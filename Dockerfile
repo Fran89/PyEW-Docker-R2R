@@ -15,4 +15,4 @@ RUN ln -s /usr/bin/gcc /usr/bin/i686-linux-gnu-gcc
 RUN source /opt/earthworm/7.9/environment/ew_linux.bash && cd /opt/earthworm/python/src && python setup.py build_ext -i 
 RUN mv /opt/earthworm/python/src/PyEW.so /opt/earthworm/python/
 
-CMD source /opt/earthworm/7.9/environment/ew_linux.bash && startstop
+CMD /opt/earthworm/Run.sh

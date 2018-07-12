@@ -27,11 +27,11 @@
 #	again. This might flood the log file if all incoming messages are
 #	too long. Maybe it should terminate instead...
 
- MyAliveString      "alive"          # heartbeat text to foreign server machine
+ MyAliveString      "RCValive"          # heartbeat text to foreign server machine
  MyAliveInt         120              # seconds between alive msgs sent to server
                                      # 0 => no alive messages to sending machine
  
- ReceiverIpAdr      127.0.0.1        # Import data through this ethernet card
+ ReceiverIpAdr      0.0.0.0        # Import data through this ethernet card
  ReceiverPort       16010            # IP port to set up for connections
 
 ### Sender description follows:
@@ -43,7 +43,7 @@
 
  SenderHeartRate    60	             # Sender's heart beat interval in seconds
 				                             # 0 => no heartbeat expected
- SenderHeartText    "alive"       # Sender's heartbeat text
+ SenderHeartText    "SNDalive"       # Sender's heartbeat text
  SocketTimeout      60000            # Timeout for Socket_ew calls in mili secs
                                      # Should be atleast the SenderHeartRate
  HeartbeatDebug     0                # Optional: 1 = to get heartbeat debug msgs.
