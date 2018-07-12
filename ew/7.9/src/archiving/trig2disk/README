@@ -1,0 +1,46 @@
+trig2disk reads type_triglist messages from the hypo_ring (e.g. those produced
+          by arc2trig and by carltrig) and writes either sac or ah triggered
+          data files to disk.
+
+
+The ah data is in xdr format which is transparent between sun/solaris and 
+intel/NT so long as the ioroutin.c interface is used.
+
+Incoming data are determined from the wf->datatype and outgoing byte order
+are determined by the intel or sparc defines in the make.  NT stupidity
+is handled based on whether solaris or winnt is defined in the make
+(in some cases, lack of winnt define assumes solaris).  Unfortunately,
+there are some dual make defines that should be cleaned up; define
+both winnt and win32; define both intel and i386.  The ahputaway
+in this directory handles byte swapping of incoming data, previous
+versions did not.
+
+The NT port of the xdr routines was accomplished by modifying the OpenBSD
+code from the ftp site at umich.  Thus modifications must include this
+source should be careful not to remove the copyright statements and can't
+be sold. Cavalier commenting of pieces of this source that weren't needed
+to write local xdr is ubiquitious.  Thus it is not rpc compatible.  When
+ftp'ing from NT to solaris, make sure you transfer as ascii to avoid the
+goofy ^M characters corrupting each line (else run dos2unix on the binary
+transfered file).
+
+sacputaway has been modified from trig2disk. There are 2 byte order issues:
+ 1) what arch are the data from and what arch are we running on
+ 2) what arch are we running on and what arch do we want to read on
+The first is taken care of by the original sacputaway with INTEL or SPARC
+makefile defines.  The second is taken care of by a mod that uses a 
+SWAPIT makefile define.  Blindly swaps before writing to disk if SWAPIT is defined.
+
+EW v3.3 is required, specifically with respect to the author field in
+the type_triglist messages (e.g. in parse_trig, carltrig, arc2trig).
+
+Will get restarted if restartMe is in the .desc
+
+To do:
+  Adding a list of stations to the trigger message is kludgy.
+  Not much error checking is done, particularly in the putaway routines.
+  How about some documentation, eh.
+  Add author subdirectory to data directory e.g. ah/author/datatime/scn.ah
+  The p in memphis.pscn isn't used yet.
+  The output data directory is only two digit year
+  Some files in the run_test get corrupt headers and I'm not sure why.

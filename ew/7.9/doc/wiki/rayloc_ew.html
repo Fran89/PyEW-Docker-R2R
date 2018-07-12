@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      rayloc_ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/rayloc_ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="rayloc_ew.html" title="View rayloc_ew">rayloc_ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/rayloc_ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/rayloc_ew?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-11T13%3A03%3A37-07%3A00&amp;precision=second" title="2012-05-11T13:03:37-07:00 in Timeline">16 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/11/12 13:03:37</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="rayloc_ew.html#EarthwormModule:rayloc_ew">Earthworm Module: rayloc_ew</a>
+    <ol>
+      <li>
+        <a href="rayloc_ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="rayloc_ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="rayloc_ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="rayloc_ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="rayloc_ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="rayloc_ew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="rayloc_ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:rayloc_ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: rayloc_ew</h1>
+<p>
+<strong>Contributed by: Ray Buland</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Ray Buland's global earthquake locator. (new in EW v7.0)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Rayloc_ew is an Earthworm Module to perform global relocation of earthquakes and travel time computation. 
+</p>
+<p>
+Rayloc_ew is an Earthworm-style wrapper around a Fortran program RayLoc, written by Ray Buland. The fortran from Ray is forward model using a Gauss-Newton iteration process fitting to the AK135 (Kennett, Engdahl, and Buland, 1995, GJR v122) update to the iasp91 earth model. 
+</p>
+<p>
+Rayloc_ew attaches itself to the input ring and monitors the ring buffer for the <a class="wiki" href="type_loc_global.html">TYPE_LOC_GLOBAL</a> messages. 
+</p>
+<p>
+Rayloc_ew reformats the input and calls the FORTRAN RayLoc processing machinery. The output of rayloc_ew 
+is a TYPE_RAYLOC message, which is written to the output ring.
+</p>
+<p>
+The wrapper accepts TYPE_LOC_GLOBAL messages and outputs TYPE_RAYLOC as described above. 
+</p>
+<p>
+Rayloc_ew requires three model files (tau.table, ak135.hed, ak135.tbl). These files are parts of rayloc_ew distribution.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, rayloc_ew reads the configuration file named on the command line.  In the control file, lines may begin with a valid rayloc_ew commands (listed below).
+</p>
+<p>
+# marks the line as a comment (example: # This is a comment).
+</p>
+<p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by liss2ew, grouped by the function they influence. Most of the commands are required; they may be specified in any order in the control file. 
+</p>
+<pre class="wiki">Earthworm system setup
+                MyModId          required
+                HeartbeatInt     required
+                InRing           required 
+                OutRing          required
+                Debug            optional
+
+Rayloc processing parameters:
+
+                StaFile        required
+                WorkDir        required
+
+                hold_params           optional; default if absent = 0 
+                fix_depth             optional; default if absent = 1   
+                use_PKP               optional; default if absent = 1    
+                use_depth_ph          optional; default if absent = 1    
+                use_S_ph              optional; default if absent = 1    
+                pick_weight_interval  optional; default if absent = 0    
+                Rmin                  optional; default if absent = 0   
+                Rmax                  optional; default if absent = 0   
+
+                D1                    optional; default if absent = 0    
+                Dmin1                 optional; default if absent = 0    
+                Dmax1                 optional; default if absent = 180  
+
+                D2                    optional; default if absent = 0   
+                Dmin2                 optional; default if absent = 0  
+                Dmax2                 optional; default if absent = 180   
+
+                D3                    optional; default if absent = 0   
+                Dmin3                 optional; default if absent = 0 
+                Dmax3                 optional; default if absent = 180   
+
+                D4                    optional; default if absent = 0   
+                Dmin4                 optional; default if absent = 0   
+                Dmax4                 optional; default if absent = 180  
+
+                D5                    optional; default if absent = 0   
+                Dmin5                 optional; default if absent = 0  
+                Dmax5                 optional; default if absent = 180  
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>D1,D2,D3,D4,D5   [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Pick weight distance interval flag(s) (there are five parameters 1=5) (TRUE = 1/FALSE = 0) (def = 0). These work in conjuction with the Dmin and Dmax parameters. They provide 5 optional distance intervals over which arrivals are essentially zero weighted.
+</p>
+<pre class="wiki">Default:  0
+Example:  D1 0
+          D2 1
+          D4 1
+</pre><p>
+<strong>Debug</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Turns on debug logging for rayloc_ew.
+</p>
+<pre class="wiki">Default:  no debug logging
+Example:  Debug
+</pre><p>
+<strong>Dmin1, Dmin2, Dmin3, Dmin4 Dmin5 [degrees]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Lower bound of distance interval(s) in which weights are zero (default 0). Note that in order to use this parameter, a corresponding Dx should be turned ON.
+</p>
+<pre class="wiki">Default:  0
+Example:  Dmin1 0
+          Dmin2 10
+          Dmin5 20
+
+</pre><p>
+<strong>Dmax1, Dmax2, Dmax3, Dmax4, Dmax5 [degrees]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Upper bound of distance interval(s) in which weights are zero (default 180). Note that in order to use this parameter, a corresponding Dx should be turned ON.
+</p>
+<pre class="wiki">Default:  0
+Example:  Dmax1 180
+          Dmin2 170
+          Dmin5 160
+</pre><p>
+<strong>fix_depth [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Use fixed depth in inversion: TRUE (1) or FALSE(0).
+</p>
+<pre class="wiki">Default:  1
+Example:  fix_depth 1
+</pre><p>
+<strong>HeartBeatInt [nsec]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: Earthworm Setup
+</p>
+<p>
+Defines the number of seconds, nsec between TYPE_HEARTBEAT messages issued by rayloc_ew.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartBeatInterval 30
+</pre><p>
+<strong>hold_params [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Hold latitude, longitude, depth, and origin time flag (default = FALSE (0).
+</p>
+<pre class="wiki">Default:  0
+Example:  hold_params 1
+</pre><p>
+<strong>InRing [ring]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells rayloc_ew which shared memory region to use for input. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  InRing HYPO_RING
+</pre><p>
+<strong>MyModId [mod_id]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_RAYLOC_EW
+</pre><p>
+<strong>OutRing [ring]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells rayloc_ew which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  OutRing PICK_RING
+</pre><p>
+<strong>pick_weight_interval [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Pick weight residual interval flag (TRUE/FALSE) (default = FALSE)
+</p>
+<pre class="wiki">Default:  0
+Example:  pick_weight_interval   1
+</pre><p>
+<strong>Rmin [seconds]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Lower bound of residual interval in which weights can be non-zero (default = 0). To activate this parameter pick_weight_interval must be 1.  
+</p>
+<pre class="wiki">Default:  0
+Example:  Rmin 0.1
+</pre><p>
+<strong>Rmax [seconds]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Upper bound of residual interval in which weights can be non-zero (default = 0). To activate this parameter pick_weight_interval must be 1.
+</p>
+<pre class="wiki">Default:  0
+Example:  Rmax 1
+</pre><p>
+<strong>StaFile [filename]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+File with stations information in GLASS format. Here is an example of few lines
+</p>
+<pre class="wiki">AAE    9.0291N  38.7655E 2442 IU Addis Ababa, Ethiopia
+AAK   42.6390N  74.4940E 1645 II Ala-Archa, Kyrgyzstan
+AAM   42.2997N  83.6561W  249 US Ann Arbor, Michigan, USA
+ABKT  37.9303N  58.1188E  678 II Alibek (Geyokcha), Turkmenistan
+ABL   34.8508N 119.2208W 1981 NC Mount Abel, California, USA
+</pre><p>
+The sample file is provided with the rayloc_ew distribution. This file used to match the station names from TYPE_LOC_GLOBAL 
+with their 3D coordinates (which is not a part of the TYPE_LOC_GLOBAL message).
+</p>
+<pre class="wiki">Default:  none
+Example:  StaFile        "/home/ilya/rayloc_work/glass_station_list.txt"
+</pre><p>
+<strong>use_PKP [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Use or not PKP phases.
+</p>
+<pre class="wiki">Default:  1
+Example:  use_PKP 0
+</pre><p>
+<strong>use_depth_ph [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Use or not depth phases.
+</p>
+<pre class="wiki">Default:  1
+Example:  use_depth_ph 0
+</pre><p>
+<strong>use_S_ph [0 or 1]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+Use or not S phases.
+</p>
+<pre class="wiki">Default:  1
+Example:  use_S_ph 0
+</pre><p>
+<strong>WorkDir [dirname]</strong><br />
+Processed by: rayloc_ew_GetConfig<br />
+Function: processing parameters
+</p>
+<p>
+This is the location of the work directory for rayloc_ew. rayloc_ew stores temp files in there. 
+Three model files should be placed in this directory before processing:
+</p>
+<p>
+1) tau.table<br />
+2) ak135.hed<br />
+3) ak135.tbl
+</p>
+<p>
+Those files are prebuilt and shipped with rayloc_ew distribution.
+</p>
+<pre class="wiki">Default:  none
+Example:  WorkDir        "/export/home/isti/model"
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+#
+#                     rayloc_ew Configuration File
+#
+MyModId        MOD_RAYLOC_EW   # This instance of rayloc_ew
+StaFile        "/gaia/home/mwithers/Projects/EWSupport/Working/run_smeagol/model/glass_station_list.txt"   # File containing station name/pin# info
+WorkDir        "/gaia/home/mwithers/Projects/EWSupport/Working/run_smeagol/model"         # Directory where model and tmp files are stored
+InRing           RAY_RING     # Transport ring to find TYPE_LOC_GLOBAL messages,
+OutRing          RAY_RING     # Transport ring to write TYPE_RAYLOC messages
+HeartbeatInt            30     # Heartbeat interval, in seconds,
+Debug                    1     # If 1, print debugging message
+#
+#
+# Parameters/flags used to control processing of rayloc
+# Default values are provided in comments and used if any
+# of the parameters in to configuration is undefined
+#
+hold_params           0    # Hold latitude, longitude, depth, and origin time flag (def = 0)
+fix_depth             1    # Fix depth (def = 1)
+use_PKP               1    # Use PKP phases (def = 1)
+use_depth_ph          1    # Use depth phases (def 1)
+use_S_ph              1    # Use S phases (def = 1)
+pick_weight_interval  0    # Pick weight residual interval flag (T/F) (def = 1)
+Rmin                  0    # Lower bound of residual interval in which weights can be non-zero (def = 0)
+Rmax                  0    # Upper bound of residual interval in which weights can be non-zero (def = 0)
+#
+D1                    0    # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin1                  0    # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax1                180    # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D2                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin2                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax2               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D3                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin3                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax3               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D4                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin4                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax4               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D5                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin5                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax5               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/rayloc_ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

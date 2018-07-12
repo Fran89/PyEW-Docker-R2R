@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: samtac2ew commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+samtac2ew Configuration File </h1>
+<i>(last revised 22 January, 2009)</i></center>
+Page Index:<br>
+
+1. <a href="#function">Functional command listing</a><br>
+2. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+3. <a href="#sample_config">Sample Configuration File</a><br>
+<p>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On startup,
+samtac2ew reads the configuration file named on the command
+line. Commands in this file set all the parameters used for configuring
+the Earthworm samtac2ew module. In the control file, lines may begin with a
+valid samtac2ew command (listed below) or with one of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @SCNL.d).<br></pre>
+
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this document (upper/lower case matters!). Blank lines are also permitted in
+the control file.
+<p><a name="function"></a></p>
+<h2>1. FUNCTIONAL COMMAND LISTING</h2>
+<p><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by samtac2ew, grouped by the function they
+influence. Some of the commands are required, as noted. They may be
+specified in any order in the control file, with the exception of the
+SAMTAC-802U communications mode settings:
+these must be listed in the order shown here.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --></p>
+<pre>
+    <a name="function">Earthworm system setup:</a>
+                <a href="#ModuleId">ModuleId</a>                required
+                <a href="#RingName">RingName</a>                required
+                <a href="#LogFile">LogFile</a>                 required
+                <a href="#HeartbeatInt">HeartbeatInt</a>            required
+                <a href="#DeviceID">DeviceID</a>                required
+                <a href="#Debug">Debug</a>                   optional
+
+    The two commands for any ONE of the two communication modes:
+        SAMTAC communication parameters: TCP mode
+                <a href="#TcpAddr">TcpAddr</a>                 required
+                <a href="#TcpPort">TcpPort</a>                 required
+
+        SAMTAC communication parameters: Windows COM port
+                <a href="#ComPort">ComPort</a>                 required
+                <a href="#Speed">Speed</a>                   required
+ 
+        SAMTAC2EW buffer and timing parameters:
+                <a href="#CommTimeout">CommTimeout</a>             optional
+ 
+        SAMTAC configuration, status and alarm parameters:
+                <a href="#InfoSCNL">InfoSCNL</a>                required
+                <a href="#SOH_int">SOH_int</a>                 optional
+</pre>
+
+<a name="alphabet"></a>
+<h2>2. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h2>
+<p>
+In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. Default values
+and example commands are listed after each command description.
+</p>
+
+<pre><strong>command <font color="red">arg1</font></strong></pre>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<a name="CommTimeout"></a>
+<pre><strong>CommTimeout <font color="red">n</font><br></strong><!-- command args ... --><br></pre>
+<blockquote><!-- command description goes here -->
+Sets the communication timeout to <font color="red">n</font> milliseconds. If unable to communicate with SAMTAC for n milliseconds, retry socket or terminate.  Default: 5000 (milliseconds)
+
+</blockquote>
+<hr>
+
+
+<a name="ComPort"><!-- command name as anchor inside quotes --> </a>
+
+<pre><strong>ComPort <font color="red">n</font><br></strong><!-- command args ... --><br></pre>
+<blockquote><!-- command description goes here -->
+Sets the com port number to <font color="red">n</font>. 
+</blockquote>
+<hr>
+
+<a name="Debug"></a>
+<pre><strong>Debug <font color="red">n</font><br></strong><!-- command args ... --><br></pre>
+<blockquote><!-- command description goes here -->
+Sets the debug level: 0 or commented out for no debug logging; 1 - 4 for increasing verbosity.  Default: no debug output. 
+</blockquote>
+<hr>
+
+<a name="DeviceID"></a>
+<pre><strong>DeviceID <font color="red">n</font><br></strong><!-- command args ... --><br></pre>
+<blockquote><!-- command description goes here -->
+Sets DeviceID(serial) of the SAMTAC. This will be used to identify data coming from the SAMTAC and should match Sys values from SCNL.
+</blockquote>
+<hr>
+
+<A NAME="HeartbeatInt">  <!-- command name as anchor inside quotes -->	
+<PRE><B>HeartbeatInt <font color=red>beat</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Beat the samtac2ew heart every <font color=red>beat</font> seconds. 
+
+</BLOCKQUOTE>
+
+<HR>
+
+<A NAME="InfoSCNL">  <!-- command name as anchor inside quotes -->	
+<PRE><B>InfoSCNL <font color=red>System Channel S C N L</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command is used to define how samtac2ew maps a System and Channel Number to a Station Channel Name. It
+is also used as a channel selector as only those streams specified get passed on to the Earthworm
+Wave Ring. This forces the trace buf type to be of type TRACEBUF2. 
+
+<font color=red>System</font> is for the SAMTAC System ID name,
+<font color=red>Channel</font> is for the SAMTAC channel number,
+<font color=red>S</font> is for station name (5 chars),
+<font color=red>C</font> is for channel identifier (3 chars), 
+<font color=red>N</font> is for network code (2 chars), and
+<font color=red>L</font> is for location code (2 chars).
+
+<PRE>
+#                Sys     Channel S       C       N   L
+InfoSCNL         21      1       ISTI    HHZ     CI  00
+InfoSCNL         21      2       ISTI    HHN     CI  00
+InfoSCNL         21      3       ISTI    HHE     CI  00
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<a name="LogFile"></a>
+<PRE><B>LogFile <font color=red>n</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If 0, don't output to logfile; if 1, do
+if 2, log to module log but not stderr/stdout
+
+</BLOCKQUOTE>
+<HR>
+
+
+
+<A NAME="ModuleId">  <!-- command name as anchor inside quotes -->	
+<PRE><B>ModuleId <font color=red>mod_id</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->	
+<PRE><B>RingName <font color=red>ring</font></B><!-- command args ... -->	</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This is the ring into which the waveforms and messages are sent.
+</BLOCKQUOTE>
+<hr>
+<A NAME="SOH_int">  <!-- command name as anchor inside quotes -->	
+<PRE><B>SOH_int <font color=red>seconds</font></B><!-- command args ... -->	</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+The interval in seconds between State of Health packets.  Default in 300 seconds(5 minutes)
+</BLOCKQUOTE>
+<hr>
+<A NAME="Speed">  <!-- command name as anchor inside quotes -->	
+<PRE><B>Speed <font color=red>rate</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the SAMTAC-802U at the Speed <font color=red>rate</font> specified. 
+To use this input mode, the ComPort directive must also be used. The
+baud rates are the standard allowable rates : 1200, 2400, 4800,
+9600, 19200, 38400, 57600, and 115200.
+</BLOCKQUOTE>
+
+<HR>
+
+<A NAME="TcpAddr">  <!-- command name as anchor inside quotes -->	
+<PRE><B>TcpAddr <font color=red>IP address</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the SAMTAC-802U at the ip address <font color=red>IP address</font>. 
+Note that the TcpPort is also required.
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="TcpPort">  <!-- command name as anchor inside quotes -->	
+<PRE><B>TcpPort <font color=red>number</font></B><!-- command args ... --></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the SAMTAC-802U at the ip address specified and this
+port <font color=red>number</font>. 
+Note that the TcpAddr  is also required for this
+directive. TcpPort defaults to 5001 for the SAMTAC-802U.
+</BLOCKQUOTE>
+
+
+<HR>
+<a name="sample_config"></a>
+<h2>3. SAMPLE CONFIGURATION FILE</h2>
+<pre>
+#
+# samtac2ew configuration file
+#
+# This code receives serial data stream (SDS) packets from the SAMTAC via
+# a TCP/IP port, converts them into Earthworm trace buf messages, and
+# stuffs them into a wave ring.
+#
+
+TcpAddr         192.168.4.5     # IP address of SAMTAC interface
+TcpPort         5001            # TCP port number of SAMTAC interface
+
+# ComPort       1               # SAMTAC-802U COM port ID, 1=COM1, 2=COM, etc
+# Speed         57600           # SAMTAC-802U baud rate
+
+DeviceID        21              # SAMTAC DeviceID(serial), must be defined here for SCNL map
+
+ModuleId        MOD_SAMTAC2EW   # module id for this import
+RingName        WAVE_RING       # transport ring to use for input/output
+
+LogFile         1               # If 0, don't output to logfile; if 1, do
+                                # if 2, log to module log but not stderr/stdout
+
+HeartbeatInt    30              # Heartbeat interval in seconds
+
+# Optional commands:
+
+SOH_int         300             # State Of Health packet interval in seconds. 
+                                # Default is 5 minutes
+
+CommTimeout     5000            # If unable to communicate with SAMTAC for X
+                                # milliseconds, retry socket or terminate
+                                # default: 5000 (milliseconds)
+
+Debug           4               # debug level: 0 or commented out for no debug
+                                # logging; 1 - 4 for increasing verbosity
+                                # default: no debug output
+
+#           Sys     Channel S       C       N   L
+InfoSCNL    21      1       ISTI    HHA     ZZ  01
+InfoSCNL    21      2       ISTI    HHB     ZZ  01
+InfoSCNL    21      3       ISTI    HHC     ZZ  01
+InfoSCNL    21      4       ISTI    HHD     ZZ  01
+InfoSCNL    21      5       ISTI    HHE     ZZ  01
+InfoSCNL    21      6       ISTI    HHF     ZZ  01
+</pre>
+
+<CENTER>
+  <a href="../modules.html">Module Index</a> | <a href="../ovr/samtac2ew_ovr.html">SAMTAC2EW 
+  Overview</a> 
+</CENTER>
+
+</body>
+</html>

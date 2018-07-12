@@ -1,0 +1,32 @@
+#
+#                    Nmake File For StartstopPipeConsole
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP=StartstopPipeConsole
+O=$(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $L\libew_mt.lib \
+         $L\startstop_lib.obj $L\startstop_winlib.obj $L\service_ew.obj \
+         $L\lockfile.obj $L\lockfile_ew.obj $L\ew_nevent_message.obj \
+         $L\pipeconsole.obj -out:$B\$(APP).exe
+   sleep 1
+   mt.exe -nologo -manifest "$(APP).exe.manifest" -outputresource:"$B\$(APP).exe"
+# (using 'mt.exe' to add manifest so program requests Administrator level)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\StartstopPipeConsole.exe

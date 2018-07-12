@@ -1,0 +1,81 @@
+# makeTrace: produce lots of meaningless trace data for testing purposes. 
+# derived from adsend. Our's is not to wonder why.
+# Alex 11/12/02.
+
+# ----------------------------------------------------------------------
+# MakeFile for makeTrace
+# ----------------------------------------------------------------------
+#
+# Instructions on how to create the executable:
+#
+#     First make sure that your environmental variables
+#     'INCLUDE' and 'LIB' are set correctly.
+#
+#     You may also load this .MAK file from Visual C++.
+#     Visual C++ will then treat it as an 'external makefile'.
+#
+#     The libsrc functions are recompiled here because we need
+#     single-threaded versions instead of multi-threaded versions
+#
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+U = $(EW_HOME)\$(EW_VERSION)\src\libsrc\util
+W = $(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt
+
+!include <ntwin32.mak>
+
+O  = makeTrace.obj getconfig.obj  \
+     console.obj threads.obj  \
+     errors.obj logit.obj kom.obj getutil.obj time_ew.obj \
+     transport.obj sleep_ew.obj
+#
+
+
+CL_FLAGS=/c /DWIN32 /W3 $(cflags)
+
+#
+# TARGET: Console application
+#
+all: makeTrace.exe
+
+
+makeTrace.exe: $O
+    link /OUT:$B\makeTrace.exe $O 
+
+# The libsrc functions are recompiled here because we need
+# single-threaded versions instead of multi-threaded versions
+
+chron3.obj: $U\chron3.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\chron3.c
+
+logit.obj: $U\logit.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\logit.c
+
+kom.obj: $U\kom.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\kom.c
+
+getutil.obj: $U\getutil.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\getutil.c
+
+time_ew.obj: $W\time_ew.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\time_ew.c
+
+transport.obj: $W\transport.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\transport.c
+
+sleep_ew.obj: $W\sleep_ew.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\sleep_ew.c
+
+.c.obj:
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+    -del a.out core *.o *.obj *% *~
+
+clean_bin:
+    -del $B\makeTrace*
+
+

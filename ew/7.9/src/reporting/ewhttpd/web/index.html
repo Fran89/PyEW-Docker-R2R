@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>EW HTTP Server</title>
+        <style>
+           html, body {
+              font: normal 10px/100% Verdana, Tahoma, sans-serif;
+           }
+           
+           
+           select {
+              font: normal 10px/100% Verdana, Tahoma, sans-serif;
+              width: 150px;
+           }
+           
+           .left {
+              float: left;
+           }
+           
+           .right {
+              float: left;
+           }
+           
+           .clear {
+              clear: both;
+              float: none;
+           }
+           
+           .OptionDiv {
+              margin-top: 10px;
+           }
+           
+           .timeline {
+              width: 400px;
+              height: 200px;
+              /*background-color: #FFFFFF;
+              border: 1px solid #000000;*/
+           }
+           .labeldiv {
+              width: 400px;
+              height: 20px;
+              text-align: right;
+           }
+           .selection_heading {
+              margin-top: 20px;
+              font-weight: bold;
+           }
+           
+           #TitleDiv {
+              margin-bottom: 30px;
+           }
+        </style>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="dygraph-combined.js" type="text/javascript"></script>
+        <script type="text/javascript">
+           var timelineparams = {
+              rollPeriod: 1,
+              showRoller: false,
+              labels: ['Time','Data'],
+              labelsDivStyles: {
+                 textAlign: 'right',
+                 right: '0px',
+                 font: 'normal 8px/100% Verdana, Tahoma, sans-serif'
+              },
+              showRangeSelector: false,
+              rangeSelectorHeight: 0
+           };
+
+           var graph = null;
+
+    
+           function initialize(mdid) {
+              // Get all the picks in the last 30 days
+              var picks = getData(30*24*60);
+              if (picks.length==0) return;
+   
+              // Isolate stations
+              var stations = isolateStations(picks);
+              if (stations.length==0) return;
+   
+              // Add stations as options to the selection
+              $.each(stations, function(index,sta) {
+                 var sn=sta.toString();
+                 $('#StationSel').append('<option value="'+sn+'">'+sn+'</option>');
+              });
+           }
+
+
+           /*
+            * Based on the form data, builds or updates the timeline
+            */
+           function update() {
+
+              var stas = [];
+              var ti = 10;
+              var it = 60000;
+              var picks = [];
+              
+              // Get selected stations
+              $('#StationSel').children().each(function(index,option){
+                 if (option.selected) stas.push(option.value);
+              });
+   
+              // Get selected time interval
+              $('#TimeSel').children(':selected').each(function(index,option) {
+                 ti = option.value;
+                 if (ti==10) it=10000; // Integration time shorter for 10 minute interval
+                 if (ti==43200) it=3600000; // and longer for 30 day interval
+              });
+   
+              // Get data
+              var picks = getData(ti);
+              if (picks.length==0) {
+                 graph.destroy();
+                 graph = null;
+                 return;
+              }
+   
+              // Plot data
+              var et = new Date();
+              var st = new Date(et.getTime()-ti*60000);
+   
+              plotTimeLine(stas, picks, st, et, it);
+           }
+
+           /*
+            * Plot timeline
+            */
+           function plotTimeLine(stas, picks, st, et, it) {
+              var md=$('#GraphicsDiv');
+              var data = integrate(stas, it, st, et, picks);
+   
+              var labels=['Time'];
+              for (var i=0;i<stas.length;i++) labels.push(stas[i]);
+              labels.push('Total');
+   
+              if (graph!=null) {
+                 graph.destroy();
+                 graph = null;
+              }
+              graph = new Dygraph(document.getElementById('PickDiv'), data, {
+                    fillGraph: true,
+                    legend: 'always',
+                    labels: labels,
+                    labelsDiv: document.getElementById('PickLabelDiv')
+                    //showRangeSelector: true
+                    });
+           }
+
+
+           /*
+            * Retrieving data function
+            * This function makes an AJAX request to the server to pull
+            * picks within a given time interval
+            * It returns the available picks
+            */
+           function getData(ti) {
+              // Collect latest picks
+              //$('#debug').append('Starting request<br>');
+              var et = new Date(); // Used for reference
+              var st = new Date(et.getTime()-60000*ti);
+              var localpicks = []; 
+   
+              //Test AJAX request
+              $.ajax({
+                 url:'ewajax',
+                 data:'reqtype=ewmsg&type=TYPE_PICK_SCNL&start='+date2str(st)+
+                       '&end='+date2str(et),
+                 dataType:'json', 
+                 async:false, 
+                 cache:false,
+                 success: function(data) {
+                    //$('#debug').append('Retrieved the data ('+data.length+')<br>');
+                    for( var i=0; i<data.length; i++)
+                       localpicks.push(new TYPE_PICK_SCNL(data[i].RawMsg));
+                 },
+                 error: function (request, status, error) {
+                    alert(error);
+                 }
+              });
+              return localpicks;
+           }
+
+           /*
+            * From an array of picks, produce an array of the considered stations
+            */
+           function isolateStations(picks) {
+              var stas = [];
+              $.each(picks, function(index,pick) {
+                 var i;
+                 var stapos = -1;
+                 for (i=0;i<stas.length;i++)
+                    if (stas[i].toString()==pick.Station.toString()) {
+                       stapos = i;
+                       break;
+                    }
+                 if (stapos==-1) stas.push(pick.Station);
+              });
+              if (stas.length>0)
+                 stas = stas.sort();
+              return stas;
+           }
+
+
+           function date2str(d) {
+              return ''+
+                    pan(d.getUTCFullYear(),4)+
+                    pan(d.getUTCMonth()+1,2)+
+                    pan(d.getUTCDate(),2)+
+                    pan(d.getUTCHours(),2)+
+                    pan(d.getUTCMinutes(),2)+
+                    pan(d.getUTCSeconds(),2);
+         
+              function pan(m,s) {
+                 var x=''+m;
+                 return ('0000').substr(0,s-x.length)+x;
+              }
+           }
+
+           /*
+            * Integrating function. Produces a data set ready for the timeline
+            * Input parameters:
+            * - An array of station names: stas
+            * - The integration time, in milliseconds: ti
+            * - The start and end times as dates: st and et
+            */
+           function integrate(stas, ti, st, et, picks) {
+              var i, j;
+              var data = [];
+              
+              // Round start and end times to the time interval
+              var s = Math.round(st.getTime()/ti)*ti;
+              var e = Math.round(et.getTime()/ti)*ti;
+              var ns = (e - s)/ti; // The number of time slots
+   
+              // Create array to be populated
+              for (i=0;i<ns;i++) {
+                 // Temporary array will carry pick count for each station
+                 var temp=[];
+                 temp.push(new Date(s+ti*i));
+                 for (j=0;j<stas.length;j++) temp.push(0);
+                 temp.push(0); // The sum of all stations
+                 data.push(temp);
+              }
+   
+              // Populate array with picks
+              for (i=0; i<picks.length; i++) {
+                 var stapos = -1;
+                 var ps = picks[i].Station.toString();
+                 // Search for station
+                 for (j=0; j<stas.length; j++)
+                    if (ps==stas[j]) {
+                       stapos = j;
+                       break;
+                    }
+                 if (stapos==-1) continue;
+      
+                 // Increment time slot
+                 var ppos = Math.round((picks[i].Arrival.getTime()-s)/ti);
+                 if (ppos<0 || ppos>=ns) continue;
+      
+                 data[ppos][stapos+1]++;
+                 data[ppos][stas.length+1]++;
+              }
+   
+              // DONE!
+              return data;
+           }
+
+
+           /*
+            * A pick EWMSG
+            * Arguments:
+            *      msg - The raw message
+            *      typ - Optional textual indication of the message type
+            */
+           function TYPE_PICK_SCNL(rawmsg) {
+               var parts = rawmsg.split(' ');
+               this.Station = new Station(parts[4]);
+               this.FstMotion = parts[5].substr(0,1);
+               this.Quality = parseInt(parts[5].substr(1,1));
+               this.Arrival = new Date();
+               this.Arrival.setUTCFullYear(parseInt(parts[6].substr(0,4)),10);
+               this.Arrival.setUTCMonth(parseInt(parts[6].substr(4,2),10)-1);
+               this.Arrival.setUTCDate(parseInt(parts[6].substr(6,2),10));
+               this.Arrival.setUTCHours(parseInt(parts[6].substr(8,2),10));
+               this.Arrival.setUTCMinutes(parseInt(parts[6].substr(10,2),10));
+               this.Arrival.setUTCSeconds(parseInt(parts[6].substr(12,2),10));
+               this.Arrival.setUTCMilliseconds(parseInt(parts[6].substr(15,3),10));
+           }
+
+           /*
+            * Station object
+            * Includes SCNL and eventually a location (TODO)
+            */
+           function Station(rawsta) {
+               this.SCNL = rawsta.split('.');
+               this.sta = this.SCNL[0];
+               this.cha = this.SCNL[1];
+               this.net = this.SCNL[2];
+               this.loc = this.SCNL[3];
+              this.timedata=[];
+           }
+
+           Station.prototype.match = function(s) {
+              if (this.toString() == s.toString()) return true;
+              return false;
+           }
+
+           Station.prototype.toString = function() {
+               return this.sta+'.'+this.cha+'.'+this.net+'.'+this.loc;
+           }
+        </script>
+    </head>
+    <body onload="initialize('GraphicsDiv')">
+        <div id="TitleDiv">
+              <h1>Earthworm Web Pick Count</h1>
+        </div>
+        <div id="FormDiv" class="left">
+           <div class="OptionDiv">
+              <span class="selection_heading">Select stations</span><br>
+              <select id="StationSel" name="Stations" multiple size=10></select>
+           </div>
+           <div class="OptionDiv">
+              <span class="selection_heading">Time Interval<br></span>
+              <select id="TimeSel" name="TimeInterval">
+                 <option value="10">10 min</option>
+                 <option value="60">1 hour</option>
+                 <option value="720">12 hours</option>
+                 <option value="1440">24 hours</option>
+                 <option value="43200">30 days</option>
+              </select>
+           </div>
+           <div class="OptionDiv">
+              <input type="submit" value="Update" class="button" onclick="update()">
+           </div>
+        </div>
+        <div id="GraphicsDiv" class="right">
+           <div id="PickLabelDiv" class="labeldiv"></div>
+           <div id="PickDiv" class="timeline"></div>
+        </div>
+        <div class="clear"></div>
+        <div>
+           <span>
+              A demonstration of EWHTTP operating as a Web Server for 
+              Earthworm data.<br>
+              Assuming that there are picks in the database, select one or more
+              stations and a time interval.<br>
+              The timeline presents the pick count per minute for intervals
+              larger than 10 minutes <br>
+              and 10 seconds for the latter.<br><br>
+              Click and drag on the timeline to zoom in.<br><br>
+              Notes:<br>
+              - Used jQuery (www.jquery.com) and DyGraph (www.dygraphs.com) libraries.<br>
+              - ewhttpd module configured to acquire TYPE_PICK_SCNL messages for 30 days.
+           </span>
+        </div>
+    </body>
+</html>

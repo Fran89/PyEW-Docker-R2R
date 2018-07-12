@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Heli_ewII commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1> <br>
+Heli_ewII Configuration File</h1>
+<i>(last revised May 1, 2006)</i></center>
+<pre>#<br># This is the heli_ewII parameter file. This program gets data gulps<br># from the waveserver(s), and creates helicorder displays.<br># Derived from heli_ew and heli_standalone, which were derived from<br># Jim Luetgert's original efforts.<br><br># This program runs either standalone or as an Earthworm module.<br># If any of the four Earthworm paramaters below are stated, it will asssume<br># that it's supposed to be a module. It will beat it's heart into the ring,<br># and use the Earthworm logging scheme. Other wise, it runs standalone.<br>LogSwitch 1<br>MyModuleId MOD_HELI_EWII<br>RingName ASSOC_RING<br>HeartBeatInt	10<br><br>wsTimeout 30 # time limit (secs) for any one interaction with a wave server.<br><br># List of wave servers (ip port comment) to contact to retrieve trace data.<br> WaveServer 136.177.31.188 16022      "harry"<br><br># Directory in which to store the temporary .gif, .link and .html files.<br>GifDir   C:\alex\heli_alex\Gifs\<br><br># Plot Parameters - sorry it's so complex, but that's the price of versatility<br>        # The following is designed such that each SCN creates it's own<br>        # helicorder display; one per day of data.<br># S                  Site<br># C                  Component<br># N                  Network<br># L 	             Location<br># 04 HoursPerPlot    Total number of hours per gif image<br># 05 Plot Previous   On startup, retrieve and plot n previous hours from tank.<br># 06 Local Time Diff UTC - Local.  e.g. -7 -&gt; PDT; -8 -&gt; PST<br># 07 Local Time Zone Three character time zone name.<br># 08 Show UTC        UTC will be shown on one of the time axes.<br># 09 Use Local       The day page will be local day rather than UTC day.<br># 10 XSize           Overall size of plot in inches<br># 11 YSize           Setting these &gt; 100 will imply pixels<br># 12 Minutes/Line    Number of minutes per line of trace<br># 13 Gain Factor     Instrument gain in microvolt/bit.<br># 14 Scale Factor    Scale factor to dress up image.<br># 15 Mean Removal    Mean of 1st minute of each line will be removed.<br># Comment            A comment for the top of the display.<br>#                                      <br>#     S    C   N  L 04 05  06  07   08 09 10  11  12 13   14   15  Comment<br><br> Plot AHID BHE US -- 12 1   -8  PST  1  0  20  20  15 0.1  1.5  1   "Alston BPA"<br> Plot ADK  SHZ AT -- 12 1   -8  PST  1  0  20  20  15 0.1  1.5  1   "Mt. Rainier Summit"<br><br><br>    # *** Optional Commands ***<br><br> Days2Save     7    # Number of days to display on web page; default=7<br># Actually, "Days2Save" is really the number of GIFs of each SCN to save.<br># For example, if HoursPerPlot is 12, you will save 7 gifs for 3.5 days.<br><br> UpdateInt    10    # Number of minutes between updates; default=2<br> RetryCount    2    # Number of attempts to get a trace from server; default=2<br># Logo    smusgs.gif # Name of logo in GifDir to be plotted on each image<br><br># We accept a command "Clip" which sets trace clipping at this many<br># vertical divisions<br>Clip 5<br><br># We accept a command "SaveDrifts" which logs drifts to GIF directory.<br># SaveDrifts<br><br># We accept a command "Make_HTML" to construct and ship index HTML file.<br>Make_HTML     <br><br># We accept a command "IndexFile" to name the HTML file.<br># Default is "index.html"<br>IndexFile welcome.html<br><br># We accept a command "BuildOnRestart" to totally rebuild images on restart.<br>BuildOnRestart     <br><br># We accept a command "Debug" which turns on a bunch of log messages<br>Debug<br>WSDebug<br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/heli_ewII_ovr.html">Heli_ew Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Contact: <b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</address>
+</body>
+</html>

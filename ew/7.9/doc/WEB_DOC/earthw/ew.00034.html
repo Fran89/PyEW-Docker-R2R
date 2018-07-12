@@ -1,0 +1,106 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Wave_serverV recovery need -->
+<!--X-From-R13: xbuyreNhftf.tbi -->
+<!--X-Date: Wed, 26 Jul 2000 12:08:46 &#45;0700 -->
+<!--X-Message-Id: 17336.964738880.34@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Wave_serverV recovery need</TITLE>
+<LINK REV="made" HREF="mailto:kohler@usgs.gov">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00033.html">Date Prev</A>][<A HREF="ew.00035.html">Date Next</A>][<A HREF="ew.00038.html">Thread Prev</A>][<A HREF="ew.00036.html">Thread Next</A>][<A HREF="welcome.html#00034">Date Index</A>][<A HREF="threads.html#00034">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Wave_serverV recovery need</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A></LI>
+<LI><em>Subject</em>: Wave_serverV recovery need</LI>
+<LI><em>From</em>: <A HREF="mailto:kohler@usgs.gov">kohler@usgs.gov</A></LI>
+<LI><em>Date</em>: Wed, 26 Jul 2000 12:08:46 -0700</LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+
+To:  Earthworm Community,
+
+I have a suggestion for a modification to wave_serverV which I think would
+benefit the Earthworm community.
+
+Currently, if a hard drive containing waveserver tank files develops a bad
+sector or sectors, and wave_serverV attempts to read the bad sector, the
+wave_serverV process will exit.  Even though the bad sector may lie in only
+one tank file, none of channels served by the wave_serverV process will
+continue being served after this time.  It would be preferable if, instead
+of exiting, wave_serverV quit serving data from the channel with the bad
+tank file and continued to serve the rest of its channels.  The program
+should also send out a pager and/or email message notifying someone of the
+problem.
+
+The reason this is important is that when wave_serverV decides to exit,
+there may be no one available to fix the problem, and a lot of data could
+be lost.  Currently, when a wave_server process dies in Menlo Park, it's a
+pageing offense, which means that someone may be awakened at night or the
+weekend (undesirable).  And, several times I have had to visit the office
+myself on a weekend to repair or replace a bad disk drive.  If only one
+channel were being lost, instead of all channels on a waveserver process, I
+wouldn't send out pages.  I would just fix the problem on Monday morning.
+
+Does anyone else think this is a problem?  Is anyone willing to modify the
+code?
+
+Thanks, Will
+
+----- End Included Message -----
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00033.html">todo list</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00035.html">todo list</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00038.html">Re: todo list</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00036.html">Wave_serverV documentation</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00034"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00034"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

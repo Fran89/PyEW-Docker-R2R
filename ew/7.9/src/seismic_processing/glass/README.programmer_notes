@@ -1,0 +1,30 @@
+The following files changed between v0.0 and v1.0:
+
+src/lib/Debug.cpp
+src/lib/Debug.hpp
+src/lib/IGlint.h 
+src/lib/ITravelTime.h 
+src/modules/Catalog/Scroll.cpp
+src/modules/Earth/TravelTime.cpp
+src/modules/Earth/trav.cpp
+src/modules/EarthWorm/EarthwormMod.cpp
+src/modules/EarthWorm/EarthwormMod.h
+src/modules/Glass/GlassMod.cpp
+src/modules/Glass/Monitor.cpp
+src/modules/Glass/Rank.cpp
+src/modules/Glass/Sphere.cpp
+src/modules/Glass/glass.cpp
+src/modules/Glass/glass.h
+src/modules/Glint/Glint.cpp
+src/modules/Glint/Glint.h
+src/modules/Glint/GlintMod.cpp
+src/modules/GlobalDebug/GlobalDebug.cpp
+src/modules/Glock/Glock.cpp
+src/modules/Glock/Glock.h
+src/modules/Grok/GrokMod.cpp
+src/modules/Grok/MapWin.cpp
+src/modules/Residuals/Canvas.cpp
+src/modules/Summary/Scroll.cpp
+
+
+DK 082503

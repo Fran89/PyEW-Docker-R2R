@@ -1,0 +1,27 @@
+LINUX_FLAGS = -lpthread
+SOLARIS_FLAGS = -lm -lposix4 #No solaris build
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+B = ../../../bin
+L = ../../../lib
+I = ../../../include
+
+CFLAGS = -I$(I) $(COPTS) $(CFLAGS.$(ARCH)) $(GLOBALFLAGS)
+LIBS = $(LIBS.$(ARCH))
+
+#
+# Note: startstop executable must be suid root to set scheduling priorities.
+#	If this isn't wanted, or we're not root, comment out the chmod below.
+
+OBJS = startstop.o $L/startstop_unix_generic.o \
+	 $L/lockfile.o $L/lockfile_ew.o $L/startstop_lib.o  $L/ew_nevent_message.o $L/libew_mt.a
+startstop: $(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $B/$@ $(OBJS) $(LIBS) $(SPECIFIC_FLAGS)
+#	chmod u+s $B/$@
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/startstop*

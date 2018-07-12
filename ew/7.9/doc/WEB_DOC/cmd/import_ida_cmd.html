@@ -1,0 +1,79 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Import_ida commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Import_ida Configuration File</H1>
+<I>(last revised 17 March 1998)</I></CENTER>
+<PRE>
+
+# @(#)import_ida.d	1.1 12/26/97
+# import_ida parameter file
+
+#  Basic Earthworm setup:
+
+MyModuleId         MOD_IMPORT_IDA # module id for this process
+OutRing            WAVE_RING      # output ring
+HeartBeatInterval  30             # seconds between heartbeats
+
+# We need to assign unique pin numbers to each net/sta/chan triple that
+# gets sent to the output ring.  Give the name of the file that contains
+# this information.  The format of this file must be the same as what
+# pick_ew expects.  You can create your own file with IDA specific
+# entries (see ida.sta for an example), or you can add the required 
+# information to the pick_ew station file.  The picker parameters are
+# not required here, and as far as this program is concerned those fields
+# may be left blank.
+
+PinnoFile          ida.sta
+
+# It is up to the user to insure that there are entries in the above file
+# for all expected net/sta/chan triples, however the program will work even
+# if the database is incomplete.  In such a case, an unresolved net/sta/chan
+# will be assigned a default pin number of 12345.  You can override this
+# default by specifying an alternate value.
+
+DefaultPinno       12345
+
+# Define the policy to follow when reconnecting after circuit timeouts.
+# There are two choices: MINIMAL_GAP, or MINIMAL_DELAY.  If the former
+# is selected then the program will request the flow start at the end of
+# whatever has been received so far.  If the latter is selected then the
+# program will request the flow start with the most recent packet available
+# on the server.
+
+Policy             MINIMAL_DELAY
+
+# The network code for Project IDA stations is II, and that is the default
+# code which gets loaded into the packet headers.  If you want to override
+# this with some other code, enter it here.
+
+Network            II
+
+# List the server(s) and stream(s) that are desired.
+# The station channel specifications should follow the syntax
+# described in ftp://idahub.ucsd.edu:/pub/pickup/idatap-1.2.1.tar.Z
+#
+# You can give either the fully qualified host name, or its IP address
+# in the usual decmial dot notation (eg, 111.22.333.44)
+#
+#          Hostname              Station/channel list
+
+server   nnn.xxx.mmm.5        nna:bhz+pfo:bhz+sur:bhz
+
+</PRE>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/import_ida_ovr.html">Import_ida Overview</A> 
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>dec@essw.com</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

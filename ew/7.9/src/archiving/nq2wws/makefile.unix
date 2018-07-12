@@ -1,0 +1,40 @@
+
+LINUX_FLAGS=-lm -pthread
+SOLARIS_FLAGS=-lnsl -lsocket -mt -lposix4 -lthread -lc -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+QLIB_DIR = $(EW_HOME)/$(EW_VERSION)/src/libsrc/qlib2
+QLIB_LIB = $(QLIB_DIR)/lib_ew/libqlib2nl.a
+
+CFLAGS +=  -g -I$(QLIB_DIR) 
+
+all: nq2wws
+
+
+BINARIES = nq2wws.o $L/mem_circ_queue.o $L/libew_mt.a $L/getsysname_ew.o \
+	$L/socket_ew.o $L/socket_ew_common.o $L/dirops_ew.o $L/swap.o
+
+all: nq2wws
+
+nq2wws: $(BINARIES) 
+	$(CC) -o $B/nq2wws $(BINARIES) $(QLIB_LIB) $(CFLAGS) $(SPECIFIC_FLAGS)
+
+
+
+lint:
+	lint nq2wws.c   $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/nq2wws* 
+
+FORCE:

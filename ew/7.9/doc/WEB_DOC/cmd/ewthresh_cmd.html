@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Ewthresh Configuration File</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1><BR>Ewthresh Configuration File </H1>
+<I>(last revised 28 April, 2011)</I></CENTER>
+<pre>
+#
+#         ewthresh Configuration File
+#
+ MyModuleId     MOD_EWTHRESH     # module id for this program
+ InRing         TEST_RING           # transport ring to use for input
+ OutRing        HYPO_RING           # transport ring to use for output
+ HeartBeatInt   30                  # EW internal heartbeat interval (sec)
+ LogFile        1                   # If 0, don't write logfile; if 1, do
+                                    # if 2, write to module log but not to
+                                    # stderr/stdout
+ MaxMsgSize     4096          # maximum size (bytes) for input/output msgs
+
+ Threshold 0202 BHZ QT TT 749.0     # SCNL to monitor & threshold to look for
+
+# ThreshVotes NumTrig TimeSpanSeconds PreEventSeconds NumSCNLs SCNL1 SCNL2 ...
+# Generate a triglist message whenever NumTrig alarms occur within TimeSpanSecconds
+#    Time of message is PreEventSeconds before first trigger; listed SCNLs are included
+#
+# ThreshVotes 10 300 30 2 SSSS CCC NN LL ssss ccc nn ll
+</pre>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/ewthresh_ovr.html">Ewthresh Overview</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

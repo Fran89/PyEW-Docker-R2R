@@ -1,0 +1,176 @@
+
+                           README FILE FOR SNWCLIENT
+                                Feb 16, 2006
+
+
+This document contains the following sections:
+
+INTRODUCTION
+STARTUP
+COMPILING THE PROGRAM
+SNWCLIENT NOTES
+SENDING SNW MESSAGES
+
+
+                                INTRODUCTION
+
+Snwclient is used to send SeisNetWatch parameters to the SNW Collection Agent.  
+The program runs continuously, so it is appropriate for real-time applications.
+
+The snwclient program gets files from a "queue directory", transmits the contents of the files
+via a socket connection, and deletes the files from the queue directory.  The
+SNWCollectionAgent program receives data from snwclient via a socket connection and
+transmits them to SeisNetWatch's orb.  
+
+If the network connection between computers is down, for any reason, files will
+accumulate in snwclient's queue directory until the network comes back up.  Then,
+all files will be sent immediately.
+
+WARNING: The snwclient program doesn't do any data formatting.  The data must be 
+pre-formatted to conform to SNWCollectionAgent's protocol.
+
+
+                                 STARTUP
+
+The name of the program configuration file is specified on the command line, eg:
+
+                          snwclient snwclient.d
+
+On Solaris, the programs can be run in a window, or they can be started
+automatically at boot time.
+
+On Windows NT, the executable (or a shortcut to the executable) can be placed in
+the users startup directory.  See Windows documentation for details.
+
+
+
+                          COMPILING THE PROGRAM
+
+If it's necessary to recompile a program, change the working directory to the
+program distribution directory.  On a Windows NT system, type:
+
+    nmake /f makefile.win
+
+On a Solaris system, type:
+
+    make -f makefile.sol
+
+The program was compiled using Microsoft Visual C++ 6.0 on Windows NT, and
+Sun C 4.2 on Solaris.  All user functions are included in the distribution
+directories.
+
+
+                             snwclient NOTES
+
+The snwclient program requires a configuration file, typically named snwclient.d.
+A sample configuration file is included in the distribution directory and is
+shown below.  Any line which begins with the # sign is interpreted as a comment,
+so feel free to add your own comment lines.
+
+The output (queue) and log directories must exist before running the program.
+They should be created manually using the mkdir command (or the equivalent
+windows/file manager operation).  In Solaris, the user must have write
+permission for these directories.
+
+The TimeZone parameter is used only for timestamping entries in the log file.
+
+#
+# snwclient.d  -  Configuration file for the snwclient program
+#
+# ServerIP      = IP address of computer running SNWCollectionAgent
+# ServerPort    = Well known port of SNWCollectionAgent program
+# TimeOut       = Send/receive will time out after TimeOut seconds.
+# RetryInterval = If an error occurs, retry after this many seconds
+# OutDir        = Path of directory containing files to send to SNWCollectionAgent
+# LogFile       = If 0, don't log to screen or disk.
+#                 If 1, log to screen only.
+#                 If 2, log to disk only.
+#                 If 3, log to screen and disk.
+# TimeZone      = Timezone of computer system clock (ignored in Solaris)
+# LogFileName   = Full path name of log files. The current date will
+#                 be appended to log file names.
+#
+-ServerIP      130.118.43.31
+-ServerPort    6666
+-TimeOut       15
+-RetryInterval 60
+-LogFile       3
+-TimeZone      GMT
+
+# Solaris
+# -------
+-OutDir        /home/earthworm/outdir
+-LogFileName   /home/earthworm/run/log/snwclient.log
+
+# Windows
+# -------
+#-OutDir        c:\earthworm\outdir
+#-LogFileName   c:\earthworm\run\log\snwclient.log
+
+After the snwclient program is invoked, it patiently waits for files to appear in the
+output queue directory.  When it detects a file, it opens a socket connection to
+SNWCollectionAgent, sends each line in the file, and then deletes the file from the queue directory.
+
+Under Windows NT, if a file is copied or moved to the queue directory using the
+"copy" or "move" command (recommended), snwclient will wait until the file is
+completely transferred to the queue directory before it is sent to SNWCollectionAgent.
+This prevents a partial file from being sent.  The Windows version also uses
+the _fsopen() system call which provides file locking.  Snwclient waits until
+all other processes are done with a file before accessing it.
+
+The Solaris version of snwclient works somewhat differently.  If a file is cp'd
+to the queue directory, it's possible that snwclient might not transfer the whole
+file.  So, I don't recommend using the cp command for this purpose.  The
+preferred technique is to create a complete file in another directory in the same
+disk partition as the queue directory.  Then create a hard link to the queue
+directory using the command:
+
+    ln <file> <queue directory)
+
+After the file has been transferred by snwclient, snwclient will remove the link,
+which leaves the original file intact.
+
+An alternative is to create the file on another directory on the same disk
+partition and move it to the queue directory using the mv command.  After the
+file has been transferred by snwclient, snwclient will erase the file.
+
+                       SENDING SNW MESSAGES
+
+To send a message, write a program that writes a string(s) with the following format
+to a file. When the file is moved to snwclient's output queue directory, it will be sent.
+
+NN-SSS:#:param1=val1;param2=val2;param3=val3;......paramN=valN
+
+NN = network
+SSS = station
+# = number of parameters that follow.
+The rest of the line is a semicolon separated list of parameters and values.
+
+For a given station the parameters must be consistant from message to message. (i.e.
+don't try to add a new parameter without restarting the SNW Server).
+
+To test that the Collection Agent is working, you can also send test messages from 
+the command line.
+
+:>telnet 130.118.43.31 6666
+Trying 130.118.43.31...
+Connected to 130.118.43.31.
+Escape character is '^]'.
+YY-ST1:3:a=3;long parameter=true;another example=2.0
+OK
+
+-------------------------------
+Snwclient is modelled after the program sendfile by Will Kohler.
+SNWCollectionAgent was written and distributed by ISTI. (www.isti.com)
+
+Please direct questions and bug reports to:
+
+Jim Luetgert
+U.S. Geological Survey
+Mail Stop 977
+345 Middlefield Rd
+Menlo Park, CA  94025
+
+phone:  (650) 329-4763
+email:  luetgert@usgs.gov
+

@@ -1,0 +1,572 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: q3302ew commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1>q3302ew Configuration File Commands</h1>
+<i>(last revised 4 Apr 2007)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+4. <a href="#descriptor">Descriptor file example</a>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On
+startup, q3302ew reads the configuration file named on the command
+line. As always, the configuraton file contains comments:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!). <br>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre>
+
+#
+# q3302ew configuration file
+#
+
+## The following items are typical Earthworm items
+
+ ModuleId       MOD_Q3302EW     # module id for this module.  Make sure to
+				# add this to earthworm.h if it is not already
+				# there
+
+ RingName       WAVE_RING       # transport ring to use for input/output,
+
+ HeartbeatInt   10              # Heartbeat interval in seconds
+                  
+ LogFile        1               # If 0, don't write logfile;; if 1, do
+                                # if 2, log to module log but not stderr/stdout
+
+## The following items tell us how to talk to the Q330
+
+IPAddress		192.168.1.166		# The Q330 IP address
+BasePort		5330			# The Q330 base port
+DataPort		1			# Which Q330 dataport to use
+SerialNumber		0x010000069a412636	# The serial number of the Q330
+AuthCode		0x0			# The Q330 auth code
+
+## The following items may help traversing some firewalls
+
+SourcePortControl	9999	# UDP port to use as a source, when talking to
+				# the Q330's control port
+
+SourcePortData		9998	# UDP port to use as a source when talking to
+				# the Q330's data port
+
+
+## The following items help control the log verbosity
+
+LogLevel	sd, rm, vb, sm 	# Comma seperated list of: 
+				# sd - Logs Q330 status on connect
+				# cr - Logs command retries
+				# rm - Pings and sends a user message
+				#      to Q330 on connect/disconnect
+				# vb - Logs messages for items like
+				#      filter delays
+				# sm - Logs 800 series messages
+				# pd - Logs all packets sent/received
+
+StatusInterval  240		# time in seconds between status updates
+
+
+## The following items offer some control over connections
+
+FailedRegistrationsBeforeSleep  5	# How many failed connection attempts
+					# before we give it a break for a bit
+MinutesToSleepBeforeRetry	3	# How long should that break be?
+
+
+## Some options to control dutycycle
+## comment out to disable
+
+#Dutycycle_MaxConnectTime	10	# We'll disconnect after this many 
+					# minutes of being connected
+#Dutycycle_BufferLevel		10	# Disconnect when the Q330's buffer is
+					# this percentage filled.	
+#Dutycycle_SleepTime		30	# Wait this many minutes before 
+					# connecting again, when we've stopped
+					# for either of the above reasons
+
+## Where should we keep our continuity files?
+## These will be named: Q3302EW_cont_[dot_d_filename] and have '.bint' 
+## and '.binq' extensions.  
+ContinuityFileDirectory	/tmp
+
+
+</pre>
+<p>
+<a name="function"></a></p>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the configure commands recognized by q3302ew, grouped by the
+function they influence. Most of the commands are required, but several are optional.
+
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --></a></p>
+<!--
+          required
+-->
+<pre>
+  <table>
+    <tr>
+      <td colspan=2 align=left>
+	<a name="function">Earthworm system setup:</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#MyModuleId">MyModuleId</a>                   
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#RingName">RingName</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#HeartbeatInt">HeartbeatInt</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td colspan=2 align=left>
+	<BR><BR>Output Control:
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#LogFile">LogFile</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#LogLevel">LogLevel</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#StatusInterval">StatusInterval</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td colspan=2 align=left>
+	<BR><BR>Communications setup:
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#IPAddress">IPAddress</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#BasePort">BasePort</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#SerialNumber">SerialNumber</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#AuthCode">AuthCode</a>
+      </td>
+      <td>required</td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#SourcePortControl">SourcePortControl</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#SourcePortData">SourcePortData</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#FailedRegistrationsBeforeSleep">FailedRegistrationsBeforeSleep</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#MinutesToSleepBeforeRetry">MinutesToSleepBeforeRetry</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#Dutycycle_MaxConnectTime">Dutycycle_MaxConnectTime</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#Dutycycle_BufferLevel">Dutycycle_BufferLevel</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#Dutycycle_SleepTime">Dutycycle_SleepTime</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan=2 align=left>
+	<BR><BR>Misc:
+      </td>
+    </tr>
+    <tr>
+      <td>
+	<a href="#ContinuityFileDirectory">ContinuityFileDirectory</a>
+      </td>
+      <td>
+	Required
+      </td>
+    </tr>
+
+  </table>
+
+
+</pre>
+<a name="alphabet">
+</a>
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+
+<!--
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="IPAddress"><b>IPAddress <font color="red">addr</font></b></a>
+</code>
+<blockquote>
+  This is the UDP address, in numeric dotted notation, of the Q330 to be accessed.  
+  On most systems, this may be a hostname as well.<br>
+  
+  <pre>
+    Default: none, required option
+    Example: IPAddress 192.168.1.100
+  </pre>
+</blockquote>
+-->
+
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. Default values and example commands are
+listed after each command description.
+</a></p>
+
+<hr style="width: 100%; height: 2px;">
+<pre><a name="AuthCode"><b>AuthCode <font color="red">auth</font><br></b></a></pre>
+<div style="margin-left: 40px;"><b>&nbsp;</b><br>
+The authcode is the authorization password to the Q330 if used. If not
+used, this should be set to the hex value 0x0.<br>
+<pre>Default: required field<br>Example: authcode 0x0<br></pre>
+</div>
+
+
+<hr style="width: 100%; height: 2px;">
+<pre><a name="BasePort"></a><span style="font-weight: bold;">BasePort <span
+ style="color: rgb(255, 0, 0);">port<br></span></span><span
+ style="font-weight: bold;"><span style="color: rgb(255, 0, 0);"></span></span></pre>
+<div style="margin-left: 40px;">This is the base UDP port of the Q330
+to be accessed (typically 5330).<br>
+<pre>baseport 5330<br></pre>
+</div>
+<br>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="ContinuityFileDirectory"><b>ContinuityFileDirectory <font color="red">path</font></b></a>
+</code>
+<blockquote>
+  This defines where continuity files should be written.  This helps the system re-establish
+  data continuity after restarts etc...<P>
+  These files will be written to the current working directory of the Q3302EW process unless
+  otherwise configured here.
+  
+  <pre>
+    Default: the current working directory of the q3302ew process
+    Example: ContinuityFileDirectory /tmp
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="DataPort"><b>IPAddress <font color="red">dpnum</font></b></a>
+</code>
+<blockquote>
+  This is the Q330 dataport to be accessed.  Valid values are 1, 2, 3, 4
+  <pre>
+    Default: none, required option
+    Example: DataPort 1
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="Dutycycle_BufferLevel"><b>Dutycycle_BufferLevel <font color="red">pcnt</font></b></a>
+</code>
+<blockquote>
+  When the Q330's buffer level is down to <font color="red">pcnt</font> percent filled, disconnect
+  and wait for the number of minutes configured in <a href="#Dutycycle_SleepTime">Dutycycle_SleepTime</a>
+  before reconnecting and drawing the buffer back down to <font color="red">pcnt</font> again.
+  <P>
+  Comment out to disable.
+  <pre>
+    Default: none
+    Example: Dutycycle_BufferLevel 10
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="Dutycycle_MaxConnectTime"><b>Dutycycle_MaxConnectTime <font color="red">minutes</font></b></a>
+</code>
+<blockquote>
+  After retrieving data from the Q330 for this many minutes, disconnect and wait the number of minutes
+  configured in <a href="#Dutycycle_SleepTime">Dutycycle_SleepTime</a> before reconnecting for and
+  retrieving data from the Q330 for this many minutes again.
+  <P>
+  Comment out to disable.
+  <pre>
+    Default: none
+    Example: Dutycycle_MaxConnectTime 10
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="Dutycycle_SleepTime"><b>Dutycycle_SleepTime <font color="red">minutes</font></b></a>
+</code>
+<blockquote>
+  When data acquisition has been stopped as a result of 
+  <a href="#Dutycycle_MaxConnectTime">Dutycycle_MaxConnectTime</a> or 
+  <a href="#Dutycycle_BufferLevel">Dutycycle_BufferLevel</a>, sleep this many minutes before 
+  reconnecting again.
+  <P>
+  Comment out to disable.
+  <pre>
+    Default: none
+    Example: Dutycycle_SleepTime 30
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="FailedRegistrationsBeforeSleep"><b>FailedRegistrationsBeforeSleep <font color="red">num</font></b></a>
+</code>
+<blockquote>
+  Defines the number of failed registration attempts that should be made before sleeping for a period of time.
+  After this number of failed attempts, we'll sleep for the number of minutes configured in 
+  <a href="#MinutesToSleepBeforeRetry">MinutesToSleepBeforeRetry</a>
+  <pre>
+    Default: none, required option
+    Example: FailedRegistrationsBeforeSleep 5
+  </pre>
+</blockquote>
+
+
+<hr style="width: 100%; height: 2px;">
+<pre><span style="font-weight: bold;"><span
+ style="color: rgb(255, 0, 0);"></span></span></pre>
+<pre><a name="HeartbeatInt"><b>HeartbeatInt <font color="red">beat</font>			</b></a><br></pre>
+<div style="margin-left: 40px;">This is the heartbeat interval in
+seconds.<br>
+</div>
+
+<hr style="width: 100%; height: 2px;">
+<pre><a name="IPAddress"><b>IPAddress <font color="red">addr</font>				</b>		<br></a></pre>
+<blockquote>
+This is the IP address of the Q330 to be accessed.  
+On most systems, this may be a hostname as well.<br>
+  <pre>Default:  none, required option
+      <br>IPAddress 192.168.1.100<br>
+  </pre>
+</blockquote>
+
+
+<hr style="width: 100%; height: 2px;">
+<pre><br></pre>
+<pre><a name="LogFile"><b>LogFile <font color="red">switch</font>				</b>	<br></a></pre>
+<blockquote>
+  <pre>  </pre>
+</blockquote>
+<blockquote>Sets the on-off switch for writing a log file to disk. If <font
+ color="red">switch</font>
+is 0, no log file will be written. If <font color="red">switch</font>
+is 1, q3302ew will write a daily log file(s) called
+q3302ewxx.log_yymmdd where xx is q3302ew's config filename&nbsp; and
+yymmdd is the current UTC date (ex: 960123) on the system clock. The
+file(s) will be written in the EW_LOG directory (environment variable).
+  <pre><!-- Default and example go here   --><br>Default:  none<br></pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="LogLevel"><b>LogLevel <font color="red">lvls</font></b></a>
+</code>
+<blockquote>
+  Configure the level of detail that is added to the LOG channel by Q3302EW.  The LOG channel is also decoded and sent to the logging system, so this can be very useful in debugging.  "lvls" should be a comma separated list of:<BR>
+  <ul>
+    <li>sd - Logs Q330 status on connect
+    <li>cr - Logs command retries
+    <li>rm - Pings and sends a user message
+          to Q330 on connect/disconnect
+    <li>vb - Logs messages for items like
+          filter delays
+    <li>sm - Logs 800 series messages
+    <li>pd - Logs all packets sent/received
+  </ul>
+  <pre>
+    Default: none, required option
+    Example: LogLevel sd, rm, vb, sm
+  </pre>
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="MinutesToSleepBeforeRetry"><b>MinutesToSleepBeforeRetry <font color="red">num</font></b></a>
+</code>
+<blockquote>
+  After the number of failed registration attempts configured in 
+  <a href="#FailedRegistrationsBeforeSleep">FailedRegistrationsBeforeSleep</a>, Q3302EW will sleep for
+  this many minutes before trying to connect and register successfully.
+  <pre>
+    Default: none, required option
+    Example: MinutesToSleepBeforeRetry 3
+  </pre>
+
+<hr style="width: 100%; height: 2px;">
+<pre><a name="MyModuleId"><b>MyModuleId <font color="red">mod_id</font>			</b>		<br></a></pre>
+<blockquote><!-- command description goes here --> Sets the module id
+for labeling all outgoing messages. <font color="red">mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+  <pre><!-- Default and example go here   --><br>Default:  none				<br>Calnet:   MyModuleId MOD_Q2EW<br></pre>
+</blockquote>
+
+<hr>
+<pre><a name="RingName"><b>RingName <font color="red">ring</font>				</b>		<br></a></pre>
+<blockquote><!-- command description goes here --> This is the ring
+into which the waveforms and messages are sent.
+  <pre>Default:  none, required option				<br>Example: RingName WAVE_RING<br></pre>
+</blockquote>
+
+
+<hr style="width: 100%; height: 2px;">
+<pre><a name="SerialNumber"></a><span style="font-weight: bold;">SerialNumber <span
+ style="color: rgb(255, 0, 0);">num</span><br></span></pre>
+<div style="margin-left: 40px;">This is the serial number of the Q330
+to be accessed. This is needed for the authentication handshaking. This
+is a hex value and must be preceeded with an 0x.<br>
+<pre>Default: none, required option<br>Example: 0x010000069A37E501<br></pre>
+</div>
+<br>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="SourcePortControl"><b>SourcePortControl <font color="red">port</font></b></a>
+</code>
+<blockquote>
+  This option forces the source port of the control connection to the Q330 to a particular
+  value.  This may be useful to negotiate firewalls that restrict outgoing ports.  Leaving
+  this option commented out will cause the system to assign an available port, which is 
+  the recomended setting.
+  <pre>
+    Default: Use system assigned source port (typical)
+    Example: SourcePortControl 9999
+  </pre>
+
+</blockquote>
+
+<hr style="width: 100%; height: 2px;">
+<code>
+  <a name="SourcePortData"><b>SourcePortData <font color="red">port</font></b></a>
+</code>
+<blockquote>
+  This option forces the source port of the data connection to the Q330 to a particular
+  value.  This may be useful to negotiate firewalls that restrict outgoing ports.  Leaving
+  this option commented out will cause the system to assign an available port, which is 
+  the recomended setting.
+  <pre>
+    Default: Use system assigned source port (typical)
+    Example: SourcePortData 9998
+  </pre>
+</blockquote>
+
+
+<hr style="width: 100%; height: 2px;">
+<pre style="font-weight: bold;"><a name="StatusInterval"></a>StatusInterval <span
+ style="color: rgb(255, 0, 0);">secs</span></pre>
+<div style="margin-left: 40px;">This is the frequency, in seconds, to
+display status checkpoints in the logfile<br>
+</div>
+<br>
+<pre style="margin-left: 40px;">Default: none, this is required <br>Example: StatusInterval 120</pre>
+<div style="margin-left: 40px;"></div>
+<pre><span style="font-weight: bold;"></span><span
+ style="font-weight: bold;"></span></pre>
+
+
+
+
+
+
+
+
+<hr style="width: 100%; height: 2px;">
+
+<pre><span style="font-weight: bold;"></span><span
+ style="font-weight: bold;"></span></pre>
+<pre><br></pre>
+
+
+<blockquote></blockquote>
+<h2><a name="descriptor">4. DESCRIPTOR FILE EXAMPLE</a></h2>
+<p>
+Here is a copy of the q3302ew.desc file as implemented.&nbsp;
+</p>
+<pre>
+modName  q3302ew
+modId    MOD_Q3302EW
+instId   INST_UNKNOWN
+
+restartMe	# restart 
+
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 20  page: 0  mail: 99
+</pre>
+<center><a name="descriptor"> </a><a href="../modules.html">Module
+Index</a> | <a href="../ovr/q3302ew_ovr.html">q3302ew Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>The URL of this page is <b>[]</b><br>
+Contact: <b>support@isti.com</b><br>
+</address>
+</body>
+</html>

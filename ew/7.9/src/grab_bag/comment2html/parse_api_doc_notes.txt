@@ -1,0 +1,36 @@
+
+
+
+
+
+
+take a source file
+  read contents in to structs
+  write structs to disk Comments file
+end
+
+
+take a source file and Comments file
+  read Comments file into structs
+  read source file into structs, updating
+    existing stuff from Comments file
+  write stuff to disk Comments file
+end
+
+
+take a source file
+  read contents into structs
+  write struct to stdout in html form
+end
+
+
+
+take a Comments file and a template file
+   read Comments file and build structs
+   read template file
+   write template file with html comments filing in special
+    sections based on template layout.
+end
+
+
+   

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: pick_ew overview</title>
+</head>
+<body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Modules:<br>
+Pick_ew Overview</h1>
+<i>(last revised 26 May 2006)</i></center>
+<p>
+This is the Earthworm picker. Pick_ew gets real-time data in the form
+of demultiplexed Earthworm waveform messages (TYPE_TRACEBUF messages).
+The program picks each channel independently, and produces pick
+messages, which are sent to an Earthworm transport ring. Pick messages
+are produced within two seconds of the pick time. Pick_ew also measures
+the length of the waveform coda following a pick and coda-length
+messages are also sent to a transport ring. Coda lengths are used by
+the "eqproc" program to assign a coda magnitude to an event. Pick_ew
+makes two types of coda measurements: The picker reports a
+"normal" coda if the amplitude decays to "cutoff" in less than 144
+seconds after the P-wave arrival. If the coda does not decay to
+"cutoff" within 144 seconds, the picker times out, reporting the
+observed amplitude and a "truncated" coda duration of 144 seconds. For
+traces with high pre-event noise levels, the picker reports a negative
+or "noisy" coda duration. In addition to the duration, the picker
+reports the average absolute amplitudes of up to six pre-determined
+2-second trace windows. Pick_ew does not start searching for new picks
+until the coda calculation is complete.<br>
+</p>
+<p>The pick is released by pick_ew within 3 sec (or whatever the
+MinCodaTerm value is, most default to 3 seconds), but it doesn't go
+back
+to looking for new picks until it reaches the coda termination
+point.&nbsp;
+Pick_ew cannot/will not produce any new picks between the pick time and
+the
+coda termination time for the given channel that is in coda
+determination mode.
+<br>
+<br>
+If the coda termination is set to a very small value, that means&nbsp;
+the measured coda duration will be longer, and if a new event happens
+to occur to boost the signal again during this time, pick_ew assumes
+the energy belongs to the original pick and the coda gets
+extended.&nbsp;
+The longest that pick_ew will sit waiting for the signal to reach the
+coda termination value is 144 sec, after which the picker releases
+the&nbsp;
+coda message with 6 time/amplitude pairs and leaves it to eqcoda to
+extrapolate the duration time.
+<br>
+</p>
+<p>If the data has time gaps, pick_ew can be set up, using
+configuration parameters, to either interpolate through the gaps or
+restart itself. For time gaps up to several samples long, it is
+probably best to interpolate. For longer gaps, it is better to restart.
+The drawback to interpolating is that the data is somewhat corrupted.
+The drawback to restarting is that the picker will not start picking
+again for about one second after a restart.
+</p>
+<p>Picks times are calculated using an algorithm developed by Rex
+Allen, in the late 1970's and early 1980's. The algorithm works well
+for short-period data (frequencies &gt; 1 Hz) and has been tested
+extensively using data from the Northern California Seismic Network.
+The program tends to miss picks from teleseismic and volcanic events. S
+waves are occasionally picked, but most of the picks are first-arrival
+P waves. If the program is used in regions other than Northern
+California, pick parameters may need to be modified, or another
+algorithm may be needed. For more information about the picking
+algorithm used by pick_ew, see the following articles:
+</p>
+<p>Allen, R.V., Automatic Earthquake Recognition and Timing From Single
+Traces, Bull. Seism. Soc. Am. 68, Oct 1978, pp. 1521-1532.
+</p>
+<p>Allen, R.V., Automatic Phase Pickers: Their Present Use and Future
+Prospects, Bull. Seism. Soc. Am. 72, Oct 1982, pp. S225-S242.
+</p>
+<p>In addition, Jim Pechmann of the University of Utah has run
+extensive tests of the
+earthworm picker. He has written up some
+<a href="picker_tune.html">suggested picker parameter changes</a> for
+use with analog and broadband data streams.</p>
+<p></p>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/pick_ew_cmd.html">Pick_ew Commands</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr><b></b>
+<address>Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+</address>
+</body>
+</html>

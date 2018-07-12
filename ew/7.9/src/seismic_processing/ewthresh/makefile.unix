@@ -1,0 +1,30 @@
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lposix4 -lthread  -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I.
+
+SRCS = ewthresh.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(L)/libew_mt.a $(L)/ws_clientII.o \
+          $(L)/socket_ew_common.o $(L)/socket_ew.o $(L)/swap.o 
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ewthresh
+
+ewthresh: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ewthresh $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ewthresh $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ewthresh
+
+clean_bin:
+	rm -f $(BINDIR)/ewthresh

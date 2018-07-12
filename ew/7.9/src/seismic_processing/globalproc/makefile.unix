@@ -1,0 +1,44 @@
+# makefile for globalproc
+LINUX_FLAGS = "" #No linux build
+SOLARIS_FLAGS = -lm -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+OL = .
+OLSRC = $(EW_HOME)/$(EW_VERSION)/src/seismic_processing/geqproc
+
+OBJ = globalproc.o \
+      $(L)/geo_to_km.o \
+      $(L)/libew_mt.a \
+      $(L)/swap.o \
+      $(L)/dirops_ew.o \
+      $(L)/site.o \
+      $(L)/tlay.o \
+      $(L)/brent.o \
+      $(L)/mnbrak.o \
+      $(L)/global_amp_rw.o \
+      $(L)/global_pick_rw.o \
+      $(L)/global_loc_rw.o \
+      $(L)/global_msg.o \
+      $(L)/watchdog_client.o \
+      $(OL)/init_ewevent.o
+
+
+globalproc: $(OBJ); \
+        $(CC) $(CFLAGS) -o $(B)/globalproc $(OBJ) $(L)/libew.a $(SPECIFIC_FLAGS)
+
+$(OL)/init_ewevent.o:
+	$(CC) -c -g $(CFLAGS) -o $(OL)/init_ewevent.o $(OLSRC)/init_ewevent.c
+
+lint:
+	lint globalproc.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~  $(OL)/init_ewevent.o 
+
+clean_bin:
+	rm -f $B/globalproc*

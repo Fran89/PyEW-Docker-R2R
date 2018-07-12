@@ -1,0 +1,101 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Heli_ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+
+0000">
+<CENTER><H1> <BR>Heli_ew Configuration File</H1>
+<I>(last revised August 10, 1999)</I></CENTER>
+<PRE>
+#
+# This is the heli_ew parameter file. This module gets data gulps
+# from the waveserver(s), and creates helicorder displays.
+
+
+#  Basic Earthworm setup:
+#
+LogSwitch    1              # 0 to completely turn off disk log file
+MyModuleId   MOD_HELI       # module id for this instance of report
+RingName     HYPO_RING      # ring to get input from
+HeartBeatInt 15             # seconds between heartbeats
+
+# List the message logos to grab from transport ring
+#             Installation     Module        Message Type
+GetSumFrom    INST_WILDCARD    MOD_EQPROC    TYPE_HINVARC
+
+wsTimeout 12 # time limit (secs) for any one interaction with a wave server.
+
+# List of wave servers (ip port comment) to contact to retrieve trace data.
+ WaveServer aaa.bbb.ddd.eee 16022      "wsv2 - ad1"
+ WaveServer aaa.bbb.ddd.fff 16023      "wsv2 - ad2"
+
+# List of target computers/directories to place output.
+#       UserName  IP Address            Directory
+Target myname@webserver1:/home/www/waveforms/helicorder/
+Target myname@webserver2:/home/www/waveforms/helicorder/
+
+# Filename prefix on target computer.  This is useful for identifying
+# files for automated deletion via crontab.
+Prefix nc
+
+# Directory in which to store the temporary .gif, .link and .html files.
+GifDir   /home/bigfiles/GIFs/helicorder/
+
+# Plot Parameters - sorry it's so complex, but that's the price of versatility
+        # The following is designed such that each SCN creates it's own
+        # helicorder display; one per day of data.
+# S                  Site
+# C                  Component
+# N                  Network
+# 04 XSize           Overall size of plot in inches
+# 05 YSize           Setting these > 100 will imply pixels
+# 06 Minutes/Line    Number of minutes per line of trace
+# 07 Gain Factor     Instrument gain in microvolt/bit.
+# 08 Scale Factor    Scale factor to dress up image.
+# 09 Plot Previous   On startup, retrieve and plot n previous hours from tank.
+# 10 Local Time Diff UTC - Local.  e.g. -7 -> PDT; -8 -> PST
+# 11 Local Time Zone Three character time zone name.
+# 12 Show UTC        UTC will be shown on one of the time axes.
+# 13 Use Local       The day page will be local day rather than UTC day.
+# 14 Mean Removal    Mean of 1st minute of each line will be removed.
+# Comment            A comment for the top of the display.
+#
+#     S    C   N  04  05  06 07   08   09  10  11   12 13 14  Comment
+
+ Plot MSL  VHZ NC 10  20  15 1.0  1.0  1   -7  PDT  1  0  1   Mammoth
+ Plot HSF  VHZ NC 10  20  15 0.5  1.0  1   -7  PDT  1  0  1   "San Juan Bautista"
+ Plot GPM  VHZ NC 10  20  15 0.5  1.0  1   -7  PDT  1  0  1   "Geysers"
+ Plot KRP  VHZ NC 10  20  15 0.25 1.0  1   -7  PDT  1  0  1   "Cape Mendocino"
+ Plot JSF  VDZ NC 10  20  15 6.8  1.0  1   -7  PDT  1  0  1   "Bay Area DST"
+ Plot JSG  VDZ NC 10  20  15 1.0  1.0  1   -7  PDT  1  0  1   "Bay Area Nano"
+
+
+    # *** Optional Commands ***
+
+ Days2Save     7    # Number of days to display on web page; default=7
+ UpdateInt    10    # Number of minutes between updates; default=2
+ RetryCount    2    # Number of attempts to get a trace from server; default=2
+ Logo    smusgs.gif # Name of logo in GifDir to be plotted on each image
+
+# We accept a command "SaveDrifts" which logs drifts to GIF directory.
+  SaveDrifts
+
+# We accept a command "Debug" which turns on a bunch of log messages
+# Debug
+# WSDebug
+</PRE>
+</PRE>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/heli_ew_ovr.html">Heli_ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+This is sac2tb, a utility for turning SAC data files into tracebuf files.
+Usage: sac2tb [-n samples] sacfile > tbuf-file
+
+Without the -n option, sac2tb defaults to 100 samples per packet.
+
+The intended use is that you run sac2tb on a bunch of SAC files for a given 
+event or time period, "cat" all the files together, and then run remux_tbuf
+to make a tankplayer file. For example, in a directory of SAC files:
+
+  foreach m (*)
+  sac2tb $m >> tbuf
+  end
+
+  remux_tbuf tb test.tnk
+
+SAC doesn't have a provision for byte-swapping, so to my knowledge, SAC files
+are only in SPARC byte-order. At least that's the assumption here. If sac2tb
+is run on an intel machine, the SAC file will be swapped into intel byte-order
+and the resulting tracebuf messages will be marked accordingly.
+
+Pete Lombard, 19 May 2001
+
+Output file can now be specified as an argument instead of as a redirect, and
+in fact must be for the Windows version.  To append to the specified file, add 
+the -a switch.  So the above example can now be accomplished by:
+
+  foreach m (*)
+  sac2tb -a $m tbuf
+  end
+
+Scott Hunter, 17 March 2010

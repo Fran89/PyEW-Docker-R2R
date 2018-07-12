@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: gcf2ew overview</TITLE>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> gcf2ew Overview</H1>
+<I>(Last Revised 27 February, 2003)</I></CENTER>
+
+<P>
+gcf2ew is a Guralp Digitizer GCF DM data feeding program for Earthworm. The
+gcf2ew module provides for three modes of data input:
+<UL>
+<LI>Lantronix MSS100 serial to IP server
+<LI>Direct Serial connection to a DM
+<LI>Network connection to <B>gcfserv</B>
+</UL>
+This version uses a Lantronix MSS100 for the reliable transmission of data over a network. 
+It also provides the capability for direct serial connection to a DM24 digitizer from
+a Solaris workstation. The direct serial connection makes full use of the BRP protocol
+that DM24's use to correct for serial line errors. In addtion, the gcfserv program can
+be used to serve data to multiple receivers using a PULL protocol that the gcf2ew
+module is configured for. V1.0.0 and later has SCNL capability for EW v7.0 and greater.
+It needs to be compiled with EW v7.0 and later, but is backward compatible to earlier
+versions of Earthworm.
+<P>
+When running with an MSS100 or gcfserv, the module provides a 
+reliable reconnection if the IP connection should drop. The network input also
+uses the Guralp BRP serial protocol to rewind the DM to request missing packets.
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="./cmd_gcf2ew.html">gcf2ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[____/gcf2ew.html]</B><BR>
+Contact: <B>support@isti.com</B><BR>
+Author: <B>Instrumental Software Technologies, Inc.</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

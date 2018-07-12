@@ -1,0 +1,27 @@
+97/05/26	Doug Neuhauser
+	Increased MAXSTATIONS from 32 to 64 in include/service.h
+	Rebuilt comserv and all clients.
+
+97/08/18	Doug Neuhauser
+	Increased the following definitions in include/cfgutil.h and
+	util/cfgutil.c
+		#define CFGWIDTH 512
+		#define SECWIDTH 256
+
+	Changed 119 to CFGWIDTH-1 in util/cfgutil.c
+
+	Added 
+		#ifdef __cplusplus
+		extern "C" {
+		#endif
+		...
+		#ifdef __cplusplus
+		}
+		#endif
+	around the function declarations in the following include files
+	to enable them to be used with C++
+		cfgutil.h
+		service.h
+		stuff.h
+		timeutil.h
+

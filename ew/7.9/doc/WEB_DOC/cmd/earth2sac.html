@@ -1,0 +1,696 @@
+<HTML>
+<HEAD>
+<!--. TH earth2sac n "18 Nov 1997"-->
+<TITLE>earth2sac.n</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1>
+earth2sac(n)
+</H1>
+<!--. SH NAME-->
+<H2>
+NAME
+</H2>
+earth2sac - save earthworm wave traces into a SAC-format data file.
+<!--. SH SYNOPSIS-->
+<H2>
+SYNOPSIS
+</H2>
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+[
+<!--. BI \-d " directory"-->
+<B>
+-d
+</B><I>
+ directory
+</I>
+] [
+<!--. BI \-e " event-file"-->
+<B>
+-e
+</B><I>
+ event-file
+</I>
+] [
+<!--. BI \-g " gap"-->
+<B>
+-g
+</B><I>
+ gap
+</I>
+] [
+<!--. BI \-n-->
+<B>
+-n
+</B>
+] [
+<!--. BI \-o " data-file"-->
+<B>
+-o
+</B><I>
+ data-file
+</I>
+] [
+<!--. BI \-s " server:port"-->
+<B>
+-s
+</B><I>
+ server:port
+</I>
+] [
+<!--. BI \-S " server-file"-->
+<B>
+-S
+</B><I>
+ server-file
+</I>
+] [
+<!--. BI \-t " server-timeout"-->
+<B>
+-t
+</B><I>
+ server-timeout
+</I>
+] [
+<!--. BI \-T " delay-time"-->
+<B>
+-T
+</B><I>
+ delay-time
+</I>
+] [
+<!--. BI \-u-->
+<B>
+-u
+</B>
+] [
+<!--. BI \-v-->
+<B>
+-v
+</B>
+] [
+<!--. BI \-h-->
+<B>
+-h
+</B>
+] [
+start-time duration ]
+<!--. SH DESCRIPTION-->
+<H2>
+DESCRIPTION
+</H2>
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+grabs seismic trace data from Earthworm wave servers and saves it in
+SAC-format data files. At a minimum,
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+needs
+a start-time and duration for trace data. It will get these two from one of
+several sources:
+<!--. I start-time-->
+<I>
+start-time
+</I>
+and
+<!--. I duration -->
+<I>
+duration
+</I>
+given as arguments; or from an event file (either a UW2-format pickfile or a
+trigger file. The event file can be given by argument as
+<!--. BI \-e " eventfile"-->
+<B>
+-e
+</B><I>
+ eventfile
+</I>
+or read from standard input. Additional
+information can be given to
+<!--. B earth2sac -->
+<B>
+earth2sac
+</B>
+through the command options, but default
+values are built in.
+<!--. LP -->
+<P>
+A single seismic trace is identified by its
+<!--. I station -->
+<I>
+station
+</I>
+name (geographical
+location within a network),
+<!--. IR component , -->
+<I>
+component
+</I>
+,
+
+and
+<!--. I network-->
+<I>
+network
+</I>
+name (e.g., UW for
+University of Washington.) This three-part identification is sometimes known
+as the
+<!--. IR SCN . -->
+<I>
+SCN
+</I>
+.
+
+The network name is a necessary part of the identification, since
+station names are not necessarily unique across different networks.
+
+<!--. LP -->
+</P>
+<P>
+<!--. SS OPTIONS-->
+<H3>
+OPTIONS
+</H3>
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-d " directory"-->
+<B>
+-d
+</B><I>
+ directory
+</I>
+Set the directory in which the SAC directory will be created. If this
+option is not given, then the SAC directory will be created in the current
+directory.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-e " event-file"-->
+<B>
+-e
+</B><I>
+ event-file
+</I>
+Specify an event file from which to get start-time and duration for saving
+data. See
+<!--. I "Event Files"-->
+<I>
+Event Files
+</I>
+below for details. The event file may be in the current directory or the full
+or relative path included in
+<!--. IR event-file .-->
+<I>
+event-file
+</I>
+.
+
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-g " gap"-->
+<B>
+-g
+</B><I>
+ gap
+</I>
+Set the gap threshold in number of sample periods. If there is a gap of more
+than this periodd of time in the trace data, then it will be filled with
+zero's.
+<!--. I Tracesave-->
+<I>
+Tracesave
+</I>
+will report on standard error when it has filled gaps in
+data. The default gap threshold is 20 sample periods. See Note below about
+possible gaps in data from sunworm.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-o " basename"-->
+<B>
+-o
+</B><I>
+ basename
+</I>
+Specify the base name of the output data files and the directory which will be
+created to hold them. Normally this name is
+determined automatically, based on the pickfile name or on the start-time. The
+output SAC directory will be created in the directory specified with the
+<!--. BI \-d " directory"-->
+<B>
+-d
+</B><I>
+ directory
+</I>
+option if it is given. Otherwise the SAC directory will be created in the
+current directory.
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+appends the station, component and network names to the
+<!--. I basename-->
+<I>
+basename
+</I>
+to form the complete filename for each SCN.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-s " server:port"-->
+<B>
+-s
+</B><I>
+ server:port
+</I>
+Specify a wave server by its name or IP address and its port number, separated by a
+colon: e.g., -s verme:16022  This flag and option may be specified more
+than once to use more than one wave server. It may be used in conjunction with
+the
+<!--. BI \-S " server-file"-->
+<B>
+-S
+</B><I>
+ server-file
+</I>
+option as well. If neither the
+<!--. I \-s -->
+<I>
+-s
+</I>
+or
+<!--. I \-S -->
+<I>
+-S
+</I>
+options are used,
+then
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+uses the default server list, currently
+/wormdata/run/params/servers. The order of servers is significant in that a
+given SCN will be retrieved from the first wave server that has it in its
+menu.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-S " server-file"-->
+<B>
+-S
+</B><I>
+ server-file
+</I>
+adds the servers listed in the file to the list from which to get wave
+traces. This option may be used in conjunction with the
+<!--. BI \-s " server:port"-->
+<B>
+-s
+</B><I>
+ server:port
+</I>
+option
+above, which see. The server file is a simple ASCII list of server names or IP address
+and port number separated by whitespace, one pair to a line. Comment lines
+have a
+<!--. B # -->
+<B>
+#
+</B>
+character in the first column of the line and are ignored.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-t " seconds"-->
+<B>
+-t
+</B><I>
+ seconds
+</I>
+Wait this many seconds for a wave server to respond. The default timeout is 30
+seconds. If a server does not respond to the initial earth2sac request in this
+time, it will be ignored.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-T " delaytime"-->
+<B>
+-T
+</B><I>
+ delaytime
+</I>
+Wait this many seconds for seismic waves to get from their origin to the
+server. Tracesave can make two requests to the server for each SCN. If the
+time interval requested is not yet held by the server at the first request,
+the server will report a wait-time after which it expects the waves to have
+arrived. After the lesser of
+<!--. I delaytime-->
+<I>
+delaytime
+</I>
+or wait-time,
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+will query the
+server a second time for the SCN. The default delaytime limit is 30 seconds.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-u-->
+<B>
+-u
+</B>
+Urgent mode; don't retry connections to servers; don't wait for waves to get
+to server. Normally, if the connection to a server fails,
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+will try once to re-establish that connection.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-v-->
+<B>
+-v
+</B>
+Verbose mode; useful for troubleshooting connection problems or filling your
+screen with gibberish.
+<!--. TP -->
+</P>
+<P>
+<!--. BI \-h-->
+<B>
+-h
+</B>
+Give the usage for
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+and exit.
+<!--. LP -->
+</P>
+<P>
+Trace start-time and duration may be given as arguments to
+<!--. BR earth2sac .-->
+<B>
+earth2sac
+</B>
+.
+
+The start-time is up to 14 digits in the format
+<!--. IR "YYMMDDHHMMSS.SS" , -->
+<I>
+YYMMDDHHMMSS.SS
+</I>
+,
+
+that is year, month, day,
+hours, minutes, seconds and hundredths of seconds. Digits on the right end of
+this format may optionally be omitted, in which case they will treated as zero.
+The duration is in seconds expressed as an
+integer. The duration must be given if the start-time is specified. If neither
+start-time and duration, nor event file are specified on the command line,
+then
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+will try to read an event file from standard input.
+
+<!--. SH Event Files-->
+<H2>
+Event Files
+</H2>
+Event files for
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+may be in one of two formats. One format is the
+UW2-format pickfile, identified by the presence of the `A' card at the start
+of the file.
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+will look for the reference time and origin time in the
+`A' card. If a `T' card is present, it will add the start-time from the `T'
+card to the reference time to get the wave trace start-time. If the `T' card
+is not present, then the wave trace start-time will be ten seconds before the
+sum of reference time and origin time. The origin time will be assumed to be
+zero if it is absent from the `A' card. The wave trace duration will be the
+`T' card duration if there is one, otherwise 120 seconds.
+<!--. LP -->
+</P>
+<P>
+The second format for event files is a trigger file. This is an ASCII file
+with one or more lines of station, channel, network, start-time and duration,
+all separated by white space. Any of station, channel or network may be the
+wildcard character
+<!--. IR * , -->
+<I>
+*
+</I>
+,
+
+which will match any SCNs which also match the
+non-wildcarded components. The start-time in the trigger file is up to 14
+digits in the format
+<!--. IR "YYMMDDHHMMSS.SS" .-->
+<I>
+YYMMDDHHMMSS.SS
+</I>
+.
+
+Missing digits on the right will be
+treated as zero's. The
+<!--. I duration-->
+<I>
+duration
+</I>
+time is in seconds expressed as an integer.
+<!--. LP -->
+</P>
+<P>
+When the data file name is not specified on the command line (with
+<!--. I \-o-->
+<I>
+-o
+</I>
+<!--. BR data-file ),-->
+<B>
+data-file
+</B>
+),
+
+then the data file name is obtained as follows.  If the pickfile
+name is known (because it was specified on the command line with the
+<!--. BI \-e " eventfile"-->
+<B>
+-e
+</B><I>
+ eventfile
+</I>
+option, then the data file name will be obtained by replacing the final letter
+in the pickfile name with
+<!--. IR W . -->
+<I>
+W
+</I>
+.
+
+If a UW2-format pickfile name is not known,
+then the data file name consists of the 11 digit start-time in format
+<!--. I YYMMDDHHMMS-->
+<I>
+YYMMDDHHMMS
+</I>
+concatenated with the letter
+<!--. IR W .-->
+<I>
+W
+</I>
+.
+
+
+<!--. SH DISCUSSION-->
+<H2>
+DISCUSSION
+</H2>
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+works be creating a list of trace requests consisting of SCNs, start-time and
+duration. A list of wave servers is also created from which a menu of
+available SCNs is obtained. Each trace request is matched against this
+menu. The first server on the list that can deliver a given SCN is requested
+to send trace data for the specified time period. The server will send back as
+many trace packets as it can to fill the request. Thus, the actual start and
+end times may extend beyond the requested period by a small interval, up to
+the duration of a trace packet (typically 1 second but possibly more.) If only
+part of the requested trace data is available, the server will send back all
+that it can. If there is a gap in the trace data within the requested
+interval, it may be filled with zero's by
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+if the gap is larger than the
+<!--. IR "gap threshold" .-->
+<I>
+gap threshold
+</I>
+.
+
+<!--. LP -->
+</P>
+<P>
+The wildcard character
+<!--. I *-->
+<I>
+*
+</I>
+may be used for one or more of
+<!--. IR station ,-->
+<I>
+station
+</I>
+,
+
+<!--. IR component ,-->
+<I>
+component
+</I>
+,
+
+and
+<!--. I network-->
+<I>
+network
+</I>
+in the trace request. The wildcard will match all the menu SCNs which also
+match the non-wildcard parts of the SCN. Currently the trace requests
+generated from UW pickfiles or from command-line arguments of start-time and
+duration consist of wildcards for
+<!--. IR station and-->
+<I>
+station
+</I>
+and
+
+<!--. I component-->
+<I>
+component
+</I>
+for the
+<!--. B UW-->
+<B>
+UW
+</B>
+<!--. IR network .-->
+<I>
+network
+</I>
+.
+
+If trace data is needed for stations in other regional networks, they should
+be specified in a custom-made
+<!--. IR "trigger file" .-->
+<I>
+trigger file
+</I>
+.
+
+<!--. LP -->
+</P>
+<P>
+As the retrieved trace data for each SCN is prepared for inclusion in the
+trace data file, the mean value of the first 1000 (approximately) samples is
+taken as the bias value, subtracted from the trace data and written to the
+channel header bias field. If a gap happens to occur within the first 1000
+samples, the mean value will include only those samples before the gap. Gaps
+in data are filled with zeros
+<!--. I after-->
+<I>
+after
+</I>
+the bias is removed.
+
+<!--. SH NOTE-->
+<H2>
+NOTE
+</H2>
+Currently the earthworm installation at University of Washington obtains most
+of its short-period trace data from the sunworm system. There is a significant
+amount of time jitter inherent in the digitizer in sunworm. The result is that
+the end-time of one trace packet (computed from its start-time, sample period
+and number of samples) and the start-time of the following packet for a given
+channel may be separated by several sample periods, or may overlap (start-time
+before computed end-time of previous packet.) The majority of the error is in
+the assigned packet times, not in the sample period. Thus, these apparent gaps
+in sample data should NOT be filled with zero's, since they are artifacts of
+the system and not real gaps. If
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+reports that short gaps (a few sample periods more than the specified or
+default
+<!--. IR "gap threshold" )-->
+<I>
+gap threshold
+</I>
+)
+
+few have been filled, these gaps should be eliminated be repeating the
+<!--. B earth2sac-->
+<B>
+earth2sac
+</B>
+command with the
+<!--. I "gap threshold"-->
+<I>
+gap threshold
+</I>
+increased slightly.
+
+<!--. SH AUTHORS-->
+<H2>
+AUTHORS
+</H2>
+Under development by Pete Lombard and the Earthworm team.
+Manual page by Pete Lombard.
+<!--. SH SEE ALSO-->
+<H2>
+SEE ALSO
+</H2>
+<!--. BR "Earthworm documentation"-->
+<B>
+Earthworm documentation
+</B>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>Pete Lombard, <A HREF="mailto:<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>">
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></A></B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>

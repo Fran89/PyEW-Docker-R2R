@@ -1,0 +1,66 @@
+From steve@geophys.washington.edu Thu Jun  8 18:29:34 2000
+Date: Thu, 8 Jun 2000 18:22:34 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: EW Community Center - comments
+
+
+A reaction to Mitch Wither's Jun 8 note:
+
+Mitch Withers raises some interesting issues, most of which I agree with.  
+However, the solution to the problems he sees is not obvious.  The original
+intent of the Earthworm Advisory Board was to help accomplish some of the
+things that Mitch sees as problems but, for what ever reasons, it has not done
+much more than set up a WEB page for documentation, a list-serve address and
+encourage the original earthworm team to generate some documentation.  These
+were all good objectives and useful accomplishments but it doesn't seem to be
+enough to result in what Mitch is hoping for.
+
+I interpret in Mitch's e-mail a desire for a better way to document and share
+what is already available and to coordinate the inclusion of new features or
+modules into the "official" release.  I agree with him that there is a great
+need but am not sure what the EW community center is or could be.  How would
+this work?  A neighborhood community center has a staff who schedule meetings,
+maintain the bulletin boards, mailing lists and newsletters, arrange for
+building maintenance and keep order when rowdy kids come to use the B-Ball
+court.  Where is such a staff for the EW Community Center?  It seems to me
+that this MUST be someone the USGS must come up with. This must be someone who
+is knowledgeable about computers, seismic data, maybe earthworm, but most
+importantly this person must understand the way community development of
+software can work.  It seems that those in the earthworm inner sanctum and/or
+their bosses are not followers of Richard Stallman or Linus Torvalds.
+
+Besides hoping that the USGS (who is that really) will come to see the value
+in having such a person the rest of us can help right now.  Mitch's number 8
+point suggests that the "earthw-list@nmt.edu" can be used more.  I agree.
+Looking at its archive (http://www.cnss.org/EWAB/earthw) I see less than 40
+entries in almost 4 years from only about a dozen different people.  A regular
+contributor to this list is Kent Lindquist who has provided several useful
+suggestions and programs in the past and who has provided the only response
+that Mitch's note so far.  So, what about the rest of you 65 subscribers to
+the earthw-list?  Lets hear some reaction.
+
+I, for one, would also like to hear some reaction to the Apr. 14 note from
+Chris Wood on a POSIX version of earthworm.  It seemed like a really good idea
+to me to support such a thing, but these seems to be no reaction from anyone.  
+Mitch calls for no splinter groups. OK, but if there is no interest in
+cooperating with someone who has spent a lot of effort to provide an upward
+compatible POSIX port (and supposedly fix a bunch of basic bugs too) why
+should those needing POSIX to run on HP or Linux or what ever not go their own
+splinter group way?  Why is the inner sanctum ignoring the whole thing?
+
+For my part I will continue to maintain the EWAB WEB pages and include any
+earthw-list messages in its archive.  I will also make any changes to the way
+these pages work, what gets included, how the documentation is updated or
+displayed, or any other suggestions that are sent my way.  HOWEVER, they
+should be sent to the earthw-list first so that everyone can see and comment
+on suggested changes.
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+
+

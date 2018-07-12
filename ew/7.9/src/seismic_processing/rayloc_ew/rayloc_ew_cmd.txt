@@ -1,0 +1,382 @@
+
+  Earthworm Modules:
+  RayLoc_ew Configuration File
+
+(last revised 13 July, 2004)
+
+On startup, rayloc_ew reads the configuration file named on the command
+line.  In the control file, lines may begin with a valid rayloc_ew
+commands (listed below).
+
+# marks the line as a comment (example: # This is a comment).
+
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). Blank lines are also permitted in
+the control file.
+
+
+    1. FUNCTIONAL COMMAND LISTING
+
+Below are the commands recognized by liss2ew, grouped by the function
+they influence. Most of the commands are required; they may be specified
+in any order in the control file.
+
+Earthworm system setup
+
+                MyModId <#MyModId>          required
+                HeartbeatInt <#HeartBeatInt>     required
+                InRing <#InRing>           required 
+                OutRing <#OutRing>          required
+                Debug <#Debug>            optional
+
+Rayloc processing parameters:
+
+
+                StaFile <#StaFile>        required
+                WorkDir <#WorkDir>        required
+
+                hold_params <#hold_params>           optional; default if absent = 0 
+                fix_depth <#fix_depth>             optional; default if absent = 1   
+                use_PKP <#use_PKP>               optional; default if absent = 1    
+                use_depth_ph <#use_depth_ph>          optional; default if absent = 1    
+                use_S_ph <#use_S_ph>              optional; default if absent = 1    
+                pick_weight_interval <#pick_weight_interval>  optional; default if absent = 0    
+                Rmin <#Rmin>                  optional; default if absent = 0   
+                Rmax <#Rmax>                  optional; default if absent = 0   
+
+                D1 <#Dx>                    optional; default if absent = 0    
+                Dmin1 <#Dminx>                 optional; default if absent = 0    
+                Dmax1 <#Dmaxx>                 optional; default if absent = 180  
+
+                D2 <#Dx>                    optional; default if absent = 0   
+                Dmin2 <#Dminx>                 optional; default if absent = 0  
+                Dmax2 <#Dmaxx>                 optional; default if absent = 180   
+
+                D3 <#Dx>                    optional; default if absent = 0   
+                Dmin3 <#Dminx>                 optional; default if absent = 0 
+                Dmax3 <#Dmaxx>                 optional; default if absent = 180   
+
+                D4 <#Dx>                    optional; default if absent = 0   
+                Dmin4 <#Dminx>                 optional; default if absent = 0   
+                Dmax4 <#Dmaxx>                 optional; default if absent = 180  
+
+                D5 <#Dx>                    optional; default if absent = 0   
+                Dmin5 <#Dminx>                 optional; default if absent = 0  
+                Dmax5 <#Dmaxx>                 optional; default if absent = 180  
+
+
+    2. ALPHABETIC COMMAND LISTING & DESCRIPTION
+
+In the following section, all configuration file commands are listed in
+alphabetical order. Listed along with the command (bold-type) are its
+arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given. Default values
+and example commands are listed after each command description.
+
+
+command arg1                                 processed by             in function
+
+------------------------------------------------------------------------
+
+D1,D2,D3,D4,D5   0 or 1    rayloc_ew_GetConfig              processing parameters
+           
+
+    Pick weight distance interval flag(s) (there are five parameters
+    1=5) (TRUE = 1/FALSE = 0) (def = 0)
+
+
+Default:  0
+Example:  D1 0
+          D2 1
+          D4 1
+
+------------------------------------------------------------------------
+
+Debug                                           rayloc_ew_GetConfig              Earthworm setup 
+           
+
+    Turns on debug logging for rayloc_ew.
+
+
+Default:  no debug logging
+Example:  Debug
+
+------------------------------------------------------------------------
+
+Dmin1, Dmin2, Dmin3, Dmin4 Dmin5 degrees                        rayloc_ew_GetConfig              processing parameters           
+
+    Lower bound of distance interval(s) in which weights are zero
+    (default 0). Note that in order to use this parameter, a
+    corresponding Dx should be turned ON.
+
+
+Default:  0
+Example:  Dmin1 0
+          Dmin2 10
+          Dmin5 20
+
+------------------------------------------------------------------------
+
+Dmax1, Dmax2, Dmax3, Dmax4, Dmax5    degrees                         rayloc_ew_GetConfig              processing parameters           
+
+    Upper bound of distance interval(s) in which weights are zero
+    (default 180). Note that in order to use this parameter, a
+    corresponding Dx should be turned ON.
+
+
+Default:  0
+Example:  Dmax1 180
+          Dmin2 170
+          Dmin5 160
+
+------------------------------------------------------------------------
+
+fix_depth       0 or 1                         rayloc_ew_GetConfig              processing parameters           
+
+    Use fixed depth in inversion: TRUE (1) or FALSE(0).
+
+
+Default:  1
+Example:  fix_depth 1
+
+------------------------------------------------------------------------
+
+HeartBeatInt nsec                         rayloc_ew_GetConfig             Earthworm Setup
+           
+
+    Defines the number of seconds, nsec between TYPE_HEARTBEAT messages
+    issued by rayloc_ew.
+
+
+Default:  none
+Example:  HeartBeatInterval 30
+
+------------------------------------------------------------------------
+
+hold_params   0 or 1                         rayloc_ew_GetConfig             processing parameters           
+
+    Hold latitude, longitude, depth, and origin time flag (default =
+    FALSE (0).
+
+Default:  0
+Example:  hold_params 1
+
+------------------------------------------------------------------------
+
+InRing ring                            rayloc_ew_GetConfig              Earthworm setup
+           
+
+    Tells rayloc_ew which shared memory region to use for input. ring is
+    a character string (valid strings are listed in earthworm.d) that
+    relates (in earthworm.d) to a unique number for the key to the
+    shared memory region.
+
+
+Default:  none
+Example:  InRing HYPO_RING
+
+------------------------------------------------------------------------
+
+MyModId mod_id                        rayloc_ew_GetConfig              Earthworm setup
+           
+
+    Sets the module id for labeling all outgoing trigger, heartbeat, and
+    error messages. mod_id is a character string (valid strings are
+    listed in earthworm.d) that relates to a unique single-byte number.
+
+
+Default:  none
+Example:  MyModuleId MOD_RAYLOC_EW
+
+------------------------------------------------------------------------
+
+OutRing ring                             rayloc_ew_GetConfig              Earthworm setup
+           
+
+    Tells rayloc_ew which shared memory region to use for output. ring
+    is a character string (valid strings are listed in earthworm.d) that
+    relates (in earthworm.d) to a unique number for the key to the
+    shared memory region.
+
+
+Default:  none
+Example:  OutRing PICK_RING
+
+
+
+------------------------------------------------------------------------
+
+pick_weight_interval 0 or 1                  rayloc_ew_GetConfig              processing parameters           
+
+    Pick weight residual interval flag (TRUE/FALSE) (default = FALSE)
+
+
+Default:  0
+Example:  pick_weight_interval   1
+
+------------------------------------------------------------------------
+
+Rmin seconds                  rayloc_ew_GetConfig              processing parameters
+
+      
+         Lower bound of residual interval in which weights can be
+non-zero (default = 0). To activate this parameter pick_weight_interval
+must be 1. 
+
+Default:  0
+Example:  Rmin 0.1
+
+------------------------------------------------------------------------
+
+Rmax seconds                  rayloc_ew_GetConfig              processing parameters           
+
+    Upper bound of residual interval in which weights can be non-zero
+    (default = 0). To activate this parameter pick_weight_interval must
+    be 1.
+
+Default:  0
+Example:  Rmax 1
+
+------------------------------------------------------------------------
+
+StaFile filename                  rayloc_ew_GetConfig              processing parameters           
+
+    File with stations information in GLASS format. Here is an example
+    of few lines
+
+AAE    9.0291N  38.7655E 2442 IU Addis Ababa, Ethiopia
+AAK   42.6390N  74.4940E 1645 II Ala-Archa, Kyrgyzstan
+AAM   42.2997N  83.6561W  249 US Ann Arbor, Michigan, USA
+ABKT  37.9303N  58.1188E  678 II Alibek (Geyokcha), Turkmenistan
+ABL   34.8508N 119.2208W 1981 NC Mount Abel, California, USA
+
+    The sample file is provided with the rayloc_ew distribution. This
+    file used to match the station names from TYPE_LOC_GLOBAL
+    with their 3D coordinates (which is not a part of the
+    TYPE_LOC_GLOBAL message).
+
+
+Default:  none
+Example:  StaFile        "/home/ilya/rayloc_work/glass_station_list.txt"
+
+------------------------------------------------------------------------
+
+use_PKP 0 or 1                  rayloc_ew_GetConfig              processing parameters           
+
+    Use or not PKP phases.
+
+
+Default:  1
+Example:  use_PKP 0
+
+------------------------------------------------------------------------
+
+use_depth_ph 0 or 1                 rayloc_ew_GetConfig              processing parameters           
+
+    Use or not depth phases.
+
+
+
+
+Default:  1
+Example:  use_depth_ph 0
+
+
+------------------------------------------------------------------------
+
+use_S_ph 0 or 1                  rayloc_ew_GetConfig             processing parameters           
+
+Use or not S phases.
+
+
+
+
+Default:  1
+Example:  use_S_ph 0
+
+------------------------------------------------------------------------
+
+WorkDir dirname                  rayloc_ew_GetConfig             processing parameters           
+
+    This is the location of the work directory for rayloc_ew. rayloc_ew
+    stores temp files in there.
+    Three model files should be placed in this directory before processing:
+    1) tau.table
+    2) ak135.hed
+    3) ak135.tbl
+
+    Those files are prebuilt and shipped with rayloc_ew distribution.
+
+
+Default:  none
+Example:  WorkDir        "/export/home/isti/model"
+
+
+------------------------------------------------------------------------
+
+
+
+    3. Sample Configuration File
+
+
+#
+#                     rayloc_ew Configuration File
+#
+MyModId        MOD_RAYLOC_EW   # This instance of rayloc_ew
+StaFile        "/home/ilya/rayloc_work/glass_station_list.txt"   # File containing station information
+WorkDir        "/home/ilya/rayloc_work"         # Directory where model and tmp files are stored
+InRing           HYPO_RING     # Transport ring to find TYPE_LOC_GLOBAL messages,
+OutRing          PICK_RING     # Transport ring to write TYPE_RAYLOC messages
+HeartbeatInt            30     # Heartbeat interval, in seconds,
+Debug                    1     # If 1, print debugging message
+#
+#
+# Parameters/flags used to control processing of rayloc
+# Default values are provided in comments and used if any
+# of the parameters in to configuration is undefined
+#
+hold_params           0    # Hold latitude, longitude, depth, and origin time flag (def = 0)
+fix_depth             1    # Fix depth (def = 1)
+use_PKP               1    # Use PKP phases (def = 1)
+use_depth_ph          1    # Use depth phases (def 1)
+use_S_ph              1    # Use S phases (def = 1)
+pick_weight_interval  0    # Pick weight residual interval flag (T/F) (def = 1)
+Rmin                  0    # Lower bound of residual interval in which weights can be non-zero (def = 0)
+Rmax                  0    # Upper bound of residual interval in which weights can be non-zero (def = 0)
+#
+D1                    0    # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin1                  0    # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax1                180    # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D2                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin2                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax2               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D3                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin3                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax3               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D4                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin4                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax4               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D5                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin5                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax5               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+
+
+
+
+------------------------------------------------------------------------
+Module Index <http://folkworm.ceri.memphis.edu/ew-doc/modules.html> |
+rayLoc_ew Overview |
+<http://www.isti.com/%7Eilya/rayloc_ew.overview.html>| 
+<http://www.isti.com/%7Eilya/rayloc_ew_cmd.html>TYPE_LOC_GLOBAL  | 
+<http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html>TYPE_RAYLOC
+<http://www.isti.com/%7Eilya/Message_Format_TYPE_RAYLOC.html>
+
+------------------------------------------------------------------------
+The URL of this page is [http://www.isti.com/~ilya/rayloc_ew_cmd.html]
+Contact: i.dricker@isti.com
+

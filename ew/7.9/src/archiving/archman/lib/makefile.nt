@@ -1,0 +1,39 @@
+#
+# Makefile for BGS Earthworm library code (NT version)
+#
+
+!include <ntwin32.mak>
+
+# list of objects for code that came from GEOLIB library
+GEOLIB_OBJS = alloc.obj chk_clk.obj copy_file.obj date_dy.obj \
+		dy_date.obj dy_in_mn.obj is_leap.obj network.obj \
+		string.obj subst_var.obj chk_num.obj diff_clk.obj \
+		add_clk.obj
+
+# list of objects for code that came from SDAS library
+#SDAS_OBJS = read_sdas_data.obj data_utils.obj
+SDAS_OBJS = 
+
+# list of objects created especially for Earthworm
+EW_OBJS = utils.obj utils_nt.obj 
+
+# flag settings
+cdebug = /Zi
+cflags = $(cflags) 
+
+# how to compile a source module
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) -D_MT $(tflags) -D_NTSDK -D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS $<
+
+# main dependencies
+OBJS = $(GEOLIB_OBJS) $(SDAS_OBJS) $(EW_OBJS)
+
+bgs.lib: $(OBJS)
+	lib -nologo -out:$@ $(OBJS)
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+

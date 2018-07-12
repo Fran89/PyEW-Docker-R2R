@@ -1,0 +1,14 @@
+ADSEND NOTES
+11/1/97
+
+adsend runs under Windows NT only.  
+
+It uses a National Instruments DAQ board (model PCI-MIO-16E-4). 
+
+To compile adsend, the National Instrument nidaq software must 
+be installed.
+
+Adsend must be single-threaded because national instruments 
+library is single-threaded.  The functions in threads.c are 
+used to defeat multi-threading.
+

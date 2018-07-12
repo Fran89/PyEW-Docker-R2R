@@ -1,0 +1,34 @@
+#
+# Makefile for ewnotify  -- Unix version
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+LIBDIR = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I.
+
+SRCS = ewnotify.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(LIBDIR)/libew_mt.a \
+          $(LIBDIR)/mem_circ_queue.o \
+          $(LIBDIR)/socket_ew_common.o $(LIBDIR)/socket_ew.o $(LIBDIR)/swap.o \
+          $(LIBDIR)/ew_spectra_io.o $(LIBDIR)/sendmail.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ewnotify
+
+ewnotify: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ewnotify $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ewnotify $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ewnotify
+
+clean_bin:
+	rm -f $(BINDIR)/ewnotify

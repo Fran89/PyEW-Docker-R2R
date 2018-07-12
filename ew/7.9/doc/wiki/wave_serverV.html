@@ -1,0 +1,866 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      wave_serverV – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/wave_serverV?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="wave_serverV.html" title="View wave_serverV">wave_serverV</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/wave_serverV?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/wave_serverV?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A06%3A25-07%3A00&amp;precision=second" title="2012-05-02T09:06:25-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:06:25</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="wave_serverV.html#EarthwormModule:wave_serverV">Earthworm Module: wave_serverV</a>
+    <ol>
+      <li>
+        <a href="wave_serverV.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="wave_serverV.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="wave_serverV.html#Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#WaveServerStartup">Wave Server Startup</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#ShuttingDownWave_serverV">Shutting Down Wave_serverV</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#HowtoMakeConfigurationChanges">How to Make Configuration Changes</a>
+            <ol>
+              <li>
+                <a href="wave_serverV.html#HowdoI:">How do I:</a>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="wave_serverV.html#Wave_serverVTools">Wave_serverV Tools</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#ProtocolNotes">Protocol Notes</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#RequestsandResponses">Requests and Responses</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#HISTORY">HISTORY</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#TROUBLESHOOTING">TROUBLESHOOTING</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="wave_serverV.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="wave_serverV.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="wave_serverV.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="wave_serverV.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:wave_serverV"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: wave_serverV</h1>
+<p>
+<strong>Contributed by: Will Kohler, Alaska Geophysical Institute; Lynn Dietz; Kent Lindquist; Alex Bittenbinder; Mac McKenzie; Eureka Young; Dave Kragness; Pete Lombard (for more details see "History" below)</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Wave_serverV provides a network-based service for trace data. It acquires Earthworm trace data messages for specified channels and maintains a disk-based circular buffer for each channel.
+</p>
+<h2 id="Details">Details</h2>
+<h3 id="Introduction">Introduction</h3>
+<p>
+This is the latest version of Wave_server as of Earthworm version v7.0. It is based on the original Wave_server. It supports the SCNL protocol and process TYPE_TRACEBUF2 messages; <strong>it is not backward compatible to SCN</strong>.
+</p>
+<p>
+Wave_serverV provides a network-based service of trace data. It acquires Earthworm trace data messages for specified channels, and maintains a disk-based circular buffer for each channel. It then offers a network service capable of supplying specified portions of trace data from specified channels. The basic features include:
+</p>
+<ul><li>Up to 10 concurrent clients can be serviced. This limit may be changed to suit the available hardware resources.
+</li></ul><ul><li>The size of the disk-based buffer is user-specified, up to 2 gigabytes per trace (approximately approximately 100 days, assuming 100 SPS, 16 bit data).
+</li></ul><ul><li>The module serves either 'sanitized' trace data in ASCII format, suitable for 'casual' purposes such as visual displays, or raw binary data containing all information (and flaws) as received from the telemetry source.
+</li></ul><ul><li>Several crash-recovery strategies are used to permit rapid restarts with minimal loss of data after catastrophic crashes, such as system errors or power loss.
+</li></ul><ul><li>Extensible client-server protocol to permit additional queries to be easily implemented.
+</li></ul><ul><li>A set of client routines are available to simplify implementing client applications.
+</li></ul><ul><li>Handles interruptions of trace data without wasting disk space. Event data from highly intermittent sources of event data will not be overwritten by long periods of quiesence.
+</li></ul><h3 id="WaveServerStartup">Wave Server Startup</h3>
+<p>
+Following is a description of the process wave_serverV goes through when it starts up. This is intended to give users an understanding of how configuration changes are implemented by wave_serverV.
+</p>
+<p>
+When wave_serverV first starts up, it reads the configuration file, and then starts a three-stage process of opening and checking tank and index files. In the first stage, it reads one of the 'tank structure' files (an *.str file) if they exist. If no tank structure files are found, wave_serverV proceeds to the second stage, below.
+</p>
+<p>
+Wave_serverV assumes that the tank structure file has the most up-to-date information about existing tank files (*.tnk) and their indexes (*.inx), especially tank file size, record size, and tank insertion position. This last crucial bit of information tells the 'starting point' in the tank. Data just behind this point is the most recent information in the tank. Data after the insertion point is the oldest and will be overwritten as new data is added to the tank in circular fashion.
+</p>
+<p>
+The server runs through the list of tanks from the structure file, verifying that each SCNL is listed in the config file. The one piece of information that wave_serverV takes from the config file in this stage is the index file size. Wave_serverV tries to open each the tank file and its index. If index files are missing or out of date, they are recreated by reading through the tank file. Depending on the amount of reconstruction needed for an index, this process may take several minutes for each tank. Note that there is no provision for checking the insertion point, read from the structure file, against the tank file.
+</p>
+<p>
+If the tank and index files are read successfully, then that tank is marked as OK. If there are errors opening these files for a tank, then one of two things may happen. If ReCreateBadTanks is set, then new (empty) tank and index files are created using the information from the tank structure file. If ReCreateBadTanks is not set, then that tank is marked as BAD for later disposition. Once this loop has been completed for all the tanks listed in the structure file, stage one is complete.
+</p>
+<p>
+For stage two of the startup sequence, wave_serverV scans the list of tanks in the config file. Any tanks that were not already found in the structure file will be created using the parameters listed in the config file. Any SCNLs added to the config file since wave_serverV was last run will be created now. If any errors are encountered creating new files here, that tank will be marked as BAD. Since the config file does not list the insertion point, any data that is in existing tank files for this SCNL will be effectively erased.
+</p>
+<p>
+For the final stage of startup, wave_serverV goes through its internal list of tanks. Any that were marked as BAD previously now come to light. If PleaseContinue is set, wave_serverV will remove that tank from its internal list. Otherwise, wave_serverV will exit now.
+</p>
+<p>
+Once this third pass is done, wave_serverV writes its internal list to the structure file and starts adding traces to their respective tanks. Each new packet of trace data causes the current index entry for that tank to be extended in time and file position. If there is a gap between the end of a tank and the new trace data (determined by GapThresh in config file), a new index entry is started. Wave_serverV periodically writes the index and structure list to disk, to save the latest information in case of wave server crashes.
+</p>
+<h3 id="ShuttingDownWave_serverV">Shutting Down Wave_serverV</h3>
+<p>
+As of Earthworm version 5.1, wave_serverV has a signal handler that allows graceful shutdowns (without having to stop all of earthworm.)
+</p>
+<p>
+<strong>WindowsNT:</strong> this shutdown mechanism can be invoked in only one way: you must give the Control-C interrupt to the console window where wave_serverV is running. <strong>DO NOT</strong> try using 'restart &lt;pid&gt;', as this will terminate wave_serverV immediately without sending a signal to it. Once wave_serverV has terminated and its console window is gone, you can start a new instance of wave_serverV by using 'restart &lt;pid&gt;' or by letting statmgr send a restart request. This last method requires that the 'restartMe' command was set in wave_serverV's .desc file.
+</p>
+<p>
+<strong>Solaris:</strong> (unix) wave_serverV can be terminated using the 'kill &lt;pid&gt;' command. To stop and immediately restart wave_serverV, you can use 'restart &lt;pid&gt;'.
+</p>
+<p>
+With earlier versions of wave_serverV (Earthworm V5.0 and earlier) the only way to shut down wave_serverV is to shut down earthworm, using the <strong>pau</strong> command or entering "quit" at the <strong>startstop</strong> window.
+</p>
+<h3 id="HowtoMakeConfigurationChanges">How to Make Configuration Changes</h3>
+<p>
+After you have been running wave_serverV for a while, you will eventually find that you need to make come configuration changes. While you can always shut down the server, delete all the tank, index, and structure files, and start with a new configuration, this is usually not necessary or desirable. Depending on what changes you need to make, existing tank files can often be preserved. Below is a description of how to change each of the tank, index and structure file parameters. <strong>These procedures depend on having PleaseContinue set to one, and ReCreateBadTanks not set.</strong> If your configuration file does not currently have these values, change the file now to include these values. When you restart wave_serverV as one of the steps below the new values for PleaseContinue and ReCreateBadTanks will take affect immediately.
+</p>
+<p>
+Be sure you understand how to <strong>restart</strong> wave_serverV. If you inadvertently shut down wave_serverV without letting it go through its normal shutdown sequence, you risk doing damage to the tank, index and structure files. In the following discussion, restart means a quick but graceful shutdown and startup of wave_serverV, using the method appropriate for your platform and wave_serverV version. When some action must be taken between wave_serverV shutdown and startup, that will be spelled out.
+</p>
+<h4 id="HowdoI:">How do I:</h4>
+<ul><li><strong>Add an SCNL (tank)?</strong> Just add a new Tank to the config file, restart wave_serverV, and the tank for the new SCNL will be created.
+</li></ul><ul><li><strong>Delete an SCNL?</strong> Delete the Tank line for that SCNL from the config file and shut down the wave_server. Delete (or move) the tank file and its associated index file(s). Then start the wave server.
+</li></ul><ul><li><strong>Change the Station/ Component/ Network of a tank?</strong> Since wave_serverV uses the Station, Component, Network, and Location (SCNL) names to uniquely identify trace data, a change to any one of these must be done by deleting the old SCNL and adding the new one. If there is useful data in the tank file for the old SCNL, you probably would want to keep the old SCNL in wave_serverV for a few days after you add the new one. Unless you have near the maximum allowed number of tank files or are running out of disk space, a tank file can be kept in wave_serverV indefinitely without having new data added to it.
+</li></ul><ul><li><strong>Change the pin number for a tank?</strong> Although pin numbers are (sometimes) recorded by wave_serverV and reported by getmenu, these numbers are not currently used by wave_serverV. So no special action is needed for wave_serverV when you change the pin number assigned to an SCNL.
+</li></ul><ul><li><strong>Change the sample rate for an SCNL?</strong> The sample rate is a critically important value that wave_serverV reads from the trace_buf messages it records. It uses this number for its conversions between time and sample number when wave_serverV responds to requests for trace data in ASCII format. So it is important not to mix trace data of different sample rates within one tank file. Usually, a change of sample rate will require a change in the component designation (such as is specified by Appendix A of the SEED manual); but this may not always be true.
+</li></ul><ul><li><strong>Change recsize (record size) of a tank?</strong> Wave_serverV considers a tank file to be made up of a sequence of records, all of them 'recsize' bytes long. One of these records holds one trace_buf message. If you need to change the records size, you must get rid of the old tank file and the information for that tank in the structure file(s). You must shut down wave_serverV, remove the tank and index file(s) for that SCNL, and then start wave_serverV. That will remove the old information from the structure file(s). To get the new tank going with the new information, you change the recsize value in the config file, and then restart wave_serverV.
+</li></ul><ul><li><strong>Change tank file size?</strong> The tank file has a moving 'starting point': as new data is added within the tank, old data is overwritten. So there is no way to extend the size of an existing tank. If you need to change the tank size, you must get rid of the old tank file and the information for that tank in the structure file(s). You must shut down wave_serverV, remove the tank and index file(s) for that SCNL, and then start wave_serverV. That will remove the old information from the structure file(s). To get the new tank going with the new information, you change the recsize value in the config file, and then restart wave_serverV.
+</li></ul><ul><li><strong>Change installation ID or module ID for a tank?</strong> The installation ID and module ID in the Tank command are used as filters to select which source module should be used for trace data. This information is stored in the tank structure file(s) for wave_serverV. There is currently no way to change this information without effectively destroying the information in the tank file. You must shut down wave_serverV, remove the tank and index file(s) for that SCNL, and then start wave_serverV. That will remove the old information from the structure file(s). To get the new tank going with the new information, you change the installation or module ID values in the config file, and then restart wave_serverV.
+</li></ul><ul><li><strong>Change index file size?</strong> The index file is always written in order, newest entry to oldest, so changing the file size is quite easy. Make the desired change in the config file and restart wave_serverV. If for some reason you are reducing the index file size, the oldest entries may get deleted. That will make any trace data to which those index entries refer inaccessible to wave_serverV. But it will not otherwise affect wave_serverV operation.
+</li></ul><ul><li><strong>Change tank file name or location?</strong> There is no way to change the name or location of an existing tank file. You must shut down wave_serverV, remove the tank and index file(s) for that SCNL, and then start wave_serverV. That will remove the old information from the structure file(s). To get the new tank going with the new information, you change the tank file name in the config file, and then restart wave_serverV.
+</li></ul><ul><li><strong>Change structure file name or location?</strong> The pathname of the structure file is recorded only in the configuration file, so changing it is possible. Make the change in the config file, shut down wave_serverV, move or rename the structure file to the desired location, and start wave_serverV. Make sure when you rename the structure file that it exactly matches the name that you give in the config file. Also note there is one command to name each of the structure files (if you are using two of them.)
+</li></ul><ul><li><strong>Change the number of index files?</strong> Changing the number of index files is simple: make the change to the config file and restart wave_serverV. If you have turned on redundant index files, new ones will be created for each tank. If you have turned off redundant index files, the second file for each tank will be ignored. But why would you want to do that?
+</li></ul><ul><li><strong>Change the number of structure files?</strong> There is no provision in wave_serverV to generate a structure file from existing tank tiles. If you need to add a redundant structure file, make the changes to the config file. This requires both setting RedundantTankStructFiles to 1, and specifying the name with !TankStructFile2. Then shut down wave_serverV, copy the existing tank structure file to the new name, and start wave_serverV.
+</li></ul><ul><li><strong>Change How Asynchronous Data is Handled?</strong> Wave_serverV can now be configured to deal with asynchronous data. Data packets that overlap in the data stream can be buffered to a database file. As data is supplied to client applications this data can be resynchronized into the stream. There are a few configuration commands that can be used to control this behavior. To turn on this processing set UsePacketSyncDb to 1. The database name defaults to TB2PACKETS.SL3DB but path and filename may be specified with the PacketSyncDbFile setting. The packet database is purged occasionally during runtime, deleting any packets older than the oldest packet in the tanks. The PurgePacketSyncDb may be used to tell wave_serverV to purge the database on startup. These settings may be modified in the configuration file followed by restarting wave_serverV.
+</li></ul><ul><li><strong>Change any other wave_serverV parameter?</strong> All other wave_serverV configuration parameters not listed above may be changed using this procedure: make the change to the config file and restart wave_serverV.
+</li></ul><h3 id="Wave_serverVTools">Wave_serverV Tools</h3>
+<p>
+Three simple utilities are available to assist with wave_serverV problems. They basicly read the tank, index, and structure files and write out their contents in human-readable form.
+</p>
+<ul><li>Inspect_tank will read a tank file, write out a summary of the contents similar to read_index, and optionally write a new index file. This can be used to generate a replacement index file off-line from wave_serverV. Usage is:
+<pre class="wiki">inspect_tank [-g gap-size] rec-size tanksize tankfile-name
+</pre></li></ul><p>
+The record size and tank file size should be exactly as they are given in the config file for that tank. If the -g option and a gap size are given they will be used to determine where gaps should be declared between trace data records. The default gap size is 1.5 sample intervals. By running inspect_tank repeatedly with different gapsize values, a profile of the gap history of the tank can be generated. Inspect_tank will prompt the user before writing a new index file; it selects the name that will not conflict with an existing index file name.
+</p>
+<ul><li>Read_index will read an index file and write out a list of the index entries (start time, end time, and tank file offset.) Usage is:
+<pre class="wiki">read_index [-g] indexfile-name
+</pre></li></ul><p>
+The optional -g flag will change the output to a list of the gaps between index entries, giving the start time and length in seconds.
+</p>
+<ul><li>Read_struct will read a tank structure file and write out its contents in a table. Usage is:
+<pre class="wiki">read_struct structurefile-name
+</pre></li></ul><h3 id="ProtocolNotes">Protocol Notes</h3>
+<ul><li>The server is synchronous, in the sense that it receives a request, issues the corresponding reply, and then processes the next request. Since there may be several server threads, more than one client can be connected and requesting data at one time. The &lt;request id&gt; was implemented to assist asynchronous clients, such as clients which are so structured that the code issuing the requests is tightly linked to the code processing the requests, and thus has trouble remembering which reply goes with which request. It is generated by the client, and is simply echoed by the server. The request id is echoed as a fixed length 12 character string, null padded on the right as required.
+</li></ul><ul><li>A client establishes a connection to a wave server by requesting a TCP connection on an agreed-upon address and port number. The client may issue as many requests as desired once the connection is made. The client may close the connection at any time to terminate the interaction.
+</li></ul><ul><li>&lt;s&gt;&lt;c&gt;&lt;n&gt; is short-hand for site code, channel code, network id, and location code. The format is four space-separated ASCII strings.
+</li></ul><ul><li>&lt;flags&gt; is currently used by the server to indicate special conditions. Currently three flags are used, but additional flags can be added as needed. Formally, it is:
+</li></ul><p>
+&lt;flags&gt;:: F | F&lt;letter&gt;...&lt;letter&gt;
+</p>
+<p>
+That is, it consists of the letter F followed by zero or more letters. A space terminates the &lt;flags&gt;. The bare letter F by itself means that the requested data was returned; there may be gaps in the data but it is up to the client to detect those. Currently "FR", "FL", and "FG" are implemented to indicate that the request totally missed the tank. "FL" means that the requested interval was before anything in the tank; "FR" means the requested interval was after anything in the tank. "FG" is used to indicate that the requested interval fell wholy within a gap in the tank.
+</p>
+<ul><li>&lt;datatype&gt; is a two character code ala CSS. Currently, only i2, i4, s2, and s4 are implemented. i means Intel byte order; s means Sparc byte order; 2 and 4 meaning two- four-byte signed integer.
+</li></ul><ul><li>All times are given as ASCII representations of floating point seconds since 1970.
+</li></ul><ul><li>Currently most of the following reqeusts and replies are handled by the ws_clientII routines that are included in the libsrc part of the Earthworm source tree.
+</li></ul><h3 id="RequestsandResponses">Requests and Responses</h3>
+<p>
+<strong>MENU: &lt;request id&gt;</strong>
+</p>
+<p>
+This request is used by a client to learn what the server 'knows'. The reply contains the list of channels being served, and the time interval available for each channel. The available time interval is as of the time of the reply. The client is responsible for tracking the time delays betweeen the MENU reply and any subsequent data requests. &lt;request id&gt; is an arbitrary ASCII string of 12 characters or less (see above). The reply is terminated by the ASCII "newline" character:
+&lt;request id&gt;        pin# &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt; . . . . . pin# &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt; \n
+</p>
+<p>
+<strong>MENUPIN: &lt;request id&gt; &lt;pin#&gt;</strong>
+</p>
+<p>
+As above, but returns the information only for specified pin number:
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt; &lt;datatype&gt; &lt;\n&gt;
+</p>
+<p>
+<strong>MENUSCNL: &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;</strong>
+</p>
+<p>
+As above, but returns the information for specified &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; name:
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt; &lt;datatype&gt; &lt;\n&gt;
+</p>
+<p>
+<strong>GETPIN: &lt;request id&gt; &lt;pin#&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;fill-value&gt;</strong>
+</p>
+<p>
+Returns the trace data for the specified &lt;pin#&gt; and requested time interval. Any data gaps within the interval are filled with &lt;fill-value&gt;. Only internal gaps will be filled. No fill will be provided for any requested data which is either before or after the range of the available period (as stated in the MENU reply). The reply data is represented in ASCII as blank-delimited signed integers.
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt; &lt;starttime&gt; &lt;sampling rate&gt;
+</p>
+<p>
+sample(1) sample(2)... sample(nsamples) &lt;\n&gt; {the samples are ASCII}
+</p>
+<p>
+If the requested time is older than anything in the tank, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt; \n
+</p>
+<p>
+For the case when the requested interval is younger than anything in the tank, the reply is
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FR &lt;datatype&gt; &lt;youngest time in tank&gt; &lt;sampling rate&gt; \n
+</p>
+<p>
+<strong>GETSCN: &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;fill-value&gt;</strong>
+</p>
+<p>
+A above, but for specified scnl name.
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt; &lt;starttime&gt; &lt;sampling-rate&gt;
+</p>
+<p>
+sample(1) sample(2)... sample(nsamples) &lt;\n&gt;
+</p>
+<p>
+<strong>GETSCNLRAW: &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt;</strong>
+</p>
+<p>
+As above, but returns the trace data in the form in which it was circulating within the system. The original trace data ("TYPE_TRACEBUF2" messages) spanning the requested period will be returned in binary form. Only whole trace data messages will be supplied, so that the actual &lt;starttime&gt; may be older than requested, and the &lt;endtime&gt; may be younger than requested. The initial part of the reply is part ASCII as above, terminated by a "\n", following that are the binary "TYPE_TRACEBUF2" messages. The reply is terminated when the stated number of binary bytes have been sent:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;bytes of binary data to follow&gt; \n        &lt;trace_buf msg&gt; ... &lt;trace_buf msg&gt;
+</p>
+<p>
+If the requested time interval is older than anything in the tank, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt; &lt;oldest time in tank&gt; \n
+</p>
+<p>
+If the requested time interval is older than anything in the tank, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FR &lt;datatype&gt; &lt;youngest time in tank&gt; \n
+</p>
+<p>
+For the case when the requested interval falls completely within a data gap, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FG &lt;datatype&gt; \n
+</p>
+<h3 id="HISTORY">HISTORY</h3>
+<p>
+The original Wave_server module was written by Will Kohler in a rather spectacularly short time: We came in on a Monday to find Will comatose, all waste cans full of espresso cups, and a working wave server. The motivation was to support the effort with the Alaska Geophysical Institute to integrate Earthworm with DataScope and to provide a playback facility for testing real-time algorithms. Lynn Dietz then proceeded to add numerous enhancements. It stores all trace data messages received, and servers all trace data received during a specified time interval. It can thus be used to recreate the the pattern of trace data messages inside an Earthworm system during a specified period of time. This has proven to be valuable for testing and debugging, and this module still exists as "wave_server".
+Kent Lindquist then produced an enhanced version, including the idea of segmenting the tank into one partition for each trace. Since then, several authors were involved in wave_server development: Alex Bittenbinder wrote the main thread; Mac McKenzie wrote the parser of the client thread (server_thread.c); Eureka Young wrote the server routines; Dave Kragness pretty much re-wrote the main thread while implementing crash-recovery, and Pete Lombard produced the suite of associated client routines.
+</p>
+<h3 id="TROUBLESHOOTING">TROUBLESHOOTING</h3>
+<p>
+From Lynn Dietz 8/07: The waveserver messages "Circular queue lapped : 3456 messages lost." mean that waveserver is not writing data to its tanks fast enough. This is an obvious source of gaps in your waveserver tanks. [To fix this you] can try increasing "InputQueueLen". Also, 270 channels is a lot for one waveserver process to handle. We usually try to limit each waveserver process to ~100 channels on one disk dedicated to that process.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, wave_serverV reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm wave_serverV module. In the control file, lines may begin with a valid wave_serverV command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by wave_serverV, grouped by the function they influence. Some of the commands are required, as noted. They may be specified in any order in the control file.
+</p>
+<pre class="wiki">   Earthworm system setup:
+                MyModuleId                required
+                RingName                required
+                LogFile                 required
+                HeartBeatInt            required
+
+        Wave Server Required Commands:
+                ServerIpAdr
+                ServerPort
+                Tank
+                GapThresh
+                IndexUpdate
+                TankStructUpdate
+                InputQueueLen
+                TankStructFile
+                SocketTimeout
+
+        Wave Server Optional Commands:
+        	AbortOnSingleTankFailure
+                ClientTimeout
+                RedundantTankStructFiles
+                RedundantIndexFiles
+                TankStructFile2
+                MaxMsgSize
+                PleaseContinue
+                ReCreateBadTanks
+                SecondsBetweenQueueErrorReports
+                MaxServerThreads
+                QueueReportInterval
+                Debug
+                SocketDebug
+                UsePacketSyncDb
+                PacketSyncDbFile
+                PurgePacketSyncDb
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>AbortOnSingleTankFailure [M]</strong>
+</p>
+<p>
+Set to 0 to have wave_server continue even if there is a fatal error on a tank during normal processing. If this flag is not set to 0, wave_server will die if any type of IO error occurs on any tank. If set to 1 wave_server will not exit unless there is a server wide error.
+</p>
+<pre class="wiki">Default:  none
+Example:  AbortOnSingleTankFailure 0
+</pre><p>
+<strong>ClientTimeout [M]</strong>
+</p>
+<p>
+Sets the timeout of M milliseconds for response from a client. If there are no idle server threads (set by MaxServerThreads), the server manager will disconnect clients and kill server threads that have not heard anything from their client in this period. Comment out or set to -1 if you don't want to kill threads of silent clients.
+</p>
+<pre class="wiki">Default:  -1 (client timeout disabled)
+Example:  ClientTimeout 60000
+</pre><p>
+<strong>Debug [n]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Sets the wave_serverV debug level to n. Level zero gives no debugging output; level one turns on debugging. Due to the large number of transactions that a wave server typically handles, very large amounts of debugging output may be produced.
+</p>
+<pre class="wiki">Default:  0 (no debugging)
+Example:  Debug 1
+</pre><p>
+<strong>GapThresh [G]</strong>
+</p>
+<p>
+Sets the gap threshold to G sample intervals. Trace data packets are timestamped with a start time and a stop time, the times of the first and last samples in that packet, respectively. Thus, the expected gap between end time of one packet and the start time of the next packet is one sample interval. Some data sources, such as older digitizers, produce data with slightly larger or smaller intervals between them. The gap threshold is intended to provide a means of detecting missing packets, without falsely declaring a missing packet because of sloppy timestamps. The preferred value for this gap threshold is 1.5. Set larger values only if you have a sloppy data source. It is not clear how wave_serverV should handle intervals of much more than one sample interval between packets if these are not caused by missing packets.
+</p>
+<pre class="wiki">Default:  none
+Example:  GapThresh 1.5
+</pre><p>
+<strong>HeartBeatInt [nsec]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Defines the number of seconds, nsec between TYPE_HEARTBEAT messages issued by wave_serverV.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartBeatInt 30
+</pre><p>
+<strong>IndexUpdate [U]</strong>
+</p>
+<p>
+Defines the interval in seconds U between which the index files are written to disk. Decreasing this number will keep the index file closer to the conditions in the tank file, but will increase disk activity. Each index file update involves opening the file, writing the new index, and closing the file. If RedundantIndexFiles are being used, then the update is alternated between the two index files for each tank.
+</p>
+<pre class="wiki">Default:  none
+Example:  IndexUpdate 10
+</pre><p>
+<strong>InputQueueLen [M]</strong>
+</p>
+<p>
+Sets the size of the input queue to M messages. Trace_buf messages are buffered in a queue when they are pulled off of an earthworm message ring. They are removed from the queue when the main thread is ready to process them. Depending on the CPU and disk speed of the machine you are using, this number should be about twice the number of tanks you are trying to serve. Slower machines may need larger queues.
+</p>
+<pre class="wiki">Default:  none
+Example:  InputQueueLen 200
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is non-zero, wave_serverV will write daily log file(s) called nnnnnxx.log_yyyymmdd where nnnnn is the name of the configuration file (with the suffix '.d' removed), xx is wave_serverV's module id (set with MyModuleId command) and yyyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile   1
+</pre><p>
+<strong>MaxMsgSize [S]</strong>
+</p>
+<p>
+Optional command to set the maximum trace_buf2 message size to S bytes. Normally, wave_serverV calculates the maximum expected message size from the record size values given in Tank commands. But if larger trace_buf2 messages are found on wave_serverV's transport ring, such as SCNL's destined for a different wave_serverV, their size must be set here. This is because wave_serverV must allocate a buffer for examining each trace_buf2 message it finds on the transport ring, and this command is the only way it knows how large to make that buffer. If trace_buf2 messages are found with a larger size than given here or in the Tank commands, wave_serverV will send an error message to statmgr. If in doubt, you can set this command to 4096, the largest trace_buf2 message allowed in earthworm.
+</p>
+<pre class="wiki">Default:  same as largest record size in Tank commands
+Example:  MaxMsgSize 1064
+</pre><p>
+<strong>MaxServerThreads [T]</strong>
+</p>
+<p>
+Sets the maximum number of server threads to T. One server thread is created for each client connected to the wave_serverV. The more server threads you allow, the more load will be placed on wave_serverV and the computer.
+</p>
+<pre class="wiki">Default:  10
+Example:  MaxServerThreads 12
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing heartbeat and error messages. mod_id is a character string (valid strings are listed in earthworm.d; maximum length is 29 characters) that relates to a unique single-byte number. In general, a different module ID is needed for each instance of wave_serverV.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_WSV_1
+</pre><p>
+<strong>PacketSyncDbFile [name]</strong>
+</p>
+<p>
+Defines the filename of the database to use for asynchronous packet buffering. The argument name may contain path information in addition to the name of the file. This setting is only valid if UsePacketSyncDb is set to 1.
+</p>
+<pre class="wiki">Default:  TB2PACKETS.SL3DB
+Example:  PacketSyndDbFile "FOO.DB"
+</pre><p>
+<strong>PleaseContinue [X]</strong>
+</p>
+<p>
+Sets the PleaseContinue flag to X. If this flag is zero and wave_serverV has errors opening and reading its tank or index files, wave_serverV will exit. If it is set to any non-zero value, wave_serverV will continue after handling those tank file errors.
+</p>
+<pre class="wiki">Default:  0 (does not continue after tank file errors)
+Example:  PleaseContinue 1
+</pre><p>
+<strong>PurgePacketSyncDb [U]</strong>
+</p>
+<p>
+Defines whether wave_serverV should purge all asynchronous trace buffer packet data on startup. If the argument U = 1 then the packet data is deleted on startup. If it is 0 then packet data is not purged on startup. Note that packet data is purged periodically during the operation of wave_serverV if UsePacketSyncDb is set to 1.
+</p>
+<pre class="wiki">Default:  0
+Example:  PurgePacketSyncDb 1
+</pre><p>
+<strong>QueueReportInterval [R]</strong>
+</p>
+<p>
+Defines the number of seconds, R between queue reports. The queue report lists the high and low queue levels for the previous interval. These reports show up in the log file and on standard error output.
+</p>
+<pre class="wiki">Default:  30
+Example:  QueueReportInterval 300
+</pre><p>
+<strong>ReCreateBadTanks [X]</strong>
+</p>
+<p>
+Sets the ReCreateBadTanks flag to X. If this flag is set, then any tanks that were listed in the tank structure file and had errors will be recreated using the parameters in the structure file. Any tanks that were listed only in the config file and had errors will not be constructed. See Wave Server Startup in the overview file for more details. It is very unlikely that setting this flag will help you. Usually it will "recreate bad tanks".
+</p>
+<pre class="wiki">Default:  0 (bad tanks are not recreated)
+Example:  ReCreateBadTanks 1
+</pre><p>
+<strong>RedundantIndexFiles [X]</strong>
+</p>
+<p>
+Sets the RedundantIndexFiles flag to X. If this flag is set, then two index files will be created for each tank file. If not set, then only one index file is created for each tank file. The index file names are based on the tank file names with "-1.inx", and if two files, "-2.inx" appended. Only a single index file is actually open for all the tanks at any given instant. We recommend that you set this flag to 1.
+</p>
+<pre class="wiki">Default:  0 (single index files for each tank)
+Example:  RedundantIndexFiles 1
+</pre><p>
+<strong>RedundantTankStructFiles [X]</strong>
+</p>
+<p>
+Sets the RedundantTankStructFiles flag to X. If this flag is set then two tank structure files will be used. If this flag is zero, then only one tank structure file will be used. The first tank structure name is given with the TankStructFile command. If two tank structure files are to be used, then you must also specify the second structure file name with the !TankStructFile2 command. Because of the importance of the tank structure file for restarting wave_serverV, it is strongly recommended that you use two tank structure files, by setting the RedundantTankStructFiles flag.
+</p>
+<pre class="wiki">Default:  0 (single tank structure file)
+Example:  RedundantTankStructFiles 1
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells wave_serverV which shared memory region to use for input and output. ring is a character string (valid strings are listed in earthworm.d; maximum length is 19 characters) that relates to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingName WAVE_RING
+</pre><p>
+<strong>SecondsBetweenQueueErrorReports [Q]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Defines the number of seconds, Q between error reports about the internal message queue. Normally when the message queue gets full, an error message would be generated for each new trace_buf2 message that was supposed to go in the queue. This could be many messages per second. To limit the number of error messages to a more reasonable frequency this parameter should be set to the desired interval. The error messages indicate the number of trace_buf2 messages that failed to enter the full queue during the last reporting interval. If you get queue full error messages very often, it means that wave_serverV, and probably your computer, is not keeping up with its assigned load.
+</p>
+<pre class="wiki">Default:  60
+Example:  SecondsBetweenQueueErrorReports 30
+</pre><p>
+<strong>ServerIpAdr [addr]</strong>
+</p>
+<p>
+Specifies the IP address, addr to which wave_serverV will listen for client connections. This must be the IP address of (one of) your computer's network interface(s), and it must be an numeric IP address, not a host or domain name.
+</p>
+<pre class="wiki">Default:  none
+Example:  ServerIpAdr 192.168.7.13
+</pre><p>
+<strong>ServerPort [nnn]</strong>
+</p>
+<p>
+Specifies the TCP port, nnn on which wave_serverV will listen for client connections. It must be a port number not used by any other service on the assigned IP address.
+</p>
+<pre class="wiki">Default:  none
+Example:  ServerPort 16021
+</pre><p>
+<strong>SocketDebug [D]</strong>
+</p>
+<p>
+Sets the socket debug level, D for earthworm's socket library functions. Level 0 turns debugging off, level one is full socket debug logging.
+</p>
+<pre class="wiki">Default:  0 (no socket debug output)
+Example:  SocketDebug 1
+</pre><p>
+<strong>SocketTimeout [m]</strong>
+</p>
+<p>
+Sets the socket timeout interval to m milliseconds. This is for calls sending responses back to the client. Values should be a few seconds, certainly less than one minute. If the timeout is exceeded, the client is disconnected and the socket is closed.
+</p>
+<pre class="wiki">Default:  none
+Example:  SocketTimeout 10000   # timeout of ten seconds
+</pre><p>
+<strong>Tank [station channel net loc recsize inst_id mod_id tanksize indexsize tankfile-name]</strong>  <br />                           Function: Required
+</p>
+<p>
+Specifies the parameters for one wave_serverV tank. This command is the heart of wave_serverV configuration. Use one Tank for each tank to be managed by this wave server, up to a maximum of 512 tanks. Computer systems limit this to a smaller value: on Unix (Solaris), the limit is about 220, based on the stdio limit of 256 open files. On WindowsNT, the limit is about 200.
+The wave trace data is selected for a Tank by the station, channel, net, and loc values (the SCNL); these names must match exactly the names found in the trace data.
+</p>
+<p>
+The amount of space alloted for each wave trace (trace_buf2) packet in the tank file is given by recsize. This value, in bytes, must be at least as large as the largest trace_buf2 packet expected for this SCNL, and must be a multiple of 4. Trace_buf packets consist of a 64-byte header, plus the trace data samples in binary format (either 2 or 4 bytes per sample.) A handy tool for seeing the size of trace_buf2 packets is the earthworm utility sniffwave. If trace_buf2 messages for this SCNL are found to be larger than recsize, they will be skipped and and error message will be sent to statmgr.
+</p>
+<p>
+To further specify which trace_buf2 packets are read by wave_serverV, you can set the inst_id and mod_id to specific values (found in earthworm_global.d in the params directory.) Trace_buf that have been produced at the earthworm installation with net_id and the module with mod_id will be selected; all others will not. Often it is more convenient to allow trace data from any installation; in that case, inst_id would be set to INST_WILDCARD. Likewise for the moduleId, using MOD_WILDCARD.
+</p>
+<p>
+The tanksize parameter sets the size of the tank in millions of bytes (ten to the sixth power, not 2 to the 20th power!). To figure out how large to make your tank files, multiply these quantities together: recsize, number of trace packets per second for this SCNL, and required duration of the tank in seconds. Be sure to allow sufficient disk space for this and all the other tank files!
+</p>
+<p>
+The size of the index file (or files if RedundantIndexFiles is set to 1) is specified as indexsize entries. Each index entry is about 20 bytes, not large. Each index entry records the start time, tank file location (offset) and endtime of a "chunk" of trace data. A new "chunk" of trace data is started whenever there is a gap larger than GapThresh sample intervals between the end time of one trace_buf2 packet and the start of the next one in the tank. So if you have lots of gaps in trace data for one SCNL (due to telemetry problems, for example) be sure to make the index files large enough. If wave_serverV runs out of index entry for an tank, it will send an error message to statmgr. Then it will overwrite the oldest index entry with new information. The result will be that the trace_data referenced by that just erased index entry will no longer be accessible from the tank file.
+</p>
+<p>
+If you find that you need to increase the size of your index files, you can do so by changing indexsize and restarting wave_serverV. Do not remove the old index files; they will be extended with new, blank entries for later use.
+</p>
+<p>
+If you have valuable old data in a tank file that has become inaccessible because of index file problems, it is possible to reconstruct the index file, using either wave_serverV or the utility inspect_tank. If you need assistance with this, ask for help from the earthworm mailing list or Earthworm Central. Naturally, your need will likely come in the heat of battle, so don't panic and delete files that might be useful.
+</p>
+<p>
+The last parameter in the Tank command is the tankfile-name; this gives the full pathname for the tank file. We recommend that you make the tank name similar to the SCNL to aid in file manipulation.
+</p>
+<pre class="wiki">Default:  none
+Example:  Tank    SEA BHZ UW --  264   INST_UW    MOD_WILDCARD       10         100         /earthworm/run/tanks/SEA_BHZ.tnk
+</pre><p>
+<strong>TankStructFile [name]</strong><br />
+Function: Required
+</p>
+<p>
+Specifies the name of the first tank structure file. This should be a full pathname, not a simple file name. This structure file name traditionally ends in "-1.str", but this is not required. The tank structure file contains configuration parameters for all existing tank files. It also contains the location in the tank file where new trace data is to be added. This data insertion point (a file offset) is updated in the tank structure file at the interval specified by TankStructUpdate.
+</p>
+<pre class="wiki">Default:  none
+Example:  TankStructFile j:\data\usgs\datafiles\p1000-1.str
+</pre><p>
+<strong>!TankStructFile2 [name]</strong>
+</p>
+<p>
+Specifies the name of the second tank structure file. This command is required if RedundantTankStructFiles is set to 1; otherwise it is ignored. This should be a full pathname, not a simple file name. This structure file name traditionally ends in "-2.str", but this is not required.
+</p>
+<pre class="wiki">Default:  none
+Example:  TankStructFile2 j:\data\usgs\datafiles\p1000-2.str
+</pre><p>
+<strong>TankStructUpdate [U]</strong><br />
+Function: Required
+</p>
+<p>
+Defines the number of seconds, U between tank structure file updates. The TANK structure is maintained in memory, and periodically written to disk. The TANK structure tracks the status of the all the tank files. Any data written to the tanks since the last time the TANK structure was written to disk is effectively lost if wave_serverV crashes. The larger the interval, the more tank data is potentially lost in a crash; the smaller the update interval the more disk I/O that is required for wave_server to operate. We recommend a structure file update interval of one second.
+</p>
+<pre class="wiki">Default:  none
+Example:  TankStructUpdate 1
+</pre><p>
+<strong>UsePacketSyncDb [U]</strong>
+</p>
+<p>
+Defines whether to buffer asynchronous trace buffer packets to a database and resynchronize them into the client streams. This feature may be turned on by specifing 1 for U. This feature is off by default. If specied the configuration parameters PacketSyncDbFile and PurgePacketSyncDb may be used to configure its behavior but are not required.
+</p>
+<pre class="wiki">Default: 0
+Example: UsePacketSyncDb 1
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+#         Wave ServerV Configuration File
+#
+#	Note:  All directories defined in this configuration file must already
+#		exit or WaveServerV will die.
+#
+MyModuleId    MOD_WAVESERVERV # wave_server's module id
+RingName      WAVE_RING        # name of transport ring to get data from
+LogFile       1                # 1=write log file to disk; 0=don't
+                               # 2=write to module log but not stderr/stdout
+HeartBeatInt  15               # seconds between heartbeats to statmgr
+ServerIPAdr   192.168.1.5      # address of machine running wave_server: geops.geophys
+ServerPort    16022            # port for receiving requests &amp; sending waves
+GapThresh     1.5              # threshhold for gap declaration
+                               # (in sampling periods)
+
+#
+
+SocketTimeout 11000  # Timeout length in MILLISECONDS for socket calls
+                     # This is for calls sending responses back to the
+                     # client. Values should be a few seconds, certainly
+                     # less than one minute.
+
+
+ClientTimeout  60000 # Optional.  Not recommended feature but it does work.
+                     # Timeout in MILLISECONDS for response from client.
+                     # Threads that have not heard anything from their client
+                     # in this period will exit.
+                     # Comment out or set to -1 if you don't want to
+                     # kill threads of silent clients.
+
+
+# Each tank file has an associated in-memory index.  On re-start, the
+# index image on disk must be updated to match the tank.  The more out
+# of date the on-disk index is, the longer it takes to rebuild.  Rebuild
+# times can be from milliseconds to minutes per tank, depending how large
+# the tank is and how old the index is.
+# Set IndexUpdate to the length in time in seconds between
+# updates to disk.  The larger the update interval, the longer
+# a crash recovery will take.  The smaller the update interval
+# the more disk I/O that is required for wave_server to operate,
+# and thus the slower it will operate, once it has reached I/O
+# saturation.
+
+IndexUpdate   10
+
+
+# Similar to an Index, each tank has TANK structure that depicts the tank.
+# The tank structure is maintained in memory, and periodically written to
+# disk.  The TANK structure tracks the status of the tank.  Any data written
+# to the tank since the last time the TANK structure was written to disk
+# is effectively lost.  TankStructUpdate is the interval in seconds that the
+# Tank Structure file on disk is updated.  The higher the interval, the more
+# the tank data is that is potentially lost in a crash, the lower the interval
+# the more the disk I/O that is required for wave_server to operate.
+
+TankStructUpdate 1
+
+# The file where TANK structures are stored
+
+TankStructFile  j:\data\usgs\datafiles\p1000-1.str
+
+# I open many files, one tracedata file for each SCNL channel to serve
+# At 500 bytes/second, 1 channel requires 41.2 megabytes per day.
+# NOTE: Record size must be multiple of 4 bytes or wave_serverV will crash
+# with data misalignment.
+# Also, record size must not be greater than MAX_TRACEBUF_SIZ, currently 4096,
+# (defined in tracebuf.h)
+#
+#           SCNL    Record       Logo                  File Size   Index Size       File Name	    New
+#          names   size  (TYPE_TRACEBUF2 only)         (megabytes) (max breaks)     (full path)      Tank
+
+Tank    GUID EAG NC -- 528   INST_MENLO    MOD_WILDCARD       1         10000        j:\data\usgs\datafiles\p1001.tnk
+Tank    IRG1 EAT NC --  528   INST_MENLO    MOD_WILDCARD       1         10000         j:\data\usgs\datafiles\p1002.tnk
+Tank    IRG2 EAT NC --  528   INST_MENLO    MOD_WILDCARD       1         10000         j:\data\usgs\datafiles\p1003.tnk
+
+
+# Advanced Options
+# YES = 1, NO = 0, NO = (default)
+
+#RedundantTankStructFiles  Set to 1 to use redundant tank struct files. (Recommended)
+RedundantTankStructFiles 1
+
+#RedundantIndexFiles  Set to 1 to use redundant tank index files. (Recommended)
+RedundantIndexFiles      1
+
+
+# Must be set if RedundantTankStructFiles = 1
+#TankStructFile2  /tmp/p1000-2.str
+TankStructFile2  j:\data\usgs\datafiles\p1000-2.str
+
+
+#InputQueueLen:  The number of messages to buffer.  Messages are buffered
+#in a queue.  They are added to the queue when they are pulled off of an
+#earthworm message ring, they are removed from the queue when the main
+#thread is ready to process them.  Depending on the CPU and disk speed
+#of the machine you are using, this number should be about twice the
+#number of tanks you are trying to serve.  Slower machines may need
+#larger queues.
+InputQueueLen 30
+
+
+###################################
+#           Other Optional Commands
+
+
+#MaxMsgSize: Optional command to tell wave_server about TRACEBUF2 messages
+# that could be larger than any going to tanks for this server. This
+# may happen if you have two wave_servers and TRACEBUF2 sources that
+# produce different size messages, e.g., ref2ew messages are 1064 bytes.
+MaxMsgSize 1064
+
+#Debug  Generates VERYVERYVERY large log files.
+#Debug 1
+
+#SocketDebug Set to 1 to get SOCKET_ew debug statements
+SocketDebug 0
+
+#PleaseContinue  Set to 1 to have wave_server continue, even if
+#  there are errors during initialization
+# PleaseContinue 1
+
+#ReCreateBadTanks Set to 1 to have bad tanks re-created from scratch.
+#ReCreateBadTanks 1
+
+#SecondsBetweenQueueErrorReports   Minimum period of time between error
+#  reports to statmgr due to the internal message queue being lapped,
+#  and thus messages being lost.  Default is 60 seconds
+#SecondsBetweenQueueErrorReports 30
+
+#MaxServerThreads  Maximum of server threads to deploy to handle client
+#  requests.  Default is 10.
+#MaxServerThreads 10
+
+#QueueReportInterval  The minimum number of seconds between
+#  reports on internal queue high and low water marks.  The default is 30.
+#QueueReportInterval 5
+
+#AbortOnSingleTankFailure  Set to 0 to have wave_server continue even
+#if there is a fatal error on a tank during normal processing.
+#if this flag is not set to 0, wave_server will die if any type of
+#IO error occurs on any tank.  If set to 1, wave_server will not exit
+#unless there is a server wide error.
+#AbortOnSingleTankFailure 1
+
+#UsePacketSyncDb Uncomment entry and set to 1 to use embedded db functionality
+# to manage asychronous trace buffer packets. Currently this is either on or off
+# for all SNCLs.
+#UsePacketSyncDb 1
+
+#PacketSyncDbFile - Specifies name of database file to use. If not specified
+# and UsePacketSyncDb == 1 then the default PCKTSYNC.SL3DB is used.
+#PacketSyncDbFile "TB2PACKETS.SL3DB"
+
+#PurgePacketSyncD Uncomment and specify one of the following to control
+# how long out of sync data is kept in the database if UsePacketSyncDb=1.
+# 1 : Purge data on startup
+# 0 : Do not purge data on startup. Obsolete data is intermittently purged
+# during the operation of wave_serverV is UsePacketSyncDb is 1.
+#PurgePacketSyncDb 1
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/wave_serverV?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

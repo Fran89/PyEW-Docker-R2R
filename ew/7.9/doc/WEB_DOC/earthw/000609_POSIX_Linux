@@ -1,0 +1,30 @@
+From: aln@ccr.jussieu.fr (Alexandre NERCESSIAN)
+Message-Id: <200006091118.e59BIxt57824@moka.ccr.jussieu.fr>
+To: earthw-list@nmt.edu
+Subject: POSIX ew
+
+I reported as soon as 19 or 20 th of april my success in installing
+the Chris Wood's port on Linux Intel machine (directly to Chris and not
+to the list). Since it seems to interrest more people I report it to
+the list now.
+
+Concerning the discussion of the last days, I can understand how difficult
+it is to keep coherency in the developpement of such a rich collection
+of codes as ew.  For ad hoc purpose, I wrote and modified several modules
+but in a way which is not "ew clean" and wich are not ready to be
+released to the communauty. Amoung the things which are of interrest for me:
+Physical parametrization of the picker (removing hard coded references
+to 100hz sampling rate).
+
+Another back end to the eqproc suite (more adequate to volcanic networks
+where the difference of altitude is of the same order as the distance
+between stations).  All that requires a lot of testing and once it works,
+it is useless without a proper documentation which is not the easiest part.
+
+Alexander Nercessian IPGP Paris France
+aln@ccr.jussieu.fr
+nerces@ipgp.jussieu.fr
+
+
+----- End Included Message -----
+

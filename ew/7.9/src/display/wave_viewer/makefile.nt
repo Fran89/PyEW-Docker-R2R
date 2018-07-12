@@ -1,0 +1,43 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 1545 2004-06-04 01:16:07Z davidk $
+#
+#    Revision history:
+#     $Log$
+#     Revision 2.10  2004/06/04 01:16:05  davidk
+#     Updated wave_viewer to include support for SCNL based Wave Servers.
+#     New version number is 2.10.
+#
+#     Revision 1.2  2003/05/06 20:48:21  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/06/01 22:24:53  davidk
+#     Initial revision
+#
+#
+#
+
+
+
+#
+#                    Nmake File For wave_viewer - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+wave_viewer:
+	copy Release\wave_viewer.exe $B\wave_viewer.exe
+
+clean: 
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\wave_viewer.exe

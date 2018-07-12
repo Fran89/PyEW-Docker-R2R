@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v6.3_to_v7.1 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v6.3_to_v7.1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v6.3_to_v7.1.html" title="View v6.3_to_v7.1">v6.3_to_v7.1</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v6.3_to_v7.1?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v6.3_to_v7.1?action=diff&amp;version=8" title="Version 8 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-17T12%3A48%3A28-08%3A00&amp;precision=second" title="2012-01-17T12:48:28-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/17/12 12:48:28</span>
+          </div>
+          <div id="wikipage"><h1 id="EarthwormMigrationGuidev6.3-v7.X">Earthworm Migration Guide v6.3 -&gt; v7.X</h1>
+<p>
+February 21, 2007
+</p>
+<p>
+This is a quick and dirty guide to what you need to know to migrate from V6.3 to V7.X in Earthworm. The biggest change in this migration is that stations are now not just identified by a 3 tuple of Station, Channel, Network, but by a 4 tuple which also includes Location code. You will hear this referred to as SCN vs SCNL. Location code is simply a 2 character "tie-breaker" for when you have multiple channels of the same type at a given station. Location codes can be any convention that the operators desire, but the location code must be limited to numbers or letters. If location codes are not being used, the operator should use dash dash as a placeholder for any configuration files "--". Refer to the SEED manual at the IRIS DMC.  Refer to the <a class="wiki" href="programmer_notes.html">programmer notes</a> for which earthworm messages changed to accomodate SCNL vs  SCN.
+</p>
+<p>
+ 
+In addition to the SCNL change, there were 2 new features added in the v7.X release that require new message types be added to the earthworm.d file. The first feature, introduced in v7.0 is the <strong>reconfigure</strong> command which requires a <strong>TYPE_RECONFIGURE</strong> message type be added in. This feature allows an operator to modify a startstop.d file with new modules or new rings, and have those changes be effected without having to stop and restart all of Earthworm. The second feature, added in v7.1, allows an operator to stop a given module using the stopmodule command. The stopmodule implementation requires that a TYPE_STOP  message be added to your earthworm.d. See the documentation on startstop for more information on how to use these new features.
+</p>
+<p>
+It is okay to run v6.3 and v7.X modules together, but if you plan on running new modules in an old configuration you will not be able to take advantage of the new features. Further, if you run new modules on the old system, you will need to bring in any new message types to your earthworm_global.d and into your earthworm.d files.
+</p>
+<h1 id="FrequentlyAskedQuestions">Frequently Asked Questions</h1>
+<p>
+<strong>1. Which modules care about SCNL vs SCN?</strong>
+</p>
+<p>
+The simple answer is any module that deals with Tracebuf, Pick, or Coda messages cares. Thus, you will need to review the documentation for each module and see how it is affected. In short, look at your data_source modules and make sure that you have decided on a SCNL scheme and get them configured first. Then work your way downstream through your processing chain. The fir and pick_ew modules are next, followed by the binder module, and ultimately hypoinverse (aka hyp2000). Note that example SCNL .d files are provided in the src dir with each module.
+</p>
+<p>
+<strong>2. Can I use v7.X modules in a v6.3 environment?</strong>
+</p>
+<p>
+Yes, you can intermix messages since all V7.X messages are new types, so old and new can reside on the same rings. However you need to take care that you rename module names so that they do not collide with old versions. It is best to  limit those running newer versions of the modules and newer messages to reside on different rings.
+</p>
+<p>
+<strong>3. Can I use my old v6.X module in a v7.0 environment?</strong>
+</p>
+<p>
+Yes, you can intermix, but realize that the v6.X module will only look for SCN message types and thus you will need to use a converter (scnl2scn) to get the SCNL data onto a separate ring in SCN format so that the v6.X module can operate.
+</p>
+<p>
+<strong>4. How can I get old messages into the new format?</strong>
+</p>
+<p>
+Easy, there are 2 converters that go forward and backward: scn2scnl and scnl2scn that will map all messages to the new or old format. They can be found in the data_exchange module directory.
+</p>
+<p>
+<strong>5. How can I import v7.X waveform data into my v6.X environment?</strong>
+</p>
+<p>
+Simply grab the v7.X module you need to use to import the data (any of the data_exchange modules or data_source modules) and make sure it is named uniquely (so that it doesn't overwrite a v6.X version) and install it on your v6.3 system in the bin directory. Also grab the scnl2scn converter from v7.X and install that. Then, update your earthworm_global.d with the new message types found in v7.X (see the earthworm_global.d from the distro). Import the data into a new ring called WAVE_RING_SCNL and then setup scnl2scn to convert the data to where you want the waveforms.
+</p>
+<p>
+<strong>6. startstop v7.X won't work with my old configuration because it complains about missing messages, what did I miss?</strong>
+</p>
+<p>
+Because new features were added into startstop, Earthworm's core module, you need to add in new message types to your old earthworm.d and earthworm_global.d files. Add in the new message types, by doing a diff on the files
+</p>
+<p>
+<strong>7. How do I deal with my old v6.X SCN wave_serverV tanks?</strong>
+</p>
+<ul><li>If you have only a small amount of data you need to move from v6.X to v7.X, you can use waveman2disk to write the section of data you need in tankplayer format, then use the tankplayer module to replay that data back into a ring. Once it's in a ring, you can convert it with scn2scnl, and then import the converted tracebufs into a v7.X wave_serverV tank. Tankplayer doesn't have a fast forward mode, so this may take some time.
+</li><li>If you have months or years worth of data in a v6.X wave_serverV tank, you may want to keep running your v6.X wave_serverV, and start a new wave_serverV recording v7.X SCNL tracebufs in parallel. Once the v7.X wave_serverV has been running long enough for you to be able to search for all the historical data you need, you can turn off your v6.X wave_serverV. Note that the wave viewer application Swarm is one of the few wave server clients that will allow accessing either SCN or SCNL packets, and therefore can talk to a v6.X or a v7.X wave_serverV server. Almost all of the earthworm modules will only deal with with SCN if they're from v6.X and SCNL if they're from v7.X. So if you do run with dual waveservers, you'll probably need two different versions of each earthworm module.
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v6.3_to_v7.1?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

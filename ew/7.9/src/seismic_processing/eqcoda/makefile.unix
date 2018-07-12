@@ -1,0 +1,32 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lposix4 -lrt -lm
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+eqcoda: eqcoda.o eqm2_calls.o stalist.o $L/libew.a $L/pipe.o 
+	$(CC) $(CFLAGS) -o $B/eqcoda eqcoda.o eqm2_calls.o stalist.o \
+	$L/libew.a $L/pipe.o $(SPECIFIC_FLAGS)
+
+feedeqcoda: feedeqcoda.o $L/pipe.o $L/libew.a
+	$(CC) -o $B/feedeqcoda feedeqcoda.o $L/libew.a $L/pipe.o  $(SPECIFIC_FLAGS)
+
+lint:
+	lint eqcoda.c eqm2_calls.c stalist.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/eqcoda*

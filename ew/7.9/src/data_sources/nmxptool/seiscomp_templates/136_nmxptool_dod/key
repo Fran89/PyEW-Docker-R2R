@@ -1,0 +1,6 @@
+SOURCE_DESC="NMXPTOOL - DataOnDemand - NAQS server (TCP/IP)"
+SOURCE_ATTR="tcp,raw,instance_per_address"
+SOURCE_MSG="Plugin based on Open-source Nanometrics Protocol library"
+SRCADDR="naqs1a.int.ingv.it"
+SRCPORT="28000"
+SPROC="naqs_3x100"

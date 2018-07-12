@@ -1,0 +1,47 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P>ewspectra overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR>Ewspectra Overview</H1>
+<I>(last revised 26 April, 2011)</I></CENTER>
+<P>
+The ewspectra module takes data from one or more waveservers, can perform a
+variety of operations on that data, most importantly computing an FFT and
+identifying the frequencies w/ the highest amplitudes in the resulting spectra.
+Results can be written to files in a specified directory or as messages to a ring.
+Specification of the timespans to process can be specified in the configuration
+file and/or via messages read from a ring.
+</P>
+<p>
+The primary option is what SCNLs to monitor and, if 2 are specified, how to combine them:
+</P>
+<UL>
+<LI>
+A single SCNL is specified & its spectra computed
+</LI>
+<LI>
+2 SCNLs are specified and the difference between their spectra is computed
+</LI>
+<LI>
+2 SCNLs are specified, and their spectra are deconvolved
+</LI>
+</UL>
+<P>
+Other options include tapering of the original timeseries, applying high-
+and/or low-pass Butterworth filters, and smoothing the spectra before writing.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/ewspectra_cmd.html">ewspectra Configuration File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

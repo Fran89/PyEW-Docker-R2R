@@ -1,0 +1,359 @@
+Release Notes:  Earthworm Version v3.9
+
+IMPORTANT NOTES ABOUT VERSION V3.9
+**********************************
+
+Background:
+Last fall the Earthworm development group began the task of upgrading
+Earthworm for Year 2000 compliance.  The first step was to create new
+message types for all messages which were using two character years.
+This is the most significant change in V3.9.  If you upgrade to V3.9,
+you may have problems when exchanging data with other Earthworms
+running older versions or using EW output with non-Earthworm programs.
+
+New Y2K compliant Message Types:
+
+The following table lists the non-Y2K-compliant Earthworm (pre v3.9) 
+message types that contain 2-digit years and the corresponding 
+Y2K-compliant message types (4-digit years) that will be used in 
+Earthworm v3.9 and higher. Besides the change from 2- to 4-digit years, 
+other minor changes in message format may be included in this exercise.
+
+      non-Y2K-compliant      Y2K-compliant 
+      (v3.3 and lower)       (v3.9 and higher)
+      -----------------      -----------------
+1.    TYPE_PICK2             TYPE_PICK2K
+2.    TYPE_CODA2*            TYPE_CODA2K
+3.    TYPE_QUAKE             TYPE_QUAKE2K
+4.    TYPE_EVENT1            TYPE_EVENT2K
+5.    TYPE_H71SUM            TYPE_H71SUM2K
+6.    TYPE_EVENT2            TYPE_HYP2000ARC (barely filled in)
+      TYPE_HINVARC           TYPE_HYP2000ARC (completely filled in)
+7.    TYPE_TRIGLIST          TYPE_TRIGLIST2K
+
+The description of the format of these messages can be found in 
+v3.9/user_doc/formats.y2k.
+
+Testing for Year 2000 compliance:
+While preliminary testing indicates that V3.9 is Year 2000 
+compliant, more extensive testing will be be performed during the 
+next six months.  When this testing is complete and found bugs fixed, 
+a Y2K compliant version of Earthworm will be released.
+
+
+NEW MODULES:
+***********
+decimate: filter and decimate routines supplied by Dave Harris
+  to process wave data (TYPE_TRACEBUF) coming from the InRing defined
+  in decimate.d into data of type TYPE_DECIMATED which is put to
+  the OutRing.  LV 7/28/98
+
+evansassoc: Y2K-compliant and much enhanced version of trg_assoc (renamed 
+  to more clearly indicate its relationship to evanstrig). 
+  Partner module to evanstrig, evansassoc associates the single-station
+  long period triggers into events.  Evansassoc builds proper TYPE_TRIGLIST2K
+  messages (with eventid and author strings) and puts them on a transport
+  ring.  Many new commands were added to the configuration file (see
+  the section on configuration changes below).  LDD 11/20/98
+
+hyp2000: Y2K-compliant version of hypoinverse.  This is the interactive
+  version.  WMK 8/18/98
+
+hyp2000_mgr: Y2K-compliant version of hypoinverse.  This version works in
+  the Earthworm eqproc "sausage".  WMK 8/18/98
+
+scream2ew: converts packets from SCREAM! to trace_buf earthworm
+  messages and puts them into an earthworm ring. Written by Kent 
+  Lindquist and Murray McGowan, with minor modifications by Mitch
+  Withers and Lucky Vidmar.
+
+ 
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+libsrc/util/chron3.c: deleted functions which used 2-digit years, replaced
+  them with functions that use 4-digit years.  Deleted "#define CENTURY"
+  in chron3.h.  LDD 10/29/98
+    Made MT-safe. Eliminated the file-global "struct Greg G" workspace and 
+  made sure functions declared their own "struct Greg" variable, if needed.
+  Added a second argument to functions grg(), gregor(), and datime(). The
+  new argument is a "struct Greg *" and is used as workspace and to return
+  results to the caller.  LDD 11/23/98
+
+libsrc/util/logit: The makefiles, makefile.sol and makefile.nt, now create
+  two object files for logit, one named logit.o and the other logit_mt.o.
+  logit.o is not multithread-safe, logit_mt.o is multithread-safe.  A program
+  can link to either object file.  Programs that link to logit_mt.o must also
+  link to sema_ew.o.  I also changed libsrc/util/makefile.sol and
+  libsrc/util/makefile.nt.  logit_mt was created because waveserverV was
+  sometimes hanging after midnight, when logit tried to open a new log file.
+  WMK 11/6/98
+ 
+  Added a "p" option to the initial logit field, that will print the
+  processID along with the message.  Davidk 11/17/1998
+
+libsrc/util/parse_trig.c: To ensure that the sta, net, comp, and author
+  fields in the SNIPPET structure are null-terminated, I set the last
+  character in each field to '\0'.  In the unmodified version of parse_trig,
+  the strncpy() function was leaving the network field unterminated.
+  Consider the the following strncpy() call:
+
+   char net[3];
+   strncpy( net, "NC", 2 );
+
+  The "N" and "C" characters are copied to "net", but net[2] remains
+  undefined.  WMK 11/27/98
+
+libsrc/util/socket_ew_common.c: changed connect_ew() function so that it
+  closes the socket if connect fails OR if it times out (connect_ew was
+  always advertised to behave this way, but it previously didn't close the
+  socket on timeout). Also fixed a bug in connect_ew() that was causing
+  it to return "false successes" on Solaris.  
+    Added a new closure option (SOCKET_CLOSE_SIMPLY_EW) for closesocket_ew 
+  which skips the call to setsockopt and simply closes the socket in the
+  default manner.   LDD 10/23/98
+
+libsrc/winnt/time_ew.c: Changed putenv() to _putenv().  Changed tzset() to
+  _tzset().  WMK 11/6/98
+
+libsrc/solaris/tranport.c, libsrc/winnt/transport.c: Added a "ring flush" 
+  to the beginning of tport_bufthr, the private buffering thread (so that 
+  old messages are reprocessed if a module is restarted in a running 
+  Earthworm system).  LDD 10/30/98
+
+libsrc/solaris/transport.c, libsrc/winnt/transport.c:
+  Changed the declaration of MyModuleId from:
+          unsigned char MyModuleId;
+  to
+          static unsigned char MyModuleId;
+  This ensures that some other source module can't modify MyModuleId in 
+  transport.c.  WMK 11/16/98
+
+include/platform.h: Added the line #define getpid _getpid to the WINNT
+  section of platform.h.  Applications can now use the function getpid()
+  in either Solaris or Windows NT.   WMK 10/30/98
+
+binder_ew: Reads new Y2K pick format, writes new Y2K quake format, links with
+  multi-threaded logit_mt. LDD 11/2/98.
+
+carlstatrig: Changed to read TYPE_TRACEBUF messages up to MAX_TRACEBUF_SIZ
+  (defined in tracebuf.h) to be consistent with the rest of earthworm.
+  PNL, 11/16/98
+
+carlsubtrig: Changed the make files so that they link to logit_mt.o instead
+  of logit.o. Changed to write TYPE_TRIGLIST2K messages for Y2K compliance.
+  PNL, 11/16/98
+
+coaxtoring: Added a configuration parameter (RcvBufSize) for specifying the
+  UDP socket receive buffer size, in bytes.  According to Stevens, in "Unix
+  Network Programming", using a larger receive buffer size will prevent
+  loss of UDP packets.  The default receive buffer size is 8192 in both
+  Solaris and Windows NT.  The maximum value is system dependent, and seems
+  to be about 260000 bytes on Solaris and NT.  If RcvBufSize is set to 0,
+  coaxtoring uses the system default size (8192).  WMK 11/4/98
+
+eqcoda: Reads new Y2K event messages, writes new hyp2000arc messages.
+  LDD 11/2/98
+
+eqproc, eqprelim: Reads new Y2K picks, codas, quakes.  Writes new Y2K event 
+  messages.  LDD 11/2/98
+
+eqverify: Reads & writes new hyp2000arc messages.  LDD 11/3/98
+
+export_generic, export_scn:  Eliminated redundant code, simplified 
+  directory structure.  Previously these 2 modules had a base source file 
+  which was almost identical except for the filter function calls. I 
+  unified things so that there is now one base source file (export.c) 
+  which calls a set of filter-related functions (exportfilter_com, 
+  exportfilter_init, exportfilter, and exportfilter_shutdown).  Each set 
+  of 4 filter functions lives in its own source file. The filter functions 
+  used to create the executable export_generic live in genericfilter.c; 
+  those used in export_scn live in scnfilter.c.  export modules with 
+  different filters can be created by writing a new set of filter functions 
+  and linking the export object with the new filter object. 
+     All export code now lives in the directory v3.9/src/export. Both
+  export_generic and export_scn are compiled automatically with emake.
+  LDD 11/13/98
+
+export_scn: Removed the hard-coded limit on number of channels that 
+  could be shipped.  Added better configuration warnings.
+  Modified to read TYPE_PICK2K and TYPE_CODA2K messages.
+  LDD 11/12/98
+
+getmenu: minor change to printed format so it works better with awk.
+  PNL 10/23/98
+
+import_ida: Compiled with the latest release of idatap-1.2.2. LV 1/4/1999
+
+pick_ew: Picks and codas produced by pick_ew now comply with the new Earthworm
+  Y2K, message-format standard.  WMK 11/4/98
+
+rcv: incorporated the newest version of USNSN code which was changed to
+  to look for the EW_LOG environment variable and write its log files in
+  there.  Also, log file creation is handled more rationally. To get a 
+  rcv log file, use the command line option "-o logfilename", for example
+  "-o rcv.loga". To get a station log file, use "-stationlog"; it will
+  create a log file named "station.loga" with the multiple station 
+  option (-#) or named by each channel name if one station process is
+  run per channel.
+     The log files will have the suffix ".loga" where the "a" will be 
+  replaced by the last digit of the julian day. In this way only ten log
+  files are kept and they are recycled automatically to make them more 
+  stable from a disk storage point of view.
+  LDD 11/13/98
+
+sniffwave: now requires three arguments: station, component, and
+  network. If the arguments are missing, it prints, "Usage: sniffwave 
+  <station> <component> <network>". Swaps TRACEBUF data bytes if necessary. 
+  Dates are not used anywhere in sniffwave, so no concerns about Y2K 
+  compliance. Changed size of data buffer to MAX_TRACEBUF_LEN (defined in 
+  tracebuf.h) for consistency with the rest of earthworm PNL 11/16/98
+
+tankplayer: fixed a bug that was causing waveform files which were captured
+  off the Menlo Park 100 Mbit waveform wire (6 interleaved data sources) to
+  play in much-longer than real time.  Also changed so that tracebuf msgs
+  are temporally spaced by the delta-t of their header endtimes, instead of 
+  starttimes. This helps with proper timing during play-back of DST data. 
+  (since a DST releases short tracebuf messages when it detects dropouts, 
+  there can be a negative delta-t between the starttimes of messages from
+  different channels; however, the endtimes of the messages created by a DST
+  should always be in chronological order.)  LDD 11/10/98
+
+wave_serverV: Changed the make files so that they link to logit_mt.o instead
+  of logit.o.  WMK 11/6/98
+
+wave_serverV: Fixed lots of logit calls so they specify the tank name when
+  errors are reported. This should make it easier for users to identify
+  which tank is causing problems. PNL, 11/30/98
+
+
+bunches of modules: Changed by PNL for v3.9, 11/19/98
+   Change:              A       B       C       D       E       F
+    adsend              X       X       NA      X       NA      X
+    coaxtoring          X       X       NA      X       NA      X
+    copystatus          NA      NA      NA      NA      NA      NA
+    cubic_msg           X       X       X       X       X       X  
+    diskmgr             X       X       NA      X       NA      NA
+    gaplist             X       X       X       X       NA      NA
+    import_generic      X       X       NA      X       NA      X
+    import_ida          X       X       NA      X       NA      X
+    pagerfeeder         X       X       X       X       NA      NA
+    ringtocoax          X       X       X       X       NA      NA
+    startstop_nt        X**     NA      NA      NA      NA      X
+    startstop_os2       NA      NA      NA      NA      NA      X
+    startstop_solaris   X**     NA      NA      NA      NA      NA
+    statmgr             X       NA      X       NA      NA      NA
+    template            X       X       X       X       X       NA
+    vdl                 X       X       X       X       NA      X
+    wave_serverV        X       X       X       X       NA      X
+
+    A. make log file names use the config filename instead of executable 
+       name.  This is as simple as calling logit_init( argv[1], ...).
+
+    B. add process id to the heartbeat message (to allow it to be
+       automatically restarted by statmgr/startstop.
+
+    C. flush the transport ring on startup, before entering processing loop.
+       To do this, set up logos, etc, & add a line like:
+	 while( tport_getmsg(....) != GET_NONE );
+
+    D. add the restartMe line to the sample descriptor file. 
+
+    E. update the sample configuration file with new message types
+	       if applicable.
+
+    F. if it's multi-threaded, link it with logit_mt.o, sema_ew.o.
+
+    **: For NT and Solaris versions of startstop, the config file is an 
+       optional command-line argument. If it is specified, it will be used
+       for the logit file name; otherwise, the command name (argv[0]) will
+       be used.
+
+
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+**************************************************** 
+
+environment/earthworm.d:
+  Commented out all message types that are non-Y2K-compliant.
+  Added new message type definitions for the Y2K-compliant message types.
+
+libsrc: new Solaris makefiles for utils and solaris. These will check
+  dependencies on source and include files and only make objects that are out
+  of date. PNL 12/11/98
+
+arc2trig:  rewritten to use new libsrc/util/read_arc.c which no longer uses
+  the defective DECODE macro. PNL 12/11/98
+
+coaxtoring: Added a configuration parameter (RcvBufSize) for specifying the
+  UDP socket receive buffer size, in bytes.  According to Stevens, in "Unix
+  Network Programming", using a larger receive buffer size will prevent
+  loss of UDP packets.  The default receive buffer size is 8192 in both
+  Solaris and Windows NT.  The maximum value is system dependent, and seems
+  to be about 260000 bytes on Solaris and NT.  If RcvBufSize is set to 0,
+  coaxtoring uses the system default size (8192).  WMK 11/4/98
+
+evansassoc:
+  The module formerly known as trg_assoc (newly named to indicate its
+  relationship to evanstrig more clearly).  These new commands are
+  required:  
+    OutRing  HYPO_RING   # Transport ring to write output to
+    LogFile        1     # 1=write log file on disk; 0=don't
+    MinEventTime  90     # total record length (s) of "normal" event
+    MaxEventTime 105     # total record length (s) of "big" event
+    PreEventTime  15     # pre-event portion (s) of event record
+    EventIDfile nextlp.id  # name of file containing next valid eventid
+                           # this file should live in EW_PARAMS directory
+    LDD 11/20/98
+ 
+hyp2000_mgr.d:  Removed the "TimeLimit" command; no longer used. LDD 11/5/98
+
+hyp2000 (hypoinverse) command file: 
+  A new command is required to enable the new Y2K formats.
+  Add these lines to your hyp2000 (hypoinverse) command file:
+
+  * Enable year 2000 formats
+  * ************************
+   200 T 1900 0
+
+     This is a new command to hypoinverse that tells it what formats
+  to expect.  It's "200" instead of "2000" because hypoinverse
+  take 3-letter commands.  The default is "old" 2-digit year format. 
+     Does the fact that you see a 1900 on this line worry you?  
+  It shouldn't.  The 2nd & 3rd args to this command only apply when 
+  you're running "COP 1" (old phase) format input thru hypoinverse.  
+  Fred Klein put those in there to support an ancient format instead
+  of changing that format.  Earthworm uses "COP 5" format.
+  LDD 11/20/98
+
+rcv:  command line argument changes due to change in logging. 
+  More details when I read more about it.  LDD 11/13/98
+
+wave_serverV: small change to the Stacker thread to stop core dumps on
+  shutdown. The main loop in this thread is changed from "while (1)" to
+  "while (!terminate)", since otherwise this thread never gets told to die.
+  PNL 12/11/98
+
+wave_serverV: added a check that Record Size in config file is not greater
+  than MAX_TRACEBUF_SIZ. PNL 12/17/98
+
+wave_serverV: Changed "MaxMsgSiz-1" to "MaxMsgSiz" in calls to tport_getmsg().
+  The "-1" was legacy code from an ascii-message processing module which 
+  used the extra byte to null-terminate incoming strings.  wave_serverV does
+  not null-terminate its incoming messages and therefore can use the entire
+  allocated space to grab messages out of the transport ring. LDD 12/17/98
+
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+Earthworm V3.9 is probably Year 2000 safe. Extensive Y2K testing will
+be performed during the 1st and 2nd quarter of 1999 to insure Y2K
+compliance.
+
+HYPO2000: There is a bug in how it calculates low-gain duration magnitudes.

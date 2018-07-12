@@ -1,0 +1,28 @@
+# THIS FILE IS UNDER CVS - DO NOT MODIFY UNLESS YOU CHECKED IT OUT!
+#
+LINUX_FLAGS=-lm -pthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = coda_dur.o cdur_config.o cdur_stalist.o compare.o \
+    $L/rdpickcoda.o $L/rw_coda_aav.o $L/libew.a
+
+coda_dur: $O
+	$(CC) $(CFLAGS) -o $B/coda_dur $O $(SPECIFIC_FLAGS)
+
+lint:
+	lint coda_dur.c cdur_config.c cdur_stalist.c compare.c \
+			$(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/coda_dur*

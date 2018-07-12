@@ -1,0 +1,121 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Re: Three questions for al earthwormers -->
+<!--X-From-R13: Xnzrf Q. Brpuznaa <crpuznaaNfrvf.hgnu.rqh> -->
+<!--X-Date: Thu, 22 Jun 2000 12:20:21 &#45;0600 (MDT) -->
+<!--X-Message-Id: 17336.964738880.26@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Re: Three questions for al earthwormers</TITLE>
+<LINK REV="made" HREF="mailto:pechmann@seis.utah.edu">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00025.html">Date Prev</A>][<A HREF="ew.00027.html">Date Next</A>][<A HREF="ew.00025.html">Thread Prev</A>][<A HREF="ew.00027.html">Thread Next</A>][<A HREF="welcome.html#00026">Date Index</A>][<A HREF="threads.html#00026">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Re: Three questions for al earthwormers</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A>, <A HREF="mailto:steve@geophys.washington.edu">steve@geophys.washington.edu</A></LI>
+<LI><em>Subject</em>: Re: Three questions for al earthwormers</LI>
+<LI><em>From</em>: James C. Pechmann &lt;<A HREF="mailto:pechmann@seis.utah.edu">pechmann@seis.utah.edu</A>&gt;</LI>
+<LI><em>Date</em>: Thu, 22 Jun 2000 12:20:21 -0600 (MDT)</LI>
+<LI><em>Cc</em>: <A HREF="mailto:ali@seis.utah.edu">ali@seis.utah.edu</A>, <A HREF="mailto:nava@seis.utah.edu">nava@seis.utah.edu</A>, <A HREF="mailto:pechmann@seis.utah.edu">pechmann@seis.utah.edu</A></LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+Steve,
+
+     I think that we can help you with your first problem:
+
+&gt; 1. A way to get state-of-health from refteks using PPP with a 422 card and
+&gt; rtpd. In particular we need to know if the GPS clock is locking when it
+&gt; should.  Right now we have no way of knowing this info without visiting the
+&gt; site.
+
+     There is a University of Utah contributed Earthworm module called
+ref2disk, written by Dave Chavez and Ali Moeinvaziri, which captures
+and stores the state-of-health information from the REF TEKs (including
+state-of-health messages about the clock).  In our current earthworm
+setup, reftektoew takes all telemetry packets received from the reftek
+data loggers via rtpd and sends them to a raw ring.  These packets are
+of various types including waveform data packets, state-of-health packets,
+and station/channel packets.  Additionally, reftektoew converts the
+waveform packets to tracebuf packets and sends them to a wave ring.
+
+     The ref2disk module reads the telemetry packets from the raw ring,
+writes the waveform data to disk files in SAC format, and writes all
+non-wavefrom packets (station/channel and state-of-health) to disk as
+binary files.  These files can be read using the Passcal program
+refpacket.  Our technicians regularly look at these files to detect and
+diagnose problems with the REF TEKs.  Ref2disk uses the station/channel
+information to set some of the SAC header variables.
+
+     The state-of-health packets are periodically sent back to the
+recording center by the REF TEKs, at least in our setup.  We don't have
+to request them.  The station/channel packets are sent back whenever
+data acquisition is started.  We are not using 422 cards in our
+REF TEKs right now, because we are still using an older REF TEK
+digital telemetry system.  However, as far as I know the same types of
+data packets should be sent back from the REF TEKs regardless of the
+telemetry protocols used.
+
+     The current documentation for ref2disk on the earthworm web site
+does not mention the treatment of the state-of-health packets.  We will 
+get that added.  In the meantime, if you have any questions about this
+module, you may contact Ali Moeinvaziri at ali@seis.utah.edu.
+
+--Jim Pechmann
+
+_____________________________________________________________
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00025.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00027.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00025.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00027.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00026"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00026"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

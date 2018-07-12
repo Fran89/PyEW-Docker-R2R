@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Hypoinverse station file format</TITLE>
+<META HTTP-EQUIV="OWNER" CONTENT="USGS">
+<META NAME="keywords" CONTENT="seismology USGS">
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<H3><IMG SRC="../GIFS/ew.logo.tiny.gif" ALT="EARTHWORM Logo" HEIGHT=61 WIDTH=71 ALIGN=TEXTTOP )></H3>
+
+<CENTER><H1>Hypoinverse Station File Format</H1></CENTER>
+<PRE>
+FORMAT OF THE HYPOINVERSE STATION FILE FOR FULL 12-LETTER (S-C-N-L) CHANNEL NAMES
+
+The channel identifier consists of a 5-letter site code, a 2-letter network
+code unique to the owner or operator of the network, a 3-letter component
+or channel code, and a 2-letter location code.  The net, component, and
+location fields are optional to Hypoinverse, but space for these fields will
+be reserved in all input and output files.  The user of Hypoinverse may specify
+(with the LET command) how many characters (counted from the left side) in
+each field to use when matching names in station and phase files.  Full use
+of the fields will require 5, 2, 3, and 2 letters; minimum use will require
+3, 0, 0 and 0 letters.  Hypoinverse can use both a 1-letter (old USGS style)
+and 3-letter (SEED style) component field. Space for both fields will be
+reserved in all input and output files. Select whether to use the 1- or 3-letter
+field for matching station and phase names with the LES command.  It is
+sometimes useful to keep the 1-letter component field for easier recognition by
+analysts than the newer, more general 3-letter field.
+
+Cols.   Format	Data
+_____   ______ 	____
+
+1-5	A5,1X	Station site code. The first character may  not  be  a
+		number or the $ character.
+
+7-8	A2,1X	Station network code.
+
+10	A1	Optional 1-letter component code for this channel.
+11-13	A3,1X	3-letter component code for this channel.
+
+15 	A1	Station weight code (in units of 0.1) by which the weights
+ 		assigned each P & S phase  are  to be multiplied.  Use the
+		digits  0-9  for the weight in tenths; "*" or "0"  for  no
+		weight; or any other character  (including blank) for full
+		weight.
+
+16-17	I2, 1X	Latitude, degrees.
+19-25	F7.4	Latitude, minutes.
+26	A1	N or blank for north latitude, S for south.
+27-29	I3, 1X	Longitude, degrees.
+31-37	F7.4	Longitude, minutes.
+38	A1	W or blank for west longitude, E for east.
+
+39-42	4X	Reserved for elevation in m. Not used by HYPOINVERSE.
+
+43-45	F3.1,2X	Default  period  (in sec) at which the  maximum  amplitude
+  		will be read for this station. Must be greater than 0.1.
+                If period is given on phase card, it overrides this value.
+
+48      A1          Put  a "2" or "A" here to designate this as  an  alternate
+                    crust model station.  Both  alternate  and primary crustal
+                    models  must be in use.  Stations may also be  tagged  for
+                    use with an alternate model in the delay file.
+
+49      A1          Optional station remark field to copy to print output.
+50-54   F5.2, 1X    P delay (sec) for delay set 1.
+56-60   F5.2, 1X    P delay (sec) for delay set 2.
+62-66   F5.2        Amplitude magnitude correction.  If in the range +/-2.4, the
+                    correction is included  (by  addition)  in  the  amplitude
+                    magnitude. If you don't want a station's magnitude used in
+                    the event magnitude, use  a  correction  of  5.0  plus the
+                    actual correction.  You can also assign a zero weight (see
+                    next).
+
+67      A1          Amplitude magnitude weight code.  Codes 0-9, "*" and blank
+                    are the same as the P & S weight codes (col 15). The actual
+                    magnitude weight used is the product of those on the station
+                    and phase cards. See also col 62.
+
+68-72   F5.2        Duration  magnitude  correction  (works  the  same  as the
+                    amplitude magnitude correction).
+
+73      A1          Duration  magnitude  weight code (works the  same  as
+                    the amplitude weight code).
+
+74      I1          Instrument  type code for this station used to select  the
+                    appropriate response curve  to  derive  an equivalent Wood
+                    Anderson amplitude. Must be either 0, 1 or 2:
+                        0: Standard Wood-Anderson torsion seismograph.
+                        1: USGS standard (1 HZ geophone, .7 critical damping.)
+                        2: Hawaii-type Sprengnether seismometer.
+
+75-80   F6.2        Calibration factor for amplitude  magnitudes, equal to the
+                    peak-to-peak  amplitude of a 10 microvolt RMS signal at  5
+                    hz  applied  to  the  VCO   and  measured  in  mm  on  the
+                    Develocorder  film  viewer.  For instrument types 0 and  2
+                    this  should  generally  be  1.0.   A  cal  factor  of 0.0
+                    signifies  an  unknown  response for  which  no  amplitude
+                    magnitudes will be computed. If a cal factor is given on a
+                    phase  card it overrides this value.  The VCO  attenuation
+                    may be given in  place  of  the  cal  factor  (see the ATN
+                    command).  An entire history of station attenuations  with
+                    the  dates  of  attenuation  changes  may  be  read from a
+                    separate file with the ATE command.
+
+81-82   A2          2-letter location code.
+                    Earthworm follows the SEED convention of allowed characters
+                    (A-Z, 0-9, space).  In apparent contradiction to the previous
+                    statement, Earthworm uses the character '-' to represent
+                    'space' in all Earthworm I/O. Just remember to think 'space'
+                    when you see '-'. Lower case alphanumerics are not permitted.
+                    The location code should always contain 2 characters, either
+                    two alpha-numeric characters or two spaces ('--' or '  ').
+                    The use of a single space (or '-') adjacent to an alpha-numeric
+                    is not permitted.
+</PRE>
+
+Other details of hypoinverse configuration can be found in the complete
+Hypoinverse documentation maintained by Fred Klein at: <br>
+<a href=ftp://ehzftp.wr.usgs.gov/klein/hyp2000/docs/hyp2000-1.0.pdf>ftp://ehzftp.wr.usgs.gov/klein/hyp2000/docs/hyp2000-1.0.pdf</a><BR>
+<a href=ftp://ehzftp.wr.usgs.gov/klein/docs/shadow2000.pdf>ftp://ehzftp.wr.usgs.gov/klein/docs/shadow2000.pdf</a>
+
+<H3>Return to:</H3>
+<UL>
+<LI> <A HREF="binder_ew_cmd.html#site_file">Binder Configuration File Commands</A>
+<LI> <A HREF="eqproc_cmd.html#site_file">Eqproc Configuration File Commands</A>
+<LI> <A HREF="eqprelim_cmd.html#site_file">Eqprelim Configuration File Commands</A>
+<LI> <A HREF="../modules.html">Earthworm Module Index</A>
+</UL>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a>
+<br>Updated <B>21 Feb 2007</B></address><BR>
+
+</BODY>
+</HTML>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE></TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2 ALIGN=CENTER>University of Washington</H2>
+
+<DIV ALIGN=right><P>Date: June 2, 1998</P></DIV>
+
+<H3>Location, Contact, and Address:</H3>
+
+<P>Pacific Northwest Seismograph Network recording at Geophysics Program
+of the University of Washington</P>
+
+<P>Steve Malone (steve@geophys.washington.edu) 206-685-3811</P>
+
+<P>Box 351650, Univ. of Washington, Seattle, WA</P>
+
+<H3>Network Characteristics:</H3>
+
+<P>~130 Analog stations, 12 broad-band, 7 strong-motion covering Washington
+&amp;&nbsp;western Oregon</P>
+
+<P>Analog data are digitized by an Analyix S-Bus A/D on a SUN&nbsp;Sparc-5
+computer</P>
+
+<P>1- Reftek continuous telemetry &amp; 4 dial-up Reftek data-loggers</P>
+
+<P>7- Terra Tech IDS-24 continuous telemetry,(using Reftek data format)</P>
+
+<P>4- channels of waveform data imported from Northern California Network.
+
+<H3 ALIGN=CENTER>
+<HR WIDTH="100%">Standard EarthWorm Modules in current Use:</H3>
+
+<P><TT>EARTHWORM</TT> code (v3.1) running on an SUN Ultra-1-170 under Solaris-2.6
+getting its waveform data from a
+<A HREF="http://www.geophys.washington.edu/SEIS/PNSN/SHOP/sunworm.html">SUNWORM</A>
+system runing on a SPARC-5.  There
+is a <A HREF="uw.block.gif">block diagram</A> showing all components of
+our current system:</P>
+
+<UL>
+<LI><B>pick_ew -</B>Pick data in trace_buf ring</LI>
+
+<LI><B>binder</B> -Carl's associator</LI>
+
+<LI><B>eqproc, eqbuf, eqcoda, eqverify, eqtee</B> -filter, quality check,
+and output pick associations-</LI>
+
+<LI><B>hypomgr, hypoinv -</B>manage and produce standard USGS hypocenter
+locations</LI>
+
+<LI><B>import_generic -</B> Used to import four waveform channels from
+Northern California in realtime.
+
+<LI><B>export_scn, export_generic - </B> Used to export waveforms and traces
+to the Alaska - Pacific Tsunami Warning Center.
+
+<LI><B>wave_serverV -</B>wave server with 18 hour for ~120 channels
+and 3 day buffer for the other ~80 channels</LI>
+
+<LI><B>startstop, copystatus, diskmgr, statmgr</B> (control and monitor)</LI>
+</UL>
+
+<H3>Associated programs/modules already developed or adapted here:</H3>
+
+<UL>
+<LI><B>sun_demux -</B>Retrieves digitized analog multiplexed data by IP
+socket from SPARC-5 machine running SUNWORM software, and demultiplexes
+it into a wave_ring for <TT>EARTHWORM</TT> use.</LI>
+
+<LI><B>uw_report, earth_proc, spong, dopage-</B>produce UW style pickfiles,
+shell script to control hypocenter determination, and notify via e-mail
+and pager.</LI>
+
+<LI><B>Ref2ew - </B>Adapted code from Reno/Alaska to read Reftek packets
+coming over leased-line modems from Terra Tech IDS-24 data loggers for
+insertion of data into wave_ring. This routine reads both from serial-I/O
+on a Central-Data 8-channel serial-SCSI box and also from a TCP/IP socket
+from an other computer receiving telemetered Reftek data coming from a
+Reftek RT-112 unit or a two-port terminal server connected to the serial
+output of a Terra-IDS box.</LI>
+
+<LI><B>Earth2uw </B>- Uses <TT>EARTHWORM</TT> wave-server client library to request
+data from a <I>wave_serverIV</I> and create a UW2 event trace data file
+for manual processing using UW analysis tools such as <I>xped</I>. </LI>
+
+<LI><B>Carl_trig </B>- We modified and tested a trigger system originally
+coded by Brian Moon of Battelle Northwest Labs to run the original
+C. Johnson (1979) LTA/STA with subnet coincidence on <TT>EARTHWORM</TT>.
+There are two programs, one to generate individual station triggers which
+may be exchanged with over the network with other <TT>EARTHWORM</TT> systems,
+and a subnet logic part which generates master event triggers which
+are written to a transport ring or optionally generates a UW-pickfile for
+use by <I>earth2uw</I> for waveorm extraction.
+
+<LI><B>Earth2sac </B>- Similar to earth2uw above but writes SAC output
+files.</LI>
+
+</LI>
+
+</UL>
+
+<H3>Development Plans:</H3>
+
+<UL>
+<LI><B>Dial2ew</B> - Modify our current Reftek dial-up system (SPYDER based)
+to take retrieved data and insert that into wave_rings (async type input).
+Nothing yet done past design concept.</LI>
+
+<LI><B>ORB server integration and evaluation</B> - We have installed the
+JSP/Datascope ORB software and are evaluating its integration with
+our <TT>EARTHWORM</TT>
+</UL>
+
+<H3>Our Additional Needs:</H3>
+
+<UL>
+<LI>Keep the documentation coming and up to date.</LI>
+
+<LI>VSAT to <TT>EARTHWORM</TT> wave_ring for NSN data</LI>
+
+<LI>Easy data exchange with neighboring networks  to the north and east
+British Columbia, Idaho and Montana)</LI>
+</UL>
+<HR>
+Return to main <A HREF="/EWAB"><TT>EARTHWORM</TT></A> or
+<A HREF="../sites.html">Sites</A> pages.
+
+</BODY>
+</HTML>

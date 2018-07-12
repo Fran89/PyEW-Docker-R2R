@@ -1,0 +1,178 @@
+2010/04/21:Lynn Dietz
+
+
+Brief History of NCSN Coda Termination Definitions
+_______________________________________________________________________________
+
+Fred Klein's Hypoinverse document and Jerry Eaton in talking about the history
+of coda termination for NCSN both describe the "standard" NCSN station as an
+L4C velocity sensor, sent thru the NCSN telemetry electronics black box (ending
+with a discriminator) at 15 dB attenuation (this comes from looking at the
+distribution of attenuation settings in the network, which was peaked with
+an even number of stations at 12 and 18 dB, giving you the average of 15 dB)
+and recorded in Menlo Park by something. Originally, that something was a
+Develocorder, which was replaced by Rex Allen's RTP, CUSP Tustin 12-bit digitizers
+and finally Earthworm National Instruments 12-bit digitizers.
+
+All pick and coda constants were originally determined for this "standard" NSCN
+station. Coda termination was originally defined by Willie Lee on the develocorder
+viewer as the point where signal reached 1 cm peak-to-peak amplitude.  When NCSN
+started analyzing the signals with a computer algorithm (Rex's RTP), Rex Allen,
+Jerry Eaton, Willie Lee, and others conducted a brief study to determine a new
+coda termination method that would be consistent with the original Develocorder
+definition.  This new coda termination was defined as the point where the
+discriminator output reached an average absolute amplitude of 60 mV (over a
+2-second window).  The parameters used by the picking algorithm are specified
+in digital counts.
+  Rex's RTP system:      coda term = 60 counts    (1 mV/count)
+  CUSP & Earthworm A/D:  coda term = 49.14 counts (5V/4096count = 1.22 mV/count)
+
+For a standard 15dB station, the coda termination of 49.14 counts on the 
+Earthworm A/D is equivalent to a ground motion of:
+
+ EWcodaterm  *  EWsensitivity@15dB  *  L4Cmotorconstant  =  endcoda-groundmotion
+ 49.14count  *   0.3519uV/count     *  1cm/s/10e6uV      =  1.729e-5 cm/s
+
+To go from coda duration to coda magnitude, hypoinverse uses a gain correction 
+factor (0 for the standard 15dB station). The correction factor takes into account 
+the differences in the hardware from the sensor output to the digitizer output;
+in essence it corrects for the recording system sensitivity.      
+
+OK, that's the NCSN's history of processing analog-telemetered seismic data.
+But now we need to process seismic data from sensors other than L4Cs recorded
+by various digital instruments.  We need to come up with scaling factors between
+the "standard" NCSN analog Earthworm-recorded station and these new recording 
+systems so that we can once again define consistent picking and coda termination 
+parameters. I want to choose parameters that terminate the coda at the above 
+15dB ground motion value because we should not have to use any gain correction 
+in the duration magnitude calculation.  Let's determine the digital counts per 
+unit ground velocity for the various digitizer/sensor combinations. That will 
+give us the scaling factors to use for our picking and coda constants.
+
+
+
+Scaling between "Standard NCSN station" and other NCSN recording systems
+_______________________________________________________________________________
+
+The Standard NSCN station (@15dB):
+
+  Earthworm/L4:     2841716 count/cm/s =  1.0EW  ( 1count/0.3519uV * 10e6uV/cm/s )
+
+
+Other digitizer/sensor pairs processed at NCSN:
+
+  DST/L4C:             145666 count/cm/s =  0.05EW ( 1count/6.865uV * 10e6uV/cm/s )
+ 
+  HRD(old)/L4C:        964320 count/cm/s =  0.34EW ( 1count/1.037uV * 10e6uV/cm/s )
+
+  HRD(new)/L4C:        784314 count/cm/s =  0.28EW ( 1count/1.275uV * 10e6uV/cm/s )
+
+  HRD(old)/HS1:        432015 count/cm/s =  0.15EW ( 1count/1.037uV * 0.448*10e6uV/cm/s )
+
+  HRD(new)/HS1:        351373 count/cm/s =  0.12EW ( 1count/1.275uV * 0.448*10e6uV/cm/s )
+
+  HRD(higain)/HS1:   35137255 count/cm/s = 12.36EW ( 1count/.01275uV * 0.448*10e6uV/cm/s )
+
+  TRI(2V-PP)/HS1:     3584000 count/cm/s =  1.26EW ( 1count/0.125uV * 0.448*10e6uV/cm/s )
+
+  TAU(2V-PP)/GS11D-O: 2552000 count/cm/s =  0.90EW ( 1count/0.125uV * 0.319*10e6uV/cm/s )
+
+  TAU(2V-PP)/GS11D-S: 2376000 count/cm/s =  0.84EW ( 1count/0.125uV * 0.297*10e6uV/cm/s )
+
+  TAU(2V-PP)/SM6-O:   2304000 count/cm/s =  0.81EW ( 1count/0.125uV * 0.288*10e6uV/cm/s )
+
+  TAU(2V-PP)/SM6-S:   1456000 count/cm/s =  0.51EW ( 1count/0.125uV * 0.182*10e6uV/cm/s )
+  
+  TAU(40VPP)/STS-2:   6000000 count/cm/s =  2.11EW ( 1count/2.5uV * 15*10e6uV/cm/s )
+
+  HRD(o)/40T:         7714561 count/cm/s =  2.7EW  ( 1count/1.037uV * 8*10e6uV/cm/s )
+
+  HRD(n)/40T:         6274510 count/cm/s =  2.2EW  ( 1count/1.275uV * 8*10e6uV/cm/s )
+
+  HRD(n)/40Tmod:     62745098 count/cm/s = 22.1EW  ( 1count/1.275uV * 80*10e6uV/cm/s )
+
+  HRD(n)/3ESPC:      11764706 count/cm/s =  4.14EW ( 1count/1.275uV * 15*10e6uV/cm/s )
+
+  HRD(n)/STS-2:      11764706 count/cm/s =  4.14EW ( 1count/1.275uV * 15*10e6uV/cm/s )
+
+  Rftk72/40T:         4195070 count/cm/s =  1.5EW  ( 1count/1.907uV * 8*10e6uV/cm/s )
+
+  Rftk130/L4C:         629129 count/cm/s =  0.22EW ( 1count/1.5895uV * 10e6uV/cm/s )
+
+  Rftk130/SS-1:       2139037 count/cm/s =  0.75EW ( 1count/1.5895uV * 3.40*10e6uV/cm/s )
+
+  Rftk130/STS-2:      9436930 count/cm/s =  3.3EW  ( 1count/1.5895uV * 15*10e6uV/cm/s )
+
+  K2/L4C:             3355705 count/cm/s =  1.2EW  ( 1count/0.298uV * 10e6uV/cm/s )
+ 
+  Makalu-gain1/SS-1   1447026 count/cm/s =  0.51EW ( 1count/2.3842uV * 3.45*10e6uV/cm/s )
+
+  Makalu-gain2/SS-1   2894053 count/cm/s =  1.0EW  ( 1count/1.1921uV * 3.45*10e6uV/cm/s )
+
+  Qterra/STS-1:       9600000 count/cm/s =  3.4EW  ( 1count/2.5uV * 24*10e6uV/cm/s )
+
+  Qterra/STS-2:       6000000 count/cm/s =  2.1EW  ( 1count/2.5uV * 15*10e6uV/cm/s )
+
+  Q680/? at CI:       9663864 count/cm/s =  3.4EW 
+
+  Qterra/GS-11:
+
+  DST24/L4C:           838926 count/cm/s = 0.30EW  ( 1count/1.192uV * 10e6uV/cm/s )
+ 
+  Q80/CMG3-NSN:       5810200 count/cm/s = 2.04EW  ( 418000count/V * 13.9V/cm/s )
+
+
+
+
+Instrument constants from Jim's notes (also in Klein's Hypoinverse Document)
+_______________________________________________________________________________
+
+Recording System Sensitivity (Fred's F):
+ 1 - NCSN analog = 0.9954  microv/count @ 24dB (Klein's Hypoinv doc)
+     eworm A/D   = 0.4977  microv/count @ 18dB (by math: 24dBvalue/2)
+                 = 0.3519  microv/count @ 15dB (by math: 18dBvalue/sqrt(2))
+
+ 2 - NCSN DST16  = 6.865   microv/count
+ 3 - RefTek72    = 1.907   microv/count
+ 4 - NMX HRD old = 1.037   microv/count (old stations-Bay Area mostly)
+     NMX HRD new = 1.275   microv/count (all new stations & old Episensor channels)
+     NMX HRD hg  = 0.01275 microv/count (high gain at Mammmoth Deep Hole)
+     NMX TRI 40V = 2.5     microv/count (Tri305 set at 40V PP, software gain=1)
+     NMX TRI 2V  = 0.125   microv/count (Tri305 set at 2V PP, software gain=1)
+     NMX TAU 40V = 2.5     microv/count (Taurus set at 40V PP, software gain=1)
+     NMX TAU 2V  = 0.125   microv/count (Taurus  set at 2V PP, software gain=1)
+ 5 - Quanterra   = 2.5     microv/count
+ 6 - K2          = 0.298   microv/count (from K2 manual: +/-2.5V, 24bits, gain=1)
+     Makalu-gain1= 2.3842  microv/count (from KMI email:   2^23/20 = 419430 count/v at gain=1)
+     Makalu-gain2= 1.1921  microv/count (from KMI email: 2*2^23/20 = 838860 count/v at gain=2)
+ 7 - NCSN DST24  = 1.192   microv/count (as per Gray Jensen 7/28/2000)
+     Reftek130   = 0.7947  microv/count (+/-5V)  for internal MEMS on ch1-3
+     Reftek130   = 1.5895  microv/count (+/-10V) unity gain (1) for external sensor on ch4-6
+     Reftek130hi = 0.0497  microv/count (+/-10V) high gain (32) for external sensor on ch4-6
+
+     Qterra Q80  = 418000  count/V
+
+NOTE: These sensitivities are for microvolts of sensor output/digital counts
+
+
+Sensor Motor Constants:
+ 1 - L4C         = 1 v/cm/s
+ 2 - FBA-23      = 1.25 v/g = 0.001278 v/cm/s/s
+ 3 - CMG-40T     = 8 v/cm/s  (normal Guralp CMG-40T)
+     CMG-40Tmod  = 80 v/cm/s (modified Guralp CMG-40T)
+ 4 - HS1         = 0.448 v/cm/s
+ 5 - Wilcoxin    = 10 v/g = 0.01022 v/cm/s/s
+ 6 - Dilatometer = 1 v/0.000001 strain
+ 7 - Streckeisen STS-1 = 24 v/cm/s
+ 8 - Streckeisen STS-2 = 15 v/cm/s
+ 9 - Episensor = 5 v/g = 0.005112 v/cm/s/s
+10 - Oyo GS-11   =
+11 - Guralp CMG3-NSN = 13.9 V/cm/s (vertical)
+12 - S-13        = 3.65 V/cm/s
+13 - Ranger SS-1 = 3.45 V/cm/s               (as per KMI)
+14 - SM6-open    = 28.8 V/m/s = 0.288 V/cm/s (as per SM6 spec sheet)
+     SM6-shunt   = 18.2 V/m/s = 0.182 V/cm/s (as per Gray's calculations)
+15 - CMG-3ESPC   = 1500 V/m/s = 15 V/cm/s    (Guralp CMG-3ESP Compact)
+16 - GS11D-open  = 0.319 V/cm/s              (as per Oyo spec sheet 4.5hz,350ohm)
+     GS11D-shunt = 0.297 V/cm/s              (as per Taka-aki from Oyo chart for 0.5 damping)
+ 

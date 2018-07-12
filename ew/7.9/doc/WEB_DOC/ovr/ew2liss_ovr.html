@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Modules: Ew2liss overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<H1 ALIGN=CENTER>Earthworm Modules: <BR>
+Ew2liss Overview</H1>
+
+<CENTER><P><I>(last revised 4 March, 2000)</I> </P></CENTER>
+
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS
+(<A HREF="http://www.liss.org">Live Internet Seismic Server</A>) format. The LISS is a
+very simple service that provides trace data in miniSEED format in near-real-time
+over the Internet. The ew2liss module will convert selected SCNs (station-component-network)
+of trace data from an Earthworm transport ring, convert that data to miniSEED format,
+and serve the data to a single LISS client (such as <A HREF="liss2ew_ovr.html">liss2ew</A>)
+over a TCP/IP network connection.
+ <P>
+One LISS normally has data for a single station. One or more components are sent
+together in the data stream. In some cases, one component is provided in more than
+one sample-rate. The `location code' is used in this case to label the different kinds
+of data. Note that nothing prevents ew2liss from handling SCNs from many stations except
+this LISS convention. It may be that ew2liss and liss2ew could be used to exchange data
+between Earthworm installations. Since LISS uses Steim-2 compression, this format should
+use less network bandwidth than Earthworm's export_scn/import pair. Performing the compression
+and decompression will use more CPU time, however.
+ <P>
+<CENTER><h4>A comment about timing</h4></CENTER>
+Earthworm trace data (TRACE_BUF format) includes "starttime" and "endtime" (8-byte
+floating-point numbers) to mark the start and end times of each message. It also includes
+sample count (an integer) and samplerate (an 8-byte floating-point number). Frequently this
+samplerate value has been set to the <B>nominal</B> sample rate; the start and end times are
+assumed to be actual measured values.
+<P>
+The miniSEED format includes only a start time for each record. The sample rate is encoded
+in the data fixed record as two two-byte integers. These two integers are treated as
+multipliers if positive, divisors if negative; this a wide range of sample rate values can be
+expressed. In converting from Earthworm TRACE_BUF messages to miniSEED, errors would be
+introduced if the nominal sample rate was used to set the miniSEED sample rate factors.
+Instead, a <STRONG>best</STRONG> rate is determined from the starttime, endtime, and sample
+count values. Then this new sample rate is rounded to the nearest 0.0001 samples per second.
+This rounded is intended to reduce the discretization introduced by the conversion to the
+short integer rate factors. Finally, this new sample rate is used to set the miniSEED sample
+rate factors.
+<p>
+<CENTER> <A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/ew2liss_cmd.html">Ew2liss
+Commands</A> </CENTER>
+ <!-- USGS-required stuff at the end -->
+<HR></P>
+
+</B>Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>

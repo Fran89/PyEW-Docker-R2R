@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS= $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = pick_ew.o pick_ra.o restart.o config.o stalist.o compare.o \
+    index.o sample.o report.o initvar.o scan.o sign.o \
+    $L/libew.a $L/swap.o $L/trheadconv.o
+
+pick_ew: $O
+	$(CC) $(CFLAGS) -o $B/pick_ew $O $(SPECIFIC_FLAGS)
+
+lint:
+	lint pick_ew.c pick_ra.c restart.c config.c stalist.c \
+			compare.c index.c sample.c report.c initvar.c \
+			scan.c sign.c $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/pick_ew*

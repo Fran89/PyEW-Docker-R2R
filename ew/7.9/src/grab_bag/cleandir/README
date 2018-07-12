@@ -1,0 +1,41 @@
+THIS IS A HYDRA MODIFIED VERSION OF CLEANDIR:
+
+Notes from John Patton:
+
+This program is a rewrite of the old Menlo cleandir. Cleandir runs as a Windows service (as opposed to running as a Windows Scheduled Task) and monitors the directories specified in the configuration file.  The criteria for deletion are as follows: If any file has a modification date/time older than the age specified in the configuration file, that file is deleted.  
+
+cleandir: Utility to erase files with old modification times in
+          specified directory.
+
+
+
+                       Solaris Installation
+                       --------------------
+Log in as root.
+
+Copy cleandir.csh to directory /opt/local/bin.  Make sure cleandir.csh
+is executable:
+
+      chmod +x cleandir.csh
+
+Create a new entry in root's crontab file:
+
+0 0 * * * /opt/local/bin/cleandir.csh /home/earthworm/run/log 90
+
+
+
+                     Windows NT Installation
+                     -----------------------
+Copy cleandir.exe to directory:  \local\bin.
+
+Make sure the "Schedule" service is running and that it starts automatically
+on reboots.
+
+Execute the command:
+
+at 23:55 /every:M,T,W,Th,F,S,Su c:\local\bin\cleandir c:\earthworm\run\log 90
+
+To verify that cleandir is scheduled to run, type:
+
+     at
+

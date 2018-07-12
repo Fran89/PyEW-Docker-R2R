@@ -1,0 +1,272 @@
+THIS FILE LAST MODIFIED BY:            DK 072903
+################################################
+SUMMARY
+GLASS is a Global Earthquake Associator written by
+Carl Johnson.
+
+GLASS contains two TIGHTLY coupled parts, the
+associator, and a series of GUI windows displaying
+status information about the associator and 
+earthquakes it has associated.
+
+The current glass revision is v1.0 build 4.
+
+################################################
+REVISIONS
+The current glass revision is v1.0 build 4.
+
+VERSION 1.0 (DK)
+Version 1.0 includes scavenging (of picks from other
+smaller events, or of waif's that weren't part of
+the primary association), trimming of picks with
+outlying residuals, better support for SCNL, code that
+prevents multiple picks from the same channel from being
+associated as the same phase, and Quake2K messages 
+with station information lines.
+Internally, v1.0 includes additional source code comments
+to make the code somewhat more readable.
+
+VERSION 0.0  (DK)
+Version 0.0 was the first "hardened" release of Glass.
+It included many bugfixes to the original version, as
+delivered by CJ.
+
+The previous version of glass was v0.0 build 11.  That
+was the version released as part of the NEIC v0.0 system.
+It is in glass_b11_src.tar.gz.  Binaries for that 
+version are also available in glass/bin/v0.0
+
+Original Version
+GLASS was originally developed by Carl Johnson.  It went
+through several revisions under his control before it
+became part of the NEIC source Orthodoxy.
+The "Original Version" was the last vision delivered
+by CJ.
+
+################################################
+COMPILING GLASS
+
+Glass is a WIN32 only module.  It is not supported
+on Solaris.
+
+To compile glass, do the following:
+1)Ensure your earthworm build environment is properly
+  set up.
+2)Set the environment variable "GLASS_DIR" to the
+  base glass directory.
+   example:   c:\> set GLASS_DIR=c:\earthworm\working\glass
+
+(*NOTE:  Glass binaries are put in the Earthworm Bin directory)
+
+
+#################################################
+INSTALLING GLASS
+
+Copy the contents of the GLASS run\params directory to your
+ EW_PARAMS directory.  Modify the glass.d file to match
+ your setup.
+
+If you are not compiling glass, copy the binaries from
+the GLASS bin directory to your Earthworm bin directory.
+
+
+Add glass to your startstop.d file.
+
+Run earthworm.
+
+Good Luck!
+
+DK 072903
+
+
+#################################################
+GLASS EW MESSAGE TYPES
+Glass Message Types  ( DK 08/25/2003)
+
+INPUT
+1)PICK2K Messages.  Phase arrivals in EW PICK2K format.
+2)GLOBAL_PICK Messages.  Phase arrivals in EW GLOBAL_PICK format.
+
+OUTPUT
+Glass Exports 5 different error messages to its earthworm output ring:
+1) Status Messages.  These are error messages intended for Earthworm Statmgr
+
+2) Heartbeat Messages.  These are heartbeats intended for Earthworm Statmgr
+
+3) Quake2K - Summary  (Type 101)  These include summary information for a quake
+              GLASS is processing.
+
+4) Quake2K - Full  (Type 101)  These include information for a quake
+              GLASS is processing.  The message includes the summary line,
+              and multiple supporting station lines(in Link2K format).
+
+5) Link2K    Station data for a quake GLASS is processing.
+
+6) UnLink2K  Station data unlinking a phase from a quake GLASS is processing.
+    _snprintf(mess, sizeof(mess) - 1,
+              "%03u %03u %d %d %s %.2f %s %s %s %s %.4f %.4f %.2f %s \n",
+              ktag[2], ktag[1], ktag[3], 0, pPick->sPhase, pPick->dT, 
+              pPick->sSite,pPick->sComp,pPick->sNet,pPick->sLoc,
+              pPick->dLat, pPick->dLon, pPick->dElev, pPick->idPick);      
+    mess[sizeof(mess)-1] = 0x00;
+
+See Quake2K and Link2K details (and sample messages) below:
+
+SAMPLE MESSAGES - w/Field Descriptions
+Quake2K - Summary
+1061805749 Received <inst: 13> <mod:255> <type:101> <seq: 13> <Length:    80>
+13 255 1928 20030727020405.79 -21.0368 -176.4516 143.84  1.14  0.00  0.00 0 0
+INST MOD QuakeID   Date/Time     Lat      Lon     Depth  RMS   Dis(0) Avg(0) Gap(0) Neq
+
+Link2k
+1061805749 Received <inst: 13> <mod:255> <type:102> <seq: 20> <Length:   115>
+13 74 2349084 1928 P 1059272152.85 CMB BHZ US -- 0.07 24.06 0.27 41.89 38.0350 -120.3850 719.00 Golden0000209490
+INST MOD PickID QuakeID Phase time(sec 1970) \
+                                   Sta Comp Net Loc 
+                                                 Res TakeOffA Affinity Azimuth 
+                                                                       Lat Lon Depth GlassPickID
+
+Quake2K - Full  (Summary followed by Link2K lines, terminated by \n\n)
+1061805749 Received <inst: 13> <mod:255> <type:101> <seq: 14> <Length:  2497>
+13 255 1928 20030727020405.79 -21.0368 -176.4516 143.84  1.14  0.00  0.00 0 0
+13 74 2349051 1928 P 1059271657.75 RAR BHZ IU -- 0.37 67.19 0.05 93.64 -21.2125
+-159.7733 28.00 Golden0000209457
+13 74 2349053 1928 P 1059271721.10 SNZO BHZ IU -- -2.57 52.15 0.07 198.38 -41.31
+02 174.7046 -11.00 Golden0000209459
+13 74 2349061 1928 P 1059271863.96 TAU BHZ II -- 0.37 39.03 0.13 225.80 -42.9099
+ 147.3204 132.00 Golden0000209467
+13 74 2349062 1928 P 1059271877.45 STKA BHZ AU -- 0.61 38.47 0.13 245.01 -31.876
+8 141.5952 230.00 Golden0000209468
+13 74 2349063 1928 P 1059271861.80 PMG BHZ IU -- 1.60 39.18 0.13 282.69 -9.4061
+147.1588 65.00 Golden0000209469
+13 74 2349065 1928 P 1059271844.80 CTAO BHZ IU -- 1.53 39.86 0.12 264.77 -20.088
+3 146.2544 357.00 Golden0000209471
+13 74 2349067 1928 P 1059271933.85 KIP BHZ IU -- 0.15 35.84 0.16 24.23 21.4233 -
+158.0138 73.00 Golden0000209473
+13 74 2349069 1928 P 1059271913.09 WAKE BHZ IU -- -0.54 36.80 0.15 336.43 19.283
+3 166.6536 0.00 Golden0000209475
+13 74 2349071 1928 P 1059271930.98 POHA BHZ IU -- 0.91 36.01 0.15 28.17 19.7575
+-155.5325 1967.00 Golden0000209477
+13 74 2349072 1928 P 1059271975.49 GUMO BHZ IU -- 0.67 33.83 0.17 308.82 13.5878
+ 144.8663 135.00 Golden0000209478
+13 74 2349073 1928 P 1059271933.83 WRAB BHZ II -- -0.42 35.81 0.16 262.23 -19.93
+33 134.3501 266.00 Golden0000209479
+13 74 2349074 1928 P 1059272021.17 SBA BHZ IU -- 1.98 31.55 0.20 184.16 -77.8488
+ 166.7573 20.00 Golden0000209480
+13 74 2349076 1928 P 1059271956.92 MIDW BHZ IU -- -0.53 34.69 0.17 358.93 28.215
+7 -177.3697 -76.00 Golden0000209482
+13 74 2349077 1928 P 1059272030.36 MBWA BHZ IU -- -0.99 30.94 0.20 257.33 -21.15
+90 119.7310 194.00 Golden0000209483
+13 74 2349078 1928 P 1059272032.41 NWAO BHZ IU -- -0.80 30.84 0.20 243.45 -32.92
+69 117.2338 265.00 Golden0000209484
+13 74 2349079 1928 P 1059272129.62 UNV BHZ AK -- -1.96 25.36 0.26 6.08 53.8465 -
+166.5020 67.00 Golden0000209485
+13 74 2349080 1928 P 1059272123.49 SMY BHZ AK -- -1.67 25.76 0.25 354.04 52.7308
+ 174.1030 58.00 Golden0000209486
+13 74 2349081 1928 P 1059272145.40 SAC SHZ NC -- 0.99 24.59 0.26 41.23 37.5825 -
+122.4171 207.00 Golden0000209487
+13 74 2349082 1928 P 1059272153.65 OHCM SHZ NC -- 0.18 24.02 0.27 40.31 39.3356
+-121.4840 79.00 Golden0000209488
+13 74 2349083 1928 P 1059272095.84 QSPA BHZ IU -- 0.06 27.46 0.23 180.05 -89.927
+9 145.0000 2927.00 Golden0000209489
+13 74 2349084 1928 P 1059272152.85 CMB BHZ US -- 0.07 24.06 0.27 41.89 38.0350 -
+120.3850 719.00 Golden0000209490
+
+
+
+
+
+
+
+
+#####################################################
+Old Notes
+The source for builds 6, 6-2, and 7, should all be the same.
+Build 6-2 includes a system of makefiles for building glass
+as part of the earthworm tree.
+Build 7 is the the build 6 source built with the
+6-2 makefiles from the v0.0 machine with a new date/build
+number.
+
+Glass Message Types  ( DK 08/25/2003)
+
+INPUT
+1)PICK2K Messages.  Phase arrivals in EW PICK2K format.
+2)GLOBAL_PICK Messages.  Phase arrivals in EW GLOBAL_PICK format.
+
+OUTPUT
+Glass Exports 5 different error messages to its earthworm output ring:
+1) Status Messages.  These are error messages intended for Earthworm Statmgr
+
+2) Heartbeat Messages.  These are heartbeats intended for Earthworm Statmgr
+
+3) Quake2K - Summary  (Type 101)  These include summary information for a quake
+              GLASS is processing.
+
+4) Quake2K - Full  (Type 101)  These include information for a quake
+              GLASS is processing.  The message includes the summary line,
+              and multiple supporting station lines(in Link2K format).
+
+5) Link2K    Station data for a quake GLASS is processing.
+
+See Quake2K and Link2K details (and sample messages) below:
+
+Quake2K - Summary
+1061805749 Received <inst: 13> <mod:255> <type:101> <seq: 13> <Length:    80>
+13 255 1928 20030727020405.79 -21.0368 -176.4516 143.84  1.14  0.00  0.00 0 0
+INST MOD QuakeID   Date/Time     Lat      Lon     Depth  RMS   Dis(0) Avg(0) Gap(0) Neq
+
+Link2k
+1061805749 Received <inst: 13> <mod:255> <type:102> <seq: 20> <Length:   115>
+13 74 2349084 1928 P 1059272152.85 CMB BHZ US -- 0.07 24.06 0.27 41.89 38.0350 -120.3850 719.00 Golden0000209490
+INST MOD PickID QuakeID Phase time(sec 1970) \
+                                   Sta Comp Net Loc 
+                                                 Res TakeOffA Affinity Azimuth 
+                                                                       Lat Lon Depth GlassPickID
+
+Quake2K - Full  (Summary followed by Link2K lines, terminated by \n\n)
+1061805749 Received <inst: 13> <mod:255> <type:101> <seq: 14> <Length:  2497>
+13 255 1928 20030727020405.79 -21.0368 -176.4516 143.84  1.14  0.00  0.00 0 0
+13 74 2349051 1928 P 1059271657.75 RAR BHZ IU -- 0.37 67.19 0.05 93.64 -21.2125
+-159.7733 28.00 Golden0000209457
+13 74 2349053 1928 P 1059271721.10 SNZO BHZ IU -- -2.57 52.15 0.07 198.38 -41.31
+02 174.7046 -11.00 Golden0000209459
+13 74 2349061 1928 P 1059271863.96 TAU BHZ II -- 0.37 39.03 0.13 225.80 -42.9099
+ 147.3204 132.00 Golden0000209467
+13 74 2349062 1928 P 1059271877.45 STKA BHZ AU -- 0.61 38.47 0.13 245.01 -31.876
+8 141.5952 230.00 Golden0000209468
+13 74 2349063 1928 P 1059271861.80 PMG BHZ IU -- 1.60 39.18 0.13 282.69 -9.4061
+147.1588 65.00 Golden0000209469
+13 74 2349065 1928 P 1059271844.80 CTAO BHZ IU -- 1.53 39.86 0.12 264.77 -20.088
+3 146.2544 357.00 Golden0000209471
+13 74 2349067 1928 P 1059271933.85 KIP BHZ IU -- 0.15 35.84 0.16 24.23 21.4233 -
+158.0138 73.00 Golden0000209473
+13 74 2349069 1928 P 1059271913.09 WAKE BHZ IU -- -0.54 36.80 0.15 336.43 19.283
+3 166.6536 0.00 Golden0000209475
+13 74 2349071 1928 P 1059271930.98 POHA BHZ IU -- 0.91 36.01 0.15 28.17 19.7575
+-155.5325 1967.00 Golden0000209477
+13 74 2349072 1928 P 1059271975.49 GUMO BHZ IU -- 0.67 33.83 0.17 308.82 13.5878
+ 144.8663 135.00 Golden0000209478
+13 74 2349073 1928 P 1059271933.83 WRAB BHZ II -- -0.42 35.81 0.16 262.23 -19.93
+33 134.3501 266.00 Golden0000209479
+13 74 2349074 1928 P 1059272021.17 SBA BHZ IU -- 1.98 31.55 0.20 184.16 -77.8488
+ 166.7573 20.00 Golden0000209480
+13 74 2349076 1928 P 1059271956.92 MIDW BHZ IU -- -0.53 34.69 0.17 358.93 28.215
+7 -177.3697 -76.00 Golden0000209482
+13 74 2349077 1928 P 1059272030.36 MBWA BHZ IU -- -0.99 30.94 0.20 257.33 -21.15
+90 119.7310 194.00 Golden0000209483
+13 74 2349078 1928 P 1059272032.41 NWAO BHZ IU -- -0.80 30.84 0.20 243.45 -32.92
+69 117.2338 265.00 Golden0000209484
+13 74 2349079 1928 P 1059272129.62 UNV BHZ AK -- -1.96 25.36 0.26 6.08 53.8465 -
+166.5020 67.00 Golden0000209485
+13 74 2349080 1928 P 1059272123.49 SMY BHZ AK -- -1.67 25.76 0.25 354.04 52.7308
+ 174.1030 58.00 Golden0000209486
+13 74 2349081 1928 P 1059272145.40 SAC SHZ NC -- 0.99 24.59 0.26 41.23 37.5825 -
+122.4171 207.00 Golden0000209487
+13 74 2349082 1928 P 1059272153.65 OHCM SHZ NC -- 0.18 24.02 0.27 40.31 39.3356
+-121.4840 79.00 Golden0000209488
+13 74 2349083 1928 P 1059272095.84 QSPA BHZ IU -- 0.06 27.46 0.23 180.05 -89.927
+9 145.0000 2927.00 Golden0000209489
+13 74 2349084 1928 P 1059272152.85 CMB BHZ US -- 0.07 24.06 0.27 41.89 38.0350 -
+120.3850 719.00 Golden0000209490
+

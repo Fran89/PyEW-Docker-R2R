@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      NT_Autostart_Procedure – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/NT_Autostart_Procedure?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="NT_Autostart_Procedure.html" title="View NT_Autostart_Procedure">NT_Autostart_Procedure</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/NT_Autostart_Procedure?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/NT_Autostart_Procedure?action=diff&amp;version=16" title="Version 16 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-27T09%3A23%3A27-08%3A00&amp;precision=second" title="2012-01-27T09:23:27-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/27/12 09:23:27</span>
+          </div>
+          <div id="wikipage"><h1 id="EarthwormNTAutostart">Earthworm NT Autostart</h1>
+<p>
+(last revised 9 October, 1999)
+</p>
+<p>
+Following are steps needed to have earthworm (EW) start up automatically when a PC running Windows NT Workstation 4.0 boots up.
+</p>
+<h2 id="Overviewofthesteps">Overview of the steps</h2>
+<ol><li>Create new user 'earthworm'
+</li><li>Setup the PC so that it automatically logs in as 'earthworm' upon reboot
+</li><li>Setup EW so that it starts up every time user 'earthworm' logs in
+</li></ol><p>
+ 
+Note: Selecting menu choices is denoted as follows:
+</p>
+<p>
+Start-&gt;Programs-&gt;...
+</p>
+<p>
+This would mean that the Start menu is to be selected first, then Programs, etc.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+(1) Create new user earthworm
+</p>
+<blockquote>
+<p>
+(a) Click on Start-&gt;Programs-&gt;Administrative Tools-&gt;User Manager
+</p>
+</blockquote>
+<ul><li>User manager window should come up
+</li></ul><blockquote>
+<p>
+(b) Click on User-&gt;New User
+</p>
+</blockquote>
+<ul><li>New user window should come up.
+</li></ul><blockquote>
+<blockquote>
+<blockquote>
+<p>
+Fill in the fields:
+</p>
+<blockquote>
+<p>
+Username:    earthworm <br />
+Password:    earthworm
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>
+Make sure that the box labeled "User Must Change Password.." is
+NOT checked.
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(c) Setup groups - click on the "Groups" Icon
+</p>
+</blockquote>
+<ul><li>Groups window should come up
+</li></ul><blockquote>
+<blockquote>
+<p>
+Select all groups in the right hand screen, then click Add, then click OK. <br />
+Back in the New User window, Click OK.<br />
+Back in the User Manager, Click USER-&gt;EXIT.
+</p>
+</blockquote>
+</blockquote>
+<p>
+(2) Automatic login
+</p>
+<blockquote>
+<p>
+(a) Start the registry editor:
+</p>
+<blockquote>
+<p>
+Click on Start-&gt;Run, type  "regedt32" in the box, then click OK.
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(b) Registry editor window should open. Click the Window titled
+</p>
+<blockquote>
+<p>
+"HKEY_LOCAL_MACHINE"
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(c) HKEY_LOCAL_MACHINE window should come to the foreground. Double click on the following:
+</p>
+<blockquote>
+<p>
+Software-&gt;Microsoft-&gt;WindowsNT-&gt;CurrentVersion-&gt;WinLogon
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(d) Now we need to create and/or set some values in the registry in the right hand section of the window.
+</p>
+</blockquote>
+<ol><li> AutoAdminLogon
+</li></ol><blockquote>
+<blockquote>
+<blockquote>
+<p>
+If the AutoAdminLogon exits: <br />
+</p>
+<blockquote>
+<p>
+Double click on the AutoAdminLogon field. Enter 1 in the pop up window.<br />
+</p>
+</blockquote>
+<p>
+If the AutoAdminLogon does not exit:<br />
+</p>
+<blockquote>
+<p>
+From the EDIT pull down menu, choose AddValue.<br />
+In the pop up window, enter "AutoAdminLogon" in the ValueName box.  Choose 'REG_SZ' for the data type.  Click OK.<br />
+Enter 1 in the next pop up window; then click OK.
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<ol start="2"><li> DefaultUserName <br />
+</li></ol><blockquote>
+<blockquote>
+<blockquote>
+<p>
+Click on Edit-&gt;Add Value. A dialog box should come up. Fill in:<br />
+</p>
+<blockquote>
+<p>
+Value Name:    DefaultUserName   click OK, another window comes up. Fill in:<br />
+String:        earthworm<br />
+</p>
+</blockquote>
+<p>
+Click OK.
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>
+        
+</p>
+<ol start="3"><li>DefaultPassword <br />
+Follow the step above to add another value:
+</li></ol><blockquote>
+<blockquote>
+<blockquote>
+<p>
+Value Name:    DefaultPassword<br />
+String:        earthworm
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>
+When all is said and done, the following values whould be listed in the right hand window:
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>
+DefaultUserName     earthworm<br />
+DefaultPassword     earthworm<br />
+AutoAdminLogon      1
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(e) Click on Registry-&gt;Exit
+</p>
+</blockquote>
+<p>
+(3) Automatic Earthworm Startup during login
+</p>
+<blockquote>
+<p>
+(a) Restart the PC.  If everything in step 1 and 2 was done correctly, the PC will automatically log you in as earthworm.
+</p>
+</blockquote>
+<blockquote>
+<p>
+(b) Make sure that the EW automatic startup script exists -- it should be called something like c:\earthworm\run\params\autostart_ew_nt.cmd.
+</p>
+<blockquote>
+<p>
+Example autostart_ew_nt.cmd: 
+</p>
+<blockquote>
+<p>
+call ew_nt.cmd <br />
+call startstop.exe <br />
+</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(c) Click on Start-&gt;Settings-&gt;Taskbar
+</p>
+<blockquote>
+<p>
+Taskbar window should come up. Click on the "Start Menu Programs" tab.
+</p>
+</blockquote>
+</blockquote>
+<p>
+     
+</p>
+<blockquote>
+<blockquote>
+<p>
+Click on "Advanced". NT Explorer should come up.
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(d) By double clicking on the appropriate directories, find:
+</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+c:\winnt\Profiles\earthworm\StartMenu-&gt;Programs-&gt;Startup
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+The right hand side window under Startup should be empty.
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+(e) Create a shortcut to the EW automatic startup script: In the right hand side window, click the right button, then select New-&gt;Shortcut.
+</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+A new window should come up, in the box enter the full path to the autostart_ew_nt script, click NEXT, and then click FINISH.  OR click on Browse to select the path to the script using NT Explorer, highlight the autorestart_ew_nt.cmd, click OPEN, then NEXT, and then click FINISH.  Last.  then click OK in the TaskBar window.
+</p>
+</blockquote>
+</blockquote>
+<h2 id="NOTESOFCAUTION">NOTES OF CAUTION</h2>
+<ul><li>user earthworm must have a password in order for automatic login to work. This means that password cannot be blank.
+</li></ul><ul><li>make sure that when creating user earthworm it is added to all groups, particularly the administrator group, since earthworm will be the only user that can log in once the registry is changed.
+</li></ul><h2 id="CHANGINGEARTHWORMVERSIONANDCONFIGURATIONDIRECTORY">CHANGING EARTHWORM VERSION AND CONFIGURATION DIRECTORY</h2>
+<p>
+Whenever a new version of Earthworm is installed, or a new configu
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/NT_Autostart_Procedure?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

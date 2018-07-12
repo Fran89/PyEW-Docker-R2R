@@ -1,0 +1,204 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqalarm_ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Eqalarm_ew Configuration File Commands</H1>
+<I>(last revised 5 December 1996)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, eqalarm_ew reads the configuration file named on the command
+line.  Commands in this file set up all parameters used in issuing
+earthquake notifications.  In the control file, lines may begin with a
+valid eqalarm_ew command (listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# eqalarmMgr's configuration file
+#
+MyModuleId      MOD_EQALARM_EW  # module id for this instance of eqalarmMgr
+RingName        HYPO_RING       # transport ring for I/0
+LogSwitch       1               # 0 to turn off logging to disk
+
+# List the message logos to grab from transport ring
+#               Installation    Module          Message Type
+GetSumFrom      INST_WILDCARD   MOD_WILDCARD      TYPE_H71SUM
+
+# Read the magnitude threshold
+#
+MagThreshold    1.0
+
+# The name of the pager group to notify
+PagerGroup      seisstaffew
+
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by eqalarm_ew, grouped by the function
+they influence.  All of the commands are required; they must be specified
+in the control file in order for eqalarm_ew to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>         Earthworm system setup:
+                <A HREF=#GetSumFrom>GetSumFrom</A>	   	required
+ 		<A HREF=#MyModuleId>MyModuleId</A>	   	required
+		<A HREF=#RingName>RingName</A>	   	required
+
+	Earthquake Notification:
+		<A HREF=#MagThreshold>MagThreshold</A>		required
+		<A HREF=#PagerGroup>PagerGroup</A>		required
+
+	Output Control:
+		<A HREF=#LogSwitch>LogSwitch</A>		required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="GetSumFrom">  <!-- command name as anchor inside quotes -->
+<PRE><B>GetSumFrom <font color=red>inst</font> <font color=red>mod_id</font> 			eqalarm_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the hypocenter messages input to eqalarm_ew.  eqalarm_ew will
+only process TYPE_H71SUM messages that come from module <font color=red>mod_id</font> at
+installation <font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font> are character strings (valid
+strings are listed in earthworm.h/earthworm.d) which are related to
+single-byte numbers that uniquely identify each installation and
+module.  Only one "GetSumFrom" command may be issued; wildcards
+(INST_WILDCARD and MOD_WILDCARD) will force eqalarm_ew to process
+all hypocenter messages, regardless of their place of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  GetSumFrom  INST_WILDCARD  MOD_WILDCARD
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogSwitch">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogSwitch <font color=red>switch</font>			eqalarm_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, eqalarm_ew
+will write a daily log file(s) called eqalarm_ewxx.log_yymmdd
+where xx is eqalarm_ew's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MagThreshold">  <!-- command name as anchor inside quotes -->
+<PRE><B>MagThreshold <font color=red>mag</font>			eqalarm_config		EQ notification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the magnitude threshold for earthquake notification.  If the
+magnitude of an event is greater than or equal to <font color=red>mag</font>, eqalarm_ew
+will issue a pager message (TYPE_PAGE) describing the event.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MagThreshold 3.5
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			eqalarm_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_EQALARM_EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PagerGroup">  <!-- command name as anchor inside quotes -->
+<PRE><B>PagerGroup <font color=red>group</font>			eqalarm_config		EQ notification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls which pagers will receive event notifications.  <font color=red>group</font> is
+a character string (which may or may not be enclosed in double-quotes)
+which is registered as a "pager group" with a Pageit computer.
+<font color=red>group</font> is written to the beginning of each pager message issued.
+eqalarm_ew places the pager message into shared memory where it can be
+found by the pagerfeeder module who then sends it to a Pageit computer
+via the serial port.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  PagerGroup  beepers
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				eqalarm_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells eqalarm_ew which shared memory region to use for input/output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/eqalarm_ew.html">Eqalarm_ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

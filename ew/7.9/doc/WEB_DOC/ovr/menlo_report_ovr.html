@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Menlo_report overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Menlo_report Overview</H1>
+<I>(last revised 10 August, 1999)</I></CENTER>
+<P>
+Menlo_report is a module that writes earthquake information to disk and
+transfers it to a remote computer.  Menlo_report watches the configured
+transport ring for hypoinverse archive messages (TYPE_HYP2000ARC) and summary
+messages (TYPE_H71SUM2K).  When it finds a message of interest, menlo_report writes the message to a disk file, then copies it to the remote computer via
+"rcp".  If the rcp succeeds, the local file is removed (unless menlo_report has been configured to "KeepLocalCopy").  If the rcp fails, the local file is NOT
+removed, and an error message is sent to the statmgr.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/menlo_report_cmd.html">Menlo_report Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

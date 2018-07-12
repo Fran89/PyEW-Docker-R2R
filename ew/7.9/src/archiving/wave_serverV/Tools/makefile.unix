@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS) -I..
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+ALL: inspect_tank read_index read_struct
+
+inspect_tank: inspect_tank.o
+	$(CC) $(CFLAGS) -g -o $B/inspect_tank inspect_tank.o
+
+read_index: read_index.o
+	$(CC) $(CFLAGS) -g -o $B/read_index read_index.o
+
+read_struct: read_struct.o
+	$(CC) $(CFLAGS) -g -o $B/read_struct read_struct.o
+
+
+
+.c.o:
+	$(CC) $(CFLAGS) -g -c $(OUTPUT_OPTION) $<
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/inspect_tank* $B/read_index* $B/read_struct*

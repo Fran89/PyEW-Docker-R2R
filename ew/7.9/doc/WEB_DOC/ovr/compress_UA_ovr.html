@@ -1,0 +1,46 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P> compress_UA and decompress_UA  overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Compress_UA and Decompress_UA Overview</H1>
+<I>(last revised 9 July, 2002)</I></CENTER>
+<P>
+The compress_UA and decompress_UA modules implement the gencompress
+algorithm  which is used with permission from Boulder Real Time
+Technologies, Inc., copyright 1997.
+<P>
+Compress_UA inputs selected trace data messages (TYPE_TRACEBUF),
+compresses the samples via the BRTT algorithm, leaves the header intact,
+and outputs the resulting message as TYPE_TRACE_COMP_UA. Trace
+messages are selected via SCN names listed in the .d file. Wildcards are
+allowed.  The compressed data output can be tagged with compress_UA's
+installation_id and module_id (normal Earthworm behavior), or with the
+installation_id and module_id of the original uncompressed
+message.
+<P>
+Decompress_UA is the matching decompressor. Its output is identical to
+the input to the compressor.  As with compress_UA, decompress_UA's
+output can be tagged with its own installation_id and module_id, or
+with those of the original message.  This option allows the
+logo of the original data source to be preserved thru the compress/decompress
+operation.
+<P>
+In order to run compress_UA and decompress_UA, you must add
+TYPE_TRACE_COMP_UA message to 'earthworm.d'.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/compress_UA_cmd.html">Compress_UA Commands</A> |
+<A HREF="../cmd/decompress_UA_cmd.html">Decompress_UA Commands</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

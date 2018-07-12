@@ -1,0 +1,2092 @@
+From bogaert@gldmutt.cr.usgs.gov Tue Feb  1 10:48:18 2000
+Date: Mon, 24 Jan 2000 14:41:56 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm V4.1 Released
+
+Earthworm Version 4.1 has been released.  
+
+You can download the release from our ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1
+
+A New Earthworm_global.d can be found at
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm.
+
+A short summary of new developments is given below.  For details of module
+enhancements 
+and bug fixes, please see the release notes attached to this email or at 
+the Earthworm ftp and/or web site.
+
+MAJOR DEVELOPMENTS
+********************
+sac2hypo:  This program works only under Solaris. It reads the headers
+   of all the SAC files in the current directory and creates a 
+   Hypoinverse archive file. 
+
+tide2ew:  This program works only under NT. It listens to
+   serial line communication from the pucks which collect tide
+   data. After NumSamples for an SCN have been collected, a new 
+   TYPE_TRACEBUF message is created
+   and written to the OutRing stamped with the SCN code given
+   in the configuration file.
+
+fir: This module implements a general-purpose FIR filter for
+   trace data. Low-pass, high-pass, multi-band-pass and notch filters
+   can be specified using simple commands in the configuration file.
+   
+decimate:  Major revision. Decimate is now a multi-stage filter-decimator.
+   The filter coefficients are computed based on the decimation rate, using
+   the Remez Exchange algorithm.
+
+wave_serverV/Tools: Three tools: inspect_tank, read_index and read_struct.
+   These three tools are to help with problems in wave_serverV tank,
+   index and structure files. These are primarily for development work.
+  
+ring2sac: Writes continuous sac files given a list of Station, Component,
+   Network names.  This software is contributed by University of Utah 
+   Seismograph Station.  
+
+trig2disk/waveman2disk:  Both modules can create SAC format file running under 
+   NT andcreate PCSUDS format files under NT.
+
+EARTHWORM DOCUMENTATION
+******************************
+The Earthworm web site has been upgraded to be consistent with
+Version 4.1. 
+
+CONTRIBUTED SOFTWARE
+********************
+Many Earthworm modules have been developed at regional networks to meet 
+their specific needs.  Since some of these may be useful to other 
+networks, we make these available at the Earthworm ftp site in the 
+Contributed_software directory.  Currently, you will find modules 
+developed at USGS Menlo Park, University of Memphis,  University of 
+Washington and University of Alaska, Fairbanks.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+
+
+    [ Part 2, Text/PLAIN  263 lines. ]
+    [ Unable to print this part. ]
+
+From bogaert@gldmutt.cr.usgs.gov Mon Feb  7 11:25:28 2000
+Date: Mon, 07 Feb 2000 11:30:59 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm V4.1 Patch A
+
+V4.1 Patch A has been released.  If you want to run the Earthworm module,
+"trig2disk", you will need to load this patch.  
+
+You can download the patch from our ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1A
+In this directory is a README describing the procedure for installing Patch A.
+
+Wave_serverV Note:
+
+The configuration file for v4.1 of Wave_serverV had an incorrect comment
+for parameter, 'ClientTimeout'.  A revised wave_serverV.d can be found in
+the above ftp directory.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+
+From kent@giseis.alaska.edu Mon Mar  6 16:31:19 2000
+Date: Mon, 06 Mar 2000 13:11:48 -0900
+From: "Dr. Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: Richard Baldwin <baldwin@pgc.nrcan.gc.ca>
+Cc: earthw-list@nmt.edu
+Subject: Re: maximum message size
+
+Richard Baldwin wrote:
+> 
+> Hello all,
+> 
+> A simple question:
+> 
+>     Is there a maximum allowable size for an earthworm message, regardless of
+>     the MSG_LOGO? Such a beast would be very handy for allocating buffers that
+>     could handle any possible message that might come in, avoiding altogether
+>     the error GET_TOBIG.
+> 
+> Thanks,
+> 
+> Richard
+
+The other way to go is to consider dynamic memory allocation, i.e.
+allocating the amount of memory you need for each message as it comes
+in. This has become a fairly standard technique. Dynamic memory
+allocation offers a number of advantages, for example you don't risk
+crashes or data loss if a message comes in that is too big for a
+pre-allocated buffer. This makes a more robust system: it's not good to
+have software that crashes if it gets data it didn't expect. Of course,
+it is possible with correct handling of a GET_TOOBIG return code that
+the software will merely lose data rather than crash. However, fully
+dynamic memory allocation can avoid even this lesser evil of data loss.
+Having a parameter that sets the maximum allowable size of a message is
+not ideal because that parameter either has to be compiled in (through a
+.h file or whatever) or specified in a parameter file. The first option
+permanently removes flexibility from the software package by arbitrarily
+and unnecessarily limiting the packet-sizes allowable to the end user.
+The parameter-file option reinstates that flexibility, though putting
+maximum packet size in the parameter file in essence makes the end user
+partially responsible for memory allocation. The software engineer
+should take full responsibility for this level of detail, though, rather
+than leaving part of the task to the user or leaving the system with
+restricted functionality. Therefore I'd recommend looking into removing
+all traces of statically allocated buffers and replacing them with fully
+dynamic allocation mechanisms. 
+
+Good luck,
+Kent
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+http://giseis.alaska.edu/Seis/Input/kent/kent.html
+From bogaert@gldmutt.cr.usgs.gov Fri Mar 17 17:38:15 2000
+Date: Thu, 16 Mar 2000 16:43:37 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm Status Report
+
+
+Earthworm Status Report
+3/16/2000
+
+V4.1 Patch B
+************
+Earthworm V4.1 patch B has been released.  It fixes a bug in trig2disk. The
+problem was that SAC files would not be written correctly when running on NT.
+The Patch can be retrieved from the Earthworm ftp site:
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1B
+
+
+New Modules:
+************
+The following modules will be released as part of Earthworm V5.  Earthworm V5
+will be released in April 2000.
+
+LISS2EW:
+Liss2ew is the earthworm module for receiving trace data from the Live Internet
+Seismic Server. The LISS is a protocol that provides trace data in mini-SEED
+format in near-real-time over an IP link. The liss2ew module will connect to
+one LISS, read selected streams of trace data, and write that trace data into
+the earthworm transport ring. 
+
+EW2LISS:
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS (Live
+Internet Seismic Server) format. The ew2liss module will convert selected SCNs
+(station-component-network) of trace data from an Earthworm transport ring,
+convert that data to miniSEED format, and serve the data to a single LISS
+client (such as liss2ew) over a IP network connection. 
+
+On-going Developments
+********************
+Kinemetrics K2 Integration:
+A suite of modules is being developed for inputting continuous waveform and SOH
+data from a Kinemetrics K2 data logger into the Earthworm system.  These module
+are based on code developed by ISTI under contact to the USGS.  The modules
+will be able to run under NT and Solaris, and receive data either over a serial
+link to the K2 or over an IP link via the host machines network connection and
+a IP-terminal server connected to the K2.   Completion is expected before the
+end of May.
+
+Mini-seed archiver:
+Lamont-Doherty Cooperative Seismographic Network has contracted with ISTI to
+develop a module, ew2mseed,  which will be capable of writing continuos
+mini-seed files for archiving and distribution.
+
+DBMS
+*****
+Starting with the release of Earthworm v5 in April 2000, Earthworm will contain
+an OPTIONAL Server Package. This server currently consists of an Oracle DBMS
+(Standard Edition), a web server, and a map server. The initial suite of
+functions of this server are fairly minimal, but the idea is that the
+infrastructure is in place, and we will be in position to produce additional
+capabilities relatively rapidly.
+                Note that the Server Package is not required to run the
+Earthworm system. If no DBMS server is available, all Earthworm functions will
+continue to operate as before, and will be supported and enhanced as before.
+There will, however, be a growing suite of features which will be available
+only if a Server is available.
+
+The initial set of DBMS-based server features, available in Earthworm v5, are:
+
+        * The DBMS is presumed to be a network-based service. That is, the DBMS
+server may reside in the local Earthworm computer, in another computer at the
+installation, or at a remote site. 
+
+        * All event data, both parametric and waveform, known to the local
+Earthworm system can be loaded into the agreed-upon DBMS servers as it is
+computed (or received).
+
+        * An Earthworm system can send real-time data to any number of DBMS
+servers (local or distant).
+
+        * A DBMS server can accept real-time data from any number of Earthworm
+(or other) systems.
+
+        * A DBMS server can support any number of concurrent, authorized
+clients.
+
+        * All data feeds from a local Earthworm system to any DBMS servers are
+under exclusive control of the local Earthworm configuration.
+
+        * The DBMS server supports a web site offering 'real-time', interactive
+seismicity maps. The maps, and the associated pages, provide graphic access to
+event, trace, and station data in the DBMS.
+
+        * Event and station data, including instrument response, can be pushed
+to a browser client in SAC format. Other formats will be incorporated.
+
+        * Re-analysis of events using SAC and re-insertion of updated events
+into the Database.  SAC will be augmented with other analysis tools, including
+Jiggle (as developed at USGS, Pasadena ). 
+
+        * Archiving of parametric and waveform data.
+
+        * Manual event creation. This permits an authorized user to declare an
+event location and radius of interest. The server will then search for all
+available stations within the specified radius, acquire the relevant portions
+of trace data, and insert them into the DBMS.
+
+
+From chris@seismo.usbr.gov Fri Apr 14 14:51:26 2000
+Date: Fri, 14 Apr 2000 15:38:06 -0600
+From: Chris Wood <chris@seismo.usbr.gov>
+To: earthw-list@nmt.edu
+Subject: POSIX port of earthworm v4.1B available for testing
+
+For those interested in such things, we ported the Solaris version
+of earthworm 4.1B to be POSIX-compliant.  The source is available at:
+	ftp://ftp.seismo.usbr.gov/pub/outgoing/v4.1_unix.tar.gz
+
+The code is alpha-level.  It has NOT been extensively tested, but
+most modules were tested with the standard test data set, or with some
+locally digitized data.  Test parameter files and data are available at:
+	ftp://ftp.seismo.usbr.gov/pub/outgoing/run_test_unix.tar.gz
+
+Most Unix vendors claim to be POSIX-compliant, so the code should
+run on those systems with few changes.  Of course, vendors sometimes
+exaggerate.  The code has currently been tested only on SGI machines.
+
+If anyone is interested in working on validating the code on Solaris
+or other POXIX platforms (Linux?), please contact me by email or phone.
+I don't have ready access to machines besides HP, SGI, and Linux, but
+am willing to work with others who do.
+
+Attached is an updated copy of an announcement handed out at the CNSS
+meeting that has some more details.
+
+ -Chris
+
+-- 
+
+ Chris Wood	Geophysicist
+		USBR Seismotectonics & Geophysics Group, Denver CO
+		Internet:  chris@seismo.usbr.gov
+		Voice:  (303) 445-3187
+
+From withers@ceri.memphis.edu Thu Jun  8 15:35:58 2000
+Date: Wed, 3 May 2000 12:34:24 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: cnss-list@nmt.edu
+Subject: CUS ANSS
+
+
+Initial Planning for Implementation of the Advanced National Seismic
+System in the Central U.S.
+
+For those who don't read manuals: meeting on 5/31/00 (see last paragraph).
+
+As you may already know, the Advanced National Seismic System is an
+initiative to organize, modernize, and standardize operation of
+seismic networks in the United States.  It is a cross-disciplinary
+effort designed to meet the needs of the Nation, while maintaining
+local interests and expertise.  A meeting of the interim national
+oversight committee was held in Albuquerque on February 29, 2000
+and a management structure was proposed.  Details can be found
+at http://pasadena.wr.usgs.gov.
+
+One conclusion of the interim national committee was the need
+for no more the six or seven regions and that these regions
+should self-organize.  Regions are formed by local interested
+parties developing an implementation plan and submitting this
+to the national committee.  When this plan meets the goals and
+standards of the ANSS the region is established.  It is essential
+that a broad community has access to any regional plan and
+that there be suitable mechanisms for comment.
+
+To this end, several parties with interest in the Central U.S.
+met on April 18, 2000.  This meeting had minimal lead time
+and participants were selected for convenience and association
+with specific disciplines.  The meeting summary is available
+at http://www.ceri.memphis.edu/CUSSN.  This url is temporary
+until we find a more permanent home. It is hoped that as many
+people and organizations will provide feedback as possible. Particularly
+in the central U.S. participation must include a wide and
+diverse group.  However, for practical and fiscal reasons,
+it is desirable to keep the core group as small and representative
+as possible.  An interim regional subcommittee has been formed and
+will meet in conjunction with EERI at the Saint Louis Adams Mark
+Hotel at 1PM on May 31, 2000 (see the CUSSN url for details).  This
+meeting will be open to any interested parties.
+
+Mitch Withers
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+
+From withers@ceri.memphis.edu Thu Jun  8 15:16:48 2000
+Date: Wed, 7 Jun 2000 05:25:02 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: EW Community Center
+
+
+Seems there are several problems with the earthworm community and I
+propose a Community Center to address them.
+
+1) The Earthworm Advisory Board is impotent.  Besides we have greater
+   need for a mechansism for experienced wormers to provide assistance
+   to others.
+
+2) Earthworm Central appears to some to be cliquish and unresponsive.
+   In fact, it is a well-tuned team that we shouldn't try to fix
+   and they are much too overwhelmed with tasks from their supervisors
+   to be responsive to the entire, growing community.  We need the
+   community to be responsive to the community.  Tasks desired by
+   the community can get community volunteers to do them rather than
+   let these tasks fall off the end of earthworm central's todo list.
+
+3) No more splinter groups please.  Gnu doesn't have splinter groups
+   and neither should we.  Splinter groups are equivalent to wasted
+   redundant resources and we all lose.
+
+4) Documentation is annoyingly incomplete or wrong.  So stop whining
+   about it and submit better documentation to the Community Center.
+   Then we'll check it and fold it into the official release.
+
+5) Earthworm doesn't do what I want.  I need CSS or SEGY format data.
+   So stop whining about it, write a subroutine, and submit it to
+   the community center.  It will be checked, then, if appropriate
+   incorporated into the official release or a contributed directory.
+   But keep in mind that if it is a module to process Yack grunts for
+   earthquake prediction in Diego Garcia, then it is unlikely others
+   will want it nor will it clutter the official release.
+
+6) Too many sponges and not enough contributors.  That's partly because
+   you gotta be in the clique to contribute.  Let's open it up and
+   contribute to the Community Center.
+
+7) This implies that the Community Center will have "counselers."  If
+   your code stinks, or doesn't follow the rules, or requires rewriting
+   tons of other modules and libraries, don't expect it to get put in
+   an official release and don't get offended.  Just try it again. You
+   will be at the mercy of the "counselers."
+
+8) Beats me how this is going to work, but using the earthw-list more is
+   a start.
+
+Mitch Withers
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+
+
+From kent@giseis.alaska.edu Thu Jun  8 15:18:03 2000
+Date: Wed, 07 Jun 2000 09:52:13 -0800
+From: "Dr. Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: Mitchell M. Withers <withers@ceri.memphis.edu>
+Cc: earthw-list@nmt.edu, Dr. Kent Lindquist <kent@giseis.alaska.edu>
+Subject: Re: EW Community Center
+
+"Mitchell M. Withers" wrote:
+> 
+> 
+> 5) Earthworm doesn't do what I want.  I need CSS or SEGY format data.
+
+Hello,
+
+We had the same problem, so in 1995 I wrote a module called css_report
+to solve this. The css_report module stores parametric and segmented
+waveform data in CSS format. In 1996 I wrote a companion module called
+archiver which stores all continuous waveform data in both CSS and
+optionally AH or SAC format. I submitted both of these to the earthworm
+team on several occasions from 1995 onwards, keeping the modules up to
+date with the latest earthworm releases. Perhaps these modules would
+help you meet your needs.
+
+Good luck,
+Kent
+
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+http://giseis.alaska.edu/Seis/Input/kent/kent.html
+From steve@geophys.washington.edu Thu Jun  8 18:29:34 2000
+Date: Thu, 8 Jun 2000 18:22:34 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: EW Community Center - comments
+
+
+A reaction to Mitch Wither's Jun 8 note:
+
+Mitch Withers raises some interesting issues, most of which I agree with.  
+However, the solution to the problems he sees is not obvious.  The original
+intent of the Earthworm Advisory Board was to help accomplish some of the
+things that Mitch sees as problems but, for what ever reasons, it has not done
+much more than set up a WEB page for documentation, a list-serve address and
+encourage the original earthworm team to generate some documentation.  These
+were all good objectives and useful accomplishments but it doesn't seem to be
+enough to result in what Mitch is hoping for.
+
+I interpret in Mitch's e-mail a desire for a better way to document and share
+what is already available and to coordinate the inclusion of new features or
+modules into the "official" release.  I agree with him that there is a great
+need but am not sure what the EW community center is or could be.  How would
+this work?  A neighborhood community center has a staff who schedule meetings,
+maintain the bulletin boards, mailing lists and newsletters, arrange for
+building maintenance and keep order when rowdy kids come to use the B-Ball
+court.  Where is such a staff for the EW Community Center?  It seems to me
+that this MUST be someone the USGS must come up with. This must be someone who
+is knowledgeable about computers, seismic data, maybe earthworm, but most
+importantly this person must understand the way community development of
+software can work.  It seems that those in the earthworm inner sanctum and/or
+their bosses are not followers of Richard Stallman or Linus Torvalds.
+
+Besides hoping that the USGS (who is that really) will come to see the value
+in having such a person the rest of us can help right now.  Mitch's number 8
+point suggests that the "earthw-list@nmt.edu" can be used more.  I agree.
+Looking at its archive (http://www.cnss.org/EWAB/earthw) I see less than 40
+entries in almost 4 years from only about a dozen different people.  A regular
+contributor to this list is Kent Lindquist who has provided several useful
+suggestions and programs in the past and who has provided the only response
+that Mitch's note so far.  So, what about the rest of you 65 subscribers to
+the earthw-list?  Lets hear some reaction.
+
+I, for one, would also like to hear some reaction to the Apr. 14 note from
+Chris Wood on a POSIX version of earthworm.  It seemed like a really good idea
+to me to support such a thing, but these seems to be no reaction from anyone.  
+Mitch calls for no splinter groups. OK, but if there is no interest in
+cooperating with someone who has spent a lot of effort to provide an upward
+compatible POSIX port (and supposedly fix a bunch of basic bugs too) why
+should those needing POSIX to run on HP or Linux or what ever not go their own
+splinter group way?  Why is the inner sanctum ignoring the whole thing?
+
+For my part I will continue to maintain the EWAB WEB pages and include any
+earthw-list messages in its archive.  I will also make any changes to the way
+these pages work, what gets included, how the documentation is updated or
+displayed, or any other suggestions that are sent my way.  HOWEVER, they
+should be sent to the earthw-list first so that everyone can see and comment
+on suggested changes.
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+
+
+From chris@seismo.usbr.gov Mon Jun 12 16:09:39 2000
+Date: Fri, 9 Jun 2000 19:58:50 -0600
+From: Chris Wood <chris@seismo.usbr.gov>
+To: earthw-list@nmt.edu
+Subject: Re:  EW Community Center, POSIX compliance comments
+
+I certainly support Mitch Withers' comment that splinter groups are
+inefficient, and that the earthworm community should volunteer to get needed
+jobs done without relying on an overtasked Earthworm Central (EC).  And I agree
+that EC simply has too much on their plate to always be responsive to the
+entire earthworm community.
+
+Perhaps a better way is needed to facilitate the community's efforts to help
+themselves.  There seem to be many capable volunteers writing code, carrying
+out community tasks, and contributing useful additions to earthworm.  But it
+also seems that some of that work goes unexamined, unrecognized, and unused.
+ Mitch Withers' request for a CSS/SEGY formatter, and Kent Lindquist's response
+that he wrote one in 1995 and submitted it to EC (with updates), seems to
+confirm this (or at least confirms the need to use the list more often).
+
+Given the over-extension of EC, we waste scarce resources if the needed work of
+capable community volunteers is "lost" before it can be incorporated into the
+distribution.  Perhaps it's just a problem managing resources.  If the
+community is to substantially contribute to the development of the code, and if
+a single group is to maintain the distribution, then there needs to be an
+effective mechanism to get the community's enhancements into the distribution
+in a timely way.  Steve Malone's idea for a Community Center manager at EC who
+would be responsible for fostering community development of the code is worth
+pursuing.  Perhaps the EAB could also look at establishing processes and
+standards for handling the community's contributions.
+
+The POSIX version of earthworm is not meant to be an exercise in splinter
+groups.  Just the opposite.  It is to allow earthworm to run on additional UNIX
+platforms without requiring a separate code base, and without requiring USGS to
+support anything beyond the NT and Solaris platforms.  The idea is to replace
+the proprietary Solaris API with the industry-standard (and Solaris-supported)
+POSIX API.  Developing (or advocating) standards-based code for open source is
+usually a "good thing" - and not necessarily the sole domain of disaffected
+splinter groups.  The same can be said about the need to address computer
+security issues.
+
+The POSIX effort was also not done in a vacuum.  It began after meetings with
+EC and their managers last year.  Since we were the ones needing earthworm on a
+non-Solaris platform (SGI) we did the work (in keeping with the self-help
+principle).  Providing NEIC and others with our data was a significant
+motivation for us to run earthworm.  In return, we asked the EC to incorporate
+the changes so we would not have to maintain a splinter version of the code.
+ EC's help was needed to validate the code, and to provide access to their
+production environment to ensure that the POSIX version under Solaris
+functioned properly.  Again, we expected to do much of that work.
+
+The (alpha) version of the POSIX code was released in April, even though not
+fully implemented on Solaris (and certainly not ready for production).  This
+was done to share progress with other developers (and to get feedback,
+suggestions, or patches from those who wanted to dive in).  Also, it appeared
+that there would be some delay before EC would be able to work with us, and I
+didn't want to go much further until they could.
+
+The state of the POSIX code today is pretty much where it was in April:  it
+runs on SGI, but compiler flags, etc. aren't yet set up for POSIX under
+Solaris. Security issues have also not been thoroughly examined, but the code
+appears to be vulnerable to certain spoofing, DoS, and other attacks.  This
+applies to both the distribution and POSIX versions.  Several people have
+worked on porting to Linux.  With the release of version 5, I'm hopeful that EC
+may have some breathing room to work with us and others on a POSIX compliant
+earthworm, and that this effort can be completed fairly quickly.
+
+
+
+-- 
+
+ Chris Wood	Geophysicist
+		USBR Seismotectonics & Geophysics Group, Denver CO
+		Internet:  chris@seismo.usbr.gov
+		Voice:  (303) 445-3187
+From: aln@ccr.jussieu.fr (Alexandre NERCESSIAN)
+Message-Id: <200006091118.e59BIxt57824@moka.ccr.jussieu.fr>
+To: earthw-list@nmt.edu
+Subject: POSIX ew
+
+I reported as soon as 19 or 20 th of april my success in installing
+the Chris Wood's port on Linux Intel machine (directly to Chris and not
+to the list). Since it seems to interrest more people I report it to
+the list now.
+
+Concerning the discussion of the last days, I can understand how difficult
+it is to keep coherency in the developpement of such a rich collection
+of codes as ew.  For ad hoc purpose, I wrote and modified several modules
+but in a way which is not "ew clean" and wich are not ready to be
+released to the communauty. Amoung the things which are of interrest for me:
+Physical parametrization of the picker (removing hard coded references
+to 100hz sampling rate).
+
+Another back end to the eqproc suite (more adequate to volcanic networks
+where the difference of altitude is of the same order as the distance
+between stations).  All that requires a lot of testing and once it works,
+it is useless without a proper documentation which is not the easiest part.
+
+Alexander Nercessian IPGP Paris France
+aln@ccr.jussieu.fr
+nerces@ipgp.jussieu.fr
+
+
+----- End Included Message -----
+
+From pechmann@seis.utah.edu Fri Jun  9 11:20:10 2000
+Date: Fri, 9 Jun 2000 11:09:15 -0600 (MDT)
+From: James C. Pechmann <pechmann@seis.utah.edu>
+To: earthw-list@nmt.edu
+Cc: ali@seis.utah.edu, pechmann@seis.utah.edu
+Subject: Comments on POSIX compliant earthworm version
+
+     As requested by Steve Malone, here are our comments on Chris
+Wood's POSIX compliant version of earthworm.
+
+     We applaud Chris Wood and the USBR for their work in putting
+together a POSIX compliant version of earthworm and fixing some bugs
+that they discovered in the process.  We don't have any immediate need
+for this new version of earthworm at the University of Utah, because
+we use Solaris as our main operating system.  Nevertheless, we encourage
+the earthworm team to consider adopting the POSIX compliant version of
+earthworm as the basis for future releases.  The reduced platform
+dependence of the POSIX compliant earthworm code would increase the
+number of potential earthworm users and allow all users the flexibility
+to choose different operating systems in the future.  And certainly,
+any bug fixes are valuable contributions which should be incorporated
+into future official versions of earthworm--whether or not the
+earthworm team decides to make these versions POSIX compliant.
+
+--Jim Pechmann and Ali Moeinvaziri
+  University of Utah
+From aster@dutchman.nmt.edu Mon Jun 12 17:37:44 2000
+Date: Mon, 12 Jun 2000 11:30:25 -0600 (MDT)
+From: Rick Aster <aster@dutchman.nmt.edu>
+To: earthw-list@nmt.edu
+Subject: V5.0
+
+	Hi Earthwormers,
+
+	A message relayed from Barbara Bogaert...
+
+Earthworm V5.0 Release
+**********************
+6/12/00
+
+V5.0 Is Released
+****************
+It can be retrieved from the Earthworm ftp site
+ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.0
+
+
+New Features of EW V5.0
+***********************
+Earthworm v5.0 contains an OPTIONAL Server Package. This server consists of:
+        *  a DBMS Server (Oracle v8, Standard Edition), 
+        *  a web server (Apache), and 
+        *  a map server (based on GMT). 
+The initial suite of functions of this server are fairly minimal, but the idea
+is that the infrastructure is in place, and we will be in good position to
+produce additional capabilities.
+                Note that the Server Package is not required to run the
+Earthworm system. If no DBMS server is available, all Earthworm functions will
+continue to operate as before, and will be supported and enhanced as before.
+There will, however, be a growing suite of features which will be available
+only if a Server is available.
+
+The initial set of DBMS-based server features are:
+        * The DBMS is presumed to be a network-based service. That is, the DBMS
+server may reside in the local Earthworm computer, in another computer at the
+installation, or at a remote site. 
+        * All event data, both parametric and waveform, known to the local
+Earthworm system can be loaded into the agreed-upon DBMS servers as it is
+computed (or received).
+        * An Earthworm system can send and/or accept real-time data to/from any
+number of DBMS servers (local or distant).
+        * A DBMS server can support any number of concurrent, authorized
+clients.
+        * All data feeds from a local Earthworm system to any DBMS servers are
+under exclusive control of the local Earthworm configuration.
+        * The DBMS server supports a web site offering rapid-response,
+interactive seismicity maps. The maps, and the associated pages, provide
+graphic access to event, trace, and station data in the DBMS.
+        * Event and station data, including instrument response, can be pushed
+to a browser client in SAC format. Other formats will be incorporated.
+        * Archiving of parametric and waveform data.
+
+For additional information about the Server Package, or for installation
+assistance, please contact me.
+
+OTHER NEW MODULES
+*****************
+
+LISS2EW
+Liss2ew is the earthworm module for receiving trace data from the Live Internet
+Seismic Server. The LISS is a protocol that provides trace data in mini-SEED
+format in near-real-time over an IP link. The liss2ew module will connect to
+one LISS, read selected streams of trace data, and write that trace data into
+the earthworm transport ring. 
+
+EW2LISS
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS (Live
+Internet Seismic Server) format. The ew2liss module will convert selected SCNs
+(station-component-network) of trace data from an Earthworm transport ring,
+convert that data to miniSEED format, and serve the data to a single LISS
+client (such as liss2ew) over a IP network connection. 
+
+
+CONTRIBUTED SOFTWARE
+**************************
+
+The contributed software can be found at 
+        ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.0
+
+UNIVERSITY OF UTAH:
+REFTOEW: Reftoew collects data from a UNR RefTek Data Server, a disk file or
+an  Earthworm transport ring.  The data (DT) packets are forwarded to the
+Earthworm Transport layer as TRACE_BUF format packets and optionally written to
+disk as binary SAC files.
+
+VOLCANO PROGRAM:
+The wonderful people at CVO have modified Carlsubtrig, Trig2disk,
+Heli_standalone, and Sgram for the greater flexibility required in the volcano
+networks.
+
+CARLSUBTRIG: Many new options regarding how subnets are triggered and which
+stations are saved.
+
+TRIG2DISK:  Functions Putaway.c SudsPutaway.c and AhPutaway.c were modified to
+use the named subnets now supplied by Carlsubtrig in naming the directories.
+
+HELI_STANDALONE:  Ported to NT. 
+
+SGRAM: Ported to NT. 
+
+In addition, an NT-based Earthworm interface has been developed by CVO, which
+replaces startstop, statmgr, and provides a GUI interface to various Earthworm
+functions. 
+
+From withers@ceri.memphis.edu Sun Jun 18 14:18:34 2000
+Date: Fri, 16 Jun 2000 15:26:26 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: www.earthworm.org
+
+
+Okay so what I'm hearing is that several people have things they
+would contribute if they could and have suggestions for the
+todo list.  I'm also aware of developments out there that others
+may not be.  Plus the contrib needs to be updated.  I propose
+that we morph the current Earthworm pages into something more like
+a www.earthworm.org.  It should have at least these sections.
+
+1) Current Earthworm pages
+
+2) prominent sign up for earthw-list
+
+3) prominent contrib
+
+4) mechanism to add to contrib
+
+5) 'wish' list of desired functions.
+
+6) 'work in progress' list with names associated with who is taking the
+lead on each task and when it is project to be completed.
+
+7) bug reports
+
+8) mechanism to add to the 'work in progress' list
+
+9) wild ones section for the yak grunt processing modules that I referred
+   to in my June 7 email.
+
+We all know that Steve Malone doesn't type as fast as he used to
+so we will need to either move the current earthworm page or allow
+access for a webmaster.  I've dabbled in html so can volunteer
+to help with this (hosting and/or helping).  Or we may
+wish to pawn this off on earthworm central or the NEIC if they have the
+staff to do it.
+
+Then, the web master is going to need a corps of knowledgeable
+people that he/she can farm out requests and jobs to
+(e.g. John Doe thinks yak grunts should be on the todo list,
+what do I do?  or Jane Doe wrote a very cool global associator
+who wants to test and check the code?).
+
+More candidates for the todo list include DBMS tools (e.g. ora2seed),
+infrastructure applications (e.g. import/export resend capability),
+quick dbms linked event review, dbms linked picker/locator revisor,
+convenient dbms populater ala dbe.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+
+
+From steve@geophys.washington.edu Tue Jun 20 08:17:03 2000
+Date: Mon, 19 Jun 2000 19:00:14 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: A reply to: www.earthworm.org
+
+Mitch calls for some actions.... So I have taken a few in response as a
+beginning of a morph.  However, I also think that some of this may be too much
+effort to make much real real improvement at this time.
+
+On Fri, 16 Jun 2000, Mitchell M. Withers wrote:
+
+> 
+> Okay so what I'm hearing is that several people have things they
+> would contribute if they could and have suggestions for the
+> todo list.
+	I am not sure what Mitch is hearing but as far as I know there have
+been, unfortunately, few responses to his original suggestion.  Ie, at least
+publically there seems to be little new to contribute.
+
+>  I'm also aware of developments out there that others
+> may not be.  Plus the contrib needs to be updated.  I propose
+> that we morph the current Earthworm pages into something more like
+> a www.earthworm.org.  It should have at least these sections.
+	What is in a name.  The current pages are one level below www.cnss.org
+and seem to have much of what he wants.  Of course one can set up another
+first level domain (takes quite a bit of effort to regester this, find domain
+name servers to handle it and does cost every year) but I don't think that
+would generate any more participation.
+	So for the details:
+> 
+> 1) Current Earthworm pages
+	OK, we got them
+> 
+> 2) prominent sign up for earthw-list
+	I have changed the pages to make this more obvious, but there are
+already over 60 people on it, almost none of whom seem to care.
+> 
+> 3) prominent contrib
+	I assume "contrib" here means earthworm modules, source, software,
+etc.  This now exists at the Golden earthworm FTP site but is not at all
+effective.  There is no documentation to what is there and no list.  One must
+paw around in the individual directories to find anything.  I agree that this
+needs a proper way of handling it.  In fact the main releases need a better
+way of providing them so that one can see the details rather then just the
+whole package and previous releases should be kept available as well.
+Maybe we just just rip this contrib stuff out of Golden and run it separately.
+
+> 
+> 4) mechanism to add to contrib
+	Good point.  I guess one sends stuff to Alex or Barbara and it gets
+put in there if one askes.  Don't know for sure and not explained anywhere.
+
+> 
+> 5) 'wish' list of desired functions.
+	It seems that the earthw-list might be a good place to start this and
+see if anyone wishes anything.  If so, it would be pretty easy to suck them
+out of the e-mail into a WEB list and formalize the process if it actually
+gets started.
+
+> 
+> 6) 'work in progress' list with names associated with who is taking the
+> lead on each task and when it is project to be completed.
+	Good idea. I again suggest that until the earthw-list has more than
+one message a month this is a good place to start.  Anyone working on
+anything?
+
+> 
+> 7) bug reports
+	Of course there are no bugs, but OK
+> 
+> 8) mechanism to add to the 'work in progress' list
+> 
+> 9) wild ones section for the yak grunt processing modules that I referred
+>    to in my June 7 email.
+> 
+> We all know that Steve Malone doesn't type as fast as he used to
+> so we will need to either move the current earthworm page or allow
+> access for a webmaster.  I've dabbled in html so can volunteer
+> to help with this (hosting and/or helping).  Or we may
+> wish to pawn this off on earthworm central or the NEIC if they have the
+> staff to do it.
+	Actually, I type much faster than I used to (and grunt like a yak as I
+do it), but have way more things to type and so do not mind help at all.  
+Also, I think I have kept up pretty well with everything I am asked to do
+regarding the WEB pages.  I don't edit the documentation (other than the first
+round), but Barbara, Lyn Dietz, and Pete Lombard have updated some of it from
+time to time.  If there are changes that should be made, send them my way and
+I will make them.
+	 I would be very glad to set up access to ANYONE, particularly Mitch,
+to jump in and add to, change or generally mess up what is on the WEB server
+here now. I can set up an access account if you ask.  Or, I am happy to
+transfer the whole thing to anyone else as well.  As the WEB page says, the
+entire directory structure for everything at www.cnss.org/EWAB
+is available as a tar file on our FTP server.  It is updated weekly so anyone
+can grab it to morph away any way you you like.
+
+	However, based on the response to these notes thus far, there seems
+little interest out there in having the earthworm organization work any better
+than it is.  Its a top down thing and few want to take any time to contribute
+or even comment on whats going on.  Thus taking much effort to change the
+WEB/list-server stuff is probably a waste of time.  I hope not, but....
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+	
+
+
+From steve@geophys.washington.edu Tue Jun 20 12:49:11 2000
+Date: Tue, 20 Jun 2000 08:35:56 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: Ali Moeinvaziri <ali@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: k2ew
+
+Ali,
+	Sorry about the delay getting back to you.  Yes, we are running the
+"k2ew" code over an IP link using an MSS100 terminal server.  It is working
+(mostly).  Pete Lombard (living in Berkeley and consulting for USGS and us
+<lombard@geophys.washington.edu>) is the current developer of this code and
+would be the best to provide it to you directly.  Of course, one would hope
+that a central FTP site would have such development code available to anyone
+who wanted to test it, but for now check with Pete.
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+On Thu, 15 Jun 2000, Ali Moeinvaziri wrote:
+
+> 
+> Steve,
+> 
+> Where can I get my hands on k2ew source code that works with terminal servers?
+> 
+> I just down loaded the new version of ew (5.0, including its upgrade), but
+> I don't seem to find k2ew in there. There is an old version of it (which
+> requires a com port of a pc) under Meno contributed source code.
+> 
+> Thanks for your help,
+> -AM
+> 
+
+
+From bogaert@usgs.gov Thu Jun 22 13:36:08 2000
+Date: Tue, 20 Jun 2000 12:08:25 -0600
+From: Barbara Bogaert <bogaert@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>,
+     Ali Moeinvaziri <ali@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: k2ew
+
+Ali,
+
+The K2EW software is currently available on the machine gldrocky at Golden
+in working directory. You have an account on that system.  If you have any
+problems accessing the software, let me know.
+
+The K2EW software has been made available to the participants of the USGS
+Strong Motion Urban Upgrade Project (NCSN, PNSN, UUSN).  Since it is  not
+fully tested I have not made it available via the Earthworm ftp site.
+However, if anyone is interested in using the development version, please
+contact me at bogaert@usgs.gov.
+
+- Barbara
+From steve@geophys.washington.edu Wed Jun 21 16:48:35 2000
+Date: Wed, 21 Jun 2000 16:44:47 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: Three questions for al earthwormers
+
+
+I have three problems/questions maybe someone out there can help with:
+
+1. A way to get state-of-health from refteks using PPP with a 422 card and
+rtpd. In particular we need to know if the GPS clock is locking when it
+should.  Right now we have no way of knowing this info without visiting the
+site.
+
+2. Some reasonable way to reconfigure waveservers to change paramters, add
+channels, remove channels without stoping and starting the entire system. With
+lots of new stations being installed and our earthworm having lots of
+inport/export modules its a big long dance for it to shut down everything and
+come back up everytime a small configuration change needs to be made. Not very
+robust, no?
+   Also, on the same topic, waveserver can gets its butt in a ringer if one
+tries to change channel parameters on it, even removing those tank files, and
+even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+tangled that it either keeps crashing or if it does run it throws out some
+channels.  The only solution seems to be to remove ALL tanks and start from
+scratch.
+
+3. A mini-seed wirter.  Notes from Alex back in winter said something about
+Lamont contracting for a ew2mseed module.  No word about this since then.  
+Actually, much better for us than a earthworm module that needs to sit on the
+WAVE_RING would be a stand-alone program to yank traces from waveservers and
+write mseed files.  Any one have such?
+
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+
+	Concatenation of responses to "three questions" from Malone
+________________________________________________________
+
+
+From lomb4185@pacbell.net Sat Jun 24 13:29:50 2000
+Date: Wed, 21 Jun 2000 13:11:13 -0700 (PDT)
+From: Pete Lombard <lomb4185@pacbell.net>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Wave_serverV
+
+
+Steve,
+
+There are three `size' values in wave_server's config file. The first is the
+record size. This is the amount of space alloted for a single trace_buf
+message. It has to be a fixed size to allow the indexing to work.
+
+A trace_buf message consists of 64 bytes of header and then an arbitrary
+number of binary numbers: 2 or 4 byte integers. For a reftek packet, there are
+250 4-byte samples in one packet, for a total of 1064 bytes. The number used
+at UW of 1100 is sufficient to hold 1064, with a little wasted space. The k2ew
+packets contain 100 4-byte samples, for a total size of 464 bytes. So the
+record size can be 464 or larger. By using 1100, you are wasting a lot of
+space. 
+
+The next `size' is the file size, the total number of bytes in the tank
+file. Wave server takes this number and divides by the record size to get the
+number of trace_buf packets that can be held in the tank. Note that while the
+label in wave_server.d says `megabytes', it means 10^6, not 2^20.
+
+The final `size' value is the index size. This is the number of index entries
+that wil be kept in the index files. Every time there is a gap of more than
+GapThresh times the sample interval, a new index entry is needed. When a gap
+in the data is overwritten by the tank wrapping around, the old index entry is
+dropped from memory.
+
+In looking over wave_server code, I found one feature you could use to make
+config changes more easily. There is a flag `ReCreateBadTanks' toward the
+bottom of the config file. Currently it is commented out. If you set its value
+to 1, then the wave_server will create a new tank if it can't find an old one
+and it is listed in the config file. This is slightly dangerous, since it may
+overwrite an existing tank if it has some error trying to read it. But that
+should be a pretty rare occurrence. 
+
+The logic is a little convoluted, so perhaps I should explain the sequence
+that wave_server goes through on startup. It reads the config file, and then
+it reads the `tank structure' file (the *.str file). It assumes that the tank
+structure file has the most up-to-date information about existing tank files
+(*.tnk) and their indexes (*.inx), especially tank file size, record size, and
+tank starting position. It runs through the list of tanks from the structure
+file, verifies that that SCN is listed in the config file, and tries to open
+the tank file and its index. This is why simply changing size parameters in
+the config file (without deleting the tank and indexes) has no effect: the
+size information is read from the structure file as long as a matching SCN is
+found from the config file.
+
+If the tank and index files are read successfully, then that tank is marked as
+OK. If there are errors opening these files, then one of two things happens. If
+ReCreateBadTanks is not set, then the tank is marked as BAD and removed from
+the internal list. Otherwise, the tank is marked as unconfigured and left for
+the next step.
+
+So this first part of the initialization has been running through the list of
+tanks found in the tank structure file, making sure that each SCN is still
+listed in the config file. For the second part, the list from the config file
+is scanned. In most cases, the tank will already have been configured because
+it was an existing tank and listed in the structure file. But if you add new
+SCNs to the config file, these must be created anew. Here is where the
+ReCreateBadTanks flags becomes useful. If a tank was marked in the first pass
+as unconfigured, it will be treated the same way as a new tank here. Tank and
+index files are created (if necessary) and the tank starting point is set to
+zero. 
+
+This is where the danger lies: suppose you have a tank file with valuable
+trace data. But both index files are corrupted for some reason. That will
+cause the wave_server to fail to configure that tank on the first pass. If
+ReCreateBadTanks is not set, that tank will get removed from the wave_server's
+list, and the tank file will be untouched. Heroic efforts could be used to
+regenerate its index files for later use. Now if ReCreateBadTanks is set, that
+tank will have new index files created, and it will be overwritten as soon as
+the wave_server starts running.
+
+The wave_server has one more step to do in initialization. It has to go
+through its list of tanks and remove any that were marked as BAD in the first
+pass. There is a config flag, `PleaseContinue'. If this is not set, wave_server
+will exit here is it finds any bad tanks. If PleaseContinue is set, then the
+tank is simply removed from the internal list and forgotten. 
+
+Once this third pass is done, wave_server writes its internal list to the
+structure file and starts adding traces to their respective tanks. Each new
+packet of trace data causes the current index entry for that tank to be
+extended in time and file position. If there is a gap between the end of a
+tank and the new trace data (determined by GapThresh in config file), a new
+index entry is started. Wave_server periodically writes the index and
+structure list to disk, to save the latest information in case of wave_server
+crashes. 
+
+The problem you had Monday afternoon has to do with a failure in the third
+configuration pass. For some reason, the UPS tanks were not removed from the
+tank list even though they had been marked as BAD. Then when wave_server got
+running and tried to write an index file to disk, it found a NULL pointer for
+the index of those tanks, and crashed. The index was NULL because it had not
+been configured in the first or second passes. I found a core file from the
+second crash and was able to glean this information from it and from the log
+entries. I'm working with Dave Kragness to see if we can figure out why these
+tanks weren't removed from the tank list.
+
+Is that clean now? Yes, I know, all this needs to be added to the
+documentation. 
+
+Pete
+
+___________________________________________________________________
+
+From phil@iron.gps.caltech.edu Thu Jun 22 13:37:40 2000
+Date: Wed, 21 Jun 2000 17:36:55 -0700 (PDT)
+From: Phil Maechling <phil@iron.gps.caltech.edu>
+To: steve@geophys.washington.edu
+Cc: phil@gps.caltech.edu
+Subject: Re: Three questions for al earthwormers
+
+
+> 
+> 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+> Lamont contracting for a ew2mseed module.  No word about this since then.  
+> Actually, much better for us than a earthworm module that needs to sit on the
+> WAVE_RING would be a stand-alone program to yank traces from waveservers and
+> write mseed files.  Any one have such?
+> 
+We can get you there, but you may view it as a "long way around".
+We have a program that sits on an earthworm ring, and reads in 
+earthworm packets. It reformats the packets as miniseed packets.
+Then it multicasts the packets out onto a network.
+We also have a comserv variation called mserv, which reads in multicast
+miniseed packets, and puts them into a comserv memory area.
+You can then use a standard datalog client to log the packets to
+disk. Note that what datalog produces is not miniseed, but seed
+telemetry volumes. Software (e.g. qmerge) is needed to generate
+the miniseed files you asked for.
+
+This reformatting into miniseed packets, transmission to mserv,
+and logging by datalog is how we are acquiring the SCSN
+analog data on TriNet. It works reasonably well. Let me know if
+it is something you'd like to look at.
+
+Thanks,
+Phil M.
+
+____________________________________________________________
+
+From machen@univ-savoie.fr Thu Jun 22 13:37:48 2000
+Date: Thu, 22 Jun 2000 02:58:02 +0200
+From: Roland Machenbaum <machen@univ-savoie.fr>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+Just an idea for your second question.
+
+You could remove the waveserver from your main Earthworm machine 
+and install it on a second one with a minimal Earthworm. Connect the two 
+wave_rings across your LAN with ringtocoax and coaxtoring. Stopping 
+the waveserver should not affect the whole system now. Depending on 
+the amount of data that you collect, this can seriously load your LAN.
+
+Sincerely,
+
+Roland
+
+______________________________________________________________
+
+From withers@ceri.memphis.edu Thu Jun 22 13:38:08 2000
+Date: Thu, 22 Jun 2000 08:25:34 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+
+I believe Pete is working on some mods to wave_server that will allow
+one to shut it down gracefully without clobbering the whole works.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+______________________________________________________________
+
+From alex@gldmutt.cr.usgs.gov Thu Jun 22 13:38:21 2000
+Date: Thu, 22 Jun 2000 09:44:42 -0600
+From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: owner-earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+At 04:44 PM 6/21/00 -0700, you wrote:
+>
+>I have three problems/questions maybe someone out there can help with:
+>
+Partial answers:
+
+>2. Some reasonable way to reconfigure waveservers to change paramters, add
+>channels, remove channels without stoping and starting the entire system...
+
+There is a command which allows one to restart a specific module. ("restart <pid>")
+
+>   Also, on the same topic, waveserver can gets its butt in a ringer if one
+>tries to change channel parameters on it, even removing those tank files, and
+>even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+>tangled that it either keeps crashing or if it does run it throws out some
+>channels.  The only solution seems to be to remove ALL tanks and start from
+>scratch.
+>
+Very bad indeed. May I contact you online to see what the specifics are, and we'll see 
+about a fix.
+
+>3. A mini-seed wirter.  Notes from Alex back in winter said something about
+>Lamont contracting for a ew2mseed module...
+
+I hear that Paul Friberg of ISTI either (almost?) has a WaveServer client to do that.
+
+Alex
+
+_________________________________________________________________
+
+From MStickney@mtech.edu Thu Jun 22 13:38:44 2000
+Date: Thu, 22 Jun 2000 09:53:09 -0600
+From: "Stickney, Mike" <MStickney@mtech.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: RE: Three questions for al earthwormers
+
+Hi Steve:
+	I am probably not the best source of information for these questions
+as I am still wet behind the ears (if earthworms have ears).
+
+	Regarding 2). Our primary worm runs on NT (you are probably on
+UNIX?) so we open a new Console Window, change directories to params, set
+the environment, then use the "restart ProcessID" command to restart a
+module. It seems to work fine for the few modules I have tried.
+	I agree with the waveserver issue. Although I have not tried a lot
+of different things, the only way I can change channel parameters and get ew
+to run successfully afterwards is to wipe out all existing wave tanks and
+start from scratch. Maybe this isn't such a big deal, but I have this severe
+aversion to deleting perfectly good seismic data.
+
+	Regarding 3). Talk to Sue Nava. I believe they have recently figured
+out a way to get Utah data into miniseed for contributing it to IRIS DMC.
+Also, I believe that Harley told me that Tim Ahern now has a way to run a
+program from his end that operates in a fashion similar to Wave_Viewer in
+that it will go out and pull data out of wave tanks given the proper
+IP:Port. Tim ask me in Seattle if I was interested in having Montana data
+archived at IRIS via this mechanism and I responded with an enthusiastic
+yes!
+	Just my two cents.
+		-Mike
+
+___________________________________________________________________
+
+From dec@essw.com Thu Jun 22 13:38:56 2000
+Date: Thu, 22 Jun 2000 08:55:16 -0700
+From: David E. Chavez <dec@essw.com>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Three questions for al earthwormers
+
+Steve -
+
+> 1. A way to get state-of-health from refteks using PPP with a 422 card and
+> rtpd. In particular we need to know if the GPS clock is locking when it
+> should.  Right now we have no way of knowing this info without visiting the
+> site.
+
+I have a proposal into Reftek to develop an operator console for 
+command & control of digitizers via RTPD.  If it is accepted, then
+that would do what you want.  Alternatively, I could develop a custom
+application which monitors state of health.  I am already working on
+something similar for Ken Smith.  This program broadcasts status
+requests once per minute and then takes the replies and builds a
+digitizer voltage stream for each station which is written to an ORB.
+
+> 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+> Lamont contracting for a ew2mseed module.  No word about this since then.  
+> Actually, much better for us than a earthworm module that needs to sit on the
+> WAVE_RING would be a stand-alone program to yank traces from waveservers and
+> write mseed files.  Any one have such?
+
+I wrote a standalone SAC to mini-seed program for Utah a while back.  It would
+be a fairly straightforward process to modify this to yank its data from a
+wavserver instead of a disk file.
+
+If you would be interested in contracting for either of these programs then
+please let me know and we can discuss things in more detail.
+
+Regards,
+David Chavez
+
+_______________________________________________________________
+
+From dietz@usgs.gov Thu Jun 22 13:39:27 2000
+Date: Thu, 22 Jun 2000 09:17:17 -0700
+From: Lynn Dietz <dietz@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+
+>1. A way to get state-of-health from refteks using PPP with a 422 card and
+>rtpd. In particular we need to know if the GPS clock is locking when it
+>should.  Right now we have no way of knowing this info without visiting the
+>site.
+
+If you're running on NT, there's a nice Reftek program called NCI
+that allows you get the status of the Reftek (which includes GPS lock info) 
+on command.  It also allows you to reconfigure the Reftek remotely.
+NCI actually interfaces to RTPD via disk files; RTPD passes the request 
+to the DAS and then ships the reply back to NCI, again via disk files.
+I thought at one point that Reftek was going to make a Solaris version
+of NCI, but I don't know if that ever happened.
+
+If you're running RTPD with a reftek archive, the SOH info is written
+to the archive.  The directory structure of the archive is like:
+/archive/yeardoy/DASid#/stream/horriblefilename.  The SOH is written
+under stream=0.  horriblefilename is a mostly ascii file, so you can 
+look at it with an editor.  It should include info about GPS locks.
+Er... this may only work on NT as well... I think the Reftek archive
+utilities are all Windows executables.
+
+I guess the only solution for Solaris users is to teach reftek2ew
+to request SOH packets from RTPD and to write their contents to
+the log file.  Or to bug Reftek for a Solaris NCI-like program.
+
+Lynn
+
+__________________________________________________________________
+
+From alex@gldmutt.cr.usgs.gov Thu Jun 22 13:39:54 2000
+Date: Thu, 22 Jun 2000 10:51:50 -0600
+From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+At 04:44 PM 6/21/00 -0700, you wrote:
+>
+>I have three problems/questions maybe someone out there can help with:
+>
+>2. Some reasonable way to reconfigure waveservers to change paramters, add
+>channels, remove channels without stoping and starting the entire system. With
+>   Also, on the same topic, waveserver can gets its butt in a ringer if one
+>tries to change channel parameters on it, even removing those tank files, and
+>even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+>tangled that it either keeps crashing or if it does run it throws out some
+>channels.  The only solution seems to be to remove ALL tanks and start from
+>scratch.
+>
+We're working to fix these problems starting today.
+Alex
+
+_________________________________________________________________
+
+From pechmann@seis.utah.edu Thu Jun 22 13:56:52 2000
+Date: Thu, 22 Jun 2000 12:20:21 -0600 (MDT)
+From: James C. Pechmann <pechmann@seis.utah.edu>
+To: earthw-list@nmt.edu, steve@geophys.washington.edu
+Cc: ali@seis.utah.edu, nava@seis.utah.edu, pechmann@seis.utah.edu
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+
+     I think that we can help you with your first problem:
+
+> 1. A way to get state-of-health from refteks using PPP with a 422 card and
+> rtpd. In particular we need to know if the GPS clock is locking when it
+> should.  Right now we have no way of knowing this info without visiting the
+> site.
+
+     There is a University of Utah contributed Earthworm module called
+ref2disk, written by Dave Chavez and Ali Moeinvaziri, which captures
+and stores the state-of-health information from the REF TEKs (including
+state-of-health messages about the clock).  In our current earthworm
+setup, reftektoew takes all telemetry packets received from the reftek
+data loggers via rtpd and sends them to a raw ring.  These packets are
+of various types including waveform data packets, state-of-health packets,
+and station/channel packets.  Additionally, reftektoew converts the
+waveform packets to tracebuf packets and sends them to a wave ring.
+
+     The ref2disk module reads the telemetry packets from the raw ring,
+writes the waveform data to disk files in SAC format, and writes all
+non-wavefrom packets (station/channel and state-of-health) to disk as
+binary files.  These files can be read using the Passcal program
+refpacket.  Our technicians regularly look at these files to detect and
+diagnose problems with the REF TEKs.  Ref2disk uses the station/channel
+information to set some of the SAC header variables.
+
+     The state-of-health packets are periodically sent back to the
+recording center by the REF TEKs, at least in our setup.  We don't have
+to request them.  The station/channel packets are sent back whenever
+data acquisition is started.  We are not using 422 cards in our
+REF TEKs right now, because we are still using an older REF TEK
+digital telemetry system.  However, as far as I know the same types of
+data packets should be sent back from the REF TEKs regardless of the
+telemetry protocols used.
+
+     The current documentation for ref2disk on the earthworm web site
+does not mention the treatment of the state-of-health packets.  We will 
+get that added.  In the meantime, if you have any questions about this
+module, you may contact Ali Moeinvaziri at ali@seis.utah.edu.
+
+--Jim Pechmann
+
+_____________________________________________________________
+
+From bogaert@usgs.gov Thu Jun 22 13:57:23 2000
+Date: Thu, 22 Jun 2000 13:51:10 -0600
+From: Barbara Bogaert <bogaert@usgs.gov>
+To: James C. Pechmann <pechmann@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+Jim,
+
+Thanks for the excellent description of ref2disk.  I'll add it to the EW
+web site.
+
+- Barbara
+
+______________________________________________________________
+
+Date: Fri, 23 Jun 2000 17:59:01 -0700
+From: Lynn Dietz <dietz@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>, David E. Chavez <dec@essw.com>
+Subject: Re: some additional reftek help please
+
+Steve,
+
+Before rtpd can write to an archive, it has to be created with the
+reftek program arccreate, which I believe is only available on Windows.
+So that's your problem there.
+
+I've never seen source code for rtpd or rtpc, or any detailed documentation
+for rtpc, so I can't be any help on that point either.
+
+Lynn
+
+
+________________________________________________________
+
+Date: Mon, 26 Jun 2000 08:02:56 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Responses to my three questions
+
+On Sat, 24 Jun 2000, Steve Malone wrote:
+
+> Pete Lombard and Alex Bittenbinder.  BTW, those who suggested using the
+> "restart <pid>" method  had better look again.  The waveserver is the one
+
+Better not try it on adsend either.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+______________________________________________________________
+From steve@geophys.washington.edu Sat Jun 24 14:03:23 2000
+Date: Sat, 24 Jun 2000 13:52:10 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Cc: Paul Freiberg <p.friberg@isti.com>,
+     Won-Young Kim <wykim@lamont.ldgo.columbia.edu>
+Subject: Responses to my three questions
+
+	Responses (11) to my three questions have been concatenated together
+and put in the earthw-list archives for anyone interested in the details
+(also includes those sent to me personnaly rather than to the list).
+
+In a nut shell answers and solutions exist or are forthcoming.  They are:
+
+1. Getting SOH from a Reftek DAS with 422 card ain't easy but can be
+done.  Thanks to Jim Pechmann, Lynn Dietz and Dave Chavez.
+
+2. Waveserver problems, things are being fixed to make it better.  Thanks to
+Pete Lombard and Alex Bittenbinder.  BTW, those who suggested using the
+"restart <pid>" method  had better look again.  The waveserver is the one
+program that you better not use this on. Since it does not catch signals it
+will quit, possibly in the middle of something leaving the tanks in a possible
+bad state which may make things even worse.  It seems that this is being
+fixed.
+
+3. Several ways of doing mseed were suggested, anyone of which would probably
+be fine, but the simplest might be a waveserver client already done... maybe
+(?). It seems that no one at Lamont nor Paul Friberg on on the earthw-list and
+so may not know there is an outstanding question.  You out there hanging from
+some rock somewhere, Paul?  Thanks to Phil Maechling, Mike Stnickney and Alex.
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+
+From kent@giseis.alaska.edu Mon Jun 26 18:53:28 2000
+Date: Mon, 26 Jun 2000 17:12:35 -0800
+From: "Dr. Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: Steve Malone <steve@geophys.washington.edu>, earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+Steve Malone wrote:
+> 
+> I have three problems/questions maybe someone out there can help with:
+> 
+> 
+> 2. Some reasonable way to reconfigure waveservers to change paramters, add
+> channels, remove channels without stoping and starting the entire system. With
+> lots of new stations being installed and our earthworm having lots of
+> inport/export modules its a big long dance for it to shut down everything and
+> come back up everytime a small configuration change needs to be made. Not very
+> robust, no?
+>    Also, on the same topic, waveserver can gets its butt in a ringer if one
+> tries to change channel parameters on it, even removing those tank files, and
+> even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+> tangled that it either keeps crashing or if it does run it throws out some
+> channels.  The only solution seems to be to remove ALL tanks and start from
+> scratch.
+> 
+> 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+> Lamont contracting for a ew2mseed module.  No word about this since then.
+> Actually, much better for us than a earthworm module that needs to sit on the
+> WAVE_RING would be a stand-alone program to yank traces from waveservers and
+> write mseed files.  Any one have such?
+> 
+
+
+Hello,
+	These problems have been fully solved at least once. I recognize that
+not everyone may want to follow the Alaskan model, however I feel
+compelled to present to those interested that the work has been done. 
+Please forgive me if I repeat two points I've made earlier in order to
+expand on them for this discussion. 
+
+	A short-as-possible technical history may help. The first wave-server,
+written by Will Kohler in 1995 to support our first integration of
+Earthworm and Datascope [Johnson et al., IRIS Newsletter Fall 1995],
+collected, buffered, and distributed packets of multiplexed trace-data
+from the old-style earthworm digitizer. In late 1995 and early 1996 we
+in Alaska recognized our need to incorporate data-streams from digital
+data-sources as well, so we designed the predecessor to the current
+earthworm tracebuf format (different from the current version only by
+the two fields 'quality' and 'pad', which were included at the request
+of the earthworm team). This allowed us to write an on-the-fly
+demultiplexer called ad_demux. In addition, I segmented the wave_server
+tank into mini-tanks, putting the now-demultiplexed packets into a tank
+for each channel. One of the first of our realizations was that we
+needed to write a "stand-alone program to yank traces from waveservers
+and write" ...[insert format here]... "files." This is the archiver
+module I wrote in early 1996. This took 6 months and five full rewrites
+for me to get correct--there are some definite gotchas. The archiver I
+wrote, and have mentioned previously, compartmentalized all the
+data-output routines into a single subroutine-hook. Thus with an
+archiver.d switch I could change the output format from Alaskan AH to
+SAC to raw-data output, with the idea that any other format would be
+easily implemented simply by inserting the desired subroutine in the
+code. The ad_demux module, the wave-server, and the archiver, as I've
+previously mentioned, were submitted to the Earthworm team in November
+1996 for what I assumed was to be inclusion in the next release. As it
+turns out the archiver was never included, the ad_demux module was
+rewritten by the USGS, and the wave_server was rewritten albeit with
+very similar design principles by the USGS and contractors, as I
+understand. Traces of this are still visible as late as the Earthworm
+v3.0 release of February, 1998, where one sees wave-server (the Will
+Kohler Original); wave-serverIII (the USGS rewrite of the multi-tank
+version); and wave-serverIV (an improvement to III). The omitted number
+2 refers to the Alaskan version. I actually have no care whatsoever if
+my software is ignored and rewritten, since it has already achieved its
+main goal, namely to solve Alaskan regional network problems. Yet the
+past does draw attention to the type of coordination problems that the
+Earthworm community may still be having, for example with the
+much-welcomed POSIX-compliance fixes from Chris Wood. Also, simililarity
+in design principles of the wave-server (II and III at least, perhaps II
+and V) may allow the Alaskan archiver still to be useful to somebody as
+a platform for the development of Earthworm archiving in other formats.
+At least that was the intent. 
+
+	In Alaska we have moved on from both our wave-server and our archiver
+due to difficulties echoing those listed by Steve Malone. First, the
+architecture of the wave-server is inherently not dynamic, and the
+import/export utilities are only partially so. In addition, we also
+decided to store data in miniseed format. Of course we could have
+continued to expand the earthworm functions. However, that is an
+extensive excercise. Much dedicated and extensive work already done by
+Dan Quinlan provided the orbserver program for data buffering and it's
+companion program orb2db, which saves data in a variety of formats,
+including miniseed. Unlike my wave-server, and unlike the current
+Earthworm utilities, the orbserver and orb2db are fully dynamic.
+Channels may be added and data-flow paths changed, expanded, or pruned
+without stopping the system at all. Data acquisition may be paused to
+harmlessly remove channels and clean up databases without loss of
+incoming data. Finally, especially with the versions of orb2db running
+for the last couple years, "tangles" [as Steve Malone calls them] are
+virtually nonexistent. Due to these technical advantages, we switched
+from the archiver/waveserver to orbserver and orb2db in late 1997 and
+have been running them since with great reliability. As a clarification
+for those not as familiar with the Alaskan work, Earthworm data are
+easily used with orbserver and orb2db given the small 'glue' utilities
+we have written in Alaska. 
+
+	In order for these points to come across with the neutrality of
+constructive input with which they're intended, I am not selling,
+promoting, or otherwise advocating my software or Antelope software for
+anybody but the Alaskan seismic lab. I do experience a bit of poignancy
+seeing multiple reinventions of the same low-level data-handling tasks
+when there's lots of interesting science to do, making me possibly
+personally remiss for not fully communicating what has been made
+available. I think the software I've written may help address the issues
+Steve Malone raises. Also, I've indeed thrown out what I've written in
+favor of the superior Antelope products. "Superior" to me means that I
+sleep at night and escape on weekends rather than sitting in the lab
+addressing "tangles."  Adressing Steve Malone's issues requires a
+significant outlay of resources, be it tax dollars or for example
+"contracting for a ew2mseed module." Antelope is not free, as
+occasionally pointed out. However nor are contractors, nor is the time
+of the people who will rewrite these functions. If the community expends
+resources to add dynamic capability to the wave-server or rewrite
+another miniseed archiver, it should be with full clarity about why
+those rewrites are necessary rather than buying the solution off the
+shelf. 
+
+Feedback welcome,
+Kent
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+http://giseis.alaska.edu/Seis/Input/kent/kent.html
+From p.friberg@isti.com Mon Jun 26 15:33:41 2000
+Date: Mon, 26 Jun 2000 17:13:10 -0400
+From: Paul Friberg <p.friberg@isti.com>
+To: earthw-list@nmt.edu
+Subject: recent discussions
+
+Dear EW community,
+
+We are new to the ewlist proper and just did a read 
+through of the last years worth of discussions.
+The recent discussions about POSIX and the need for
+an improved contribution mechanism have been very
+interesting. We applaud Chris and company for their
+efforts in bringing POSIX standards to EW and hope
+that it gets adopted into the regular release. We also
+hope a more standard approach to contributions is 
+established.
+
+On the contribution discussion, we were surprised to
+hear that Kent has written a continuous data archiver
+and it never made it into the release. When will this make
+it into the release? 
+
+ISTI has made a few modifications to waveman2disk, including
+some bug fixes. We would like to contribute our work back to
+the official release. The version we have uses the Berkeley
+qlib2 to provide mseed output. We were not contracted by
+anyone to write this. Furthermore, we have not been contracted, 
+at this time, to write a separate waveserver client that does 
+continous data archiving to miniseed (referred to as ew2mseed 
+in some emails I saw on the archive). Is there still community
+interest in such a client, or will our waveman2disk mods suffice?
+
+Regards,
+
+Paul
+-- 
+ Paul Friberg - p.friberg@isti.com - http://www.isti.com
+      (914) 256-9290 Office - (914) 256-9299 FAX
+    ISTI==Instrumental Software Technologies, Inc.
+Systems Integration and Software Development Specialists
+From tlmurray@usgs.gov Mon Jul 10 09:11:17 2000
+Date: Mon, 3 Jul 2000 10:15:00 -0700
+From: tlmurray@usgs.gov
+To: earthw-list@nmt.edu
+Cc: jpower@usgs.gov, jnmarso@usgs.gov
+Subject: Re: EW Community Center
+
+I too have been disappointed by the lack of connection among earthworm
+community users and developers.  I have developed quite a few modules,
+especially for integrating non-seismic data streams into the earthworm
+system. Some might achieve wide-spread use.  For example, archiving
+continuous waveform data still seems to be an issue. So I wrote a simple
+module for sending triglist2k messages to trig2disk at user-specified
+intervals to produce sequential data files containing all the desired trace
+data.  Though probably not the enterprise level solution that some network
+operators require, it is perfectly suited for smaller operators such as I
+work with.
+
+But I am not sure what to do with this module or the others.  Wait until
+the formal release of a USGS Open-File Report describing them? The
+open-source proponents seem to push a test-it-in-battle approach, much more
+in keeping with my preferred style.  Does the fact they are written in
+Visual Basic and thus NT-specific make a difference?  I don't know.  I was
+expecting to funnel everything through the staff in Golden, but they are
+swamped with their own set of tasks.  Until I saw this latest exchange, I
+did not even know others shared my concerns about such issues.  Though
+unsuited to undertake a major role with the entire Earthworm community, I
+do have a certain responsibility to the users I work with.  My approach is
+perhaps instructive of what will increasingly occur unless some strong
+leadership in the Earthworm community either appears on its own or is paid
+to appear.
+
+I am in a somewhat unique position among Earthworm users.  In my role
+working with overseas volcano observatories, I am setting up numerous
+Earthworm boxes around the Pacific rim, especially Latin America.  In
+addition to monitoring volcanoes, the observatories typically run their
+country's national seismic network.  My guess is that within 3 years
+Earthworm boxes will be integral to every national seismic net in North and
+South America to as far south as at least Ecuador and possibly all the way
+to Tierra del Fuego.
+
+As part of this effort, I want to see these groups become part of an active
+user community.  To assist in this end, Jeff Marso (who is working with me
+on this project), put together a new listserver,
+http://tlaloc.wr.usgs.gov/mailman/listinfo/glowworm  We opted to produce a
+new one because the current Earthworm listserver appeared (1) moribund  (at
+the time) and (2) several generations old. He used GNU's Mailman :
+http://www.gnu.org/software/mailman/mailman.html We are hoping it will
+become the focal point of our support efforts as it provides a nice user
+interface, message threading, and all the normal benefits of a listserver.
+
+There is no content yet.  Our plan is to announce it and begin using it
+during an install in Ecuador starting next week.  By using it as the
+primary method of obtaining support from us, we hope that our colleagues
+will become accustomed to using it and eventually develop the community as
+they start to peek under the hood and can help each other.  It is also to
+be truly bilingual - messages in Spanish or English or anything in between
+will be welcome.  We may be naive in this approach, but at least it's a
+strategy of some sort.
+
+I apologize to the current listserver administrator as this is not to be
+taken as knock at you. The fact that no one was using the site drove our
+decision to go forward with one of our own as just being simpler.  In
+hindsight, we should have checked in with you anyway.  We did let Alex know
+of our plan.  But it may not be bad to have a additional listserver from
+the current one - it will be addressing a different audience.  We are
+flexible and it still early enough to change paths.  But I can't give up
+the newer generation's features as I need to entice people into using it.
+Whether this is a splintering of or enhancement to the Earthworm community
+is open to discussion.
+
+A final comment - I am pushing Earthworm technology into the non-seismic
+areas that volcano monitoring involves: strain, geodetic, chemical,
+hydrologic, etc.  A project at Mt. Rainier involves no seismic data
+whatsoever. I see it is an easy-to-use method for real-time geophysical
+data collection and distribution and a way to integrate all the different
+data streams together.  It's quite possible that Earthworm could take off
+in a much larger community than it now serves.
+
+From tlmurray@usgs.gov Mon Jul 10 09:16:27 2000
+Date: Mon, 3 Jul 2000 11:49:47 -0700
+From: tlmurray@usgs.gov
+To: earthw-list@nmt.edu
+Cc: glowworm@tlaloc.wr.usgs.gov
+Subject: Current GlowWorm module list
+
+    [ The following text is in the "iso-8859-1" character set. ]
+    [ Your display is set for the "US-ASCII" character set.  ]
+    [ Some characters may be displayed incorrectly. ]
+
+If anyone is interested, the following gives a brief description of the NT
+modules for Earthworm that I have put together.  Though they are working
+for me, I suspect that more wide-spread use would reveal some bugs or
+shortcomings.  I have had problems with the install program, but hope that
+the last run-through got that solved (the modules are NT-specific so they
+involve getting all the right DLL's and OCX's installed and registered
+properly).
+
+One of the goals was to produce a system that completely replicated the
+capabilities, including output in compatible data formats, of the old
+PcSeis system, itself a variant of Willie Lee's IASPEI systems.  With the
+final addition of the SSAM module, that has been achieved.
+
+ Programs developed for GlowWorm
+
+Programs that access transport rings
+
+   AfmServer.exe    Establishes a TCPIP server for the client program
+                    AfmController.exe to monitor incoming data and send
+                    control messages to AFM field sites via a ring.  This
+                    program is the forerunner to a proposed more
+                    generalized InstrumentController.
+   ComPortInterface.exe   Moves data between a serial port and a transport
+                    ring.  It has special features to aid in use with
+                    radios and data transmission.
+   ComPortRepeater.exe    Sends data received from one ComPortInterface to
+                    another ComPortInterface for retransmission.
+   ContRecord.exe   Produces TrigList2k messages at set intervals.
+                    Trig2Disk uses the messages to build successive data
+                    files, thus producing a continuous record of seismic
+                    trace data.
+   DTRpulser.exe    Sends "pulse DTR" messages to ComportInterface at
+                    specified intervals to provide a hardware watchdog
+                    signal.
+   FreewaveMonitor.exe    Determines if a communication link is still
+                    active. Rainier AFM specific.
+   LaharDetector.exe      Detects lahar signals by looking at real-time AFM
+                    data.
+   MessageCopier.exe      Copies specified messages from several rings into
+                    a single ring.
+   PagerInterface.exe     Relays TYPE_VHMEMO messages produced by other
+                    modules to the 3rd party program PageMaster via a DDE.
+                    (in development)
+   RingPorky.exe    A Porky that looks at ring output from
+                    ComportInterfaces to produce Bob data files of incoming
+                    data.
+   Rsam.exe         Records 1 and 10-minute RSAM values in Bob data files,
+                    looks for RSAM events, and runs RSAM event and tremor
+                    alarms.
+   SCNxlator.exe    Replaces selected network fields produced by one
+                    ComportInterface to that of another, thus making the
+                    data look as though it had come from the second one.
+                    Rainier AFM specific.
+   SerialPortDecoder.exe  Decodes and parses data messages from
+                    ComportInterface into a standard tabular data format.
+   Ssam.exe         Records 1-minute SSAM values produced by ew2ssam.exe in
+                    ascii data files. In one directory tree are the data
+                    files compatible with the 16-band PcSeis output.  In
+                    another tree are the full 128 fft-line data for all
+                    future applications.
+   vhMailMan.exe    Sends e-mail messages from TYPE_VHMEMO messages
+                    produced by other modules.
+   vhRingToSerial.exe     Transmits and receives selected messages from
+                    selected rings from one system to another via either a
+                    serial port (spread-spectrum radio) or a TCPIP port.
+       vhStoretabledata.exe   Stores data in Tabular Messages into text,
+Bob, or Access data files.
+   vhWormManager.exe      Provides a central manager for the Earthworm
+                    system.
+
+Enhanced Earthworm modules
+
+   CarlSubTrig.exe  Added the capability to use only a subset of a subnet's
+                    stations to determine if the subnet has triggered, but
+                    record all stations in the subnet.  Thus a noisy
+                    station can be recorded in the subnet, but won't help
+                    produce false subnet triggering.  Also added the
+                    capability to designate the subnet by a 6-character
+                    alpha name instead of just a number.
+   Trig2Disk.exe    Uses the alpha subnet name in naming the data files or
+                    directories for ease-of-sorting.
+   Sgram.exe        Ported to run under NT as either standalone or in
+                    conjunction with StartStop.
+   Heli_standalone.exe    Ported to run under NT.
+
+
+New message types
+
+   TYPE_OBJECTSTATE Contains information for either setting an object state
+                    (such as set instrument sample rate=x), the current
+                    state of an object (such as radio link down, sample
+                    rate =x, etc.), or the acknowledgement of a command
+                    received.
+
+   TYPE_MEMO        Contains messages to be sent as e-mail or to a pager.
+
+   TYPE_VCOMPORT    Contains data received from or to be transmitted out of
+                    a serial port, including serial port control lines.
+
+   TYPE_VTABULARDATA      Contains one or more lines of tabular-type data.
+
+Modules for remote control of field sites
+
+   AfmController.exe      A client for AfmServer.exe, AfmController sends
+                    control messages to Afm controllers and displays
+                    incoming data.
+
+Modules for remote display of incoming data
+
+   LaharDisplay.exe Receives display information from the TCPIP server in
+                    Lahar.exe.
+   RemoteManager.exe      Receives current module status from the TCPIP
+                    server in vhWormManager.exe.
+   RsamDisplay.exe  Receives display information from the TCPIP server in
+                    Rsam.exe.
+
+Other modules
+
+   Wait.exe         Provides a delay of a specified number of seconds
+                    before continuing execution of a cmd or bat file, thus
+                    allowing all drivers to load properly before attempting
+                    to access them. The syntax for waiting 10 seconds would
+                    be:   Wait.exe 10
+
+   Archiver.exe     Copies data from the acquisition computer to an archive
+                    area where it can copied onto archive media.  Syntax is
+                    simply:    Archive.exe
+
+   StartMe.exe      Provides the means to start a program from the command
+                    line and assign it a priority of either idle, normal,
+                    or high.  The syntax is:
+                    Startme.exe "program" "arguments" "priority" "window
+                    title"
+
+Program development modules
+
+   cvoutils.dll     Contains the PowerBasic routines that provide C
+                    language capabilities that are difficult or impossible
+                    in VB.
+   transportvb.dll  Contains the routines from Earthworm's transport.c.
+   vhComPortCtrl.ocx      Wraps the standard VB comport control into an
+                    easy to use ActiveX control.  Setup menus and input
+                    file i/o are encapsulated in the control.  The control
+                    contains special features useful for data acquisition
+                    and instrument control through a radio network.
+   vhMessages.dll   Contains all selected Earthworm message objects.
+   vhDataSocket.ocx Wraps Crescent tools CITCP.ocx into an easy-to-use
+                    TCPIP socket ActiveX control.  Its login procedures
+                    mate with vhTcpServer.ocx.  Setup menus and input file
+                    i/o are encapsulated in the control.
+   VhIpDataServer.ocx     Wraps Crescent tools CIServer.ocx into a
+                    convenient TCPIP server ActiveX control.  Its login
+                    procedures mate with the vhSocket.ocx client.  Setup
+                    menus and input file i/o are encapsulated in the
+                    control.
+   vhTransportCtrl.ocx    Wraps the Earthworm transport routines in
+                    TransportVb.dll into a moderately easy-to-use ActiveX
+                    control. Setup menus and input file i/o are
+                    encapsulated in the control.
+   vhxAdo.dll       Contains the wrappers to use ADO to store data in a
+                    relational data base (in use, but still preliminary)
+                          .
+
+Required 3rd party development tools
+
+   Crescent Internet Tools     ($235) For TCPIP sockets and servers, and
+                    e-mail interfaces.
+   Microsoft Visual Basic
+          Professional   ($475) Program development platform.
+   OmniTrend PageMaster   ($70) Stand-alone program that provides a
+                    convenient interface to alphanumeric pagers and
+                    organizing group pages.  Pages are sent to it via DDE.
+                    (not tested)
+   Pinnacle Graphics Server    ($300) For real-time graphics.
+   PowerBasic DLL compiler     ($155) For building "C functions" using
+                    Basic that can be called by VB when VB lacks such
+                    functions.  PowerBasic provides Basic programmers with
+                    the capability to build programs or routines comparable
+                    to or better in performance than Microsoft C.
+   Sax Software's SaxSetup     ($199) For building installation programs.
+                    Buggy.
+   Visio2000              ($360) For system documentation.
+   Automachron.exe  (Freeware) For time synching the PC clock to an
+                    internet time server (http://www.oneguycoding.com)
+
+
+
+From: Pete Lombard <lomb4185@pacbell.net>
+Subject: Wave_serverV documentation
+To: earthw-list@nmt.edu
+Reply-to: lomb4185@pacbell.net
+Message-id: 
+ <14699.64853.769679.593933@adsl-63-195-86-112.dsl.snfc21.pacbell.net>
+MIME-version: 1.0
+X-Mailer: VM 6.67 under Emacs 20.4.1
+Content-type: text/plain; charset=us-ascii
+Content-transfer-encoding: 7bit
+
+
+New documentation for wave_serverV has been posted on the earthworm web
+site. In fact it is so new that it mentions features not yet released, just to
+whet your appetite. The URLs are:
+  http://www.cnss.org/EWAB/ovr/wave_serverV_ovr.html
+and
+http://www.cnss.org/EWAB/cmd/wave_serverV_cmd.html
+
+Send any suggestions and complaints to me.
+
+-- 
+Pete Lombard
+Earthworm Programmer
+
+815 Ramona Ave
+Albany, CA 94706-1819
+
+email: lomb4185@pacbell.net
+voice: (510) 526-2950
+
+
+From withers@ceri.memphis.edu Tue Jul 25 14:17:02 2000
+Date: Tue, 25 Jul 2000 13:56:38 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: todo list
+
+
+Hi all:
+
+As a first pass, I have put a table on the EWAB web page hoping
+to make a todo list.  This is an effort to avoid duplication
+of effort and provide an opportunity to take on tasks.  Take
+a look and tell me what additional fields should be in there,
+and help me fill out the table with what everyone is working on.
+
+http://www.cnss.org/EWAB/TODO
+
+thanks,
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+
+
+From kohler@usgs.gov Wed 26 Jul 2000 12:08:46 2000
+Date: Wed, 26 Jul 2000 12:08:46 -0700
+From: kohler@usgs.gov
+To: earthw-list@nmt.edu
+Subject: Wave_serverV recovery need
+X-MIMETrack: Serialize by Router on gscamnlh01/SERVER/USGS/DOI(Release 5.0.2b |December
+ 16, 1999) at 07/26/2000 12:08:37 PM
+MIME-Version: 1.0
+Content-type: text/plain; charset=us-ascii
+
+
+To:  Earthworm Community,
+
+I have a suggestion for a modification to wave_serverV which I think would
+benefit the Earthworm community.
+
+Currently, if a hard drive containing waveserver tank files develops a bad
+sector or sectors, and wave_serverV attempts to read the bad sector, the
+wave_serverV process will exit.  Even though the bad sector may lie in only
+one tank file, none of channels served by the wave_serverV process will
+continue being served after this time.  It would be preferable if, instead
+of exiting, wave_serverV quit serving data from the channel with the bad
+tank file and continued to serve the rest of its channels.  The program
+should also send out a pager and/or email message notifying someone of the
+problem.
+
+The reason this is important is that when wave_serverV decides to exit,
+there may be no one available to fix the problem, and a lot of data could
+be lost.  Currently, when a wave_server process dies in Menlo Park, it's a
+pageing offense, which means that someone may be awakened at night or the
+weekend (undesirable).  And, several times I have had to visit the office
+myself on a weekend to repair or replace a bad disk drive.  If only one
+channel were being lost, instead of all channels on a waveserver process, I
+wouldn't send out pages.  I would just fix the problem on Monday morning.
+
+Does anyone else think this is a problem?  Is anyone willing to modify the
+code?
+
+Thanks, Will
+
+----- End Included Message -----

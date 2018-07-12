@@ -1,0 +1,202 @@
+
+From bogaert@gldage.cr.usgs.gov Wed Jun  3 17:03:05 1998
+Date: Thu, 4 Dec 1997 13:59:01 -0700
+From: Barbara Bogaert <bogaert@gldage.cr.usgs.gov>
+Subject: Earthworm Documentation
+
+December 4, 1997
+
+Dr. Ken Smith
+Seismological Laboratory
+Mackay School of Mines
+University of Nevada
+Reno, Nevada 89557-0141
+
+Dear Ken:
+
+Pursuant to your letter, the earthworm development team (Alex
+Bittenbinder, Barbara Bogaert, Lynn Dietz, Will Kohler, Pete Lombard,
+and Jim Luetgert) met in Menlo Park in October to review the EWAB
+suggestions, assess existing documentation and plan the implementation
+of the Earthworm documentation web site.  The process was helped
+immensely by Pete and Jim from their perspective as new users and
+developers of the Earthworm system. The meeting resulted in the
+attached table of contents and the plan described below.  
+
+The table of contents is ambitious and, given the other
+responsibilities of the earthworm developers, I am afraid it could be
+as long as a year before it is completed. Steve Malone, Alex
+Bittenbinder, and myself suggest that we implement the executive
+summary and module descriptions first.  The module descriptions will
+take the participation of the entire Earthworm development team.  I
+have talked with David Oppenheimer about the time contributions
+required from Lynn and Will.  He has agreed that they will be available
+part time over the next two months to complete their portions of the
+module descriptions.
+
+Based on the team's availability, a realistic goal is to have the text
+for the executive summary and module descriptions completed by the end
+of December. I will then assemble the web page by the end of January.
+Steve Malone has agreed to host the web page at the University of
+Washington.  I will also start work on a plan for implementation of
+the remaining documentation.  In addition to the Earthworm development
+team, Sue Nava, Jim Pechman  (University of Utah) and Kent Fogleman
+(operations manager for USGS Menlo Park production systems) will be
+helping to complete the documentation outlined in the table of contents.
+
+I would appreciate any comments or suggestions concerning the table of
+contents and the implementation plan.
+
+
+Sincerely,
+
+Barbara
+
+Barbara Bogaert
+Project Manager, Earthworm Development Team
+
+----------------------------------------------------------------------
+
+Earthworm Documentation
+Draft Table of Contents
+December 4, 1997
+
+
+Section 1: Executive Summary 
+
+	I. What is Earthworm:
+		
+		How it got started.
+		What it's becoming.
+
+	II. General features, principles, and benefits:
+
+		The 5 sacred cows: modularity (encapsulation!), system
+		independence, scalability, connectivity, robustness.
+
+		Principles of operation: modules, message passing,
+		broadcasts (async nature), long-haul connections,
+		cables and rings
+
+	III. What it does:
+		List of current functions
+
+	IV. Support issues
+		How the community works.
+
+	V. Contact-people, pointers to web page.
+
+
+Section 2: User Guide:
+
+	I. Purpose of this manual 
+
+	II. Overview of the principles of operation:
+		Modules; message passing; cables and rings; asynchronous nature.
+		Logos: message types, module ids, installation ids.
+		Status Manager: Philosophy, log files, .desc file
+			error handling: heartbeats, pagers, mail, 
+		Startstop: Its configuration files and restart mechanism.
+
+	III. Example with diagram of how earthworm handles an earthquake from
+	trace data stream to arc file.
+
+	IV. How it's organized
+		The directory tree
+
+	V. Installation configuration:
+		earthworm.d
+		earthworm.h
+		ew_sol_cpu.cmd
+			paths
+			environment variables
+
+	VI. Module Description:
+		Overview of .d, .desc, how .d and .desc are normally named. 
+			how log files get their name.
+		Table using hypertext:
+			module_name
+			short description
+			Link to detailed description, including tuning 
+				hints, notes on module's performance.
+			Link to details of configuration (.d) file
+			Link to details of descriptor (.desc) file
+			Message types read, written and passed by module.
+			Primary rings or cables used.
+		 	
+	VII. Tutorial:  How to set up a running earthworm; how to tell if 
+	it's working:
+
+	IX. Guide to log files: 
+	    Description of how log files are created, options, description of 
+            error messages and helpful hints for using them.
+
+	X. Trouble shooting an operating system:
+		Kent Fogleman will write up examples from his Menlo experience.
+
+	XII. Routine Maintenance
+		What and when to backup
+		Modifying .d and .desc files
+		Cleaning out the log directory
+		Notifying interested people of changes, testing, etc
+		Keeping log books
+		How the new year is handled.
+		
+	XIII. System dependent functions (OS2, NT, Solaris)
+		Booting the system
+		Starting and stopping earthworm
+
+
+
+Section 3. Programmer's manual:
+
+	I. Development Philosophy
+		1. Coding philosophy: easy to understand and modify. 
+		   Nothing cute, 
+		   Kind comments and `stories' where needed.
+		2. System Independence, /libsrc
+		3. "Dumb" modules - single function, one input port, one output
+		4. Operating System requirements
+		5. Joys of broadcasting, no load on sender; dynamic 
+		   reconfiguration. We don't loose messages.
+		6. Why we did what we did.
+
+ 	II. How to compile:
+		1. emake and make_ew
+		2. Compiler requirements, version numbers.
+		3. Environment variables.
+		4. Other requirements, ie. OCI for Oracle.
+		5. Operating System versions.
+		6. Use ansi function calls
+		7. How to use version and working directories.
+		8. Describe how the bin directory is organized and used.
+
+	III. Libsrc functions:
+		Descriptions and function calls.
+
+	IV. Guidelines for logging, error reporting, meaningful heartbeats.
+
+	V. Transport Layer
+
+	VI. Creating new modules: 
+		When to use private memory rings. 
+		Message buffering. 
+		Multi-threading.
+
+	VII. Debug tools, description and how to use.
+		
+
+
+Section 4. Appendix:
+
+	A. Glossary
+	B. Format of arc file
+	C. Format of summary line
+	D. Pick and coda message format
+	E. Trace data format
+	F. Picker Tuning
+	G. Gory details of binder
+	H. Wave_clients and how they work 
+
+
+

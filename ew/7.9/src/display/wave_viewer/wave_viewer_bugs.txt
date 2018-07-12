@@ -1,0 +1,15 @@
+###################
+###################
+Wave Viewer Known Bugs & "FEATURES"
+
+Cache should never be shorter than the screen.
+So cache must be greater than SecondsOnDisplay * SampleRate
+
+When in auto-scroll mode, wave_viewer occassionaly fails to 
+draw trace on the screen when it should appear.  The result
+looks like a gap.  Pressing any button that causes a redraw
+of the trace will clear the fake gap (up, down, BIAS, add
+a trace, drop a trace, etc.)
+This problem usually happens when wave_viewer is CPU 
+challenged and constantly requesting data.
+

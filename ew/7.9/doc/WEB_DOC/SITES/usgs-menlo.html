@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>USGS Menlo Park Earthworm</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2 ALIGN=CENTER>USGS - Menlo Park, CA</H2>
+
+<DIV ALIGN=right><P>Date: January 8, 1998</P></DIV>
+
+<H3>Location, Contact, and Address:</H3>
+
+<P>Northern California Seismic Network, recorded at USGS, Menlo Park, CA</P>
+
+<P>David Oppenheimer (oppen@usgs.gov) 650-329-4792 <BR>
+Lynn Dietz (dietz@usgs.gov) 650-329-5520 <BR>
+Will Kohler (kohler@usgs.gov) 650-329-4761</P>
+
+<P>345 Middlefield Rd, MS 977, Menlo Park, CA 94025</P>
+
+<H3>Network Characteristics:</H3>
+
+<P>Over 500 Analog stations, mostly short-period, vertical component, covering
+northern California with a few in southern Oregon</P>
+
+<P>Analog data are digitized by National Instruments A/D's on two 486/DOS
+computers</P>
+
+<P>15- continuous 16-bit DST (Digital Seismic Telemetry) stations (3 channels
+each)</P>
+
+<P>
+<HR></P>
+
+<H2 ALIGN=CENTER>Standard Earthworm Modules Currently in Use</H2>
+
+<H3>Waveform Data Acquisition &amp; Conversion:</H3>
+
+<UL>
+<LI><B>adsend -</B> digitize waveforms, broadcast multiplexed data onto
+LAN. Production version runs on two 486/DOS computers, each digitizing
+256 channels. A new Windows NT version of adsend which produces demultiplexed
+trace_buf messages has been running in parallel on a Pentium for 3 months.
+</LI>
+
+<LI><B>getdst2 -</B> acquire continuous 16-bit digitally-telemetered seismic
+data from DST stations. Production version runs only on Pentium OS/2 computers.
+</LI>
+
+<LI><B>ad_demux -</B> demultiplex waveform messages from the DOS-version
+of adsend into single-channel trace_buf messages.</LI>
+</UL>
+
+<H3>Rapid Earthquake Location &amp; Notification:</H3>
+
+<P>For our rapid notificaton system, we run this basic Earthworm system
+(v2.9+) in parallel on two computers, a Pentium running Windows NT-4.0
+and a Pentium running Solaris-2.6:</P>
+
+<UL>
+<LI><B>coaxtoring -</B>move broadcast waveform data from LAN onto A/D ring</LI>
+
+<LI><B>picker -</B>pick P-arrivals from multiplexed data, output to pick
+ring</LI>
+
+<LI><B>binder</B> -Carl's associator</LI>
+
+<LI><B>eqprelim, eqbuf, eqcoda, eqverify </B>-filter, quality check, and
+output rapid (25-pick) pick associations</LI>
+
+<LI><B>eqproc, eqbuf, eqcoda, eqverify </B>-filter, quality check, and
+output final pick associations</LI>
+
+<LI><B>hypo_mgr, hypoinv -</B>manage and produce standard USGS hypocenter
+locations</LI>
+
+<LI><B>menlo_report -</B>transfer event locations to earlybird systems
+for notification, archiving</LI>
+
+<LI><B>startstop, copystatus, diskmgr, statmgr</B> (control and monitor)</LI>
+
+<LI><B>pagerfeeder -</B>communicate with Paging PC's via serial port</LI>
+</UL>
+
+<H3>Auxiliary Tasks &amp; Data Exchange:</H3>
+
+<P>In addition to our Earthworm rapid-notification computers, we have several
+other PC's (OS/2, NT and Solaris) which listen to the broadcast waveform
+data and perform other tasks. </P>
+
+<UL>
+<LI><B>lptrig, trg_assoc -</B> identify long-period events (John Evans'
+algorithm). Used to monitor Long Valley and Lassen regions.</LI>
+
+<LI><B>import_generic -</B> receive Earthworm messages over a socket and
+write them the configured ring. Partner module to export_generic or export_scn.
+So far used in test-mode to import pick data from UC Berkeley and USGS-Pasadena.</LI>
+
+<LI><B>export_generic -</B> send all Earthworm messages of a given logo
+to an import module over a socket. Currently used to ship hypocenters to
+Alaska Tsunami Warning Center (ATWC) &amp; Alan Jones' &quot;Seismic&quot;
+and picks to UC Berkeley &amp; USGS-Pasadena.</LI>
+
+<LI><B>export_scn -</B>same as export_generic, but send only those messages
+pertaining to selected stations (identified by site-component-network codes).
+Currently used to send continuous waveform data to ATWC and UCB. </LI>
+
+<LI><B>wave_server -</B>(the original wave_server) maintain a circular
+buffer of waveform data and send all data in a requested time range to
+a client over a socket. Used to send DST waveforms to Menlo Park's CUSP
+system.</LI>
+
+<LI><B>wave_serverIII, wave_serverIV -</B> maintain a circular buffer of
+waveform data and send data from requested channels, requested time intervals
+to a client over a socket. Currently serves wave_viewers (electronic develocorder
+program on Windows desktop and laptop computers) and rsec2.</LI>
+
+<LI><B>vdl -</B>send triggered waveform data to USNSN</LI>
+</UL>
+
+<P>
+<HR></P>
+
+<H3>Programs/modules under development:</H3>
+
+<UL>
+<LI><B>rcv -</B>adapt Dave Ketchum's rcv/station software into an Earthworm
+module. rcv/station receives triggered and/or continuous waveform data
+from USNSN, then passes it to an Earthworm-specific function which outputs
+it to a ring in Earthworm trace_buf format.</LI>
+
+<LI><B>rsec2 -</B>given an event located by hypoinverse, request the waveforms
+of the closest N stations from a wave_server module, then produce a record-section
+in GIF-format.</LI>
+
+<LI><B>getdst24 -</B>acquire continuous 24-bit digitally-telemetered seismic
+data from new DST stations. Data will be time-stamped in the field. Currently
+in the drawing-board stage. </LI>
+</UL>
+
+<H3>Our Additional Goals:</H3>
+
+<UL>
+<LI>Write better documentation of what we have.</LI>
+</UL>
+<HR>
+Return to main <A HREF="/EWAB">Earthworm</A> or 
+<A HREF="../sites.html">Sites</A> pages.
+
+
+</BODY>
+</HTML>

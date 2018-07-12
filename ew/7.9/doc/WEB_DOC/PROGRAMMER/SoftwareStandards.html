@@ -1,0 +1,345 @@
+<HTML><HEAD><TITLE>EARTHWORM SOFTWARE STANDARDS</TITLE>
+
+<BODY aLink=#ff0000 bgColor=#fac0a2 link=#0000ee text=#000000 vLink=#551a8b>
+
+<! Blame Alex and Mitch for this one>
+<H1><IMG  src="../GIFS/ew.logo.gif"ALT="EARTHWORM Logo"
+height=200 width=208 align=TEXTTOP>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Earthworm Software Standards</h1>
+
+<HR width="100%">
+
+<H5 align=right><TT>Update August 14, 2000</TT></H5>
+<HR>
+<A name=TOP></A>
+<UL>
+  <li><a href="#PROCEDURES">Earthworm Software Procedures</a>
+  <ol>
+    <LI><A href="#CORE">Core Software</A>
+    <LI><A href="#CONTRIBUTED">Contributed Software</A>
+    <LI><A href="#ENCAPSULATED">Encapsulated Software</A>
+    <LI><A href="#CONTRIBUTING">Contributing New Software</A>
+    <LI><A href="#MODIFYING">Modifying Existing Software</A>
+  </ol>
+  <LI><A href="#CODING">Earthworm Coding Standards</A>
+  <OL>
+    <LI><A href="#FLEXIBILITY">Flexibility</A>
+    <LI><A href="#SYSIND">System Independence</A>
+    <LI><A href="#TEDIUM">Reducing the Tedium</A>
+    <LI><A href="#ROBUSTNESS">Robustness</A>
+    <LI><A href="#MAINTAINABILITY">Maintainability</A>
+    </LI>
+  </OL>
+</UL>
+
+<HR>
+<hr>
+
+<h1 align=center>
+<a name=PROCEDURES>Earthworm Software Procedures</a>
+</h1>
+
+<P>
+Earthworm effort began as a grass-roots
+effort by developers. As such, its spirit was to focus on producing high-quality
+code and to minimize meetings, rules, and procedures. However, success brings
+problems; as the number of contributors and users has grown, so has the need for
+a stated set of operating procedures. Thus, the following is offered in the
+spirit of  "A loose consensus and some working code."
+
+<P>
+The Earthworm effort has several objectives: first, it is to provide a rapid
+response system suitable for critical monitoring applications; second, it is to
+operate as a vehicle to integrate the products of various seismic installations
+into a common software package available to all. The first objective implies
+that the system be robust and reliable, which, in turn requires a closely knit
+organization to provide rigorous standards, testing, and rapid bug-fixing. It
+further requires that the system be maintainable, and be suitable for use at a
+variety of installations, including those with modest levels of resources. The
+second objective leads toward a policy of open inclusion of various offerings,
+produced for a variety of purposes and operating environments, and therefore
+engineered to varying degrees of robustness and reliability.
+
+<P>
+In response to these needs, an <I>Earthworm Central</I> has evolved, which
+maintains the Earthworm software, accepts contributions, develops code, produces
+documentation, and releases Earthworm versions. This group is also responsible
+for quality assurance and bug fixes. There are currently three rough categories
+of software within the Earthworm effort:
+<A href="#CORE">core</A>,
+<A href="#CONTRIBUTED">contributed</A>,
+<A href="#ENCAPSULATED">encapsulated</A>.
+
+<hr>
+
+<P>
+<A name=CORE>1. Core Software</A>
+
+<P>
+The core software is intended to meet the requirements of the
+mission-critical objectives. The focus here is to maintain the quality of the
+core software in terms of reliability, maintainability, robustness, and
+longevity. This, in turn, comes down to issues like portability, failure modes,
+and error-detection, -processing, and -recovery. Core software is modified as
+needed under the control of Earthworm Central to fix errors and provide
+enhancements. The distribution system consists mainly of numbered releases and
+patches of various degrees of formality, depending on the urgency of the fix.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=CONTRIBUTED>2. Contributed Software</A>
+
+<P>
+The Contributed software consists of ancillary programs submitted for
+inclusion with the Earthworm distribution, but which, for whatever reason, don't
+fit into the <A href="#CORE">core</A>
+category. These are distributed <STRONG>as is</STRONG>. An index and
+descriptions of these programs will be maintained.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=ENCAPSULATED>3. Encapsulated Software</A>
+
+<P>
+A few exotic codes belong to the encapsulated category. These are part of the
+<A href="#CORE">core</A>
+offering, but are maintained by the original authors rather than <I>Earthworm
+Central</I>, either due to the complexity of the algorithm, or because they
+interface to other systems which may be changing. Examples include hypo-inverse
+and the 'coupler' package to the NOAA tsunami warning system. The approach is
+that the author, or the author's institution is responsible for the quality and
+maintenance of the code.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=CONTRIBUTING>4. Contributing New Software</A>
+
+<P>
+Anyone is welcome to create and contribute software. As mentioned above, most
+any relevant software will be accepted into the distribution as contributed. It
+is only requested that source code, some documentation, and a link to the author be
+provided. <A href="#CORE">Core</A>
+software is usually created or solicited in response to user needs. The
+objective in such cases is to offer the highest-quality code, in terms of the
+above requirements, in the most timely manner possible. After it is acquired it
+is normally reviewed and released to selected sites for testing. Any required
+changes as a result of testing and review will be communicated to the author.
+Such changes may then be implemented either by the author or by others as
+dictated by schedule and available resources.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=MODIFYING>5. Modifying existing modules</A>
+
+<P>
+Modifications to contributed software are on request by the author. The
+author may simply request to replace the software currently in the distribution
+with a new version, and it will be replaced on the Earthworm ftp site.
+
+<P>
+New versions of encapsulated software are generally accepted as they are
+produced, and released by various methods as required by the urgency of the
+situation. Any observed malfunctions are reported to the author.
+
+<P>
+Since the performance of core software is the responsibility of <I>Earthworm
+Central</I>, changes to core are made under its control. Reported bugs and
+deficiencies are discussed, and implementation of the fix is assigned, reviewed,
+and incorporated by <I>Earthworm Central</I> as required. Enhancements produced
+by others will similarly be evaluated and inserted by <I>Earthworm Central</I>.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+<hr>
+
+<p>
+<h1 align=center>
+<A name=CODING>Earthworm Coding Standards</A>
+</h1>
+
+<P>
+Coding standards is a noxious and intrusive idea which invades a developer's
+creative privacy (limited as it is), stifles innovation, and destroys
+morale. At best it is ignored; at worst it incites a counter-productive
+reaction. Yet in order to have any hope of having the system be portable,
+maintainable, and mission critical, some common conventions are needed. Thus the
+intent here is to state coding objectives rather than standards, and to explain
+traditional practices and conventions as they have (not necessarily as they
+should have) evolved within the Earthworm group.
+
+<P>
+<A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=FLEXIBILITY>1. Flexibility:</A>
+<P>
+One module, one function: We've found (the hard way)
+that the idea that 'a module should do only one thing' to be extremely important.
+It's more expedient to write one module to do several related functions, but the
+result is a complex module with numerous switches and options, and a maintenance
+and stability problem, in that enhancements to one of the functions may affect
+the others. Single-function modules, on the other hand, results in
+code which is simpler to understand and maintain. Separate, similar modules may
+lead to identical code in multiple modules. The solution is to place such code
+into utility functions, and place those functions into the utility library
+(/src/libsrc/util).
+
+<P>
+One input, one output: In principle, a module can connect to any number of
+transport rings and use any number of 'back-door' communication schemes.
+However, the idea of standard-in and standard-out (one input ring, one output ring)
+has merit. It is the basis of the 'erector set' feature of Earthworm, which allows
+users to assemble custom systems. In practice, we've found that modules with multiple
+input and output streams quickly lead to reduced flexibility. Other than
+performance, there's no harm in a module dumping various kinds of messages onto
+one output ring, and contemporary hardware can easily support very high traffic
+on transport rings.
+
+<P><A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=SYSIND>2. System independence:</A>
+<P>
+OS Kernel functions: Given our limited resources, the principle is to run on the
+two most dominant platforms of the day; currently, these are NT and Solaris.
+To date, Earthworm has survived five operating systems. In the process, the
+tradition has developed of using wrapper routines for system-specific calls,
+and producing
+different versions of such routines for each operating system. Such routines are
+kept in system-specific libraries (currently .../src/libsrc/solaris and
+.../src/libsrc/winnt), and the correct library
+is specified at link-time via environment variables. Thus, for example, the
+routine sleep_ew() wraps the NT "Sleep()" call, and the Solaris "nanosleep()"
+call, and modules which use the sleep_ew() function can run on either
+system.
+
+<P>
+To preserve this, of course, implies that wrapper routines will be produced as needed.
+
+<P><A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=TEDIUM>3. Reducing the tedium:</A>
+<P>
+Start with a template. The Earthworm architecture imposes an overhead burden
+on a module. This includes connecting to transport rings, reading and writing
+messages, reading the parameter file, error logging, etc. We've found that the
+most painless way of coding this is to start with an existing module which is
+similar in structure to the module to be written, and to modify it as needed.
+Another approach is to use the "template" module in
+/src/diagnostic_tools/template. This tends to reduce these tasks to cut and past
+operations, and produces code which is easy for others to maintain.
+
+<P>
+Earthworm utilities: /src/libsrc/util/ contains various utility routines such
+as message parsers and format generators. Using these can save much tedious
+effort, and aids portability.
+
+<P><A href="#TOP">Return to top</A>
+
+<HR>
+
+<P><A name=ROBUSTNESS>4. Robustness:</A>
+
+<P>
+Error reporting. This is best appreciated by those who get stuck installing
+and maintaining Earthworm systems. A major frustration is the situation when a
+module which exits with no error message, or a message which not meaningful to
+the people who must maintain the system. This occurs most often during
+configuration, when the parameter files are being created and debugged. A
+shocking amount of installation time can be spent resolving such problems. A
+more serious case is when a module exits during run-time because of an unusual
+asynchronous condition (e.g. receiving an oversize message) without adequately
+reporting the cause. If such events are rare, finding the problem can become
+extremely difficult and the consequence of such failures is potentially very
+serious.
+
+<P>
+"Works as long as there are no earthquakes". There are numerous horror
+stories of systems which had performed well for long time, and failed when a
+major earthquake occurred. Some classic problem areas include:
+<UL>
+  <LI>Careless algorithm design, which fails to correctly handle extreme input
+      values (or volume).
+  <LI>Code which requests additional resources during an event. For example, a
+      module which requests additional memory proportional to the size of an event
+      may fail only during large events, when sufficient memory may be temporarily
+      unavailable.
+  <LI>Insufficient internal buffering. CPU time will likely become more scarce
+      during a large event, and a module must survive such periods gracefully. Note
+      that a standard practice for such modules is to use a separate thread to
+      acquire input messages, and to use the library buffering routines between the
+      acquisition thread the processing thread. </LI>
+</UL>
+
+<P>
+Memory leaks. There have been modules which passed various tests, but which
+caused the system to hang after weeks of running by slowly draining available
+memory. This, plus the event-driven failure mode above, makes run-time memory
+requests a very dangerous practice. It is far better to do all malloc()'s only
+at start-up time and 'waste' memory, rather than crashing the system later.
+
+<P><A href="#TOP">Return to top</A>
+
+<HR>
+
+<P>
+<A name=MAINTAINABILITY>5. Maintainability:</A>
+
+<P>
+Given the 'community' objective of the Earthworm distribution, it is crucial
+that the code be easily understood, modified, and maintained by others. People
+with various skill levels and available time should be able to understand and
+modify the distributed code. Considerations here include:
+<UL>
+  <LI>Long, leading comments which give the reader insight into the motivations
+    for the code being as it is. Consider that the reader may be less skilled and
+    familiar with the algorithm than the author.
+  <LI>Simple, flexible coding. Most developers are familiar with horrors of
+      dense, 'elegant' code, written in a minimum number of lines of source code.
+      The usual excuse for this practice is efficiency, but this is hard to justify
+      given modern hardware and optimizing compilers. More realistically, this is
+      usually a pathetic attempt by the author to impress the reader with their
+      cleverness. This style creates problems in that it takes longer to understand
+      the code, and more code has to be disturbed to make modifications.
+  <LI>Intuitive naming conventions. Cute or terse file and variable names
+      may be convenient and amusing to the author, but make things difficult for
+      people who follow, and detract from the author's reputation.
+  <LI>Documentation. The primary documentation is comments in the source code.
+      Beyond that, the author is encouraged to write a short description for
+      publication on the Earthworm web site.</LI>
+</UL>
+
+<! **********************   END PAGE BLURB   ***************************************>
+
+<P><A href="#TOP">Return to top</A>
+
+<HR>
+
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY></HTML>

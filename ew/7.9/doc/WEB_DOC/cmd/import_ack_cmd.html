@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <title>Earthworm Modules: Import_ack commands</title>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(250, 223,
+    175);" alink="#ff0000" link="#0000ee" vlink="#551a8b">
+    <center>
+      <h1><br>
+        Import_ack Configuration File </h1>
+      <i>(last revised 2 Dec 2011)</i></center>
+    <h2>1. EXAMPLE CONFIGURATION FILE</h2>
+    <pre>#<br># import_ack configuration file<br>#<br># This is the companion receiver for export_ack and export_scnl_ack. <br>#<br># It initiates a connect request to the export specified in this file. <br># It will accept any legal message from the export it connects to <br># and put it into the ring it's attached to. The logo of the message <br># will the same as it was in the originating system.<br># It will return an acknowledgment packet for every packet it receives.<br># If the heartbeat string it receives doesn't match, it will put it <br># the message into the ring as a TYPE_HEARTBEAT message, but it will<br># not drop the connection.<br>#<br># Import/Export send heartbeats to each other, as well as into their<br># local earthworm systems. If the heartbeat from the distant partner is<br># not received whithin the expected time period (RcvAliveInt) the link is<br># terminated, and an attempt to reconnect is initiated. If things go<br># seriously wrong, the heartbeat into the local earthworm system in<br># stopped. The expectation is that "restartMe" has been set in the .desc<br># file, and we'll be killed and restarted.<br>#<br># All socket operations are performed with a timeout. This is noramlly<br># defaulted, but can be set in this file (SocketTimeout).<br>#<br># Configuration notes:<br>#<br># "restartMe" should be uncomment in our .desc file.<br>#<br># The period of our local heartbeat (HeartBeatInt) must be safely smaller<br># (faster) than our advertised period in our .desc file (tsec:).<br># Otherwise we'll get continually restarted for no good reason.<br># Note that tsec:0 implies no heartbeats expected, and so we'll never get<br># restarted.<br>#<br># The rate at which we send heartbeats to our distant partner should be<br># considerably faster than the rate at which our partner expects them.<br># Otherwise, a heartbeat delayed in transmission will cause our partner to<br># conclude that the link is broken, and cause them to break the link and<br># reinitialize. Which will cause us to do the same.<br>#<br># If SocketTimeout is specified, it should be at least as large as the<br># expected period of heartbeats from our distant partner.<br>#<br><br># Basic Earthworm setup<br>#----------------------<br> MyModuleId     MOD_IMPORT_ACK  # module id for this import,<br> RingName       PICK_RING       # transport ring to use for input/output,<br> HeartBeatInt   90              # Heartbeat interval in seconds<br>                                #    should be &gt;= RcvAliveInt<br> LogFile        1               # If 0, don't write log file <br>                                #    1, do write log file<br>                                #    2, write module log but not stderr/stdout<br><br> MaxMsgSize     65000           # maximum size (bytes) for input/output msgs<br><br># Socket communication info<br>#--------------------------<br> SendAliveText  ImpAlive        # heartbeat text to foreign server machine<br> SendAliveInt   30              # seconds between alive msgs sent to server<br>                                #   0 = no alive messages to sending machine<br> <br># Description of export partner<br>#------------------------------<br> ServerIPAdr    aaa.bbb.c.ddd   # Ip address of the machine we're to listen to<br> ServerPort     16005           # IP port number used by sender<br> RcvAliveText   ExpAlive        # export's heartbeat text<br> RcvAliveInt    60              # export's heart beat interval in seconds<br>                                #   0 = no heartbeat expected<br><br># Optional commands<br>#------------------<br>#SocketTimeout  60000   # Timeout for Socket_ew calls in milliseconds<br>                        #   Should be at least the RcvAliveInt<br>                        #   Will default to RcvAliveInt<br>#HeartbeatDebug 0       # non-zero to get heartbeat debug messages.<br>#SocketDebug    1       # non-zero to get socket debug messagese.<br><br>#LogoRewrite    1       <big>#</big> rewrite the logo as my own instead of the imported ModID and InstID<br><br></pre>
+    <p>
+    </p>
+    <center> <a href="../modules.html">Module Index</a> | <a
+        href="../ovr/import-export_ovr.html#import_ack">Import_ack
+        Overview</a>
+    </center>
+    <!-- USGS-required stuff at the end -->
+    <hr>
+    Contact: <b>
+      <address> Questions? Issues? <a
+          href="http://groups.google.com/group/earthworm_forum?hl=en"
+          target="_blank">Subscribe to the Earthworm Google Groups List.
+        </a></address>
+    </b><br>
+  </body>
+</html>

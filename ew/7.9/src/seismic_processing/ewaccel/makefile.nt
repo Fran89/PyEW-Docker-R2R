@@ -1,0 +1,43 @@
+#
+#                    Nmake File For ewaccel  - Windows NT version
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ewaccel
+
+OBJS = ewaccel.obj butterworth_c.obj
+
+EW_LIBS =  \
+		$L\libew_mt.lib \
+		$L\ws_clientII.obj \
+		$L\socket_ew_common.obj \
+		$L\socket_ew.obj \
+		$L\swap.obj \
+		$L\mem_circ_queue.obj
+
+compflags = /c /W3 /MT /nologo
+
+linkflags = /nologo
+
+libs = libcmt.lib
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) $(EW_LIBS) \
+      $(LIBS) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(CLAGS) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)*

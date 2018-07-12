@@ -1,0 +1,53 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5319 2013-01-30 19:15:54Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.4  2006/11/21 23:03:51  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.3  2004/04/30 18:36:40  kohler
+#     gaplist now accepts both TYPE_TRACEBUF and TYPE_TRACEBUF2 messages.
+#     WMK 4/30/04
+#
+#     Revision 1.2  2003/05/06 20:41:44  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 17:39:05  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#                    Nmake File For gaplist - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = gaplist
+O = $(APP).obj config.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $L\libew.lib \
+    $L\swap.obj $L\trheadconv.obj -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\gaplist*

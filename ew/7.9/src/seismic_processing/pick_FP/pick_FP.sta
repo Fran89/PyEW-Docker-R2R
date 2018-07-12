@@ -1,0 +1,23 @@
+# Do not leave any blank lines in this file.
+#
+#
+# Note: use negative values for filterWindow, longTermWindow
+#       and tUpEvent to let the code autoset them.
+#
+#                                      threshold1
+# Pick  Pin     Sta/Comp           longTermWindow  tUpEvent
+# Flag  Numb    Net/Loc       filterWindow  threshold2
+# ----  ----    --------      -----------------------------
+    1    00  AVG3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    01  AVG3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    02  BEL3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    03  BEL3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    04  SCL3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    05  SCL3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    06  STN3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    07  STN3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    08  PGN3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    09  PGN3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    10  VDP3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    11  VDP3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    12  CMP3 C03 IN --   -1  -1   8.6  17.2   -1

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Starting_Stopping_and_Status – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Starting_Stopping_and_Status?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Starting_Stopping_and_Status.html" title="View Starting_Stopping_and_Status">Starting_Stopping_and_Status</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Starting_Stopping_and_Status?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Starting_Stopping_and_Status?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-27T09%3A05%3A28-08%3A00&amp;precision=second" title="2012-01-27T09:05:28-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/27/12 09:05:28</span>
+          </div>
+          <div id="wikipage"><h1 id="StartingStoppingandStatusofEarthworm">Starting, Stopping and Status of Earthworm</h1>
+<p>
+April 9, 2010
+</p>
+<p>
+Once the setup of the Earthworm parameter directory has been completed, Earthworm can be started up in the following way:
+</p>
+<p>
+On Solaris:
+</p>
+<pre class="wiki"> # cd /home/earthworm/run/params
+ # source ew_sol_sparc.cmd
+ # startstop
+</pre><p>
+On Windows 2000:
+</p>
+<pre class="wiki"> C:\&gt; cd earthworm\run\params
+ C:\&gt; ew_nt.cmd
+ C:\&gt; startstop
+</pre><p>
+The <strong>startstop</strong> module creates all message rings and starts up all modules. On Windows 2000 <strong>startstop</strong> can be directed to open a new console window for each module, while on Solaris each module process is started up in the background. For the duration of its operation, the Earthworm status console reports all messages received by the modules, and it can also be used to get an immediate listing on the status of all modules in the configuration. To get the status of all modules, press the Enter or Return keys in the Earthworm console window. The following is an example of a status report:
+</p>
+<pre class="wiki">                    EARTHWORM SYSTEM STATUS
+
+        Hostname-OS:            gldnbuffs - SunOS 5.6
+        Start time (UTC):       Fri Apr  9 18:26:09 2010
+        Current time (UTC):     Fri Apr  9 18:26:11 2010
+        Disk space avail:       3165122 kb
+        Ring  1 name/key/size:  HYPO_RING / 1015 / 1024 kb
+        Startstop's Log Dir:    /export/home/earthworm/run/logs/
+        Startstop's Params Dir: /export/home/earthworm/run/params/
+        Startstop's Bin Dir:    /export/home/earthworm/v7.4/bin/
+        Startstop Version:      v7.4n 2010-04-08
+
+         Process  Process           Class/    CPU
+          Name      Id     Status  Priority   Used  Argument
+         -------  -------  ------  --------   ----  --------
+       startstop    4857   Alive    TS/ 0     0:00
+       trig2disk    4859   Alive    TS/ 0     0:00  trig2disk.d
+       diskmgr      4860   Alive    TS/ 0     0:00  diskmgr.d
+       statmgr      4861   Alive    TS/ 0     0:00  statmgr.d
+
+   Press return to print Earthworm status, or
+   type restart nnn where nnn is proc id or name to restart, or
+   type quit to stop Earthworm.
+</pre><p>
+To stop the Earthworm system, type <strong>quit</strong> into the Earthworm status console. The currently running Earthworm configuration can also be stopped outside of the console window using the module <strong>pau</strong>. Follow the first two steps for starting up Earthworm to source or execute the ew_sol_sparc.cmd or ew_nt.cmd files, then type <strong>pau</strong>. A similar procedure can be used to obtain the status of the Earthworm system. The module to execute in this case is called <strong>status</strong>.
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Starting_Stopping_and_Status?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

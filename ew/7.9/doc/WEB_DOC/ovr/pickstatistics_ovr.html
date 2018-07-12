@@ -1,0 +1,105 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: PickStatistics  overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module:<BR>PickStatistics Overview</H1>
+<I>(last revised 11 January, 2012)</I></CENTER>
+<P>
+PickStatistics has been developed to allow the follow up of pick_ew settings.
+This <B>java</B> application reads through any file or set of files containing 
+PICK_SCNL messages to estimate the average pick count per hour as well as its 
+evolution over a given time period.
+This allows a raw evaluation of the performance of the picker module (currently pick_ew or pick_FP) 
+in the sense that excessive pick count may indicate that the pick_ew parameters 
+for that channel are too loose and absent picks may indicate otherwise.PickStatistics 
+can be used in graphical or console mode.
+</P>
+<P>
+<B>GRAPHICAL MODE</B><BR>
+The graphical mode can be initiated simply with the command: 
+</P>
+<P>
+<TT>java -jar PickStatistics.jar [target]</TT>
+</P>
+<P>
+where <TT>[target]</TT> is an optional file or folder to be scanned by PickStatistics.<br>
+This initiates the PickStatistics application window, as shown below.
+<B>Note that no configuration is needed but PickStatistics will require Java 1.6 or higher</B>
+</P>
+<IMG SRC="pickstatistics_1.png">
+<P>
+If <TT>[target]</TT> is void, the user may then use the "Open" option under the "File" menu to select 
+one or more file. The user may even select entire folders. PickStatistics 
+will scan every file under every subfolder for files containing picks.
+After all files are processed, Pick statistics will present a table 
+with the computed average pick counts per hour.<BR>
+Double-clicking on any station will open a dialog with a graphic of the
+evolution of the pick count per hour along the available period, as shown below.
+</P>
+<IMG SRC="pickstatistics_2.png">
+
+<P>
+<B>CONSOLE MODE</B><BR>
+This mode has been created to allow the automated usage of PickStatistics within control
+scripts or similar. To use the console mode, start PickStatistics as:
+</P>
+<P>
+<TT>java -jar PickStatistics.jar [target] [S.C.N.L]</TT>
+</P>
+<P>
+where <TT>[S.C.N.L]</TT> is the full channel name. Note that in this case
+the target folder/file and the SCNL channel name are mandatory. In this mode, PickStatistics 
+will scan the target for the SCNL channel and produce a table of event counts per hour.<BR>
+As an example, the command 
+</P>
+<P>
+<TT>java -jar PickStatistics.jar binder_ak_ew_20111226.log MSW.EHZ.AV.--</TT> 
+</P>
+<P>
+would produce the following output:
+</P>
+<P>
+<TT>
+MSW.EHZ.AV.--
+2011.12.26 00:00:00 1<BR>
+2011.12.26 01:00:00 52<BR>
+2011.12.26 02:00:00 59<BR>
+2011.12.26 03:00:00 45<BR>
+2011.12.26 04:00:00 44<BR>
+2011.12.26 05:00:00 49<BR>
+2011.12.26 06:00:00 58<BR>
+2011.12.26 07:00:00 69<BR>
+2011.12.26 08:00:00 96<BR>
+2011.12.26 09:00:00 74<BR>
+2011.12.26 10:00:00 80<BR>
+2011.12.26 11:00:00 112<BR>
+2011.12.26 12:00:00 160<BR>
+2011.12.26 13:00:00 160<BR>
+2011.12.26 14:00:00 171<BR>
+2011.12.26 15:00:00 167<BR>
+2011.12.26 16:00:00 159<BR>
+2011.12.26 17:00:00 172<BR>
+2011.12.26 18:00:00 161<BR>
+2011.12.26 19:00:00 151<BR>
+2011.12.26 20:00:00 127<BR>
+2011.12.26 21:00:00 130<BR>
+2011.12.26 22:00:00 128<BR>
+2011.12.26 23:00:00 126<BR>
+2011.12.27 00:00:00 103<BR>
+</TT>
+</P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A><!-- |
+<A HREF="../cmd/arc2trig_cmd.html">Arc2trig Configuration File</A>
+-->
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

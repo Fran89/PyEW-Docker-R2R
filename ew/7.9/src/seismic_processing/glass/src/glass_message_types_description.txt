@@ -1,0 +1,163 @@
+AssOrigin
+  Write to EW Output that we associated an origin
+
+AssLink
+  Write to EW Output that we associated a phase with an origin
+
+EarthInit
+  CARL Unused
+	Parse the Earthworm config file.
+
+Ellipticity
+  CARL Unused
+	Pretty Formats an elipticity file into Carl "elf.d" format
+
+EW
+  CARL Unused
+  Opens a file in read-only text mode, sets state to IDLE
+	Appears to trigger a conversion from that file to one or more
+	PICK2K internal messages.
+
+FlinnEngdahlLoad
+  CARL Unused
+	Load FlinnEngdahl information from a given directory
+
+
+FlinnEngdahl
+  Get the FlinnEngdahl Region for a Lat/Lon Quake
+
+GlassMonitor
+  CARL Unused
+	Create a new CMonitor and give it a pointer to Glass
+  
+GlassNoAssociate
+  CARL Unused
+  Force glass not to associate new locations
+
+GlassNoLocate
+  CARL Unused
+  Force glass not to locate (only calc residuals and rms)
+
+GlassParams
+  CARL Unused
+	Parse glass params config file
+
+GlobalPick
+  CARL Unused
+  Parse an EW Global Pick message.  Broadcast it as internal "PICK2K" message
+
+
+Grok
+  A quake was updated or created, so update the GUI
+
+GrokTest
+  CARL Unused
+  Test the drawing of the display by drawing a bogus quake
+
+HeartBeat
+  CARL Unused
+  Log a heartbeat message to a debug file.
+
+HypoLoad
+  CARL Unused
+  Load a station list in hypoellipse format
+
+IGlint
+  Get a pointer to Glint
+
+Initialize
+  Do one-time(I think) initialization for each module
+
+ISolve
+  Get a pointer to Solve
+
+ITravelTime
+  Get a pointer to the Travel Time interface.
+  (Note*: both EarthMod and TravelTime reply to the
+	  message.  The EarthMod code appears to preempt the TravelTime code)
+
+Locate
+  Locate an Earthquake (Glass request to Glock)
+
+Logit
+  Log a message via Earthworm module that "Station site not found."
+
+LogFile
+  CARL Unused
+	Log a message to the debug utility (In EarthwormMod)
+
+MaxMessage
+  CARL Unused
+	Log "MaxMessage" to the debug utility (In EarthwormMod) 
+
+ModuleId
+  CARL Unused  (used to set cMod)
+  Log Module name to Debug, lookup moduleID from module name
+
+MsgSize
+  CARL Unused
+	Log "MsgSize" to the debug utility (In EarthwormMod) 
+
+NEIC
+  CARL Unused
+  (PDE Module) Load a catalog file, convert to internal "QUAKE2K" messages.
+
+NetFind
+  Get Station (lat/lon/elev) information from S code (S only not SCNL)
+
+NetLoad
+  CARL Unused
+  Load station from "earthworm" format file (only reads S not SCNL)
+
+NoFlushInput  (EarthwormMod)
+  CARL Unused
+  Sets a bFlush flag to false (presumably don't flush EW ring on startup)
+
+PDE
+  CARL Unused
+  Opens a file in read-only text mode, sets state to PDE
+	Appears to trigger a conversion from that file to a Quake2K internal
+	message with PICK2K internal messages.
+
+
+PICK2K
+  Create an internal PICK to pass from Earthworm or PDE to Glass
+
+QUAKE2K
+  Create an internal QUAKE to pass from PDE to Glass
+
+RingIn
+  CARL Unused
+  Attach to a given Earthworm Ring for input
+
+RingOut
+  CARL Unused
+  Attach to a given Earthworm Ring for input
+
+sphere
+  CARL Unused
+  GlassMod:  hardcode some sphere settings and calculate
+	their intersection.  ????
+
+ShutDown
+  ShutDown  (A default message type)
+	Message to terminate sent out to all modules from Earthworm module
+	 or config file reader.
+
+SolveTest
+  CARL Unused
+  Send out an ISolve message, and see if you get a ISolve pointer back.
+
+SpockReport
+  CARL Unused
+	Create a CSpock and initialize it.  Use it to dump a report after
+	an association.  CSpock appears to dump technical Associator parameters.
+
+T
+  CARL Unused
+  Earth Module handles it (looks like a traveltime lookup), but does not
+	return true after handling it. Looks like a bug.
+
+World
+  CARL Unused
+  Load the Base BitMap of the world for Grok display.

@@ -1,0 +1,454 @@
+RELEASE NOTES EARTHWORM VERSION 3.1
+
+
+NEW MODULES:
+***********
+
+STATUS: 
+
+Status is a separate program to request the Earthworm system status
+from startstop.  This program previously existed only in the Solaris
+version.  It has been rewritten to be system-independent (works on NT
+and Solaris). Instead of using Solaris msgsnd/msgrcv IPC functions to
+communicate withstartstop, status now uses Earthworm transport
+functions to request and retrieve an Earthworm system status message.
+Both startstop_solaris and startstop_nt will respond to status.
+   usage:  status
+Developed by Lynn Dietz
+   
+
+WAVE_SERVERV:
+
+Wave_serverV replaces wave_serverIII and wave_serverIV.  It, like it's
+successors,  provides a network-based service of trace data. It
+acquires Earthworm trace data messages for specified channels, and
+maintains a disk-based circular buffer for each channel. It then offers
+a network service capable of supplying specified portions of trace data
+from specified channels.
+
+Wave_serverV improvements include:
+	* Several crash-recovery strategies are used to permit rapid
+	restarts with minimal loss of data after catastrophic crashes,
+	such as system errors or power loss.
+
+	* Changed to use Socket_ew socket wrapper routines, which
+	encapsulate non-blocking socket functionality along with
+	timeout values.  Socket_ew routines found in
+	src/libsrc/util/socket_ew_common.c
+
+	* Wave_serverV orignally shutdown when it found a message
+	larget than the configured record size for its tank. Now it
+	skips the message, sends an error message to statmgr, and
+	continues.
+
+	* Fine tuned tank searching algorithms and responses to provide
+	better functionality with wave_viewer(surf.exe).
+
+Details of the other improvements and bug fixes can be found below in the MODIFICATIONS section.
+
+Wave_serverV Limitations:
+* If you are asking wave_serverV to serve "gappy" data, you are at the cutting edge of wave_serverV's abilities.  We recommend you use large index files if this is the case.
+
+Wave_serverV's development has been the result of the efforts of many
+over the last year including Will Kohler, Alex Bittenbinder, Lynn
+Dietz, Mac MacKenzie, and Eureka Young.  David Kragness pretty much
+re-wrote the main thread while implementing crash-recovery for
+wave_serverV with substantial debugging assistance and suggestions from
+Pete Lombard.
+
+
+WAVE CLIENT Functions:
+
+The wave client functions are routines which can be used by other
+Earthworm modules and  user applications to request waveform data from
+Wave_serverV.  The wave_client functions ( in ws_clientII.c ) have been
+updated with the new socket functions mentioned above and other changes
+were made with the following philosophy behind them. 
+
+     *  Leave sockets open unless there is an error on the socket; calling
+     program should ensure all sockets are closed before it quits.
+    
+     *  Routines are thread-safe. However, the calling thread must ensure
+     its socket descriptors are unique or mutexed so that requests and
+     replies can't overlap.
+    
+     *  Routines are layered on top of Dave Kragness's socket functions and
+     thus do no timing themselves. Exceptions to this are wsWaitAscii and
+     wsWaitBinHeader which need special timing of recv().
+
+Developed by Pete Lombard, University of Washington Geophysics.
+
+SNIFFRING:
+
+       Usage: sniffring <RING_NAME> <optional:tracebuf_file>
+
+ This is actually a debugging tool. It's a command-line program that,
+ given a running Earthworm, you can use to attach to a transport ring
+and view all the messages that are flying around it.  For each message
+it sees, sniffring prints a line listing the message logo (installation
+id, module id, and message type), sequence #, and length. For all
+messages (except waveform data), sniffring then prints the contents of
+the message to the screen.
+  Optionally, sniffring will write all TYPE_TRACEBUF messages it
+  receives to a user-named binary file (this file may grow very
+quickly!!!).  The contents of this file can then be dumped to the
+screen in ascii by using the program dumpwave.
+
+Developed by Lynn Dietz.
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+
+RCV:
+
+For background, rcv_ew is a composite Earthworm module first release in
+version 3.0.  It actually contains two USNSN programs (RCV and station,
+written by Dave Ketchum) that call a set of user functions (written by
+Lynn Dietz) which contain all the Earthwormy stuff.  The RCV process is
+started by startstop; RCV handles the communication with the USNSN in
+Golden.  RCV spawns the station process which then processes the data
+and handles all the Earthworm communications.  Listed below are the
+recent changes to the components of rcv_ew.
+
+Modifications to the USNSN base code (RCV & station) by Dave Ketchum:
+
+ 1) The server in Golden sends "keepalives" to the RCV whenever no data 
+    has been sent for 1 minute. If RCV fails to see data or a keepalive for 
+    two minutes, it will shutdown the socket (to Golden) and try to reattach.
+
+ 2) RCV calls user_heartbeat() whenever a data packet is received or a 
+    "keepalive" is received.   RCV passes "keepalive" messages to station.
+    NOTE: RCV's user_heartbeat() function remains a dummy in the Earthworm 
+          set of user* functions.
+
+ 3) Station calls user_heart_beat() whenever a data packet is received or 
+    a "keepalive" is received. The user_proc() function does not see the 
+    keepalives.  
+    NOTE: Station's user_heart_beat() function is the Earthworm heartbeat!
+
+ 4) Station in multichannel mode will use the last channel slot for any
+    new channel that comes in after all of the channel slots are full.  The
+    data will be passed on to the user routine.  This will keep station from
+    dying when the table is full.  Since only 50 bytes or so are required
+    for each channel it is recommended that the # of channels be overallocated.
+
+Modifications to rcv_ew's user* functions (in user_proc_ew.c) by Lynn Dietz:
+
+ 1) Now rcv_ew's heartbeats are "meaningful" and come only from calls to 
+    user_heart_beat() within station:
+ 
+      called from user_proc_cmd() on startup,
+      called from station.c on receipt of data (including partial packets),
+      called from station.c on receipt of keepalives.
+
+       So if RCV gets unhappy and stops passing info to station, station won't 
+    beat its heart and Earthworm will know that there's a problem within the 
+    RCV/station module. (The previous version of station had a HeartBeat 
+    thread, which beat its heart whether data was being received or not). 
+       user_heart_beat() will only beat its heart if the time since the last 
+    beat is >= "HeartBeatInt" seconds (set in config file). The actual 
+    heartbeat interval will be irregular since it is driven by data coming 
+    from Golden. But since "keepalives" should come every minute, so should 
+    heartbeats.  
+       The user_heart_beat() heartbeat contains a process_id so that the 
+    RCV/station module can be restarted by statmgr/startstop.  The process_id 
+    in the heartbeat is actually that of RCV, station's parent (RCV is the 
+    only process that startstop knows about).
+
+    Tip: Set "HeartBeatInt" to something under 60 seconds to guarantee a 
+         heartbeat for each keepalive.
+
+ 2) The optional config file command "AssignPin" has been replaced by a new
+    REQUIRED command, "AcceptSCN".  I rearranged the fields so that if/when 
+    we drop pins, we can just drop the last field.  Here's an example:
+
+    #          site comp net pinno
+    #          ---- ---- --- -----
+    AcceptSCN  HWUT BHZ  US  6005
+
+       You must have an "AcceptSCN" command for each SCN that you expect to 
+    get from Golden.  user_proc() will ignore any SCN that is not listed in 
+    the config file, issuing an error message that it is doing so.  
+
+ 3) A "BigBrother" thread is started in user_proc_cmd(); this thread monitors 
+    the time since the last data packet was received for each SCN. If this 
+    time exceeds "MaxSilence" minutes (new configuration command) for any SCN, 
+    station will issue an error message.  It will continue to issue an error 
+    every "MaxSilence" minutes that no data comes in.  It will also issue an 
+    "un-error" message when it starts receiving data for that SCN again.
+       The "BigBrother" thread also monitors the termination flag in the 
+    transport ring so that RCV/station will exit in a timely manner when the 
+    Earthworm system is stopped.
+
+IMPORT_GENERIC:
+   Changed as per Doug Neuhauser's suggestion for reading as much as
+   available from socket. It helped a lot. Thanks Doug.  Changed to use
+   Socket_ew socket wrapper routines, which encapsulate non-blocking
+   socket functionality along with timeout values.  Socket_ew routines
+   found in src/libsrc/util/socket_ew_common.c  DSK 2/1/98
+
+EXPORT_GENERIC:
+	Changed to use Socket_ew socket wrapper routines, which encapsulate
+	non-blocking socket functionality along with timeout values.
+	Socket_ew routines found in src/libsrc/util/socket_ew_common.c
+	DSK 2/1/98
+
+EXPORT_SCN:
+	Changed to use Socket_ew socket wrapper routines, which
+	encapsulate non-blocking socket functionality along with
+	timeout values.  Socket_ew routines found in
+	src/libsrc/util/socket_ew_common.c  DSK 2/1/98
+
+ADSEND:
+
+Adsend no longer uses "pin numbers".  Adsend does use a table in which
+each SCN is associated with a physical connection ("pin") on the
+National Instruments Mux boards.  The DAQ pin numbers go from zero to
+15, 63, 127, or 255, depending on how many mux's are in the system.
+Adsend doesn't put the DAQ pin numbers in the trace headers.
+WMK 1/7/98
+
+PICK_EW: 
+
+Pin numbers are no longer used.  In the station list (eg pick_ew.sta),
+the scn controls which channels are picked.  The pick-nopick flag has
+been removed.  To stop picking an scn, comment out a line in the
+station file.  Comment lines begin with the "#" character.  Use the
+station files in earthworm/working/src/pick_ew as models.
+WMK 3/28/98
+
+SENDMAIL() library function(NT version): 
+Function strlwr() (non-ansci) is
+replaced by calls to tolower(), which is ansii.
+
+SENDMAIL() library function(OS2 version): 
+
+Sendmail() now gets the name of the host computer from environmental
+variable SYS_NAME.  Also, the line:
+	char *hostname;        is replaced by:
+	char hostname[80];                                           
+WMK 2/20/98
+
+TANKPLAYER:
+ 
+Added a new optional configuration file command, "ScreenMsg".
+    - if ScreenMsg has a non-zero argument, tankplayer will print 
+      informational messages to the screen as it plays waveform files.
+    - if ScreenMsg 0 is used, tankplayer won't write stuff to the screen.
+    - if no ScreenMsg command is given, tankplayer won't write to screen.
+      LDD 2/27/98
+
+chron3.c: 
+Function timegm() added.  This function was part of the SunOS 4.x
+run-time library, but it doesn't exist under Solaris.     
+WMK 2/27/98
+
+CHRON3.H:
+ 
+Added function prototype for timegm().          
+WMK 2/27/98
+
+STARTSTOP_SOLARIS:
+
+	1) Removed the Heartbeat thread and the Status thread.  Moved
+	both functions into the main thread. Altered the Earthworm
+	status request/response so that communication is handled thruthrough
+	Earthworm transport protocol instead of Solaris msgsnd(),
+	msgrcv() functions.  This eliminates status message size
+	restrictions and out-of-date status message problems that
+	existed in the previous version.  Startstop watches for
+	TYPE_REQSTATUS messages on all the transport rings it created,
+	and responds by putting a TYPE_STATUS message back into the
+	ring on which it found the request.  LDD 3/17/98
+	
+	2) Changed some details regarding restarting child processes when a
+	TYPE_RESTART message is received.
+
+	2.1) Bug fix: Startstop now calls fork1() when restarting a child.
+	   Under Solaris threads (linked with -lthread), fork1() only
+	   duplicates the calling thread [it used to call fork(), which
+	   duplicates all threads in the calling process, and restarts were
+	   inconsistent].
+	
+	2.2) New feature: Startstop now writes error messages to the
+	transport ring when it has trouble restarting a child (it used
+	to just write to its log file).  This requires a change to
+	startstop's descriptor file.  
+	LDD 3/25/98
+	
+	3) Now prints system start time, stop time, and current time in UTC
+	instead of local time.    WMK 4/7/98
+
+	4) Startstop_solaris had a problem running from a
+	shell-script.  It now works in foreground, in background from
+	the commandline, and in background from a script. PNL 4/7/98
+
+
+STARTSTOP_NT:
+
+	1) Now prints system start time and current time in UTC instead of
+	local time.    WMK 4/7/98
+	
+	2)Modified to watch all transport rings for TYPE_RESTART messages and
+	to kill/restart the corresponding process when it receives such a
+	message.
+	
+	Incorporated the feature from startstop_solaris which allows one to
+	inquire about the state of the Earthworm system without being in
+	startstop's window.  Startstop watches for TYPE_REQSTATUS messages on
+	all the transport rings it created, and responds by putting a
+	TYPE_STATUS message back into the ring on which it found the request.
+	
+	Moved the Heartbeat from its own thread into the main loop which
+	watches over the transport rings.
+	LDD 3/19/98
+
+ 
+STATMGR:
+Now time stamps its email and TYPE_PAGE messages with UTC time only.
+All references to local time have been eliminated.
+WMK 4/7/98
+ 
+
+Wave_serverV:
+
+wave_server.c:
+1. Made MaxMsgSize an optional configurable item. If it is not specifically
+set in the config file, then wave_serverV will set it to the largest record
+size found in its config file.
+
+2. During startup, ConfigTANK() includes the same check as TankIsInList(), so
+the latter has been removed.
+
+3. In the main thread, the file offset for the current tank was saved while
+trace data was written to the tank, and restored afterword. The server thread
+did the same thing. In effect, each of these threads was trying to put the
+file pointer back to where it thought the other thread wanted it. I removed
+these calls to ftell and fseek, since neither thread really knew where the
+other wanted the file pointer. Now each thread moves the file pointer to where
+it needs it, and leaves it there when it releases the mutex.
+
+4. When the waveserver found a message larger than the configured record size
+for its tank, it used to shut down. Now it skips the message, sends and error
+message to statmgr, and continues. Note that this is a separate check from the
+transport size check in the stacker thread.
+
+5. Several errors in the server thread reported by logit that they were
+exiting, but then did "goto HeavyRestart". Now these errors cause an exit
+with status -1.
+
+6. The main loop in the IndexMgr thread has been rearranged to improve
+efficiency. 
+
+server_thread.c
+1. ProcessMsg was reorganized to reduce the number of calls to send(),
+especially for trace header information. _writeDataBuffer() has been deleted;
+now send_ew() of Dave's socket wrappers is used.
+
+2. _GetSCN() has been deleted. It did some memcpy() that has been replaced by
+some pointer assignments for improved efficiency.
+
+
+serve_trace.c
+1. The values of FLAG_L and FLAG_R were changed so that they could be used as
+indexes into an array of strings in GetOffset(), in place of the calls to
+strcpy().
+
+2. SendReqDataAscii() and SendReqDataBin() used memcpy() in order to access
+the TRACE_BUF header. Now this is accomplished through pointer
+assignment. This requires that the record size in wave_serverV.d be multiples
+of 4 or wave_serverV will die with misaligned data. This is checked while
+reading the config file.
+
+3. ReadBlockData() has been changed as described in (6) for wave_serverV.c
+above.
+
+4. SendReqDataAscii() and SendReqDataRaw() have been changed to use
+SendHeader() instead of SendFlgData(). This removes several calls to send()
+for small strings of header data. SendFlgData(), SendIntData(), SendDblData(),
+SendRawData(), SendStrData(), have all been replaced by SendHeader() and
+send_ew(). All of Prep*Data() have been removed. Since SendHeader() sends
+reqid back to the client, this string must be an argument to the calls between
+ProcessMsg() and SendHeader().
+
+5. SendReqDataAscii() has been reorganized to do sanity checks on trace data
+before sending the reply header to the client.
+
+6. SendReqDataAscii() has been changed to use GapThresh (optionally included
+in config file) to set the gap threshhold in place of the hardwired value of
+1.5
+
+7. BulkSendFill() has been changed to use memcpy() in place of PrepStrData().
+
+index_util.c
+1. Casts added in front of several calls to malloc() to get rid of fascist
+compiler warnings.
+
+Above changes and enhancements by DSK and PNL.
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+
+earthworm.d: 
+Add Message types TYPE_REQSTATUS and TYPE_STATUS for use by
+startstop and status programs.  LDD 3/17/98
+
+rcv_ew.d: 1) Changed the optional "AssignPin" command to a 
+             required "AcceptSCN" command.
+          2) Added a new command "MaxSilence" for reporting extraordinarily
+             long data gaps from individual channels.
+
+wave_serverV:
+
+The wave_serverV config file is very different from the wave_serverIV config file.
+  
+    
+Commands which remained the same:
+
+	MyModuleId, RingName, LogFile, HeartBeatInt, ServerIPAdr, 
+	ServerPort, GapThresh,
+	SocketTimeout, SocketDebug,Tank, InputQueueLen
+     
+Commands which changed in or are new to wave_serverV:
+
+	IndexUpdate, TankStructUpdate, TankStructFile, RTankStructFile2,
+	MaxMsgSize, SecondsBetweenQueueErrorReports
+
+Please see the wave_serverV.d config file or the wave_serverV.commands
+file in the src/wave_serverV directory.
+
+
+startstop.desc:  Added an error regarding child restarts.  LDD 3/25/98
+ 
+tankplayer:  New optional command "ScreenMsg"   LDD 2/27/98
+
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  This is a problem for ringtocoax, since packet delays need to be set
+to a few milliseconds.
+
+WAVE_VIEWER:
+
+Wave_viewer does not handle flagged GETSCN replies correctly. If you
+try to view the most recent data from a wave_server, wave_viewer makes
+many requests per second for 10 seconds of data in the future. The
+server replies that the data is to the right of the tank, but the
+viewer asks again. Two effects are that the viewer gets so busy asking
+for one channel in the future that it does keep up with the other
+channels which have some data available. Also, the server is getting
+bombarded with useless requests. The same thing happens for requests at
+the beginning of the tank and data in a gap.
+
+DEVELOPERS:
+
+AB:	Alex Bittenbinder
+LDD:	Lynn Dietz
+DSK:	David Kragness 
+WMK:	Will Kohler 
+PNL:	Pete Lombard

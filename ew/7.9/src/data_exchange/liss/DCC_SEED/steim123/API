@@ -1,0 +1,274 @@
+void endianflip_frame (cfp framep)
+   procedure for in-place byte-endian reversal of a 64-byte compressed frame.
+
+LONG endianflip (LONG e)
+   function for byte-endian reversal of a 32-bit word.
+
+SHORT swapb (SHORT e)
+   function for byte-endian reversal of a 16-bit SHORT.
+
+SHORT compress_frame (ccptype ccp,  SHORT difference,  SHORT level,  
+      SHORT reserve,  SHORT flip)
+  passed:
+         ccp            :  pointer to the compression continuity structure for
+                           this channel. 
+         difference     :  the desired differencing operation, 1 or 2
+         level          :  the desired compression coding level, 1, 2, or 3
+         reserve        :  the number of non-data 32-bit "blocks" to reserve
+                             at the beginning of the frame, used for embedded
+                             storage of integration constants.  typically,
+                             "reserve" will be 2 for level 1/2 and 3 for level
+                             3, which will install the first (level 1/2,
+                             difference=1) or the first and second (level 3,
+                             difference 1 or 2) samples in the record and
+                             reserve space for later installation of the last
+                             sample of a group of frames, such as in a
+                             4096-byte (63 frame+header) data record.
+                             reserve=15 will generate a totally empty frame,
+                             in the appropriate level.
+         flip           :  0 will generate a frame in the native endian-ness
+                             of the computer, 
+                           1 will reverse the endian-ness.
+         *(ccp->peeks)  :  the compression look-ahead (peek) buffer containing
+                             data to be compressed.  the data will begin at
+                             ccp->peeks^[ccp->next_out], and continue for
+                             ccp->peek_total samples. it is advisable to
+                             guarantee that the peek buffer always contain at
+                             least 143 samples (maximum in level 3) to avoid
+                             generating compressed frames padded with
+                             non-data, which will greatly reduce compression
+                             efficiency.
+  returns:
+         ccp->framebuf  :  will contain the 64-byte compressed frame in the
+                             selected endian-ness. 
+         *ccp           :  the compression continuity strucure will be
+                             updated, particularly, ccp->peek_total will be
+                             decremented by the amount of samples removed from
+                             the peek buffer, and will be negative by the
+                             number of 32-bit non-data blocks padded at the
+                             end of the frame if the peek buffer did not
+                             contain a sufficient number of samples to fill
+                             the frame. if this underflow occurs, and the
+                             caller has more data to write, the
+                             clear_compression should be called to reset
+                             buffer pointers before new data is placed in the
+                             peek buffer.
+  
+         function value :  will return the number of samples from the peek
+                             buffer actually compressed if successful. if
+                             differences are too large to compress in the
+                             selected mode, a frame containing as many samples
+                             as possible that fit will be built, and the
+                             number that fit (>= 0) will be returned.  if in
+                             subsequent calls data are still too large, will
+                             return -1, at which point the peek-buffer
+                             next-out will start at the group of samples that
+                             will not compress. the caller can clip the data,
+                             and try again.
+  
+   
+SHORT decompress_frame (cfp framep,  unpacktype unpacked,  sptype final,  
+         SHORT lastframesize,  SHORT level, SHORT recursion,  SHORT flip,
+         SHORT ignore, sptype statcode)
+    passed:
+           framep    :       pointer to the 64-byte frame to be decompressed.
+           unpacked  :       pointer to an array large enough to hold the
+                               maximum number of samples possible in level 3
+                               in one frame + 2 history samples + 1 decoded
+                               embedded integration constant for the "last
+                               sample" in a record == 146.
+           final     :       a pointer to a 16-bit integer, see below.
+           level     :       compression level of the frame, 1,2, or 3. the
+                               differencing operation used to build the frame
+                               is internally encoded and will be automatically 
+                               determined.
+      lastframesize  :       should be 0 for the very first frame to be
+                               decompressed, and must be maintained by the
+                               caller for each frame to be decompressed. it is
+                               used to update the previous history. see
+                               example usage of the procedure.
+          recursion  :       should always be 0 supplied by the caller.
+               flip  :       0 to used the native endian-ness of the computer.
+                             1 to reverse endian-ness.
+             ignore  :       > 0 will ignore interpretation of any embedded
+                               integration constants at and above the value,
+                               i.e. 1 will ignore all, 2 will ignore the
+                               second, and so on. this is useful in the case
+                               where multiple smaller groups of frames (such
+                               as, say, 9) each with embedded constants are
+                               batched togther to create larger, say
+                               4096-byte, records, and the integration
+                               constants not at the beginning of the 4096-byte
+                               records may not contain valid data,
+                               particularly the "final" sample.
+          *statcode  :       pointer to a 16-bit integer into which will be
+                               returned a status of the 
+                               decompression.
+    returns:
+        in unpacked  :       the 32-bit decompressed data will start at the
+                               third element (unpacked[2]) of unpacked, with
+                               the first two elements containing 2 previous
+                               history samples, which may be used by the
+                               caller.  
+             *final  :       if non-zero is the index of "unpacked" that
+                               contains an embedded integration constant for
+                               the "last sample" in a record. this may be
+                               saved by the caller to be used at the end of a
+                               group of frames to check decompression.
+          *statcode  :       see above.
+      function value :       will return the number of samples decompressed,
+                               or -1 if there was a detectable error.
+
+BOOLEAN dferrorfatal (SHORT statcode, FILE *print)
+     used to print an error string describing the associcated decompression
+        errors. 
+     passed:
+         statcode    : the status code returned by decompress frame.
+             print   : file pointer to which you want status messages to be
+                         printed. NULL otherwise.
+     returns:
+         TRUE        : if a "fatal" decompression error was encountered on
+                         this frame, i.e. the frame could not be decompressed without errors.
+                       TRUE is not returned if decompression encountered a
+                         failure at the integration constant check
+                         (EDF_INTEGRESYNC), which may happen if a record is
+                         simply missing. will also not return fatal if the
+                         sample count is wrong, or the last
+                         integration-constant check produces an
+                         error. somebody may have just made a mistake.  of
+                         course, if you consider these errors fatal, check for
+                         them explicitly in "statcode" in your user program.
+
+void clear_compression (ccptype ccp,  SHORT level)
+   will reset buffer indices and install the minimum number of samples
+   required to call "compress_frame" without the chance of generating a
+   "padded" frame, according to the selected compression level. note that the
+   compression level can be changed by calling this routine with the
+   appropriate level.
+   
+ccptype init_compression (SHORT level)
+   will allocate a "compression_continuity" structure, and then will allocate
+   a "peek" buffer, and install a pointer to it in the
+   "compression_continuity".  because this actually allocates memory, this
+   function should be called only at program initialization. (you can use your
+   favorite memory allocator).  returns a NULL pointer if no memory is
+   available for either allocated structure.
+
+SHORT peek_threshold_avail (ccptype ccp)
+   returns >= 0 if at least enough samples are in the associated "peek" buffer
+   to guarantee a full compressed frame. if < 0, indicates how many more are
+   needed.
+
+SHORT peek_contents (ccptype ccp)
+   returns the current number of samples in the "peek" buffer. maximum value
+   is PEEKELEMS.  minimum value may be negative, and if so, indicates samples
+   were padded in the compressed_frame that produced the condition (the
+   absolute value is the number of padded 32-bit "blocks".  when the peek
+   buffer contents goes negative, buffer pointers should be reset with a call
+   to "clear_compression" before new data is read into the peek buffer and
+   compression resumed.
+
+LONG frames (ccptype ccp)
+   returns the number of frames that have been filled in this record.
+
+SHORT peek_write (ccptype ccp,  LONG samples[], SHORT numwrite)
+   will write 32-bit samples to the peek buffer if there is room. normally
+   this would be called only if you know there is room.
+
+void clear_generic_decompression (dcptype dcp)
+   this procedure is used to clear decompression history (such as after an
+      unrecoverable expansion error) 
+
+dcptype init_generic_decompression ()
+   init_generic_decompression:   allocate and initialize a
+      decompression_continuity structure, to be used with
+      "decompress_generic_record". 
+
+LONG decompress_generic_record (generic_data_record *gdr, LONG udata[], sptype
+                                statcode, dcptype dcp, SHORT firstframe, LONG
+                                headertotal, SHORT level, SHORT flip, SHORT
+                                dataframes) 
+   decompress_generic_record:   will decompress an entire data record into a
+                                 linear array of LONG's. 
+   
+   passed:
+          gdr :   pointer to a generic data record, starting with the header.
+        udata :   pointer to an array that will hold the decompressed data
+                   from the entire record. it is the caller responsibility to
+                   see that this is big enough. 
+          dcp :   pointer to a "decompression_continuity" structure for this
+                   channel, which has previously been allocated and
+                   initialized by "init_decompression". 
+   firstframe :   the frame at which data begins, normally 0.
+   headertotal:   the number of samples said to be in the record according to
+                   a stored value in a header. if this value < 0, no check
+                   will be performed. 
+        level :   the compression level 1/2/3.
+         flip :   >0 to endian-flip the data before processing.
+   dataframes :   the number of data frames, e.g. 63 for a 4096-byte record
+                   with 64-byte header. 
+   
+   returns:
+        udata :   decompressed data.
+     statcode :   cumulative status of decompression of all frames in the
+                    record. any irregularity will appear as one of the
+                    EDF_... error code bits, which may be printed using the
+                   "dferrorfatal" function. 
+          dcp :   various internal elements will be updated.
+   function value:  the number of samples in the record, or a negative value
+                      if unsuccessful. 
+
+SHORT compress_generic_record (gdptype gdp,  SHORT firstframe)
+   function to compress a single frame of an entire data record. continuity is
+     maintained in the *gdp structure. 
+   passed:
+            gdp     :   the adaptive generic data record control structure
+                          pointer 
+       firstframe   :   the frame at which data begins (where the last sample
+                          will be inserted), typeically 1.
+   
+   returns: the number of full data frames in the record, excluding the
+              header.  the record is full when this number is ==
+              gdp->adp->framesperpackage, which is initialized by the
+              caller. this is typically the total number of frames in a record
+              - 1, e.g. 63 for a 4096-byte record.
+
+LONG generic_record_samples (gdptype gdp)
+     Returns the number of samples compressed into generic record.   
+
+void clear_generic_compression (gdptype gdp, SHORT framesreserved)
+   framesreserved  :   the number of frames at which to begin inserted data,
+                        normally 0, unless event/cal...etc blockettes are to
+                        be inserted. if this == the number of data frames in
+                        the record (e.g. 63 for a 4096-byte record), a record
+                        with no data frames will be generated by
+                        compress_generic_record.
+
+gdptype init_generic_compression (SHORT diff, SHORT fpt, SHORT fpp, 
+        SHORT level, SHORT flip, generic_data_record *gdr) 
+   allocates and initializes a control structure for compressing a "generic
+        data record" at the requested level.
+   
+   passed:
+          diff    :   the default differencing to be used, 1 or 2. this is
+                        ignored in level 3, which adaptively determines the
+                        best differencing. 
+          fpt     :   frames per trial. controls the number of frames in a
+                        package over which differencing adaptivity is
+                        performed, typically, say, 8 with fpp=63. 
+          fpp     :   frames per package. the number of data frames (not
+                        including header) that comprises a full data record,
+                        typically 63 for a 4096-byte record having one 64-bye
+                        header. 
+          level   :   the compression level, 1/2/3.
+          flip    :   if you want the output data reversed from the native
+                        byte order of the computer on which you're running.
+           *gdr   :   the already-allocated data record into which the
+                        compressed frames will go. 
+   
+   returns: a pointer to a "generic_data_record_control" structure, partially
+                        initialized. before use, the caller should use
+                        "clear_generic_compression" to establish the location
+                        of the first data frame and zero the number of samples
+                        in the complete record.
+   

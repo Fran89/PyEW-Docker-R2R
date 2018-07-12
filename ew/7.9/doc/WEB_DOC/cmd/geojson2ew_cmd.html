@@ -1,0 +1,1035 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:w="urn:schemas-microsoft-com:office:word"
+  xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+  xmlns:mv="http://macVmlSchemaUri"
+  xmlns="http://www.w3.org/TR/REC-html40">
+  <head>
+    <meta name="Title" content="Earthworm Modules: geojson2ew commands">
+    <meta name="Keywords" content="">
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+    <meta name="ProgId" content="Word.Document">
+    <meta name="Generator" content="Microsoft Word 14">
+    <meta name="Originator" content="Microsoft Word 14">
+    <link rel="File-List"
+      href="geojson2ew%20commands_files/filelist.xml">
+    <link rel="Edit-Time-Data"
+      href="geojson2ew%20commands_files/editdata.mso">
+    <!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+    <title>Earthworm Modules: geojson2ew commands</title>
+    <!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Kevin Frechette</o:Author>
+  <o:LastAuthor>Kevin Frechette</o:LastAuthor>
+  <o:Revision>8</o:Revision>
+  <o:TotalTime>5</o:TotalTime>
+  <o:Created>2014-11-03T19:00:00Z</o:Created>
+  <o:LastSaved>2014-11-03T19:06:00Z</o:LastSaved>
+  <o:Pages>2</o:Pages>
+  <o:Words>1251</o:Words>
+  <o:Characters>7131</o:Characters>
+  <o:Lines>59</o:Lines>
+  <o:Paragraphs>16</o:Paragraphs>
+  <o:CharactersWithSpaces>8366</o:CharactersWithSpaces>
+  <o:Version>14.0</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+    <link rel="themeData"
+      href="geojson2ew%20commands_files/themedata.xml">
+    <!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:SplitPgBreakAndParaMark/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="276">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+    <style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Times;
+	panose-1:2 0 5 0 0 0 0 0 0 0;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 0 0 0 1 0;}
+@font-face
+	{font-family:"MS Mincho";
+	mso-font-charset:78;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+@font-face
+	{font-family:"MS Mincho";
+	mso-font-charset:78;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:1 134676480 16 0 131072 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;}
+h1
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 1 Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:1;
+	font-size:24.0pt;
+	font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;
+	font-weight:bold;}
+h2
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 2 Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:#0000EE;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:#551A8B;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	color:black;}
+address
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"HTML Address Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;
+	font-style:italic;}
+pre
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"HTML Preformatted Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:Courier;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-bidi-font-family:Courier;
+	color:black;}
+span.HTMLAddressChar
+	{mso-style-name:"HTML Address Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"HTML Address";
+	font-family:Times;
+	mso-ascii-font-family:Times;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Times;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;
+	font-style:italic;}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 1";
+	mso-ansi-font-size:16.0pt;
+	mso-bidi-font-size:16.0pt;
+	font-family:Calibri;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"MS Gothic";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#345A8A;
+	mso-themecolor:accent1;
+	mso-themeshade:181;
+	font-weight:bold;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:13.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Calibri;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"MS Gothic";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#4F81BD;
+	mso-themecolor:accent1;
+	font-weight:bold;}
+span.HTMLPreformattedChar
+	{mso-style-name:"HTML Preformatted Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"HTML Preformatted";
+	font-family:Courier;
+	mso-ascii-font-family:Courier;
+	mso-fareast-font-family:"MS Mincho";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Courier;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;
+	color:black;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:10.0pt;
+	mso-ansi-font-size:10.0pt;
+	mso-bidi-font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1027"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+  </head>
+  <body style="tab-interval:.5in" alink="#FF 0000" bgcolor="#FADFAF"
+    lang="EN-US" link="#0000EE" vlink="#551A8B">
+    <div class="WordSection1">
+      <h1 style="text-align:center" align="center"><span class="GramE"><span
+            style="mso-fareast-font-family:&quot;Times New
+            Roman&quot;;mso-bidi-font-family:&quot;Times New
+            Roman&quot;">geojson2ew</span></span><span
+          style="mso-fareast-font-family:&quot;Times New
+          Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
+          Configuration File Commands<o:p></o:p></span></h1>
+      <p class="MsoNormal" style="text-align:center" align="center"><i><span
+            style="mso-fareast-font-family:&quot;Times New
+            Roman&quot;;mso-bidi-font-family:&quot;Times New
+            Roman&quot;">(<span class="GramE">last</span> revised April
+            24, 2015)</span></i><span
+          style="mso-fareast-font-family:&quot;Times New
+          Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;"><o:p></o:p></span></p>
+      <p class="MsoNormal"><span
+          style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+          mso-bidi-font-family:&quot;Times New Roman&quot;">Page Index:<br>
+          1. <a href="#example"><span class="GramE">Example
+              configuration file</span></a><span class="GramE"><br>
+            2.</span> <a href="#function"><span class="GramE">Functional
+              command listing</span></a><span class="GramE"><br>
+            3.</span> <a href="#alphabet"><span class="GramE">Alphabetic
+              command listing &amp; description</span></a><span
+            class="GramE"><br>
+            4.</span> <a href="#descriptor">Descriptor file example</a>
+          <o:p></o:p></span></p>
+      <p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On
+        startup, geojson2ew reads the configuration file named on the
+        command line. As always, the configuration file contains
+        comments: </p>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+        <pre>#<span style="mso-spacerun:yes">&nbsp; </span><span class="GramE">marks</span> the line as a comment (example: # This is a comment).<br></pre>
+      </blockquote>
+      <p class="MsoNormal"><span
+          style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+          mso-bidi-font-family:&quot;Times New Roman&quot;">Command
+          names must be typed in the control file exactly as shown in
+          this document (upper/lower case matters!).<o:p></o:p></span></p>
+      <h2><a name="example"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">1. EXAMPLE
+            CONFIGURATION FILE<o:p></o:p></span></a></h2>
+      <pre><span style="mso-bookmark:example">#<br># geojson2ew configuration file<br>#<br># This code receives geoJSON records from an AMQP server, converts them into<br># Earthworm trace buf messages, and stuffs them into a wave ring.<br>#<br>#<br> ModuleId       MOD_GEOJSON2EW  # module id for this import,<br> RingName       WAVE_RING       # transport ring to use for input/output,<br><br> HeartbeatInt   10              # Heartbeat interval in seconds<br>                                # this should match the geojson2ew.desc heartbeat!<br><br> LogFile        1               # If 0, don't write logfile;; if 1, do<br>                                # if 2, log to module log but not stderr/stdout<br><br> HOST           131.215.66.126<br> PORT           5672<br> QUEUENAME      Results2Earthworm<br> USERNAME       seismic<br> PASSWORD       secret
+<span style="mso-spacerun:yes">&nbsp;</span>
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_SNCL<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="SpellE">properties.SNCL</span>
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_TIME<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="SpellE">properties.time</span>
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_SAMPLERATE <span class="SpellE">properties.sampleRate</span><span style="mso-spacerun:yes"> </span><br>
+<span style="mso-spacerun:yes">&nbsp;</span># Map channels
+<span style="mso-spacerun:yes">&nbsp;</span>#<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="SpellE">channelCode</span> <span class="SpellE">jsonPath</span> multiplier condition
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN N features[*].<span class="SpellE">geometry.coordinates</span>[0] 1e6 <span class="SpellE">properties.coordinateType</span>=NEU
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN E features[*].<span class="SpellE">geometry.coordinates</span>[1] 1e6 <span class="SpellE">properties.coordinateType</span>=NEU
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN Z features[*].<span class="SpellE">geometry.coordinates</span>[2] 1e6 <span class="SpellE">properties.coordinateType</span>=NEU
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN Q features[*].<span class="SpellE">properties.quality</span> 1
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 1 features[*].<span class="SpellE">properties.EError</span> 1e6
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 2 features[*].<span class="SpellE">properties.NError</span> 1e6
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 3 features[*].<span class="SpellE">properties.UError</span> 1e6
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 4 features[*].<span class="SpellE">properties.ENCovar</span> 1e6
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 5 features[*].<span class="SpellE">properties.EUCovar</span> 1e6
+<span style="mso-spacerun:yes">&nbsp;</span>MAP_CHAN 6 features[*].<span class="SpellE">properties.NUCovar</span> 1e6
+<span style="mso-spacerun:yes"></span><o:p></o:p></span></pre>
+      <span style="mso-bookmark:example"></span>
+      <h2><a name="function"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">2.
+            FUNCTIONAL COMMAND LISTING<o:p></o:p></span></a></h2>
+      <p><!-- ADD HERE: Paragraph "Below are the commands recognized..." --><span
+          style="mso-bookmark:function">Below are the configure commands
+          recognized by geojson2ew, grouped by the function they
+          influence. </span></p>
+      <!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: -->
+      <pre><span style="mso-bookmark:function">Earthworm system setup:<br><span style="mso-tab-count:2"></span></span><a href="#ModuleId"><span class="SpellE">ModuleId</span></a><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-spacerun:yes">&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><span style="mso-tab-count:1"></span><a href="#RingName"><span class="SpellE">RingName</span></a><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-spacerun:yes">&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><span style="mso-tab-count:2"></span><a href="#HeartbeatInt"><span class="SpellE">HeartbeatInt</span></a><span style="mso-tab-count:1">&nbsp;&nbsp; </span><span style="mso-spacerun:yes">&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><br><span style="mso-tab-count:1"></span><span style="mso-spacerun:yes"></span><span style="mso-tab-count:1"></span>Output Control:<br><span style="mso-tab-count:
+2"></span><a href="file:///Users/kevin/Desktop/geojson2ew%20commands.html#LogFile"><span class="SpellE">LogFile</span></a><span style="mso-tab-count:2">&nbsp;      </span><span style="mso-tab-count:1">&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><span style="mso-tab-count:
+2"></span><a href="file:///Users/kevin/Desktop/geojson2ew%20commands.html#HOST">HOST</a><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required <br><a href="#PORT">PORT</a><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><a href="#QUEUENAME">QUEUENAME</a><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><a href="#USERNAME">USERNAME</a><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required<br><span style="mso-tab-count:2"></span><a href="#PASSWORD">PASSWORD</a><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required <br><a href="#MAP_SNCL">MAP_SNCL</a><span style="mso-tab-count:
+1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required <br><a href="#MAP_TIME">MAP_TIME</a><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required <br><a href="#MAP_SAMPLERATE">MAP_SAMPLERATE</a><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required <br><a href="#MAP_CHAN">MAP_CHAN</a><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>required<span style="mso-spacerun:yes">&nbsp; </span></pre>
+      <h2><a name="alphabet"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">3.
+            ALPHABETIC COMMAND LISTING &amp; DESCRIPTION<o:p></o:p></span></a></h2>
+      <p><span style="mso-bookmark:alphabet">In the following section,
+          all configuration file commands are listed in alphabetical
+          order. Listed along with the command (bold-type) are its
+          arguments (in red), the name of the subroutine that processes
+          the command, and the function within the module that the
+          command influences. A detailed description of the command and
+          is also given. Default and example values are listed after
+          each command description. </span></p>
+      <pre><span style="mso-bookmark:alphabet"><b><span style="mso-spacerun:yes">&nbsp;</span><span class="GramE">command</span> </b></span><span style="mso-bookmark:alphabet"><b><span style="color:red">arg1</span><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>processed by<span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>function </b></span></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:alphabet"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <span style="mso-bookmark:alphabet"></span>
+      <pre><a name="HOST"><!-- ADD HERE: all commands; below is a sample command blank: --><b><!-- command name as anchor inside quotes -->HOST </b></a><span style="mso-bookmark:HOST"><span class="SpellE"><span class="GramE"><b><span style="color:red">url</span></b></span></span><b><span style="mso-tab-count:
+3">                              </span>main<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!-- command args ... --> <o:p></o:p></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This command is used to define the host for
+              the AMQP server.<o:p></o:p></span></span></p>
+        <pre><!-- Default and example go here   --><span style="mso-bookmark:HOST"><span style="mso-spacerun:yes">&nbsp;</span>Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br> Example:  </span><meta charset="utf-8"><span>131.215.66.126</span></pre>
+      </blockquote>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <pre><span style="mso-bookmark:HOST"><a name="HeartbeatInt"><!-- command name as anchor inside quotes --></a><span class="SpellE"><span style="mso-bookmark:HeartbeatInt"><b>HeartbeatInt</b></span></span><span style="mso-bookmark:HeartbeatInt"><b> </b></span></span><span style="mso-bookmark:
+HOST"><span style="mso-bookmark:HeartbeatInt"><b><span style="color:red">beat</span><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="SpellE"> HeartBeat</span><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Earthworm setup</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!-- command args ... --> <o:p></o:p></span></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: HeartbeatInt"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;; mso-bidi-font-family:&quot;Times New
+                Roman&quot;">Beat the geojson2ew heart every </span></span></span><span
+            style="mso-bookmark:HOST"><span
+              style="mso-bookmark:HeartbeatInt"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family:&quot;Times New
+                Roman&quot;; color:red">beat</span></span></span><span
+            style="mso-bookmark:HOST"><span
+              style="mso-bookmark:HeartbeatInt"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;; mso-bidi-font-family:&quot;Times New
+                Roman&quot;"> seconds. This is implemented as a separate
+                thread in geojson2ew.<br>
+              </span></span></span></p>
+        <pre><span style="mso-bookmark:HOST"><span style="mso-spacerun:yes"></span>Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br>Example:  10<br></span></pre>
+      </blockquote>
+      <span style="mso-bookmark:HeartbeatInt"></span>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <pre><span style="mso-bookmark:HOST"><a name="LogFile"><!-- command name as anchor inside quotes --></a><span class="SpellE"><span style="mso-bookmark:LogFile"><b>LogFile</b></span></span><span style="mso-bookmark:LogFile"><b> </b></span></span><span style="mso-bookmark:
+HOST"><span style="mso-bookmark:LogFile"><b><span style="color:red">switch</span><span style="mso-tab-count:4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </span><span class="SpellE">GetConfig</span><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Earthworm Setup</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!-- command args ... --> <o:p></o:p></span></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family: &quot;Times New
+                Roman&quot;">Sets the on-off switch for writing a log
+                file to disk. If </span></span></span><span
+            style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family:&quot;Times New
+                Roman&quot;; color:red">switch</span></span></span><span
+            style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;; mso-bidi-font-family:&quot;Times New
+                Roman&quot;"> is 0, no log file will be written. If </span></span></span><span
+            style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family:&quot;Times New
+                Roman&quot;; color:red">switch</span></span></span><span
+            style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;; mso-bidi-font-family:&quot;Times New
+                Roman&quot;"> is 1, geojson2ew will write a daily log
+                file(s) called geojson2ewxx.log_yymmdd where xx is
+                geojson2ew's module id (set with "<span class="SpellE">ModuleId</span>"
+                command) and <span class="SpellE">yymmdd</span> is the
+                current UTC date (ex: 960123) on the system clock. The
+                file(s) will be written in the EW_LOG directory
+                (environment variable). <o:p></o:p></span></span></span></p>
+        <pre><!-- Default and example go here   --><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span style="mso-spacerun:yes">&nbsp;</span>Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br> Example:  1<br></span></span></pre>
+      </blockquote>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">
+              <hr align="center" size="2" width="100%"> </span></span></span></div>
+      <pre><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><a name="MAP_CHAN"></a>MAP_CHAN </b></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span class="SpellE"><b><span style="color:red">cc jsonpath m c</span></b></span><b><span style="mso-tab-count:2">              </span>geojson_map<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> </span></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family: &quot;Times New
+                Roman&quot;">This command is used to define the Channel
+                Code, <span class="SpellE">json</span> path, Multiplier
+                and optionally the Condition for the channel mapping. If
+                the condition is not specified then all matches are
+                used.<o:p></o:p></span></span></span></p>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"> Default:<span
+              style="mso-spacerun:yes">&nbsp; </span>none</span></span><br>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"> Example: </span></span><span>N
+          features[*].<span class="SpellE">geometry.coordinates</span>[0]
+
+
+
+
+
+
+          1e6 <span class="SpellE">properties.coordinateType</span>=NEU</span></blockquote>
+      <pre style="margin-bottom:12.0pt"><meta charset="utf-8"></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">
+              <hr align="center" size="2" width="100%"> </span></span></span></div>
+      <pre><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><a name="MAP_SAMPLERATE"></a>MAP_SAMPLERATE </b></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span class="SpellE"><b><span style="color:red">jsonpath</span></b></span><b><span style="mso-tab-count:2"></span></b></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">               </span></b></span></span>geojson_process</span><span style="mso-tab-count:
+2">	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> </span></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family: &quot;Times New
+                Roman&quot;">This command is used to define the <span
+                  class="SpellE">json</span> path for the sample rate
+                mapping. <o:p></o:p></span></span></span></p>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"><span style="mso-bookmark:HOST"></span><span
+              style="mso-bookmark:HOST"><span
+                style="mso-bookmark:LogFile"> </span></span>Default:<span
+              style="mso-spacerun:yes">&nbsp; </span>none</span></span><br>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"> Example: </span></span><span><span
+            class="SpellE">properties.sampleRate</span></span></blockquote>
+      <pre style="margin-bottom:12.0pt"><meta charset="utf-8"></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">
+              <hr align="center" size="2" width="100%"> </span></span></span></div>
+      <pre><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><a name="MAP_SNCL"></a>MAP_SNCL </b></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span class="SpellE"><b><span style="color:red">jsonpath</span></b></span></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span class="SpellE"><b><span style="color:red"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">                     </span></b></span></span></span></b></span><b>geojson_process<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> </span></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: LogFile"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family: &quot;Times New
+                Roman&quot;">This command is used to define the <span
+                  class="SpellE">json</span> path for the SNCL mapping.
+                <o:p></o:p></span></span></span></p>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"> Default:<span
+              style="mso-spacerun:yes">&nbsp; </span>none</span></span><br>
+        <span style="mso-bookmark:HOST"><span
+            style="mso-bookmark:LogFile"> Example: </span></span><span><span
+            class="SpellE">properties.SNCL</span></span></blockquote>
+      <pre style="margin-bottom:12.0pt"><meta charset="utf-8"></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">
+              <hr align="center" size="2" width="100%"> </span></span></span></div>
+      <span style="mso-bookmark:LogFile"></span>
+      <pre><span style="mso-bookmark:HOST"><a name="MAP_TIME"><b>MAP_TIME </b></a></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:MAP_CHAN"><span class="SpellE"><b><span style="color:red">jsonpath</span></b></span><b><span style="mso-tab-count:2"></span></b></span></span><span style="mso-bookmark:HOST"><span style="mso-bookmark:MAP_CHAN"><b><span style="mso-tab-count:2"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">                     </span></b></span></span>geojson_process</span><span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> </span></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+        <p class="MsoNormal"><span style="mso-bookmark:HOST"><span
+              style="mso-bookmark: MAP_CHAN"><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family: &quot;Times New
+                Roman&quot;">This command is used to define the <span
+                  class="SpellE">json</span> path for the time mapping.
+                <o:p></o:p></span></span></span></p>
+        <pre style="margin-bottom:12.0pt"><span style="mso-bookmark:HOST"><span style="mso-bookmark:MAP_CHAN">Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br>Example:  </span></span><meta charset="utf-8"><span><span class="SpellE">properties.time</span></span></pre>
+      </blockquote>
+      <span style="mso-bookmark:MAP_CHAN"></span><span
+        style="mso-bookmark:HOST"></span>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-fareast-font-family:&quot;Times New
+          Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
+          <hr align="center" size="2" width="100%"> </span></div>
+      <span style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+        mso-bidi-font-family:&quot;Times New Roman&quot;"><!--[endif]--><a
+          name="ModuleId"><!-- command name as anchor inside quotes --><o:p></o:p></a></span>
+      <pre><span style="mso-bookmark:ModuleId"><span class="SpellE"><b>ModuleId</b></span><b> </b></span><span style="mso-bookmark:ModuleId"><span class="SpellE"><b><span style="color:red">mod_id</span></b></span></span><span style="mso-bookmark:ModuleId"><b><span style="color:red"><span style="mso-tab-count:1"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">                       </span></b></span></span></span></span><span class="SpellE">GetConfig</span><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Earthworm setup</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!-- command args ... --> <o:p></o:p></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">Sets the module id for labeling all outgoing
+              messages. </span></span><span style="mso-bookmark:
+            ModuleId"><span class="SpellE"><span class="GramE"><span
+                  style="mso-fareast-font-family: &quot;Times New
+                  Roman&quot;;mso-bidi-font-family:&quot;Times New
+                  Roman&quot;;color:red">mod</span></span><span
+                style="mso-fareast-font-family:&quot;Times New
+                Roman&quot;;mso-bidi-font-family:&quot;Times New
+                Roman&quot;; color:red">_id</span></span></span><span
+            style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;"> is a character string (valid strings are
+              listed in <span class="SpellE">earthworm.d</span>) that
+              relates (in <span class="SpellE">earthworm.d</span>) to a
+              unique single-byte number. <o:p></o:p></span></span></p>
+        <pre><!-- Default and example go here   --><span style="mso-bookmark:ModuleId"><span style="mso-spacerun:yes">&nbsp;</span>Default: <span style="mso-spacerun:yes">&nbsp;</span>none <br> Example:  </span><meta charset="utf-8"><span>MOD_GEOJSON2EW</span></pre>
+      </blockquote>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:ModuleId"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <pre><span style="mso-bookmark:ModuleId"><b><a name="PASSWORD"></a>PASSWORD </b></span><span style="mso-bookmark:ModuleId"><span class="SpellE"><b><span style="color:red">password</span></b></span><b><span style="mso-tab-count:2"></span></b></span><span style="mso-bookmark:ModuleId"><b><span style="mso-tab-count:2"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">                     </span></b></span></span></span>main<span style="mso-tab-count:
+3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:
+2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <o:p></o:p></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This command is used to define the password </span></span><span
+            style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;"><span style="mso-bookmark:HOST"><span
+                  style="mso-fareast-font-family: &quot;Times New
+                  Roman&quot;;mso-bidi-font-family:&quot;Times New
+                  Roman&quot;">for the AMQP server</span></span>.<o:p></o:p></span></span></p>
+        <span style="mso-bookmark:ModuleId"> Default:<span
+            style="mso-spacerun:yes">&nbsp; </span>none</span><br>
+        <span style="mso-bookmark:ModuleId"> Example: secret</span><br>
+        <span style="mso-bookmark:ModuleId"></span></blockquote>
+      <pre style="margin-bottom:12.0pt"><span style="mso-bookmark:ModuleId"><o:p></o:p></span></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:ModuleId"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <pre><span style="mso-bookmark:ModuleId"><b><a name="PORT"></a>PORT </b></span><span style="mso-bookmark:ModuleId"><b><span style="color:red">number</span><span style="mso-tab-count:2"></span></b></span><span style="mso-bookmark:ModuleId"><b><span style="mso-tab-count:2"><span style="mso-bookmark:HOST"><span style="mso-bookmark:LogFile"><b><span style="mso-tab-count:2">                           </span></b></span></span></span>main<span style="mso-tab-count:1">&nbsp;&nbsp;</span><span style="mso-tab-count:1">&nbsp; </span><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <o:p></o:p></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This command is used to define the port
+              number </span></span><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;"><span style="mso-bookmark:HOST"><span
+                  style="mso-fareast-font-family: &quot;Times New
+                  Roman&quot;;mso-bidi-font-family:&quot;Times New
+                  Roman&quot;">for the AMQP server</span></span>. <o:p></o:p></span></span></p>
+        <span style="mso-bookmark:ModuleId"> Default:<span
+            style="mso-spacerun:yes">&nbsp; </span>none</span><br>
+        <span style="mso-bookmark:ModuleId"> Example: </span><span>5672</span></blockquote>
+      <pre style="margin-bottom:12.0pt"><meta charset="utf-8"></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:ModuleId"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <pre><span style="mso-bookmark:ModuleId"><b><a name="QUEUENAME"></a>QUEUENAME </b></span><span style="mso-bookmark:ModuleId"><span class="SpellE"><b><span style="color:red">queuename</span></b></span><b>                   main<span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <o:p></o:p></span></pre>
+      <blockquote>
+        <p class="MsoNormal"><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This command is used to define the queue name
+            </span></span><span style="mso-bookmark:ModuleId"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;"><span style="mso-bookmark:HOST"><span
+                  style="mso-fareast-font-family: &quot;Times New
+                  Roman&quot;;mso-bidi-font-family:&quot;Times New
+                  Roman&quot;">for the AMQP server</span></span>. <o:p></o:p></span></span></p>
+        <span style="mso-bookmark:ModuleId"> Default:<span
+            style="mso-spacerun:yes">&nbsp; </span>none</span><br>
+        <span style="mso-bookmark:ModuleId"> Example: </span>Results2Earthworm<br>
+      </blockquote>
+      <pre style="margin-bottom:12.0pt"><meta charset="utf-8"></pre>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:ModuleId"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <span style="mso-bookmark:ModuleId"></span>
+      <pre><a name="RingName"><!-- command name as anchor inside quotes --></a><span class="SpellE"><span style="mso-bookmark:RingName"><b>RingName</b></span></span><span style="mso-bookmark:RingName"><b> </b></span><span style="mso-bookmark:RingName"><b><span style="color:red">ring</span><span style="mso-tab-count:4">&nbsp;&nbsp;                       </span><span class="SpellE">GetConfig</span><span style="mso-tab-count:2">&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Earthworm setup</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><!-- command args ... --> <o:p></o:p></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:RingName"><span
+              style="mso-fareast-font-family: &quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This is the ring into which the waveforms and
+              messages are sent. <o:p></o:p></span></span></p>
+        <pre><span style="mso-bookmark:RingName">Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br>Example:  SCN_RING<br></span></pre>
+      </blockquote>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:RingName"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <span style="mso-bookmark:RingName"></span>
+      <pre><a name="USERNAME"><!-- command name as anchor inside quotes --><b>USERNAME </b></a><span style="mso-bookmark:SCNL2pinmap"><b><span style="color:red">username</span><span style="mso-tab-count:3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  main      </span><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>Main geojson2ew Thread</b><span style="mso-tab-count:1"> </span><span style="mso-tab-count:1"> </span><!-- command args ... --> <o:p></o:p></span></pre>
+      <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt"><!-- command description goes here -->
+        <p class="MsoNormal"><span style="mso-bookmark:SCNL2pinmap"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;">This command is used to define the user name
+            </span></span><span style="mso-bookmark:SCNL2pinmap"><span
+              style="mso-fareast-font-family:&quot;Times New
+              Roman&quot;;mso-bidi-font-family:&quot;Times New
+              Roman&quot;"><span style="mso-bookmark:HOST"><span
+                  style="mso-fareast-font-family: &quot;Times New
+                  Roman&quot;;mso-bidi-font-family:&quot;Times New
+                  Roman&quot;">for the AMQP server</span></span>.<br>
+            </span></span></p>
+        <pre><span style="mso-bookmark:RingName">Default:<span style="mso-spacerun:yes">&nbsp; </span>none<br>Example:  </span><meta charset="utf-8"><span>seismic</span></pre>
+        <p class="MsoNormal"><br>
+          <span style="mso-bookmark:SCNL2pinmap"> </span></p>
+      </blockquote>
+      <div class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-bookmark:SCNL2pinmap"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">
+            <hr align="center" size="2" width="100%"> </span></span></div>
+      <span style="mso-bookmark:SCNL2pinmap"></span>
+      <h2><a name="descriptor"><span
+            style="mso-fareast-font-family:&quot;Times New Roman&quot;;
+            mso-bidi-font-family:&quot;Times New Roman&quot;">4.
+            DESCRIPTOR FILE EXAMPLE<o:p></o:p></span></a></h2>
+      <p><span style="mso-bookmark:descriptor">Here is a copy of the
+          geojson2ew.desc file as implemented. Note that all causes of
+          death for geojson2ew feed through the function geojson2ew_<span
+            class="GramE">die(</span>) which logs all causes of death
+          using <span class="SpellE">logit</span>() and sends a message
+          to the <span class="SpellE">statmgr</span> utility. </span></p>
+      <pre>modName  geojson2ew<br>modId    MOD_GEOJSON2EW<br>instId   INST_UNKNOWN<br><br>restartMe       # restart this sucker as it is critical to data collection<br>#<br>#<br>#    Heartbeat Specification.  If the status manager does not receive<br>#    a heartbeat message every &lt;tsec&gt; seconds from this module, an<br>#    error will be reported (client module dead).  &lt;page&gt; is the maximum<br>#    number of pager messages that will be reported and &lt;mail&gt; is the<br>#    maximum number of email messages that will be reported.  If the<br>#    page or mail limit is exceeded, no further errors will be reported<br>#    until the status manager is restarted.<br>#<br>tsec: 20  page: 0  mail: 99<br><br># these are the statmgr messages that geojson2ew will send before dieing<br>#<br>err: 1  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "AMQP server error caused geojson2ew to die"<br>#<br>err: 2  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "SIGNAL caused geojson2ew to die"<br>#<br>err: 3  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "EW tport_putmsg() failed, geojson2ew dead"<br>#<br>err: 4  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "EW TERMINATE recv'd, geojson2ew dead"<br>#<br>err: 5  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "EW config problems on startup, geojson2ew dead"<br>#<br># BELOW: WARNINGS, NOT FATAL YET<br>err: 6  nerr: 1  tsec: 0  page: 5  mail: 20<br>text: "geoJSON parsing errors"<br></pre>
+<br>
+      <span style="mso-bookmark:descriptor"></span>
+      <p class="MsoNormal" style="text-align:center" align="center"><span
+          style="mso-fareast-font-family:&quot;Times New
+          Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;"><a
+            href="../modules.html">Module Index</a> | <a
+            href="../ovr/geojson2ew_ovr.html">geojson2ew
+            Overview</a> <o:p></o:p></span></p>
+      <hr align="center" size="2" width="100%">
+      <address><span style="mso-fareast-font-family:&quot;Times New
+          Roman&quot;;mso-bidi-font-family: &quot;Times New Roman&quot;">Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List.</a></span></address>
+    </div>
+  </body>
+</html>

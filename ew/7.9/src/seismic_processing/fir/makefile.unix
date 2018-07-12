@@ -1,0 +1,60 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -O ${GLOBALFLAGS}
+FFLAGS = 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = fir.c
+OBJS = fir.o
+
+OBJS = fir.o \
+       bandcom.o \
+       configure.o \
+       filt1scn.o \
+       firfilt.o \
+       firthrd.o \
+       hqr.o \
+       initpars.o \
+       initsta.o \
+       matchscn.o \
+       readcnfg.o \
+       readewh.o \
+       remeznp.o \
+       resetsta.o \
+       setfilt.o \
+       statrpt.o \
+       zeroes.o \
+       $L/swap.o \
+       $L/mem_circ_queue.o \
+       $L/libew_mt.a
+
+fir: $(OBJS)
+	$(CC) ${CFLAGS} -o $B/fir $(OBJS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint fir.c bandcom.c configure.c filt1scn.c firfilt.c \
+			firthrd.c hqr.c initpars.c initsta.c matchscn.c \
+			readcnfg.c readewh.c remeznp.c resetsta.c setfilt.c \
+			statrpt.c zeroes.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *% *~
+
+clean_bin:
+	rm -f $B/fir
+
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=windows-1252">
+  <meta name="Generator" content="Microsoft Word 97">
+  <title>Earthworm Migration Doc V6.3->V7.X</title>
+  <meta name="Template"
+ content="C:\Program Files\Microsoft Office\Office\html.dot">
+</head>
+<body alink="#ff0000" bgcolor="#fac0a2" link="#0000ff" text="#000000"
+ vlink="#800080">
+<a href="http://www.usgs.gov/"><br>
+</a>
+<p></p>
+<h1><img src="../images/ewlogomini.jpg" alt="EARTHWORM Logo" height="81"
+ width="95"></h1>
+<p></p>
+<font face="Courier New"></font>
+<h1 align="center">Earthworm Migration Guide v6.3 -&gt; v7.X<font
+ face="Courier New"><br>
+</font></h1>
+<font face="Courier New"><b>
+<p align="center">February 21, 2007<br>
+<br>
+</p>
+</b></font>
+<div style="text-align: left;">
+<p>This is a quick and dirty guide to what you need to know to migrate
+from V6.3 to V7.X in Earthworm. The biggest change in this migration is
+that stations are now not just identified by a 3 tuple of Station,
+Channel, Network, but by a 4 tuple which also includes Location code.
+You will hear this referred to as SCN vs SCNL. Location code is simply
+a 2 character "tie-breaker" for when you have multiple channels of the
+same type at a given station. Location codes can be any convention that
+the operators desire, but the location code must be limited to numbers
+or letters. If location codes are not being used, the operator should
+use dash dash as a placeholder for any configuration files "--". Refer
+to the SEED manual at the IRIS DMC.&nbsp; Refer to the <a
+ href="../PROGRAMMER/location_codes/EW_Loc_policy.txt">programmer notes</a>
+for which earthworm messages changed to accomodate SCNL vs&nbsp; SCN. <br>
+</p>
+<p>In addition to the SCNL change, there were 2 new features added in
+the v7.X release that require new message types be added to the
+earthworm.d file. The first feature, introduced in v7.0 is the <span
+ style="font-weight: bold;">reconfigure</span> command which requires a
+<span style="font-weight: bold;">TYPE_RECONFIGURE</span> message type
+be added in. This feature allows an operator to modify a startstop.d
+file with new modules or new rings, and have those changes be effected
+without having to stop and restart all of Earthworm. The second
+feature, added in v7.1, allows an operator to stop a given module using
+the <span style="font-weight: bold;">stopmodule</span> command. The
+stopmodule implementation requires that a TYPE_STOP&nbsp; message be
+added to your earthworm.d. See the documentation on startstop for more
+information on how to use these new features.<br>
+</p>
+<p>It is okay to run v6.3 and v7.X modules together, but if you plan on
+running new modules in an old configuration you will not be able to
+take advantage of the new features. Further, if you run new modules on
+the old system, you will need to bring in any new message types to your
+earthworm_global.d and into your earthworm.d files.<br>
+</p>
+<p><br>
+Frequently Asked Questions:<br>
+</p>
+<ol style="font-weight: bold;">
+  <li>Which modules care about SCNL vs SCN?</li>
+  <ul style="font-weight: normal;">
+    <li>The simple answer is any module that deals with Tracebuf, Pick,
+or Coda messages cares. Thus, you will need to review the documentation
+for each module and see how it is affected. In short, look at your
+data_source modules and make sure that you have decided on a SCNL
+scheme and get them configured first. Then work your way downstream
+through your processing chain. The fir and pick_ew modules are next,
+followed by the binder module, and ultimately hypoinverse (aka
+hyp2000). Note that example SCNL .d files are provided in the src dir
+with each module.<br>
+    </li>
+  </ul>
+  <li>Can I use v7.X modules in a v6.3 environment?</li>
+  <ul>
+    <li><span style="font-weight: normal;">Yes, you can intermix
+messages since all V7.X messages are new types, so old and new can
+reside on the same rings. However you need to take care that you rename
+module names so that they do not collide with old versions. It is best
+to&nbsp; limit those running newer versions of the modules and newer
+messages to reside on different rings.</span><br>
+    </li>
+  </ul>
+  <li>Can I use my old v6.X module in a v7.0 environment?</li>
+  <ul>
+    <li><span style="font-weight: normal;">Yes, you can intermix, but
+realize that the v6.X module will only look for SCN message types and
+thus you will need to use a converter (scnl2scn) to get the SCNL data
+onto a separate ring in SCN format so that the v6.X module can operate.</span><br>
+    </li>
+  </ul>
+  <li>How can I get old messages into the new format?</li>
+  <ul>
+    <li><span style="font-weight: normal;">Easy, there are 2 converters
+that go forward and backward: scn2scnl and scnl2scn that will map all
+messages to the new or old format. They can be found in the
+data_exchange module directory.</span><br>
+    </li>
+  </ul>
+  <li>How can I import v7.X waveform data into my v6.X environment?</li>
+  <ul>
+    <li><span style="font-weight: normal;">Simply grab the v7.X module
+you need to use to import the data (any of the data_exchange modules or
+data_source modules) and make sure it is named uniquely (so that it
+doesn't overwrite a v6.X version) and install it on your v6.3 system in
+the bin directory. Also grab the <span style="font-style: italic;">scnl2scn</span>
+converter from v7.X and install that. Then, update your
+earthworm_global.d with the new message types found in v7.X (see the
+earthworm_global.d from the distro). Import the data into a new ring
+called WAVE_RING_SCNL and then setup scnl2scn to convert the data to
+where you want the waveforms.</span><br>
+    </li>
+  </ul>
+  <li>startstop v7.X won't work with my old configuration because it
+complains about missing messages, what did I miss?</li>
+  <ul>
+    <li><span style="font-weight: normal;">Because new features were
+added into startstop, Earthworm's core module, you need to add in new
+message types to your old earthworm.d and earthworm_global.d files. Add
+in the new message types, by doing a diff on the files</span></li>
+  </ul>
+  <li>How do I deal with my old v6.X SCN wave_serverV tanks?</li>
+  <ul>
+    <li><span style="font-weight: normal;">If you have only a small
+amount of data you need to move from v6.X to v7.X, you can use
+waveman2disk to write the section of data you need in tankplayer
+format, then use the tankplayer module to replay that data back into a
+ring. Once it's in a ring, you can convert it with scn2scnl, and then
+import the converted tracebufs into a v7.X wave_serverV tank.
+Tankplayer doesn't have a fast forward mode, so this may take some time.</span></li>
+    <li><span style="font-weight: normal;">If you have months or years
+worth of data in a v6.X wave_serverV tank, you may want to keep running
+your v6.X wave_serverV, and start a new wave_serverV recording v7.X
+SCNL tracebufs in parallel. Once the v7.X wave_serverV has been running
+long enough for you to be able to search for all the historical data
+you need, you can turn off your v6.X wave_serverV. Note that the wave
+viewer application <a href="http://www.avo.alaska.edu/Software/swarm/">Swarm</a>
+is one of the few wave server clients that will allow accessing either
+SCN or SCNL packets, and therefore can talk to a v6.X or a v7.X
+wave_serverV server. Almost all of the earthworm modules will only deal
+with with SCN if they're from v6.X and SCNL if they're from v7.X. So if
+you do run with dual waveservers, you'll probably need two different
+versions of each earthworm module. </span></li>
+  </ul>
+</ol>
+</div>
+<div style="text-align: left;">
+<p><br>
+</p>
+</div>
+<br>
+<hr>
+Contact: <a href="http://groups.google.com/group/earthworm_forum?hl=en">earthworm mailing list </a><br>
+</p>
+</body>
+</html>

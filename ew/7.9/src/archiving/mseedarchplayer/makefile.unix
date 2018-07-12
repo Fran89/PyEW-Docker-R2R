@@ -1,0 +1,44 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LIBS = $(MT_FLAG) $(LINK_LIBS) $(SPECIFIC_FLAGS)
+
+CFLAGS= $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+LIBMSEED = $(EW_HOME)/$(EW_VERSION)
+
+C = \
+	mseedarchplayer.c \
+	config.c \
+	lookup.c \
+	status.c \
+	mseedfilename.c \
+	processdata.c
+
+O = \
+	mseedarchplayer.o \
+	config.o \
+	lookup.o \
+	status.o \
+	mseedfilename.o \
+	processdata.o \
+    	$L/libew_mt.a \
+    	$L/libmseed.a
+
+mseedarchplayer: $(O)
+	$(CC) $(CFLAGS) -o $(B)/mseedarchplayer $(O) $(LIBS) 
+
+lint:
+	lint $(C) $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $(B)/mseedarchplayer*

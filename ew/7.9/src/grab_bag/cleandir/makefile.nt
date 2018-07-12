@@ -1,0 +1,34 @@
+
+
+NODEBUG=1
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+EW_LIB = $(L)
+
+!include <ntwin32.mak>
+!include makefile.ind
+
+OBJ = obj
+O = $(APP).obj
+
+
+
+$B\$(APP).exe: $O $(ALL_CLIENT_LIBS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+   $(ALL_CLIENT_LIBS)  $L\libew.lib \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+.cpp.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+        -del a.out core *.o *.obj *% *~
+
+clean_bin:
+        -del $B\cleandir*
+

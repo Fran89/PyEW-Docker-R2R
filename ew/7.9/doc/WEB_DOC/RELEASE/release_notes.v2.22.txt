@@ -1,0 +1,59 @@
+
+Release Notes Earthworm Version 2.22  
+QAed for OS/2 Only
+
+
+
+
+Modules Modified:
+*****************
+
+	Eqcoda: Added option to label phases as binder does or to label as 
+		generic P and S. 
+
+	Eqproc: Added option to send S-phases to next process.
+
+
+BUGS FIXED:
+***********
+
+
+Binder:	Bugs in binder from v2.21 were found and fixed through the
+	heroic efforts of Will and Lynn. Included divide by zero in location
+	routine and look and store outside the stack.
+
+
+Modules in Progress:
+********************
+
+	Export
+	Eqprelim
+	Picker_exp
+
+
+NOTE: Hypoinverse source code is not the same on the Solaris and OS2
+	releases.  We hope to fix this in the future by having Fred
+	Klein come up with an ansi version of hypoinverse.  In order to
+	compile hypoinverse with the OS2 Fortran compiler, we made many
+	changes to the hypoinverse code.
+
+WARNINGS:
+
+Version 2.22 is only a OS2 version.  OS2 Version 2.22 was run through QA suite and passed with high marks from David Oppenheimer.
+Solaris version was not created.
+
+When attempting to move the official v2.22 release from natash to newt, the following problems were found:
+
+	1. EQPROC - on natasha, the eqproc directory contains the file
+		log_everything.c  This is not in the v2.22 eqproc directory
+		on newt.
+
+	2. EXPORT - export directories are different.
+
+	3. LIBSRC/SOLARIS - is not complete on natasha.
+
+	4. MENLO_REPORT - has file 'makesolaris' on newt; not on natasha
+
+	5. PICKER - on solaris, still has 'makefile' in directory
+
+	6. STARTSTOP_SOLARIS - version on natasha is not most recent.

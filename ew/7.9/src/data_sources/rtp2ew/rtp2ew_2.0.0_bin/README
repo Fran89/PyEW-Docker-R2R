@@ -1,0 +1,12 @@
+This directory contains the rtp2ew 2.0.0 binaries 
+(rename them rtp2ew for your platform):
+
+rtp2ew.exe  - Windows (compiled on XP, Visual Studio 8)
+rtp2ew.linux_centos6.3.intel64* - using Centos 6.3 Final on an x86_64 64 bit host
+rtp2ew.linux_ubuntu12.10.intel32* - using Ubuntu 12.10 on an x386 32 bit host
+rtp2ew.macosx.intel* - Mac OS X Intel on a 10.7.5 version of the OS
+rtp2ew.solaris10.intel* - Solaris 10 on x86 server (64 bit)
+rtp2ew.solaris10.sparc* - Solaris 10 on a SPARC server
+rtp2ew.solaris11.intel* - Solaris 11 on x86 server (64 bit)
+
+Contact Trimble to have any other Linux flavors built.

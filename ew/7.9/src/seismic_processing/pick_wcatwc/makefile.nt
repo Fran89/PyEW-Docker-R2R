@@ -1,0 +1,37 @@
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = pick_wcatwc
+
+fft_opts = /O2
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+ADD_CFLAGS= -D_ADD_TRACE2_HEADER_
+
+ALL: $B\$(APP).exe
+
+
+EBLIBS= $L\diskrw.obj $L\complex.obj $L\filters.obj \
+	$L\get_pick.obj $L\report.obj $L\ReadStationData.obj \
+	$L\geotools.obj $L\mags.obj $L\taulib.obj $L\mjstime.obj
+
+OBJS= $(APP).obj config.obj 
+
+EWLIBS = $L\libew.lib $L\swap.obj $L\trheadconv.obj
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) $(EWLIBS) \
+      $(LIBS) $(EBLIBS) -out:$B\$(APP).exe
+
+# Clean-up rules
+clean:
+   -del a.out core *.o *.obj *% *~
+
+clean_bin:
+   -del $B\pick_wcatwc*
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) $(ADD_CFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<

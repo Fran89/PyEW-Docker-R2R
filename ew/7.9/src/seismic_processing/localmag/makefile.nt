@@ -1,0 +1,97 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6283 2015-03-19 07:59:27Z et $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.14  2007/03/29 20:09:50  paulf
+#     added eventXML option from INGV. This option allows writing the Shakemap style event information out as XML in the SAC out dir
+#
+#     Revision 1.13  2006/11/21 23:04:48  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.12  2004/07/01 17:32:20  labcvs
+#     Removed unused oracle specific library init_ewevent. JMP
+#
+#     Revision 1.11  2003/08/06 19:13:25  patton
+#     Removed Global librarys.
+#
+#     Revision 1.10  2003/05/06 20:55:16  lucky
+#     *** empty log message ***
+#
+#     Revision 1.9  2002/09/27 17:32:15  dhanych
+#     *** empty log message ***
+#
+#     Revision 1.8  2002/05/13 16:48:12  dhanych
+#     20020513 dbh -- added glevt_2_ewevent, init_ew_event for global messages
+#
+#     Revision 1.7  2001/08/08 19:12:26  lucky
+#     Fixed paths to bin and lib
+#
+#     Revision 1.6  2001/04/11 21:07:08  lombard
+#     "site.?" renamed to "lm_site.?" for clarity.
+#
+#     Revision 1.5  2001/03/24 05:33:41  lombard
+#     fixed L and B macros.
+#
+#     Revision 1.4  2001/03/01 05:25:44  lombard
+#     changed FFT package to fft99; fixed bugs in handling of SCNPars;
+#     changed output to Magnitude message using rw_mag.c
+#
+#     Revision 1.3  2001/01/15 03:55:55  lombard
+#     bug fixes, change of main loop, addition of stacker thread;
+#     moved fft_prep, transfer and sing to libsrc/util.
+#
+#     Revision 1.2  2000/12/31 17:27:25  lombard
+#     More bug fixes and cleanup.
+#
+#     Revision 1.1  2000/12/19 18:31:25  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For localmag - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = localmag
+
+fft_opts = /O2
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+ALL: $B\$(APP).exe
+
+OBJS = lm_main.obj lm_util.obj lm_config.obj lm_ws.obj lm_misc.obj lm_sac.obj \
+   lm_site.obj lm_xml_event.obj
+
+EWLIBS = $L\swap.obj $L\read_arc.obj \
+   $L\ws_clientII.obj $L\socket_ew_common.obj $L\socket_ew.obj \
+   $L\tlay.obj $L\mnbrak.obj $L\brent.obj $L\dirops_ew.obj \
+   $L\mem_circ_queue.obj \
+   $L\libew_mt.lib $L\fft99.obj $L\fft_prep.obj $L\transfer.obj \
+   $L\rw_mag.obj
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) $(EWLIBS) \
+      $(LIBS) -out:$B\$(APP).exe
+
+# Clean-up rules
+clean:
+   -del a.out core *.o *.obj *% *~
+
+clean_bin:
+   -del $B\localmag*
+
+
+sing.obj: sing.c
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(fft_opts) $(cdebug) $(cvarsmt) $(tflags) $<
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<

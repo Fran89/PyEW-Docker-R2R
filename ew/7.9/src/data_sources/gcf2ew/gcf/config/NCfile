@@ -1,0 +1,60 @@
+
+START XA
+
+site_name sensor_model/serial# Digit/Serial# location
+
+# this one will accept all default channel names, and use a blank for
+# location code
+HILL0	  CMG3T/BB1            DM24/BB123   
+
+HILL1	  CMG3/1234A           DM24/4321     1        
+{
+	name/dip/azimuth
+	Z
+	N/0/180          
+	E/0/270          
+}
+
+HILL2	  CMG3T/12X            DM24/2222     1        
+{
+	name/dip/azimuth
+	Z	
+	N/0/3            sensor on magnetic north
+	E/0/93           sensor on magnetic north
+}
+
+
+# The following site has orientation perfect.
+HILL3	  CMG3/1111            DM24/33X3     1
+{
+	name/dip/azimuth
+	Z
+	N
+	E
+}
+
+# the next line applies to all channels for HILL4. Trust the orientations (just like HILL3)
+# assuming that most sensor are placed correctly, most lines would be
+# like this one.
+
+# Also, if the last column is rate, and we want all, we can ignore this
+# column
+
+HILL4	  CMG3T/A432           DM24/1234     1        
+
+# I want to force the channel name based upon channel and sample rate
+# if this type of section is not needed, we can totally drop the "rate"
+# column
+
+HILL4	  SIDSENSOR/1	       DM24/1289     2	     
+{
+	rate name/dip/azimuth
+	1    Z/LH1
+	1    N/LH2
+	1    E/LH3
+	50   Z/HHZ
+	50   N/HHN
+	50   E/HHE
+}
+
+END XA

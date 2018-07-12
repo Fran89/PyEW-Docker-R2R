@@ -1,0 +1,59 @@
+/* latency_mon resource script file
+   ********************************/
+  
+#include <windows.h>
+
+latency_mon    ICON   DISCARDABLE  "monit01c.ico"
+
+#include "latency_mon.h"
+
+   latency_mon_menu MENU
+   {
+      MENUITEM "&Station Status",                IDM_STATION_STATUS
+      POPUP "&Control Panel"
+      {
+         MENUITEM "Tra&ces Per Screen",          IDM_TRACEPERSCREEN
+         MENUITEM "&Print Status Summary",       IDM_PRINTSUMMARY
+         MENUITEM "&Save Status Summary",        IDM_SAVESUMMARY
+      }
+      MENUITEM "&Refresh",                       IDM_REFRESH
+   }
+
+/* Dialog windows */
+   StationStatus DIALOG 20, 20, 220, 104 
+   STYLE DS_MODALFRAME | WS_VISIBLE | WS_CAPTION
+   CAPTION "Time To Display"
+   FONT 14, "MS Sans Serif"
+   BEGIN
+      CTEXT "Enter start time of data on screen",    ID_NULL,     4, 4, 212, 8
+      CTEXT "and total number of hours to display.", ID_NULL,     4, 12, 212, 8
+      RTEXT "Year", ID_NULL,            5, 26, 80, 8
+      RTEXT "Month", ID_NULL,           5, 36, 80, 8
+      RTEXT "Day", ID_NULL,             5, 46, 80, 8
+      RTEXT "Hour", ID_NULL,            5, 56, 80, 8
+      RTEXT "Total Time", ID_NULL,      5, 66, 80, 8
+      EDITTEXT    EF_DISPLAYYEAR,       90, 26, 40, 10, WS_TABSTOP | ES_LEFT
+      EDITTEXT    EF_DISPLAYMONTH,      90, 36, 40, 10, WS_TABSTOP | ES_LEFT
+      EDITTEXT    EF_DISPLAYDAY,        90, 46, 40, 10, WS_TABSTOP | ES_LEFT
+      EDITTEXT    EF_DISPLAYHOUR,       90, 56, 40, 10, WS_TABSTOP | ES_LEFT
+      EDITTEXT    EF_DISPLAYTOTALTIME,  90, 66, 40, 10, WS_TABSTOP | ES_LEFT
+      LTEXT "(4-digit)", ID_NULL,       140, 26, 70, 8
+      LTEXT "(1-12)", ID_NULL,          140, 36, 70, 8
+      LTEXT "(1-31)", ID_NULL,          140, 46, 70, 8
+      LTEXT "(0-23)", ID_NULL,          140, 56, 70, 8
+      LTEXT "(Hours, >= 1)", ID_NULL,   140, 66, 70, 8
+      DEFPUSHBUTTON "OK" IDOK,          33, 84, 60, 12, WS_GROUP
+      PUSHBUTTON "Cancel" IDCANCEL,     127, 84, 60, 12, WS_GROUP
+   END
+   
+   TracePerScreen DIALOG 20, 20, 220, 60 
+   STYLE DS_MODALFRAME | WS_VISIBLE | WS_CAPTION
+   CAPTION "Number traces on screen"
+   FONT 14, "MS Sans Serif"
+   BEGIN
+      CTEXT "Number of traces to show on",     ID_NULL,     4, 4, 212, 8
+      CTEXT "visible part of screen",          ID_NULL,     4, 12, 212, 8
+      EDITTEXT    EF_NUMSTATODISP,      95, 22, 30, 10, WS_TABSTOP | ES_LEFT
+      DEFPUSHBUTTON "OK" IDOK,          33, 40, 60, 12, WS_GROUP
+      PUSHBUTTON "Cancel" IDCANCEL,     127, 40, 60, 12, WS_GROUP
+   END

@@ -1,0 +1,24 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS=${GLOBALFLAGS} -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+TEMPLATE = template.o $L/libew.a  $L/lockfile_ew.o $L/lockfile.o 
+
+template: $(TEMPLATE)
+	$(CC) $(CFLAGS) -o $B/template $(TEMPLATE) $(SPECIFIC_FLAGS)
+
+lint:
+	lint template.c ${GLOBALFLAGS}
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/template*

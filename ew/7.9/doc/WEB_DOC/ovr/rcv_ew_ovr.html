@@ -1,0 +1,171 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: rcv_ew overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Rcv_ew Overview</H1>
+<I>(last revised 16 April, 1998)</I></CENTER>
+
+<P>
+Rcv_ew receives triggered or continuous trace data from one or more USNSN
+stations (collected in Golden, Colorado), reformats it into standard Earthworm
+format and places it in an Earthworm transport ring. For each channel, the trace
+data output by rcv_ew will be chronological. There will be no overlap between
+successive data messages, but there may be gaps. The messages will likely
+be of variable length, with a maximum length set by the user.
+<P>
+Rcv_ew is a composite Earthworm module. It is made up of two USNSN programs
+(RCV and STATION, written and maintained by Dave Ketchum) that call a set of
+user functions (written by Lynn Dietz) which contain all the Earthworm-specific
+code. RCV is a command-line program which under Earthworm is started by
+startstop. RCV handles the communication with the USNSN in Golden, receiving
+USNSN packets via a TCP/IP socket or a VSAT. RCV spawns the STATION process
+at the end of a pipe and passes data packets to it. STATION can be spawned
+one for each incoming channel or it can be invoked as one STATION process
+handling all of the channels coming in on the communications link. The latter
+mode, referred to as the "multiple" STATION mode, is required for the Earthworm
+implementation of rcv_ew.  STATION processes the data packets and handles all
+the Earthworm communications by calls to the user functions. As the USNSN
+produces internal enhancements to RCV or STATION, the new code can be moved
+directly into rcv_ew. Likewise changes to the Earthworm-side user functions
+can be made without affecting the USNSN code. As of April, 1998, rcv_ew runs
+on Solaris only.
+<P>
+<B>Waveform Packet Processing:</B>
+<P>
+RCV receives USNSN packets from prearranged channels via a TCP/IP socket or
+a VSAT. The data may be either triggered or continuous. The packet stream
+can include data from multiple stations. RCV performs the recommended input
+processing for rollbacks as described in the USNSN Satellite Primer
+(ftp://gldfs.cr.usgs.gov/primer/Primer.eps). The data supplied to STATION is
+as complete as it can be (except that during rollback some data may be tossed)
+without duplicating many packets. However, the packets for a given channel
+may arrive out of sequence or may overlap in time.
+<P>
+In the absence of new waveform data, the USNSN sends a 'keepalive' message to
+RCV at least once a minute.  This keepalive ensures that the communications
+link is still viable and allows the Earthworm code to issue a heartbeat. RCV
+also passes the keepalives to STATION. If no data or keepalive is seen for
+more than 120 seconds, RCV automatically attempts to reconnect to Golden.
+<P>
+After STATION receives the first packet for each channel, it watches for
+sequencing errors on the channel and reports them.  STATION knows that the
+rollback code in RCV has handed it as good a set of data as can be had.
+Much of STATION's code deals with "Partial update" records.  These are
+short packets which contain incremental parts of a longer packet. Partial
+packets are used for mainly with 1 sps long-period data. Since a full 2048
+byte compressed packet contains as much as 45 minutes of 1 sps data, it was
+perceived as desirable to send incremental pieces of this longer packet at
+shorter intervals (about every 2 minutes). Each partial packet contains the
+chunk of data that has been created since the last partial. STATION puts these
+partial packets in buffers. When the buffer contains a whole packet, STATION
+decompresses the data and calls the user-supplied processing function
+(user_proc) with the time and in-the-clear data.
+<P>
+The Earthworm processing function (user_proc) is configured to accept
+only packets from a user-supplied list of channels (specified by a station,
+channel and network code, or SCN). Packets from any unlisted SCNs are ignored,
+with an "Ignoring data from SCN" error being issued. Within user_proc, packets
+for each listed channel are buffered (up to a user-specified limit) to allow
+for the re-sequencing of packets on rollbacks. Once the buffer for a channel is
+full, user_proc will "release" (output) the oldest packet on receipt of a new,
+in-sequence packet. If user_proc is handed an out-of-sequence packet with an
+earlier-than-expected timestamp (a rollback packet), it looks through that
+channel's buffer for a packet with an identical sequence number. If such a
+packet is found, user_proc overwrites it with the newly received packet.
+Otherwise, user_proc issues a "Rollback cannot be used" error, and discards
+the new packet. If user_proc is handed an out-of-sequence packet with a
+later-than-expected timestamp, it issues a "Gap prior to seq=x" error, and
+buffers the new packet for later release. When user_proc is handed a packet
+that is marked "end-of-trace-segment" (triggered data), it releases all packets
+in the buffer for that channel (who knows how long it will be until the next
+trigger occurs?). To "release" a packet, user_proc first discards any data in
+the packet which duplicates previously released data, then it produces a
+chronological stream of standard Earthworm waveform messages (TYPE_TRACEBUF).
+Most of the waveform messages will contain the number of data samples specified
+by the user; but some shorter messages will also be produced. These
+TYPE_TRACEBUF messages are output to the user-configured Earthworm transport
+ring where any waveform-processing modules can access them.
+<P>
+The Earthworm code also includes a thread which monitors the time since the
+last data packet was received for each channel. If this time exceeds a user-specified limit ("MaxSilence" minutes) for any channel, rcv_ew will issue
+an error message. It will continue to issue an error every "MaxSilence" minutes
+that no data comes in for that channel.  Rcv_ew will issue an "un-error"
+message when it starts receiving data for that channel again. This thread
+also monitors the Earthworm termination flag in the transport ring so that
+rcv_ew will exit in a timely manner when the Earthworm system is stopped.
+<P>
+<B>SEED channel names:</B>
+<P>
+RCV and STATION (as well as other USNSN and IRIS codes) use get_name() to
+get SEED names for channels. This function requires that a file named
+nsnstation2.dat reside in the directory in which the program was started.
+A sample of this file is included in rcv_ew's source
+directory .../vX.X/src/rcv.
+The best way to get the most up-to-date station list from Golden is to use
+the autodrm.  Send a mail message to
+<font color=green>autodrm@gldfs.cr.usgs.gov</font> with the body:
+<BLOCKQUOTE>
+BEGIN<BR>
+CLIST<BR>
+STOP<BR>
+</BLOCKQUOTE>
+The returned mail can then be saved as a text file and named
+nsnstation2.dat. For rcv_ew to run correctly, a copy
+of nsnstation2.dat must be
+placed in the EW_PARAMS directory.
+<P>
+<B>Earthworm Heartbeats:</B>
+<P>
+Rcv_ew beats its Earthworm heart from within STATION.  STATION calls the
+function user_heart_beat() first from within the configuration function
+(user_proc_cmd), and then on receipt of any data or keepalive from RCV.
+user_heart_beat() will issue a TYPE_HEARTBEAT message only if the time
+since the last beat is greater than "HeartBeatInt" seconds (set in config file).
+The actual heartbeat interval will be irregular since it is driven by data
+coming from Golden. But since "keepalives" should come every minute, so
+should heartbeats. If the communication link to Golden goes down, rcv_ew will
+stop beating its heart. The rcv_ew heartbeat contains a process_id so that
+the rcv_ew module can be restarted by statmgr/startstop.  The process_id
+in the heartbeat is actually that of RCV, STATION's parent (RCV is the
+only process that startstop knows about).
+<dl>
+<dt>Tip:
+<dd>Set "HeartBeatInt" to something under 60 seconds to guarantee a
+     heartbeat for each keepalive.
+</dl>
+<P>
+<B>User Functions:</B>
+<P>
+The user functions which contain all the Earthworm-specific code
+live in the source file user_proc_ew.c. The functions are:
+<ol>
+<li> user_proc_cmd(argc,argv)
+   called once at startup of STATION for user setup.
+   This is where we read the Earthworm configuration file and
+   start up the time-since-last-packet monitoring thread.
+<li> user_proc(iy,id,ih,im,is,ms,leap,name,cname,network,eof,rate,seq)
+   called from STATION to deliver one packet of data to the user.
+   This function contains the guts of the Earthworm packet processing.
+<li> user_heartbeat()
+   called from RCV on receipt of data or keepalive message.
+   This function is a dummy function within rcv_ew.
+<li> user_heart_beat()
+   called from STATION on receipt of data or keepalive message.
+   This function is the Earthworm heartbeat for rcv_ew.
+<li> user_shutdown()
+   invoked by RCV and STATION as part of the process termination.
+
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/rcv_ew_cmd.html">Rcv_ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

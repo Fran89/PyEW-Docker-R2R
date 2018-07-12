@@ -1,0 +1,33 @@
+
+LINUX_FLAGS=-lpthread -lc -lm
+SOLARIS_FLAGS=-lthread -lc -lm -lnsl -lsocket -lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LIB330_DIR = $(EW_HOME)/$(EW_VERSION)/src/libsrc/lib330
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+LIBDIR = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I$(LIB330_DIR) -I. -g
+LDFLAGS = -L$(LIB330_DIR) -l330 $(SPECIFIC_FLAGS)
+
+SRCS = q3302ew.c logging.c config.c options.c lib330Interface.c heart.c
+
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(LIBDIR)/libew_mt.a  
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: q3302ew
+
+q3302ew: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o q3302ew $(OBJS) $(EW_LIBS) $(LDFLAGS)
+	cp q3302ew $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f q3302ew
+
+clean_bin:
+	rm -f $(BINDIR)/q3302ew

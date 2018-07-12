@@ -1,0 +1,177 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Earthworm Status Report -->
+<!--X-From-R13: Pneonen Pbtnreg <obtnregNtyqzhgg.pe.hftf.tbi> -->
+<!--X-Date: Thu, 16 Mar 2000 16:43:37 &#45;0700 -->
+<!--X-Message-Id: 17336.964738879.3@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Earthworm Status Report</TITLE>
+<LINK REV="made" HREF="mailto:bogaert@gldmutt.cr.usgs.gov">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00002.html">Date Prev</A>][<A HREF="ew.00004.html">Date Next</A>][<A HREF="ew.00002.html">Thread Prev</A>][<A HREF="ew.00004.html">Thread Next</A>][<A HREF="welcome.html#00003">Date Index</A>][<A HREF="threads.html#00003">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Earthworm Status Report</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A></LI>
+<LI><em>Subject</em>: Earthworm Status Report</LI>
+<LI><em>From</em>: Barbara Bogaert &lt;<A HREF="mailto:bogaert@gldmutt.cr.usgs.gov">bogaert@gldmutt.cr.usgs.gov</A>&gt;</LI>
+<LI><em>Date</em>: Thu, 16 Mar 2000 16:43:37 -0700</LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+
+Earthworm Status Report
+3/16/2000
+
+V4.1 Patch B
+************
+Earthworm V4.1 patch B has been released.  It fixes a bug in trig2disk. The
+problem was that SAC files would not be written correctly when running on NT.
+The Patch can be retrieved from the Earthworm ftp site:
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1B
+
+
+New Modules:
+************
+The following modules will be released as part of Earthworm V5.  Earthworm V5
+will be released in April 2000.
+
+LISS2EW:
+Liss2ew is the earthworm module for receiving trace data from the Live Internet
+Seismic Server. The LISS is a protocol that provides trace data in mini-SEED
+format in near-real-time over an IP link. The liss2ew module will connect to
+one LISS, read selected streams of trace data, and write that trace data into
+the earthworm transport ring. 
+
+EW2LISS:
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS (Live
+Internet Seismic Server) format. The ew2liss module will convert selected SCNs
+(station-component-network) of trace data from an Earthworm transport ring,
+convert that data to miniSEED format, and serve the data to a single LISS
+client (such as liss2ew) over a IP network connection. 
+
+On-going Developments
+********************
+Kinemetrics K2 Integration:
+A suite of modules is being developed for inputting continuous waveform and SOH
+data from a Kinemetrics K2 data logger into the Earthworm system.  These module
+are based on code developed by ISTI under contact to the USGS.  The modules
+will be able to run under NT and Solaris, and receive data either over a serial
+link to the K2 or over an IP link via the host machines network connection and
+a IP-terminal server connected to the K2.   Completion is expected before the
+end of May.
+
+Mini-seed archiver:
+Lamont-Doherty Cooperative Seismographic Network has contracted with ISTI to
+develop a module, ew2mseed,  which will be capable of writing continuos
+mini-seed files for archiving and distribution.
+
+DBMS
+*****
+Starting with the release of Earthworm v5 in April 2000, Earthworm will contain
+an OPTIONAL Server Package. This server currently consists of an Oracle DBMS
+(Standard Edition), a web server, and a map server. The initial suite of
+functions of this server are fairly minimal, but the idea is that the
+infrastructure is in place, and we will be in position to produce additional
+capabilities relatively rapidly.
+                Note that the Server Package is not required to run the
+Earthworm system. If no DBMS server is available, all Earthworm functions will
+continue to operate as before, and will be supported and enhanced as before.
+There will, however, be a growing suite of features which will be available
+only if a Server is available.
+
+The initial set of DBMS-based server features, available in Earthworm v5, are:
+
+        * The DBMS is presumed to be a network-based service. That is, the DBMS
+server may reside in the local Earthworm computer, in another computer at the
+installation, or at a remote site. 
+
+        * All event data, both parametric and waveform, known to the local
+Earthworm system can be loaded into the agreed-upon DBMS servers as it is
+computed (or received).
+
+        * An Earthworm system can send real-time data to any number of DBMS
+servers (local or distant).
+
+        * A DBMS server can accept real-time data from any number of Earthworm
+(or other) systems.
+
+        * A DBMS server can support any number of concurrent, authorized
+clients.
+
+        * All data feeds from a local Earthworm system to any DBMS servers are
+under exclusive control of the local Earthworm configuration.
+
+        * The DBMS server supports a web site offering 'real-time', interactive
+seismicity maps. The maps, and the associated pages, provide graphic access to
+event, trace, and station data in the DBMS.
+
+        * Event and station data, including instrument response, can be pushed
+to a browser client in SAC format. Other formats will be incorporated.
+
+        * Re-analysis of events using SAC and re-insertion of updated events
+into the Database.  SAC will be augmented with other analysis tools, including
+Jiggle (as developed at USGS, Pasadena ). 
+
+        * Archiving of parametric and waveform data.
+
+        * Manual event creation. This permits an authorized user to declare an
+event location and radius of interest. The server will then search for all
+available stations within the specified radius, acquire the relevant portions
+of trace data, and insert them into the DBMS.
+
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00002.html">Re: maximum message size</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00004.html">POSIX port of earthworm v4.1B available for testing</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00002.html">Re: maximum message size</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00004.html">POSIX port of earthworm v4.1B available for testing</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00003"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00003"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

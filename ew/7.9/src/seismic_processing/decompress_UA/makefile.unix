@@ -1,0 +1,34 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = decompress_UA.c
+OBJS = decompress_UA.o
+
+DECOMPRESS = $(OBJS) $L/libew.a $L/swap.o
+
+decompress_UA: $(DECOMPRESS)
+	$(CC) $(CFLAGS) -o $B/decompress_UA $(DECOMPRESS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint decompress_UA.c $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/decompress_UA*

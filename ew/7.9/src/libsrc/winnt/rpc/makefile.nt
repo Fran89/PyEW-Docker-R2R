@@ -1,0 +1,48 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:04:17  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:48:11  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2001/04/11 20:48:24  lombard
+#     Initial revision
+#
+#
+#
+
+#                  Nmake File For Library Routines
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+OBJS = xdr.obj \
+    xdr_stdio.obj \
+    xdr_float.obj \
+    xdr_array.obj \
+    ntohl.obj \
+    htonl.obj 
+
+all: $(OBJS) install
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+install:
+   copy *.obj $L
+
+clean:
+	-del a.out core *.o *.obj *% *~
+

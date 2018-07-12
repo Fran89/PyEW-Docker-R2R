@@ -1,0 +1,41 @@
+#
+#    Nmake File For ew2moledb - Windows version
+# 
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ew2moledb
+O = $(APP).obj ew2moledb_tracebuf.obj ew2moledb_pickcoda.obj ew2moledb_quakelink.obj  ew2moledb_strongmotionII.obj ew2moledb_magnitude.obj ew2moledb_arc.obj ew2moledb_sendmail.obj ew2moledb_mysql.obj ew2moledb_error.obj ew2moledb_eb_hypotwc.obj ew2moledb_eb_picktwc.obj ew2moledb_eb_alarm.obj ew2moledb_heartbeat.obj
+
+
+# Add the proper path for MySQL library
+MYSQLCLIENTLIB = ../mysql-connector-c-build/lib/mysqlclient.lib
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all: $B\$(APP).exe
+
+$B\$(APP).exe: $O
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+	$L/read_arc.obj $L/rw_mag.obj $L/rw_strongmotionII.obj $L/rdpickcoda.obj $L/sendmail.obj \
+	$L/mem_circ_queue.obj $L/swap.obj \
+	$L/getsysname_ew.obj \
+	$L/libew_mt.lib $L/sema_ew.obj  $L/dirops_ew.obj \
+	$L/libebpick.lib $L/libebloc.lib \
+	$(MYSQLCLIENTLIB) \
+	-out:$B\$(APP).exe
+
+.c.obj:
+	$(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+   
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj
+
+clean_bin:
+	-del $B\$(APP).exe
+

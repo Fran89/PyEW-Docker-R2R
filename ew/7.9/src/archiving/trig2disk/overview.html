@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Modules: trig2disk overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<H1 ALIGN=CENTER>Earthworm Modules: <BR>
+CarlTrig Overview</H1>
+
+<CENTER><P><I>(last revised 11 October, 1998)</I> </P></CENTER>
+
+<H2>trig2disk</H2>
+
+
+<p>
+trig2disk reads type_triglist messages from the hypo_ring (e.g. those produced
+          by arc2trig and by carltrig) and writes either sac or ah triggered
+          data files to disk.
+</p>
+
+
+<p>
+The ah data is in xdr format which is transparent between sun/solaris and 
+intel/NT so long as the ioroutin.c interface is used.  The sac format only
+currently works on Solaris.
+</p>
+
+<p>
+The NT port of the xdr routines was accomplished by modifying the OpenBSD
+code from the ftp site at umich.  Thus modifications must include this
+source should be careful not to remove the copyright statements and can't
+be sold. Cavalier commenting of pieces of this source that weren't needed
+to write local xdr is ubiquitious.  Thus it is not rpc compatible.  When
+ftp'ing from NT to solaris, make sure you transfer as ascii to avoid the
+goofy ^M characters corrupting each line (else run dos2unix on the binary
+transfered file).
+</p>
+
+<p>
+sacputaway has been modified from trig2disk. There are 2 byte order issues:
+ <li>1) what arch are the data from and what arch are we running on</li>
+ <li>2) what arch are we running on and what arch do we want to read on</li>
+The first is taken care of by the original sacputaway with INTEL or SPARC
+makefile defines.  The second is taken care of by a mod that uses a 
+SWAPIT makefile define.  Blindly swaps before writing to disk if SWAPIT is defined.
+</p>
+
+<p>
+EW v3.3 is required, specifically with respect to the author field in
+the type_triglist messages (e.g. in parse_trig, carltrig, arc2trig).
+</p>
+
+<p>
+Will get restarted if restartMe is in the .desc
+</p>
+
+<p>
+To do:
+  <li>Adding a list of stations to the trigger message is kludgy.</li>
+  <li>Not much error checking is done, particularly in the putaway routines.</li>
+  <li>How about some documentation, eh.</li>
+  <li>Add author subdirectory to data directory e.g. ah/author/datatime/scn.ah</li>
+  <li>The p in memphis.pscn isn't used yet. </li>
+  <li>The output data directory is only two digit year </li>
+
+</p>
+
+<P>  <A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/trig2disk.html">trig2disk
+Commands</A> 
+ <!-- USGS-required stuff at the end --> 
+<HR></P>
+
+<ADDRESS>The URL of this page is <B>[http://www.cnss.org/EWAB/ovr/trig2disk.html]<BR>
+</B>Contact: <B>withers@ceri.memphis.edu</B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>

@@ -1,0 +1,9 @@
+
+ewexport2ringserver:
+
+Consume Earthworm TRACEBUF packets from an export server, create 512-byte
+miniSEED records and forward them to a DataLink server, aka ringserver.
+
+The export_* program must be run on a host system with the appropriate data
+in an Earthworm ring.  Ideally the ewexport2ringserver process is on the same
+machine or the same local network as the destination ringserver.

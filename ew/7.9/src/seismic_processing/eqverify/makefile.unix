@@ -1,0 +1,37 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS_VERIFY = eqverify.o $L/libew.a $L/pipe.o 
+OBJS_FEEDER = arcfeeder.o $L/libew.a $L/pipe.o 
+
+all:
+	make -f makefile.unix eqverify
+	make -f makefile.unix arcfeeder
+
+eqverify: $(OBJS_VERIFY)
+	$(CC) $(CFLAGS) -o $B/eqverify $(OBJS_VERIFY) $(SPECIFIC_FLAGS)
+
+arcfeeder: $(OBJS_FEEDER)
+	$(CC) $(CFLAGS) -o $B/arcfeeder $(OBJS_FEEDER) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint eqverify.c arcfeeder.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/eqverify* $B/arcfeeder*

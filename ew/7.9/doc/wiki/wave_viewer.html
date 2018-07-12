@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      wave_viewer – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/wave_viewer?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="wave_viewer.html" title="View wave_viewer">wave_viewer</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/wave_viewer?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/wave_viewer?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-02-26T13%3A06%3A49-08%3A00&amp;precision=second" title="2012-02-26T13:06:49-08:00 in Timeline">19 months</a> ago</span>
+            <span class="trac-print">Last modified on 02/26/12 13:06:49</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="wave_viewer.html#EarthwormModule:wave_viewer">Earthworm Module: wave_viewer</a>
+    <ol>
+      <li>
+        <a href="wave_viewer.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="wave_viewer.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="wave_viewer.html#IMPORTANTNOTES">IMPORTANT NOTES</a>
+          </li>
+          <li>
+            <a href="wave_viewer.html#OVERVIEW">OVERVIEW</a>
+          </li>
+          <li>
+            <a href="wave_viewer.html#FEATURES">FEATURES</a>
+          </li>
+          <li>
+            <a href="wave_viewer.html#CONTROLSANDBUTTONS">CONTROLS AND BUTTONS</a>
+          </li>
+          <li>
+            <a href="wave_viewer.html#STATUSINDICATORS">STATUS INDICATORS</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="wave_viewer.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:wave_viewer"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: wave_viewer</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Wave_viewer, which runs under Win2000, acts as an electronic develecorder. It retrieves waveform data from wave_serverV and displays it.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Wave Viewer provides a graphic user interface(GUI) for viewing waveform data out of an Earthworm wave server. In seismological ease, Wave Viewer acts as an electronic develecorder. It can only interact with one server at a time, and runs on Microsoft Windows platforms. It was written by Carl Johnson and is maintained by Earthworm Central via David Kragness. <strong>Wave Viewer is NOT SCNL compatible. If you are using a v7x Earthworm system, you will have to convert using scnl2scn. You could alternately use Swarm instead. (This may be found in the Earthworm Contrib distribution at some point in the future.) - 2008 11 04</strong> 
+</p>
+<h3 id="IMPORTANTNOTES">IMPORTANT NOTES</h3>
+<p>
+<strong>VERSION INFO</strong> 
+</p>
+<p>
+The current version of Wave Viewer is v2.02 internally released on 01/16/2002, externally released as part of Earthworm v6.1. All Wave Viewer releases starting with v1.04 are Y2K compliant.
+</p>
+<p>
+<strong>SOURCE INFO</strong> 
+</p>
+<p>
+Wave Viewer is written in C++, utilizing the MFC class libraries.
+</p>
+<p>
+<strong>CONFIGURATION FILE</strong> 
+</p>
+<p>
+The default configuration file name is "wave_viewer.d", but you may name an alternate configuration file as the second argument on the command line 
+</p>
+<h3 id="OVERVIEW">OVERVIEW</h3>
+<p>
+Wave_viewer acts as a client to the Earthworm WaveServerV module. Earthworm Wave Servers maintain circular disk-based memory for specified trace data channels. Wave Viewer is a graphical tool that allows a user to examine the data within the Wave Server. Wave_viewer connects to a single wave server, and provides controls for a user to navigate that wave server's tanks, and thus look at the data available for channels served by that wave server.
+</p>
+<p>
+Wave_viewer reads a configuration file "wave_viewer.d" when it starts up. This file contains various parameters, including the IP address of the wave server to connect to, and the definition of the station groups, explained below. (*NOTE* The default configuration file name is "wave_viewer.d", but you may name an alternate configuration file as the second argument on the command line.)
+</p>
+<p>
+Wave Viewer interacts with the wave server asynchronously with regard to the user's actions, thus the user is generally free to operate the controls at will. A caching algorithm tries to anticipate user motions, and pre-load the required data over the network from the Wave Server.
+</p>
+<p>
+When the Wave Viewer program first loads, it connects to the specified wave server, and displays all channels being served(or atleast as many as it can fit on the screen), starting with the youngest data available.
+</p>
+<p>
+Wave Viewer performance is dependent upon the speed of the machine you are using, the amount of memory the program is allowed to use for cache, and it's ability to connect and get data from the given wave server(network bandwidth and wave-server speed).
+</p>
+<h3 id="FEATURES">FEATURES</h3>
+<p>
+Groups 
+</p>
+<p>
+The configuration file can contain a number of named groups of stations. These groups can be selected via the "Groups" Menu item. Selecting a group means that ONLY the stations named in that group are being shown on the screen. If you would like to see only a select number of channels, instead of all of the channels from a given wave_server, you can specify a group of channels. By selecting that group, only those channels will be displayed.
+</p>
+<p>
+Trigger Files 
+</p>
+<p>
+The user can open a trigger file which must contain event triggers in Earthworm TYPE_TRIGLIST2K format, such as those written by arc2trig, arc2trig2, or carltrig. The user can step through such events via the "+" and "-" tool buttons. When a trigger event is selected, the trace data at the time of the event is displayed, and a red bar is drawn at each station trigger time. The user is free to select various groups without changing the time shown. The user is also free to browse via manual controls at any time."
+</p>
+<p>
+Display by Time 
+</p>
+<p>
+Selecting the menu item "Functions", submenu "Time", causes a window to appear. This window permits the user to enter a specific time, either in human notation, or as seconds since 1970 (as per Unix and Windows 2000, for engineering purposes). Entering a time value and pressing the "OK" button will cause data at that time to be displayed.
+</p>
+<p>
+Show Time 
+</p>
+<p>
+Moving the mouse to a point on a trace will cause the time of that point to be displayed in a window at the bottom right of the screen. Note that the mouse has to be moved to activate this feature.
+</p>
+<p>
+Scrolling 
+</p>
+<p>
+The vertical scroll bars operate when there are more stations to be displayed than fit on the screen. They operate in the usual manner.
+</p>
+<p>
+Horizontal scrolling is as usual, but in addition the slider bar can be dragged left or right, and acts as a speed control. Releasing the slider bar stops the display. 
+</p>
+<h3 id="CONTROLSANDBUTTONS">CONTROLS AND BUTTONS</h3>
+<p>
+FileOpen (yellow folder): 
+</p>
+<p>
+Brings up a dialog box to open a trigger file. Opening a trigger file will cause Wave Viewer to parse the trigger file, and create a tree of quakes and triggers. This tree can be accessed by choosing "Function-&gt;Trigger" from the Menu Bar.
+Print (printer): 
+</p>
+<p>
+Brings up a print dialog box. Wave Viewer does not support printing.
+</p>
+<p>
+Help (?): 
+</p>
+<p>
+Brings up the "About Wave Viewer" dialog box.
+</p>
+<p>
+Previous Trigger (-): 
+</p>
+<p>
+Goes to the previous trigger in the trigger list. See FileOpen.
+</p>
+<p>
+Next Trigger (+): 
+</p>
+<p>
+Goes to the next trigger in the trigger list. See FileOpen.
+</p>
+<p>
+Decrease Display Time (&lt;-&gt;): 
+</p>
+<p>
+Cuts the time shown on the display in half. So if there were 20 seconds of time on the display, then after clicking this button, there would be 10. The start time of the display remains the same.
+</p>
+<p>
+Increase Display Time (&gt;-&lt;): 
+</p>
+<p>
+Doubles the time shown on the display. So if there were 20 seconds of time on the display, then after clicking this button, there would be 40. The start time of the display remains the same.
+</p>
+<p>
+Decrease Display Scale ("Decrease Display Time rotated 90 degrees"): 
+</p>
+<p>
+Cuts the scale for each trace on the display in half. So if the scale for the first trace on the screen was +/- 80 counts, before the button was pressed then it would be +/- 40 counts afterwards. This button affects every channel on the display.
+</p>
+<p>
+Increase Display Scale ("Increase Display Time rotated 90 degrees"): 
+</p>
+<p>
+Doubles the scale for each trace on the display. So if the scale for the first trace on the screen was +/- 80 counts, before the button was pressed then it would be +/- 160 counts afterwards.
+</p>
+<p>
+Go To Oldest Data (|&lt;-): 
+</p>
+<p>
+Updates the menu and moves the display so that the start time of the display is the oldest data currently available in the wave_server tank of the first channel on the screen. Moves display to the oldest data in the wave_server tanks. (*Note*, the first channel on the screen is used for reference. So if the oldest data in the first channel is at time 10, the second at time 11, and the third at time 9, then the display will be moved to time 10.
+</p>
+<p>
+Go To Newest Data (-&gt;|): 
+</p>
+<p>
+Updates the menu and moves the display so that the end time of the display is the newest data currently available in the wave_server tank of the first channel on the screen. Moves display to the newest data in the wave_server tanks. (*Note*, the first channel on the screen is used for reference. So if the newest data in the first channel is at time 10, the second at time 11, and the third at time 9, then the display will be moved to time 10.
+</p>
+<p>
+Auto-Scroll (-&gt;): 
+</p>
+<p>
+Automatically scroll the display continuously, in sink with real time. When Wave Viewer is in auto-scroll mode it continues to scroll. It scrolls 1 second for each second of clock time that passes.
+</p>
+<p>
+Add A Trace (1 line to 2 lines) 
+</p>
+<p>
+Increases the number of channels on the display by 1.
+</p>
+<p>
+Drop A Trace (2 lines to 1 line) 
+</p>
+<p>
+Decreases the number of channels on the display by 1.
+</p>
+<p>
+Bias (BIAS): 
+</p>
+<pre class="wiki">The bias button causes the calibration for the band(channel) to be redone.
+This involves three different sets of behavior depending upon how
+much data wave_viewer has recorded for the given channel:
+  1) If wave_viewer has less than 30 samples of data
+	The bias is recalculated, and the scale is reset to 8 * stddev of the data points.
+  2) If wave_viewer has less than 60 seconds of data
+	The bias is recalculated, and the scale is reset to 2 * stddev of the data points.
+  3) If wave_viewer has atleast   60 seconds of data
+	Only the bias is recalculated.
+*Note* If the Scale has been set in the config file, then wave_viewer will
+never automatically adjust the scale, no matter how much data is available.
+</pre><h3 id="STATUSINDICATORS">STATUS INDICATORS</h3>
+<p>
+Block Colors - Channel Status 
+</p>
+<p>
+There is an area in the header of each trace channel (the area vertically between the '+' and '-') that the wave_viewer will fill with a certain color indicating that that trace is blocked because of a particular problem. The colors/problems are given below:
+</p>
+<p>
+RED 
+</p>
+<p>
+!!!!Inidicates serious error with the tank!!!!!
+</p>
+<p>
+BLUE 
+</p>
+<p>
+Indicates that data was requested to the right of the tank (this color is seen frequently when the viewer is pushed too close to the tank edge)
+</p>
+<p>
+GREEN 
+</p>
+<p>
+Indicates that no data was available for the channel, or an error occurred while retrieving data.
+</p>
+<p>
+PURPLE 
+</p>
+<p>
+Unknown error state!
+</p>
+<p>
+The only color that should be seen during normal operation (other than clear, is BLUE. Any other color probably indicates an error with the tank within the wave_server.) Status Bar 
+</p>
+<p>
+The Wave Viewer status bar is broken up into 6 segments: 
+</p>
+<p>
+1) Status Segment 
+</p>
+<p>
+The status segment, contains the current status of the program. In auto-scroll mode, the program is frequently attempting to retrieve data from a wave_server. At this time, the current data request to the wave_server is posted in this segment. If a wave_viewer is very busy in auto-scroll mode, then the only thing you may see in this segment is requests. When wave_viewer has retrieved all desired data, it will display a status of "done" in this segment. It will also list serious errors here.
+</p>
+<p>
+2) Station Info Segment 
+</p>
+<p>
+When the user places the mouse over the "header area" of a given channel, the information for that channel will be displayed in this segment. The SCN are displayed, along with the Scale and the Bias. The SampleRate is not displayed here, but is displayed in the channel "header area" if there is ample room. The format is: 
+</p>
+<p>
+" +/- B:"
+</p>
+<p>
+3) Queue Info Segment 
+</p>
+<p>
+This segment displays how many data requests are currently in the request queue. The format is: 
+</p>
+<p>
+"Queue: "
+</p>
+<p>
+4) Data Received Segment 
+</p>
+<p>
+This segment displays the amount of data received over the socket from the wave_server. Each time wave_viewer receives a new packet from the server, it writes the size of the packet to this segment. When wave_server has received a completed message from the wave_server, then it prints the size of the completed message, along with a prefix denoting the type of message. A completed message is comprised of one or more packets. Receive buffer notation
+</p>
+<pre class="wiki">	*XXXX  indicates that a complete SCN reply was received from the server
+	+XXXX  indicates that a complete menu reply was received from the server
+	-XXXX  indicates that a complete NOT UNDERSTOOD reply was received from the server.
+	Examples:
+	  	"56"	Wave Viewer received a packet of 56 bytes from the server
+		"*388"  Wave Viewer received a completed message (a Reply to a
+				request for data from a channel) of 388 bytes.
+		"+1608" Wave Viewer received a completed message (a Reply to a
+				request for a menu) of 1608 bytes.
+		"-388"  Wave Viewer received a completed message (unknown
+				message type) of 388 bytes.
+</pre><p>
+5) Time Segment 
+</p>
+<p>
+When the user moves the mouse over an area of trace on the screen, this segment displays the time for the location of the mouse pointer. 
+format:        YYYY MMMDD HHMM SS.DD
+</p>
+<p>
+6) Trigger Segment 
+</p>
+<p>
+When the user is viewing an Earthworm trigger message, this segment shows the time of the current trigger.
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/wave_viewer?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

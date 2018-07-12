@@ -1,0 +1,20 @@
+
+
+modName  q3302ew
+modId    MOD_Q3302EW
+instId   ${EW_INST_ID}
+
+restartMe	# restart 
+
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 300  page: 0  mail: 99
+
+

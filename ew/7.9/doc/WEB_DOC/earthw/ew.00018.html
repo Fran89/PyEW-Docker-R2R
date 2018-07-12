@@ -1,0 +1,105 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Re: Three questions for al earthwormers -->
+<!--X-From-R13: Buvy [nrpuyvat <cuvyNveba.tcf.pnygrpu.rqh> -->
+<!--X-Date: Wed, 21 Jun 2000 17:36:55 &#45;0700 (PDT) -->
+<!--X-Message-Id: 17336.964738879.18@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Re: Three questions for al earthwormers</TITLE>
+<LINK REV="made" HREF="mailto:phil@iron.gps.caltech.edu">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00016.html">Date Prev</A>][<A HREF="ew.00019.html">Date Next</A>][<A HREF="ew.00016.html">Thread Prev</A>][<A HREF="ew.00019.html">Thread Next</A>][<A HREF="welcome.html#00018">Date Index</A>][<A HREF="threads.html#00018">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Re: Three questions for al earthwormers</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: <A HREF="mailto:steve@geophys.washington.edu">steve@geophys.washington.edu</A></LI>
+<LI><em>Subject</em>: Re: Three questions for al earthwormers</LI>
+<LI><em>From</em>: Phil Maechling &lt;<A HREF="mailto:phil@iron.gps.caltech.edu">phil@iron.gps.caltech.edu</A>&gt;</LI>
+<LI><em>Date</em>: Wed, 21 Jun 2000 17:36:55 -0700 (PDT)</LI>
+<LI><em>Cc</em>: <A HREF="mailto:phil@gps.caltech.edu">phil@gps.caltech.edu</A></LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+
+&gt; 
+&gt; 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+&gt; Lamont contracting for a ew2mseed module.  No word about this since then.  
+&gt; Actually, much better for us than a earthworm module that needs to sit on the
+&gt; WAVE_RING would be a stand-alone program to yank traces from waveservers and
+&gt; write mseed files.  Any one have such?
+&gt; 
+We can get you there, but you may view it as a "long way around".
+We have a program that sits on an earthworm ring, and reads in 
+earthworm packets. It reformats the packets as miniseed packets.
+Then it multicasts the packets out onto a network.
+We also have a comserv variation called mserv, which reads in multicast
+miniseed packets, and puts them into a comserv memory area.
+You can then use a standard datalog client to log the packets to
+disk. Note that what datalog produces is not miniseed, but seed
+telemetry volumes. Software (e.g. qmerge) is needed to generate
+the miniseed files you asked for.
+
+This reformatting into miniseed packets, transmission to mserv,
+and logging by datalog is how we are acquiring the SCSN
+analog data on TriNet. It works reasonably well. Let me know if
+it is something you'd like to look at.
+
+Thanks,
+Phil M.
+
+____________________________________________________________
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00016.html">Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00019.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00016.html">Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00019.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00018"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00018"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

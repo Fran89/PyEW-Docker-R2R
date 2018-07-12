@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      ew2mseed – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/ew2mseed?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="ew2mseed.html" title="View ew2mseed">ew2mseed</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/ew2mseed?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/ew2mseed?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-02-26T16%3A00%3A15-08%3A00&amp;precision=second" title="2012-02-26T16:00:15-08:00 in Timeline">19 months</a> ago</span>
+            <span class="trac-print">Last modified on 02/26/12 16:00:15</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="ew2mseed.html#EarthwormModule:ew2mseed">Earthworm Module: ew2mseed</a>
+    <ol>
+      <li>
+        <a href="ew2mseed.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="ew2mseed.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="ew2mseed.html#ew2mseedclientprovidesthefollowingcapabilities">ew2mseed client provides the following capabilities</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#Runtimeoperation">Runtime operation</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#UnavailableSCNLs">Unavailable SCNLs</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#Featuresandlimitationsofew2mseed">Features and limitations of ew2mseed</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#Usingew2mseedwithmultipleWaveServers">Using ew2mseed with multiple WaveServers</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#Catch-upalgorithmnewinversion02-Apr-2002">Catch-up algorithm (new in version 02-Apr-2002)</a>
+          </li>
+          <li>
+            <a href="ew2mseed.html#StartLatencyparameternewinversion15-May-2003">StartLatency parameter (new in version 15-May-2003)</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="ew2mseed.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:ew2mseed"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: ew2mseed</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+ew2mseed is a standalone module that builds continuous miniSEED day files from a wave_serverV connection
+</p>
+<h2 id="Details">Details</h2>
+<p>
+ew2mseed  is a non interactive automatic Earthworm WaveServerV client for archiving continuous nov-overlapping time-ordered waveforms in MiniSEED format.  Like any  Earthworm program, it has a configuration file ew2mseed.d allowing for extensive configuration. This is where we tell it, among other things, which waveservers to interrogate, where and in which format to store the trace output. 
+ 
+</p>
+<h3 id="ew2mseedclientprovidesthefollowingcapabilities">ew2mseed client provides the following capabilities</h3>
+<ul><li>generates the MiniSEED files on per day basis;
+</li><li>talks to multiple WaveServerV(s);
+</li><li>creates and updates the directory/file structure in the following format: NET/STA/STA.NET.LOC.CHAN.YEAR.JDAY;
+</li><li>provides extensive logging of the processing statistics (several tens of megabytes of log files a day!);
+</li><li>outputs MiniSEED data in STEIM1 or STEIM2 compression (configurable);
+</li><li>MiniSEED logical record size is also configurable;
+</li><li>the program uses SIGUSR1 signal to generate a state-of-health report (use "kill -USR1 pid", where pid is a process ID of running ew2mseed);
+</li><li>location code is supported;
+</li><li>supports 4 levels of verbosity;
+</li><li>provides a catch-up algorithm to boost a transmission of data from the late channels;
+</li><li>supports locking mechanism preventing multiple copies of ew2mseed to operate over the same configuration file.
+</li></ul><h3 id="Runtimeoperation">Runtime operation</h3>
+<p>
+When started, ew2mseed searches the structure NET/STA/ in the directory  defined by the configuration parameter MseedDir for the filenames in the format STN.NET.LOC.CHAN.YEAR.JDAY, where julian day is always represented by 3 digits. If the file for a specific SCNL does not exist, this file is created by ew2mseed. The date extension of this file (YEAR.JDAY) is set either to <br />
+(1a) the date defined by the beginning of the earthworm tank file (in case the parameter StartTime is omitted in ew2mseed.d or StartTime is older than the beginning of the tank); [BR]]
+</p>
+<blockquote>
+<p>
+or <br />
+</p>
+</blockquote>
+<p>
+(1b) If the StartTime is younger than the beginning of the  tank,  the filename date extension (YEAR and JDAY) is set to the date of StartTime. Data collection starts in case (1a) from the beginning of the tank and in case (1b) from the time marked by StartTime parameter.
+</p>
+<p>
+If at the invocation of ew2mseed, at least a single file containing MiniSEED records in the correct format do exist in the directory for the particular SCNL, ew2mseed compares three parameters ((1) most recent date and time in the most recent data file; (b) time of StartTime parameter; and (c) the beginning time in the Earthworm tank). The program uses the most recent time among (a), (b), and (c) as the starting time for data retrieval.
+</p>
+<p>
+ew2mseed will <br />
+(2a) create a new file STN.NET.LOC.CHAN.YEAR1.JDAY1 for  data beginning at YEAR1 JDAY1  if such file does not exist; <br />
+or <br />
+(2b) will use the existing file if the file in the with YEAR1 and JDAY1 exist is for the this STN.NET.LOC.CHAN.
+</p>
+<p>
+The considerations for  a complex design described above are the following: <br />
+(a) ew2mseed is intended to grab as much data points from the WaveServer as possible in an automatic mode. <br />
+(b) It is assumes that if the data for the particular date are written into the file of it's directory structure, the data for  all previous days have are also processed if ew2mseed operates constantly.
+</p>
+<p>
+The obvious flip side of such an approach is that as long as the file STN.NET.LOC.CHAN.YEAR1.JDAY1 exists in the directory structure with at least a single valid MiniSEED block, there is no way to force ew2mseed to get data before YEAR1 JDAY1 and before time defined by the latest MiniSEED block.
+</p>
+<p>
+The following is also true: removing the files from the specific directory for the particular SCNL followed by a  restart of ew2mseed would create a situation defined as cases (1a) and (1b) above: ew2mseed might start extracting data which have already been received. 
+ 
+</p>
+<h3 id="UnavailableSCNLs">Unavailable SCNLs</h3>
+<p>
+When ew2mseed is started, it attempts to receive a small portion of data for each SCNLs. If for some reason even a single snippet for a particular SCNL is not available, ew2mseed removes this SCNL from the processing ring and documents this channel in the regular LOG file and also writes SCNL parameters into the LOCK file. Therefore, a LOCK file for a particular ew2mseed process contains an information about the unavailable SCNLs during the lifetime of this ew2mseed process. If the LOCK file is not used, ew2mseed writes an information about unavailable SCNLs into the stderr channel. 
+ 
+</p>
+<h3 id="Featuresandlimitationsofew2mseed">Features and limitations of ew2mseed</h3>
+<ul><li>This version runs on UNIX/SOLARIS platform only;
+</li><li>Every instance of ew2mseed creates a log file in the directory defined by the environmental variable EW_LOG. The structure of the log file name is  CONF_FILE_NAME + 0.log_ + current date, where CONF_FILE_NAME is the configuration file name with extension removed. For example, "ew2mseed ew2mseed1.d" created log file ew2mseed10.log_20010118 on 18 January 2001. To force multiple instances of ew2mseed to log into different files, the CONF_FILE_NAMEs should be different;
+</li><li>The program writes large data files and log files. It does not check for the available disk space;
+</li><li>The productivity of the program is mostly limited by the bandwidth of the TCP/IP connection. The program does not put a limit on the number of SCNLs it reads from. Therefore, if there are too many SCNLs, the speed of removing data from the WaveServerV can exceed the speed of reading and processing data by ew2mseed . This will lead to the additional tears in the disk MiniSEED files;
+</li><li>The program uses SIGUSR1 signal to generate state-of-health reports. Nevertheless, the parameters to be included in the report are yet to be refined;
+</li><li>The program does not support "wild cards", therefore, all SCNLs should be listed in the ew2mseed.d file in explicit form;
+</li><li>WaveServerV is currently not warranted from havin OVERLAPPED snippets. OVERLAPPED snippet is defined as one with a starttime being earlier than the previous snippet endtime. OVERLAPPED snippets are discarded by ew2mseed and every instance of OVERLAP is logged. Removing of OVERLAPPED snippets create gaps. Overlapped snippets might indicate problems with the original data in WaveServerV.
+</li><li>Removing the most recent files from active directories for SCNLs during the ew2mseed operation can lead to the catastrophic consequences and is prohibited.
+</li></ul><p>
+Running more than a single copy of ew2mseed for for the same SCNL/Location/file structure is prohibited.  Despite we implemented a locking mechanism preventing more then one copy of ew2mseed to operate over a particular ew2mseed.d.x file, there is no automatic way to prevent two ew2mseed  with different ew2mseed.d.x configuration files to write to the same   /NET/STN/STN.NET.LOC.CHAN.YEAR.JDAY.
+</p>
+<h3 id="Usingew2mseedwithmultipleWaveServers">Using ew2mseed with multiple WaveServers</h3>
+<ol><li>Here we walk a reader through the steps of the ew2mseed program from the standpoint of multiple WaveServers usage. Multiple WaveServers are set in the configuration file as key word WaveServer followed by the IP:Port, where IP address can also be human readable computer name which will be resolved by gethostbyname() system call.
+<pre class="wiki"># frame relay.. 
+WaveServer 192.168.12.10 16022 
+# harry... 
+WaveServer 136.177.31.188 16022 
+# harry2... 
+WaveServer 136.177.31.10 16022
+</pre></li><li>All available WaveServers are first registered in the configuration structure of ew2mseed.  If we follow the example configuration above, in particular, there will be created a WaveServer linked list containing 3 WaveServers.
+</li></ol><ol start="3"><li> ew2mseed calls a function  int processWsAppendMenu (RINGS *rn, WS_MENU_QUEUE_REC *menu) , which uses EW library function wsAppendMenu() in a loop for each WaveServer. wsAppendMenu() can either append a current WaveServer menu or return an error indicating that the connection to the WaveServer is not available. The main task of processWsAppendMenu () is to fill up the WaveServers structure WS_MENU_QUEUE_REC *menu. This structure is later used for getting data snippets. As long as at least a single WaveServer is available, the WS_MENU_QUEUE_REC *menu structure is not NULL and function processWsAppendMenu () returns the number of available WaveServers from the list. If no WaveServers are available, processWsAppendMenu () does not return. In this case it idles for 20 seconds and attempt to connect to WaveServers again. An operator can examine the log file and kill the instance of <strong>ew2mseed</strong> manually if he/she realizes that the WaveServers declared in the configuration will not be available.
+</li></ol><ol start="4"><li>Let us suppose that we passed the stage (3) and found out that, for example, two out of three WaveServers declared in the configuration file are running and their data are available.  We now search through every available WaveServer and create a list of available PSCNLs. If no PSCNLs is available, the program quits.
+</li></ol><ol start="5"><li>If we are here, it means that more than 0 WaveServers provide more than zero PSCNLs.  In other words we entered the main loop of ew2mseed. In the main loop, the core call is to int wsGetTraceBin (TRACE_REQ* getThis, WS_MENU_QUEUE_REC* menu_queue,  int timeout).  wsGetTraceBin() is a library function from WaveClient library and it is declared as being able to extract data from multiple WaveServers. Here is an extract from wsGetTraceBin() documentation:
+<pre class="wiki">                 Retrieves the piece of raw trace data specified in the 
+                 structure 'getThis': The current menu list, as built by the 
+                 routines above will be searched for a matching SCNL. If a match 
+                 is found, the associated wave server will be contacted, and a 
+                 request for the trace snippet will be made. If a server returns 
+                 with a flag (request in gap or outside of tank), another server 
+                 in the menu queue will be tried. (http://www.cnss.org/EWAB/libsrc.html)
+</pre></li><li>Once in while (when ew2mseed read all data until the endTime of the tank for a particular PSCNL),  ew2mseed calls a function int updateMenu (RINGS *rn, WS_MENU_QUEUE_REC *menu_queue), which updates local copies of menus of WaveServers and includes/excludes from the WaveServer's linked list those WaveServers which  became available/unavailable.
+</li></ol><h3 id="Catch-upalgorithmnewinversion02-Apr-2002">Catch-up algorithm (new in version 02-Apr-2002)</h3>
+<p>
+The problem description: ew2mseed receives high volume of data from heterogeneous set of channels; due to the various reasons (connection speed is the most important), some channels are later than the others. We implemented an algorithm which forces ew2mseed to request more information from the later channels.
+</p>
+<blockquote>
+<p>
+1) Each channel has a configuration structure. We add a new integer field "Priority" which indicates  a factor at  which we increase the parameter RecordNumber for a given station. That is, if  Priority  is 2 for a channel, it will poll twice  more data form the WaveServer relative to the channels with GetTraceTimes = 1. At the init stage each channel sets "Priority" to the default 1.
+</p>
+</blockquote>
+<blockquote>
+<p>
+2)  We count number of loops over all channels.  After <strong>LoopsBeforeService</strong> (configurable parameter, default value = 50)  production loops  for each channel we compute the TIME of the snippet we currently process and  AVERAGE TIME for all channels.
+</p>
+</blockquote>
+<blockquote>
+<p>
+4) Next for each channel we compute Priority as: if the processing time on the channel is less than  N days  later than the Average, we assign N+1 to GetTraceTimes, if the average time is later than the channel processing time, we set 1 to GetTraceTime. GetTraceTimes is bounded by 1 as the lowest limit and by the configurable parameter <strong>PriorityHighWater</strong> (default value = 5). Next, we increase/decrease the requested time limits for a request to the WaveServerV proportinally to the "Priority" parameter.
+</p>
+</blockquote>
+<blockquote>
+<p>
+5) Goto 2.
+</p>
+</blockquote>
+<h3 id="StartLatencyparameternewinversion15-May-2003">StartLatency parameter (new in version 15-May-2003)</h3>
+<p>
+StartLatency parameter in hours is used to superseed StartTime parameter.  The starttime is computed as the current time minus StartLatency and the resultanant number is used to compute StartTime. Either StartTime or StartLatency must be present in the configuration file.  If both of them are present, the program will use the parameter which is below than the other one in the configuration file. 
+ 
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/ew2mseed?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

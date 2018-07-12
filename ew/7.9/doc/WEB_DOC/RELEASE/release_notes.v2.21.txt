@@ -1,0 +1,46 @@
+Release Notes Earthworm Version 2.21
+
+This version was the first official release of the Cleanup from v2.0.
+The cleanup was inspired by comments from Kent Lindquist and help from
+David Walter.
+
+Changes Made:
+*************
+
+Created a libsrc directory with subdirectories for generally used functions and also for operating systems specific routines.
+
+		util
+		solaris
+		os2
+
+	Standarized the way configuration files are read and logging is
+done.
+
+	Created new directory structure with a run directory independent of
+the versio directories.
+
+	Handling of module id, ring ids,  etc. was made uniform and depends on
+variables defined in earthworm.h.
+
+
+  
+
+This version went to Utah.  It was QAed and passed with the following 
+modules:
+
+	binder:  with bug in the OS/2 version
+	coaxtoring
+	copystatus
+	diskmgr (never tested)
+	eqalarm_ew
+	eqbuf
+	eqcoda
+	eqproc
+	hypo
+	hypo_mgr
+	hypo_ew
+	menlo_report
+	pagerfeeder
+	picker
+	statmgr
+	startstop_solaris

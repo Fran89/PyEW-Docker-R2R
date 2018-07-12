@@ -1,0 +1,51 @@
+# ----------------------------------------------------------------------
+# MakeFile for Ws2Ew
+# ----------------------------------------------------------------------
+#
+# Instructions on how to create the executable:
+#
+#     First make sure that your environmental variables
+#     'INCLUDE' and 'LIB' are set correctly.
+#
+#     You may also load this .MAK file from Visual C++.
+#     Visual C++ will then treat it as an 'external makefile'.
+#
+#     The libsrc functions are recompiled here because we need
+#     single-threaded versions instead of multi-threaded versions
+#
+#
+NODEBUG=1
+#
+!include <ntwin32.mak>
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+#
+O = Ws2Ew.obj getconfig.obj Ws2EwUtils.obj
+J = $L\socket_ew.obj $L\socket_ew_common.obj $L\libew_mt.lib \
+    $L\mem_circ_queue.obj libpsnms.lib
+#
+# TARGET: Console application
+#
+all: lib Ws2Ew.exe
+#
+Ws2Ew.exe: $O
+   link $(conlflags) $(ldebug) $(conlibsmt) /LIBPATH:.\mseed -OUT:$B\Ws2Ew.exe $O $J
+#    
+.c.obj:
+    cl /c /DWIN32 $(cvarsmt) $(GLOBALFLAGS) $(tflags) $<
+#
+lib:
+    -cd mseed 
+    nmake -f makefile.nt
+    -cd ..
+
+# Clean-up directives
+clean:
+    -cd mseed
+    nmake -f makefile.nt clean
+    -cd ..
+    -del *.obj
+
+clean_bin:
+    -del $B\Ws2Ew*

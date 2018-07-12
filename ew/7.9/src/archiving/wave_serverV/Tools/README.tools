@@ -1,0 +1,56 @@
+The tools in this directory are used for helping diagnose and fix problems
+with wave_serverV tanks, index and structure files. This are intended
+primarily for developers.
+
+SUMMARY:
+inspect_tank: Reads a tank file to show the data chunk list.
+read_index: Reads an index file and prints some data to screen.
+read_struct: Reads a tank structure file, prints some data to screen.
+fix4_3.3: Used to convert pre-v3.3 tanks stucture files to v3.3 and later
+  format. Obsolete; saved as an example of how to do this in the future.
+
+
+Usage:
+inspect_tank [-g gap] recSize tankSize tankfile
+ recSize:  the record size used for writing this tank file. MUST be the same
+   value as set in the wave_serverV config file for this tank. Otherwise
+   inspect_tank will read utter garbage. This value can also be found using
+   read_struct on the tank structure file that describes this tank file.
+
+ tankSize: the size of the tank file, in millions of bytes, as specified in
+   the wave_serverV config file. This value is not critical. If not known, use
+   some value larger than the actual tank file size.
+ 
+ tankfile: the name of the tank file to inspect.
+
+ -g gap: (optional) the gap threshhold value set in the wave_serverV config
+   file. If you choose a different value, there may be a different number of
+   data chunks reported than logged in the tank index file.
+
+After reading the tank file and printing the index of data chunks to screen,
+inspect_tank prompts the user to write a new index file. This file will have
+the suffix "-X.inx" appended to the tankfile name. This index file name is
+unlikely to conflict with existing index files.
+
+inspect_tank tries to find the point in the tank file where data wraps around
+from new data to old data. This works properly if data is recorded in
+monitonicly increasing time. But if time goes backward in the tank file (such
+as would happen when recording several data segments from tankplayer)
+inspect_tank may not be able to identify the correct wrap point. In this case,
+it is unlikely that the wave_server will be able to serve anything useful from
+this data. When inspect_tank prints its data chunk index, it always prints the
+oldest chunk first. This is the way the index file is always written.
+
+
+read_index indexfile
+  Simply reads the contents of the named index file (filename ends with ".inx"
+  and prints them to screen. The format matches that printed by inspect_tank,
+  allowing for easy comparison by the user.
+
+
+read_struct structfile
+  Reads the name tank structure file (filenames with ".str") and prints the
+  following data to screen: SCN (Station, Component, Network), Offset (point
+  in tank file where new data will next be recorded), FP (First Pass flag),
+  RecS (record size), and tankfile name.
+

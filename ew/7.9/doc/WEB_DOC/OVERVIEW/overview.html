@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Project Summary
+</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1><IMG SRC="../GIFS/ew.logo.gif" ALT="EARTHWORM Logo" HEIGHT=100 WIDTH=104 ALIGN=TEXTTOP>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+EARTHWORM PROJECT SUMMARY </H1>
+
+<DIV ALIGN=right><P><B>January 15, 1998</B></P></DIV>
+
+<H2><A NAME="history"></A>History and Motivation</H2>
+
+<P>The <TT>EARTHWORM</TT> project was started in 1993, mainly in response
+to a number of common needs identified by regional seismic networks: The
+automatic processing systems used by most regional networks were aging,
+and maintenance costs were growing; advances in seismic research required
+data from new, sophisticated sensors in order to provide viable research
+data; growing demands for immediate societal utility called for new and
+highly visible real-time products; and finally, shrinking funding meant
+that most individual networks could no longer support local system development
+efforts. </P>
+
+<P>Most of the processing systems then in use had a number of drawbacks
+which made it difficult to enhance them to meet the new requirements: They
+were built on vendor-specific products, which tied them to high-price vendors,
+and deprived them of the benefits of the rapidly growing mass market. They
+tended to be tightly integrated, in the sense that functionally unrelated
+parts of the system shared a common resource, such as processor cycles,
+internal data paths, or peripheral devices. This resulted in systems that
+were difficult to modify, as changes to one function could cause malfunctions
+in an unrelated area. </P>
+
+<P>The initial <TT>EARTHWORM</TT> effort had the specific mission of replacing
+the aging Rex Allen / Jim Ellis Real Time Pickers (<I>RTP</I>s) at Menlo
+Park. These devices had functioned well for decades and had become the
+mainstay of Menlo Park's ability to produce rapid event solutions. However,
+replacement parts were no longer available, and there was an urgent need
+to produce a replacement system in minimum time. This meant producing a
+system which could process over five hundred channels of data quickly and
+reliably. </P>
+
+<P>In response to this, a delegation from Menlo Park was dispatched to
+present these problems to Carl Johnson, then at the University of Hawaii.
+Carl had produced many, if not most, of the seismic processing systems
+to date. The hope was that having been instrumental in creating the current
+situation, he might be in position to assist us in getting out of it. The
+visit bore fruit. Carl provided a number of ideas and algorithms that became
+the core of a new, common seismic processing system. As the system developed,
+a community of users and developers grew around it. The <B><A HREF="http://www.anss.org">Council
+of National Seismic Systems</A></B> formalized this process by a <A HREF="http://www.anss.org/resolution.97-01.txt">resolution
+</A>creating a board of directors to guide its development. The effort
+currently consists of a  that operate
+the system or it's derivatives and contribute to its development. Coordination
+of this effort is centered at the National Seismic Systems Project of the
+USGS in Golden, Colorado, which functions as the clearing house for development,
+distribution, documentation, and support. </P>
+
+<H2>
+<HR WIDTH="100%"><A NAME="design"></A>Design goals</H2>
+
+<P>One of Carl's most significant contributions is a set of principles
+to guide the design and implementation of a seismic processing system that
+would avoid some of the pitfalls of its predecessors: </P>
+
+<LI><A NAME="modularity"></A><B>Modularity: </B>each function performed
+by the system should be encapsulated into a module that can function independently
+of other modules, in terms of hardware as well as software. The implication
+is that a set of critical system functions can be guaranteed to be independent
+of other functions in the system. Thus, new, experimental functions can
+be added without disrupting pre-existing critical operations. Also, quality
+assurance can be performed on a module-by-module level, rather than for
+the entire system. This has proved to be a difficult principle to adhere
+to in practice. First, one has to resist the temptation to use intermediate
+results already computed by other modules, and second, to resist the lure
+of using various common utilities which would streamline operations. <BR>
+</LI>
+
+<LI><A NAME="system"></A><B>System independence: </B>Such modules should
+operate on various brands of computer hardware and operating systems, and
+various types of such computers can be linked together to operate as one
+system. This, with the idea of modularity above, implies that the system
+can gradually migrate from one type of computer to another without disruption.
+In practice this means using only standardized portions of various computer
+systems, and isolating any unavoidable system- specific functions in standardized
+wrapper routines. <BR>
+</LI>
+
+<LI><A NAME="scalability"></A><B>Scalability:</B> The system is to provide
+a smooth cost-performance curve to accommodate large as well as small networks.
+This was perhaps more significant prior to the availability of cheap, powerful
+mass-produced computers. However, it is still relevant in regard to license
+fees for included commercial software. <BR>
+</LI>
+
+<LI><A NAME="connectivity"></A><B>Connectivity: </B>The assumption is that
+such systems are no longer isolated, but have to interact quickly and reliably
+with other automatic real-time systems, interactive analysis systems, and
+various notification schemes. The objective is to provide connectivity
+at various levels of automatic and interactive processing, so that such
+systems can be configured to operate in configurations ranging from complete
+stand-alone operation to functioning as nodes in a distributed wide-area
+system. <BR>
+</LI>
+
+<LI><A NAME="robustness"></A><B>Robustness:</B> Traditionally, the role
+of seismic processing systems was mainly one of research support. As a
+result, system reliability was naturally less important than cost, time
+to completion, and features. However, the new responsibilities to the press
+and emergency response agencies required very high levels of system reliability,
+especially during seismic crises, when input data and power may be interrupted,
+and system loads may increase dramatically. Thus issues like error detection
+and recovery, time-to-repair, graceful degradation, and load control were
+becoming vital, and had to be designed into the system. The costs of robustness
+are often not appreciated, in terms of time to design, implement, and test,
+as well as costs for suitable hardware and ancillary equipment. </LI>
+
+<H2>
+<HR WIDTH="100%"><A NAME="architecture"></A>System Architecture:</H2>
+
+<P>Carl Johnson also provided a system architecture which implemented the
+above design goals. This basic scheme was developed by the <TT>EARTHWORM</TT>
+team at Menlo Park, and resulted in the scheme described below. </P>
+
+<P>An <TT>EARTHWORM</TT> system consists of a set of modules 'immersed'
+in a message passing 'medium'. Each module performs some coherent task,
+such as data acquisition, phase picking, etc. Modules communicate by broadcasting
+and receiving various messages such as packets of trace data, phase picks,
+etc. The message passing scheme is analogous to radio communications: It
+consists of a message-carrying 'medium' and a set of standard routines
+which can be thought of as multi-frequency two-way radios operating in
+this medium. Modules can use these routines to broadcast messages into
+this medium on a specified 'frequency', and to 'tune in' to messages on
+specified 'frequencies'. Significant properties of this scheme are that:
+(1) a module cannot be prevented from broadcasting a message whenever it
+chooses; (2) any number of modules can listen in to some sending module(s)
+without affecting that module; (3) a module receives only the messages
+of interest to it and it is notified if it missed a message. </P>
+
+<P>This 'medium' (the <TT>EARTHWORM</TT> transport layer) operates within
+one computer as well as between different computers. Standard TCP/IP network
+broadcasts (UDP) can be used to carry a batch of messages between computers,
+and shared memory regions are used to simulate such broadcasts within a
+computer. Each participating computer can be equipped with multiple network
+ports and multiple shared memory regions. Special adapter modules are used
+to link the message flows between a shared memory region and a network
+cable. Thus an <TT>EARTHWORM</TT> system can be configured to have a geometry
+of message passing paths tailored for a specific application, operating
+on any number of computers. Note that this scheme operates within one <TT>EARTHWORM</TT>
+system, spanning a maximum distance of several hundred meters. Message
+exchange between remote <TT>EARTHWORM</TT>s is handled by a different mechanism.
+The selective 'frequencies' of this 'medium' are implemented by attaching
+'shipping tags' to all messages. They specify the module which created
+the message, the type of message it is, and the installation where the
+<TT>EARTHWORM</TT> system is running. Thus, for example, a message may
+be labeled as being a p-pick produced by the Rex Allen picker at Menlo
+Park, or a location produced by Hypo-inverse at Seattle. These tags are
+then used by the receiving routines to provide only the desired messages
+to a listening module. </P>
+
+<P>The modules are independent main programs. Each module has free use
+of the file system and other system facilities. However, the <TT>EARTHWORM</TT>
+system offers several suites of support routines that can be used by the
+program to make it a compliant <TT>EARTHWORM</TT> module. One such suite
+is the collection of message passing routines (transport routines). These
+are used to acquire input data by requesting messages of certain type(s),
+and to broadcast output messages. Another set of routines is used to effect
+operating system independence by providing a common set of 'wrapper' routines
+for system-specific functions. For example, the system routines for starting
+a thread are different on Solaris and NT; the <TT>EARTHWORM</TT> system
+provides routines for both systems with the same name and arguments. Thus,
+if a program uses that routine, it can run on either operating system:
+the proper system-specific version of that routine will be automatically
+inserted when the program is built. This suite currently contains such
+'wrappers' for all common functions. Routines are added as required. Moving
+<TT>EARTHWORM</TT> to a new operating system involves creating a new set
+of such 'wrapper' routines. <TT>EARTHWORM</TT> currently offers 'wrappers'
+for OS/2, Solaris, and Windows NT. </P>
+
+<P>Modules generally read a configuration file at startup time. This file
+contains basic <TT>EARTHWORM</TT> parameters which define the module, specify
+which message 'medium' (message ring) it wishes to listen to, and which
+message ring it wishes to broadcast it's output messages to. In addition,
+this file can contain arbitrary operating parameters specific to its operation.
+</P>
+
+<P>Error detection is accomplished via several mechanisms: Any module may
+broadcast an error message. Such messages are forwarded to a special module
+(<A HREF="../ovr/startstop_ovr.html">StartStop,</A> below), which takes appropriate
+actions based on the nature of the complaint. Each module can also provide
+a periodic heartbeat; if this heartbeat should cease an error would then
+be declared and processed. A module may also request to be restarted if
+its heartbeat should cease. In addition, the <TT>EARTHWORM</TT> as a whole
+can produce a heartbeat to an external monitoring device. Such a monitoring
+device, capable of generating pager messages, is available as part of the
+<TT>EARTHWORM</TT> system. </P>
+
+<H2>
+<HR WIDTH="100%"><A NAME="types"></A>Types of modules and functions:</H2>
+
+<P>The <A HREF="../modules.html">suite of modules</A> available in the <TT>EARTHWORM</TT>
+system is quite varied, but can be classified into several categories:
+</P>
+
+<LI>1<A NAME="control"></A>. System: Several modules are used to provide
+control over the system and error reporting: </LI>
+
+<UL>
+<LI><A HREF="../ovr/startstop_ovr.html">StartStop</A> is a module, which starts
+and stops the <TT>EARTHWORM</TT> system. Like other modules, startstop
+reads it's configuration file, which contains the 'blue print' for the
+system. It specifies the message rings to be created, lists all modules
+to be started and the parameter files they are to read. </LI>
+
+<LI><A HREF="../ovr/statmgr_ovr.html">StatusManager:</A> It's role is to process
+error messages and heartbeats from individual modules. Each module can
+post a file containing specifications for how to process it's various error
+messages, such as what actions (email, pager, etc) to take based on the
+rate of recurrence. </LI>
+</UL>
+
+<P>2.<A NAME="source"></A> Data Sources: These are modules that introduce
+data into an <TT>EARTHWORM</TT> system. These consist of three types: </P>
+
+<UL>
+<LI>Data acquisition modules, (such as <A HREF="../ovr/adsend_ovr.html">adsend</A>)
+which perform real-time control of data acquisition hardware and produce
+streams of trace data messages; </LI>
+
+<LI>Data import modules, (such as <A HREF="../ovr/coaxtoring_ovr.html">coaxtoring</A>,
+import_generic, import_scn, rcv) which connect to distant processing systems
+and receive various types of messages. These are then typically checked
+for validity, converted into locally known message types and broadcast into
+the local <TT>EARTHWORM</TT>. </LI>
+
+<LI>Data players(such as <A HREF="../ovr/tankplayer_ovr.html">tankplayer</A>),
+which can read historic data from archive files (such as trace data or
+phase picks) and broadcast them in the correct time order. These modules
+have been of critical value for analyzing rare malfunctions and quality
+assurance testing. </LI>
+</UL>
+
+<LI>3. <A NAME="processing"></A>Processing Modules: These include the majority
+of the modules. They receive their input by listening for some specific
+type on a specified message medium, perform some seismic function, and
+produce occasional output messages. Examples include </LI>
+
+<UL>
+<LI>phase pickers&nbsp;(<A HREF="../ovr/pick_ew_ovr.html">pick_ew</A>) which listen
+to selected trace data, and broadcast phase messages, associators (<A HREF="../ovr/binder_ew_ovr.html">binder_ew</A>),
+which listen to phase picks and produce trial locations, etc. There are
+then follow-on modules for producing conventional hypocenters (<A HREF="../ovr/hyp2000_mgr_ovr.html">hyp2000_mgr</A>,
+<A HREF="../ovr/eqverify_ovr.html">eqverify,</A> <A HREF="../ovr/eqproc_ovr.html">eqproc</A>,
+<A HREF="../ovr/eqcoda_ovr.html">eqcoda</A>, <A HREF="../ovr/eqbuf_ovr.html">eqbuf</A>).
+A special subset of these modules are the 'trigger' modules. These process
+input data, such as trace or picks, and produce an event message, stating
+the type of event, the participating stations, and the time period of the
+event. Examples include hypocenters, low frequency, and STA/LTA coincidence.
+</LI>
+</UL>
+
+<LI>4. <A NAME="output"></A>Output Modules: These modules move data from
+an <TT>EARTHWORM</TT> system into post- processing systems of various types.
+Examples include: </LI>
+
+<UL>
+<LI>Export modules, which connect to distant systems and manage the long-distance
+sending of specified message types (export_generic, export_scn, vdl). </LI>
+
+<LI>Servers: These input standard <TT>EARTHWORM</TT> messages, such as
+trace data, store this data for some period of time, and offer access to
+this pool of data via a service on the internet (<A HREF="../ovr/wave_serverV_ovr.html">wave_serverV</A>).
+</LI>
+
+<LI>Notification modules: These move data to external systems when a significant
+vent has been detected (<A HREF="../ovr/eqalarm_ew.html">eqalarm</A>, <A HREF="../ovr/pagerfeeder.html">pagerfeeder</A>).
+This generally involves moving files of summary data to systems, which
+determine what notification actions should be taken. </LI>
+
+<LI>Post-processing interface modules: These modules listen for messages
+indicating that an event has been detected, go to various servers to obtain
+the requested trace data, format this data to suit various packages, and
+deliver the requisite files to a remote post-processing system. Examples
+include interactive seismic analysis packages, web page generators, and
+dBase's. </LI>
+</UL>
+
+<LI>5. <A NAME="record.playback"></A>Record/Playback Modules: This is a set of modules which
+can create and play back segments of trace and pick
+data. The main use for this is for fault analysis and creation of test suites. See
+wave_serverV, tankplayer, and waveman2disk for creating and replaying trace
+data. Also see trig2K_putter getter.
+
+
+<UL>
+
+<LI>The <A HREF="../ovr/wave_serverV_ovr.html">wave_serverV</A> can be
+used to extract everything in an <TT>EARTHWORM</TT> ring to a circular
+buffer file for for special client programs to extract time periods
+into permanent files. </LI>
+
+<LI>The data player, <A HREF="../ovr/tankplayer_ovr.html">tankplayer</A>
+can read historic data from archive files (such as trace data or
+phase picks) and broadcast them in the correct time order into
+an <TT>EARTHWORM</TT> ring.
+</UL>
+
+<P>A <A HREF="../USER_GUIDE/Module_msgs.html">table of module names </A>organized by
+type of input, type of output and message type is useful to see how the
+different modules interact.</P>
+
+<P>
+Several <A HREF="../USER_GUIDE/examples.html">example configurations</A> of the modules
+and what they do are provided with details on what each module does relative
+to the others.
+<P>
+<HR>
+  <IMG SRC="../GIFS/ew.logo.tiny.gif" HEIGHT=61 WIDTH=71 ALIGN=LEFT><IMG SRC="../GIFS/smusgs.gif" HEIGHT=48 WIDTH=48 ALIGN=RIGHT><FONT SIZE=-1>The
+  <B><I>EARTHWORM</I></B> development team is headed by Alex Bittenbinder and
+  coordinated by Barbara Bogaert; both with the <A HREF="http://earthquake.usgs.gov/">U.S.
+  Geological Survey</A>. &nbsp;&nbsp;&nbsp;&nbsp; <p>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+  <CENTER><P>
+<HR>
+    <BR>
+  </CENTER>
+
+</font></BODY>
+</HTML>

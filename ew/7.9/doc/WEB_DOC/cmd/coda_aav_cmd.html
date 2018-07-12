@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: coda_aav Commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Coda AAV Configuration File Commands</H1>
+<I>(last revised 25 October 2012)</I></CENTER>
+
+<pre>
+
+#
+#  coda_aav's Configuration File
+#
+MyModId       MOD_CODA_AAV     # This instance of pick_ew
+StaFile       "pick_ew.sta"    # File containing station name/pin# info
+InRing           WAVE_RING     # Transport ring to find waveform data on,
+OutRing          PICK_RING     # Transport ring to write output to,
+HeartbeatInt            30     # Heartbeat interval, in seconds,
+Debug                    0     # If 1, print debugging message
+
+# Specify which messages to look at with Getlogo commands.
+#   GetLogo <installation_id> <module_id> <message_type>
+# The message_type must be either TYPE_TRACEBUF or TYPE_TRACEBUF2.
+# Use as many GetLogo commands as you need.
+# If no GetLogo commands are given, pick_ew will look at all
+# TYPE_TRACEBUF and TYPE_TRACEBUF2 messages in InRing.
+#-----------------------------------------------------------------
+GetLogo  INST_WILDCARD  MOD_WILDCARD  TYPE_TRACEBUF2
+
+</pre>
+
+<hr>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> | <A HREF="../ovr/coda_aav_ovr.html"
+>Coda AAV Overview</a>
+</center>
+
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>

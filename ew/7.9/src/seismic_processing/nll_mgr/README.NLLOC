@@ -1,0 +1,11 @@
+June 29, 2011
+
+The nll_mgr program is designed to drive Anthony Lomax's NonLinLoc locator
+program. The software source for the NLLoc program is provided in the src
+directory below and was last updated by Anthony on Feb 28, 2011. Please
+check his website for updates:
+
+http://alomax.free.fr/nlloc/
+
+The provision of NLLoc with EW is a convenience. Please give Anthony feedback
+and any business if you want changes made to the code.

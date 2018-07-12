@@ -1,0 +1,61 @@
+# FILE: makefile.unix                 Copyright (c), Symmetric Research 2010
+#
+#                    Make file for srusb2ew
+#
+
+#CFLAGS = -g ${GLOBALFLAGS} -DDEBUG
+CFLAGS = -g ${GLOBALFLAGS}
+
+
+# Insist that Earthworm environment is set
+
+# The following lines set the location of the SR USBxCH library
+# functions needed to compile srusb2ew.  Un-comment the first line 
+# below when compiling from the earthworm directory tree and the
+# second when compiling from the SR directory tree.
+
+SR_HOME=$(EW_HOME)/$(EW_VERSION)/src/data_sources/srusb2ew
+#SR_HOME=/usr/local/SR
+
+USBXCH=$(SR_HOME)/USBXCH
+
+USBXCHINC = $(USBXCH)/Include
+USBXCHLIB = $(USBXCH)/Lib/SrUsbXch.c
+HELPERLIB = $(USBXCH)/Lib/SrHelper.c
+
+
+PDEF  = -DSROS_LINUX
+CFLAGSR = $(CFLAGS) -fPIC -Wno-multichar
+
+APP = srusb2ew
+O = $(APP).o SrUsbXch.o SrHelper.o
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LIBS = -lm -lpthread
+
+EWLIBS = $L/libew.a
+
+$B/$(APP): $O
+	$(CC) $(CFLAGS) -o $B/$(APP) $O $(EWLIBS) $(LIBS)
+
+$(APP).o: $(APP).c
+	$(CC) -c $(CFLAGS) $(PDEF) -I$(USBXCHINC) -o $@  $(APP).c
+
+SrUsbXch.o: $(USBXCHLIB)
+	$(CC) -c $(CFLAGSR) $(PDEF) -I$(USBXCHINC) $(USBXCHLIB)
+
+SrHelper.o: $(HELPERLIB)
+	$(CC) -c $(CFLAGSR) $(PDEF) -I$(USBXCHINC) $(HELPERLIB)
+
+.c.o:
+	$(CC) $(CFLAGS) -o $@
+
+
+# Clean-up directives
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/$(APP)*

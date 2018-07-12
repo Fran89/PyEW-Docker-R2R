@@ -1,0 +1,44 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5320 2013-01-30 20:04:07Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2006/11/22 23:06:39  stefan
+#     menlo contrib
+#
+#     Revision 1.1.1.1  2004/04/28 23:15:44  dietz
+#     pre-location code Contrib/Menlo
+#
+#
+#
+
+#     Nmake File For condenselogo- Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = condenselogo
+O = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: condenselogo.obj 
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O  \
+    $L\libew.lib -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	del $B\condenselogo*

@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+   <TITLE>Earthworm: Start, Stop, and Status</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<H1>
+<CENTER>Starting, Stopping and Status of Earthworm</center></H1>
+<DIV ALIGN=center><P><B>April 9, 2010</B></P></DIV>
+<P>
+<P>
+Once the setup of the Earthworm parameter directory has been completed, Earthworm can be started up in the following way:
+<P>
+On Solaris:
+<PRE>
+ # cd /home/earthworm/run/params
+ # source ew_sol_sparc.cmd
+ # startstop
+</PRE>
+ <P>
+On Windows 2000:
+<PRE>
+ C:\> cd earthworm\run\params
+ C:\> ew_nt.cmd
+ C:\> startstop
+</PRE>
+
+<P>
+The <STRONG>startstop</STRONG> module creates all message rings and starts up all modules. On Windows 2000 <STRONG>startstop</STRONG>  can be directed to open a new console window for each module, while on Solaris each module process is started up in the background. For the duration of its operation, the Earthworm status console reports all messages received by the modules, and it can also be used to get an immediate listing on the status of all modules in the configuration. To get the status of all modules, press the Enter or Return keys in the Earthworm console window. The following is an example of a status report:
+
+<PRE>                    EARTHWORM SYSTEM STATUS
+
+        Hostname-OS:            gldnbuffs - SunOS 5.6
+        Start time (UTC):       Fri Apr  9 18:26:09 2010
+        Current time (UTC):     Fri Apr  9 18:26:11 2010
+        Disk space avail:       3165122 kb
+        Ring  1 name/key/size:  HYPO_RING / 1015 / 1024 kb
+        Startstop's Log Dir:    /export/home/earthworm/run/logs/
+        Startstop's Params Dir: /export/home/earthworm/run/params/
+        Startstop's Bin Dir:    /export/home/earthworm/v7.4/bin/
+        Startstop Version:      v7.4n 2010-04-08
+
+         Process  Process           Class/    CPU
+          Name      Id     Status  Priority   Used  Argument
+         -------  -------  ------  --------   ----  --------
+       startstop    4857   Alive    TS/ 0     0:00
+       trig2disk    4859   Alive    TS/ 0     0:00  trig2disk.d
+       diskmgr      4860   Alive    TS/ 0     0:00  diskmgr.d
+       statmgr      4861   Alive    TS/ 0     0:00  statmgr.d
+
+   Press return to print Earthworm status, or
+   type restart nnn where nnn is proc id or name to restart, or
+   type quit<cr> to stop Earthworm.
+</PRE>
+<P> To stop the Earthworm system, type <STRONG>quit</STRONG> into the Earthworm
+  status console. The currently running Earthworm configuration can also be stopped
+  outside of the console window using the module <STRONG>pau</STRONG>. Follow
+  the first two steps for starting up Earthworm to source or execute the ew_sol_sparc.cmd
+  or ew_nt.cmd files, then type <STRONG>pau</STRONG>. A similar procedure can
+  be used to obtain the status of the Earthworm system. The module to execute
+  in this case is called <STRONG>status</STRONG>. </P><hr>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>

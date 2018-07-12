@@ -1,0 +1,40 @@
+
+#                    Nmake File For ewnotify - Windows NT version
+
+# NODEBUG=1
+!IF "$(EW_DEBUG)" == "1"
+!ELSE
+NODEBUG=1
+!ENDIF
+
+!include <ntwin32.mak>
+
+APP = ewnotify
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+ALL: $B\$(APP).exe
+
+OBJS = ewnotify.obj
+
+EWLIBS = \
+   $L\socket_ew_common.obj $L\socket_ew.obj \
+   $L\mem_circ_queue.obj \
+   $L\libew_mt.lib $L\ew_spectra_io.obj $L\sendmail.obj
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) $(EWLIBS) \
+      $(LIBS) -out:$B\$(APP).exe
+
+# Clean-up rules
+clean:
+   -del a.out core *.o *.obj *% *~
+
+clean_bin:
+   -del $B\ewnotify*
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) /Od $<
+

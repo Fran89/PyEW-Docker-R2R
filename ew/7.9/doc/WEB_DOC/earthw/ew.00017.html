@@ -1,0 +1,179 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Re: Wave_serverV -->
+<!--X-From-R13: Brgr Zbzoneq <ybzo4185Ncnporyy.arg> -->
+<!--X-Date: Wed, 21 Jun 2000 13:11:13 &#45;0700 (PDT) -->
+<!--X-Message-Id: 17336.964738879.17@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Re: Wave_serverV</TITLE>
+<LINK REV="made" HREF="mailto:lomb4185@pacbell.net">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00015.html">Date Prev</A>][<A HREF="ew.00016.html">Date Next</A>][<A HREF="ew.00015.html">Thread Prev</A>][<A HREF="ew.00016.html">Thread Next</A>][<A HREF="welcome.html#00017">Date Index</A>][<A HREF="threads.html#00017">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Re: Wave_serverV</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: Steve Malone &lt;<A HREF="mailto:steve@geophys.washington.edu">steve@geophys.washington.edu</A>&gt;</LI>
+<LI><em>Subject</em>: Re: Wave_serverV</LI>
+<LI><em>From</em>: Pete Lombard &lt;<A HREF="mailto:lomb4185@pacbell.net">lomb4185@pacbell.net</A>&gt;</LI>
+<LI><em>Date</em>: Wed, 21 Jun 2000 13:11:13 -0700 (PDT)</LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+
+Steve,
+
+There are three `size' values in wave_server's config file. The first is the
+record size. This is the amount of space alloted for a single trace_buf
+message. It has to be a fixed size to allow the indexing to work.
+
+A trace_buf message consists of 64 bytes of header and then an arbitrary
+number of binary numbers: 2 or 4 byte integers. For a reftek packet, there are
+250 4-byte samples in one packet, for a total of 1064 bytes. The number used
+at UW of 1100 is sufficient to hold 1064, with a little wasted space. The k2ew
+packets contain 100 4-byte samples, for a total size of 464 bytes. So the
+record size can be 464 or larger. By using 1100, you are wasting a lot of
+space. 
+
+The next `size' is the file size, the total number of bytes in the tank
+file. Wave server takes this number and divides by the record size to get the
+number of trace_buf packets that can be held in the tank. Note that while the
+label in wave_server.d says `megabytes', it means 10^6, not 2^20.
+
+The final `size' value is the index size. This is the number of index entries
+that wil be kept in the index files. Every time there is a gap of more than
+GapThresh times the sample interval, a new index entry is needed. When a gap
+in the data is overwritten by the tank wrapping around, the old index entry is
+dropped from memory.
+
+In looking over wave_server code, I found one feature you could use to make
+config changes more easily. There is a flag `ReCreateBadTanks' toward the
+bottom of the config file. Currently it is commented out. If you set its value
+to 1, then the wave_server will create a new tank if it can't find an old one
+and it is listed in the config file. This is slightly dangerous, since it may
+overwrite an existing tank if it has some error trying to read it. But that
+should be a pretty rare occurrence. 
+
+The logic is a little convoluted, so perhaps I should explain the sequence
+that wave_server goes through on startup. It reads the config file, and then
+it reads the `tank structure' file (the *.str file). It assumes that the tank
+structure file has the most up-to-date information about existing tank files
+(*.tnk) and their indexes (*.inx), especially tank file size, record size, and
+tank starting position. It runs through the list of tanks from the structure
+file, verifies that that SCN is listed in the config file, and tries to open
+the tank file and its index. This is why simply changing size parameters in
+the config file (without deleting the tank and indexes) has no effect: the
+size information is read from the structure file as long as a matching SCN is
+found from the config file.
+
+If the tank and index files are read successfully, then that tank is marked as
+OK. If there are errors opening these files, then one of two things happens. If
+ReCreateBadTanks is not set, then the tank is marked as BAD and removed from
+the internal list. Otherwise, the tank is marked as unconfigured and left for
+the next step.
+
+So this first part of the initialization has been running through the list of
+tanks found in the tank structure file, making sure that each SCN is still
+listed in the config file. For the second part, the list from the config file
+is scanned. In most cases, the tank will already have been configured because
+it was an existing tank and listed in the structure file. But if you add new
+SCNs to the config file, these must be created anew. Here is where the
+ReCreateBadTanks flags becomes useful. If a tank was marked in the first pass
+as unconfigured, it will be treated the same way as a new tank here. Tank and
+index files are created (if necessary) and the tank starting point is set to
+zero. 
+
+This is where the danger lies: suppose you have a tank file with valuable
+trace data. But both index files are corrupted for some reason. That will
+cause the wave_server to fail to configure that tank on the first pass. If
+ReCreateBadTanks is not set, that tank will get removed from the wave_server's
+list, and the tank file will be untouched. Heroic efforts could be used to
+regenerate its index files for later use. Now if ReCreateBadTanks is set, that
+tank will have new index files created, and it will be overwritten as soon as
+the wave_server starts running.
+
+The wave_server has one more step to do in initialization. It has to go
+through its list of tanks and remove any that were marked as BAD in the first
+pass. There is a config flag, `PleaseContinue'. If this is not set, wave_server
+will exit here is it finds any bad tanks. If PleaseContinue is set, then the
+tank is simply removed from the internal list and forgotten. 
+
+Once this third pass is done, wave_server writes its internal list to the
+structure file and starts adding traces to their respective tanks. Each new
+packet of trace data causes the current index entry for that tank to be
+extended in time and file position. If there is a gap between the end of a
+tank and the new trace data (determined by GapThresh in config file), a new
+index entry is started. Wave_server periodically writes the index and
+structure list to disk, to save the latest information in case of wave_server
+crashes. 
+
+The problem you had Monday afternoon has to do with a failure in the third
+configuration pass. For some reason, the UPS tanks were not removed from the
+tank list even though they had been marked as BAD. Then when wave_server got
+running and tried to write an index file to disk, it found a NULL pointer for
+the index of those tanks, and crashed. The index was NULL because it had not
+been configured in the first or second passes. I found a core file from the
+second crash and was able to glean this information from it and from the log
+entries. I'm working with Dave Kragness to see if we can figure out why these
+tanks weren't removed from the tank list.
+
+Is that clean now? Yes, I know, all this needs to be added to the
+documentation. 
+
+Pete
+
+___________________________________________________________________
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00015.html">Re: k2ew</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00016.html">Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00015.html">Re: k2ew</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00016.html">Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00017"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00017"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

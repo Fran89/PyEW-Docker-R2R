@@ -1,0 +1,26 @@
+
+Unit tests of util library should go in this directory from now on...
+
+kicking it off with:
+
+ew_nevent_test_sender and ew_nevent_test_receiver
+
+Step 1. Start the receiver:
+
+pauls-MacBook-Air:test paulf$ ./ew_nevent_test_receiver 
+event named 'test_event' created
+About to wait for event named 'test_event' sent
+
+
+Step 2. Then in another terminal window, fire the test sender:
+
+pauls-MacBook-Air:test paulf$ ./ew_nevent_test_sender 
+event named 'test_event' created
+event named 'test_event' sent
+pauls-MacBook-Air:test paulf$ 
+
+
+Step 3. go back to reciever window and you should see this signaled
+
+event named 'test_event' happened
+pauls-MacBook-Air:test paulf$

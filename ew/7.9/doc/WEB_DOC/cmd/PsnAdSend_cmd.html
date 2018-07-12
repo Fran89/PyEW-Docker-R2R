@@ -1,0 +1,176 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: PsnAdSend commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<CENTER><H1><a name="Top"></a>PsnAdSend V2.6 Configuration File for Earthworm
+7.x</H1> 
+<p><i><b>Updated: January 12, 2015</b></p> 
+</i></CENTER>
+<P align="left">Below is a typical PsnAdSend.d configuration file for PsnAdSend
+Version 2.6. This file should
+be located in the \earthworm\run_working\params directory. The ModuleId must be added to 
+the earthworm.d file also located in this directory.</P>
+<PRE>
+#                    CONFIGURATION FILE FOR PSNADSEND VERSION 2.6
+#                    --------------------------------------------
+# <span style="background-color: #FFFF00">*</span> = New feature in version 2.5 and 2.6
+#
+ModuleId         MOD_PSNADSEND_A	# Module id of this instance of PsnAdSend
+OutRing          WAVE_RING      	# Transport ring to write waveforms to
+#
+MuxDataRing	 MUX_DATA_RING		# <span style="background-color: #FFFF00">*</span> Transport ring to write raw multiplexed ADC data to 
+			                # This parameter is option. Comment out or set to 0 if not used
+					# See <a href="../ovr/PsnAdsend_ovr.html">Overview documentation</a> for more information
+#
+Debug		 0			# Enables time reference debugging
+#
+# For Windows use port number
+CommPortTcpHost  1              	# Comm Port Number for Windows
+#
+# For Linux use port device string 
+#CommPortTcpHost /dev/ttyUSB0           # Comm Port String for Linux
+#
+# For TCP/IP Connection to device us IP address or host string 
+#CommPortTcpHost 192.168.1.24           # This is the same for Linux and Windows
+TcpPort		 8011			# TCP Port number to use when connecting to the RS-232 host adapter
+#
+TcpMode		 0			# Set to 1 for TCP/IP connection to host server
+					# Tells PsnAdSend if the CommPortTcpHost string above is a host/IP address or Comm Port
+#
+#
+PortSpeed        38400          	# Comm Port Baud Rate
+HeartbeatInt     30             	# Heartbeat interval in seconds
+#
+ConsoleDisplay   0                      # <span style="background-color: #FFFF00">*</span> If 1 use console functions to redisplay status. This feature
+                                        # can now be used on system other then Windows. Uses standard ANSI Escape
+                                        # sequences to clear the display and reposition the cursor to top left corner.  
+ControlCExit     1	                # If 1 exit on sigint control-c event
+RefreshTime      20	                # Auto Status Display Refresh Time, 0 = no status display
+CheckStdin       0                      # Windows Only; if 1 check for user input
+#
+#                        ADC CONFIGURATION
+ChanRate         200            	# Sampling rate in samples/second
+AdcDataSize      4                      # ADC Data trace buffer size. Can be 2 or 4 bytes
+#
+#                         TIMING INFORMATION
+NoDataTimeout    60			# No Data Timeout in seconds
+UpdateSysClock   0              	# 1 = PC time updated with AD board time
+HighToLowPPS     0              	# 1 = PPS Signal direction is High to Low
+NoPPSLedStatus   0			# 1 = Disable 1PPS LED blinking
+LogMessages      1              	# 1 = Log messages from DLL &amp; ADC to log file
+TimeOffset       0              	# Time Reference offset in milliseconds
+NoSendBadTime    0			# 1 = Only send packets with good GPS lock
+ExitOnTimeout    1                      # 1 = Exit program if data timeout. 0 = Keep trying to get data out
+                                        # of the ADC board.
+#
+#         The following 5 parameters are new in PsnAdSend Version 2.5
+#
+SystemTimeError    60			# <span style="background-color: #FFFF00">*</span> Used to check the system time against the income ADC board time
+					# Sends message to the StatMgr if this value (in seconds) is exceeded
+					# Comment out or set to 0 to disable this check
+PPSTimeError	   10			# <span style="background-color: #FFFF00">*</span> Used to check the time difference between the GPS receiver and the ADC board
+					# Sends message to the StatMgr if this value (in milliseconds) is exceeded
+					# Comment out or set to 0 to disable this check
+NoLockTimeError    30			# <span style="background-color: #FFFF00">*</span> Used to check for no GPS lock condition 
+					# Sends message to the StatMgr if this value (in minutes) is exceeded
+FilterSysTimeDiff  1			# <span style="background-color: #FFFF00">*</span> If the SystemTimeError parameter above is used there will be additional
+					# log file information written to the file every 5 minutes. If enabled these
+					# messages will be filtered out
+FilterGPSMessages  0			# <span style="background-color: #FFFF00">*</span> If enable messages indicating a good GPS lock and ADC Board lock status
+					# will be filtered out 
+#
+#         The following parameter is new in PsnAdSend Version 2.6
+#
+StartTimeError     0                    # <span style="background-color: #FFFF00">*</span> Used when PsnAdSend first starts up. If the time difference between the  
+                                        # A/D board time exceeds this amount (in seconds) PsnAdSend will set the 
+                                        # system time to UTC time using the GPS receiver connected up to the A/D board. <b>Only</b> 
+                                        # <b>available on Linux based systems</b>. See the overview documentation for more information.</PRE>
+<PRE>#
+# Time Reference Types:
+# 'PC' = Use PC Time, 'GARMIN' = Garmin GPS 16 or 18, 'MOT_NMEA' = Motorola ONCORE NMEA, 
+# 'MOT_BIN' = Motorola ONCORE Binary, 'WWV' = WWV (must have WWV option on the ADC board )
+# 'SKG' = Sure Electronics SKG GPS Board
+# 'OEM_4800' or 'OEM_9600' = Generic GPS receiver using 4800 or 9600 baud.
+#  Note: Generic GPS receivers must have a 1PPS signal with a duration or 10 or more milliseconds
+#
+TimeRefType      GARMIN			# One of the types above
+#
+TimeFileName     c:\tmp\PsnSendTime	# Path and root name of the time info file
+#TimeFileName     /tmp/PsnSendTime      # use something like this for Linux
+#
+# Filter params for Low-Pass and High-Pass Filters; Channel Number, Type, Cutoff Freq, Poles
+# Type can be one of the following; LP = Low-Pass or HP = High-Pass
+# Cutoff is the filter 3 db point in Hz
+# Poles is the filter poles. This should be a even number between 2 and 16
+#
+#       Ch#  Type Cutoff Poles
+#       ---  ---- ------ -----
+#Filter   1    LP    20     2
+#Filter   1    HP    1      2
+#
+#Filter   2    LP    10     4
+#Filter   2    HP    1      4
+
+# Filter params for inverse (period extending) filter;
+# Sensor Frequency is in Hz 
+# Sensor Q is the Q or damping factor of the sensor
+# FilterFreq sets the low end frequency in Hz of the period extending filter
+# FilterQ is the Q of the single pole FilterFreq
+#
+#     Ch#  Type SensorFreq SensorQ FilterFreq FilterQ
+#Filter 1   INV      4.5      .707      .1      .707
+#
+# -------------------------------------------------------------------------
+#    SCNL VALUES FOR EACH ADC CHANNEL
+#
+# The number of Chan directives below will set how many channels to record from the ADC Board
+# Stat = Station ID; can be can be 1 to 5 chars, 
+# Comp = Component Name; should be 3 chars, 
+# Net  = Network ID; should be 2 chars 
+# Loc  = Location; should be 2 chars
+# Bits = How many ADC bits to use from the ADC board for this channel
+# Gain = ADC channel Gain. Only used by 24 Bit converter boards
+# FilterDly = Low-Pass Filter Delay in Milliseconds
+# Invert = (Y)es will invert the ADC channel data
+# Send = (Y)es will send the channel data to the Earthworm ring
+# DcOffset = Adds a DC Offset to the incoming data; Integer number in ADC counts
+#
+#  This example would record all 8 channels from a 16-Bit ADC Board
+#     Note: 16-Bit Boards do not use the Gain parameter and should be set to 1
+#           Bits can be 16 or 12
+#     Stat  Comp Net Loc Bits Gain FltrDly Invert Send DcOffset
+#     ----- ---- --- --- ---- ---- ------- ------ ---- --------
+Chan  CH1   BHZ  PN  01   16   1      0      N      Y     0
+Chan  CH2   BHN  PN  02   16   1      0      N      Y     0
+Chan  CH3   BHE  PN  03   16   1      0      N      Y     0
+Chan  CH4   SHE  PN  04   16   1      0      N      Y     0
+Chan  CH5   SHZ  PN  05   16   1      0      N      Y     0
+Chan  CH6   SHN  PN  06   16   1      0      N      Y     0
+Chan  CH7   AHE  PN  07   16   1      0      N      Y     0
+Chan  CH8   AHZ  PN  08   16   1      0      N      Y     0
+#
+#   Example for 4-Channel 24-Bit ADC or Strong Motion Board
+#     Note: Gain can be 1, 2, 4, 8, 16, 32, 64
+#           Bits can be 16 to 24
+#Chan CH1   BHZ  PN  01   20   32     0      N      Y     0
+#Chan CH2   BHN  PN  02   20   32     0      N      Y     0
+#Chan CH3   BHE  PN  03   20   32     0      N      Y     0
+#Chan CH4   SHE  PN  04   20   8      0      N      Y     0
+#
+# The number of AddChan directives below will set how many additional channels to derive from the 
+# real ADC channels above. This is the same information above except the Gain parameter has been removed
+# and AdcCh is one of the enumerated channels above.
+#
+#       AdcCh Stat  Comp Net Loc Bits FltrDly Invert Send DcOffset
+#       ----- ----- ---- --- --- ---- ------- ------ ---- --------
+#AddChan  2    CH9   BHN  PN  01  16      0      N     Y     0
+#AddChan  7    CH10  AHE  PN  01  16      0      N     Y     0
+#
+# end of file
+#</PRE>
+<hr>
+<p align="center"><b>[ <a href="#Top">Top</a>  ] [ <a href="../ovr/PsnAdSend_ovr.html">Overview</a> ]</b></p>
+<p align="center">&nbsp;</p>
+</BODY>
+</HTML>

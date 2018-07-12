@@ -1,0 +1,464 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqcoda commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Eqcoda Configuration File Commands</H1>
+<I>(last revised 27 May 2011)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A><BR>
+4.  <A HREF=#notes>Notes on eqcoda's default values for its constants</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, eqcoda reads the configuration file named on the command-line.
+Commands in this file set up all parameters used in extrapolating coda
+durations.  In the control file, lines may begin with a valid eqcoda
+command (listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# This is eqcoda's parameter file
+#
+MyModuleId  MOD_EQPROC  # module id to label logfile  with.
+                        # Note: eqcoda is part of a mega-module which is
+                        # ultimately started by the program eqproc.  All
+                        # child processes of this mega-module need to use the
+                        # same module id (thus use eqproc's module id).
+
+LogFile       1         # 0=log to stderr/stdout only
+                        # 1=log to disk and stderr/stdout
+                        # 2=log to disk only
+
+LabelAsBinder 0         # 0=label phases as generic P and S;
+                        # non-zero = label phases as binder did
+
+LabelVersion  0         # Optional command; default LabelVersion=1
+                        # 0 = write a blank in the version field of the
+                        #   summary line of the TYPE_HYP2000ARC msg
+                        # non-zero = use the version number passed from
+                        #   eqproc,eqprelim on the summary line.
+
+LogArcMsg      0        # optional set to 1 to log the HYP2000ARC message to the logfile
+ForceExtrapolation 0    # optional set to 1 to force extrapolation of the coda computation
+			# for all picks (not just those truncated or noisy)
+
+# PipeTo sends eqcoda's output to one of these three modules:
+#   eqverify        performs some tests to determine if the event
+#                   is noise or a real earthquake.
+#   hyp2000_mgr     locates event and calculates coda duration mag.
+#   log_everything  debug tool which writes all of eqcoda's
+#                   output to the screen and to a file
+#                   in the EW_PARAMS directory named "junkfile".
+#--------------------------------------------------------------
+# PipeTo "eqverify eqverify.d"
+PipeTo "hyp2000_mgr hyp2000_mgr.d ncal2000.hyp"
+# PipeTo "log_everything"
+
+
+# StaFile loads per-channel parameters (added in v5.1).
+# Use same station list as pick_ew.  eqcoda uses only the
+# SCN, CodaTerm and ClipCount fields and ignores the rest.
+#--------------------------------------------------------------
+StaFile   pick_ew.sta
+
+
+# Obsolete commands (in v5.1 and higher)
+#--------------------------------------------------------------
+# Define the coda termination level (counts) and clipping
+# levels for all channels.  Default values are appropriate for
+# Earthworm 12-bit data.
+# coda_term     49.14  	# same as CodaTerm in pick_ew stationfile
+# coda_clip       820
+# p_clip1         984
+# p_clip2        1148
+
+
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by eqcoda, grouped by the function they
+influence.  Some of the commands are marked "required"; they describe the
+Earthworm system setup.  These commands must be specified in the control
+file in order for eqcoda to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>	Earthworm system setup:
+ 		<A HREF=#MyModuleId>MyModuleId</A>	required
+                <A HREF=#PipeTo>PipeTo</A>          required
+
+        Constants:
+		<A HREF=#coda_cutoff>coda_cutoff</A>	obsolete
+		<A HREF=#coda_clip>coda_clip</A>	obsolete
+		<A HREF=#p_clip1>p_clip1</A>		obsolete
+		<A HREF=#p_clip2>p_clip2</A>		obsolete
+ 		<A HREF=#pi.c7>pi.c7</A>		obsolete
+ 		<A HREF=#StaFile>StaFile</A>
+ 		<A HREF=#ForceExtrapolation>ForceExtrapolation</A> 	optional
+
+	Output Control:
+		<A HREF=#LabelAsBinder>LabelAsBinder</A>   required
+		<A HREF=#LabelVersion>LabelVersion</A>
+		<A HREF=#LogArcMsg>LogArcMsg</A>	optional
+		<A HREF=#LogFile>LogFile</A>		required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="coda_cutoff">  <!-- command name as anchor inside quotes -->
+<PRE><B>coda_cutoff <font color=red>cutoff</font>			eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+<font color=blue><B>Obsolete in v5.1 and higher</font></B><BR>
+Define default coda termination level (counts).  The "coda_cutoff"
+and "pi.c7" commands are interchangeable.  Coda duration is reported
+as the time from the P-arrival to the time when the average absolute
+amplitude of a 2-second trace data window reaches <font color=red>cutoff</font> counts.
+Eqcoda extrapolates the coda decay to a level of <font color=red>cutoff</font> counts,
+estimating the coda duration for those picks that pick_ew has
+timed-out on (pick_ew waits a maximum of 144 seconds for the coda
+to reach the <font color=red>cutoff</font> value).  For extrapolated coda lengths to be
+consistent with "normally-terminating" (<144 sec) coda lengths
+reported by pick_ew, be sure that both modules are configured
+with the same coda-termination value.  Traditionally, codas have
+been "terminated" when the average absolute amplitude in a 2 second
+window reaches 60 mV.
+<PRE><!-- Default and example go here   -->
+Default:  coda_cutoff 49.15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="coda_clip">  <!-- command name as anchor inside quotes -->
+<PRE><B>coda_clip <font color=red>klipc</font>				eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+<font color=blue><B>Obsolete in v5.1 and higher</font></B><BR>
+Define the number of counts <font color=red>KlipC</font> above which a 2-second trace data
+window's average absolute amplitude should be considered as clipped.
+Clipped values will not be used in coda fitting and extrapolation.
+<PRE><!-- Default and example go here   -->
+Default:  coda_clip 820			Calnet:  coda_clip 820
+</PRE>
+</BLOCKQUOTE>
+<HR>
+<A NAME="ForceExtrapolation">  <!-- command name as anchor inside quotes -->
+<PRE><B>ForceExtrapolation <font color=red>switch</font>			eqc_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE>
+Turns on forcing of extrapolation for all picks if switch is set to 1, default is off.
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="LabelAsBinder">  <!-- command name as anchor inside quotes -->
+<PRE><B>LabelAsBinder <font color=red>switch</font>			eqc_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for how phases are labeled in the archive message
+that will be sent to the next process.  If <font color=red>switch</font> is 0, phases
+are labeled as generic P or S.  If <font color=red>switch</font> is non-zero, each phase
+will be labeled with the phase descriptor attached to that pick by
+binder.  The table below lists possible phase labels:
+<PRE>
+   ------------------------------------------------------
+     LabelAsBinder        Station Archive Line
+        <font color=red>switch</font>        cols. 5-6         cols. 37-38
+   ------------------------------------------------------
+          0           " P"              " S"
+       non-zero       "P ","Pn","Pg"    "S ","Sn","Sg"
+   ------------------------------------------------------</PRE>
+Hypoinverse does not use the phase label; it just passes the label
+along into its output archive file.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  LabelAsBinder 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LabelVersion">  <!-- command name as anchor inside quotes -->
+<PRE><B>LabelVersion <font color=red>switch</font>			eqc_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Determines whether eqcoda will write a version number on the summary line
+of the TYPE_HYP2000ARC message that it outputs.  If <font color=red>switch</font>
+is 0, the version field will remain blank.
+If <font color=red>switch</font> is non-zero, the version number passed from
+eqproc or eqprelim will be written into the hypoinverse version field.
+<PRE><!-- Default and example go here   -->
+Default:  LabelVersion 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogArcMsg">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogArcMsg <font color=red>switch</font>				eqc_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing HYP2000ARC messages to the log.  If <font color=red>switch</font>
+is 0, (the default) then no HYP2000ARC message is written to the log.
+<PRE><!-- Default and example go here   -->
+Default:  0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				eqc_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk and/or screen.  If <font color=red>switch</font>
+is 0, no log file will be written, but messages may go to stderr and/or stdout.
+If <font color=red>switch</font> is 1, eqcoda will write daily log file(s) called
+eqcodaxx.log_ccyymmdd where xx is eqcoda's module id (set with "MyModuleId" command)
+and ccyymmdd is the current UTC date (ex: 19960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).  Messages may also go to stderr
+and/or stdout.  If <font color=red>switch</font>
+is 2, the log file will be written, but no messages will go to stderr or stdout.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			eqc_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.<BR>
+<B>NOTE:</B> eqcoda is part of a mega-module which is ultimately started by
+the program eqproc.  All sub-modules of this megamodule should be
+given the same module id.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="p_clip1">  <!-- command name as anchor inside quotes -->
+<PRE><B>p_clip1 <font color=red>klipP1</font>				eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+<font color=blue><B>Obsolete in v5.1 and higher</font></B><BR>
+Define the number of counts <font color=red>KlipP1</font> above which the first P-amplitude
+(of 3) reported by pick_ew should be considered to be clipped.
+Clipped values will not be used in calculating the average P-amplitude.
+<PRE><!-- Default and example go here   -->
+Default:  p_clip1 984			Calnet:  p_clip1 984
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="p_clip2">  <!-- command name as anchor inside quotes -->
+<PRE><B>p_clip2 <font color=red>klipP2</font>				eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+<font color=blue><B>Obsolete in v5.1 and higher</font></B><BR>
+Define the number of counts <font color=red>KlipP2</font> above which the 2nd and 3rd
+P-amplitudes (of 3) reported by pick_ew should be considered to
+be clipped.  Clipped values will not be used in calculating the
+average P-amplitude.
+<PRE><!-- Default and example go here   -->
+Default:  p_clip2 1148			Calnet:  p_clip2 1148
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="pi.c7">  <!-- command name as anchor inside quotes -->
+<PRE><B>pi.c7 <font color=red>cutoff</font>				eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+<font color=blue><B>Obsolete in v5.1 and higher</font></B><BR>
+The "coda_cutoff" and "pi.c7" commands are interchangeable.
+See above description for the "coda_cutoff" command.
+<PRE><!-- Default and example go here   -->
+Default:  coda_cutoff 49.15		Calnet:  coda_cutoff 49.15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PipeTo">  <!-- command name as anchor inside quotes -->
+<PRE><B>PipeTo <font color=red>cmdstring</font>			eqc_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the command to which eqcoda will pipe its output for the next step in
+earthquake processing.  Eqcoda produces a TYPE_HYP2000ARC message, in the format
+of a hypoinverse archive file (with shadow cards), for each event.
+One of these modules should be used to process eqcoda's output:
+<PRE>
+  eqverify        performs some tests to determine if the event
+                  is noise or a real earthquake.
+
+  hyp2000_mgr     locates event and calculates coda duration mag
+                  using hypoinverse.
+
+  log_everything  debug tool which writes all of eqcoda's
+                  output to the screen and to a file in
+                  the EW_PARAMS directory named "junkfile".
+</PRE>
+Blank spaces are allowed in <font color=red>cmdstring</font> as long as
+the entire command is enclosed in double-quotes.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   PipeTo "eqverify eqverify.d"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="StaFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>StaFile <font color=red>stationfile</font>			eqc_config		constants</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Gives the name of the <font color=red>stationfile</font> eqcoda must read to
+set per-channel parameters; see <A HREF="pick_ew_cmd.html#station">pick_ew's station list format</A> for
+field descriptions and examples.  Eqcoda should read the same station file as pick_ew.
+
+Eqcoda uses only five of the fields of the station file:
+<font color=green>Station, Comp, Net</font> (#3,4,5), <font color=green>CodaTerm</font> (#19),
+and <font color=green>ClipCount</font> (#23).
+The <font color=green>Station, Comp, Net</font> fields identify the Station, Component, and Network
+codes of each channel.
+The <font color=green>CodaTerm</font> field defines the coda
+termination level (counts) for each channel.  The <font color=green>ClipCount</font>
+field (added specifically for eqcoda, ignored by pick_ew)
+specifies the maximum amplitude (counts zero-to-peak) that can be
+expected for each channel. Eqcoda calculates clipping thresholds for P-amplitudes (KlipP1, KlipP2)
+and coda-window average absolute amplitudes (KlipC) as a fraction
+of <font color=green>ClipCount</font>.  See <A HREF=#notes>Notes on eqcoda's
+default values for its constants</A> below for details.
+
+<P>If the StaFile command is omitted, eqcoda will use
+the original global defaults (appropriate for 12-bit Earthworm analog data) for
+all channels. If a channel is not listed in <font color=red>stationfile</font>, eqcoda will use
+the default parameters (appropriate for 12-bit Earthworm
+analog data) for that channel. If a channel is listed in
+<font color=red>stationfile</font>, but the <font color=green>ClipCount</font> field
+is missing, eqcoda will use DefaultClipCount=2048 (also appropriate for 12-bit Earthworm
+analog data) for that channel.  On startup, eqcoda logs the parameters it will use
+for each channel, with an asterisk denoting default values.
+
+<P>Pick_ew reports the first three peaks of the P-wave arrival.  Eqcoda computes
+the average for its output message.  If the first (of 3) P-amplitude
+exceeds KlipP1 counts, eqcoda considers it to be clipped.  If the second or
+third P-amplitude exceed KlipP2, they are considered to be clipped.  Eqcoda
+excludes any clipped values when calculating the average P-amplitude.
+
+<P>Pick_ew reports coda duration as the time from the P-arrival to the time when the
+average absolute
+amplitude of a 2-second trace data window reaches <font color=green>CodaTerm</font> counts.
+Pick_ew also reports the average absolute amplitudes of up to six
+2-second coda windows.  Eqcoda finds the slope of the coda decay by performing an
+L1 fit to the coda amplitudes, ignoring any coda amplitudes that precede the predicted
+S-wave arrival or that exceed that channel's coda clipping (KlipC) threshold.
+Eqcoda extrapolates the coda decay to a level of <font color=green>CodaTerm</font> counts,
+estimating the coda duration for those picks that pick_ew has
+timed-out on (pick_ew waits a maximum of 144 seconds for the coda
+to reach the <font color=green>CodaTerm</font> value).
+
+<P>For extrapolated coda lengths to be
+consistent with "normally-terminating" (<144 sec) coda lengths
+reported by pick_ew, be sure that both modules read the same station file.
+
+
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  StaFile pick_ew.sta
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="notes">
+<H2>4.  NOTES ON EQCODA'S DEFAULT VALUES FOR ITS CONSTANTS</H2>
+<P>
+For historical perspective, most of eqcoda's code was originally
+written to handle Rex Allen RTP digitizer data which had an output
+range of +/- 2500 counts for an input signal of +/- 2.5 Volts.
+The Earthworm system uses a 12-bit A/D; so its output ranges
+from +/- 2048 counts for the same input signal of +/- 2.5 Volts.
+<PRE>
+   For Allen RTP digitizers,  1 mV = 1.0  counts
+   For Earthworm digitizers,  1 mV = 0.82 counts
+</PRE>
+The constants used in eqcoda were originally defined for the RTP data
+to be "nice round numbers" of mV input to the digitizer. In eqcoda,
+the defaults for these constants have been converted for use with
+analog Earthworm data. They still correspond to the same input values;
+they just aren't "nice round numbers" any more.
+<PRE>
+   Original constants for Rex Allen RTP data:
+    KlipC  = 1000 count = 0.40 max zero-to-peak amplitude
+    KlipP1 = 1200 count = 0.48 max zero-to-peak amplitude
+    KlipP2 = 1400 count = 0.56 max zero-to-peak amplitude
+
+   Eqcoda's constants for 12-bit Earthworm data:
+    KlipC  =  820 count
+    KlipP1 =  984 count
+    KlipP2 = 1148 count
+</PRE>
+<P>
+Originally, eqcoda used a set of global constants for all
+channels because all data in the system was produced by
+the Earthworm digitizer. In Earthworm versions v5.1 and higher, eqcoda
+can be configured to use per-channel constants instead of the original
+global constants.  To set per-channel constants, eqcoda must read
+a station list file, the same file that is read by pick_ew.  Eqcoda
+uses 5 fields: station, component, network, CodaTerm, and ClipCount.
+The ClipCount field (added specifically for eqcoda, ignored by pick_ew)
+specifies the maximum amplitude (counts zero-to-peak) that can be
+expected for each channel.  Eqcoda calculates each channel's three
+clipping constants by multiplying its ClipCount by the fractions
+used in the original definitions (see above).
+If the ClipCount field is omitted from the station file, eqcoda
+assumes the channel is a standard Earthworm analog channel from a 12-bit
+digitizer and it assigns a DefaultClipCount = 2048.
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/eqcoda_ovr.html">Eqcoda Overview</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

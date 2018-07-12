@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      How_Microsoft_Windows_NT_4.0_handles_internal_Time – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/How_Microsoft_Windows_NT_4.0_handles_internal_Time?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="How_Microsoft_Windows_NT_4.0_handles_internal_Time.html" title="View How_Microsoft_Windows_NT_4.0_handles_internal_Time">How_Microsoft_Windows_NT_4.0_handles_internal_Time</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/How_Microsoft_Windows_NT_4.0_handles_internal_Time?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/How_Microsoft_Windows_NT_4.0_handles_internal_Time?action=diff&amp;version=13" title="Version 13 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-19T16%3A32%3A58-08%3A00&amp;precision=second" title="2012-01-19T16:32:58-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/19/12 16:32:58</span>
+          </div>
+          <div id="wikipage"><p>
+<strong>How Microsoft Windows NT 4.0 Handles Internal Time</strong>
+</p>
+<p>
+Updated October 26, 1998
+</p>
+<p>
+Sandhill Consulting October 1998 abrause@…
+</p>
+<p>
+Planning to use an external time source with NT 4.0? Read on.....
+</p>
+<p>
+Date and Time are stored in a PC with a battery powered chip set called the CMOS RAM/ Real Time Clock. The BIOS calls the Real Time Clock to get the current time/date on boot-up and passes this data to the operating system. DOS works this way, but NT 4.0 does it differently.
+</p>
+<p>
+At boot time, Windows NT 4.0 gets the SYSTEM time directly from the Real Time Clock (instead of the BIOS). SYSTEM time is a data structure stored in RAM. In bypassing the BIOS code and going directly to the Real Time Clock for time, Windows NT 4.0 can avoid any problems associated with non-compliant BIOS code. (Microsoft's explanation) 
+No other applications or services may read or write to the Real Time Clock because NT 4.0 prevents any direct calls. NT 4.0's access to the Real Time Clock is via the Win32 SetSystemTime() function. TIME and NET TIME commands in a cmd window are examples of the use of this function.
+</p>
+<p>
+SYSTEM time is maintained by the operating system (via the CPU) with an 18.2-Hertz timer chip that updates the time data structure every 55 milliseconds. This timer has much greater precision than the Real Time Clock (which updates approximately every second). But for some unknown reason, Microsoft chooses to keep SYSTEM time synchronized with the CMOS/RAM Real Time Clock. This is called CMOS synchron-ization is enforced by the "time daemon".
+</p>
+<p>
+The NT 4.0 kernel calls the time daemon hourly to compare SYSTEM time with the Real Time Clock. If the two are significantly different (more than one minute different), the time daemon updates SYSTEM time from the relatively poor precision Real Time Clock. Stated another way, when the two clocks drift apart or SYSTEM time is updated (or changed) from a different source, they are re-set (synchronized) to the CMOS/Real Time Clock time by the time daemon.
+</p>
+<p>
+CMOS synchronization in Windows NT 4.0 can be defeated by the Win32 function 
+SetSystemTimeAdjustment(). By specifying the bTimeAdjustmentDisabled = FALSE option, SYSTEM time will be updated using only the 18.2-Hertz timer. This option should be considered whenever external time sources are used for setting SYSTEM time in Windows NT 4.0. Time servers, such as Timeserv.exe in the Microsoft NT 4.0 Server Resource Kit use this option.
+</p>
+<p>
+With CMOS synchronization enabled, (the default action in NT) any attempt to achieve continuous accurate time from an outside source will eventually fail because the time daemon will re-set the SYSTEM time data structure to the low-precision Real Time Clock time whenever it sees a one minute difference in time.
+</p>
+<p>
+========================================================================================= 
+</p>
+<p>
+Attachment 1:
+</p>
+<p>
+This is part of the documentation from an app called Timeserv.exe which is in the NT Resource Kit (server only) The program allows you use an external timesource to set time on an NT box. It can use the Naval Observatory (via modem) a GPS signal (via a com port) or even a user supplied hardware board (using his .dll to communicate with it) Once configured, this app runs as an NT service with no user intervention. <br />
+The author's homepage is <a class="ext-link" href="http://home1.gte.net/dougho/TimeServ.html"><span class="icon">​</span>http://home1.gte.net/dougho/TimeServ.html</a>
+</p>
+<p>
+Accuracy Information for Windows NT <br />
+From TimeServ documentation <br />
+<a class="ext-link" href="http://home1.gte.net/dougho/TimeServ.html"><span class="icon">​</span>http://home1.gte.net/dougho/TimeServ.html</a>
+</p>
+<p>
+A default entry in timeserv.ini is TASync=no. This is one of the main reasons that TimeServ is not supported for Windows NT 3.1. It specifies that the TimeAdjustment flag in the system should be fixed and skew compensation allowed. By default, Windows NT regularly syncs the time to the CMOS RTC (on 3.51 or later it only does this when time is off by at least one minute). By specifying this option on the first time set after each boot, the clock will run using only the 8254-based timer which has greater precision and can result in greater stability. In this mode, skew compensation is possible (for error in the rate of the system timer). Of course, if CMOS sync is not disabled, the long term clock will take on the characteristics of the CMOS RTC with poor precision. Assuming that CMOS sync is disabled and using the popular i486 or uniprocessor Pentium CPU type, setting your time daily should result in a clock with maximum +/-.45 second error (twice daily +/-.22s, four times daily +/-.10s, etc). These figures are for TimeServ obtaining the time from a non-network source. Detailed skew compensation is not normally attempted when using a network source because of inconsistent delays over the network. In such cases if you notice time drifting more with TimeServ than you had experienced before, you might want to set TASync=yes.
+</p>
+<p>
+Warning: For skew compensation to work properly, you should never set the time manually while TimeServ is running. If you must set the time manually, either stop the Time Service first (and restart it after, if desired), or set TASync=yes. 
+=================================================================================================
+</p>
+<p>
+This documentation is from the Microsoft SDK for SetSystemTimeAdjustment().
+</p>
+<p>
+The SetSystemTimeAdjustment function tells the system to enable or disable periodic time adjustments to its time of day clock. Such time adjustments are used to synchronize the time of day with some other source of time information. When periodic time adjustments are enabled, they are applied at each clock interrupt. <br />
+BOOL SetSystemTimeAdjustment( 
+</p>
+<p>
+DWORD dwTimeAdjustment, <em> size, in 100-nanosecond units, of a periodic time adjustment <br />
+BOOL bTimeAdjustmentDisabled </em> whether periodic time adjustment is to be disabled or enabled <br />
+);
+</p>
+<p>
+Parameters
+</p>
+<p>
+dwTimeAdjustment <br />
+Specifies the number of 100-nanosecond units added to the time-of-day clock at each clock interrupt if periodic time adjustment is enabled.
+</p>
+<p>
+bTimeAdjustmentDisabled <br />
+Specifies the time adjustment mode that the system is to use. Periodic system time adjustments can be disabled or enabled.
+</p>
+<p>
+A value of TRUE specifies that periodic time adjustment is to be disabled. The system is free to adjust time of day using its own internal mechanisms. The value of dwTimeAdjustment is ignored. The system's internal adjustment mechanisms may cause the time-of-day clock to jump noticeably when adjustments are made.
+</p>
+<p>
+A value of FALSE specifies that periodic time adjustment is to be enabled, and will be used to adjust the time-of-day clock. The system will not interfere with the time adjustment scheme, and will not attempt to synchronize time of day on its own. The system will add the value of dwTimeAdjustment to the time of day at each clock interrupt.
+</p>
+<p>
+Return Value <br />
+If the function succeeds, the return value is TRUE. <br />
+If the function fails, the return value is FALSE. To get extended error information, call GetLastError. One way the function can fail is if the caller does not possess the SE_SYSTEMTIME_NAME privilege.
+</p>
+<p>
+Remarks <br />
+The GetSystemTimeAdjustment and SetSystemTimeAdjustment functions support algorithms that synchronize the time-of-day clock, reported via GetSystemTime and GetLocalTime, with another time source using a periodic time adjustment.
+</p>
+<p>
+The SetSystemTimeAdjustment function supports two modes of time synchronization: time-adjustment - disabled and time-adjustment - enabled.
+</p>
+<p>
+In the first mode, bTimeAdjustmentDisabled is set to FALSE. At each clock interrupt, the system adds the value of dwTimeAdjustment to the time of day. The clock interrupt rate may be determined by calling GetSystemTimeAdjustment, and looking at the returned value of the DWORD value pointed to by lpTimeIncrement.
+</p>
+<p>
+In the second mode, bTimeAdjustmentDisabled is set to TRUE. At each clock interrupt, the system adds the interval between clock interrupts to the time of day. No adjustment to that interval is made. The system is free to periodically refresh the time-of-day clock using other techniques. Such other techniques may cause the time-of-day clock to jump noticeably when adjustments are made.
+</p>
+<p>
+An application must have system-time privilege (the SE_SYSTEMTIME_NAME privilege) for this function to succeed. The SE_SYSTEMTIME_NAME privilege is disabled by default. Use the AdjustTokenPrivileges function to enable the privilege before calling SetSystemTimeAdjustment, and then to disable the privilege after the SetSystemTimeAdjustment call.
+</p>
+<p>
+See Also <br />
+AdjustTokenPrivileges, GetSystemTimeAdjustment, SetLocalTime, SetSystemTime, SystemTimeToTzSpecificLocalTime 
+  
+  
+ 
+</p>
+<p>
+==========================================================================================
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/How_Microsoft_Windows_NT_4.0_handles_internal_Time?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

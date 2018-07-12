@@ -1,0 +1,41 @@
+From steve@geophys.washington.edu Wed Jun 21 16:48:35 2000
+Date: Wed, 21 Jun 2000 16:44:47 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: Three questions for al earthwormers
+
+
+I have three problems/questions maybe someone out there can help with:
+
+1. A way to get state-of-health from refteks using PPP with a 422 card and
+rtpd. In particular we need to know if the GPS clock is locking when it
+should.  Right now we have no way of knowing this info without visiting the
+site.
+
+2. Some reasonable way to reconfigure waveservers to change paramters, add
+channels, remove channels without stoping and starting the entire system. With
+lots of new stations being installed and our earthworm having lots of
+inport/export modules its a big long dance for it to shut down everything and
+come back up everytime a small configuration change needs to be made. Not very
+robust, no?
+   Also, on the same topic, waveserver can gets its butt in a ringer if one
+tries to change channel parameters on it, even removing those tank files, and
+even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+tangled that it either keeps crashing or if it does run it throws out some
+channels.  The only solution seems to be to remove ALL tanks and start from
+scratch.
+
+3. A mini-seed wirter.  Notes from Alex back in winter said something about
+Lamont contracting for a ew2mseed module.  No word about this since then.  
+Actually, much better for us than a earthworm module that needs to sit on the
+WAVE_RING would be a stand-alone program to yank traces from waveservers and
+write mseed files.  Any one have such?
+
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+

@@ -1,0 +1,10 @@
+RTP2EW
+
+This data source module is a client program to the REF TEK/Trimble RTPD data server that
+accepts PASSCAL-formatted data and inputs it into Earthworm.
+
+This binary is being updated by the REF TEK Seismic group of Trimble, Inc.  The binary
+was not ready at the time of Earthworm release v7.9.  When released, the binary will be
+added to the Earthworm SVN repository for download, as well as added to future
+Earthworm releases.  The binary will also be available by contacting Trimble support
+directly:  reftek_support@Trimble.com

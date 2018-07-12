@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Liss2ew_scnl overview</title>
+  <meta name="GENERATOR"
+ content="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+<h1 align="center">Earthworm Modules: <br>
+Liss2ew_scnl Overview</h1>
+<center>
+<p><i>(last revised 30 May 2006)</i> </p>
+</center>
+Liss2ew_scnl is the earthworm module for receiving trace data from the <a
+ href="http://www.liss.org">Live Internet Seismic Server</a>. This
+module was rewritten from the liss2ew by Peter Lombard and converted to
+C++ when the SCNL modifications were made. This version was contributed
+by the NEIC HYDRA group and has only been compiled and tested using
+Windows OS. <br>
+<br>
+The LISS is a
+very simple service that provides trace data in miniSEED format in
+near-real-time
+over the Internet. The liss2ew module will connect to one LISS, read
+selected streams
+of trace data, and write that trace data into the earthworm transport
+ring.
+<p>One LISS normally has data for a single station. One or more
+components are sent
+together in the data stream. In some cases, one component is provided
+in more than
+one sample-rate. The `location code' is used in this case to label the
+different kinds
+of data. </p>
+<p>The miniSEED format may contain a few other types of blockettes
+besides the
+Data-Only blockette. (You can read the <a
+ href="http://www.adobe.com/prodindex/acrobat/readstep.html">PDF</a>
+version of the <a
+ href="http://www.iris.washington.edu/manuals/acrobat/T_SEED.pdf">SEED
+manual</a> if you want to know more.)
+Currently liss2ew ignores these non-trace-data blockettes. </p>
+<p>Besides the ASL, there are several other LISS servers. Some digital
+seismographs produce
+miniSEED. There is be an earthworm LISS server module, <a
+ href="ew2liss_ovr.html">ew2liss</a>.&nbsp; The ew2liss is NOT SCNL
+compatible yet.&nbsp; This will allow the exchange of earthworm trace
+data by an alternate format to the current <a
+ href="import-export_ovr.html">import/export</a> combination.
+</p>
+<p> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/liss2ew_scnl_cmd.html">Liss2ew scnl
+Commands</a><!-- USGS-required stuff at the end --> </p>
+<hr>
+</b>Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+</address>
+</body>
+</html>

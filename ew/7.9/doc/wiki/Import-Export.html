@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Import-Export – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Import-Export?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Import-Export.html" title="View Import-Export">Import-Export</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Import-Export?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Import-Export?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-02-29T15%3A55%3A43-08%3A00&amp;precision=second" title="2012-02-29T15:55:43-08:00 in Timeline">19 months</a> ago</span>
+            <span class="trac-print">Last modified on 02/29/12 15:55:43</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="Import-Export.html#Earthworm:Import-ExportOverview">Earthworm: Import-Export Overview</a>
+    <ol>
+      <li>
+        <a href="Import-Export.html#export_gen_actvimport_pasv">export_gen_actv, import_pasv</a>
+      </li>
+      <li>
+        <a href="Import-Export.html#NEW:export_ackexport_scnl_ack">NEW: export_ack, export_scnl_ack</a>
+      </li>
+      <li>
+        <a href="Import-Export.html#import_ack">import_ack</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="Earthworm:Import-ExportOverview"><a class="wiki" href="Earthworm.html">Earthworm</a>: Import-Export Overview</h1>
+<p>
+Newly created for EW v7.0 is <a class="wiki" href="export_ack.html">export_ack</a>, <a class="wiki" href="export_scnl_ack.html">export_scnl_ack</a>, and <a class="wiki" href="import_ack.html">import_ack</a> for acknowledgement handshaking.
+</p>
+<p>
+The modules import_generic, export_generic, and export_scn represent the Earthworm long-distance communication modules that provide a rapid, secure message exchange facility between two or more Earthworm or other processing systems. Any link capable of supporting the TCP/IP protocol suite can be used. The philosophy underlying these modules is that they implement a static, long-term linkage between pairs of cooperating installations. It is presumed that this linkage has been agreed upon by both institutions, and that both installations establish matching configurations that provide reasonably good assurance that only the designated machines are participating in the linkage.
+</p>
+<p>
+Export_generic accepts a list of message logos (installation id, module id, and message type) to export. Any messages with matching logos will be queued in a memory based FIFO, and sent to the receiving "import_generic", or similar program, via a TCP connection. If the available bandwidth of the link is lower than the aggregate rate of messages being queued for shipping, the FIFO will eventually overflow. In that case, an error is logged, and the queue becomes circular. That is, if the queue is configured to be N messages long, it will contain the most recent N messages. The intent is to avoid shipping uselessly old messages such as when two systems exchange phase picks or trace data for 'real-time' event detection.
+</p>
+<p>
+Import_generic receives such messages, and releases them into its local system under the logos with which they were sent. Other modules in that Earthworm may then selectively examine or ignore such messages by specifying which installation id's they are interested in.
+</p>
+<p>
+Both import_generic and export_generic offer 'stub' routines through which all messages pass. The intent is to provide an easy place to insert custom code to process messages before they are sent out (in export_generic), and after they are received, but before they are released into the local system (in import_generic). Examples of such filtering may be to send only relevant picks to a neighboring network, or to change formats to accommodate another system. The intent is that the insertion of such code will result in a new module with a name of the form import_xxx or export_xxx.
+</p>
+<p>
+One such specialized version of export has been created: Export_scn is a modified version of export_generic that specializes in sending trace data. Its configuration file differs in that the user can specify the station, component, and network names of the traces to be exported.
+</p>
+<p>
+A further modification of export_scn is export_scn_pri. This version offers the additional capability to specify a priority for each station, component, and network name combination to be exported. Export_scn_pri always transfers the highest priority data before lower priority data. This feature is intended to improve system throughput during high-volume events or periods of network degradation.
+</p>
+<p>
+To simplify the adoption of export_scn_pri, onfiguration (".d") files are interchangable between it and export_scn. Export_scn_pri will read priorities from the command lines specifying the station, component and network names, or will use a default priority (lowest) if not specified. Export_scn will ignore any priorities that are specified.
+</p>
+<p>
+Export_scn_pri uses a prioritized queue instead of a circular queue. If bandwidth limitations arise, lower priority messages are dropped or rejected before higher priority messages.
+</p>
+<p>
+Two-way heartbeats are used to assure that the link is actually capable of transmitting data. The heartbeats consist of agreed-upon text strings sent at an agreed-upon rate. If a proper heartbeat is not received in time, it is presumed that the link is broken. Both Import and Export then log the error, close their connections, and attempt to re-establish the link.
+</p>
+<p>
+It has been found that socket-based programs which offer (rather than accept) a connection are sometimes unable to re-establish a link after a break has been detected. To address this, and other 'massive failure' modes, a feature has been added to export which causes a restart of the module in such a manner that its previous network environment is not re-inherited. This is done by inserting the token "restartMe" in the error descriptor file of the sender (e.g. 'export_generic.desc'). Then if the statusManager module detects a lack of heartbeat form export, a request is made to start_stop to kill and restart the module.
+</p>
+<p>
+Neither export_generic nor import_generic change the logos of the messages being transferred. So it is important to make sure that logos being imported have unique logos: installation id, module id, and message type. If the imported logos match any of the existing logos, you will have serious problems with earthworm! The message transport system will get very confused by these matching logos. Keep this in mind when you have more than one earthworm system with the same installation id that share data through export_xxx and import_xxx. Since the installation id's and message id's (e.g. TYPE_TRACEBUF) will match, the module id's on these two machines must be different for the modules that are creating the messages.
+</p>
+<h2 id="export_gen_actvimport_pasv">export_gen_actv, import_pasv</h2>
+<p>
+Export Generic makes available on a certain TCP/IP port at a certain IP address an export of data, and Import Generic makes a connection to that exporting machine/ IP address/ port to retrieve that data. In some cases this is difficult to configure because of firewalls, where the exporting machine is behind a firewall and can't receive incoming connections. In a situation like that, you can use export_gen_actv and import pasv. Export Generic Active exports data (as described above for Export Generic), but goes one step further by trying to drop off that data onto a specific remote machine and port. That remote machine should be running Import Passive, which sits and waits at a specific port and IP address for an exporting computer to connect start dropping off data. This moves the firewall issues to the importing machine from the exporting machine. In this case, the importing machine will require the ability to receive remote connections at a specific port; this may necessitate opening the IP address and port in the firewall/router.
+</p>
+<h2 id="NEW:export_ackexport_scnl_ack">NEW: export_ack, export_scnl_ack</h2>
+<p>
+This new version of export expects to receive an acknowledgment packet  for every packet it writes to the socket. Creation of this new version  was desired because we observed during the export of continuous trace data that during a communication failure, export was able to successfully write several messages to the (broken?) socket, but import never received them. When the socket was re-established, those messages were lost forever. 
+</p>
+<p>
+Acknowledgments are received asynchronously by the socket-reading thread.  A circular buffer, SendQueue, tracks the status of msgs after they been  pulled from the MessageStacker queue. If the socket is broken/reconnected,  export*ack re-sends any msgs in the SendQueue which haven't been  acknowledged. In normal operation, if export*ack laps the SendQueue and  finds a message that has been sent but not ACKed, it will sleep 10ms and  then check status again, looping until an ACK is received before preparing  to send the next message. 
+</p>
+<p>
+The SendQueue length is configurable, from 1 to 254 messages (default=100).   Using a shorter SendQueue can cause a decrease in the rate at which export will send messages. A slower rate might be desireable so  that an import system is not flooded by data after a prolonged  communication break. In testing with export and import on the same  machine, these are export's approximate maximum data rates:
+</p>
+<pre class="wiki">  SendQueueLength =   1,   10 messages/second
+  SendQueueLength =  10,   90 messages/second
+  SendQueueLength = 100,  350 messages/second
+</pre><p>
+Using the default SendQueueLength, export*ack's data rate was not observably different than export_generic's data rate.  
+</p>
+<p>
+export*ack requires using the new import_ack to communicate properly. Since the receipt of ACKs is asynchronous, we may now have the opposite  problem to that we had before (duplicate data instead of lost data). It  is now possible that import_ack actually received a packet, but export_ack didn't get the ACK before the socket broke. In this is case, export_ack will re-send the packet and import_ack will see the same packet more than  once. The system running import_ack must be prepared for duplicate data.
+</p>
+<h2 id="import_ack">import_ack</h2>
+<p>
+This new version of import is required as the data exchange partner for the new export*ack modules. However, it can communicate with either  old or new-protocol export modules, and can therefore be used anywhere in place of import_generic.
+</p>
+<p>
+From the first message received per socket connection, import_ack  discovers what flavor of export it's talking to. It will do either 
+old non-ACK or new ACK protocol as appropriate on the fly.
+</p>
+<p>
+Import_ack has been modified to use same configuration commands as export for setting up the server connection and socket heartbeat strings and intervals. It still recognizes the original import_generic commands.  
+</p>
+<p>
+Since the receipt of ACKs by export_ack is asynchronous, we may now  have the opposite problem to that we had before (duplicate data instead  of lost data). It is now possible that import_ack received a packet,  but the socket broke before export_ack received the ACK. In this is case,  export_ack will re-send the packet and import_ack will see the same packet more than once. Therefore, the system running import_ack as a partner to export_ack must be prepared to handle duplicate data.  
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Import-Export?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

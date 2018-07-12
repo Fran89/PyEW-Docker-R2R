@@ -1,0 +1,45 @@
+#
+#
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lnsl -lsocket -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BINARIES = nmxsrv_socket.o nmx_api.o nmxp_packet.o crc32.o\
+           $L/socket_ew.o $L/swap.o \
+           $L/threads_ew.o $L/socket_ew_common.o $L/libew.a
+          
+all:
+	make -f makefile.unix naqs2ew
+	make -f makefile.unix naqssoh
+#	make -f makefile.unix naqsserTG
+	make -f makefile.unix getmenu-nmx
+
+naqs2ew: naqs2ew.o channels.o naqschassis.o $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/naqs2ew naqs2ew.o channels.o naqschassis.o $(BINARIES) $(SPECIFIC_FLAGS)
+
+naqssoh: naqssoh.o sohchannels.o naqschassis.o $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/naqssoh naqssoh.o sohchannels.o naqschassis.o $(BINARIES) $(SPECIFIC_FLAGS)
+
+#naqsserTG: naqsserTG.o serchannels.o naqschassis.o $(BINARIES)
+#	$(CC) -o $B/naqsserTG naqsserTG.o serchannels.o naqschassis.o $(BINARIES) -lm
+
+
+getmenu-nmx: getmenu-nmx.o $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/getmenu-nmx getmenu-nmx.o $(BINARIES) $(SPECIFIC_FLAGS)
+
+dsclient: dschassis.o $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/dsclient dschassis.o $(BINARIES) $(SPECIFIC_FLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/naqs* $B/*nmx*

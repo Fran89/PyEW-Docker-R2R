@@ -1,0 +1,57 @@
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+QLIB_DIR = $(EW_HOME)/$(EW_VERSION)/src/libsrc/qlib2
+QLIB_LIB = $(QLIB_DIR)/lib_ew/libqlib2nl.a
+CFLAGS = -g  $(GLOBALFLAGS)  -I$(QLIB_DIR) -I.
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LIBS = $L/swap.o $L/libew.a
+RTLIBS = $L/swap.o $(LINK_LIBS) $L/libew.a
+MSLIBS=-L$(L) -lmseed -lm
+DCLIBS=$(LIBS) $L/dirops_ew.o
+
+
+all: remux_tbuf sac2tb ms2tb ring2tank tr2dump ms2tank tankcut tanksniff dc2tank wsvtank2tb
+	
+remux_tbuf: remux_tbuf.o remux_code.o $(LIBS)
+	$(CC) $(CFLAGS) -g -o $B/remux_tbuf remux_code.o remux_tbuf.o $(LIBS) $(SPECIFIC_FLAGS)
+
+tanksniff: tanksniff.o $(LIBS)
+	$(CC) $(CFLAGS) -g -o $B/tanksniff tanksniff.o $(LIBS) $(SPECIFIC_FLAGS)
+	
+sac2tb: sac2tb.o $(LIBS)
+	$(CC) $(CFLAGS) -g -o $B/sac2tb sac2tb.o $(LIBS) $(SPECIFIC_FLAGS)
+
+ring2tank: ring2tank.o $(LIBS)
+	$(CC) $(CFLAGS) -g -o $B/ring2tank ring2tank.o $(RTLIBS) $(SPECIFIC_FLAGS)
+
+ms2tb: ms2tb.o $(LIBS) read_mseed_data.o
+	$(CC) $(CFLAGS) -g -o $B/ms2tb ms2tb.o read_mseed_data.o -L$(L) $(QLIB_LIB) -lm $(SPECIFIC_FLAGS)
+
+ms2tank: ms2tank.o mseed2tank.o 
+	$(CC) $(CFLAGS) -g -o $B/ms2tank ms2tank.o mseed2tank.o $(MSLIBS) $(SPECIFIC_FLAGS)
+
+dc2tank: dc2tank.o mseed2tank.o remux_code.o
+	$(CC) $(CFLAGS) -g -o $B/dc2tank dc2tank.o mseed2tank.o remux_code.o $(MSLIBS) $(DCLIBS) $(SPECIFIC_FLAGS)
+
+tankcut: tankcut.o remux_code.o
+	$(CC) $(CFLAGS) -g -o $B/tankcut tankcut.o  remux_code.o $(RTLIBS) $(SPECIFIC_FLAGS)
+
+tr2dump: tr2dump.o $(LIBS) 
+	$(CC) $(CFLAGS) -g -o $B/tr2dump tr2dump.o $(LIBS) $(SPECIFIC_FLAGS)
+
+wsvtank2tb: wsvtank2tb.o
+	$(CC) $(CFLAGS) -g -o $B/wsvtank2tb wsvtank2tb.o $(LIBS) $(SPECIFIC_FLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/remux_tbuf* $B/sac2tb*  $B/ms2tb* $B/tankcut $B/dc2tank $B/ms2tank $B/tanksniff $B/ring2tank $B/tr2dump $B/wsvtank2tb

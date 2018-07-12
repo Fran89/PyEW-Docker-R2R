@@ -1,0 +1,5 @@
+2014.234: 0.2
+	- Fix file creation mode on Windows by opening in "binary" mode.
+
+2013.168: 0.1
+	- Initial release.

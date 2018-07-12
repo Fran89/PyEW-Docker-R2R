@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Evanstrig commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1><BR>Evanstrig Configuration File </H1>
+<I>(last revised 24 July, 1998)</I></CENTER>
+<pre>
+#
+#                  Evanstrig's Configuration File
+#
+MyModuleId    MOD_EVANSTRIG # module id for this program,
+InRing        WAVE_RING     # Transport ring to find waveform data on
+OutRing       PICK_RING     # Transport ring to write all output to
+LogFile       1
+
+HeartbeatInt  0     # Heartbeat interval (seconds)
+                    # if 0, no heartbeats will be sent.
+
+Log_triggers 1      # If 1, log to screen only
+                    # If 2, log to log file only
+                    # If 3, log to screen and log file
+
+Debug_enabled  0    # If 1, print debug messages
+
+# List the message logos to grab from input transport ring
+#              Installation       Module       Message Type
+GetWavesFrom   INST_WILDCARD   MOD_WILDCARD   # TYPE_TRACEBUF msg
+
+# Define the maximum gap (in # of sample intervals) between
+# consecutive tracbuf messages to interpolate thru without a restart.
+# The number of samples that will be interpolated is MaxGap-1.
+MaxGap 3
+
+#  Magic numbers from John Evans for configuring the trigger:
+@evanstrig_params.d      # file with integer & floating-point parameters
+
+# Optional command for changing the maximum number of channels
+# which can be triggered on.  Default is 32.
+# MaxSCN 20
+
+# List the SCN's to trigger on:
+#           site  comp  net
+TriggerOn    MPR  VHZ  NC
+TriggerOn    MCM  VHZ  NC
+TriggerOn    MCV  VHZ  NC
+TriggerOn    MDC  VHZ  NC
+TriggerOn    MTU  VHZ  NC
+TriggerOn    SLK  VHZ  NN
+TriggerOn    MMP  VHZ  NC
+TriggerOn    MLM  VHZ  NC
+TriggerOn    MGP  VHZ  NC
+TriggerOn    MLK  VHZ  NC
+
+</pre>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/evanstrig_ovr.html">Evanstrig Overview</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

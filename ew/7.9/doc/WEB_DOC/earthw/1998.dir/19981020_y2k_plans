@@ -1,0 +1,27 @@
+
+From alex@gldage.cr.usgs.gov Tue Oct 20 15:44:19 1998
+Date: Tue, 20 Oct 1998 12:37:01 -0600
+From: Alex Bittenbinder <alex@gldage.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm Y2K upgrade
+
+
+We are about to begin the Earthworm year 2000 compliance project. It has been decided that the fix will be via 'date field expansion', not 'date logic conversion'. That is, four digits for year will be used throughout, rather than inserting logic to the effect "if year is less than blah blah, add 100". Thus, we won't have to worry for another 8000 years!
+
+Nearly 30 modules have to be changed and tested. In order to do this, we're
+resorting to some rather totalitarian tactics:
+
+We're starting work on Earthworm v4.0, which will be Y2K compliant. To do this, we're in effect closing Earthworm to development until we're compliant. We expect to be completed within a month or so. That is, we're:
+
+Creating, on gldrocky, a copy of /working named /workingY2K, where the changes will be made. The focus will be to make that code Y2K compliant. The workingY2K directory will be created and new development closed starting  Monday, October 26 at 9:00AM MDT. 
+
+After /workingY2K has passed Q/A, it will be copied back onto /working, overwriting whatever was there (backups will be made). Notice will be given before this dastardly deed is done. This will then become the new Orthodoxy for Earthworm. That is, release v4.0 (and on) will be produced from /working as usual. 
+
+Thus, any development done 'on the side', during the 'closed period' will have to be re-integrated and re-tested on v4.0 in order to become part of Earthworm.
+
+This matter will be up for discussion during techie-blather-hour Wed, October 21.
+
+Alex Bittenbinder
+
+
+

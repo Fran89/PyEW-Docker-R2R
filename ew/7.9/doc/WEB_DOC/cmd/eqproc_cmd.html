@@ -1,0 +1,597 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqproc commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Eqproc Configuration File Commands</H1>
+<I>(last revised October 11, 2007)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A><BR>
+4.  <A HREF=#logfile>Description of eqproc's log file</A><BR>
+5.  <A HREF=#megamod>The "mega-module" which begins with eqproc</A><BR>
+<P>
+<!-- Paragraph "On startup, xxxx reads the..." -->
+On startup, eqproc reads the configuration file named on the command-line.
+Commands in this file set up all parameters used in making earthquake
+notifications. In the control file, lines may begin with a valid eqproc
+command (listed below) or with one of 2 special characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+# This is Eqproc's Parameter File
+
+# Basic Earthworm setup:
+#-----------------------
+ MyModuleId   MOD_EQPROC    # Module id for this instance of eqproc
+ RingName     PICK_RING     # Ring to get input from
+ HeartbeatInt 30            # seconds between heartbeats to statmgr
+ LogFile      1             # 0 = turn off disk log file;
+                            # 1 = turn on disk log
+                            # 2 = write disk log but not to stderr/stdout
+
+# List the message logos to grab from transport ring
+#               Installation       Module          Message Types
+#-----------------------------------------------------------------
+ GetPicksFrom   INST_WILDCARD    MOD_WILDCARD    # pick_scnl & coda_scnl
+ GetAssocFrom   INST_MENLO       MOD_BINDER      # quake2k & link2k
+
+# Send output to the following command (uncomment one):
+#------------------------------------------------------
+ PipeTo "eqbuf eqbuf.d"     # buffer events for downstream modules
+#PipeTo "eqcoda eqcoda.d"   # do coda weighting & extrapolation
+#PipeTo "log_everything"    # end chain here for debugging
+
+# Load station list
+#------------------
+ maxsite     3500
+ site_file   calsta.hinv
+
+# Load crustal model
+# Refer to file containing "lay" commands, or list them here
+#-----------------------------------------------------------
+#@ncal_model.d           # file containing "lay" commands
+ lay   0.0     4.0
+ lay   3.5     5.9
+ lay   15.0    6.85
+ lay   25.0    7.85
+
+# Set pick/quake FIFO lengths (must be >= binder's fifo lengths)
+#---------------------------------------------------------------
+ pick_fifo_length  1000  # optional: default = 1000
+ quake_fifo_length  100  # optional: default = 100
+
+# Control how/when events are reported
+#-------------------------------------
+ ReportS      0     # 0 = do not send S-phases to next process
+                    # non-zero = do send S-phases to next process
+ rpt_dwell 60.0     # seconds to wait after last update before
+                    #   reporting event to downstream modules
+                    #   (optional: default = 30)
+ rpt_check  5.0     # interval (sec) at which to check all hypocenters
+                    #   to see if it's time to report an event
+                    #   (optional: default = 0.3 * rpt_dwell)
+
+# Control debugging info to log
+#------------------------------
+ rpt_grab   4.0     # tolerance (sec) for noting waif picks for
+                    #   in log file. (optional: default = 4.0)
+#print              # uncomment for extra debug logging
+#graph              # uncomment for extra debug logging
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by eqproc, grouped by the function they
+influence.  Some of the commands are marked "required"; they describe the
+Earthworm system setup and the network model.  These commands must be
+specified in the control file in order for eqproc to operate.
+
+<!-- The pre-formatted functional command listing goes here -->
+<PRE>	Earthworm system setup:
+                <A HREF=#GetAssocFrom>GetAssocFrom</A>    required
+                <A HREF=#GetPicksFrom>GetPicksFrom</A>	required
+                <A HREF=#MyModuleId>MyModuleId</A>	required
+                <A HREF=#PipeTo>PipeTo</A>          required
+                <A HREF=#RingName>RingName</A>	required
+
+        Seismic network/model definition:
+                <A HREF=#lay>lay</A>             required
+                <A HREF=#psratio>psratio</A>
+                <A HREF=#site>site</A>            \  site list required; specify with
+                <A HREF=#site_file>site_file</A>       /  either "site" or "site_file"
+                <A HREF=#maxsite>maxsite</A>
+                <A HREF=#pick_fifo_length>pick_fifo_length</A>
+                <A HREF=#quake_fifo_length>quake_fifo_length</A>
+
+	Event notification:
+                <A HREF=#rpt_dwell>rpt_dwell</A>
+                <A HREF=#rpt_grab>rpt_grab</A>
+                <A HREF=#ReportS>ReportS</A>		required
+
+	Output Control:
+                <A HREF=#LogFile>LogFile</A>		required
+                <A HREF=#print>print</A>
+                <A HREF=#graph>graph</A>
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<A NAME="GetAssocFrom">  <!-- command name as anchor inside quotes -->
+<PRE><B>GetAssocFrom <font color=red>inst mod_id</font>		eqp_config		Earthworm setup</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the association messages input to eqproc.  Eqproc will only
+process quakes and links that come from module <font color=red>mod_id</font> at installation
+<font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font> are character strings (valid strings are
+listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module.
+Only 2 "Get*From" commands may be issued; wildcards (INST_WILDCARD and
+MOD_WILDCARD) will force eqproc to process all quakes & links,
+regardless of their place of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   GetAssocFrom  INST_MENLO  MOD_BINDER
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GetPicksFrom">  <!-- command name as anchor inside quotes -->
+<PRE><B>GetPicksFrom <font color=red>inst mod_id</font>		eqp_config		Earthworm setup</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the pick and coda message input to eqproc.  Eqproc will only
+process picks and codas that come from module <font color=red>mod_id</font> at installation
+<font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font> are character strings (valid strings are
+listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module.
+Only 2 "Get*From" commands may be issued; wildcards (INST_WILDCARD and
+MOD_WILDCARD) will force eqproc to process all picks & codas,
+regardless of their place of origin.<BR>
+<B>Note:</B> both binder and eqproc should be set to listen to the same pick source(s)!
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   GetPicksFrom  INST_WILDCARD  MOD_WILDCARD
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="graph">  <!-- command name as anchor inside quotes -->
+<PRE><B>graph  					eqp_config 		output</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Requests that a graphical representation of all phases and their
+residuals be written to a file named GRyyyymmddhhnn## (see "print"
+command for naming convention).  The plot displays the time-residual
+horizontally and the epicentral distance vertically.  See Johnson
+(1994) for a more complete description of this graph.  This file is
+useful for tuning and debugging.
+<PRE><!-- Default and example go here   -->
+Default:  don't write the GR* file
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="lay">  <!-- command name as anchor inside quotes -->
+<PRE><B>lay <font color=red>depth velocity</font>   	               t_com                   model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the layered velocity structure to be used for calculating
+travel times.  <font color=red>depth</font> is the distance (km) to the top of the layer,
+and <font color=red>velocity</font> is the seismic P-wave velocity (km/sec) within that
+layer.  No default velocity structure is defined; therefore, the user
+must always supply one in the control file.  Up to 20 layers can be
+specified, and they should be listed in order of increasing depth.<BR>
+<B>Note:</B> binder and eqproc calculate travel times independently.  Be
+sure that both programs are using the same velocity model!
+<PRE><!-- Default and example go here   -->
+Default:  none                          Calnet:  lay   0.0  4.0
+                                                 lay   3.5  5.9
+                                                 lay  15.0  6.85
+                                                 lay  25.0  7.85
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				eqp_config		output</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, eqproc will
+write a daily log file(s) called eqprocxx.log_yyyymmdd where xx is
+eqproc's module id (set with "MyModuleId" command) and yyyymmdd is the
+current UTC date (ex: 19960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="maxsite">  <!-- command name as anchor inside quotes -->
+<PRE><B>maxsite <font color=red>nsite</font>	                         site_com                model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Allocates memory to store <font color=red>nsite</font> station locations in the site table.
+<PRE>        <!-- Default and example go here   -->
+Default:  maxsite 1000                  Calnet:  maxsite 1000
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			eqp_config		Earthworm setup</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="pick_fifo_length">  <!-- command name as anchor inside quotes -->
+<PRE><B>pick_fifo_length <font color=red>npickfifo</font>	                         eqp_config                model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Allocates memory to store <font color=red>npickfifo</font> picks and codas while binder chews on them.
+Must be set to a value greater than or equal to <font color=red>npickfifo</font> used by binder.
+<PRE>        <!-- Default and example go here   -->
+Default:  pick_fifo_length 1000         Calnet:  pick_fifo_length 4000
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PipeTo">  <!-- command name as anchor inside quotes -->
+<PRE><B>PipeTo <font color=red>cmdstring</font>			eqp_config		Earthworm setup</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the command to which eqproc will pipe a "binder-finalized" event
+for the next step in earthquake processing.  Blank spaces are allowed
+in <font color=red>cmdstring</font> as long as the entire command is enclosed in
+double-quotes.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   PipeTo "eqbuf eqbuf.d"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="print">  <!-- command name as anchor inside quotes -->
+<PRE><B>print					eqp_config		output</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Requests that the final hypocenter and phase summary data for each
+event be written to a file.  The file's name combines the earthquake's
+origin-time and the last 2 digits of its event id# (assigned by binder)
+ in the form PRyyyymmddhhnn## where yyyy is the year, mm is the month, dd
+is the day of the month, hh is the hour (0-23), nn is the minutes past
+the hour, and ## is the last 2 digits of the event id.  For example,
+picks from event id# 1399 on July 12, 1995 at 0123 GMT would be found
+in PR19950712012399.  All phases with a residual less than <font color=red>maxres</font>
+("rpt_grab" command) are included in this file regardless of how the
+picks are associated.  Picks are tagged with the phase that is being
+considered.  If a pick is associated with a different event, it is
+labeled with that event's id#.  If a pick is not associated with any
+event, it is labeled as WAIF.  This file is useful for tuning and
+debugging.
+<PRE><!-- Default and example go here   -->
+Default:  don't write the PR* file
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="psratio">  <!-- command name as anchor inside quotes -->
+<PRE><B>psratio <font color=red>value</font>                        	 t_com                   model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the value of the P/S seismic velocity ratio.
+<PRE><!-- Default and example go here   -->
+Default:  psratio  1.72                 Calnet:  psratio  1.72
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="quake_fifo_length">  <!-- command name as anchor inside quotes -->
+<PRE><B>quake_fifo_length <font color=red>nquakefifo</font>	                      eqp_config                model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Allocates memory to store <font color=red>nquakefifo</font> quake messages while binder chews on them.
+Must be set to a value greater than or equal to <font color=red>nquakefifo</font> used by binder.
+<PRE>        <!-- Default and example go here   -->
+Default:  quake_fifo_length 100         Calnet:  quake_fifo_length 100
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="ReportS">  <!-- command name as anchor inside quotes -->
+<PRE><B>ReportS <font color=red>switch</font>				eqp_config		notification</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for reporting picks that binder has associated as
+S-phases.  If <font color=red>switch</font> is 0, S-phases are not sent along to the next
+process; if <font color=red>switch</font> is non-zero, S-phases are included in the event
+message (hypocenter plus associated picks) that is sent to the next
+process.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  ReportS  0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				eqp_config		Earthworm setup</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells eqproc which shared memory region to use for input. <font color=red>ring</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  RingName PICK_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="rpt_dwell">  <!-- command name as anchor inside quotes -->
+<PRE><B>rpt_dwell <font color=red>treport</font>			eqp_config		notification</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the length of time (seconds) to wait after the last modification
+to a hypocenter before reporting the event.
+<PRE><!-- Default and example go here   -->
+Default:  rpt_dwell 30.0		Calnet:  rpt_dwell 60.0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="rpt_grab">  <!-- command name as anchor inside quotes -->
+<PRE><B>rpt_grab <font color=red>maxres</font>				eqp_config		notification</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the maximum residual (seconds) for reporting a given phase
+with respect to an event.  <font color=red>maxres</font> should span binder's allowed
+residual range for associating picks (see binder's "taper" and
+"taper_OT" commands); otherwise, eqproc may not list all picks that
+binder associated with the event.  All phases with a residual less
+than <font color=red>maxres</font> are included in an event's PR* file ("print" command)
+and GR* file ("graph" command), regardless of how the picks are
+associated.
+<PRE><!-- Default and example go here   -->
+Default:  rpt_grab 4.0			Calnet:  rpt_grab 4.0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="site">  <!-- command name as anchor inside quotes -->
+<PRE><B>site <font color=red>name latitude longitude</font>		site_com		model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Enters a station location into the station site table, where <font color=red>name</font> is
+the station code used by the picker, and <font color=red>latitude</font> and <font color=red>longitude</font>
+are expressed in decimal degrees (positive to the north and east).
+Use either multiple "site" commands or one "site_file" command to load
+the station list into eqproc.
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="site_file">  <!-- command name as anchor inside quotes -->
+<PRE><B>site_file <font color=red>filename</font>			site_com		model</B>	 <!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Enters site codes and station locations into the site table by reading
+a HYPOINVERSE format station file called <font color=red>filename</font>.  In this file,
+stations are described by a 5-letter site name, a 2-letter network
+code, a 3-letter component code, and a 2-letter location code.  The picker must also be using
+this station-naming convention.  The format of the file is described
+under <A HREF="../USER_GUIDE/hypoinv_sta.html">"HYPOINVERSE STATION FILE FOR FULL 12-LETTER S-N-C-L STATION NAMES"</A>.  Use either one "site_file" command or
+multiple "site" commands to load the station list into eqproc.
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="logfile">
+<H2>4.  DESCRIPTION OF EQPROC'S LOG FILE</H2>
+
+<PRE>
+Eqproc writes a line to its log file every time it grabs a TYPE_QUAKE2K
+message from the shared memory ring.  It's sort of giving you a time-stamped
+log of binder's output.  Here are some example lines and what they contain:
+
+2338  8.00:       8 1617 19.70  33.8140 -116.9780  4.00 0.00  0.0  0.0   0  6
+2338  8.00:       8 1617 19.32  33.8298 -116.9644  2.21 0.06 20.4 61.7 139  6
+2338  8.00:       8 1617 19.32  33.8298 -116.9644  2.21 0.20 20.4100.9  83 12
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+
+field  columns   Description
+       (approx)
+1,2      1-10    System time (hrmn sec) at which this TYPE_QUAKE2K message
+                 was received.
+ 3      12-19    Binder's event id.
+4,5     21-30    hrmn sec of event origin time
+ 6      32-39    latitude
+ 7      41-49    longitude
+ 8      50-55    depth
+ 9      56-60    rms
+10      61-65    dmin: distance to nearest station
+11      66-70    ravg: average epicentral distance of all associated stations
+12      72-74    maximum azimuthal gap
+13      75-77    total # picks associated with this event.
+
+You'll notice that the first line has zero's for rms, dmin, ravg, and gap.
+This is binder's initial stack location for the event.
+The subsequent locations for the event come from binder's simple L1 locator.
+
+------------------------------------------------------------------------------
+
+When eqproc decides that binder is finished with an event, you'll see
+a set of lines that look something like this:
+
+ 510 24.00:40203471 #### PR20071010050971
+40203471 2007Oct10  509  2.49  38.7843 -122.7507  3.18 0.06  2.0  4.9  85  9
+GCR   EHZ NC 02 2007Oct10  509  3.51 P U0   3.2  -0.11
+PFR   DPZ BG -- 2007Oct10  509  3.68 P U0   3.6  -0.00
+GBG   EHZ NC -- 2007Oct10  509  4.36 P U0   6.9  -0.00
+MNS   DPZ BG -- 2007Oct10  509  3.61 P U0   3.2  -0.00
+GAXB  EHZ NC -- 2007Oct10  509  4.40 P D2   8.2  -0.18
+FNF   DPZ BG -- 2007Oct10  509  3.43 P D0   2.0  -0.00
+AL3   DPZ BG -- 2007Oct10  509  5.56 P ?2  10.6   0.57
+JKR   DPZ BG -- 2007Oct10  509  3.45 P U0   2.0   0.02
+GDXB  HHZ NC -- 2007Oct10  509  3.80 P D0   4.7  -0.11
+LTC   SHZ NC -- 2007Oct10  509 50.01 Sn?0 167.7   2.49 WAIF
+LTC   SHZ NC -- 2007Oct10  509 50.01 Sg?0 167.7   0.67 WAIF
+TER   EHZ CI -- 2007Oct10  510  6.70 PnD0 487.6  -2.72 WAIF
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+
+The first line tells you that an event has been finalized:
+Field    Description
+ 1,2     system time (hrmn sec) when the event was declared "final,"
+  3      binder's event id,
+  5      a string that contains the event origin time (PRyyyymmddhhmmxx)
+         where xx is the last 2 digits of the event id.
+
+The second line is a summary line with:
+Field    Description
+  1      the event id from binder
+ 2,3,4   origin time,
+  5      latitude,
+  6      longitude,
+  7      depth,
+  8      rms,
+  9      dmin,
+ 10      ravg,
+ 11      gap,
+ 12      # associated phases.
+
+The remaining lines describe the phases associated with the event:
+    columns  Description
+       1-15  station (site,component,net,loc),
+      17-36  arrival time,
+      38-39  phase that binder called it,
+         40  polariy,
+         41  pick quality (0-4),
+      43-47  epicentral distance, and
+      49-54  traveltime residual (sec).
+      56-?   optional comment.
+
+Some of these lines may have either "#xxxx" (an event id) or "WAIF" written
+after the residual in the optional comment field.  These are phases that
+eqproc thought could possibly have been associated with this event, but
+that weren't.  If the comment is "#xxxx" then that phase is actually
+associated with a different event (whose id is xxxx).  If the comment is
+"WAIF" then the phase is not associated at all.
+</PRE>
+<HR>
+
+<A NAME="megamod">
+<H2>5.  THE "MEGA-MODULE" WHICH BEGINS WITH EQPROC</H2>
+<P>
+The eqproc "mega-module" is a chain of processes that produces
+final earthquake locations for the Earthworm system.   Only eqproc, the first link in the mega-module, is listed
+in startstop's configuration file to be started by startstop.  Eqproc
+then starts the next process, specified in its "PipeTo" command, and
+communicates with it via a pipe.
+Each newly created process starts the next link in the same way.
+From startstop's point of view, the whole mega-module inherits the name
+of the first link (eqproc) and that's the only name it displays.
+From statmgr's point of view, all processes
+within the mega-module share one module id, one heartbeat, and one
+descriptor file.  However, each process has its own configuration file
+and its own log file.
+<P>
+As of 8 September 1999, the eqproc mega-module consists of
+the following "links":
+<PRE>
+  SUB-MODULE    INPUT FROM   		  	OUTPUT TO
+  ----------	----------		  	---------
+  eqproc        shared memory (PICK_RING)       pipe to eqbuf
+  eqbuf         stdin (pipe from eqproc)        pipe to eqcoda
+  eqcoda        stdin (pipe from eqbuf)         pipe to eqverify
+  eqverify      stdin (pipe from eqcoda)        pipe to hyp2000_mgr
+  hyp2000_mgr   stdin (pipe from eqverify)      shared memory (HYPO_RING)
+
+</PRE>
+
+<H3>Inter-link (Intra-mega-module) Communication:</H3>
+All messages are passed between the processes of the mega-module
+via pipes.  The pipe communications are encapsulated in a set of routines containing
+the peculiarities of the operating system.  Messages, with types defined
+in earthworm.d, are sent from one link to the next, in one direction only!
+If a process
+doesn't need to do anything with a given message type, it just pipes it
+along to the next link.  The current pipe routines (in pipe.c) are:
+<PRE>
+  pipe_init     starts up the next "link", replacing its stdin with
+                a pipe from the "parent" program.
+  pipe_put      writes a message of a given type to the pipe.
+  pipe_get      gets the next message from the pipe.
+  pipe_close    closes the pipe.
+
+</PRE>
+
+<H3>Heartbeats:</H3>
+The mega-module has one module-id and one heartbeat.  The heartbeat
+initiates at the first link (eqproc), is piped through all the links, and is
+deposited into shared memory by the last link (in this case, hyp2000_mgr).
+If any of the links dies,
+no heartbeat will be seen by statmgr and it will complain appropriately.
+
+<H3>Error Messages:</H3>
+Since the whole mega-module has only one module-id, the sub-modules need
+to share the complete set of error numbers within a common descriptor file.
+Each link is assigned a
+block of error numbers to use for its complaints.  Each link passes along
+any error messages it reads from the pipe.  The last link puts all error
+messages into shared memory where they are available to statmgr.
+Statmgr reads one descriptor file for the mega-module.
+
+<H3>Final Output from Mega-module:</H3>
+The last link in the mega-module, hyp2000_mgr, deposits heartbeats, error
+messages, and event messages
+(that look like hypoinverse archive files) onto shared memory where any
+other Earthworm module can find them.
+<HR>
+
+
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/eqproc_ovr.html">Eqproc Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,29 @@
+#
+#                    Nmake File For startstop_nt
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP=startstop
+O=$(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+    $L\libew_mt.lib $L\startstop_lib.obj \
+    $L\startstop_winlib.obj $L\service_ew.obj $L\lockfile.obj $L\lockfile_ew.obj \
+    $L\ew_nevent_message.obj $L\pipeconsole.obj  -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\startstop*

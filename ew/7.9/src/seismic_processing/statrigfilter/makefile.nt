@@ -1,0 +1,44 @@
+#
+#   THIS FILE IS UNDER CVS - 
+#   DO NOT MODIFY UNLESS YOU HAVE CHECKED IT OUT.
+#
+#    $Id: makefile.nt 5320 2013-01-30 20:04:07Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.2  2006/11/21 23:04:53  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.1  2005/11/23 18:56:31  dietz
+#     New module for filtering individual station triggers. Heavily based
+#     on the code from pkfilter.
+#
+#
+
+#     Nmake File For statrigfilter - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = statrigfilter    
+O = $(APP).obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: statrigfilter.obj 
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+    $L\libew.lib -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	del $B\statrigfilter*

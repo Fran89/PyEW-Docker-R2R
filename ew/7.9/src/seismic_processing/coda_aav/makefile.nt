@@ -1,0 +1,44 @@
+# THIS FILE IS UNDER CVS - DO NOT MODIFY UNLESS YOU CHECKED IT OUT!
+#
+#  $Id: makefile.nt 490 2009-11-09 19:16:15Z dietz $
+# 
+#  Revision history:
+#   $Log$
+#   Revision 1.1  2009/11/09 19:15:28  dietz
+#   Initial version, may still contain bugs and debugging statements
+#
+
+
+#
+#                    Nmake File For coda_aav - Windows NT version
+#
+APP = coda_aav
+O = $(APP).obj caav_config.obj caav_stalist.obj compare.obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+!include <ntwin32.mak>
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib
+
+
+$B\$(APP).exe: $O
+   link $(linkflags) $(libs) $O \
+    $L\libew.lib $L\swap.obj $L\trheadconv.obj $L\rw_coda_aav.obj \
+ -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~ 
+
+clean_bin:
+	-del $B\coda_aav*

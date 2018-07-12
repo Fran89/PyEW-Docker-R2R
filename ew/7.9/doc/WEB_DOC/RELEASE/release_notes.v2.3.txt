@@ -1,0 +1,58 @@
+Release Notes: Earthworm Version 2.3
+
+New Modules
+***********
+
+EQPRELIM: does rapid notification based on user defined number of picks
+ 	associated with an event.
+
+RINGTOCOAX: transfers messages from specified memory ring to specific
+		network coax; optionally transfers heartbeats.
+  
+
+Modules Modified:
+*****************
+
+	Coaxtoring: modified to read from a specific port
+  	picks.
+
+	Menlo_report Modifications:
+		1. optional whether transfer .arc or .sum files, both or none
+		2. user defined suffix for arc and sum files
+		3. user defined temporary filename used in transfer to remote
+		   system. (see copyfile below)
+		
+	Copyfile Utility: modified when transferring file to remote system;
+		first,  creates temporary file on remote system
+		and after successful transfer renames file to correct filename 
+		and suffix.			
+
+	
+Important Notes:
+
+	Hypoinverse os2 and solaris versions are different source code.
+	The Solaris version is the same as Fred Klein's official version.
+	In order to compile under OS2, the OS2 version was modified to be 
+	ANSI compatible.
+	The plan is to have Fred produce an ANSI version after the April 18
+	firedrill is over.
+		    
+
+Modules in Progress
+
+	Export - version that forks under Solaris.
+
+	Import_generic
+
+	Export_generic
+
+	Digi
+
+	Eqglitch
+
+	Picker_exp
+
+
+
+
+ 

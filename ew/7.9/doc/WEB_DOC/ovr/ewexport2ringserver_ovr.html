@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>ewexport2ringserver overview</title></head><body bgcolor="#ffffff">
+<center>
+<h1>ewexport2ringserver Overview</h1>
+<i>(last revised April 23, 2015)</i></center>
+<p>
+The <b>ewexport2ringserver</b> program collects data from an Earthworm <a href="import-export_ovr.html"><b>export</b></a> process and sends the data to an IRIS <i>ringserver</i> SeedLink server. If you are running an Earthworm system, you should consider using the <a href="ew2ringserver_ovr.html"><b>ew2ringserver</b></a>
+program instead. This version of the software is only needed if you
+must run it on a system without Earthworm and have access to an export
+feed from an Earthworm system on a different host.</p>
+<p>All data are packaged as 512-byte miniSEED records allowing the destination <i>ringserver</i> to serve the the data via the SeedLink protocol. Ideally the <b>ewexport2ringserver</b> process is on the same machine or the same local network as the destination <i>ringserver</i>.<br>
+</p>
+<p>Due to the differences between Earthworm Tracebuf packet lengths and
+miniSEED records, the program maintains a small internal buffer for
+each time series. This allows the program to create full and efficient
+miniSEED records, but also introduces a slight delay or latency in the
+data transmission. The amount of delay depends on the sample rate of
+the data and the compressability of the series. For most purposes it is
+inconsequential.<br>
+</p>
+<p>The IRIS page for this program is here:&nbsp; <a href="https://seiscode.iris.washington.edu/projects/ewexport2ringserver" target="_blank">IRIS Supported Software - ewexport2ringserver</a><br>
+</p>
+
+<p>For more information on the <i>ringserver</i>, visit:&nbsp; <a href="https://seiscode.iris.washington.edu/projects/ringserver" target="_blank">IRIS <i>ringserver</i> SeedLink server</a></p>
+For information on setting up this program and the <i>ringserver</i> SeedLink server, see the "HowTo-EW-SeedLink.txt" file included with the source code, or view <a href="https://seiscode.iris.washington.edu/projects/ewexport2ringserver/wiki/A_SeedLink_server_for_Earthworm" target="_blank">the setup instructions on the IRIS site</a>.<br>
+<br>
+<br>
+
+<center><b><a href="../modules.html">Module Index</a>
+</b></center>
+<!-- USGS-required stuff at the end -->
+<hr><br>
+<b>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body></html>

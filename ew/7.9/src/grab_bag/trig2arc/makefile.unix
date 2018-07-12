@@ -1,0 +1,37 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lthread -lm $(LINK_LIBS)
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+OBJ = trig2arc.o \
+      hyp_trig_utils.o \
+      $L/libew_mt.a \
+      $L/dirops_ew.o \
+      $L/socket_ew.o \
+      $L/socket_ew_common.o \
+      $L/mem_circ_queue.o \
+      $L/parse_trig.o \
+      $L/swap.o 
+
+trig2arc: $(OBJ); \
+	$(CC) $(CFLAGS) -o $(B)/trig2arc $(OBJ) $(SPECIFIC_FLAGS)
+
+lint:
+	lint trig2arc.c hyp_trig_utils.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/trig2arc*

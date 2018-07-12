@@ -1,0 +1,193 @@
+<HTML>
+<HEAD>
+<TITLE>EARTHWORM Status 98/02</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+ 
+ 
+<H1 ALIGN=CENTER>
+<B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM Status Report<BR>
+</FONT></FONT></B></H1>
+<HR WIDTH="100%">
+ 
+<H5 ALIGN=RIGHT><TT>Feb. 12, 1998</TT></H5>
+
+
+<H4>This is an update of Earthworm status since the notes of
+<A HREF="19970925_status.1.html">9/25/97</A>.</H4>
+
+The Earthworm community is alive and growing. The number of
+participants is growing and, more significantly, so is the number of
+sites participating in development. Currently, eight individuals at
+UofW Seattle, PNL Richland, USGS Menlo Park, ATWC Palmer, and USGS
+Golden are actively participating in design, implementation,
+modifications, and testing. This group has been keeping in touch via
+<P>
+email, individual phone calls, and a weekly conference call meeting.
+This has resulted in a very effective development team, especially when
+one considers that we're spread over three time zones, several thousand
+miles, and report to six different supervisors. The benefits have been
+to (1) accelerate progress by sharing specialized knowledge, (2)
+provide a very rapid mechanism for isolating and fixing bugs, (3)
+identify and implement mutually desired enhancements, and (4) assure
+that new designs are as generally useful as possible.
+
+<H3>CURRENT DIRECTIONS:</H3>
+<UL>
+<LI><B>1. NOAA-USGS Tsunami project:</B>
+	This has been one of the main objectives. Work to date
+	consisted of installation of systems at the Alaska Tsunami
+	Warning Center (ATWC) in Palmer Alaska, UofW in Seattle, USGS
+	Menlo Park, and an installation is in progress at PGC British Columbia. 
+	The result is that ATWC is receiving trace data from IDA, USNSN, Menlo
+	Park, and Seattle. All data are interfaced to ATWC's existing
+	processing system. In addition, hypocentral parameters are
+	being received from Menlo Park and Seattle. Our current
+	installation there consists of two computers: a Sparc Ultra,
+	which acts as their 'loading dock', and an NT Intel machine
+	which digitizes local analog data and runs the core ATWC
+	functions.  The digital data are currently being shipped via
+ 	a combination of public Internet and DOI net, which, as expected, 
+	has proven to be a rich source of rare link failure-modes,
+	and has thus provided a good test-bed for debugging and ruggedizing 
+	our communications software. Work is continuing, as described below.
+<P>
+<LI><B>2. Support of regional networks:</B>
+	This has focused on support of individual installations, and
+ 	'completion' of Earthworm, in terms of interactive analysis and
+	archiving. The work done at the University of Fairbanks (IceWorm) 
+	has resulted in an excellent integration of the DataScope interactive
+	analysis package. The approach here has been to create  'connector'
+	software, which facilitates interfacing Earthworm to various
+	interactive analysis schemes already in use at various sites. An 
+	interface to the UofW 'uw2' format 
+	has been completed, and a SAC interface is in progress. The
+	object is to be in position to accommodate pre-existing
+	interactive analysis packages, as well as being able to offer a
+	variety of pre-integrated options. A number of site visits have
+	been scheduled with the objective of discussing areas in which
+	we can be of service, and to produce task lists and schedules.
+<P>
+<LI><B>3. EWAB:</B>
+	We have responded to the
+	EWAB request for documentation (see below); in addition, 
+	a 'request for comment' (RFC) mechanism is being created to 
+	coordinate development efforts at various sites. The objective 
+	is to assure that the whole community be aware of various planned 
+	and ongoing developments, and that there be an opportunity to 
+	submit comments which will be considered by the developing 
+	institution. The hope is that this will permit sharing of 
+	programming talent and software components, and will
+	result in modules, which will be of more general utility.
+
+</UL>
+
+<H3>RECENT DEVELOPMENTS:</H3>
+<UL>
+<LI><B>Socket utility routines:</B>  Our experiences with long-distance, long-term
+socket connections, multi-threaded servers, automated client programs
+as well as the seamy underside of NT and Solaris 2.6, have led us
+re-write our socket utility routines. This new suite features
+user-specified timeout values and proper operation on Solaris and NT.
+<P>
+<LI><B>WaveServerV:</B>  This is an enhancement of WaveServerIV. The additional
+features are a robust crash-recovery scheme, incorporation of the new
+socket routines (see above), performance enhancements, and bug fixes.
+<P>
+<LI><B>WaveClientII:</B>  This is a set of utility routines to ease creation of
+WaveServer clients. This set replaces the earlier, simpler such set,
+and features a wider variety of services for both 'simple' and
+'sophisticated' client programs, is multi-thread safe, and utilizes the
+new socket routines (see above).
+<P>
+<LI><B>'UW2' interface:</B>  An interface between Earthworm and the University of
+Washington 'uw2' interactive analysis package has been completed. The
+routine is executed either automatically or manually, takes either
+Earthworm 'trigger' messages or UW2 format pick files, and constructs
+the UW2 event files by accessing a specified list of WaveServers. This
+routine is the first use of a series of utility routines, which will
+permit quick integration with other interactive analysis formats.
+<P>
+<LI><B>SAC interface:</B>  Work is about to start on an interface to SAC, modeled
+on the UW2 interface code, above. The next task is to submit to the
+EWAB a request for comment (RFC). The plan is to collect the responses,
+produce an implementation plan, which addresses the comments, and to
+start implementation of a first version module.
+<P>
+<LI><B>CarlTrig:</B>  Named in honor of its perpetrator, this is a port of the
+traditional STA/LTA trigger algorithm as popularized by Carl Johnson.
+The initial version is nearing completion. The motivation was to
+provide a more conservative method of saving event data than via
+hypo-inverse solutions. This module generates 'trigger' messages, the
+same as those generated by hypoinverse solutions (arc2trig), or the
+John Evans long period coincidence detector (lptrig). This initial
+version features subnet logic, and may include individual station
+trigger parameters and inclusion of delayed data. An RFC is being
+prepared to provide the specs for future versions.
+<P>
+<LI><B>Documentation:</B>  An overview document, module descriptions, and sample
+parameter files have been submitted to the EWAB, and have been posted
+on the CNSS site. This is an ongoing process; additional descriptions
+are being prepared. It has been noted that there is currently a
+discontinuity between the overview document and the descriptions of
+individual modules. It is agreed that there should be a section
+explaining more about the various components of Earthworm, and an
+explanation of how they interact. It has been suggested that this could
+be done via several examples, stating the problem to be solved, a
+diagram of an Earthworm construction to solve the problem, and an
+explanation of how the various components of the construction would
+interact. Further comments and contributions are welcome.
+<P>
+<LI><B>RCV:</B>  RCV, the USNSN computer code which receives USNSN data has been
+encapsulated into an earthworm module. The approach here has been to
+encapsulate the existing RCV code with no modifications. Thus, as the 
+USNSN produces internal enhancements to RCV, the new code can be moved directly 
+into this module. Modifications affecting the external behaviour, will, of
+course, require a change to the encapsulating wrapper. This connects to the USNSN
+system in Golden, CO and receives triggered, compressed trace data,
+possibly out of sequence. The USNSN system in Golden controls which
+stations are sent. The encapsulating wrapper decompresses the data,
+re-sequences the data (as permitted within a user-specified time
+limit), and produces a stream of standard Earthworm trace data
+messages. This is currently installed and undergoing testing between the 
+USNSN Golden and ATWC in Palmer. It appears that RCV may require some
+minor enhancements to make it more robust, and USNSN has agreed to
+work on this. It is expected that this module will be documented
+and released as part of Earthworm after it has demonstrated acceptable
+performance. 
+<P>
+<LI><B>import_IDA:</B>  A similar encapsulation has been done for the receiver of
+IRIS/IDA data from UCSD. A module description document is being produced.
+</UL>
+
+<H3>FUTURE DIRECTIONS:</H3>
+<UL>
+<LI><B>Tsunami:</B>  This will continue to be a large effort. Upcoming tasks
+include implementing a list of enhancements for ATWC, generating a
+second-generation bug- and enhancement list based on experience with
+the current installation at ATWC, installation of dedicated
+communication links, integration of data acquisition from several types
+of data loggers, and installation and testing of a redundant system.
+<P>
+<LI><B>DBMS:</B>  Phase II work is about to begin. This includes evaluation and
+selection of suitable data structures, the production of a working
+system capable of acquiring and storing real-time data in a commercial
+data base, providing operator displays and controls, and to provide
+interactive access to the data which permits modifications, additions,
+and archiving of the stored data.
+<P>
+<LI><B>Complete Earthworm:</B>  Work toward making Earthworm a complete network
+processing system capable of rapid exchange of data with other sites,
+and offering a suite of interactive analysis tools suitable for
+low-level routine processing as well as research support.
+<P>
+<LI><B>Regional support:</B>  Assist various regional networks as required to help
+them meet their goals.
+<HR>
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+
+</BODY>
+</HTML>
+

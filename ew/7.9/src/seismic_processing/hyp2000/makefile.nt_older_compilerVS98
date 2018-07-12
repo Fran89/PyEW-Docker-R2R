@@ -1,0 +1,72 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt_older_compilerVS98 4348 2011-06-29 20:37:50Z stefan $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2006/06/14 19:31:55  stefan
+#     deprecated makefile
+#
+#     Not only is this a makefile for an older version of the compiler
+#     but as of 6/29/2011 it's also a makefile for an older version of 
+#     hyp2000. Left here for your reference, since if you have the old
+#     compiler but the new hyp2000 you can probably use this as a starting
+#     point.
+#
+#     Revision 1.3  2004/05/20 23:14:49  dietz
+#     Grabbed Fred Klein's latest location-code friendly version 5/20/2004
+#
+#     Revision 1.3  2003/05/06 20:55:09  lucky
+#     *** empty log message ***
+#
+#     Revision 1.2  2000/09/12 22:15:54  dietz
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/09/12 20:52:43  dietz
+#     Initial revision
+#
+#     Revision 1.1  2000/02/14 18:41:39  lucky
+#     Initial revision
+#
+#
+#
+
+
+#          Nmake file for stand-alone version of hypoinverse
+#                         Windows NT version
+#
+#  Compiling and linking is accomplished on one line.
+#  This allows the compiler to intercompare the source files,
+#  and catch some additional errors.
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+FFLAGS = /exe:$B\hyp2000.exe /list /f77rtl
+
+FOR = hyp.for hyate.for hybda.for hybeg.f hycal.for hycin.f \
+      hycmd.for hycout.f hycrh.for hycrt.for hydel.for hydelt.f \
+      hyedit.f hyfile.for hyfmc.for hyinit.for hyinp.for hyloc.for hylst.for \
+      hymag.for hymagp.for hyopen.for hyphs.for hypoinv.for hypref.for \
+      hypro.for hyrep.for hysol.for hysou.for hysta.for hystl.for \
+      hysum.for hysvd.f hytime.f77 hytra.for hytrh.for hytrl.for \
+      hytrt.for hyxmc.for init_event.f medwt.for utmcal.for \
+      subs\errset.f subs\openr.f subs\openw.f subs\klas.for \
+      subs\upstr.for subs\spawn.f subs\askc.for subs\lask.for \
+      subs\jask.for subs\askr.for subs\leng.for subs\readq.for \
+      subs\dayjl.for subs\jdate.for subs\box2.for subs\box3.for \
+      subs\klass.for subs\ksic.for
+
+hyp:
+   f77 $(FFLAGS) $(FOR)
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~ subs\*.o subs\*.obj
+
+clean_bin:
+	-del $B\hyp2000*

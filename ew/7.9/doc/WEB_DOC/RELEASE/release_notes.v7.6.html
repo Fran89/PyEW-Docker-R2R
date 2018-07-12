@@ -1,0 +1,315 @@
+<HTML>
+<HEAD>
+<TITLE> EW v7.6 released on November 2, 2012</TITLE>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER>
+  <H1>Earthworm Release Notes V7.6</H1>
+  <I>(November 2, 2012)</I>
+</CENTER>
+<p> <a href="#modules">New Modules</a><br>
+  <a href="#modifications">Modifications/ Bug Fixes to Existing Modules</a> <br>
+  <a href="#config">Changes To Configuration Files And Descriptor Files</a><br>
+  <a href="#library">Library Changes</a>
+<p>
+<PRE>
+
+<b><a name=modules>NEW MODULES:</a></b>
+***********
+
+ewhtmlreport
+An awesome new HTML report generator for producing catalogs from a directory
+of arc files (saving TYPE_HYP2000ARC messages to a directory using ew2file)
+and optionally a dir of TYPE_MAGNITUDE messages (also produced using ew2file).
+The program has both a standalone mode and the ability to run periodically
+and produce timed reports. 
+Ruben Luis October 26, 2012
+
+coda_aav, coda_dur
+ These Lynn Dietz modules were moved from the Menlo Contrib svn into Earthworm proper
+ coda_aav: This program produces 2s coda avg absolute values (aav).     
+         The program was decoupled from pick_ew so that picks and     
+         coda can potentially be produced from differently-processed  
+         waveform streams of a given SCNL
+ coda_dur: This program reads picks and coda avg absolute values (aav)  
+         and then determines the coda duration for each pick.         
+         The program was decoupled from pick_ew so that picks and    
+         coda can potentially be produced from differently-processed  
+         waveform streams of a given SCNL.
+Added to SVN by Stefan Lisowski 2012-10-25
+
+sniffrings
+displays the content of the messages read from multiple rings simultaneously.
+It prints the logo, sequence # and length of the message, followed by the
+message itself (except for binary waveform messages) to the screen.
+It is based on new EW "Specific Semaphore" functions defined in sema_ew.c
+Matteo Quintiliani 2012-09-19
+
+Mm, Theta, Ms
+These three new global magnitude modules were recently separated from their windows specific GUI
+parts...so I ported them to UNIX for everyone's use. Enjoy, but the unix versions are still
+under test.
+Paul Friberg 2012-09-10
+
+ew2moledb
+Mole is an open near real-time database-centric Earthworm subsystem
+It is made up of a MySQL database schema (moledb), an Earthworm module
+(ew2moledb), and a PHP web interface (moleface).
+Matteo Quintiliani and Stefano Pintore July 27, 2012
+
+pick_wcatwc and loc_wcatwc 
+These are brought over from Windows to compile on a UNIX box. I have compiled and
+tested these on MAC OS X 10.5,  and now on Linux and Solaris as well
+Paul Friberg 2012-07-10
+On Sept 11, 2012 I upgraded the loc_wcatwc to match the Theta output from the Theta program
+this is sync'ed with EarlyBird svn release r986. I only had to modify the loc_wcatwc.c and .d
+files.
+Paul Friberg 2012-09-11
+
+hypAssoc
+ This module tries to associate and merge several hyp2000 messages for a single event
+ in order to produce a single hyp2000 message.
+ This is a preliminary version with simple test only based on origin time.
+Jean-Marie SAUREL 09/28/2011
+
+ewshear
+ This module takes data from a specified ring from two sensors
+ assumed to be placed on different floors of a building.  By computing the
+ relative drop in shear wave velocity between subsequent time windows,
+ an alarm message is posted to a specified ring when that drop is large enough.
+Scott Hunter 11/08/2011
+
+PickStatistics - in display
+ This module by Ruben Luis displays pick statistics of binder_ew files and is useful
+ for detecting errant pick settings.
+Added to SVN by Paul Friberg Jan 8, 2012
+
+pick_FP 
+ This is a new Earthworm picker module developed by Anthony Lomax and Claudio Satriano
+ and is a filter based picker. It reportedly (see SRL article) does much better than
+ pick_ew and is definitely easier to configure with only 4 settings! It does not do
+ codas though, and for that Lynn Dietz's coda_aav and coda_dur modules.
+Added to SVN by Paul Friberg Dec 2011
+
+ew_rsamalarm
+ This module is a port of a VB module to monitor RSAM messages, detect events at
+ specified stations (logging & posting messages about said events), and posting an
+ alarm message when enough stations in a network report events concurrently.
+Added to SVN by Scott Hunter 04/04/2012
+
+snwclient
+ This module was part of the Contrib/Menlo section and was written by Jim Luetgert of the USGS
+Added to SVN by Paul Friberg 
+
+<b><a name=modifications>MODIFICATIONS/BUG FIXES TO EXISTING MODULES:</a></b>
+********************************************
+
+export_actv and derivatives
+Wes Thelen and Pete Lombard uncovered a bug that showed MOD and RING names could only be 20 chars
+for just this application. Fixed in SVN and also added versioning and checks to see that the
+length of these tokens are smaller than allowed by getutil, which is 32 char.
+Paul Friberg October 19, 2012
+
+ewhtmlemail
+Many new features added to ewhtmlemail in recent days that improve the google charts, allow
+ML magnitudes to be seen and integrated, KML generation etc. Check it out. Read the .d
+file carefully
+Paul Friberg & Ruben Luis, October 19 2012
+
+hyp2000_mgr
+A new optional capability to have PRT files named and sent to a directory: SeparatePRTdir 
+Paul Friberg October 7, 2012
+
+ew2mseed
+Modified ew2mseed to write data in big-endian format accroding to IRIS recommendations for all types of procesors
+Linux version of ew2mseed has been extensively tested at IRIS DMC
+Ilya Dricker September 22, 2012
+
+nmxptool
+Updated nmxptool to the version 2.1.0
+Main feature added is the capability to specify the Location Code
+within the channel pattern declaration.
+Matteo Quintiliani July 22, 2012
+
+putpick
+Added in the option to specify the delay time between pick releases:
+Usage: putpick <pickfile> <RING_NAME> <pause: y/n or microsecs delay>
+Paul Friberg July 10, 2012
+
+binder_ew v1.0.6
+Significant changes to binder to improve multi-component station picks (trying to
+eliminate use of pkfilter) by adding logic to the stacking and association phase
+of the process.
+Paul Friberg July 10, 2012
+
+decimate
+Was very annoyed by the constant warnings about gaps and overlaps that I knew about
+so added a Quiet parameter to stop these from coming to stderr (still logged).
+Paul Friberg July 6, 2012
+
+libsrc/util
+In order to create ew2mseed_nl (see below), I added util/ws_clientII_no_location.c
+there. It can be used as a drop-off replacement for standard ws_clientII.c if you want
+to create no-location version of your program (see ew2mseed module as an example)
+Ilya Dricker, June 20, 2012
+
+ew2mseed
+To my surprise there exist many pew-SNCL (EW version 6 or below) installations of EW
+in this world. In order to be able to connect to there conservative wave_serverV, we
+added ew2mseed_nl target to corresponding makefiles of ew2mseed. Now we build ew2mseed
+and ew2mseed_nl together. Some logging improvement is also done in a source code of 
+ew2mseed. Also, I removed wsSniffer program from ew2mseed makefile: this program was never
+properly completed (let me know if you want it back). Finally, I made sure that ew2mseed
+links with qlib2_nl (no-leap-second) version of miniseed library.
+Ilya Dricker, June 20, 2012
+
+reftek2ew
+ Allowed tracebuf2 splitting for C2 compression, was segfaulting the code 1.7.1
+ Fixed the endtime check on tracebuf2's for single packets 1.7.2
+Paul Friberg, June 12, 2012
+
+localmag
+ Magnitude quality estimator. Added parameter MLQpar1. Ticket #200 .
+Matteo Quintiliani, Franco Mele April 19, 2012
+ Added in ResponseInMeters flag to allow SAC responses from rdseed -pf to be used as is. This
+ is actually a change to this libsrc/util/transfer.c code.
+Paul Friberg, July 19, 2012
+
+trig2disk (and util/sacputaway.c)
+ Fixed bugs saving SAC trace files. Ticket #192 .
+Stefano Pintore, Matteo Quintiliani April 19, 2012
+
+ewspectra, ewnotify, activated_scripts
+ All three of these modules were upgraded to set default heart beat intervals of 30 seconds
+and allow HeartbeatInt to be set as an option in the configuration file. This was a slight
+oversight on the initial development :)
+Updated by Paul Friberg March 16, 2012
+
+hypoinverse 1.36
+ Upgrade to allow deeper boreholes than -999m in the stations file. This is important now
+that station elevation can be used with the CRE velocity model specification.
+From Fred Klein, installed and tested by Paul Friberg March 13, 2012
+hypoinverse 1.38
+ Upgrade for international dateline crossing handling for AVO
+From Fred Klein, installed and tested by Paul Friberg and AVO crew Aug 30, 2012
+
+hyp2000_mgr
+ This was a bug fix in the summary line printing for small negative depths. New version
+tested with hypoinverse 1.36 released by Fred Klein March 12, 2012
+Paul Friberg March 13, 2012
+ Updated to use hypoinverse 1.38 and unified quality algo in read_arc.c
+Paul Friberg August 30, 2012
+
+getmenu
+ now getmenu accepts from command line, more than one waveserver address and port.
+ Usage: getmenu server:port [ server:port [ server:port ] ... ]
+ Closed ticket #194 .
+Matteo Quintiliani 02/15/2012
+
+diskmgr
+ added the parameter checkInterval. Closed ticket #191 .
+Matteo Quintiliani 01/27/ 2012
+
+gmew
+ modified the gm_util.c to allow arbitrary horizontal SEED chars like 2 and 3 for horizontal
+ component (it was restricted to N and E chars).
+ also fixed location code printing in STRONG MOTION message sent to EW ring
+ Added in allowDuplicates flag to .d to allow many location codes at a given SCN! Before only the first loc in the menu was taken.
+ The version is now 0.2.4.
+Paul Friberg February 6, 2012
+ Added in ResponseInMeters flag to allow SAC responses from rdseed -pf to be used as is. This
+ is actually a change to this libsrc/util/transfer.c code. Same as localmag.
+ The version as of this one is 0.2.6
+Paul Friberg, July 19, 2012
+
+startstop
+ On some linux systems the Interactive() thread spun out of control because the
+ return of fgets() was not being checked and it was not returning an error either.
+ This caused some EW systems (on a Fedora 15 box for instance) to spin out of control
+ because the interactive input thread was spinning endlessly sucking up CPU and writing
+ to stdout the status prompt message. Fixed in version starstop 7.6a 
+Paul Friberg January 17, 2012
+
+localmag
+    Fixed tickets #174 , #176 , #177 , #179 .
+    http://bigboy.isti.com/trac/earthworm/query
+      - 174 Bug in localmag handling parameter saveTrace.
+      - 179 Localmag: parameter saveTrace allows to define a structure of
+            subdirectories
+      - 176 A station filter for localmag.
+            Added parameters SkipStationsNotInArc and MinWeightPercent.
+      - 177 Localmag: look at the specific version of an event-id
+            Added parameter LookAtVersion.
+Matteo Quintiliani 09/27/2011
+
+localmag
+     closed ticket #183 - added new option saveSCNL to allow location code
+	to be saved in channel mags of TYPE_MAGNITUDE message
+Paul Friberg 10/21/2011
+
+statmgr
+	added checking for length of descriptor file to avoid segmentation violations
+	or stack smashing as it is now called in gnu world
+Paul Friberg 10/20/2011
+
+ewthresh
+	added a new command, ThreshVotes, to generate a triglist message when enough
+alarms within a specified timeframe have occurred (backdated by a specified time);
+the SCNLs to be included are listed in the command
+Scott Hunter 12/22/2011
+
+carlsubtrib
+	added new optional functionality to release preliminary event message 
+	when a the network trigger is set to ON
+Ruben Luis 10/01/2012
+
+binder_ew
+	removed call to tport_putflag, which was (supposedly) being used to terminate a
+	thread when the module was exiting, but (with recent changes to startstop) 
+	caused earthworm to shut down entirely.  (Thread will terminate as the module
+	does.)
+Scott Hunter 4/4/2012
+
+binder_ew
+/* paulf - added version reporting 2012.02.21 along with no_P_on_Horiz boolean */
+/* paulf - v1.0.2 added ChannelNumberMap for no_P_on_Horiz option */
+/* paulf - v1.0.3 added no_P and no_S options to scavenge portion of phase binding */
+/* paulf - v1.0.4 - added stack_horizontals to allow inclusion of horizontals in stacking, new default is to ignore HORIZONTAL comps */
+#define BINDER_VERSION "1.0.4 2012.06.02"
+See above comments per version change - Paul Friberg
+
+
+ew2rsam
+	Added 2 new config commands: ReadTRACEBUF2 and WriteTRACEBUF2, to read/WriteTRACEBUF2
+	TRACEBUF2 messages.  When writing TRACEBUF2 messages, the period indicator is moved to
+	the Location field.  When reading TRACEBUF messages and writing TRACEBUF2 messages, 
+	the channel field is truncated to fit.
+Scott Hunter 4/4/2012
+
+ew2rsam
+	Added a new command, QueueSize, to override the default queue size of 500 messages.
+Scott Hunter 8/23/2012
+
+<b><a name=config>CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:</a></b>
+****************************************************
+ewthresh.d
+	Now recognizes the ThreshVotes command
+Scott Hunter 12/22/2011
+
+
+<b><a name=library>LIBRARY CHANGES:</a></b>
+****************
+sema_ew.c
+        Added the following functions:
+	CreateSpecificSemaphore_ew(), DestroySpecificSemaphore_ew(),
+        PostSpecificSemaphore_ew(), WaitSpecificSemaphore_ew().
+	Since Mac OS X does not support unnamed semaphores, declared
+	CreateSpecificNamedSemaphore_ew() and DestroySpecificNamedSemaphore_ew(),
+	in place of the unnamed ones.
+Matteo Quintiliani 09/19/2012
+
+</PRE>
+</BODY>
+</HTML>

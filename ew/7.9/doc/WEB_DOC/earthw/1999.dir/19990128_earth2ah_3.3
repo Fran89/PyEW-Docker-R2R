@@ -1,0 +1,53 @@
+
+From withers@gandalf.ceri.memphis.edu Thu Jan 28 17:50:29 1999
+Date: Thu, 28 Jan 1999 16:00:01 -0600 (CST)
+From: "Mitchell M. Withers" <withers@gandalf.ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: new earth2ah
+
+
+I have moved the old version of earth2ah on gldrocky to earth2ah3.3.
+Recall that earth2ah is a standalone executable (not a module)
+that allows grabbing user specified slices of data from a wave_serverV
+and writing to ah_xdr format data files (new version has sac too).
+It runs under both NT and Solaris.
+
+It is available from the earthworm developement crew in the UM directory.
+(Or I can supply it directly, much to Alex's consternation).
+
+The new version of earth2ah has the following enhancements:
+
+     -v3.9 compliant. Will not compile under 3.3 but will still
+           probably work (sorry I've no way to test this).
+
+     -still runs and compiles under both NT and Solaris but
+      you must source your ew_XX.cmd to recompile.
+
+     -still a standalone executable (with man.1/earthworm.1
+       man pages at Steve Malone's encouragement [insistence?]).
+
+     -uses standard earthworm libraries instead of local ones
+
+     -uses trig2disk putaway routines instead of local ones
+      (so we only have to modify these in one place, eh).
+
+     -fixed bug in -L switch that only used last line of SNC file
+
+     -removed -e option (sorry, I got lazy).
+
+     -added -f switch to specify the output data format. Currently
+      only SAC and AH are supported.  Had trouble getting correctly
+      written SAC data on NT so, for the time being, consider Microsoft
+      NT and SAC to be mutually exclusive (AH works fine, but must
+      be transferred to Solaris in ascii format to avoid stupid ^M
+      characters).
+
+      Still needs to be a bit more friendly if the output directory
+      exists (currently we bail).
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+

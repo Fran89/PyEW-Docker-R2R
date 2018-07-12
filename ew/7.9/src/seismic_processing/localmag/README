@@ -1,0 +1,27 @@
+The is the README file for localmag, and earthworm program for
+calculating local magnitudes.
+
+See the overview and command HTML documents in the Doc directory
+
+There are sections in the code that some day will allow connections
+to the Earthworm Database. Currently, these are disabled by "#ifdef EWDB"
+cpp statements. Use these to look for places where the database connections
+need to be implemented. I encourage you to keep this EWDB-specific code
+inside these "#ifdef EWDB" lines. That way, earthworm users who do not have
+the Earthworm Database can still compile localmag.
+
+There are also sections of the code that allow some UW-specific file
+formats to be read and written. These are protected by "#ifdef UW". 
+Additional files are neede to compile localmag with these UW extensions; 
+they are not provided by USGS.
+
+The end result is that the code compiles now without the EWDB or UW
+sections. 
+
+/* Send all comments and complaints to Pete Lombard, lomb4185@pacbell.net */
+12/31/00
+
+Updated the code on August 8, 2005 as per users requests. Send all requests
+for changes to Paul Friberg p.friberg@isti.com (pete is now at UCBerkeley
+and his email is lombard@seismo.berkeley.edu)
+

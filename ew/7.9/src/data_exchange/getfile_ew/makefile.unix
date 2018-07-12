@@ -1,0 +1,29 @@
+#
+
+LINUX_FLAGS=-lm -lpthread -lc
+SOLARIS_FLAGS=-mt -lm -lsocket -lnsl -lposix4 -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+getfile_ew: getfile_ew.o getfile_socket.o 
+	$(CC) $(CFLAGS) -o $B/getfile_ew getfile_ew.o getfile_socket.o \
+	$L/getutil.o $L/kom.o $L/dirops_ew.o $L/transport.o \
+	$L/sleep_ew.o $L/logit.o  $L/time_ew.o $L/threads_ew.o \
+	$L/socket_ew.o $L/socket_ew_common.o \
+	$(SPECIFIC_FLAGS)
+
+
+lint:
+	lint getfile_ew.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/getfile_ew*

@@ -1,0 +1,176 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Earthworm Modules: SrPar2Ew overview</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+SrPar2Ew Overview</h1></center>
+
+<center><i>(last revised 10 January, 2007)</i></center>
+
+<p>
+
+<b>Introduction</b><br><br>
+
+SrPar2Ew allows the Symmetric Research PARxCH family of low cost
+24 bit data acquisition systems to send data to an Earthworm system
+running either Windows (Win2K, WinXP) or Linux.  PARxCH models with 1,
+4, and 8 channels are all supported.  It can also support 16 channels
+if run with 2 PAR8CH on the same PC which share one PARGPS.  Very
+accurate timestamping of the acquired data results when the optional
+PARGPS timing unit is used with the PARxCH A/D.  Timestamping using
+the PC system time set by NTP is also available.
+
+<br><br>
+
+SrPar2Ew reads configuration information like sampling rate and
+PARxCH model from an Earthworm style .d configuration file and then
+opens drivers and initializes hardware for the PARxCH and optional
+PARGPS.  Then it starts the A/D and goes into an infinite loop
+acquiring data, converting it to Earthworm tracebuf (or tracebuf2)
+format and writing it out to the specified Earthworm ring.  On each
+pass through the loop, it also sends a heartbeat message to the
+Earthworm ring.
+
+<br><br>
+
+In order to run SrPar2Ew, you need a working Earthworm system, a
+PARxCH A/D board, and the PARxCH device driver and library software
+that comes with the board and is also available free from the
+Symmetric Research website
+
+<a href="http://www.symres.com/index.htm"
+title="Symmetric Research manufactures high precision A/D's">www.symres.com</a>.
+
+For accurate timing information, a PARGPS timing unit and its software
+is also required.
+
+
+<br><br><b>Setup</b><br><br>
+
+Follow any instructions given in the official documentation to get
+Earthworm up and running.
+
+<br><br>
+
+The first step in adding PARxCH data is to install the PARxCH with GPS
+software.  This can be done by unpacking the pxgpsw2k.zip or
+pxgpslnx.tar file and running the included install script to copy the
+SR software to the \sr\parxch and \sr\pargps directories.  Linux users
+should substitute /usr/local/sr/parxch for references to the
+\sr\parxch directory.
+
+<br><br>
+
+You will also need to install the PARxCH and PARGPS device drivers
+using the indriver utilities from their respective driver
+subdirectories.  See the readme files in the \sr\parxch\driver and
+\sr\pargps\driver directories for more information.
+
+<br><br>
+
+Then hook up the A/D hardware.  Make sure it is working correctly by
+running the diagnostic program in the \sr\parxch\diags directory.  The
+acquisition programs in the \sr\parxch\scope and \sr\parxch\simple
+directories can also help in checking out a new system.
+
+<br><br>
+
+To add the PARGPS (optional but recommended), first install the PARGPS
+device driver using the indriver utility provided in the PARGPS
+software.  See the readme file in the \sr\pargps\driver directory for
+more information.  Then hook up the PARGPS hardware.  Make sure it is
+working correctly by running the diagnostic program in the
+\sr\pargps\diags directory.
+
+<br><br>
+
+Once Earthworm and the PARxCH/PARGPS are working on their own, it's time
+to get them working together.  Edit the srpar2ew.d configuration
+file settings so they are appropriate for your system.
+
+<br><br>
+
+At this time, you will probably also want to edit some additional
+Earthworm module configuration files to handle the PARxCH data that
+will be coming.  This might include adding tanks for the PARxCH data
+in wave_serverV.d if the data is to be saved on the same computer or
+setting the PARxCH channels in export_scn.d if the data is to be
+exported to another computer.
+
+<br><br>
+
+In the beginning, it is probably best to use two separate command
+prompt windows.  In the first, run startstop to start Earthworm.  In
+the second, type "srpar2ew srpar2ew.d" without the quotes
+to start the PARxCH acquiring and sending data.
+
+<br><br>
+
+You can check the log files and run diagnostic programs like sniffring
+to help diagnose any problems.  If something isn't going right, it is
+easy to stop SrPar2Ew, modify its configuration file, and
+restart it without having to stop the rest of Earthworm.  Once you've
+got your parameters set right, then go ahead and have startstop
+control SrPar2Ew too.
+
+
+<br><br><b>Compiling</b><br><br>
+
+SrPar2Ew is written in C and is compiled and linked using the
+standard Earthworm makefiles such as makefile.nt.  In order to
+successfully compile, access to the PARxCH and PARGPS system software
+is required.  This software, including source, is included with every
+PARxCH and PARGPS purchase.  It is also available for free download from
+the Symmetric Research website
+
+<a href="http://www.symres.com/index.htm"
+title="Symmetric Research manufactures high precision A/D's">www.symres.com</a>.
+
+<br><br>
+
+All Symmetric Research software, including the PARxCH system software
+and SrPar2Ew, has been designed so a single set of source code
+can service different operating systems.  This is accomplished
+primarily through the use of conditional compilation which selects OS
+specific code at compile time based on which SROS_xxx setting is defined.
+Valid options include SROS_WIN2K (for both Windows 2000 and XP) and
+SROS_LINUX.  Solaris is not available.
+
+<br><br>
+
+Although using a PARGPS timing unit is optional, it is recommended.
+Even if you are not using the PARGPS, you should always install the
+PARGPS software and define GPS_AVAILABLE when compiling the PARxCH and
+SrPar2Ew software, so the timing portions of the code are
+included.
+
+
+<br><br><b>More Info</b><br><br>
+
+General questions about Earthworm are probably best answered by
+the official Earthworm User's discussion group.  But, if you have
+specific questions about SrPar2Ew and its configuration
+parameters, please let us know at
+<a href="mailto:info@symres.com">info@symres.com</a>.
+
+</p>
+
+<center>
+<a href="../modules.html">Module Index</a> |
+<a href="../cmd/srpar2ew_cmd.html">SrPar2Ew Commands</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+The URL of this page is  <b>[http://folkworm.ceri.memphis.edu/ew-doc/ovr/srpar2ew_ovr.html]</b><br>
+Contact: <a href="mailto:info@symres.com"><b>info@symres.com</b></a>
+</address>
+
+</body>
+</html>

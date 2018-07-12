@@ -1,0 +1,247 @@
+.TH "include/nmxp_log.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp_log.h \- 
+.PP
+Log for Nanometrics Protocol Library.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNMXP_LOG_SET\fP   -1"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_NORM\fP   0"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_ERR\fP   1"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_WARN\fP   2"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_NORM_NO\fP   3"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_NORM_PKG\fP   4"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_STR\fP(s)   (s == NULL)? '<null>' : s"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_NULL\fP   0"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_CHANSTATE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_CHANNEL\fP   NMXP_LOG_D_CHANSTATE << 1"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_RAWSTREAM\fP   NMXP_LOG_D_CHANSTATE << 2"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_CRC\fP   NMXP_LOG_D_CHANSTATE << 3"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_CONNFLOW\fP   NMXP_LOG_D_CHANSTATE << 4"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_PACKETMAN\fP   NMXP_LOG_D_CHANSTATE << 5"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_EXTRA\fP   NMXP_LOG_D_CHANSTATE << 6"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_DATE\fP   NMXP_LOG_D_CHANSTATE << 7"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_GAP\fP   NMXP_LOG_D_CHANSTATE << 8"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_DOD\fP   NMXP_LOG_D_CHANSTATE << 9"
+.br
+.ti -1c
+.RI "#define \fBNMXP_LOG_D_ANY\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBnmxp_log_set_prefix\fP (char *prefix)"
+.br
+.RI "\fIAdd prefix string for logging. \fP"
+.ti -1c
+.RI "const char * \fBnmxp_log_version\fP ()"
+.br
+.RI "\fIPrint value of PACKAGE_NAME and PACKAGE_VERSION. \fP"
+.ti -1c
+.RI "void \fBnmxp_log_init\fP (int(*func_log)(char *), int(*func_log_err)(char *))"
+.br
+.RI "\fISet function pointers for 'normal logging' and 'error logging'. \fP"
+.ti -1c
+.RI "void \fBnmxp_log_add\fP (int(*func_log)(char *), int(*func_log_err)(char *))"
+.br
+.RI "\fIAdd function pointers to 'normal logging' and 'error_logging'. \fP"
+.ti -1c
+.RI "void \fBnmxp_log_rem\fP (int(*func_log)(char *), int(*func_log_err)(char *))"
+.br
+.RI "\fIRemove function pointers from 'normal logging' and 'error_logging'. \fP"
+.ti -1c
+.RI "int \fBnmxp_log_stdout\fP (char *msg)"
+.br
+.RI "\fIWrapper for fprintf to stdout and flushing. \fP"
+.ti -1c
+.RI "int \fBnmxp_log_stderr\fP (char *msg)"
+.br
+.RI "\fIWrapper for fprintf to stderror and flushing. \fP"
+.ti -1c
+.RI "int \fBnmxp_log\fP (int level, int verb,...)"
+.br
+.RI "\fIA generic logging/printing routine. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Log for Nanometrics Protocol Library. 
+
+Author: Matteo Quintiliani Istituto Nazionale di Geofisica e Vulcanologia - Italy quintiliani@ingv.it
+.PP
+\fBId:\fP
+.RS 4
+\fBnmxp_log.h\fP,v 1.15 2008-04-11 07:50:32 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NMXP_LOG_SET   -1"normal output with time and package name 
+.SS "#define NMXP_LOG_NORM   0"normal output with time and package name 
+.SS "#define NMXP_LOG_ERR   1"error output with time and package name 
+.SS "#define NMXP_LOG_WARN   2"warning output with time and package name 
+.SS "#define NMXP_LOG_NORM_NO   3"normal output without time and package name 
+.SS "#define NMXP_LOG_NORM_PKG   4"normal output with only package name 
+.SS "#define NMXP_LOG_STR(s)   (s == NULL)? '<null>' : s"If s is NULL return '<null>', otherwise value of s 
+.SS "#define NMXP_LOG_D_NULL   0"kind of log message 
+.SS "#define NMXP_LOG_D_CHANSTATE   1"
+.SS "#define NMXP_LOG_D_CHANNEL   NMXP_LOG_D_CHANSTATE << 1"
+.SS "#define NMXP_LOG_D_RAWSTREAM   NMXP_LOG_D_CHANSTATE << 2"
+.SS "#define NMXP_LOG_D_CRC   NMXP_LOG_D_CHANSTATE << 3"
+.SS "#define NMXP_LOG_D_CONNFLOW   NMXP_LOG_D_CHANSTATE << 4"
+.SS "#define NMXP_LOG_D_PACKETMAN   NMXP_LOG_D_CHANSTATE << 5"
+.SS "#define NMXP_LOG_D_EXTRA   NMXP_LOG_D_CHANSTATE << 6"
+.SS "#define NMXP_LOG_D_DATE   NMXP_LOG_D_CHANSTATE << 7"
+.SS "#define NMXP_LOG_D_GAP   NMXP_LOG_D_CHANSTATE << 8"
+.SS "#define NMXP_LOG_D_DOD   NMXP_LOG_D_CHANSTATE << 9"
+.SS "#define NMXP_LOG_D_ANY"\fBValue:\fP
+.PP
+.nf
+( NMXP_LOG_D_CHANSTATE | NMXP_LOG_D_CHANNEL | NMXP_LOG_D_RAWSTREAM | NMXP_LOG_D_CRC | NMXP_LOG_D_CONNFLOW | \
+  NMXP_LOG_D_PACKETMAN | NMXP_LOG_D_EXTRA | NMXP_LOG_D_DATE | NMXP_LOG_D_GAP | NMXP_LOG_D_DOD )
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "void nmxp_log_set_prefix (char * prefix)"
+.PP
+Add prefix string for logging. \fBParameters:\fP
+.RS 4
+\fIprefix\fP string message 
+.RE
+.PP
+
+.SS "const char* nmxp_log_version ()"
+.PP
+Print value of PACKAGE_NAME and PACKAGE_VERSION. 
+.SS "void nmxp_log_init (int(*)(char *) func_log, int(*)(char *) func_log_err)"
+.PP
+Set function pointers for 'normal logging' and 'error logging'. \fBParameters:\fP
+.RS 4
+\fIfunc_log\fP Function pointer to the the function for 'normal logging' 
+.br
+\fIfunc_log_err\fP Function pointer to the the function for 'error logging' 
+.RE
+.PP
+
+.SS "void nmxp_log_add (int(*)(char *) func_log, int(*)(char *) func_log_err)"
+.PP
+Add function pointers to 'normal logging' and 'error_logging'. \fBParameters:\fP
+.RS 4
+\fIfunc_log\fP Function pointer to the the function for 'normal logging' 
+.br
+\fIfunc_log_err\fP Function pointer to the the function for 'error logging' 
+.RE
+.PP
+
+.SS "void nmxp_log_rem (int(*)(char *) func_log, int(*)(char *) func_log_err)"
+.PP
+Remove function pointers from 'normal logging' and 'error_logging'. \fBParameters:\fP
+.RS 4
+\fIfunc_log\fP Function pointer to the the function for 'normal logging' 
+.br
+\fIfunc_log_err\fP Function pointer to the the function for 'error logging' 
+.RE
+.PP
+
+.SS "int nmxp_log_stdout (char * msg)"
+.PP
+Wrapper for fprintf to stdout and flushing. \fBParameters:\fP
+.RS 4
+\fImsg\fP String message 
+.RE
+.PP
+
+.SS "int nmxp_log_stderr (char * msg)"
+.PP
+Wrapper for fprintf to stderror and flushing. \fBParameters:\fP
+.RS 4
+\fImsg\fP String message 
+.RE
+.PP
+
+.SS "int nmxp_log (int level, int verb,  ...)"
+.PP
+A generic logging/printing routine. This function works in two modes:
+.PP
+.IP "1." 4
+Initialization, expecting 2 arguments with the first (level) being NMXP_LOG_SET and the second being verbosity bitmap. This will set the verbosity for all future calls, the default is NMXP_LOG_D_NULL. Can be used to change the verbosity at any time. I.e. 'nmxp_log(NMXP_LOG_SET, NMXP_LOG_D_PACKET | NMXP_LOG_D_CONNFLOW);'
+.IP "2." 4
+Expecting 3+ arguments, log level, verbosity, printf format, and printf arguments. If the verbosity is included into the set verbosity bitmap (see mode 1), the printf format and arguments will be printed at the appropriate log level, where level represents:
+.IP "  1." 6
+0, normal output with time and package name
+.IP "  2." 6
+1, error output with time and package name
+.IP "  3." 6
+2, warning output with time and package name
+.IP "  4." 6
+3, normal output without time and package name
+.IP "  5." 6
+4, normal output with only package name N.B. Error messages will always be printed! TODO Optional for all warning messages
+.PP
+
+.PP
+.PP
+\fBReturn values:\fP
+.RS 4
+\fInew_verbosity\fP if using mode 1. 
+.br
+\fIn\fP the number of characters formatted on success, and a a negative value on error if using mode 2.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlevel\fP 
+.br
+\fIverb\fP 
+.br
+\fI...\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

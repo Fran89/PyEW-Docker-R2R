@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Earthworm Program: mseed2tbuf overview</title></head><body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Program:<br>
+mseed2tbuf Overview</h1>
+<i>(last revised April 21, 2015)</i></center>
+<p>
+The <b>mseed2tbuf</b> program reads MiniSEED messages from one
+ring, converts them to TRACEBUF2 messages, and deposits them into
+another ring. The converted data will be split into two or more
+TRACEBUF2 packets as needed to make sure that they don't exceed the
+4096-byte TRACEBUF2 size limit. The <b>mseed2tbuf</b> binary is built via the <a href="ringdup_ovr.html"><b>ringdup</b></a> code (with the "_MSEED2TBUF" symbol defined).<br>
+<br>
+</p>
+<p></p>
+<center><b><a href="../modules.html">Module Index</a> | <a href="../cmd/mseed2tbuf_cmd.html">mseed2tbuf Commands</a>
+</b></center>
+<!-- USGS-required stuff at the end -->
+<hr><br>
+<b>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body></html>

@@ -1,0 +1,50 @@
+
+#
+#                    Nmake File For wave_probe - Windows NT version
+#
+NODEBUG=1
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+!include <ntwin32.mak>
+
+APP = wave_probe 
+O = $(APP).obj \
+    ws_clientII.obj \
+
+
+libs = ws2_32.lib
+
+INC="C:\Program Files\DevStudio\VC\include"
+
+#SWAPIT will swap output bytes regardless of any other issues
+#INTEL will swap input bytes
+compflags= /c /W3 /MT /Di386 /DSWAPIT /I$(INC)
+
+linkflags= /release /nologo
+
+LIBSEW = \
+#	   $L/ws_clientII.obj \
+         $L/libew.lib \
+         $L/socket_ew.obj \
+         $L/socket_ew_common.obj \
+         $L/parse_trig.obj \
+
+
+   
+$B\$(APP).exe: $O
+   link $(linkflags) $(libs) $O $(LIBSEW) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(cflags) $(cvarsmt) $(tflags) /Od $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\wave_probe*
+

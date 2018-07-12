@@ -1,0 +1,248 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: nq2gif commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>nq2gif Configuration File Commands</H1>
+<I>(last revised 28 December 2008)</I></CENTER>
+                               
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#function">Functional command listing</A><BR>
+3.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+4.  <A HREF="#descriptor">Descriptor file example</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, nq2gif reads the configuration file named on the command
+line.   As always, the configuraton file contains comments:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). nq2gif supports one diagnostic command
+line option, -v is for verbose mode so that you can see packets coming in.
+<P>
+<A NAME="example">
+<H2>1.   EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# nq2gif configuration file
+#
+# This code receives MiniSEED records as files, reads them and
+# plots them as GIF images suitable for quick review.
+#
+#
+ModuleId       MOD_NQ2GIF        # module id for this import,
+InRingName     HYPO_RING         # shared memory ring for input
+
+HeartBeatInt   10      # Heartbeat interval in seconds
+                       # this should match the nq2ring.desc heartbeat!
+
+LogFile         1      # If 0, don't write logfile;; if 1, do
+                       # if 2, log to module log but not stderr/stdout
+
+# Directory where we should look for the NetQuakes miniSEED files
+NQFilesInDir    /home/luetgert/getfiles/netquakes/nq2gif
+
+# Directory where the successfully processed files are put
+NQFilesOutDir /home/luetgert/getfiles/netquakes/nq2gif/save
+
+# Directory where the problem files are put
+NQFilesErrorDir /home/luetgert/getfiles/netquakes/nq2gif/trouble
+
+GifDir       /home/luetgert/gifs/netquakes/         # Directory for temporary .gif files.
+LocalTarget  /home/luetgert/sendfiles/netquakes/    # Directory for .gif files for output
+
+StationList /home/earthworm/run/params/netquake.db1 # The file with all the station metadata.
+
+# Plot Display Parameters - 
+		# The following is designed such that each SCN creates it's own
+		# helicorder display; one per panel of data.
+		
+# 01 SecsPerPlot     Total number of seconds per gif image
+# 02 XSize           Overall size of plot in inches Setting these > 100 will imply pixels
+# 03 YSize           Ysize/channel.
+#                                      
+#         01    02   03   04  05 06 07 
+
+ Display  30  1200  200 
+
+# Filter Parameters - [[[ NOT YET IMPLEMENTED ]]]
+#
+# 01 fLow     Lower filter corner (Hz)
+# 02 fHigh    Upper filter corner (Hz)
+# 03 fType    Filter type 0 - No Filter
+#                         1 - Low Pass ( Uses fHigh)
+#                         2 - High Pass ( Uses fLow)
+#                         3 - Band Pass ( Uses fLow & fHigh)
+#                                      
+#         01    02   03   04  05 06 07 
+
+Filter    0.01  20    3 
+
+Logo    smusgs.gif   # Name of logo in GifDir to be plotted on each image
+UseDST
+
+# Debug switch: the token "Debug" (without the quotes) can be stated.
+# If it is, lots of weird debug messages will be produced 
+  Debug
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>  
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the configure commands recognized by nq2gif, grouped by the function 
+they influence.  Most of the commands are required. 
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>
+         Earthworm system setup:
+        <A HREF="#MyModuleId">MyModuleId</A>           required
+        <A HREF="#InRingName">RingName</A>             required
+        <A HREF="#OutRingName">RingName</A>            required
+        <A HREF="#HeartbeatInt">HeartbeatInt</A>       required
+    
+    Output Control:
+        <A HREF="#LogFile">LogFile</A>                required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed 
+in alphabetical order.  Listed along with the command (bold-type) are 
+its arguments (in red), the name of the subroutine that processes the 
+command, and the function within the module that the command influences. 
+A detailed description of the command and is also given.  Default values 
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>                processed by        function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+</BLOCKQUOTE>
+<HR>
+<A NAME="HeartbeatInt">  <!-- command name as anchor inside quotes -->    
+<PRE><B>HeartbeatInt <font color=red>beat</font>            HeartBeat        Earthworm setup</B><!-- command args ... -->        
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Beat the nq2gif heart every <font color=red>beat</font> seconds. 
+</BLOCKQUOTE>
+<HR>
+<PRE><!-- Default and example go here   -->
+Default:  0 - do not use logit() for LOG channels
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->    
+<PRE><B>LogFile <font color=red>switch</font>                GetConfig        Earthworm Setup</B><!-- command args ... -->        
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, nq2gif 
+will write a daily log file(s) called q2ewxx.log_yymmdd 
+where xx is nq2gif's module id (set with "MyModuleId" command) 
+and yymmdd is the current UTC date (ex: 960123) on the system clock.  
+The file(s) will be written in the EW_LOG directory (environment 
+variable).  
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->    
+<PRE><B>MyModuleId <font color=red>mod_id</font>            GetConfig        Earthworm setup</B><!-- command args ... -->        
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none                
+Calnet:   MyModuleId MOD_nq2gif
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->    
+<PRE><B>RingName <font color=red>ring</font>                GetConfig        Earthworm setup</B><!-- command args ... -->        
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This is the ring into which the waveforms and messages are sent.
+<PRE>
+Default:  none, required option                
+ATWC:   RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<HR>
+<A NAME="descriptor">
+<H2>4.  DESCRIPTOR FILE EXAMPLE</H2>
+<P>
+Here is a copy of the nq2gif.desc file as implemented. Note that all causes of
+death for nq2gif feed through the function q2ew_die() which logs all causes of
+death using logit() and sends a message to the statmgr utility.
+
+<PRE>
+
+modName  nq2gif
+modId    MOD_nq2gif
+instId   INST_MENLO
+
+restartMe    # restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 20  page: 0  mail: 99
+
+# these are the statmgr messages that nq2gif will send before dieing
+#
+#
+err: 0  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "COMSERV has a problem and died"
+#
+err: 1  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "COMSERV Recv NO DATA TIMEOUT and died"
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused nq2gif to die"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, nq2gif dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, nq2gif dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, nq2gif dead"
+#
+# BELOW: WARNINGS, NOT FATAL YET 
+err: 6  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "qlib2 decompression errors"
+#
+</PRE>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/nq2gif_ovr.html">nq2gif Overview</A>
+</CENTER>
+
+</BODY>
+</HTML>

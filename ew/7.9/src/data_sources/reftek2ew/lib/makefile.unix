@@ -1,0 +1,20 @@
+
+# Make all libraries
+
+all: reftek rtp util
+
+reftek: FORCE
+	cd $@; make -f makefile.unix
+
+rtp: FORCE
+	cd $@; make -f makefile.unix
+
+util: FORCE
+	cd $@; make -f makefile.unix
+
+clean: FORCE
+	cd reftek;  make -f makefile.unix $@
+	cd rtp;     make -f makefile.unix $@
+	cd util;    make -f makefile.unix $@
+
+FORCE:

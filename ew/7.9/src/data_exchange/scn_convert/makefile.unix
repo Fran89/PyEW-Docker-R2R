@@ -1,0 +1,39 @@
+#
+#   This file is managed using Concurrent Versions System (CVS).
+#
+
+CFLAGS = ${GLOBALFLAGS}
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BIN = $L/libew.a $L/rdpickcoda.o
+
+all: scn2scnl scnl2scn
+
+scn2scnl: scn2scnl.o scn_config.o to_pick_scnl.o to_coda_scnl.o \
+	  scn_convert.o to_trace_scnl.o $(BIN) 
+	$(CC) $(CFLAGS) -o $B/scn2scnl scn2scnl.o scn_config.o to_pick_scnl.o \
+	  to_coda_scnl.o to_trace_scnl.o scn_convert.o $(BIN) $(SPECIFIC_FLAGS)
+ 
+scnl2scn: scnl2scn.o scnl_config.o to_pick2k.o to_coda2k.o \
+          scnl_convert.o to_trace_scn.o $(BIN)
+	$(CC) $(CFLAGS) -o $B/scnl2scn scnl2scn.o scnl_config.o to_pick2k.o \
+      to_coda2k.o scnl_convert.o  to_trace_scn.o  $(BIN) $(SPECIFIC_FLAGS)
+ 
+lint:
+	lint scn2scnl.c scnl2scn.c scn_config.c scnl_config.c scn_convert.o \
+      $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/scn2scnl* $B/scnl2scn*
+

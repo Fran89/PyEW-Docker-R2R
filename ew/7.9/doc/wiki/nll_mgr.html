@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      nll_mgr – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/nll_mgr?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="nll_mgr.html" title="View nll_mgr">nll_mgr</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/nll_mgr?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/nll_mgr?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-13T09%3A14%3A12-07%3A00&amp;precision=second" title="2012-05-13T09:14:12-07:00 in Timeline">16 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/13/12 09:14:12</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="nll_mgr.html#EarthwormModule:nll_mgr">Earthworm Module: nll_mgr</a>
+    <ol>
+      <li>
+        <a href="nll_mgr.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="nll_mgr.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="nll_mgr.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="nll_mgr.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="nll_mgr.html#NLL_MGRCOMMANDLINEARGUMENTS">NLL_MGR COMMAND LINE ARGUMENTS</a>
+          </li>
+          <li>
+            <a href="nll_mgr.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="nll_mgr.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="nll_mgr.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:nll_mgr"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: nll_mgr</h1>
+<p>
+<strong>Contributed by: Anthony Lomax</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Relocates earthquakes using NonLinLoc from Anthony Lomax (tail of mega-module) (New in 7.5)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+nll_mgr is an Earthworm program which calls an encapsulated version of the probabilistic, global-search location program NLLoc in the NonLinLoc package (NLL), written by Anthony Lomax. nll_mgr gets "arc messages", containing associated picks, via a pipe from another program. nll_mgr call NonLinLoc with the contents of the "arc message". NonLinLoc locates the event using parameters from the nll_mgr EW Configuration File and from a static NLL control file, and writes standard NLL ouptut to disk files. nll_mgr then creates a new "arc message" with the location results from NonLinLoc and sends that arc message to an Earthworm transport ring.
+</p>
+<p>
+The NLL location program (NLLoc) performs probabilistic, non-linear, global-search earthquake location in 1D and 3D structures. Travel-times and location are performed in a 3D Grid structure which defines a specific, gridded, rectangular volume (Non-GLOBAL mdoe) or spherical section (GLOBAL mode). A good working knowledge of the NLL package including the setting up of travel-time grids is essential before attempting to configure nll_mgr and use NLLoc within EW. See <a class="ext-link" href="http://www.alomax.net/nlloc"><span class="icon">​</span>http://www.alomax.net/nlloc</a> for an overview, download information and sample location tutorials.
+</p>
+<p>
+nll_mgr is written in C, as is the NonLinLoc package
+</p>
+<p>
+Disclaimer: The NonLinLoc algorithm makes relatively intense usage of the CPU, depending on number of observations, program parameters, and other factors. Since the "sausage" schema uses eqbuf to hold the next earthquake(s) in buffers until the previous location processing is completed, the intense usage of the CPU will introduce additional delays in event throughput.
+</p>
+<p>
+Documentation on the NonLinLoc package and the NLL control file parameters is available at the web site: <a class="ext-link" href="http://www.alomax.net/nlloc"><span class="icon">​</span>http://www.alomax.net/nlloc</a> -&gt; Control File
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"> #
+#               nll_mgr's Configuration File
+#
+MyModuleId MOD_EQPRELIM_NLL   # module id to label outgoing messages with.
+                              # Note: nll_mgr is part of a mega-module which is
+                              # ultimately started by the program eqproc.  All
+                              # child processes of this mega-module need to use the
+                              # same module id (thus use eqproc's module id).
+RingName   HYPO_RING          # The transport ring to write output to,
+LogFile    2                  # 0=no log; 1=errors; 2=errors and hypocenters
+SourceCode W                  # character to label summary cards with to
+                              # identify them as coming from Earthworm
+NllCtrlFile /ew/nll/earthworm.in
+                              # NLL control file name with full path (see www.alomax.net/nlloc -&gt; Control File)
+                              # This files must exist.
+                              # (The NLL LOCFILES statement will be overwritten by nll_mgr)
+NllStaFile  /ew/nll/sta_list.in
+                              # NLL file containing station coordinates in NLL GTSRCE format
+                              # This file must exist.
+                              # Use an existing, empty file if station GTSRCE statements
+                              # are inside NllCtrlFile
+NllTimePath /ew/nll/taup/ak135/ak135
+                              # NLL travel-time grid files path/root (see NLL LOCFILES statement)
+                              # These files must exist.
+NllTimeSwap 1                 # iSwapBytesOnInput value from NLL LOCFILES statement
+                              # (0 = NO, 1 = YES) flag to indicate if hi and low
+                              # bytes of input time grid files should be swapped. Allows reading of travel time
+                              # grids generated with a different binary, floating point byte order than on the
+                              # computer running EW.
+NllOutPath  /ew/nll/out/nll_mgr0
+                              # NLL output file path without NLL "root name"
+                              # This directory must exist.
+                              # IMPORTANT! - this path should be different from
+                              # the path used by any other
+                              # instances of modules containing nll_mgr.
+                              # NLL output to this path will only be overwritten
+                              # by output from subsequent events with same output name
+                              # (i.e. same first phase time).
+</pre><h3 id="NLL_MGRCOMMANDLINEARGUMENTS">NLL_MGR COMMAND LINE ARGUMENTS</h3>
+<p>
+An example command line to start nll_mgr may look like this:
+</p>
+<pre class="wiki">	nll_mgr nll_mgr.d
+	argv[0]  argv[1] 
+</pre><pre class="wiki">argv[0] is the name of the executable.
+
+argv[1] is the name of nll_mgr's own configuration file which it reads on startup. 
+</pre><p>
+In this file, lines may begin with a valid nll_mgr command, described later in this document, or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by nll_mgr, grouped by the function they influence. All of the commands are required; they must be specified in the configuration file in order for nll_mgr to operate.
+</p>
+<pre class="wiki">	Earthworm system setup:
+ 		MyModuleId	required
+		RingName	required
+
+	Output Control:
+		LogFile		required
+
+	Miscellaneous:
+		SourceCode	required
+
+	NonLinLoc specific:
+		NllCtrlFile	required
+		NllStaFile	required
+		NllTimePath	required
+		NllTimeSwap	required
+		NllOutPath	required
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and the values used by Calnet are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>LogFile [switch]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: output
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is non-zero, nll_mgr will write daily log file(s) called nll_mgrxx.log_yymmdd where xx is nll_mgr's module id (set with "MyModuleId" command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable). The level of output written to the file is controlled by the value of switch:
+</p>
+<pre class="wiki">    switch = 0  no log file is written
+             1  write errors to log file
+             2  write errors and hypocenters to log file
+</pre><pre class="wiki">Default:  none
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<p>
+NOTE: nll_mgr is part of a mega-module which is ultimately started by the program eqproc. All sub-modules of this megamodule should be given the same module id.
+</p>
+<pre class="wiki">Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</pre><p>
+<strong>NllCtrlFile [filename]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: NonLinLoc
+</p>
+<p>
+NLL control file name with full path. The specified file must exist. This control statements in this file will be used by NLL when called from EW, except for certain control statements (including LOCFILES) which are automatically set or use parameters from the other nll_mgr configuration file NonLinLoc commands. See www.alomax.net/nlloc -&gt; Control File for a complete description of NLL control file format and statements.
+</p>
+<pre class="wiki">Default:  none				Example:  NllCtrlFile /ew/nll/earthworm.in
+</pre><p>
+<strong>NllOutPath [label]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: NonLinLoc
+</p>
+<p>
+NLL output file path without NLL "root name" (see NLL LOCFILES statement). This directory must exist. IMPORTANT! - this path should be different from the path used by any other instances of modules containing nll_mgr. NLL output to this path will only be overwritten by output from subsequent events with same output name (i.e. same first phase time).
+</p>
+<pre class="wiki">Default:  none				Example:  NllOutPath /ew/nll/out/nll_mgr0
+</pre><p>
+<strong>NllStaFile [filename]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: NonLinLoc
+</p>
+<p>
+NLL file containing station coordinates in NLL GTSRCE format. This file must exist. Use an existing, empty file if all station GTSRCE statements are in the file specified by NllCtrlFile. NLL will only use stations whose coordinates are specified by a GRSRCE statement (usually NLL GLOBAL mode location) or for which individaul station travel-time grid files exist on the NllTimePath (usually NLL non-GLOBAL mode location).
+</p>
+<pre class="wiki">Default:  none				Example:  NllStaFile /ew/nll/sta_list.in
+</pre><p>
+<strong>NllTimePath [label]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: NonLinLoc
+</p>
+<p>
+NLL travel-time grid files path/root (see NLL LOCFILES statement). These files must exist. For NLL GLOBAL mode location there will normally be travel-time grid files for each phase type, for NLL non-GLOBAL mode location, there will normally be a travel-time grid file for each station, either P phase only or P and S phase.
+</p>
+<pre class="wiki">Default:  none				Example:  NllTimePath /ew/nll/taup/ak135/ak135
+</pre><p>
+<strong>NllTimeSwap [label]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: NonLinLoc
+</p>
+<p>
+iSwapBytesOnInput value from NLL LOCFILES statement. (0 = NO, 1 = YES) flag to indicate if hi and low bytes of input time grid files should be swapped. Allows reading of travel time grids generated with a different binary, floating point byte order than on the computer running EW.
+</p>
+<pre class="wiki">Default:  none				Example:  NllTimeSwap 0
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells nll_mgr which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none				Calnet:  RingName HYPO_RING
+</pre><p>
+<strong>SourceCode [label]</strong><br />
+Processed by: nll_mgr_config<br />
+Function: miscellaneous
+</p>
+<p>
+Reads in a single character label to write in column 80 of the hypo71-format summary messages output by nll_mgr. This label identifies the source of the hypocenter as the Earthworm system. These summary messages are placed on the output shared memory region.
+</p>
+<pre class="wiki">Default:  none				Calnet:  SourceCode W
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/nll_mgr?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

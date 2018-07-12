@@ -1,0 +1,136 @@
+<HTML>
+<HEAD>
+<TITLE>NOAA's West Coast and Alaska Tsunami Warning Center Earthworm/EarlyBird system</TITLE>
+</HEAD>
+<BODY>
+<H1><CENTER><IMG SRC=console.jpg> <BR><br>
+West Coast and Alaska Tsunami Warning Center <br>
+Earthworm/EarlyBird Processing System<P>
+</CENTER>
+</H1>
+<HR SIZE=2>
+<HR SIZE=2>
+<H2>
+USGS Earthworm software acquires seismic data of various formats<P>
+WC&ATWC EarlyBird software processes this data<P>
+</H2>
+<HR SIZE=2>
+<HR SIZE=2>
+URL Last Updated: July 23, 1999<br><br>
+Contact: <STRONG>Tom Sokolowski</STRONG> <A HREF="MAILTO: wcatwc@wcatwc.gov"> (wcatwc@wcatwc.gov)</A><br>
+<A href="http://www.wcatwc.gov">West Coast & Alaska Tsunami Warning Center</A> (WC&ATWC)<br>
+910 South Felton Street <br>
+Palmer, Alaska 99645 <br>
+Voice: 907-745-4212 <br>
+FAX: 907-745-6071 <br>
+<P>
+<HR SIZE=2>
+<HR SIZE=2>
+<H2>
+OVERVIEW
+</H2>
+<P>
+The Earthworm/EarlyBird system acquires, processes, and analyzes both digital 
+and analog seismic data in real-time from seismometers located worldwide.  The USGS 
+Earthworm software acts as a data interface for the WC&ATWC.  All data imported from other 
+networks or exported to other centers is received/SENT via Earthworm modules.  A module
+written by the USGS for the WC&ATWC passes data to the NT based EarlyBird processing
+system in a local format.  The EarlyBird system was developed at the WC&ATWC for locating
+and sizing earthquakes as rapidly as possible and issuing tsunami notifications to the 
+appropriate emergency personnel.  This software automatically locates and sizes
+local, regional, and teleseismic earthquakes upon P-wave arrivals.
+<P>
+The Earthworm initiative at the WC&ATWC began as a result of NOAA's <A href=
+"http://www.pmel.noaa.gov/tsunami-hazard"> National Tsunami Hazard Mitigation Program</A>.
+One aspect of this program is to enhance the tsunami warning centers with
+seismic data from networks operated by regional earthquake centers.  The USGS is 
+implementing this task and has chosen Earthworm as the standard for seismic data and
+hypocenter parameters exchange.
+<P>
+A system of dedicated circuits was installed to connect the WC&ATWC and the Pacific 
+Tsunami Warning Center (PTWC) with the National Earthquake Information Center,
+the USGS at Meno Park, the University of Washington, the Alaska Earthquake Information
+Center, and the Hawaii Volcanoes Observatory.  Connections can be made with other
+organizations also (such as the Alaska Volcano Observatory and the Pacific Geoscience
+Center, Canada).  These other connections are made through public internet.  The <A href=
+"atwc.gif"> Earthworm/EarlyBird configuration</A> is set up so that two processing 
+systems are running concurrently in case of a system or network malfunction.  The
+primary system, Worm1, acquires data from the regional centers through the dedicated
+circuits along with data from other sources through the internet.  It also exports data
+as needed via the dedicated circuits.  The secondary system,
+Worm2, acquires all data through the internet.  Each of these SOLARIS systems has a direct
+TCP/IP connection with a Windows NT PC (EarlyBird 1 and 2).  The Earthworm software also
+runs on these systems to acquire the data from Worm1 and 2 and to operate an
+analog-to-digital card for acquiring the WC&ATWC Alaska seismic network.  An Earthworm
+module, ew_atwc, reformats the data and passes it to the EarlyBird
+processes.  EarlyBird sees all data in a consistent format and performs all seismic
+analysis.  EarlyBird 1 and 2 are also on a local Windows NT LAN.  This LAN accomodates
+data transfer between the various PCs in use operationally at the WC&ATWC and enhances
+tsunami message dissemination.
+<P>
+At present, the systems process approximately 90 channels of seismic data.  The 
+data comes from the following sources: WC&ATWC Alaska network, USGS National Earthquake 
+Information Center, USGS Menlo Park, UC Berkeley, University of Washington, 
+IRIS/IDA Near Real Time System, IRIS/Albuquerque Seismic Lab, 
+Alaska Earthquake Information Center, and the Southern California 
+Seismic Network.  Aproximately half the channels are analog and half are
+digital broadband.
+<P>
+In addition to exchanging seismic data with other centers, the Earthworm modules in Worm1
+and Worm2 accomodate transfer of near real-time hypocenter information computed at other
+centers.  As locations and magnitudes are computed for local earthquakes at the USGS
+Menlo Park and the University of Washington, these are printed out at the WC&ATWC and are 
+displayed on a map.  The WC&ATWC program <A href="earthvu.gif"> EarthVu</A> displays 
+the locations of all earthquakes located by the other centers over the last week.  
+<P>
+<HR SIZE=2>
+<HR SIZE=2>
+<H2>
+<A href="ew_atwc.gif"> Earthworm Modules Currently in Use</A>
+</H2>
+<P>
+<UL>
+<LI>
+<STRONG>import_generic</STRONG> - Receive Earthworm TRACE_BUF and H71SUM messages from 
+other centers.  Each center's connection requires a separate import_generic.
+</LI>
+<LI>
+<STRONG>export_scn</STRONG> - Transmit Earthworm TRACE_BUF messages to other 
+centers when just certain channels are to be transmitted from a ring.  Each center's 
+connection requires a separate export_scn.
+</LI>
+<LI>
+<STRONG>import_ida</STRONG> - Receive data from the IRIS/IDA Near Real Time System and
+convert this to TRACE_BUF format.
+</LI>
+<LI>
+<STRONG>ringtocoax</STRONG> - Send all data from ring on Worm1(2) to connection on
+EarlyBird1(2).
+</LI>
+<LI>
+<STRONG>coaxtoring</STRONG> - Take all data delivered to EarlyBird1(2) by ringtocoax 
+on Worm1(2) and place it in a new ring.
+</LI>
+<LI>
+<STRONG>adsend</STRONG> - Digitize up to 64 channels of data from the WC&ATWC's
+Alaska network.
+</LI>
+<LI>
+<STRONG>hypo_print</STRONG> - Print and send to EarthVu latest locations and magnitudes
+determined by regional centers.
+</LI>
+<LI>
+<STRONG>ew_atwc</STRONG> - Take TRACE_BUF data from the WAVE_RING on the NT PCs and
+pass it to the EarlyBird processing system.
+</LI>
+<LI>
+<STRONG>startstop, copystatus, statmgr</STRONG> - System monitors
+</LI>
+<HR SIZE=2>
+<HR SIZE=2>
+<P>
+Return to main <A href="/EWAB"> Earthworm page</A>, <A href="../sites.html"> Sites page</A>,
+or <A href="http://www.wcatwc.gov"> WC&ATWC home page</A>.
+</P>
+</BODY>
+</HTML>

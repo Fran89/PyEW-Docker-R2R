@@ -1,0 +1,474 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Statmgr commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Statmgr Configuration File Commands</H1>
+  <i>(last revised 2 March, 2006)</i>
+</CENTER>
+
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#function">Functional command listing</A><BR>
+3.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+4.  <A HREF="#descriptor">Descriptor file details</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, statmgr reads the configuration file named on the command
+line.  Commands in this file set up all parameters used in monitoring
+the health of an Earthworm system.  In the control file, lines may begin
+with a valid statmgr command (listed below) or with one of 2 special
+characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example"></a>
+<H2>1.   EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+
+#                    Status Manager Configuration File
+#                             (statmgr.d)
+#
+#   This file controls the notifications of earthworm error conditions.
+#   The status manager can send pager messages to a pageit system, and
+#   it can also send email messages to a list of recipients.
+#   Earthquake notifications are not handled by the status manager.
+#   In this file, comment lines are preceded by #.
+#
+MyModuleId  MOD_STATMGR
+
+#   "RingName" specifies the name of the transport ring to check for
+#   heartbeat and error messages.  Ring names are listed in file
+#   earthworm.h.  Example ->  RingName HYPO_RING
+#
+RingName    HYPO_RING
+
+#   If CheckAllRings is set to 1 then ALL rings startstop currently<br>#   knows about will be checked for status messages. The above<br>#   single RingName, however, still needs to be a valid ring name.<br>#   If you use CheckAllRings, you don't want to use any
+#   copystatus modules. Note statmgr may not be able to keep up
+#   on a system with a very busy ring, and you may need to
+#   set CheckAllRings to 0 and go back to the old way of using copystatus<br>CheckAllRings	0<br>
+#   "GetStatusFrom" lists the installations & modules whose heartbeats
+#   and error messages statmgr should grab from transport ring:
+#
+#              Installation     Module           Message Types
+GetStatusFrom   INST_MENLO    MOD_WILDCARD   # heartbeats & errors
+
+#   "LogFile" sets the switch for writing a log file to disk.
+#             Set to 1 to write a file to disk.
+#             Set to 0 for no log file.
+#             Set to 2 for module log file but no logging to stderr/stdout
+#
+LogFile   1
+
+#   "heartBeatPageit" is the time in seconds between heartbeats
+#   sent to the pageit system.  The pageit system will report an error
+#   if heartbeats are not received from the status manager at regular
+#   intervals.
+#
+heartbeatPageit  60
+
+#   "pagegroup" is the pager group name.
+#   The pageit program maps this name to a list of pager recipients.
+#   This line is required. Individual modules can override this group
+#   by including the "pagegroup" command in their descriptor file.
+#
+pagegroup  larva_test
+
+#   Between 1 and 10 names of computers to use as a mail server.
+#	   They will be tried in the order listed
+#   This system must be alive for mail to be sent out.
+#   This parameter is used by Windows NT only.
+#
+#   Syntax
+#     MailServer  <serverName1>
+#     MailServer  <serverName2>
+#             ...
+#     MailServer  <serverNameN>
+#
+MailServer  andreas
+
+#   Any number (or none) of email recipients may be specified below.
+#   These lines are optional.
+#
+#   Syntax
+#     mail  emailAddress1
+#     mail  emailAddress2
+#             ...
+#     mail  emailAddressN
+#
+mail  <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+#
+
+#
+# Mail program to use, e.g /usr/ucb/Mail (not required)
+# If given, it must be a full pathname to a mail program
+MailProgram /usr/ucb/Mail
+
+#
+# Subject line for the email messages. (not required)
+#
+Subject "This is an earthworm status message"
+
+#
+# Message Prefix - useful for paging systems, etc.
+#    this parameter is optional
+#
+MsgPrefix "(("
+
+#
+# Message Suffix - useful for paging systems, etc.
+#    this parameter is optional
+#
+MsgSuffix "))"
+
+#   Now list the descriptor files which control error reporting
+#   for earthworm modules.  One descriptor file is needed
+#   for each earthworm module.  If a module is not listed here,
+#   no errors will be reported for the module.  The file name of a
+#   module may be commented out, if it is temporarily not to be used.
+#   To comment out a line, insert # at the beginning of the line.
+#
+Descriptor  statmgr.desc
+# Descriptor  adsend_a.desc        # Data source (adsend) on lardass
+# Descriptor  adsend_b.desc        # Data source (adsend) on honker
+# Descriptor  picker_a.desc        # Picker programs on redhot
+# Descriptor  picker_b.desc        # Picker programs on redhot
+# Descriptor  coaxtoring.desc
+# Descriptor  diskmgr.desc
+# Descriptor  binder.desc
+# Descriptor  eqproc.desc
+# Descriptor  startstop.desc
+# Descriptor  pagerfeeder.desc
+# Descriptor  pick_client.desc
+# Descriptor  pick_server.desc
+
+</PRE>
+<P>
+<A NAME="function"></a>
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by statmgr, grouped by the function
+they influence.  Most of the commands are required.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>         Earthworm system setup:
+                <A HREF="#GetStatusFrom">GetStatusFrom</A>	   	required
+ 		<A HREF="#MyModuleId">MyModuleId</A>	   	required
+		<A HREF="#RingName">RingName</A>	   	required
+
+	Monitor system:
+		<A HREF="#heartbeatPageit">heartbeatPageit</A> 	required
+		<A HREF="#Descriptor">Descriptor</A>		required
+		<A HREF="#mail">mail</A>
+		<A HREF="#pagegroup">pagegroup</A>		required
+
+	Output Control:
+		<A HREF="#LogFile">LogFile</A>		   	required
+
+</PRE>
+
+<A NAME="alphabet"></a>
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</b></PRE>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="Descriptor"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>Descriptor <font color=red>descfile</font>			statmgr_config		Monitor system</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Registers patients with the statmgr.  <font color=red>descfile</font> is the name of a file
+(up to 29 characters long) that describes a module that statmgr will
+monitor.  One "Descriptor" command must give the name of statmgr's own
+descriptor file (ie, the statmgr is a patient of itself).  Up to
+MAXDESC (currently defined as 15 in statmgr.h) "Descriptor" commands
+may be issued.   All descriptor files should live in directory
+specified by the EW_PARAMS environment variable.  Each descriptor file
+contains the patient module's name and ID, its heartbeat interval, and
+all its possible error codes and what they mean.  It also contains
+information on how and how often the statmgr should notify system
+operators when errors do occur (see <A HREF="#descriptor">section 3</A> for more details on the
+descriptor files).
+<PRE><!-- Default and example go here   -->
+Default:  none
+Examples: Descriptor  statmgr.desc
+	  Descriptor  "statmgr.desc"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GetStatusFrom"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>GetStatusFrom <font color=red>inst</font> <font color=red>mod_id</font>		statmgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the heartbeat and error messages input to statmgr.  statmgr
+will only process TYPE_HEARTBEAT and TYPE_ERROR messages that come
+from module <font color=red>mod_id</font> at installation <font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font> are
+character strings (valid strings are listed in earthworm.h/earthworm.d)
+which are related to single-byte numbers that uniquely identify each
+installation and module.  Up to 2 "GetStatusFrom" command may be
+issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force statmgr
+to process all heartbeat and error messages, regardless of their place
+of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   GetStatusFrom  INST_WILDCARD  MOD_WILDCARD
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="heartbeatPageit"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>heartbeatPageit <font color=red>nsec</font>			statmgr_config		Monitor system</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds <font color=red>nsec</font> between heartbeat messages
+issued by statmgr to the Pageit computer.  This heartbeat serves as
+the heartbeat for the entire Earthworm system being monitored by
+statmgr.  A statmgr heartbeat is actually a TYPE_PAGE message that
+contains a character string (example: "alive: sysname#").  statmgr
+places this TYPE_PAGE message into shared memory where the pagerfeeder
+module can find it and send it to the Pageit system via the serial
+port.  If the Pageit computer doesn't receive a heartbeat within a
+specified time interval, it will issue an "obituary" page for the
+Earthworm system.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   heartbeatPageit 60
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				statmgr_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, statmgr
+will write a daily log file(s) called statmgrxx.log_yymmdd
+where xx is statmgr's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="mail"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>mail <font color=red>recipient</font>				statmgr_config		Monitor system</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Registers one <font color=red>recipient</font> email address with the statmgr.  As
+configured by descriptor files, statmgr will send every <font color=red>recipient</font>
+an email message about patient-module errors and state of health
+(dead/alive) changes.  Up to MAXRECIP (currently defined as 10 in
+statmgr.h) "mail" commands may be issued, but none are required.
+Each <font color=red>recipient</font> address can be up to 59 characters long.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  mail  jdoe@yourmachine.edu
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			statmgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   MyModuleId MOD_STATMGR
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="pagegroup"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>pagegroup <font color=red>group</font>				statmgr_config		Monitor system</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Registers a pager <font color=red>group</font> (string up to 79 characters long) with the
+statmgr.  statmgr will address all of its TYPE_PAGE messages to
+<font color=red>group</font> unless the module's descriptor file included its own
+pagegroup command.  When the paging system computer receives the message, it maps
+<font color=red>group</font> to a list of pager recipients and sends a page to each one.
+Only one "pagegroup" command is allowed and it is required.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  pagegroup  ew_operators
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				statmgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells statmgr which shared memory region to use for input/output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="descriptor"></a>
+<H2>4.  DESCRIPTOR FILE DETAILS</H2>
+
+Every module is registered with the statmgr by means of a "Descriptor" command in statmgr's configuration file.  This command gives the name of the module's
+"descriptor file" which contains details about the module's name and ID, its heartbeat rate, its error codes, and when/how to notify operators of any
+problems.  Statmgr processes each descriptor file in the function
+statmgr_getdf().
+<P>
+All errors received by the statmgr are written to its daily log file.
+Each descriptor file specifies when error messages are to be reported via
+email and pager.  The default pager group name and a list of email recipients are
+listed in file statmgr's configuration file.  A different pagegroup can be
+listed in each module's descriptor file to override the default.
+<P>
+Here are the lines that make up a descriptor file:
+<UL>
+<LI>Comment lines are preceded by #.
+<P>
+
+<LI>The following lines describe the patient module:
+<P>
+<B>instId <font color=red>inst</font></B>
+<BLOCKQUOTE>
+<font color=red>inst</font> is the installation at which the patient-module is running.
+<font color=red>inst</font> is a character string (valid strings are listed in earthworm.h)
+that relates (in earthworm.h) to a unique single-byte number.
+This line is required; <font color=red>inst</font> and<font color=red> modId</font> allow statmgr to match an
+error message with its proper descriptor file instructions.
+</BLOCKQUOTE>
+
+<HR>
+<B>modId <font color=red>modId</font></B>
+<BLOCKQUOTE>
+<font color=red>modid</font> is the module id of the patient module.  <font color=red>modid</font> is a
+character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.  <font color=red>modid</font>
+must match that used in the patient module's own configuration
+file.  This line is required; <font color=red>inst</font> and<font color=red> modId</font> allow statmgr to
+match an error message with its proper descriptor file instructions.
+</BLOCKQUOTE>
+
+<HR>
+<B>modName <font color=red>modName</font></B>
+<BLOCKQUOTE>
+Give the <font color=red>name</font> of the patient module.  <font color=red>name</font> is text string
+(up to 39 characters) which statmgr includes in each logged and
+reported error message from this patient.  This line is required.
+</BLOCKQUOTE>
+
+<HR>
+<B>system <font color=red>sysname</font></B>
+<BLOCKQUOTE>
+This is an optional parameter.  <font color=red>sysname</font> is a string (up to 29
+characters) giving the name of the computer on which the patient
+module is running.  statmgr includes this text string in each
+logged and reported error message from this patient.  If the
+"system" line is ommitted, statmgr assumes the module is running
+on the local computer and uses the environment variable, SYS_NAME,
+in its place.
+</BLOCKQUOTE>
+
+<HR>
+<B>pagegroup <font color=red>group</font></B>
+<BLOCKQUOTE>
+This is an optional parameter.  <font color=red>group</font> is a string (up to 79
+characters) to which statmgr will address all TYPE_PAGE messages regarding
+this specific module.
+If the "pagegroup" line is ommitted here, statmgr uses the pagegroup
+listed in its own configuration file.
+</BLOCKQUOTE>
+
+<HR>
+<P>
+<LI>Next is a required line that describes the patient module's heartbeat:
+<P>
+<B>tsec: <font color=red>tsec</font>  page: <font color=red>npage</font>  mail: <font color=red>nmail</font></B>
+<BLOCKQUOTE>
+If the statmgr does not receive a heartbeat message every <font color=red>tsec</font>
+seconds from this patient module, an error will be reported
+(LOCAL_time <font color=red>modName</font>/<font color=red>sysname</font> module dead).  If statmgr receives
+a heartbeat from a module that it has reported "dead," it will send
+out an "alive" message (LOCAL_time <font color=red>modName</font>/<font color=red>sysname</font> module alive).
+<font color=red>tsec</font> is generally set to 2*(heartbeat-interval) of the patient
+module.  <font color=red>npage</font> is the maximum number of pager messages that will
+be reported and <font color=red>nmail</font> is the maximum number of email messages that
+will be reported.  Each "dead" and "alive" message counts as a
+separate message.  If the page or mail limit is exceeded, no further
+errors will be reported until the status manager is restarted.
+</BLOCKQUOTE>
+<HR>
+<P>
+<LI>And finally follows the list of possible errors that the patient
+module may produce.  Each error is described by two lines:
+<P>
+<B>err: <font color=red>code</font>  nerr: <font color=red>nerr</font>  tsec: <font color=red>tsec</font>  page: <font color=red>npage</font>  mail: <font color=red>nmail</font><BR>
+text: <font color=red>description</font></B>
+<BLOCKQUOTE>
+<font color=red>code</font> is the error code generated by the patient module.
+Error codes can be any unsigned integer, not necessarily
+sequential.
+<P>
+<font color=red>nerr</font> and <font color=red>tsec</font> specify the maximum allowable error rate.
+If the error rate exceeds <font color=red>nerr</font> errors per <font color=red>tsec</font> seconds,
+an email or pager message may be reported.  To report all
+errors, set <font color=red>nerr</font> to 1 and <font color=red>tsec</font> to 0.
+<P>
+<font color=red>npage</font> is the maximum number of pager messages that will be
+reported and <font color=red>nmail</font> is maximum number of email messages that
+will be reported.  If the page or mail limit is exceeded, no
+further errors will be reported until the statmgr is restarted.
+<P>
+ <font color=red>description</font> is the default text string (up to 79 characters) that
+statmgr will report for this error code.  Enclose the string in
+double-quotes if it contains embedded blanks.  Each module may
+include a (hopefully more informative) text string in its error
+message; if so, that string overrides the default, <font color=red>description</font>.
+</BLOCKQUOTE>
+</UL>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/statmgr_ovr.html">Statmgr Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

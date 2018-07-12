@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      srusb2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/srusb2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="srusb2ew.html" title="View srusb2ew">srusb2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/srusb2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/srusb2ew?action=diff&amp;version=5" title="Version 5 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A41%3A59-07%3A00&amp;precision=second" title="2012-05-02T09:41:59-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:41:59</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="srusb2ew.html#EarthwormModule:srusb2ew">Earthworm Module: srusb2ew</a>
+    <ol>
+      <li>
+        <a href="srusb2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="srusb2ew.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="srusb2ew.html#Introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="srusb2ew.html#Setup">Setup</a>
+          </li>
+          <li>
+            <a href="srusb2ew.html#Compiling">Compiling</a>
+          </li>
+          <li>
+            <a href="srusb2ew.html#MoreInfo">More Info</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="srusb2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="srusb2ew.html#FunctionalCommandListing">Functional Command Listing</a>
+          </li>
+          <li>
+            <a href="srusb2ew.html#AlphabeticalCommandListingDescription">Alphabetical Command Listing &amp; Description</a>
+          </li>
+          <li>
+            <a href="srusb2ew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="srusb2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:srusb2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: srusb2ew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Symmetric Research Digitzer module for usb port digitizers.
+</p>
+<h2 id="Details">Details</h2>
+<h3 id="Introduction">Introduction</h3>
+<p>
+srusb2ew allows the Symmetric Research USBxCH family of low cost 24 bit data acquisition systems to send data to an Earthworm system running either Windows (WinXP/Win7) or Linux. USBxCH models with 4 and 8 channels are supported. Very accurate timestamping of the acquired data results when an optional GPS antenna is used with the USBxCH A/D. Timestamping using the PC system time set by NTP is also available. 
+</p>
+<p>
+srusb2ew reads configuration information like sampling rate and USBxCH model from an Earthworm style .d configuration file and then opens drivers and initializes hardware for the USBxCH and optional GPS antenna. Then it starts the A/D and goes into an infinite loop acquiring data, converting it to Earthworm tracebuf2 format and writing it out to the specified Earthworm ring. On each pass through the loop, it also sends a heartbeat message to the Earthworm ring. 
+</p>
+<p>
+In order to run srusb2ew, you need a working Earthworm system, a USBxCH A/D board, and the USBxCH device driver and library software that comes with the board and is also available free from the Symmetric Research website www.symres.com. For accurate timing information, a GPS antenna is also recommended. 
+</p>
+<h3 id="Setup">Setup</h3>
+<p>
+Follow any instructions given in the official documentation to get Earthworm up and running. 
+</p>
+<p>
+The first step in adding USBxCH data is to install the USBxCH software. This can be done by unpacking the usbw2k.zip or usblnx.tar file and running the included install script to copy the SR software to the \SR\USBXCH directory. Linux users should substitute /usr/local/SR/USBXCH for references to the \SR\USBXCH directory. 
+</p>
+<p>
+You will also need to install the USBxCH device driver. Under Windows, this is done automatically via the Add New Hardware wizard and Plug 'n' Play. Under Linux, use the indriver utility the Driver subdirectory. See the readme file in the \SR\USBXCH\Driver or /usr/local/SR/USBXCH/Driver directory for more information. 
+</p>
+<p>
+Then hook up the A/D hardware. Make sure it is working correctly by running the diagnostic program in the \SR\USBXCH\Utilities\Diag directory. The acquisition programs in the \SR\USBXCH\Scope and \SR\USBXCH\DVM directories can also help in checking out a new system. 
+</p>
+<p>
+To add an (optional but recommended) GPS antenna purchased from Symmetric Research, plug the 2.1mm power connector into the second 2.1mm jack on the back of the USBxCH and plug the DB25 connector on to the 25-pin Dshell digital input connector on the front right side of the USBxCH. Make sure it is working correctly by running the NmeaTime program in the \SR\USBXCH\Utilities\NmeaTime directory which shows the received NMEA strings with the GPS information. When satellite lock is achieved, the red led will begin blinking and the $GPRMC string will show the letter A in the second field instead of the letter V. 
+</p>
+<p>
+Once Earthworm and the USBxCH are working on their own, it's time to get them working together. Edit the srusb2ew.d configuration file settings so they are appropriate for your system. 
+</p>
+<p>
+At this time, you will probably also want to edit some additional Earthworm module configuration files to handle the USBxCH data that will be coming. This might include adding tanks for the USBxCH data in wave_serverV.d if the data is to be saved on the same computer or setting the USBxCH channels in export_scn.d if the data is to be exported to another computer. 
+</p>
+<p>
+In the beginning, it is probably best to use two separate command prompt windows. In the first, run startstop to start Earthworm. In the second, type "srusb2ew srusb2ew.d" without the quotes to start the USBxCH acquiring and sending data. 
+</p>
+<p>
+You can check the log files and run diagnostic programs like sniffring and sniffwave to help diagnose any problems. If something isn't going right, it is easy to stop srusb2ew, modify its configuration file, and restart it without having to stop the rest of Earthworm. Once you've got your parameters set right, then go ahead and have startstop control srusb2ew too. 
+</p>
+<h3 id="Compiling">Compiling</h3>
+<p>
+srusb2ew is written in C and is compiled and linked using the standard Earthworm makefiles such as makefile.nt. In order to successfully compile, access to the USBxCH system software is required. This software, including source, is included with every USBxCH purchase. It is also available for free download from the Symmetric Research website www.symres.com. 
+</p>
+<p>
+All Symmetric Research software, including the USBxCH system software and srusb2ew, has been designed so a single set of source code can service different operating systems. This is accomplished primarily through the use of conditional compilation which selects OS specific code at compile time based on which SROS_xxx setting is defined. Valid options include SROS_WIN2K (for both Windows 2000 and XP) and SROS_LINUX. Solaris is not available. 
+</p>
+<h3 id="MoreInfo">More Info</h3>
+<p>
+General questions about Earthworm are probably best answered by the official Earthworm User's discussion group. But, if you have specific questions about srusb2ew and its configuration parameters, please let us know at info@….
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, srusb2ew reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm srusb2ew module. In the control file, lines may begin with a valid srusb2ew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FunctionalCommandListing">Functional Command Listing</h3>
+<p>
+Below are the commands recognized by srusb2ew, grouped by the function they influence. Some of the commands are required, as noted. They may be specified in any order in the control file.
+</p>
+<pre class="wiki">   Earthworm system setup:
+                ModuleId                required
+                RingName                required
+                LogFile                 required
+                HeartbeatInterval       required
+                OutputMsgType           optional
+                Debug                   optional
+
+   USBxCH data acquisition parameters:
+                AtodDriverName          required
+                AtodModelName           required
+                SamplingRate            required
+
+   USBxCH GPS timing parameters:
+                GpsModelName            required
+
+   Channel SCNL parameters:
+                EwChannelScnl           optional
+
+   Summary logging parameters:
+                SummaryInterval         optional
+                GpsReportInterval       optional
+                GpsBadLimit             optional
+
+   Debugging output parameters:
+                OutputPakFiles        optional
+                PacketsPerFile        optional
+</pre><h3 id="AlphabeticalCommandListingDescription">Alphabetical Command Listing &amp; Description</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>AtodDriverName [driver_name]</strong><br />
+Function: USBxCH Configuration
+</p>
+<p>
+Sets the name of the USBxCH device driver to driver_name. This name is case sensitive and must match the name used when installing the driver.
+</p>
+<pre class="wiki">Default:  None
+Example:  AtodDriverName SrUsbXch0
+</pre><p>
+<strong>AtodModelName [xch_model_name]</strong><br />
+Function: USBxCH Configuration
+</p>
+<p>
+Indicates which member of the USBxCH family of 24 bit data acquisition devices is being used. xch_model_name can be USB4CH, or USB8CH. This name is case sensitive and must match the model you are actually using.
+</p>
+<pre class="wiki">Default:  None
+Example:  AtodModelName USB4CH
+</pre><p>
+<strong>Debug [n]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the log output level for srusb2ew. Errors and warnings are always logged. Level 0 adds startup info. Level 1 adds general summaries every SummaryInterval seconds and GPS lock status summaries every GpsReportInterval seconds. Level 2 adds some additional details. Level 3 adds time and satellite info for every 1 second buffer of data. Level 4 adds NMEA messages for every buffer. Level 5, primarily for code debugging, adds function calls and program variable values.
+</p>
+<pre class="wiki">Default:  0
+Example:  Debug 1
+</pre><p>
+<strong>EwChannelScnl [n sta comp net loc pin]</strong><br />
+Function: Channel Configuration
+</p>
+<p>
+There should be one EwChannelScnl command for each USBxCH channel, including special channels like the digital and GPS PPS channels. This information is used to provide the full station, component, network and location names (SCNL) plus pin number as headers for the earthworm trace buffer messages. n indicates the USBxCH channel number while sta comp net loc pin give the earthworm SCNL and pin values.
+</p>
+<pre class="wiki">Default:  The channels are named CH## with component xxx, net SR and
+          location -- (indicating blank location).  The pin number is 
+          set equal to the USBxCH channel number.
+Example:  EwChannelScnl 0 CH00 xxx SR -- 0
+</pre><p>
+<strong>GpsBadLimit [nbad]</strong><br />
+Function: Summary Logging
+</p>
+<p>
+The GPS lock status is determined once a second (ie for every buffer of data acquired). It is defined as good if 3 or more satellites are in view, and as bad otherwise. Since there are typically many seconds in one GpsReportInterval, we need a criteria to determine if the GPS lock status summarized over the interval is good or bad. GpsBadLimit provides this criteria. If the GPS lock status was bad for more than nbad seconds during the current GpsReportInterval, the summary status is defined as bad. An error message is written to the Earthworm ring every time the summary GPS lock status changes.
+</p>
+<pre class="wiki">Default:  1
+Example:  GpsBadLimit 60
+</pre><p>
+<strong>GpsModelName [gps_model_name]</strong><br />
+Function: USBxCH Configuration
+</p>
+<p>
+Indicates what equipment is being used to determine GPS time. Currently, gps_model_name must be GARMIN, TRIMBLE, ONCORE, or PCTIME. GARMIN is the default and refers to a Garmin GPS 16x HVS receiver. TRIMBLE refers to the Trimble Ace III receiver (this model has been discontinued by Trimble). ONCORE refers to a Motorola Oncore GT+ unit (this model has been discontinued by Motorola). PCTIME means time stamping of the data is done using the PC system time and assumes this time is accurate because it has been set using NTP (Network Time Protocol) or some other GPS receiver. Other values may be allowed in the future.
+</p>
+<pre class="wiki">Default:  GARMIN
+Example:  GpsModelName GARMIN
+</pre><p>
+<strong>GpsReportInterval [nsec]</strong><br />
+Function: Summary Logging
+</p>
+<p>
+A summary of the GPS lock status is written to the log file every nsec seconds if the log file is turned on (LogFile 1), a medium log output level is selected (Debug &gt;= 1), and you are using GPS (GpsEnable ON). Set nsec to 0 if no GPS lock status lines are desired.
+</p>
+<pre class="wiki">Default:  0
+Example:  GpsReportInterval 1200
+</pre><p>
+<strong>HeartbeatInterval [nsec]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Defines the number of seconds, nsec, between TYPE_HEARTBEAT messages issued by srusb2ew.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartbeatInterval 60
+</pre><p>
+<strong>LogFile [n]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If n is 0, no log file will be written. If n is non-zero, srusb2ew will write daily log file(s) called nnnnn_yyyymmdd.log where nnnnn is the name of the configuration file (with the suffix '.d' removed) and yyyymmdd is the current UTC date (ex: 20040123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile 1
+</pre><p>
+<strong>ModuleId [mod_id]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number. In general, a different module ID is needed for each instance of srusb2ew.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_SRUSB2EW
+</pre><p>
+<strong>OutputMsgType [trace_format]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells srusb2ew whether to send waveform messages in the the old or new style tracebuf format. trace_format is a case sensitive character string and must be either TYPE_TRACEBUF or TYPE_TRACEBUF2. For Earthworm v7.0 and later, TYPE_TRACEBUF2 is the default.
+</p>
+<pre class="wiki">Default:  TYPE_TRACEBUF2 (for v7.0 and greater, TYPE_TRACEBUF otherwise)
+Example:  OutputMsgType TYPE_TRACEBUF2
+</pre><p>
+<strong>OutputPakFiles [n]</strong><br />
+Function: Debugging output
+</p>
+<p>
+Sets the on-off switch for writing native USBxCH acquired data packets to disk in SR .pak format files. If n is 0, no .pak files will be written. If n is 1, srusb2ew will write .pak files in addition to the normal EW tracebuf packets. The .pak files can be used for debugging or for alternate processing with SR utilities such as Pak2Asc. A new sub-directory will be created in the current working directory. The name of the new directory is based on the acquisition start time and will be something like 2010-03-05-at-00-13-43. The .pak files will be written into this new directory. With names starting at 00000000.pak and increasing sequentially. The number of packets in each .pak file is controlled by the PacketsPerFile parameter.
+</p>
+<pre class="wiki">Default:  0
+Example:  OutputPakFiles 
+</pre><p>
+<strong>PacketsPerFile [n]</strong><br />
+Function: Debugging output
+</p>
+<p>
+Specifies the number of packets to include in each output .pak file. If the number given is less than the sampling rate/2 it will be increased. This parameter is ignored if .pak files were not requested by setting OutputPakFiles to 1.
+</p>
+<pre class="wiki">Default:  none
+Example:  PacketsPerFile 650
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells srusb2ew which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingName WAVE_RING
+</pre><p>
+<strong>SamplingRate [sps]</strong><br />
+Function: USBxCH Configuration
+</p>
+<p>
+Requests how many samples per second to acquire. The actual sampling rate may be a different than the sps requested since only certain rates are achievable with the USBxCH hardware. Allowed rates include 39.1, 65.1, 78.1, 130.2, 651.0. Currently, the maximum allowed sps is 651.
+</p>
+<pre class="wiki">Default:  None
+Example:  SamplingRate 130
+</pre><p>
+<strong>SummaryInterval [nsec]</strong><br />
+Function: Summary Logging
+</p>
+<p>
+A summary of the analog, GPS PPS, and GPS serial info read is written to the log file every nsec seconds if the log file is turned on (LogFile 1) and a medium log output level is selected (Debug &gt;= 1). Set nsec to 0 if no summary lines are desired.
+</p>
+<pre class="wiki">Default:  0
+Example:  SummaryInterval 1200
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki"># FILE: srusb2ew.d            Copyright (c), Symmetric Research, 2010
+#
+# This is the srusb2ew parameter file for acquiring data with a 
+# Symmetric Research USBxCH 24 bit A/D board and putting that
+# data onto an earthworm ring.
+#
+# The standard earthworm import_generic/export (or export_scnl) functions
+# can be used to transfer USBxCH tracebuf data from a local WAVE_RING to
+# a WAVE_RING on another machine.  If you have data from two different
+# USBxCH boards arriving at the same ring, you must ensure that each is
+# using a different ModuleId.  Otherwise, the two sets of data will 
+# appear to be scrambled together which leads to lots of message sequence
+# number errors.
+#
+# If you wish to use MOD_SRUSB2EW for a ModuleId instead of
+# MOD_ADSEND_C, you must first define it in your earthworm.d file.
+#
+
+Debug               2               # control amount of info sent to log file 0-8
+                                    # warnings and errors always given
+                                    # 0 adds startup info
+                                    # 1 adds status summaries every GpsReportInterval
+                                    # 2 adds config + more detail (default)
+                                    # 3 adds trace data message info every second
+                                    # 4 adds counter values, NMEA strings every second
+                                    # Remaining levels 5-8 mostly for code debugging
+
+OutputPakFiles      1               # output SR dat files in addition to the
+                                    # normal EW tracebuff packets, good for 
+                                    # debugging or alternate processing with SR
+                                    # utilities such as Pak2Asc
+PacketsPerFile     650              # packets in each .PAK file, will be adjusted
+                                    # if less than sampling rate/2
+
+#
+# Basic Earthworm parameters:
+#
+
+MyModuleId         MOD_ADSEND_C     # module id for this instance of srusb2ew
+RingName           WAVE_RING        # shared memory ring for outputting acquired data
+LogFile            1                # 0 to turn off disk log file; 1 to turn it on
+HeartBeatInterval  60               # seconds between heartbeats, only checked
+                                    # after each second of data is acquired
+#
+# Optional Earthworm parameters:
+#
+
+OutputMsgType   TYPE_TRACEBUF2      # Older style waveforms were identified by
+                                    # Station/Channel/Network (SCN), the newer
+                                    # style also includes Location.  For Earthworm 
+                                    # v7.0 and greater use, TYPE_TRACEBUF2.  If  
+                                    # you need the older style, use TYPE_TRACEBUF.
+
+#
+# Basic USBxCH parameters:
+#
+
+AtodDriverName     SrUsbXch0        # name of USBxCH kernel mode device driver installed
+AtodModelName      USB4CH           # which USBxCH is being used: USB4CH, USB8CH
+
+SamplingRate       130.1            # requested sampling rate - the actual rate may be
+                                    # different from this due to hardware considerations
+                                    # currently only  78, 130, or 650 is allowed.
+
+#
+# Basic USBxCH GPS parameters:
+#
+
+GpsModelName       GARMIN           # usually GARMIN or TRIMBLE, may be PCTIME for NTP time
+
+
+#
+# Optional logging parameters:
+#
+SummaryInterval   1200              # seconds in log file between summary info
+                                    # use 0 for no reporting
+GpsReportInterval 3600              # seconds in log file between GPS lock lines
+                                    # use 0 for no reporting
+GpsBadLimit        300              # number of bad locks allowed per interval
+                                    # before error message is sent
+
+
+#
+# Channel info: SCNL AND PIN VALUES FOR EACH A/D CHANNEL
+#
+# EwChannelScnl lines relate the USBxCH channel numbers to the SCNL and pin
+# numbers used to identify channels in an earthworm system.  The pin
+# numbers are optional.  If a pin number is not specified for a channel, 
+# the pin number is set to the A/D channel number.
+#
+# Three different versions of this section are given below showing how
+# the setup would look when using the USB4CH or USB8CH.  Only the
+# version corresponding to the USBxCH you are actually using should
+# be commented in, the other two should be commented out.
+#
+# The older keyword EwChannel is the same, except it has no location value.
+# If OutputMsgType = TYPE_TRACEBUF2 and EwChannel is used, the location field
+# defaults to "--" which means a blank location.
+#
+
+#
+# Sample EwChannelScnl section for the USB4CH
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+#EwChannelScnl   0      CH00  xxx   SR   --    0
+#EwChannelScnl   1      CH01  xxx   SR   --    1
+#EwChannelScnl   2      CH02  xxx   SR   --    2
+#EwChannelScnl   3      CH03  xxx   SR   --    3
+#EwChannelScnl   4      DGTL  xxx   SR   --    4
+#EwChannelScnl   5      PPS   xxx   SR   --    5
+#EwChannelScnl   6      CNTR  xxx   SR   --    6
+
+
+
+#
+# Sample EwChannelScnl section for the USB8CH
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+#EwChannelScnl   0      CH00  xxx   SR   --    0
+#EwChannelScnl   1      CH01  xxx   SR   --    1
+#EwChannelScnl   2      CH02  xxx   SR   --    2
+#EwChannelScnl   3      CH03  xxx   SR   --    3
+#EwChannelScnl   4      CH04  xxx   SR   --    4
+#EwChannelScnl   5      CH05  xxx   SR   --    5
+#EwChannelScnl   6      CH06  xxx   SR   --    6
+#EwChannelScnl   7      CH07  xxx   SR   --    7
+#EwChannelScnl   8      DGTL  xxx   SR   --    8
+#EwChannelScnl   9      PPS   xxx   SR   --    9
+#EwChannelScnl  10      CNTR  xxx   SR   --   10
+
+
+
+#
+# Actual EwChannelScnl section being used ...
+# replace with appropriate values for your installation
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+EwChannelScnl   0      CH00  SHZ   SR   U4    0
+EwChannelScnl   1      CH01  SHZ   SR   U4    1
+EwChannelScnl   2      CH02  SHZ   SR   U4    2
+EwChannelScnl   3      CH03  SHZ   SR   U4    3
+EwChannelScnl   4      DGTL  DIG   SR   U4    4
+EwChannelScnl   5      PPS   GPS   SR   U4    5
+</pre><p>
+ 
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/srusb2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+From bogaert@usgs.gov Wed Oct  4 16:53:17 2000
+Date: Wed, 04 Oct 2000 17:47:05 -0600
+From: Barbara Bogaert <bogaert@usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm V5.1 is released.
+
+
+Earthworm V5.1 Release
+10/4/00
+
+V5.1 Is Released
+****************
+It can be retrieved from the Earthworm ftp site
+ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.1
+
+New Features of EW V5.1
+***********************
+k2ew: Communicates with the K2 data logger from Kinemetrics. Uses TCP or 
+COM port for communication on WindowsNT, TCP or TTY (serial) comms on Unix. 
+See src/data/sources/k2ew/Doc or the Earthworm web pages for documentation.
+
+ringdup: Program to read messages (with user given logos) from one ring and 
+deposit them in another. This is mainly copied
+from export. This is actually two programs: ringdup_generic and ringdup_scn.
+
+naqs2ew: Interfaces with the Nanometrics digital data acquisition program, 
+NaqsServer, requests continuous waveform data
+from a list of SCNs and outputs Earthworm tracebuf packets into an 
+Earthworm transport ring.
+
+Event Review Using the Earthworm Database: The Event Review provides 
+Earthworm with a remote, rapid event review
+capability. Its intended use is permit a duty seismologist to rapidly 
+respond to a significant event. It was NOT designed to
+serve as a routine analysis facility.
+
+CONTRIBUTED SOFTWARE
+**************************
+
+The contributed software can be found at
+         ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/contributed_software
+Coming Soon: A table describing contributed software can be found at URL: 
+www.cnss.org/EWAB/Contributed/Contributed.htm
+
+UNIVERSITY OF UTAH SEISMIC STATION:
+IMPORT_GEN_PASV/EXPORT_ACTV: The original Earthworm import/export pair have 
+been modified such that import_generic is now passive and the export 
+modules now initiates communication. import_gen_pasv module prepares a port 
+and waits for a connection request from a export_actv module. These modules 
+will become part of the core Earthworm in release v5.2.
+
+
+
+
+
+Barbara Bogaert                 U.S. Geological Survey
+Project Manager, Earthworm Development Group
+bogaert@usgs.gov                        phone:  303-273-8491 
+
+
+

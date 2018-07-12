@@ -1,0 +1,1576 @@
+# Mapping file contains tables of instrument types, long station names
+# and agency names.
+# Agency net agency-name # net is standard network code;
+#    agency-name: the long agency name, up to 40 characters
+Agency NC   Northern California Seismic Network
+Agency BK   Berkeley Digital Seismic Network
+Agency CE   California Division of Mines and Geology
+Agency NP   National Strong-Motion Program
+Agency PG   Pacific Gas and Electric
+Agency XT   USGS Tremor
+#
+#
+# Station sta net longName
+#  sta and net are standard station and network codes;
+#  longName is the long station name, up to 20 characters
+Station  ARC   BK     Arcata Humbolt Stat
+Station  BDM   BK     Black Diamond Mines
+Station  BKS   BK     UC Berkeley -Byerly
+Station  BRIB  BK     Briones Russel Rsrv
+Station  BRK   BK     Brkly Hav Hall
+Station  CMB   BK     Columbia Col BB
+Station  CMSB  BK     CAL Stadium
+Station  CRQB  BK     Carquinez Bridge
+Station  CVS   BK     Sonoma Vineyard
+Station  FARB  BK     Farallon Islands
+Station  HOPS  BK     Hopland Fld Sta UCD
+Station  JAS   BK     Jamestown
+Station  JAS1  BK     Jamestown
+Station  JRSC  BK     Jasper Ridge -Stnfd
+Station  KCC   BK     Kaiser Creek SC Edi
+Station  MHC   BK     Mnt Hamilton - Lick
+Station  MIN   BK     Mineral - Lassen VP
+Station  MOD   BK     Modoc Plateau
+Station  ORV   BK     Oroville Dam - DWR
+Station  PKD   BK     Pkfld - Bear Valley
+Station  PKD1  BK     Pkfld - Haliburton
+Station  POTR  BK     Potrero Hills
+Station  RFSB  BK     Richmond Borehole
+Station  RSRB  BK     Rchmnd-San Rafl
+Station  SAO   BK     San Andreas Geo Obs
+Station  SCCB  BK     Santa Clara Commun
+Station  SMCB  BK     St Marys Col
+Station  STAN  BK     Stanford
+Station  WDC   BK     Whiskeytwn Dam NRA
+Station  WENL  BK     Wente Vineyards
+Station  YBH   BK     Yreka Blue Horn NFS
+Station  YBIB  BK     Yerba Buena Isl
+Station  33742 CE     Ridgecrest
+Station  36529 CE     Prkfld Turkey Flat1
+Station  36712 CE     Templton Las Tablas
+Station  44015 CE     Lone Pine A
+Station  47063 CE     Mendota FS
+Station  47125 CE     Capitola FS
+Station  47126 CE     San Juan Bautista
+Station  47381 CE     Gilroy #3
+Station  47460 CE     Greenfld Police Stn
+Station  47707 CE     Watsonville
+Station  47729 CE     Big Sur
+Station  47750 CE     Aptos
+Station  47762 CE     Salinas
+Station  48906 CE     Santa Cruz Co Bldg
+Station  54730 CE     Lake Crowley
+Station  54933 CE     Lake Crowley LV Dam
+Station  55067 CE     Mariposa FS
+Station  57031 CE     Santa Clara Agnew
+Station  57064 CE     Fremont Mission SJ
+Station  57383 CE     Gilroy #6 San Ysidr
+Station  57458 CE     Tracy - Sewage Plnt
+Station  57600 CE     San Jose Santa Trsa
+Station  57604 CE     San Jose SC Co Bldg
+Station  57614 CE     Description Unknown
+Station  57748 CE     Description Unknown
+Station  57783 CE     Fremont
+Station  57911 CE     Santa Clara
+Station  57950 CE     Fremont Kato & Page
+Station  58065 CE     Saratoga Aloha Ave
+Station  58127 CE     Woodside FS
+Station  58130 CE     SF Diamond Hghts
+Station  58131 CE     SF Pacific Hghts
+Station  58132 CE     SF CLiff House
+Station  58133 CE     SF Telegraph Hill
+Station  58135 CE     Santa Cruz UCSC
+Station  58151 CE     SF Rincon Hill
+Station  58163 CE     Yerba Buena Island
+Station  58219 CE     Hayward  CSUH Grnds
+Station  58222 CE     SF Presidio
+Station  58223 CE     SFO - Engineering
+Station  58224 CE     Description
+
+Station  58337 CE     Oakland
+Station  58374 CE     Belmont
+Station  58375 CE     Foster City APEEL 1
+Station  58376 CE     Hayward - APEEL 1E
+Station  58378 CE     Upper Crystal Spr
+Station  58393 CE     Hayward - APEEL 2E
+Station  58472 CE     Oakland
+Station  58505 CE     Richmond City Hall
+Station  58539 CE     SSF Sierra PT
+Station  58565 CE     San Rafael 2nd & Ln
+Station  58588 CE     Stanford
+Station  58596 CE     Description Unknown
+Station  58599 CE     Stanford Amphithtr
+Station  58619 CE     Redwood City Oracle
+Station  58642 CE     Treas I Tech Array
+Station  58653 CE     Hayward
+Station  58658 CE     Hayward
+Station  58661 CE     Castro Valley
+Station  58663 CE     Newark - bridge
+Station  58664 CE     Palo Alto Dmb Brdg
+Station  58665 CE     Newark City Hall
+Station  58667 CE     Concord - Clayton
+Station  58716 CE     San Francisco
+Station  58740 CE     San Francisco
+Station  58754 CE     Half Moon Bay
+Station  58768 CE     San Francisco
+Station  58790 CE     Piedmont
+Station  58798 CE     Hayward
+Station  58905 CE     San Rafael
+Station  58906 CE     Santa Cruz Co Bldg
+Station  58931 CE     Oakland - airport
+Station  58932 CE     Oakland
+Station  58961 CE     SF Bay Bridge
+Station  58964 CE     Half Moon Bay
+Station  58968 CE     Foster City SM Brdg
+Station  66038 CE     S Lake Tahoe Meyers
+Station  67068 CE     Vacaville Irr Dist
+Station  67751 CE     Pittsburg
+Station  67771 CE     Antioch
+Station  67910 CE     Antioch
+Station  67942 CE     Sacramento
+Station  67972 CE     W Sacramento
+Station  68034 CE     Lake Berryessa
+Station  68035 CE     Kelseyville FS
+Station  68045 CE     Fairfield
+Station  68150 CE     Napa
+Station  68676 CE     Santa Rosa - US 101
+Station  68682 CE     Description Unknown
+Station  68717 CE     Rohnert Pk - US 101
+Station  68797 CE     Rohnert Park Hwy 10
+Station  69039 CE     Bodega Head
+Station  76741 CE     Truckee
+Station  77350 CE     Palermo FS
+Station  77756 CE     Nevada City
+Station  79683 CE     Albion
+Station  79757 CE     Leggett
+Station  79761 CE     Leggett
+Station  87053 CE     Lake Almanor FS
+Station  88059 CE     Redding
+Station  88060 CE     Red Bluff Fairgrnds
+Station  89101 CE     Petrolia FS
+Station  89686 CE     Eureka
+Station  89687 CE     Eureka
+Station  89734 CE     Eureka
+Station  89735 CE     Eureka
+Station  89736 CE     Eureka
+Station  89781 CE     Eureka
+Station  89901 CE     Petrolia
+Station  89973 CE     Rio Dell Hwy 101
+Station  89T01 CE     Petrolia
+Station  96142 CE     Likely FS
+Station  GDI   CE     58638 Concord
+Station  GDJ   CE     58639 Oakland
+Station  GEC   CE     58642 Treas Isl
+Station  GEI   CE     58648 SF
+Station  GHF   CE     58675 Oakland
+Station  HAA   CE     58700 SF
+Station  HAX   CE     5870x SF
+Station  HBG   CE     58716 SF
+Station  HBI   CE     58718 SF
+Station  HEA   CE     58740 SF
+Station  HGI   CE     SF6 Cty Bldg
+Station  RIH   CE     58505 Rich C Hl
+Station  RIM   CE     Richmond Med Ctr
+Station  BAV   NC     Antelope Valley
+Station  BAV   NC     Antelope Valley
+Station  BPC   NC     Pine Canyon
+Station  BPO   NC     Post Ranch
+Station  BSG   NC     Shirttail Gulch
+Station  BSR   NC     Salinas Radio
+Station  CAL   NC     Calaveras Reserv
+Station  CAO   NC     Arnold Ranch
+Station  CBR   NC     Bollinger Canyon
+Station  CCH1  NC     Chabot
+Station  CCO   NC     Coe Ranch
+Station  CDV   NC     Description
+
+Station  CGP1  NC     Garin Prk E Dnhl
+Station  CMW1  NC     Mill Creek E FBA
+Station  CNI   NC     Niles Canyon
+Station  CPI   NC     Pinole Ridge
+Station  CPM   NC     Point Molate
+Station  CSL   NC     San Leandro Hills
+Station  CSU1  NC     Sunol E DigFBA
+Station  CTA   NC     Taylor
+Station  CVP   NC     Vollmer Peak
+Station  CYB   NC     Yerba Buena Island
+Station  GGP   NC     Geyser Peak
+Station  HBT   NC     Bautista
+Station  HCO   NC     Corn Cob Canyon
+Station  HPC   NC     Pacheco Lake
+Station  JBL   NC     Camp Ben Lomond
+Station  JBN   NC     Ben Lomand Mountain
+Station  JCH   NC     Cahill Ridge
+Station  JNA   NC     New Almaden Mine
+Station  JSA   NC     San Andreas Res
+Station  JSB   NC     San Bruno Mountain
+Station  JSF   NC     Stanford Telescope
+Station  JSGB  NC     Saratoga Golf Crs
+Station  JSP   NC     San Pedro Valley
+Station  JUM   NC     Mount Umunhum
+Station  KCP   NC     Cahto Peak
+Station  KCPB  NC     Cahto Peak
+Station  KEB   NC     Edison Butte OR
+Station  KHM   NC     Horse Mountain
+Station  KHMB  NC     Horse Mountain
+Station  KMP   NC     Mount Pierce
+Station  KMPB  NC     Mount Pierce
+Station  KSX   NC     Camp Six
+Station  LRR   NC     Red Rock Mountain
+Station  LSF   NC     South Fork
+Station  LTC   NC     Tuscan Springs
+Station  MDP   NC     Devil's Postpile
+Station  MEM   NC     East Mammoth
+Station  MHD   NC     Hidden Dam
+Station  MMI   NC     Miami Mountain
+Station  MPR   NC     Pilot Ridge
+Station  MRH   NC     Rocky Hill
+Station  MTC   NC     Tac Room
+Station  NAD   NC     Allendale
+Station  NBO   NC     Bolinas
+Station  NBP   NC     Berryessa Peak
+Station  NGVB  NC     Green Valley Rd
+Station  NHF   NC     Hamilton Field
+Station  NLH   NC     Lake Herman
+Station  NMH   NC     Mt St Helena
+Station  NRL   NC     Rodeo Lagoon
+Station  NP    NC     Sonoma Mt
+Station  NSP   NC     Sears Point
+Station  NTAB  NC     Tamalpais Peak
+Station  NTYB  NC     Taylor Mntn
+Station  NVE   NC     Mount Veeder
+Station  PCC   NC     Crazy Canyon
+Station  PGH   NC     Gold Hill
+Station  PHF   NC     Heflinger Ranch
+Station  PHO   NC     Hog Canyon
+Station  PHP   NC     Hope Ranch
+Station  PHR   NC     Hernandez Valley
+Station  PMC   NC     McMillan Canyon
+Station  PMG   NC     Santa Margarita
+Station  PMM   NC     Middle Mountain
+Station  PMP   NC     Monarch Peak
+Station  PPB   NC     Point Buchon
+Station  PPC   NC     Portuguese Canyon
+Station  PVC   NC     Vineyard Canyon
+Station  WMP   NC     Mount Pheasant
+Station  1002  NP     Redwood City, APEEL
+Station  1023  NP     Ferndale, Fire Stn
+Station  1515  NP     Foster City 2s
+Station  1575  NP     Hollister City H
+Station  1580  NP     Arcata, Humboldt
+Station  1581  NP     Eureka, So Bay Sch
+Station  1582  NP     Eureka, Coll of Rdw
+Station  1584  NP     Ferndale, Bunker Hl
+Station  1586  NP     Loleta Fire Stn
+Station  1590  NP     Larkspur, Ferry Trm
+Station  1662  NP     Emeryville, PPP
+Station  1675  NP     SF FS17
+Station  1678  NP     SF GG Brdg Toll
+Station  1684  NP     Sunol Reg Park 1s
+Station  1688  NP     Sunol Forst FS 1s
+Station  1689  NP     Dublin FS 1s
+Station  1690  NP     Danville FS 1s
+Station  1691  NP     Pleasant Hill FS
+Station  1695  NP     Snyvl 1058 Colto
+Station  1697  NP     Los Gatos Rod & Gun
+Station  1720  NP     Cupertino,Snyvl
+Station  1722  NP     Richmond Gun Clu
+Station  1725  NP     Ferndale, Ctrvil B&
+Station  1730  NP     San Leandro Hills
+Station  1734  NP     La Honda, Weeks Crk
+Station  1735  NP     SF, US Court
+Station  1736  NP     Portola Valley
+Station  1737  NP     El Cerrito MVCC
+Station  1739  NP      Union City Maso
+Station  1740  NP     SF FS28        2
+Station  1741  NP     SF Marina School
+Station  1742  NP     San Jose Gov't C
+Station  1743  NP     Petaluma FS2
+Station  1744  NP     Healdsburg FS
+Station  1745  NP     Menlo Park, USGS
+Station  1746  NP     Fortuna, Fire Stn
+Station  1747  NP     Coalinga FS
+Station  1748  NP     Fresno, USGS/NSMP
+Station  1749  NP     Point Molate Bld
+Station  1750  NP     Fremont, Coyote H
+Station  1751  NP     Novato FS4
+Station  1752  NP     Woodside, Filoli
+Station  1753  NP     Foster City,Bowdi
+Station  1754  NP     Hayward FS1
+Station  1755  NP     Alameda Fire Stn
+Station  1756  NP     Alameda Fire Stn
+Station  1757  NP     Fremont, Mission SJ
+Station  1759  NP     Vallejo Fire Stat
+Station  1760  NP     Benicia Fire Sta
+Station  1761  NP     Sonoma Fire Stati
+Station  1762  NP     Novato Fire Sta 1
+Station  1763  NP     Martinez: VA Hosp
+Station  1764  NP     St Helena, FS
+Station  1765  NP     Napa Fire Station
+Station  1767  NP     Santa Rosa Fire S
+Station  1768  NP     Petaluma Fire Stn
+Station  1769  NP     Fairfield, Travis
+Station  1770  NP     SF, Fire Stn 7
+Station  1771  NP     SF, FIre Stn 8
+Station  1772  NP     SF, Fire Stn 18
+Station  1774  NP     SF, Fire Stn 23
+Station  1776  NP     Redwood City FS 10
+Station  1777  NP     San Mateo, FS 1
+Station  1778  NP     San Jose, FS 14
+Station  1779  NP     San Jose, FS 13
+Station  1780  NP     San Jose, FS 9
+Station  1781  NP     San Jose, FS 6
+Station  1782  NP     San Jose, FS 10
+Station  1783  NP     San Jose, FS 26
+Station  1784  NP     Menlo Park, USGS
+Station  1785  NP     Pleasanton, FS 1
+Station  1786  NP     Livermore, F.S
+Station  1787  NP     Palo Alto, FS 7 SLA
+Station  2001  NP     Hawthorne, NV
+Station  2006  NP     Reno, NV UNV
+Station  2010  NP     Mina, NV
+Station  2012  NP     Fallon NV
+Station  2015  NP     Stillwater WR, NV
+Station  2016  NP     Gabbs NV
+Station  2018  NP     Silver Springs, NV
+Station  2019  NP     Carson City NV
+Station  2020  NP     Mason Valley, NV
+Station  2021  NP     Montgomery Pass, NV
+Station  2023  NP     Reno, NV Sierra Pac
+Station  2024  NP     Goldfield, NV
+Station  ALM   PG     SJ Division Office
+Station  BEL   PG     Belmont SC
+Station  CCA   PG     Contra Costa Sub
+Station  CIN   PG     Cinnabar SC/Oper
+Station  CON   PG     Concord SC/Dif Off
+Station  CUP   PG     Cupertino SC/Oper
+Station  DCY   PG     DCPP 550 kv yard
+Station  EMB   PG     Embarcadero Z Sub
+Station  EUR   PG     Eureka Service Cntr
+Station  EWH   PG     Emeryville Wrhs
+Station  FCC   PG     Fairfield CC
+Station  FUL   PG     Fulton Sub
+Station  FWH   PG     Fremont Wrhs
+Station  GAT   PG     Gates Sub
+Station  HAY   PG     Hayward SC
+Station  IGN   PG     Ignacio Sub
+Station  JEF   PG     Jefferson Sub
+Station  LAK   PG     Lakeville Sub
+Station  LBN   PG     Los banos Sub
+Station  LBN   PG     Los banos Sub
+Station  MAR   PG     Martin H Sub
+Station  MAR   PG     Martin H Sub
+Station  MET   PG     Metcalf Sub
+Station  MET   PG     Metcalf Sub
+Station  MID   PG     Midway
+Station  MIS   PG     Mission X Sub
+Station  MOR   PG     Moraga Sub
+Station  MOS   PG     Moss Landing SwC
+Station  MTV   PG     Monta Vista Sub
+Station  NWK   PG     Newark Sub
+Station  OAK   PG     Oakland SC
+Station  RAV   PG     Ravenswood Sub
+Station  RMD   PG     Richmond SC/Oper
+Station  SAM   PG     San Mateo Sub
+Station  SAR   PG     Santa Rosa SC/Oper
+Station  SFD   PG     SF Division Office
+Station  SOB   PG     Sobrante Sub
+Station  SRL   PG     San Ramon LC
+Station  SRS   PG     San Ramon Sub
+Station  TES   PG     Tesla Sub
+Station  WEB   PG     Oakland Div Office
+Station  WIG   PG     GT&S Office
+Station  KN40  SJD    SJDA Station
+Station  KP1   SJD    SJDA Station
+Station  KP5   SJD    SJDA Station
+Station  KRCK  SJD    SJDA Station
+Station  KS5   SJD    SJDA Station
+Station  P01   XT     OFD EOC 3s
+Station  P02   XT     OFD FS 29 1s
+Station  P03   XT     OFD FS 23 1s
+Station  P04   XT     OFD FS 16 1s
+Station  P05   XT     OFD FS 13 1s
+Station  P06   XT     OFD FS 27 1s
+Station  P07   XT     OAK FS 22 1s
+Station  P08   XT     TraPac Maint 2s
+Station  P09   XT     Depwi res 2s
+Station  P10   XT     OFD FS 20 2s
+Station  P11   XT     OFD FS 17 1s
+Station  P12   XT     KTVU 2s
+#
+# Inst sta comp net inst-type
+#   sta, comp and net are standard station, component and network codes
+#   inst-type is the instrument description, up to 50 characters
+Inst  ARC     BHE   BK   Unknown Type
+Inst  ARC     BHN   BK   Unknown Type
+Inst  ARC     BHZ   BK   Unknown Type
+Inst  ARC     HLE   BK   Kinemetrics FBA-23
+Inst  ARC     HLN   BK   Kinemetrics FBA-23
+Inst  ARC     HLZ   BK   Kinemetrics FBA-23
+Inst  BDM     HLE   BK   Unknown Accelerometer
+Inst  BDM     HLN   BK   Unknown Accelerometer
+Inst  BDM     HLZ   BK   Unknown Accelerometer
+Inst  BKS     HLE   BK   Kinemetrics FBA-23
+Inst  BKS     HLN   BK   Kinemetrics FBA-23
+Inst  BKS     HLZ   BK   Kinemetrics FBA-23
+Inst  BRIB    HLE   BK   Kinemetrics FBA-23
+Inst  BRIB    HLN   BK   Kinemetrics FBA-23
+Inst  BRIB    HLZ   BK   Kinemetrics FBA-23
+Inst  CMB     HLE   BK   Kinemetrics FBA-23
+Inst  CMB     HLN   BK   Kinemetrics FBA-23
+Inst  CMB     HLZ   BK   Kinemetrics FBA-23
+Inst  CVS     HLE   BK   Unknown Accelerometer
+Inst  CVS     HLN   BK   Unknown Accelerometer
+Inst  CVS     HLZ   BK   Unknown Accelerometer
+Inst  FARB    HLE   BK   Unknown Accelerometer
+Inst  FARB    HLN   BK   Unknown Accelerometer
+Inst  FARB    HLZ   BK   Unknown Accelerometer
+Inst  HOPS    HLE   BK   Kinemetrics FBA-23
+Inst  HOPS    HLN   BK   Kinemetrics FBA-23
+Inst  HOPS    HLZ   BK   Kinemetrics FBA-23
+Inst  JAS     HLE   BK   Unknown Type
+Inst  JAS     HLN   BK   Unknown Type
+Inst  JAS     HLZ   BK   Unknown Type
+Inst  JAS1    HLE   BK   Unknown Type
+Inst  JAS1    HLN   BK   Unknown Type
+Inst  JAS1    HLZ   BK   Unknown Type
+Inst  JRSC    HLE   BK   Kinemetrics FBA-23
+Inst  JRSC    HLN   BK   Kinemetrics FBA-23
+Inst  JRSC    HLZ   BK   Kinemetrics FBA-23
+Inst  KCC     HLE   BK   Unknown Accelerometer
+Inst  KCC     HLN   BK   Unknown Accelerometer
+Inst  KCC     HLZ   BK   Unknown Accelerometer
+Inst  MHC     HLE   BK   Kinemetrics FBA-23
+Inst  MHC     HLN   BK   Kinemetrics FBA-23
+Inst  MHC     HLZ   BK   Kinemetrics FBA-23
+Inst  MIN     HLE   BK   Kinemetrics FBA-23
+Inst  MIN     HLN   BK   Kinemetrics FBA-23
+Inst  MIN     HLZ   BK   Kinemetrics FBA-23
+Inst  MOD     HLE   BK   Unknown Type
+Inst  MOD     HLN   BK   Unknown Type
+Inst  MOD     HLZ   BK   Unknown Type
+Inst  ORV     HLE   BK   Kinemetrics FBA-23
+Inst  ORV     HLN   BK   Kinemetrics FBA-23
+Inst  ORV     HLZ   BK   Kinemetrics FBA-23
+Inst  PKD     HLE   BK   Unknown Accelerometer
+Inst  PKD     HLN   BK   Unknown Accelerometer
+Inst  PKD     HLZ   BK   Unknown Accelerometer
+Inst  PKD1    HLE   BK   Kinemetrics FBA-23
+Inst  PKD1    HLN   BK   Kinemetrics FBA-23
+Inst  PKD1    HLZ   BK   Kinemetrics FBA-23
+Inst  POTR    HLE   BK   Unknown Accelerometer
+Inst  POTR    HLN   BK   Unknown Accelerometer
+Inst  POTR    HLZ   BK   Unknown Accelerometer
+Inst  RFSB    HLE   BK   Wilcoxin 731
+Inst  RFSB    HLN   BK   Wilcoxin 731
+Inst  RFSB    HLZ   BK   Wilcoxin 731
+Inst  SAO     HLE   BK   Kinemetrics FBA-23
+Inst  SAO     HLN   BK   Kinemetrics FBA-23
+Inst  SAO     HLZ   BK   Kinemetrics FBA-23
+Inst  SCCB    HLE   BK   FBA
+Inst  SCCB    HLN   BK   FBA
+Inst  SCCB    HLZ   BK   FBA
+Inst  SMCB    HLE   BK   Wilcoxin 731
+Inst  SMCB    HLN   BK   Wilcoxin 731
+Inst  SMCB    HLZ   BK   Wilcoxin 731
+Inst  STAN    HLE   BK   Unknown Type
+Inst  STAN    HLN   BK   Unknown Type
+Inst  STAN    HLZ   BK   Unknown Type
+Inst  WDC     HLE   BK   Kinemetrics FBA-23
+Inst  WDC     HLN   BK   Kinemetrics FBA-23
+Inst  WDC     HLZ   BK   Kinemetrics FBA-23
+Inst  WENL    HLE   BK   Unknown Accelerometer
+Inst  WENL    HLN   BK   Unknown Accelerometer
+Inst  WENL    HLZ   BK   Unknown Accelerometer
+Inst  YBH     HLE   BK   Kinemetrics FBA-23
+Inst  YBH     HLN   BK   Kinemetrics FBA-23
+Inst  YBH     HLZ   BK   Kinemetrics FBA-23
+Inst  33742   HN?   CE   Unknown Type
+Inst  36529   HN?   CE   Unknown Type
+Inst  36712   HN?   CE   Unknown Type
+Inst  44015   HN?   CE   Unknown Type
+Inst  47063   HN?   CE   Unknown Type
+Inst  47125   HN?   CE   Unknown Type
+Inst  47126   HN?   CE   Unknown Type
+Inst  47381   HN?   CE   Unknown Type
+Inst  47460   HN?   CE   Unknown Type
+Inst  47707   HN?   CE   Unknown Type
+Inst  47729   HN?   CE   Unknown Type
+Inst  47750   HN?   CE   Unknown Type
+Inst  47762   HN?   CE   Unknown Type
+Inst  54730   HN?   CE   Unknown Type
+Inst  54933   HN?   CE   Unknown Type
+Inst  55067   HN?   CE   Unknown Type
+Inst  57031   HN?   CE   Unknown Type
+Inst  57064   HN?   CE   Unknown Type
+Inst  57383   HN?   CE   Unknown Type
+Inst  57458   HN?   CE   Unknown Type
+Inst  57600   HN?   CE   Unknown Type
+Inst  57604   HN?   CE   Unknown Type
+Inst  57614   HN?   CE   Unknown Type
+Inst  57748   HN?   CE   Unknown Type
+Inst  57783   HN?   CE   Unknown Type
+Inst  57911   HN?   CE   Unknown Type
+Inst  57950   HN?   CE   Unknown Type
+Inst  58065   HN?   CE   Unknown Type
+Inst  58127   HN?   CE   Unknown Type
+Inst  58130   HN?   CE   Unknown Type
+Inst  58131   HN?   CE   Unknown Type
+Inst  58132   HN?   CE   Unknown Type
+Inst  58133   HN?   CE   Unknown Type
+Inst  58135   HN?   CE   Unknown Type
+Inst  58151   HN?   CE   Unknown Type
+Inst  58163   HN?   CE   Unknown Type
+Inst  58219   HN?   CE   Unknown Type
+Inst  58222   HN?   CE   Unknown Type
+Inst  58223   HN?   CE   Unknown Type
+Inst  58337   HN?   CE   Unknown Type
+Inst  58374   HN?   CE   Unknown Type
+Inst  58375   HN?   CE   Unknown Type
+Inst  58376   HN?   CE   Unknown Type
+Inst  58378   HN?   CE   Unknown Type
+Inst  58393   HN?   CE   Unknown Type
+Inst  58472   HN?   CE   Unknown Type
+Inst  58505   HN?   CE   Unknown Type
+Inst  58539   HN?   CE   Unknown Type
+Inst  58565   HN?   CE   Unknown Type
+Inst  58588   HN?   CE   Unknown Type
+Inst  58596   HN?   CE   Unknown Type
+Inst  58599   HN?   CE   Unknown Type
+Inst  58619   HN?   CE   Unknown Type
+Inst  58642   HN?   CE   Unknown Type
+Inst  58653   HN?   CE   Unknown Type
+Inst  58658   HN?   CE   Unknown Type
+Inst  58661   HN?   CE   Unknown Type
+Inst  58663   HN?   CE   Unknown Type
+Inst  58664   HN?   CE   Unknown Type
+Inst  58665   HN?   CE   Unknown Type
+Inst  58667   HN?   CE   Unknown Type
+Inst  58716   HN?   CE   Unknown Type
+Inst  58740   HN?   CE   Unknown Type
+Inst  58754   HN?   CE   Unknown Type
+Inst  58768   HN?   CE   Unknown Type
+Inst  58790   HN?   CE   Unknown Type
+Inst  58798   HN?   CE   Unknown Type
+Inst  58905   HN?   CE   Unknown Type
+Inst  58906   HN?   CE   Unknown Type
+Inst  58931   HN?   CE   Unknown Type
+Inst  58932   HN?   CE   Unknown Type
+Inst  58961   HN?   CE   Unknown Type
+Inst  58964   HN?   CE   Unknown Type
+Inst  58968   HN?   CE   Unknown Type
+Inst  66038   HN?   CE   Unknown Type
+Inst  67068   HN?   CE   Unknown Type
+Inst  67751   HN?   CE   Unknown Type
+Inst  67771   HN?   CE   Unknown Type
+Inst  67910   HN?   CE   Unknown Type
+Inst  67942   HN?   CE   Unknown Type
+Inst  67972   HN?   CE   Unknown Type
+Inst  68034   HN?   CE   Unknown Type
+Inst  68035   HN?   CE   Unknown Type
+Inst  68045   HN?   CE   Unknown Type
+Inst  68150   HN?   CE   Unknown Type
+Inst  68676   HN?   CE   Unknown Type
+Inst  68682   HN?   CE   Unknown Type
+Inst  68717   HN?   CE   Unknown Type
+Inst  68797   HN?   CE   Unknown Type
+Inst  69039   HN?   CE   Unknown Type
+Inst  76741   HN?   CE   Unknown Type
+Inst  77350   HN?   CE   Unknown Type
+Inst  77756   HN?   CE   Unknown Type
+Inst  79683   HN?   CE   Unknown Type
+Inst  79757   HN?   CE   Unknown Type
+Inst  79761   HN?   CE   Unknown Type
+Inst  87053   HN?   CE   Unknown Type
+Inst  88059   HN?   CE   Unknown Type
+Inst  88060   HN?   CE   Unknown Type
+Inst  89101   HN?   CE   Unknown Type
+Inst  89686   HN?   CE   Unknown Type
+Inst  89687   HN?   CE   Unknown Type
+Inst  89734   HN?   CE   Unknown Type
+Inst  89735   HN?   CE   Unknown Type
+Inst  89736   HN?   CE   Unknown Type
+Inst  89781   HN?   CE   Unknown Type
+Inst  89973   HN?   CE   Unknown Type
+Inst  89T01   HN?   CE   Unknown Type
+Inst  96142   HN?   CE   Unknown Type
+Inst  BAV     VLE   NC   NCSN Analog L4c 2
+Inst  BAV     VLN   NC   NCSN Analog L4c 2
+Inst  BAV     VLZ   NC   NCSN Analog L4c 2
+Inst  BPC     VLN   NC   NCSN Analog L4c 2
+Inst  BPO     VLE   NC   NCSN Analog L4c 2
+Inst  BPO     VLN   NC   NCSN Analog L4c 2
+Inst  BPO     VLZ   NC   NCSN Analog L4c 2
+Inst  BSG     VLE   NC   NCSN Analog L4c 2
+Inst  BSG     VLN   NC   NCSN Analog L4c 2
+Inst  BSG     VLZ   NC   NCSN Analog L4c 2
+Inst  BSR     VLE   NC   NCSN Analog L4c 2
+Inst  BSR     VLN   NC   NCSN Analog L4c 2
+Inst  BSR     VLZ   NC   NCSN Analog L4c 2
+Inst  CAL     VLE   NC   NCSN Analog L4c 2
+Inst  CAL     VLN   NC   NCSN Analog L4c 2
+Inst  CAL     VLZ   NC   NCSN Analog L4c 2
+Inst  CAO     VLE   NC   NCSN Analog L4c 2
+Inst  CAO     VLN   NC   NCSN Analog L4c 2
+Inst  CAO     VLZ   NC   NCSN Analog L4c 2
+Inst  CBR     ADN   NC   NCSN DST FBA23 3
+Inst  CBR     ADE   NC   NCSN DST FBA23 3
+Inst  CBR     VLN   NC   NCSN Analog L4c 2
+Inst  CBR     ADZ   NC   NCSN DST L4c 2
+Inst  CCO     ADN   NC   NCSN DST FBA23 3
+Inst  CCO     ADE   NC   NCSN DST FBA23 3
+Inst  CCO     ADZ   NC   NCSN DST L4c 2
+Inst  CNI     VLE   NC   NCSN Analog L4c 2
+Inst  CPI     ADN   NC   NCSN DST FBA23 3
+Inst  CPI     ADE   NC   NCSN DST FBA23 3
+Inst  CPI     ADZ   NC   NCSN DST L4c 2
+Inst  CPM     ADN   NC   NCSN DST FBA23 3
+Inst  CPM     ADE   NC   NCSN DST FBA23 3
+Inst  CPM     ADZ   NC   NCSN DST L4c 2
+Inst  CSL     VLE   NC   NCSN Analog L4c 2
+Inst  CSL     VLN   NC   NCSN Analog L4c 2
+Inst  CTA     EHZ   NC   Kinemetrics K2
+Inst  CTA     HNE   NC   Kinemetrics K2
+Inst  CTA     HNN   NC   Kinemetrics K2
+Inst  CTA     HNZ   NC   Kinemetrics K2
+Inst  CVP     VLE   NC   NCSN Analog L4c 2
+Inst  CVP     VLN   NC   NCSN Analog L4c 2
+Inst  CYB     ADN   NC   NCSN DST FBA23 3
+Inst  CYB     ADE   NC   NCSN DST FBA23 3
+Inst  CYB     ADZ   NC   NCSN DST L4c 2
+Inst  JBL     VLE   NC   NCSN Analog L4c 2
+Inst  JBL     VLN   NC   NCSN Analog L4c 2
+Inst  JBN     ADN   NC   NCSN DST FBA23 3
+Inst  JBN     ADE   NC   NCSN DST FBA23 3
+Inst  JBN     ADZ   NC   NCSN DST L4c 2
+Inst  JCH     ADN   NC   NCSN DST FBA23 3
+Inst  JCH     ADE   NC   NCSN DST FBA23 3
+Inst  JCH     ADZ   NC   NCSN DST L4c 2
+Inst  JSA     EHZ   NC   Kinemetrics K2
+Inst  JSA     HNE   NC   Kinemetrics K2
+Inst  JSA     HNN   NC   Kinemetrics K2
+Inst  JSA     HNZ   NC   Kinemetrics K2
+Inst  JSB     ADN   NC   NCSN DST FBA23 3
+Inst  JSB     ADE   NC   NCSN DST FBA23 3
+Inst  JSB     ADZ   NC   NCSN DST L4c 2
+Inst  JSF     VLE   NC   NCSN Analog L4c 2
+Inst  JSF     ADN   NC   NCSN DST FBA23 3
+Inst  JSF     ADE   NC   NCSN DST FBA23 3
+Inst  JSF     VLN   NC   NCSN Analog L4c 2
+Inst  JSF     ADZ   NC   NCSN DST L4c 2
+Inst  JSGB    ADZ   NC   Nanometrics Episensor 3
+Inst  JSGB    ADN   NC   Nanometrics Episensor 3
+Inst  JSGB    ADE   NC   Nanometrics Episensor 3
+Inst  JSGB    ADZ   NC   Nanometrics L4c 2
+Inst  JSGB    VDN   NC   Nanometrics L4c 2
+Inst  JSGB    VDE   NC   Nanometrics L4c 2
+Inst  JSP     EHZ   NC   Kinemetrics K2
+Inst  JSP     HNE   NC   Kinemetrics K2
+Inst  JSP     HNN   NC   Kinemetrics K2
+Inst  JSP     HNZ   NC   Kinemetrics K2
+Inst  JUM     ADN   NC   NCSN DST FBA23 3
+Inst  JUM     ADE   NC   NCSN DST FBA23 3
+Inst  JUM     ADZ   NC   NCSN DST L4c 2
+Inst  KCPB    BNZ   NC   RefTek Episensor 3
+Inst  KCPB    BNN   NC   RefTek Episensor 3
+Inst  KCPB    BNE   NC   RefTek Episensor 3
+Inst  KCPB    BHZ   NC   RefTek Guralp 2
+Inst  KCPB    BHN   NC   RefTek Guralp 2
+Inst  KCPB    BHE   NC   RefTek Guralp 2
+Inst  KHM     VLE   NC   NCSN Analog L4c 2
+Inst  KHM     VLN   NC   NCSN Analog L4c 2
+Inst  KHMB    BNZ   NC   RefTek Episensor 3
+Inst  KHMB    BNN   NC   RefTek Episensor 3
+Inst  KHMB    BNE   NC   RefTek Episensor 3
+Inst  KHMB    BHZ   NC   RefTek Guralp 2
+Inst  KHMB    BHN   NC   RefTek Guralp 2
+Inst  KHMB    BHE   NC   RefTek Guralp 2
+Inst  KMP     VLE   NC   NCSN Analog L4c 2
+Inst  KMP     VLN   NC   NCSN Analog L4c 2
+Inst  KMPB    BHE   NC   Unknown Type
+Inst  KMPB    BHN   NC   Unknown Type
+Inst  KMPB    BHZ   NC   Unknown Type
+Inst  KMPB    BNE   NC   Unknown Type
+Inst  KMPB    BNN   NC   Unknown Type
+Inst  KMPB    BNZ   NC   Unknown Type
+Inst  LRR     VLE   NC   NCSN Analog L4c 2
+Inst  LTC     VLN   NC   NCSN Analog L4c 2
+Inst  MDP     VLN   NC   NCSN Analog L4c 2
+Inst  MDR     VLE   NC   NCSN Analog L4c 2
+Inst  MDR     VLN   NC   NCSN Analog L4c 2
+Inst  MEM     VLE   NC   NCSN Analog L4c 2
+Inst  MEM     VLN   NC   NCSN Analog L4c 2
+Inst  MMI     VLN   NC   NCSN Analog L4c 2
+Inst  MRH     VLE   NC   NCSN Analog L4c 2
+Inst  MRH     VLN   NC   NCSN Analog L4c 2
+Inst  MRH     VLZ   NC   NCSN Analog L4c 2
+Inst  NAD     VLN   NC   NCSN Analog L4c 2
+Inst  NBO     ADN   NC   NCSN DST FBA23 3
+Inst  NBO     ADE   NC   NCSN DST FBA23 3
+Inst  NBO     ADZ   NC   NCSN DST L4c 2
+Inst  NBP     VLN   NC   NCSN Analog L4c 2
+Inst  NGVB    EHZ   NC   Kinemetrics K2
+Inst  NGVB    HNE   NC   Kinemetrics K2
+Inst  NGVB    HNN   NC   Kinemetrics K2
+Inst  NGVB    HNZ   NC   Kinemetrics K2
+Inst  NHF     VLE   NC   NCSN Analog L4c 2
+Inst  NHF     ADN   NC   NCSN DST FBA23 3
+Inst  NHF     ADE   NC   NCSN DST FBA23 3
+Inst  NHF     VLN   NC   NCSN Analog L4c 2
+Inst  NHF     ADZ   NC   NCSN DST L4c 2
+Inst  NLH     ADN   NC   NCSN DST FBA23 3
+Inst  NLH     ADE   NC   NCSN DST FBA23 3
+Inst  NLH     ADZ   NC   NCSN DST L4c 2
+Inst  NMH     HNE   NC   Unknown Type
+Inst  NMH     HNN   NC   Unknown Type
+Inst  NMH     HNZ   NC   Unknown Type
+Inst  NMH     VLN   NC   Unknown Type
+Inst  NMH     ADZ   NC   Nanometrics Episensor 3
+Inst  NMH     ADN   NC   Nanometrics Episensor 3
+Inst  NMH     ADE   NC   Nanometrics Episensor 3
+Inst  NMH     VLN   NC   NCSN Analog L4c 2
+Inst  NMH     ADZ   NC   Nanometrics L4c 2
+Inst  NMH     VDN   NC   Nanometrics L4c 2
+Inst  NMH     VDE   NC   Nanometrics L4c 2
+Inst  NRL     VLE   NC   NCSN Analog L4c 2
+Inst  NRL     VLN   NC   NCSN Analog L4c 2
+Inst  NSM     ADZ   NC   Nanometrics Episensor 3
+Inst  NSM     ADN   NC   Nanometrics Episensor 3
+Inst  NSM     ADE   NC   Nanometrics Episensor 3
+Inst  NSM     ADZ   NC   Nanometrics L4c 2
+Inst  NSM     VDN   NC   Nanometrics L4c 2
+Inst  NSM     VDE   NC   Nanometrics L4c 2
+Inst  NSP     ADN   NC   NCSN DST FBA23 3
+Inst  NSP     ADE   NC   NCSN DST FBA23 3
+Inst  NSP     ADZ   NC   NCSN DST L4c 2
+Inst  NTAB    EHZ   NC   Kinemetrics K2
+Inst  NTAB    HNE   NC   Kinemetrics K2
+Inst  NTAB    HNN   NC   Kinemetrics K2
+Inst  NTAB    HNZ   NC   Kinemetrics K2
+Inst  NTYB    EHZ   NC   Kinemetrics K2
+Inst  NTYB    HNE   NC   Kinemetrics K2
+Inst  NTYB    HNN   NC   Kinemetrics K2
+Inst  NTYB    HNZ   NC   Kinemetrics K2
+Inst  NVE     VLN   NC   NCSN Analog L4c 2
+Inst  PCC     VLE   NC   NCSN Analog L4c 2
+Inst  PCC     VLN   NC   NCSN Analog L4c 2
+Inst  PCC     VLZ   NC   NCSN Analog L4c 2
+Inst  PHF     VLE   NC   NCSN Analog L4c 2
+Inst  PHF     VLN   NC   NCSN Analog L4c 2
+Inst  PHF     VLZ   NC   NCSN Analog L4c 2
+Inst  PHO     VLE   NC   NCSN Analog L4c 2
+Inst  PHO     VLN   NC   NCSN Analog L4c 2
+Inst  PHO     VLZ   NC   NCSN Analog L4c 2
+Inst  PHP     VLE   NC   NCSN Analog L4c 2
+Inst  PHP     VLN   NC   NCSN Analog L4c 2
+Inst  PHP     VLZ   NC   NCSN Analog L4c 2
+Inst  PHR     VLN   NC   NCSN Analog L4c 2
+Inst  PMC     VLE   NC   NCSN Analog L4c 2
+Inst  PMC     VLN   NC   NCSN Analog L4c 2
+Inst  PMC     VLZ   NC   NCSN Analog L4c 2
+Inst  PMP     VLN   NC   NCSN Analog L4c 2
+Inst  PPC     VLE   NC   NCSN Analog L4c 2
+Inst  PPC     VLN   NC   NCSN Analog L4c 2
+Inst  PPC     VLZ   NC   NCSN Analog L4c 2
+Inst  PRC     VLN   NC   NCSN Analog L4c 2
+Inst  PVC     VLE   NC   NCSN Analog L4c 2
+Inst  PVC     VLN   NC   NCSN Analog L4c 2
+Inst  PVC     VLZ   NC   NCSN Analog L4c 2
+Inst  1002    HN2   NP   Kinemetrics K2
+Inst  1002    HN3   NP   Kinemetrics K2
+Inst  1002    HNZ   NP   Kinemetrics K2
+Inst  1023    HN2   NP   Kinemetrics Etna
+Inst  1023    HN3   NP   Kinemetrics Etna
+Inst  1023    HNZ   NP   Kinemetrics Etna
+Inst  1515    HN2   NP   Unknown Type
+Inst  1515    HN3   NP   Unknown Type
+Inst  1515    HNZ   NP   Unknown Type
+Inst  1575    HN2   NP   Kinemetrics Etna
+Inst  1575    HN3   NP   Kinemetrics Etna
+Inst  1575    HNZ   NP   Kinemetrics Etna
+Inst  1580    HN2   NP   Kinemetrics Etna
+Inst  1580    HN3   NP   Kinemetrics Etna
+Inst  1580    HNZ   NP   Kinemetrics Etna
+Inst  1581    HN2   NP   Kinemetrics Etna
+Inst  1581    HN3   NP   Kinemetrics Etna
+Inst  1581    HNZ   NP   Kinemetrics Etna
+Inst  1582    HN2   NP   Kinemetrics Etna
+Inst  1582    HN3   NP   Kinemetrics Etna
+Inst  1582    HNZ   NP   Kinemetrics Etna
+Inst  1584    HN2   NP   Kinemetrics Etna
+Inst  1584    HN3   NP   Kinemetrics Etna
+Inst  1584    HNZ   NP   Kinemetrics Etna
+Inst  1586    HN2   NP   Kinemetrics Etna
+Inst  1586    HN3   NP   Kinemetrics Etna
+Inst  1586    HNZ   NP   Kinemetrics Etna
+Inst  1590    HN2   NP   Kinemetrics K2
+Inst  1590    HN3   NP   Kinemetrics K2
+Inst  1590    HNZ   NP   Kinemetrics K2
+Inst  1662    HN2   NP   Kinemetrics K2
+Inst  1662    HN3   NP   Kinemetrics K2
+Inst  1662    HNZ   NP   Kinemetrics K2
+Inst  1675    HN2   NP   Kinemetrics K2
+Inst  1675    HN3   NP   Kinemetrics K2
+Inst  1675    HNZ   NP   Kinemetrics K2
+Inst  1678    HN2   NP   Kinemetrics K2
+Inst  1678    HN3   NP   Kinemetrics K2
+Inst  1678    HNZ   NP   Kinemetrics K2
+Inst  1684    HN2   NP   Unknown Type
+Inst  1684    HN3   NP   Unknown Type
+Inst  1684    HNZ   NP   Unknown Type
+Inst  1688    HN2   NP   Kinemetrics K2
+Inst  1688    HN3   NP   Kinemetrics K2
+Inst  1688    HNZ   NP   Kinemetrics K2
+Inst  1689    HN2   NP   Kinemetrics Etna
+Inst  1689    HN3   NP   Kinemetrics Etna
+Inst  1689    HNZ   NP   Kinemetrics Etna
+Inst  1690    HN2   NP   Kinemetrics K2
+Inst  1690    HN3   NP   Kinemetrics K2
+Inst  1690    HNZ   NP   Kinemetrics K2
+Inst  1691    HN2   NP   Kinemetrics K2
+Inst  1691    HN3   NP   Kinemetrics K2
+Inst  1691    HNZ   NP   Kinemetrics K2
+Inst  1695    HN2   NP   Unknown Type
+Inst  1695    HN3   NP   Unknown Type
+Inst  1695    HNZ   NP   Unknown Type
+Inst  1697    HN2   NP   Kinemetrics K2
+Inst  1697    HN3   NP   Kinemetrics K2
+Inst  1697    HNZ   NP   Kinemetrics K2
+Inst  1720    HN2   NP   Kinemetrics Etna
+Inst  1720    HN3   NP   Kinemetrics Etna
+Inst  1720    HNZ   NP   Kinemetrics Etna
+Inst  1722    HN2   NP   Kinemetrics Etna
+Inst  1722    HN3   NP   Kinemetrics Etna
+Inst  1722    HNZ   NP   Kinemetrics Etna
+Inst  1725    HN2   NP   Kinemetrics Etna
+Inst  1725    HN3   NP   Kinemetrics Etna
+Inst  1725    HNZ   NP   Kinemetrics Etna
+Inst  1730    HZ2   NP   Kinemetrics Etna
+Inst  1730    HZ3   NP   Kinemetrics Etna
+Inst  1730    HZN   NP   Kinemetrics Etna
+Inst  1734    HN2   NP   Kinemetrics Etna
+Inst  1734    HN3   NP   Kinemetrics Etna
+Inst  1734    HNZ   NP   Kinemetrics Etna
+Inst  1735    HN2   NP   Kinemetrics Etna
+Inst  1735    HN3   NP   Kinemetrics Etna
+Inst  1735    HNZ   NP   Kinemetrics Etna
+Inst  1736    HN2   NP   Kinemetrics K2
+Inst  1736    HN3   NP   Kinemetrics K2
+Inst  1736    HNZ   NP   Kinemetrics K2
+Inst  1737    HN2   NP   Kinemetrics K2
+Inst  1737    HN3   NP   Kinemetrics K2
+Inst  1737    HNZ   NP   Kinemetrics K2
+Inst  1739    HN2   NP   Kinemetrics K2
+Inst  1739    HN3   NP   Kinemetrics K2
+Inst  1739    HNZ   NP   Kinemetrics K2
+Inst  1740    HN2   NP   Kinemetrics K2
+Inst  1740    HN3   NP   Kinemetrics K2
+Inst  1740    HNZ   NP   Kinemetrics K2
+Inst  1741    HN2   NP   Kinemetrics K2
+Inst  1741    HN3   NP   Kinemetrics K2
+Inst  1741    HNZ   NP   Kinemetrics K2
+Inst  1742    HN2   NP   Kinemetrics K2
+Inst  1742    HN3   NP   Kinemetrics K2
+Inst  1742    HNZ   NP   Kinemetrics K2
+Inst  1743    HN2   NP   Kinemetrics K2
+Inst  1743    HN3   NP   Kinemetrics K2
+Inst  1743    HNZ   NP   Kinemetrics K2
+Inst  1744    HN2   NP   Kinemetrics K2
+Inst  1744    HN3   NP   Kinemetrics K2
+Inst  1744    HNZ   NP   Kinemetrics K2
+Inst  1745    HN2   NP   Kinemetrics K2
+Inst  1745    HN3   NP   Kinemetrics K2
+Inst  1745    HNZ   NP   Kinemetrics K2
+Inst  1746    HN2   NP   Kinemetrics Etna
+Inst  1746    HN3   NP   Kinemetrics Etna
+Inst  1746    HNZ   NP   Kinemetrics Etna
+Inst  1747    HN2   NP   Kinemetrics Etna
+Inst  1747    HN3   NP   Kinemetrics Etna
+Inst  1747    HNZ   NP   Kinemetrics Etna
+Inst  1748    HN2   NP   Kinemetrics K2
+Inst  1748    HN3   NP   Kinemetrics K2
+Inst  1748    HNZ   NP   Kinemetrics K2
+Inst  1749    HN2   NP   Kinemetrics Etna
+Inst  1749    HN3   NP   Kinemetrics Etna
+Inst  1749    HNZ   NP   Kinemetrics Etna
+Inst  1750    HN2   NP   Kinemetrics Etna
+Inst  1750    HN3   NP   Kinemetrics Etna
+Inst  1750    HNZ   NP   Kinemetrics Etna
+Inst  1751    HN2   NP   Kinemetrics K2
+Inst  1751    HN3   NP   Kinemetrics K2
+Inst  1751    HNZ   NP   Kinemetrics K2
+Inst  1752    HN2   NP   Kinemetrics K2
+Inst  1752    HN3   NP   Kinemetrics K2
+Inst  1752    HNZ   NP   Kinemetrics K2
+Inst  1753    HN2   NP   Kinemetrics K2
+Inst  1753    HN3   NP   Kinemetrics K2
+Inst  1753    HNZ   NP   Kinemetrics K2
+Inst  1754    HN2   NP   Kinemetrics K2
+Inst  1754    HN3   NP   Kinemetrics K2
+Inst  1754    HNZ   NP   Kinemetrics K2
+Inst  1755    HN2   NP   Kinemetrics K2
+Inst  1755    HN3   NP   Kinemetrics K2
+Inst  1755    HNZ   NP   Kinemetrics K2
+Inst  1756    HN2   NP   Kinemetrics K2
+Inst  1756    HN3   NP   Kinemetrics K2
+Inst  1756    HNZ   NP   Kinemetrics K2
+Inst  1757    HN2   NP   Kinemetrics Etna
+Inst  1757    HN3   NP   Kinemetrics Etna
+Inst  1757    HNZ   NP   Kinemetrics Etna
+Inst  1759    HN2   NP   Unknown Type
+Inst  1759    HN3   NP   Unknown Type
+Inst  1759    HNZ   NP   Unknown Type
+Inst  1760    HN2   NP   Unknown Type
+Inst  1760    HN3   NP   Unknown Type
+Inst  1760    HNZ   NP   Unknown Type
+Inst  1761    HN2   NP   Kinemetrics K2
+Inst  1761    HN3   NP   Kinemetrics K2
+Inst  1761    HNZ   NP   Kinemetrics K2
+Inst  1762    HN2   NP   Unknown Type
+Inst  1762    HN3   NP   Unknown Type
+Inst  1762    HNZ   NP   Unknown Type
+Inst  1763    HN2   NP   Kinemetrics Etna
+Inst  1763    HN3   NP   Kinemetrics Etna
+Inst  1763    HNZ   NP   Kinemetrics Etna
+Inst  1764    HN2   NP   Kinemetrics Etna
+Inst  1764    HN3   NP   Kinemetrics Etna
+Inst  1764    HNZ   NP   Kinemetrics Etna
+Inst  1765    HN2   NP   Unknown Type
+Inst  1765    HN3   NP   Unknown Type
+Inst  1765    HNZ   NP   Unknown Type
+Inst  1767    HN2   NP   Kinemetrics K2
+Inst  1767    HN3   NP   Kinemetrics K2
+Inst  1767    HNZ   NP   Kinemetrics K2
+Inst  1768    HN2   NP   Kinemetrics K2
+Inst  1768    HN3   NP   Kinemetrics K2
+Inst  1768    HNZ   NP   Kinemetrics K2
+Inst  1769    HN2   NP   Kinemetrics K2
+Inst  1769    HN3   NP   Kinemetrics K2
+Inst  1769    HNZ   NP   Kinemetrics K2
+Inst  1770    HN2   NP   Kinemetrics K2
+Inst  1770    HN3   NP   Kinemetrics K2
+Inst  1770    HNZ   NP   Kinemetrics K2
+Inst  1771    HN2   NP   Kinemetrics K2
+Inst  1771    HN3   NP   Kinemetrics K2
+Inst  1771    HNZ   NP   Kinemetrics K2
+Inst  1772    HN2   NP   Kinemetrics K2
+Inst  1772    HN3   NP   Kinemetrics K2
+Inst  1772    HNZ   NP   Kinemetrics K2
+Inst  1774    HN2   NP   Kinemetrics K2
+Inst  1774    HN3   NP   Kinemetrics K2
+Inst  1774    HNZ   NP   Kinemetrics K2
+Inst  1776    HN2   NP   Kinemetrics K2
+Inst  1776    HN3   NP   Kinemetrics K2
+Inst  1776    HNZ   NP   Kinemetrics K2
+Inst  1777    HN2   NP   Kinemetrics K2
+Inst  1777    HN3   NP   Kinemetrics K2
+Inst  1777    HNZ   NP   Kinemetrics K2
+Inst  1778    HN2   NP   Kinemetrics K2
+Inst  1778    HN3   NP   Kinemetrics K2
+Inst  1778    HNZ   NP   Kinemetrics K2
+Inst  1779    HN2   NP   Kinemetrics K2
+Inst  1779    HN3   NP   Kinemetrics K2
+Inst  1779    HNZ   NP   Kinemetrics K2
+Inst  1780    HN2   NP   Kinemetrics K2
+Inst  1780    HN3   NP   Kinemetrics K2
+Inst  1780    HNZ   NP   Kinemetrics K2
+Inst  1781    HN2   NP   Kinemetrics K2
+Inst  1781    HN3   NP   Kinemetrics K2
+Inst  1781    HNZ   NP   Kinemetrics K2
+Inst  1782    HN2   NP   Kinemetrics K2
+Inst  1782    HN3   NP   Kinemetrics K2
+Inst  1782    HNZ   NP   Kinemetrics K2
+Inst  1783    HN2   NP   Kinemetrics K2
+Inst  1783    HN3   NP   Kinemetrics K2
+Inst  1783    HNZ   NP   Kinemetrics K2
+Inst  1784    HN2   NP   Kinemetrics K2
+Inst  1784    HN3   NP   Kinemetrics K2
+Inst  1784    HNZ   NP   Kinemetrics K2
+Inst  1785    HN2   NP   Kinemetrics K2
+Inst  1785    HN3   NP   Kinemetrics K2
+Inst  1785    HNZ   NP   Kinemetrics K2
+Inst  1786    HN2   NP   Kinemetrics K2
+Inst  1786    HN3   NP   Kinemetrics K2
+Inst  1786    HNZ   NP   Kinemetrics K2
+Inst  1787    HN2   NP   Kinemetrics K2
+Inst  1787    HN3   NP   Kinemetrics K2
+Inst  1787    HNZ   NP   Kinemetrics K2
+Inst  2001    HN2   NP   Kinemetrics Etna
+Inst  2001    HN3   NP   Kinemetrics Etna
+Inst  2001    HNZ   NP   Kinemetrics Etna
+Inst  2006    HN2   NP   Kinemetrics Etna
+Inst  2006    HN3   NP   Kinemetrics Etna
+Inst  2006    HNZ   NP   Kinemetrics Etna
+Inst  2010    HN2   NP   Kinemetrics Etna
+Inst  2010    HN3   NP   Kinemetrics Etna
+Inst  2010    HNZ   NP   Kinemetrics Etna
+Inst  2012    HN2   NP   Kinemetrics Etna
+Inst  2012    HN3   NP   Kinemetrics Etna
+Inst  2012    HNZ   NP   Kinemetrics Etna
+Inst  2015    HN2   NP   Kinemetrics Etna
+Inst  2015    HN3   NP   Kinemetrics Etna
+Inst  2015    HNZ   NP   Kinemetrics Etna
+Inst  2016    HN2   NP   Kinemetrics Etna
+Inst  2016    HN3   NP   Kinemetrics Etna
+Inst  2016    HNZ   NP   Kinemetrics Etna
+Inst  2018    HN2   NP   Kinemetrics Etna
+Inst  2018    HN3   NP   Kinemetrics Etna
+Inst  2018    HNZ   NP   Kinemetrics Etna
+Inst  2019    HN2   NP   Kinemetrics Etna
+Inst  2019    HN3   NP   Kinemetrics Etna
+Inst  2019    HNZ   NP   Kinemetrics Etna
+Inst  2020    HN2   NP   Kinemetrics Etna
+Inst  2020    HN3   NP   Kinemetrics Etna
+Inst  2020    HNZ   NP   Kinemetrics Etna
+Inst  2021    HN2   NP   Kinemetrics Etna
+Inst  2021    HN3   NP   Kinemetrics Etna
+Inst  2021    HNZ   NP   Kinemetrics Etna
+Inst  2023    HN2   NP   Kinemetrics Etna
+Inst  2023    HN3   NP   Kinemetrics Etna
+Inst  2023    HNZ   NP   Kinemetrics Etna
+Inst  2024    HN2   NP   Kinemetrics Etna
+Inst  2024    HN3   NP   Kinemetrics Etna
+Inst  2024    HNZ   NP   Kinemetrics Etna
+Inst  ALM     HLE   PG   Unknown Type
+Inst  ALM     HLN   PG   Unknown Type
+Inst  ALM     HLZ   PG   Unknown Type
+Inst  BEL     HLE   PG   Unknown Type
+Inst  BEL     HLN   PG   Unknown Type
+Inst  BEL     HLZ   PG   Unknown Type
+Inst  CCA     HLE   PG   Unknown Type
+Inst  CCA     HLN   PG   Unknown Type
+Inst  CCA     HLZ   PG   Unknown Type
+Inst  CIN     HLE   PG   Unknown Type
+Inst  CIN     HLN   PG   Unknown Type
+Inst  CIN     HLZ   PG   Unknown Type
+Inst  CON     HLE   PG   Unknown Type
+Inst  CON     HLN   PG   Unknown Type
+Inst  CON     HLZ   PG   Unknown Type
+Inst  CUP     HLE   PG   Unknown Type
+Inst  CUP     HLN   PG   Unknown Type
+Inst  CUP     HLZ   PG   Unknown Type
+Inst  DCY     HLE   PG   Unknown Type
+Inst  DCY     HLN   PG   Unknown Type
+Inst  DCY     HLZ   PG   Unknown Type
+Inst  EMB     HLE   PG   Unknown Type
+Inst  EMB     HLN   PG   Unknown Type
+Inst  EMB     HLZ   PG   Unknown Type
+Inst  EUR     HLE   PG   Unknown Type
+Inst  EUR     HLN   PG   Unknown Type
+Inst  EUR     HLZ   PG   Unknown Type
+Inst  EWH     HLE   PG   Unknown Type
+Inst  EWH     HLN   PG   Unknown Type
+Inst  EWH     HLZ   PG   Unknown Type
+Inst  FCC     HLE   PG   Unknown Type
+Inst  FCC     HLN   PG   Unknown Type
+Inst  FCC     HLZ   PG   Unknown Type
+Inst  FUL     HLE   PG   Unknown Type
+Inst  FUL     HLN   PG   Unknown Type
+Inst  FUL     HLZ   PG   Unknown Type
+Inst  FWH     HLE   PG   Unknown Type
+Inst  FWH     HLN   PG   Unknown Type
+Inst  FWH     HLZ   PG   Unknown Type
+Inst  GAT     HLE   PG   Unknown Type
+Inst  GAT     HLN   PG   Unknown Type
+Inst  GAT     HLZ   PG   Unknown Type
+Inst  HAY     HLE   PG   Unknown Type
+Inst  HAY     HLN   PG   Unknown Type
+Inst  HAY     HLZ   PG   Unknown Type
+Inst  IGN     HLE   PG   Unknown Type
+Inst  IGN     HLN   PG   Unknown Type
+Inst  IGN     HLZ   PG   Unknown Type
+Inst  JEF     HLE   PG   Unknown Type
+Inst  JEF     HLN   PG   Unknown Type
+Inst  JEF     HLZ   PG   Unknown Type
+Inst  LAK     HLE   PG   Unknown Type
+Inst  LAK     HLN   PG   Unknown Type
+Inst  LAK     HLZ   PG   Unknown Type
+Inst  LBN     HLE   PG   Unknown Type
+Inst  LBN     HLN   PG   Unknown Type
+Inst  LBN     HLZ   PG   Unknown Type
+Inst  MAR     HLE   PG   Unknown Type
+Inst  MAR     HLN   PG   Unknown Type
+Inst  MAR     HLZ   PG   Unknown Type
+Inst  MET     HLE   PG   Unknown Type
+Inst  MET     HLN   PG   Unknown Type
+Inst  MET     HLZ   PG   Unknown Type
+Inst  MID     HLE   PG   Unknown Type
+Inst  MID     HLN   PG   Unknown Type
+Inst  MID     HLZ   PG   Unknown Type
+Inst  MIS     HLE   PG   Unknown Type
+Inst  MIS     HLN   PG   Unknown Type
+Inst  MIS     HLZ   PG   Unknown Type
+Inst  MOR     HLE   PG   Unknown Type
+Inst  MOR     HLN   PG   Unknown Type
+Inst  MOR     HLZ   PG   Unknown Type
+Inst  MOS     HLE   PG   Unknown Type
+Inst  MOS     HLN   PG   Unknown Type
+Inst  MOS     HLZ   PG   Unknown Type
+Inst  MTV     HLE   PG   Unknown Type
+Inst  MTV     HLN   PG   Unknown Type
+Inst  MTV     HLZ   PG   Unknown Type
+Inst  NWK     HLE   PG   Unknown Type
+Inst  NWK     HLN   PG   Unknown Type
+Inst  NWK     HLZ   PG   Unknown Type
+Inst  OAK     HLE   PG   Unknown Type
+Inst  OAK     HLN   PG   Unknown Type
+Inst  OAK     HLZ   PG   Unknown Type
+Inst  RAV     HLE   PG   Unknown Type
+Inst  RAV     HLN   PG   Unknown Type
+Inst  RAV     HLZ   PG   Unknown Type
+Inst  RMD     HLE   PG   Unknown Type
+Inst  RMD     HLN   PG   Unknown Type
+Inst  RMD     HLZ   PG   Unknown Type
+Inst  SAM     HLE   PG   Unknown Type
+Inst  SAM     HLN   PG   Unknown Type
+Inst  SAM     HLZ   PG   Unknown Type
+Inst  SAR     HLE   PG   Unknown Type
+Inst  SAR     HLN   PG   Unknown Type
+Inst  SAR     HLZ   PG   Unknown Type
+Inst  SFD     HLE   PG   Unknown Type
+Inst  SFD     HLN   PG   Unknown Type
+Inst  SFD     HLZ   PG   Unknown Type
+Inst  SOB     HLE   PG   Unknown Type
+Inst  SOB     HLN   PG   Unknown Type
+Inst  SOB     HLZ   PG   Unknown Type
+Inst  SRL     HLE   PG   Unknown Type
+Inst  SRL     HLN   PG   Unknown Type
+Inst  SRL     HLZ   PG   Unknown Type
+Inst  SRS     HLE   PG   Unknown Type
+Inst  SRS     HLN   PG   Unknown Type
+Inst  SRS     HLZ   PG   Unknown Type
+Inst  TES     HLE   PG   Unknown Type
+Inst  TES     HLN   PG   Unknown Type
+Inst  TES     HLZ   PG   Unknown Type
+Inst  WEB     HLE   PG   Unknown Type
+Inst  WEB     HLN   PG   Unknown Type
+Inst  WEB     HLZ   PG   Unknown Type
+Inst  WIG     HLE   PG   Unknown Type
+Inst  WIG     HLN   PG   Unknown Type
+Inst  WIG     HLZ   PG   Unknown Type
+Inst  KN40    ADE   SJD  Unknown Type
+Inst  KN40    ADN   SJD  Unknown Type
+Inst  KN40    VDZ   SJD  Unknown Type
+Inst  KP1     ADE   SJD  Unknown Type
+Inst  KP1     ADN   SJD  Unknown Type
+Inst  KP1     VDZ   SJD  Unknown Type
+Inst  KP5     ADE   SJD  Unknown Type
+Inst  KP5     ADN   SJD  Unknown Type
+Inst  KP5     VDZ   SJD  Unknown Type
+Inst  KRCK    ADE   SJD  Unknown Type
+Inst  KRCK    ADN   SJD  Unknown Type
+Inst  KRCK    VDZ   SJD  Unknown Type
+Inst  KS5     ADE   SJD  Unknown Type
+Inst  KS5     ADN   SJD  Unknown Type
+Inst  KS5     VDZ   SJD  Unknown Type
+Inst  P01     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P01     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P01     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P02     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P02     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P02     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P03     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P03     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P03     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P04     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P04     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P04     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P05     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P05     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P05     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P06     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P06     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P06     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P07     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P07     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P07     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P08     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P08     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P08     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P09     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P09     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P09     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P10     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P10     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P10     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P11     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P11     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P11     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  P12     ADE   XT   ICS-3028 Digital Accelerometer
+Inst  P12     ADN   XT   ICS-3028 Digital Accelerometer
+Inst  P12     VDZ   XT   ICS-3028 Digital Accelerometer
+Inst  BRIB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  BRIB    EP1   BKN  Quanterra L4c 2
+Inst  BRK     HLE   BK   Kinemetrics FBA-23
+Inst  BRK     HLN   BK   Kinemetrics FBA-23
+Inst  BRK     HLZ   BK   Kinemetrics FBA-23
+Inst  CMB     BHZ   BKN  Quanterra Streckeisen STS-1 2
+Inst  CMSB    BL1   BKN  Quanterra Wilcoxin 3
+Inst  CMSB    BL2   BKN  Quanterra Wilcoxin 3
+Inst  CMSB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  CMSB    EP1   BKN  Quanterra L4c 2
+Inst  CMSB    HLE   BK   Wilcoxin 731
+Inst  CMSB    HLN   BK   Wilcoxin 731
+Inst  CMSB    HLZ   BK   Wilcoxin 731
+Inst  CRQB    BL1   BKN  Quanterra Wilcoxin 3
+Inst  CRQB    BL2   BKN  Quanterra Wilcoxin 3
+Inst  CRQB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  CRQB    EP1   BKN  Quanterra L4c 2
+Inst  CRQB    HLE   BK   Wilcoxin 731
+Inst  CRQB    HLN   BK   Wilcoxin 731
+Inst  CRQB    HLZ   BK   Wilcoxin 731
+Inst  HOPS    BHZ   BKN  Quanterra Streckeisen STS-1 2
+Inst  RFSB    BL1   BKN  Quanterra Wilcoxin 3
+Inst  RFSB    BL2   BKN  Quanterra Wilcoxin 3
+Inst  RFSB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  RFSB    EP1   BKN  Quanterra L4c 2
+Inst  RSRB    BL1   BKN  Quanterra Wilcoxin 3
+Inst  RSRB    BL2   BKN  Quanterra Wilcoxin 3
+Inst  RSRB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  RSRB    EP1   BKN  Quanterra L4c 2
+Inst  RSRB    HLE   BK   Wilcoxin 731
+Inst  RSRB    HLN   BK   Wilcoxin 731
+Inst  RSRB    HLZ   BK   Wilcoxin 731
+Inst  SAO     BHZ   BKN  Quanterra Streckeisen STS-1 2
+Inst  SMCB    BL1   BKN  Quanterra Wilcoxin 3
+Inst  SMCB    BL2   BKN  Quanterra Wilcoxin 3
+Inst  SMCB    BL3   BKN  Quanterra Wilcoxin 3
+Inst  SMCB    EP1   BKN  Quanterra L4c 2
+Inst  WDC     BHZ   BKN  Quanterra Streckeisen STS-2 2
+Inst  YBH     BHZ   BKN  Quanterra Streckeisen STS-1 2
+Inst  YBIB    HLE   BK   Wilcoxin 731
+Inst  YBIB    HLN   BK   Wilcoxin 731
+Inst  YBIB    HLZ   BK   Wilcoxin 731
+Inst  48906   HN?   CE   Unknown Type
+Inst  58224   HN?   CE   Unknown Type
+Inst  89901   HN?   CE   Unknown Type
+Inst  HGI     HN?   CE   Kinemetrics K2
+Inst  BAV     VHZ   NC   Unknown Type
+Inst  BSG     VHZ   NC   Unknown Type
+Inst  BSR     VHZ   NC   Unknown Type
+Inst  CAL     VHZ   NC   Unknown Type
+Inst  CAO     VHZ   NC   Unknown Type
+Inst  GGP     VHZ   NC   Unknown Type
+Inst  HCO     VHZ   NC   Unknown Type
+Inst  HPC     VHZ   NC   Unknown Type
+Inst  JSP     VHZ   NC   Unknown Type
+Inst  KCP     VHZ   NC   Unknown Type
+Inst  KEB     VHZ   NC   Unknown Type
+Inst  KSX     VHZ   NC   Unknown Type
+Inst  LSF     VHZ   NC   Unknown Type
+Inst  MHD     VHZ   NC   Unknown Type
+Inst  MPR     VHZ   NC   Unknown Type
+Inst  MRH     VHZ   NC   Unknown Type
+Inst  PCC     VHZ   NC   Unknown Type
+Inst  PGH     VHZ   NC   Unknown Type
+Inst  PHF     VHZ   NC   Unknown Type
+Inst  PHO     VHZ   NC   Unknown Type
+Inst  PHP     VHZ   NC   Unknown Type
+Inst  PMC     VHZ   NC   Unknown Type
+Inst  PMG     VHZ   NC   Unknown Type
+Inst  PMM     VHZ   NC   Unknown Type
+Inst  PPC     VHZ   NC   Unknown Type
+Inst  PVC     VHZ   NC   Unknown Type
+Inst  CCH1    ADZ   NC   Nanometrics Wilcoxin 3
+Inst  CCH1    ADN   NC   Nanometrics Wilcoxin 3
+Inst  CCH1    ADE   NC   Nanometrics Wilcoxin 3
+Inst  CCH1    DDI   NC   Nanometrics Dilatometer 1
+Inst  CCH1    VDN   NC   Nanometrics HS1 2
+Inst  CCH1    VDE   NC   Nanometrics HS1 2
+Inst  CGP1    ADZ   NC   Nanometrics Wilcoxin 3
+Inst  CGP1    ADN   NC   Nanometrics Wilcoxin 3
+Inst  CGP1    ADE   NC   Nanometrics Wilcoxin 3
+Inst  CGP1    DDI   NC   Nanometrics Dilatometer 1
+Inst  CGP1    VDN   NC   Nanometrics HS1 2
+Inst  CGP1    VDE   NC   Nanometrics HS1 2
+Inst  CMW1    ADZ   NC   Nanometrics Wilcoxin 3
+Inst  CMW1    ADN   NC   Nanometrics Wilcoxin 3
+Inst  CMW1    ADE   NC   Nanometrics Wilcoxin 3
+Inst  CMW1    DDI   NC   Nanometrics Dilatometer 1
+Inst  CMW1    VDN   NC   Nanometrics HS1 2
+Inst  CMW1    VDE   NC   Nanometrics HS1 2
+Inst  CDV     VLZ   NC   Unknown Type
+Inst  CSU1    ADZ   NC   Nanometrics Wilcoxin 3
+Inst  CSU1    ADN   NC   Nanometrics Wilcoxin 3
+Inst  CSU1    ADE   NC   Nanometrics Wilcoxin 3
+Inst  CSU1    ADZ   NC   Nanometrics L4c 2
+Inst  CSU1    VDN   NC   Nanometrics HS1 2
+Inst  CSU1    VDE   NC   Nanometrics HS1 2
+Inst  GGP     VLZ   NC   NCSN Analog L4c 2
+Inst  HBT     VLN   NC   NCSN Analog L4c 2
+Inst  HCO     VLZ   NC   NCSN Analog L4c 2
+Inst  HPC     VLE   NC   NCSN Analog L4c 2
+Inst  HPC     VLN   NC   NCSN Analog L4c 2
+Inst  HPC     VLZ   NC   NCSN Analog L4c 2
+Inst  JNA     VLZ   NC   NCSN Analog L4c 2
+Inst  JSP     VLE   NC   NCSN Analog L4c 2
+Inst  JSP     VLN   NC   NCSN Analog L4c 2
+Inst  KCP     VLZ   NC   NCSN Analog L4c 2
+Inst  KEB     VLZ   NC   NCSN Analog L4c 2
+Inst  KSX     VLZ   NC   NCSN Analog L4c 2
+Inst  LSF     VLZ   NC   NCSN Analog L4c 2
+Inst  MHD     VLZ   NC   NCSN Analog L4c 2
+Inst  MPR     VLZ   NC   NCSN Analog L4c 2
+Inst  MTC     VLZ   NC   NCSN Analog L4c 2
+Inst  PGH     VLZ   NC   NCSN Analog L4c 2
+Inst  PMG     VLZ   NC   NCSN Analog L4c 2
+Inst  PMM     BFN   NC   Unknown Type
+Inst  PMM     ISZ   NC   Unknown Type
+Inst  PMM     JSN   NC   Unknown Type
+Inst  PMM     KSE   NC   Unknown Type
+Inst  PMM     VLE   NC   NCSN Analog L4c 2
+Inst  PMM     VLN   NC   NCSN Analog L4c 2
+Inst  PMM     VLZ   NC   NCSN Analog L4c 2
+Inst  PPB     VHZ   NC   Unknown Type
+Inst  PPB     VLZ   NC   NCSN Analog L4c 2
+Inst  PVC     QFI   NC   Unknown Type
+Inst  PVC     SHI   NC   Unknown Type
+Inst  WMP     ADN   NC   NCSN DST FBA23 3
+Inst  WMP     ADE   NC   NCSN DST FBA23 3
+Inst  WMP     ADZ   NC   NCSN DST L4c 2
+Inst  1515    ADE   NP   Unknown Type
+Inst  1515    ADN   NP   Unknown Type
+Inst  1515    VDZ   NP   Unknown Type
+Inst  1575    ADE   NP   Kinemetrics Etna
+Inst  1575    ADN   NP   Kinemetrics Etna
+Inst  1575    VDZ   NP   Kinemetrics Etna
+Inst  1580    ADE   NP   Kinemetrics Etna
+Inst  1580    ADN   NP   Kinemetrics Etna
+Inst  1580    VDZ   NP   Kinemetrics Etna
+Inst  1675    ADE   NP   Kinemetrics K2
+Inst  1675    ADN   NP   Kinemetrics K2
+Inst  1675    VDZ   NP   Kinemetrics K2
+Inst  1678    ADE   NP   Kinemetrics K2
+Inst  1678    ADN   NP   Kinemetrics K2
+Inst  1678    VDZ   NP   Kinemetrics K2
+Inst  1684    ADE   NP   Unknown Type
+Inst  1684    ADN   NP   Unknown Type
+Inst  1684    VDZ   NP   Unknown Type
+Inst  1688    ADE   NP   Kinemetrics K2
+Inst  1688    ADN   NP   Kinemetrics K2
+Inst  1688    VDZ   NP   Kinemetrics K2
+Inst  1689    ADE   NP   Kinemetrics Etna
+Inst  1689    ADN   NP   Kinemetrics Etna
+Inst  1689    VDZ   NP   Kinemetrics Etna
+Inst  1690    ADE   NP   Kinemetrics K2
+Inst  1690    ADN   NP   Kinemetrics K2
+Inst  1690    VDZ   NP   Kinemetrics K2
+Inst  1691    ADE   NP   Kinemetrics K2
+Inst  1691    ADN   NP   Kinemetrics K2
+Inst  1691    VDZ   NP   Kinemetrics K2
+Inst  1695    ADE   NP   Unknown Type
+Inst  1695    ADN   NP   Unknown Type
+Inst  1695    VDZ   NP   Unknown Type
+Inst  1720    ADE   NP   Kinemetrics Etna
+Inst  1720    ADN   NP   Kinemetrics Etna
+Inst  1720    VDZ   NP   Kinemetrics Etna
+Inst  1722    ADE   NP   Kinemetrics Etna
+Inst  1722    ADN   NP   Kinemetrics Etna
+Inst  1722    VDZ   NP   Kinemetrics Etna
+Inst  1737    ADE   NP   Kinemetrics K2
+Inst  1737    ADN   NP   Kinemetrics K2
+Inst  1737    VDZ   NP   Kinemetrics K2
+Inst  1739    ADE   NP   Kinemetrics K2
+Inst  1739    ADN   NP   Kinemetrics K2
+Inst  1739    VDZ   NP   Kinemetrics K2
+Inst  1740    ADE   NP   Kinemetrics K2
+Inst  1740    ADN   NP   Kinemetrics K2
+Inst  1740    VDZ   NP   Kinemetrics K2
+Inst  1741    ADE   NP   Kinemetrics K2
+Inst  1741    ADN   NP   Kinemetrics K2
+Inst  1741    VDZ   NP   Kinemetrics K2
+Inst  1742    ADE   NP   Kinemetrics K2
+Inst  1742    ADN   NP   Kinemetrics K2
+Inst  1742    VDZ   NP   Kinemetrics K2
+Inst  1743    ADE   NP   Kinemetrics K2
+Inst  1743    ADN   NP   Kinemetrics K2
+Inst  1743    VDZ   NP   Kinemetrics K2
+Inst  1744    ADE   NP   Kinemetrics K2
+Inst  1744    ADN   NP   Kinemetrics K2
+Inst  1744    VDZ   NP   Kinemetrics K2
+Inst  1745    ADE   NP   Kinemetrics K2
+Inst  1745    ADN   NP   Kinemetrics K2
+Inst  1745    VDZ   NP   Kinemetrics K2
+Inst  1747    ADE   NP   Kinemetrics Etna
+Inst  1747    ADN   NP   Kinemetrics Etna
+Inst  1747    VDZ   NP   Kinemetrics Etna
+Inst  1749    ADE   NP   Kinemetrics Etna
+Inst  1749    ADN   NP   Kinemetrics Etna
+Inst  1749    VDZ   NP   Kinemetrics Etna
+Inst  1750    ADE   NP   Kinemetrics Etna
+Inst  1750    ADN   NP   Kinemetrics Etna
+Inst  1750    VDZ   NP   Kinemetrics Etna
+Inst  1751    ADE   NP   Kinemetrics K2
+Inst  1751    ADN   NP   Kinemetrics K2
+Inst  1751    VDZ   NP   Kinemetrics K2
+Inst  1752    ADE   NP   Kinemetrics K2
+Inst  1752    ADN   NP   Kinemetrics K2
+Inst  1752    VDZ   NP   Kinemetrics K2
+Inst  1753    ADE   NP   Kinemetrics K2
+Inst  1753    ADN   NP   Kinemetrics K2
+Inst  1753    VDZ   NP   Kinemetrics K2
+Inst  1754    ADE   NP   Kinemetrics K2
+Inst  1754    ADN   NP   Kinemetrics K2
+Inst  1754    VDZ   NP   Kinemetrics K2
+Inst  1755    ADE   NP   Kinemetrics K2
+Inst  1755    ADN   NP   Kinemetrics K2
+Inst  1755    VDZ   NP   Kinemetrics K2
+Inst  1756    ADE   NP   Kinemetrics K2
+Inst  1756    ADN   NP   Kinemetrics K2
+Inst  1756    VDZ   NP   Kinemetrics K2
+Inst  1759    ADE   NP   Unknown Type
+Inst  1759    ADN   NP   Unknown Type
+Inst  1759    VDZ   NP   Unknown Type
+Inst  1760    ADE   NP   Unknown Type
+Inst  1760    ADN   NP   Unknown Type
+Inst  1760    VDZ   NP   Unknown Type
+Inst  1761    ADE   NP   Kinemetrics K2
+Inst  1761    ADN   NP   Kinemetrics K2
+Inst  1761    VDZ   NP   Kinemetrics K2
+Inst  1762    ADE   NP   Unknown Type
+Inst  1762    ADN   NP   Unknown Type
+Inst  1762    VDZ   NP   Unknown Type
+Inst  1765    ADE   NP   Unknown Type
+Inst  1765    ADN   NP   Unknown Type
+Inst  1765    VDZ   NP   Unknown Type
+Inst  1767    ADE   NP   Kinemetrics K2
+Inst  1767    ADN   NP   Kinemetrics K2
+Inst  1767    VDZ   NP   Kinemetrics K2
+Inst  1768    ADE   NP   Kinemetrics K2
+Inst  1768    ADN   NP   Kinemetrics K2
+Inst  1768    VDZ   NP   Kinemetrics K2
+Inst  1784    ADE   NP   Kinemetrics K2
+Inst  1784    ADN   NP   Kinemetrics K2
+Inst  1784    VDZ   NP   Kinemetrics K2
+Inst  2020    ADE   NP   Kinemetrics Etna
+Inst  2020    ADN   NP   Kinemetrics Etna
+Inst  2020    VDZ   NP   Kinemetrics Etna
+Inst  ALM     ADE   PG   Unknown Type
+Inst  ALM     ADN   PG   Unknown Type
+Inst  ALM     VDZ   PG   Unknown Type
+Inst  BEL     ADE   PG   Unknown Type
+Inst  BEL     ADN   PG   Unknown Type
+Inst  BEL     VDZ   PG   Unknown Type
+Inst  CCA     ADE   PG   Unknown Type
+Inst  CCA     ADN   PG   Unknown Type
+Inst  CCA     VDZ   PG   Unknown Type
+Inst  CIN     ADE   PG   Unknown Type
+Inst  CIN     ADN   PG   Unknown Type
+Inst  CIN     VDZ   PG   Unknown Type
+Inst  CON     ADE   PG   Unknown Type
+Inst  CON     ADN   PG   Unknown Type
+Inst  CON     VDZ   PG   Unknown Type
+Inst  CUP     ADE   PG   Unknown Type
+Inst  CUP     ADN   PG   Unknown Type
+Inst  CUP     VDZ   PG   Unknown Type
+Inst  DCY     ADE   PG   Unknown Type
+Inst  DCY     ADN   PG   Unknown Type
+Inst  DCY     VDZ   PG   Unknown Type
+Inst  EMB     ADE   PG   Unknown Type
+Inst  EMB     ADN   PG   Unknown Type
+Inst  EMB     VDZ   PG   Unknown Type
+Inst  EUR     ADE   PG   Unknown Type
+Inst  EUR     ADN   PG   Unknown Type
+Inst  EUR     VDZ   PG   Unknown Type
+Inst  EWH     ADE   PG   Unknown Type
+Inst  EWH     ADN   PG   Unknown Type
+Inst  EWH     VDZ   PG   Unknown Type
+Inst  FCC     ADE   PG   Unknown Type
+Inst  FCC     ADN   PG   Unknown Type
+Inst  FCC     VDZ   PG   Unknown Type
+Inst  FUL     ADE   PG   Unknown Type
+Inst  FUL     ADN   PG   Unknown Type
+Inst  FUL     VDZ   PG   Unknown Type
+Inst  FWH     ADE   PG   Unknown Type
+Inst  FWH     ADN   PG   Unknown Type
+Inst  FWH     VDZ   PG   Unknown Type
+Inst  GAT     ADE   PG   Unknown Type
+Inst  GAT     ADN   PG   Unknown Type
+Inst  GAT     VDZ   PG   Unknown Type
+Inst  HAY     ADE   PG   Unknown Type
+Inst  HAY     ADN   PG   Unknown Type
+Inst  HAY     VDZ   PG   Unknown Type
+Inst  IGN     ADE   PG   Unknown Type
+Inst  IGN     ADN   PG   Unknown Type
+Inst  IGN     VDZ   PG   Unknown Type
+Inst  JEF     ADE   PG   Unknown Type
+Inst  JEF     ADN   PG   Unknown Type
+Inst  JEF     VDZ   PG   Unknown Type
+Inst  LAK     ADE   PG   Unknown Type
+Inst  LAK     ADN   PG   Unknown Type
+Inst  LAK     VDZ   PG   Unknown Type
+Inst  LBN     ADE   PG   Unknown Type
+Inst  LBN     ADN   PG   Unknown Type
+Inst  LBN     VDZ   PG   Unknown Type
+Inst  MAR     ADE   PG   Unknown Type
+Inst  MAR     ADN   PG   Unknown Type
+Inst  MAR     VDZ   PG   Unknown Type
+Inst  MET     ADE   PG   Unknown Type
+Inst  MET     ADN   PG   Unknown Type
+Inst  MET     VDZ   PG   Unknown Type
+Inst  MID     ADE   PG   Unknown Type
+Inst  MID     ADN   PG   Unknown Type
+Inst  MID     VDZ   PG   Unknown Type
+Inst  MIS     ADE   PG   Unknown Type
+Inst  MIS     ADN   PG   Unknown Type
+Inst  MIS     VDZ   PG   Unknown Type
+Inst  MOR     ADE   PG   Unknown Type
+Inst  MOR     ADN   PG   Unknown Type
+Inst  MOR     VDZ   PG   Unknown Type
+Inst  MOS     ADE   PG   Unknown Type
+Inst  MOS     ADN   PG   Unknown Type
+Inst  MOS     VDZ   PG   Unknown Type
+Inst  MTV     ADE   PG   Unknown Type
+Inst  MTV     ADN   PG   Unknown Type
+Inst  MTV     VDZ   PG   Unknown Type
+Inst  NWK     ADE   PG   Unknown Type
+Inst  NWK     ADN   PG   Unknown Type
+Inst  NWK     VDZ   PG   Unknown Type
+Inst  OAK     ADE   PG   Unknown Type
+Inst  OAK     ADN   PG   Unknown Type
+Inst  OAK     VDZ   PG   Unknown Type
+Inst  RAV     ADE   PG   Unknown Type
+Inst  RAV     ADN   PG   Unknown Type
+Inst  RAV     VDZ   PG   Unknown Type
+Inst  RMD     ADE   PG   Unknown Type
+Inst  RMD     ADN   PG   Unknown Type
+Inst  RMD     VDZ   PG   Unknown Type
+Inst  SAM     ADE   PG   Unknown Type
+Inst  SAM     ADN   PG   Unknown Type
+Inst  SAM     VDZ   PG   Unknown Type
+Inst  SAR     ADE   PG   Unknown Type
+Inst  SAR     ADN   PG   Unknown Type
+Inst  SAR     VDZ   PG   Unknown Type
+Inst  SFD     ADE   PG   Unknown Type
+Inst  SFD     ADN   PG   Unknown Type
+Inst  SFD     VDZ   PG   Unknown Type
+Inst  SOB     ADE   PG   Unknown Type
+Inst  SOB     ADN   PG   Unknown Type
+Inst  SOB     VDZ   PG   Unknown Type
+Inst  SRL     ADE   PG   Unknown Type
+Inst  SRL     ADN   PG   Unknown Type
+Inst  SRL     VDZ   PG   Unknown Type
+Inst  SRS     ADE   PG   Unknown Type
+Inst  SRS     ADN   PG   Unknown Type
+Inst  SRS     VDZ   PG   Unknown Type
+Inst  TES     ADE   PG   Unknown Type
+Inst  TES     ADN   PG   Unknown Type
+Inst  TES     VDZ   PG   Unknown Type
+Inst  WEB     ADE   PG   Unknown Type
+Inst  WEB     ADN   PG   Unknown Type
+Inst  WEB     VDZ   PG   Unknown Type
+Inst  WIG     ADE   PG   Unknown Type
+Inst  WIG     ADN   PG   Unknown Type
+Inst  WIG     VDZ   PG   Unknown Type
+Inst  P01     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P02     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P03     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P04     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P05     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P06     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P07     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P08     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P09     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P10     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P11     ADZ   XT   ICS-3028 Digital Accelerometer
+Inst  P12     ADZ   XT   ICS-3028 Digital Accelerometer

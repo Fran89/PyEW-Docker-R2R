@@ -1,0 +1,53 @@
+From das#0029@psi.potsdam.edu Mon Nov  1 12:45:45 1999
+Date: Wed, 20 Oct 1999 15:23:13 +0000
+From: Earthworm Potsdam <das#0029@psi.potsdam.edu>
+To: Earthworm List <earthw-list@nmt.edu>
+Subject: The newbie makes himself known
+
+I appreciate the responses to my recent post concerning mail messages in
+earthworm. My name and affiliation :
+
+Andrew M McDermott
+(315) 267-2862
+Andrew@psi.potsdam.edu
+
+I collaborate with Dr. Frank Revetta on the SUNY Potsdam (NY) campus. We
+assisted in the installation of a local Earthworm server during the past
+weekend (10/15-10/16) by the crew from Lamont-Doherty.
+
+Our server is listed in the DNS server database for 137.143.110.101 
+(potsdam.edu) as
+
+worm.potsdam.edu  137.143.104.230
+
+A correction on my question: I quoted the results of "blat -h" as an
+indication of the error message which appears on the console from
+statmgr when messages are NOT successfuuly sent via my mailserver
+(psi.potsdam.edu) to my user (das#0029@psi.potsdam.edu), but I did not
+mean to imply that "-h" is issued with blat when it is invoked. I
+suspect that if I  knew how blat is being invoked when I set up a mail
+entry in statmgr I could probably fix the script/file responsible to
+eliminate the error messages. Blat works fine from the command line in
+an NT console (I could also find the windows sendmail clones or some
+other mail sender but I would still be left with the questions
+concerning
+
+1) what is mailed: a file, or a variable holding the error message or...
+
+2) how/where does Earthworm invoke this mailer (since obvously I don't
+have a link from blat to /usr/ucb/Mail as the statmgr.d file implies,
+yet it seems to look for blat if I don't have it installed)? The
+variables included in the file statmgr.d must be included into a
+variable which is included in the mailer command invocation somewhere;
+in the case of blat, the default values I get in my registry by
+installing blat must be overridden in the command line if I need
+multiple recipients, etc). 
+
+I have looked around and can't find these things yet. I will keep
+looking and screwing around until/unless someone knows this is a
+complete waste of time. I figure small things are the best place to
+start in understanding how a big thing works. Mail would also make it
+simpler for me to monitor this system from a distance, so I figure it
+has some value in the early stages.
+
+Thanks again.

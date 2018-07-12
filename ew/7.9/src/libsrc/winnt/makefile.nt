@@ -1,0 +1,98 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6165 2014-10-30 06:59:01Z et $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.11  2007/03/27 05:06:16  stefan
+#     clean rpc
+#
+#     Revision 1.10  2007/02/20 23:28:17  stefan
+#     order of all line fixed to allow install on the first try
+#
+#     Revision 1.9  2007/02/20 16:00:52  paulf
+#     added the lockfile_ew.c
+#
+#     Revision 1.8  2006/11/21 23:04:16  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.7  2006/04/04 18:04:37  stefan
+#     startstop with reconfigure and libraries 20060404 s.lisowski
+#
+#     Revision 1.6  2004/07/19 19:20:13  davidk
+#     Fixed delete command so it would not cause a make error if there were no files to delete.
+#
+#     Revision 1.5  2004/07/19 17:52:11  davidk
+#     Added EW_DEBUG flag check.
+#     If EW_DEBUG = 1 then debug information will be built into objects.
+#
+#     Revision 1.4  2004/07/13 16:47:28  mark
+#     Initial checkin
+#
+#     Revision 1.3  2002/08/26 16:19:04  davidk
+#     Updated compilation tree for better compilation on NT.
+#
+#     Revision 1.1  2000/02/14 18:53:30  lucky
+#     Initial revision
+#
+#
+#
+
+#                  Nmake File For Library Routines
+
+# Set MS Make Variable NODEBUG based on EW_DEBUG setting
+!IF "$(EW_DEBUG)" == "1"
+LIBC = libcmtd.lib libcpmtd.lib oldnames.lib
+!ELSE
+NODEBUG=1
+LIBC = libcmt.lib libcpmt.lib oldnames.lib
+!ENDIF
+
+!include <ntwin32.mak>
+
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all: copyfile dirops_ew getavail getsysname_ew pipe sema_ew \
+     sendmail sendpage sleep_ew service_ew socket_ew startstop_winlib \
+     threads_ew time_ew transport wait_timer rpc_dir lockfile_ew \
+     pipeconsole install 
+
+copyfile: copyfile.obj
+dirops_ew: dirops_ew.obj
+getavail: getavail.obj
+getsysname_ew: getsysname_ew.obj
+pipe: pipe.obj
+sema_ew: sema_ew.obj
+sendmail: sendmail.obj
+sendpage: sendpage.obj
+service_ew: service_ew.obj
+sleep_ew: sleep_ew.obj
+socket_ew: socket_ew.obj
+startstop_winlib: startstop_winlib.obj
+time_ew: time_ew.obj
+threads_ew: threads_ew.obj
+transport: transport.obj
+truetime: truetime.obj
+wait_timer: wait_timer.obj
+lockfile_ew: lockfile_ew.obj
+pipeconsole: pipeconsole.obj
+
+rpc_dir:
+	nt_comp rpc
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+install:
+   copy *.obj ..\..\..\lib
+#   del *.obj
+
+
+clean:
+	-del a.out core *.o *.obj *% *~
+	nt_clean rpc

@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v5.0 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v5.0?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v5.0.html" title="View v5.0">v5.0</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v5.0?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v5.0?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-17T12%3A54%3A25-08%3A00&amp;precision=second" title="2012-01-17T12:54:25-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/17/12 12:54:25</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">
+Earthworm Release Notes V5.0
+
+(June 12, 2000)
+Earthworm V5.0 Release
+**********************
+6/12/00
+
+V5.0 Is Released
+****************
+It can be retrieved from the Earthworm ftp site
+ftp://ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.0
+
+
+New Features of EW V5.0
+***********************
+Earthworm v5.0 contains an OPTIONAL Server Package. This server consists of:
+        *  a DBMS Server (Oracle v8, Standard Edition), 
+        *  a web server (Apache), and 
+        *  a map server (based on GMT). 
+The initial suite of functions of this server are fairly minimal, but the idea
+is that the infrastructure is in place, and we will be in good position to
+produce additional capabilities.
+                Note that the Server Package is not required to run the
+Earthworm system. If no DBMS server is available, all Earthworm functions will
+continue to operate as before, and will be supported and enhanced as before.
+There will, however, be a growing suite of features which will be available
+only if a Server is available.
+
+The initial set of DBMS-based server features are:
+        * The DBMS is presumed to be a network-based service. That is, the DBMS
+server may reside in the local Earthworm computer, in another computer at the
+installation, or at a remote site. 
+        * All event data, both parametric and waveform, known to the local
+Earthworm system can be loaded into the agreed-upon DBMS servers as it is
+computed (or received).
+        * An Earthworm system can send and/or accept real-time data to/from any
+number of DBMS servers (local or distant).
+        * A DBMS server can support any number of concurrent, authorized
+clients.
+        * All data feeds from a local Earthworm system to any DBMS servers are
+under exclusive control of the local Earthworm configuration.
+        * The DBMS server supports a web site offering rapid-response,
+interactive seismicity maps. The maps, and the associated pages, provide
+graphic access to event, trace, and station data in the DBMS.
+        * Event and station data, including instrument response, can be pushed
+to a browser client in SAC format. Other formats will be incorporated.
+        * Archiving of parametric and waveform data.
+
+For additional information about the Server Package, or for installation
+assistance, please contact me.
+
+OTHER NEW MODULES
+*****************
+
+LISS2EW
+Liss2ew is the earthworm module for receiving trace data from the Live Internet
+Seismic Server. The LISS is a protocol that provides trace data in mini-SEED
+format in near-real-time over an IP link. The liss2ew module will connect to
+one LISS, read selected streams of trace data, and write that trace data into
+the earthworm transport ring. 
+
+EW2LISS
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS (Live
+Internet Seismic Server) format. The ew2liss module will convert selected SCNs
+(station-component-network) of trace data from an Earthworm transport ring,
+convert that data to miniSEED format, and serve the data to a single LISS
+client (such as liss2ew) over a IP network connection. 
+
+
+CONTRIBUTED SOFTWARE
+**************************
+
+The contributed software can be found at 
+  
+ftp://ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/contributed_software
+
+UNIVERSITY OF UTAH:
+REFTOEW: Reftoew collects data from a UNR RefTek Data Server, a disk file or
+an  Earthworm transport ring.  The data (DT) packets are forwarded to the
+Earthworm Transport layer as TRACE_BUF format packets and optionally written to
+disk as binary SAC files.
+
+VOLCANO PROGRAM:
+The wonderful people at CVO have modified Carlsubtrig, Trig2disk,
+Heli_standalone, and Sgram for the greater flexibility required in the volcano
+networks.
+
+CARLSUBTRIG: Many new options regarding how subnets are triggered and which
+stations are saved.
+
+TRIG2DISK:  Functions Putaway.c SudsPutaway.c and AhPutaway.c were modified to
+use the named subnets now supplied by Carlsubtrig in naming the directories.
+
+HELI_STANDALONE:  Ported to NT. 
+
+SGRAM: Ported to NT. 
+
+In addition, an NT-based Earthworm interface has been developed by CVO, which
+replaces startstop, statmgr, and provides a GUI interface to various Earthworm
+functions. 
+
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v5.0?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

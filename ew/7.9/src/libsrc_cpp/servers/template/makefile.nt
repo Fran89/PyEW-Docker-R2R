@@ -1,0 +1,339 @@
+# Microsoft Developer Studio Generated NMAKE File, Based on server_template.dsp
+
+
+!IF "$(OS)" == "Windows_NT"
+NULL=
+!ELSE 
+NULL=nul
+!ENDIF 
+
+CPP=$(CC) $(GLOBALFLAGS) 
+RSC=rc.exe
+
+OUTDIR=.\Release
+INTDIR=.\Release
+# Begin Custom Macros
+OutDir=.\Release
+# End Custom Macros
+
+ALL : "$(EW_HOME)\$(EW_VERSION)\bin\mlserver.exe"
+
+
+CLEAN :
+	-@erase "$(INTDIR)\kom.obj"
+	-@erase "$(INTDIR)\logit.obj"
+	-@erase "$(INTDIR)\getutil.obj"
+	-@erase "$(INTDIR)\sema_ew.obj"
+	-@erase "$(INTDIR)\sleep_ew.obj"
+	-@erase "$(INTDIR)\socket_ew.obj"
+	-@erase "$(INTDIR)\socket_ew_common.obj"
+	-@erase "$(INTDIR)\threads_ew.obj"
+	-@erase "$(INTDIR)\time_ew.obj"
+	-@erase "$(INTDIR)\transport.obj"
+	-@erase "$(INTDIR)\timefuncs.obj"
+	-@erase "$(INTDIR)\worm_signal.obj"
+	-@erase "$(INTDIR)\logger.obj"
+	-@erase "$(INTDIR)\globalutils.obj"
+	-@erase "$(INTDIR)\mutex.obj"
+	-@erase "$(INTDIR)\threadableobject.obj"
+	-@erase "$(INTDIR)\comfile.obj"
+	-@erase "$(INTDIR)\configsource.obj"
+	-@erase "$(INTDIR)\configurable.obj"
+	-@erase "$(INTDIR)\socket_exception.obj"
+	-@erase "$(INTDIR)\serverbase.obj"
+	-@erase "$(INTDIR)\passport.obj"
+	-@erase "$(INTDIR)\mutableservermessage.obj"
+	-@erase "$(INTDIR)\mutableserverrequest.obj"
+	-@erase "$(INTDIR)\mutableserverresult.obj"
+	-@erase "$(INTDIR)\mutableserverbase.obj"
+	-@erase "$(INTDIR)\ewdb_oci_base.obj"
+	-@erase "$(INTDIR)\ewdb_ora_api.obj"
+	-@erase "$(INTDIR)\oracleconfigsource.obj"
+	-@erase "$(INTDIR)\dbmutableserver.obj"
+	-@erase "$(INTDIR)\request_template.obj"
+	-@erase "$(INTDIR)\result_template.obj"
+	-@erase "$(INTDIR)\server_template.obj"
+	-@erase "$(INTDIR)\main.obj"
+	-@erase "$(INTDIR)\vc60.idb"
+	-@erase "$(EW_HOME)\$(EW_VERSION)\bin\server_template.exe"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "%EW_HOME%\%EW_VERSION%\include" /I "%EW_HOME%\%EW_VERSION%\include_cpp" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\servers" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\servers\messaging" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\util" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\util\sockets" /I "%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\util\sockets" /I "%ORACLE_HOME%\OCI80\include" /I "%SCHEMA_DIR%\src\include" /I "%SCHEMA_DIR%\src\include\internal" /D "NDEBUG" /D "WIN32" /D "_WINSOCKAPI_" /D "_CONSOLE" /D "_MBCS" /D "_MT" /D "_Windows" /D "_WINNT" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\mlserver.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+LINK32_FLAGS=nafxcw.lib libcmt.lib kernel32.lib user32.lib winspool.lib shell32.lib ws2_32.lib ociw32.lib oci.lib /nologo /subsystem:console /pdb:"$(OUTDIR)\mlserver.pdb" /incremental:no /machine:I386 /nodefaultlib:"libcmtd.lib" /nodefaultlib:"libcd.d" /out:"$(EW_HOME)\$(EW_VERSION)\bin\mlserver.exe" /libpath:"$(ORACLE_HOME)\oci80\lib\msvc" 
+LINK32_OBJS= \
+	"$(INTDIR)\kom.obj" \
+	"$(INTDIR)\logit.obj" \
+	"$(INTDIR)\getutil.obj" \
+	"$(INTDIR)\sema_ew.obj" \
+	"$(INTDIR)\sleep_ew.obj" \
+	"$(INTDIR)\socket_ew.obj" \
+	"$(INTDIR)\socket_ew_common.obj" \
+	"$(INTDIR)\threads_ew.obj" \
+	"$(INTDIR)\time_ew.obj" \
+	"$(INTDIR)\transport.obj" \
+	"$(INTDIR)\timefuncs.obj" \
+	"$(INTDIR)\worm_signal.obj" \
+	"$(INTDIR)\logger.obj" \
+	"$(INTDIR)\globalutils.obj" \
+	"$(INTDIR)\mutex.obj" \
+	"$(INTDIR)\threadableobject.obj" \
+	"$(INTDIR)\comfile.obj" \
+	"$(INTDIR)\configsource.obj" \
+	"$(INTDIR)\configurable.obj" \
+	"$(INTDIR)\socket_exception.obj" \
+	"$(INTDIR)\serverbase.obj" \
+	"$(INTDIR)\passport.obj" \
+	"$(INTDIR)\mutableservermessage.obj" \
+	"$(INTDIR)\mutableserverrequest.obj" \
+	"$(INTDIR)\mutableserverresult.obj" \
+	"$(INTDIR)\mutableserverbase.obj" \
+	"$(INTDIR)\ewdb_oci_base.obj" \
+	"$(INTDIR)\ewdb_ora_api.obj" \
+	"$(INTDIR)\oracleconfigsource.obj" \
+	"$(INTDIR)\dbmutableserver.obj" \
+	"$(INTDIR)\request_template.obj" \
+	"$(INTDIR)\result_template.obj" \
+	"$(INTDIR)\server_template.obj" \
+	"$(INTDIR)\main.obj"
+
+"$(EW_HOME)\$(EW_VERSION)\bin\server_template.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+
+!IF "$(NO_EXTERNAL_DEPS)" != "1"
+!IF EXISTS("server_template.dep")
+!INCLUDE "server_template.dep"
+!ELSE 
+!MESSAGE Warning: cannot find "server_template.dep"
+!ENDIF 
+!ENDIF 
+
+
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\kom.c"
+
+"$(INTDIR)\kom.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE=$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\logit.c
+
+"$(INTDIR)\logit.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) /D_LOGITMT $(SOURCE)  
+
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\getutil.c"
+
+"$(INTDIR)\getutil.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\sema_ew.c"
+
+"$(INTDIR)\sema_ew.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\sleep_ew.c"
+
+"$(INTDIR)\sleep_ew.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\socket_ew.c"
+
+"$(INTDIR)\socket_ew.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\socket_ew_common.c"
+
+"$(INTDIR)\socket_ew_common.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\threads_ew.c"
+
+"$(INTDIR)\threads_ew.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\time_ew.c"
+
+"$(INTDIR)\time_ew.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\transport.c"
+
+"$(INTDIR)\transport.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.cpp"
+
+"$(INTDIR)\timefuncs.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.cpp"
+
+"$(INTDIR)\worm_signal.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.cpp"
+
+"$(INTDIR)\logger.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.cpp"
+
+"$(INTDIR)\globalutils.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.cpp"
+
+"$(INTDIR)\mutex.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.cpp"
+
+"$(INTDIR)\threadableobject.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\comfile.cpp
+
+"$(INTDIR)\comfile.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.cpp
+
+"$(INTDIR)\configsource.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.cpp
+
+"$(INTDIR)\configurable.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.cpp"
+
+"$(INTDIR)\socket_exception.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.cpp"
+
+"$(INTDIR)\serverbase.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\passport.cpp"
+
+"$(INTDIR)\passport.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.cpp"
+
+"$(INTDIR)\mutableservermessage.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.cpp"
+
+"$(INTDIR)\mutableserverrequest.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.cpp"
+
+"$(INTDIR)\mutableserverresult.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.cpp"
+
+"$(INTDIR)\mutableserverbase.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(SCHEMA_DIR)\src\ora_api\ewdb_ew_oci_base.c"
+
+"$(INTDIR)\ewdb_ew_oci_base.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(SCHEMA_DIR)\src\ora_api\ewdb_oci_base.c"
+
+"$(INTDIR)\ewdb_oci_base.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(SCHEMA_DIR)\src\ora_api\ewdb_ora_api.c"
+
+"$(INTDIR)\ewdb_ora_api.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\oracleconfigsource.cpp"
+
+"$(INTDIR)\oracleconfigsource.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE="$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\dbmutableserver.cpp"
+
+"$(INTDIR)\dbmutableserver.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+
+
+SOURCE=.\request_template.cpp
+
+"$(INTDIR)\request_template.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=.\result_template.cpp
+
+"$(INTDIR)\result_template.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=.\server_template.cpp
+
+"$(INTDIR)\server_template.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+SOURCE=.\main.cpp
+
+"$(INTDIR)\main.obj" : $(SOURCE) "$(INTDIR)"
+	$(CPP) $(CPP_PROJ) $(SOURCE)
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+H 7 1  Legend 
+D 0 0.5p
+N 1
+V 0 0.5p
+S 0.1i c 0.04i white 0.15p 0.2i City
+N 1
+V 0 0.5p
+S 0.1i a 0.05i red 0.10p 0.2i Epicenter
+N 1
+V 0 1=0.5p
+S 0.1i t 0.05i lightbrown 0.15p 0.2i Seismic Station

@@ -1,0 +1,362 @@
+For the latest notes, proceed to the END of this file...
+
+2000-03-11  Pete Lombard  <lomb4185@pacbell.net>
+	* Changes to compile on Unix:
+	Change filenames to lower case
+	Changed to Unix EOL
+	Changed returntype of thread funs to thr_ret
+	Changed `_timezone' to `timezone'; added def in general.h
+
+2000-03-08  Pete Lombard  <lomb4185@pacbell.net>
+	* Added mutex protection for circular buffer.
+	* Removed `readyflg' from circbuf structure	
+	* Added `waitflg' to clearly mark wait packets.
+
+2000-03-23 Pete Lombard
+	* Added TCP communication mode for WindowsNT and Unix
+	* K2c_init_io replaces k2c_init_ser to do IO initialization
+	* getconfig now handles 3 choices of communication: Windows COM
+	  port, Unix TTY port (coming soon) and Windows/Unix TCP.
+	* Three different versions are compiled to do these different comm
+	  modes; any one platform will only see two: serial or TCP.
+	* Changed all comments from c++ style to C style
+
+2000-04-18 Pete Lombard
+	* Changed TCP IO files to separate versions for NT and Unix
+	* Seems to run on NT COM and TCP and linux TCP; lots more to do
+	* Reading from K2 is now done into a buffer, instead of doing
+	single byte reads; removed calls to ClearCommError in NT serial IO
+	
+2000-04-28 Pete Lombard
+	* put TCP IO files back into one version, using ew socket wrappers
+	* combined k2c_tcp.c with wtcprt, utcprt, and wutcprt files.
+	* Overhauled all files:
+	* removed typedefs of general.h
+	* simplified return values of all functions
+	* Added error logging to many functions, instead of leaving it to
+	be done at the end of main().
+	* Added `redo' flag to many k2c_* functions, for socket or other
+	comm retries.
+	* Renamed `read' thread to `output' thread to better describe its
+	function.
+	* Removed heartbeat thread; heartbeats are now done by main
+	thread, which checks on output thread only if NoSendTimeout > 0
+	* Added a heartbeat before initiating K2 streaming.
+
+2000-05-01 Pete Lombard
+	* Placed Unix and NT serial routines in one file for each, with
+	similar semantics to the k2c_tcp.c routines
+	* Added functions to log and alarm on values in K2 status and
+	extended status messages.
+	* Added config items for buffer params, timeouts, status queries,
+	and debugging
+	* made one function for delivering heartbeats and status messages,
+	used for reporting alarms.
+
+2000-06-09 Pete Lombard
+	* Removed OutputThreadKeepAlive
+	* Added external power failure and low external voltage alarms
+	* Added k2mi_req_params() and k2mi_report_params() for external
+	voltage checks
+	* In k2pktio.c, added `chbuff', a small buffer to copy data into,
+	to get around data alignment problems in Solaris
+	* Bug fixes to handle timeouts in k2p_recv_packet() correctly.
+	* Added code to k2c_ser_un.c to handle timing correctly
+	* Added debugging logit() calls in many places
+	* Corrected coefficients for mega and giga byte conversions
+	* Changed alarm logic to send status messages only once for each
+	occurence of an alarm. The alarm condition must clear in k2ew
+	before another message about that condition is sent.
+	* Fixed bug in k2c_flush_recv() where bcount was not properly
+	incremented
+	* Fixed bug in k2c_tcp.c where a null point could be passed to
+	memcpy().
+	* Added station ID to status messages to ease in identifying which
+	k2ew instance is reporting the error.
+	* Added code to assign earthworm pin numbers to trace data
+	* Added ability to use a restart file to resume serial data from
+	the point it was interrupted by a short shutdown of k2ew.
+	* Clarified text in config files for MaxWaitPackets and
+	MaxRestartAge
+	* Added code to throttle number of resend requests after a
+	prolonged outage of serial data
+	* Moved installation of signal handlers to just before start of
+	main loop, to allow termination by signals during startup problems
+	
+2000-07-02 Pete Lombard
+	* Added WaitTime to limit age of `wait' slots in circular buffer
+	* Added k2cb_check_waits() to change old `wait' slots into `skip'
+	slots; prevents buffer-full errors.
+	* Removed BufferEntries; buffer size now set to twice WaitTime per
+	stream
+	* Removed MaxWaitPackets; not needed with WaitTime
+	* Removed WaitingEntries; not needed
+	* Added check that restart file station name matches K2 station
+	name
+	* Fixed up logic for when to write and when to use restart file
+	* Removed signal handler for SIGSEGV and SIGILL; caused tight loop
+	with kernel if you have a SIGSEGV after the signal handler.
+	* Cleaned up config files.
+
+2000-07-27 Pete Lombard
+	* Put heartbeats back in a separate thread, so we don't wait too
+	long while trying to read from socket or COM port. Heartbeat
+	thread checks for life of main and output threads but only to send
+	a heartbeat, not to take any other action
+	* Removed redom_comm() functionality from k2c_ser_nt.c, since it
+	didn't perform a useful function
+	* Added optional command 'DontQuit' to stop termination on
+	timeouts
+	* Changed k2cb_check_waits() to remove all out-of-date wait
+	packets in one call, instead of one at a time.
+	* Output thread indicates its liveliness (for heartbeat thread) by
+	setting g_ot_working to 1 in its main loop.
+	* Main thread indicates its liveliness by setting g_mt_working to
+	1 after calls to k2c_rcvbt_tout() in k2pktio.c and calls to
+	k2c_recv_buff() in k2misc.c
+	* Changed log filename to conform to earthworm standard, based on
+	config file name instead of module name.
+	* Corrected argument declaration of dataseq in k2cb_blkwait_in():
+	was long; should be unsigned long
+	* Changed log file name to be consistent with Earthworm convention
+
+2000-08-12 Pete Lombard
+	* Fixed bug in cb_check_waits where linked list of waiting buffers
+	was being disconnected, causing circular buffer full errors.
+	* Added function cb_dump_buf() to print the circular buffer to
+	file for debugging. The printout consists only of the indexing
+	elements of the buffer strucutre, so is not useful for
+	reconstructing the buffer contents, only for debugging CB errors.
+
+2000-08-30 Pete Lombard
+	* Added checks for K2 restart, which would reset sequence numbers
+	and possibly reset time to 1 January 1980. Now k2ew will reset its
+	sequence numbers if it sees the K2 reset its sequence numbers
+	while keeping K2 time current.
+	* Added error message to tell when K2 restarts.
+	* Added checks to reject packets with times less than 1981, a
+	likely condition if the K2 time gets reset to 1980
+	* Added checks to make sure packet times increase for each stream.
+	* Added logging of some GPS conditions and ambient temperature
+	from the K2 params structure. Now the params structure is
+	requested whenever the status stucture is requested. Moved the
+	temperature alarm checks out of the extend status section, since
+	K2s don't support extended status.
+	* Removed "low external voltage" alarm: the external battery shows
+	up as an internal battery, not as external power in the K2 params
+	structure. Changed wording about "OnBattery" command in .d files.
+	* Reduced logging of resend requests and replies; now those
+	entries come only with debug level 1 or greater.
+
+2001-03-22  Paul Friberg <p.friberg@isti.com>
+	* Station name remapping:  added new directive to the .d
+	file to allow the station name to be specified there. An
+	example directive is:  StationID LAX
+	The purpose is to rename the station if the K2's STNID needs
+	to be something different (for legacy data purposes).
+
+2001-07-22  Eric Thomas <e.thomas@isti.com>
+         Version 2.20:  Improved handling of resend
+         requests (more focus on oldest waiting packet); added commands
+         "MaxBlkResends", "MaxReqPending", "ResumeReqVal",  "WaitResendVal",
+         "RestartComm"; improved debug log output messages; added logging of
+         K2 channel names; changed "# of packets lost" value so that it is
+         only the total after a restart (to be consistent with the "# of
+         packets received OK" total); added "Program start time", "# of
+         packet retries", "Packet error rating" and "Time of last output
+         seq err" to the summary listings; added logging of "in-process"
+         summary listing at each status output interval.
+
+2001-07-23  Eric Thomas <e.thomas@isti.com>
+         Version 2.22:  Changed default value for 'MaxReqPending' command
+         from 10 to 6 (as per recommendation of Dennis Pumphrey).
+
+2001-08-07  Eric Thomas <e.thomas@isti.com>
+         Version 2.23:  Added "ChannelNames" and "InvPolFlags" parameters.
+
+2001-08-08  Eric Thomas <e.thomas@isti.com>
+         Version 2.24:  Changed so that the "ChannelNames" remapping occurs
+         even when a restart file is used; made handling of station names
+         in the code more straightforward.
+
+2001-08-22  Eric Thomas <e.thomas@isti.com>
+         Version 2.25:  Fixed "# of packets lost" total displayed so that
+         it works correctly after a restart file has been used.
+
+2001-10-19  Will Kohler <kohler@usgs.gov>
+         Version 2.26:  If a pcdrv_raw_read error or pcdrv_raw_write message
+         is received from the K2, the program now sends a K2STAT_BAD_DISK
+         message to statmgr.
+
+2002-01-17  Will Kohler <kohler@usgs.gov>
+         Version 2.27:  Changed types of variables g_mt_working and
+         g_ot_working to "volatile".
+
+2002-01-29  Eric Thomas <e.thomas@isti.com>
+         Version 2.28:  Improved recovery after timeout by adding call to
+         'k2mi_init_blkmde()' to attempt to restore block mode in the K2
+         (needed if modem took over K2's I/O).
+
+2002-04-22  Lucky Vidmar <lucky_vidmar@hotmail.com>
+         Version 2.29:  k2ew was being restarted by startstop because
+         it would stop beating its heart when re-trying to connect. It now
+         continues to beat its heart even when retrying several times.
+
+2002-05-06 Will Kohler <kohler@usgs.gov>
+         Version 2.30: Changed function k2c_init_io() in file k2c_tcp.c so
+         that heartbeats are sent to statmgr while k2ew is attempting to
+         make a socket connection to the K2.
+
+2003-05-13 Pete Lombard <lombard@seismo.berkeley.edu>
+	Version 2.31: Changed parsing of the channel bitmask from
+	STREAM_K2_RW_PARMS.TxChanMap  instead of 
+	MISC_RW_PARMS.channel_bitmap, which is the acquisition mask.
+	Added ability to handle 40-byte extended status packet in addition
+	to old 12-byte extended status packet.
+
+2003-05-26 Paul Friberg <p.friberg@isti.com>
+	Version 2.32: cleaned up GPS lock error message to echo network
+	and station name (previously it was impossible to tag this message
+	to any particular K2). Also added network code to all error messages
+	emanating from a K2. They now all read "K2 <NN-SSSS>: error/warn message"
+	All changes made in k2misc.c
+
+2003-05-28 Paul Friberg <p.friberg@isti.com>
+	added in k2 info packets for status monitoring of K2's. 
+	Only tested on Solaris. New config item in .d file is InjectInfo 
+	(defaults to OFF if not present).
+
+        This new feature is for use in SeisNetWatch to monitor parameters
+        of K2s. K2 parameters and status packets are injected into the
+        wavering as TYPE_K2INFO_PACKET and this message should be configured as
+        a local message in the earthworm.d file. The SNW program k2ewagent
+	reads these messages from the ring and transmits them to the SNW
+	server for processing.
+ 
+        Also fixed first three calls to k2ew_enter_exitmsg() which sent out
+        status messages without the station name...because comms were not
+        yet established with the K2. I added the config file name in there
+        since that usually has some station specific moniker in it. 
+	
+2003-06-06 Pete Lombard <lombard@seismo.berkeley.edu>
+	Version 2.34: Changed k2mi_report_extstatus() to eliminate the
+	problem with byte alignment. Now elements of the extended status
+	structure are copied to local variables before the values are read.
+
+2003-07-17 Paul Friberg Version 2.35: fixed a message about
+        write and read errors that was getting sent to the status
+        manager without any information about the K2 network/station
+        name that it was corresponding to.  This error message was added
+	back in version 2.26. PLEASE make sure that any future messages
+	sent to the statmgr indicate which k2 station is reporting the
+	error.
+
+2003-08-22 Paul Friberg Version 2.36: modified the redo_socket()
+        call to more properly obey the SIGTERM signal. This was hanging
+        up the restart caused by startstop_solaris and causing k2ew_tcp
+        under Solaris to go into a Zombie state. The fix was to look
+        at the g_terminate flag and if set, exit with an error. Previously
+        the program would continue on for another try if the g_dontquit
+        flag was set!  This change was discussed with Pete Lombard and
+	Eric Thomas.
+
+2004-06-02 Pete Lombard Version 2.37: added support for location
+        code (SCNL) and TYPE_TRACEBUF2 messages. Location codes are
+	specified in the LocationNames config parameter, similar to
+	ChannelNames. Added LCFlag to control the action taken on missing
+	location or channel names.
+	
+
+2005-03-25 Will Kohler Version 2.38: K2ew will now, optionally,
+        obtain network code from the K2 headers, rather than from the
+        configuration file.  For this to work, network codes need to
+        be entered into the K2 using Altus File Assistant. A different
+        network code may be entered for each stream.  The K2 must be
+        running application firmware version 3.02 or later.
+        The "Network" parameter, in the config file, is now optional.
+
+2005-05-27 Paul Friberg Version 2.39: fixed previous version for issues
+	with the restart file. If the restart file was being used, then
+	the above network code assignment was not taking. The change 
+	was to add network and location code to the line, instead of 
+	just recording the Channel name in the restart file. The old
+	Channel identifier is retired and is replaced by NCL. If
+	the restart file Channel line is encountered, it will cause 
+	k2ew to exit (this will alert to problems when k2ew is 
+	upgraded to this new version). The fix will be to remove any
+	restart files before upgrading.
+	THIS VERSION ONLY COMPILED on SOLARIS by Paul Friberg
+	
+2005-06-01 Paul Friberg Version 2.40: added in a new directive
+        ForceBlockMode to wrest control from the modem for K2s configured
+        with both a modem and a serial data stream feed. This feature is
+        off by default, but can be turned on by setting ForceBlockMode 1
+        inside the configuration file.  Only tested on Solaris with a 
+	modem-enabled K2. Also added new communications
+        statistics message for pickup by k2ewagent.
+ 
+2005-09-15 Paul Friberg Version 2.41: cleaned up all of the
+        exit messages that could get emailed to a user. The messages now
+        all indicate the station name or the config filename so that 
+        the K2 having the error can be identified.
+
+2007-05-10 Lynn Dietz Version 2.42: Added a CtrlHandler (Windows only) 
+        to catch/ignore user logoff events so that k2ew console windows 
+        will survive user logouts when Earthworm is started with 
+        startstop_service. Also modified to log a descriptive message 
+        instead of a numeric value for handled signals.
+
+2007-12-17 Paul Friberg Version 2.43: modified ForceBlockMode to check
+	for modem active strings and not regain control if modem is
+	active.  Note that I also fixed the returns from redo_socket 
+	in k2c_tcp.c only to do this check if ForceBlockMode is set.
+	The previous version where ForceBlockMode (2.40) was introduced,
+	would only regrab control from the modem if RestartComm was
+	set in the .d file. THis is not necessary in 2.43.
+
+	Again, this is special code to handle dual feed K2s that have
+	both a LIVE SDS stream of data and a modem backup for dialout.
+	This is a common usage at Calif. Geological Survey.
+
+	Here is text from Dennis Pumphrey of KMI in an email
+	from 5/29/2007:
+
+*************
+Paul,
+
+The Altus has one command task. The command task is needed whenever you
+want to talk to the unit - either by sending commands in command mode,
+sending command packets, or sending retransmission requests.
+
+If an internal modem is installed, the Altus will insist on talking back
+to the modem after 5 minutes of inactivity on the command task.
+
+So:
+1) If you continue to send command packets (even pings), then control
+will never be sent back to the modem (because it is never idle) - but
+then you will never be able to call in to the unit through the modem.
+
+2) If you send a CR to the SDS port when the modem has control, you'll
+bet back a message "modem in control and active" vs. "modem in control
+an inactive". "active" means there's someone on the line. "inactive"
+means that the command task is just monitoring the modem. The command
+task will automatically hang up after 5 minutes of inactivity so you
+don't have to worry about someone dialing in and camping on the modem
+line.
+
+Actual text:
+MODEM in control and active\r\n
+-or-
+MODEM in control and inactive\r\n
+                  }
+3) "occasionally" is some combination of these, or you can deal with
+losing access to the command task because you won't get responses. You
+can recover with CR to tell what's happening (as in (2) above), and then
+send "\\\\" for force control back to the SDS port.
+
+If you just wrest control back from the modem (by sending "\\\\") then
+you may take control away from an active modem session.
+
+ 
+Dennis
+*************

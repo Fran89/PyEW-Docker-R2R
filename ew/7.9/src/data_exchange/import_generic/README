@@ -1,0 +1,9 @@
+April 13, 2010
+
+import_ack can replace import_generic as it can self
+detect whether the importer is one that supports _ack
+or not. From 7.4 on out, import_generic will no longer
+be compiled and it may disappear after that.
+
+For backward compatibilities sake, we will copy or
+link the import_ack executable to import_generic.

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>University of Utah Earthworm System Description</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><P><B><FONT SIZE=+1>University of Utah </FONT></B></P></CENTER>
+
+<DIV ALIGN=right><P>Date:&nbsp;Jan. 20, 1998</P></DIV>
+
+<H2><B>Location, Contact, and Address:</B></H2>
+
+<P>University of Utah Regional Seismograph Network operated by:</P>
+
+<ADDRESS>University of Utah Seismograph Stations </ADDRESS>
+
+<ADDRESS>135 South 1460 East </ADDRESS>
+
+<ADDRESS>Room 705 WBB </ADDRESS>
+
+<ADDRESS>Salt Lake City, UT 84112-0111 </ADDRESS>
+
+<ADDRESS>801-581-6274</ADDRESS>
+
+<P>Earthworm Contact: </P>
+
+<ADDRESS>Sue Nava </ADDRESS>
+
+<ADDRESS>Email: <A HREF="mailto:nava@seis.utah.edu">nava@seis.utah.edu</A></ADDRESS>
+
+<ADDRESS>Voice: 801-585-7972 </ADDRESS>
+
+<ADDRESS>Fax: 801-585-5585 </ADDRESS>
+
+<H2><B>Network Characteristics</B> </H2>
+
+<P>Information listed below includes both the Utah and Yellowstone networks</P>
+
+<UL TYPE=CIRCLE>
+<LI>~100 analog, short-period telemetry stations (~160 channels) </LI>
+
+<LI>5 broadband stations with analog telemetry </LI>
+
+<LI>2 broadband stations using digital telemetry, 2 additional to be installed
+shortly </LI>
+
+<LI>2 strong motion stations (one hardwire connection and one with cell
+phone dial-up access) </LI>
+
+<LI>7 USNSN broadband stations in monitoring region </LI>
+
+<LI>Analog network data digitized by Concurrent 7200C computer using HAWK
+event detection software </LI>
+
+<LI>Continous telemetery from 24-bit Reftek digitizers </LI>
+</UL>
+
+<P><B><A HREF="uussflow.ps">Flow Chart describing UUSS Data Acquisition
+System (postscript file) </A></B>
+<HR WIDTH="100%"></P>
+
+<H2 ALIGN=CENTER><B>Standard Earthworm Modules in current use </B></H2>
+
+<P>USGS Earthworm software (version 2.8) installed on SUN Ultra-140 under
+Solaris 2.6 </P>
+
+<UL TYPE=CIRCLE>
+<LI>ad_demux </LI>
+
+<LI>binder </LI>
+
+<LI>coaxtoring </LI>
+
+<LI>copystatus </LI>
+
+<LI>diskmgr </LI>
+
+<LI>eqalarm </LI>
+
+<LI>eqbuf </LI>
+
+<LI>eqcoda </LI>
+
+<LI>eqprelim </LI>
+
+<LI>eqproc </LI>
+
+<LI>eqverify </LI>
+
+<LI>hypo_mgr </LI>
+
+<LI>pagerfeeder </LI>
+
+<LI>pick_ew </LI>
+
+<LI>startstop </LI>
+
+<LI>statmgr </LI>
+
+<LI>wave_server </LI>
+
+<LI>(tankplayer) <BR>
+
+<HR WIDTH="100%"></LI>
+</UL>
+
+<H2><B>Non-Standard Earthworm Modules in current use </B></H2>
+
+<UL TYPE=CIRCLE>
+<LI>reftoew: receives packets from Reftek dataserver (dataserver software
+from UNR), puts data into EW trace_ring, and outputs continuous SAC files.
+Code written by D. Chavez under contract to the University of Utah. </LI>
+
+<LI>nsn_rcv: receives data feed from USNSN (currently 7 stations located
+in montoring area). Code written by D. Chavez under contract to the University
+of Utah. </LI>
+
+<LI>nsn_sta: writes SAC-format files for USNSN data locally. Code written
+by D. Chavez under contract to the University of Utah.. </LI>
+
+<LI>vdl: sends data feed (currently 8 analog-telemetered, short-period
+and 2 digitally-telemetered BB stations) to USNSN. Code written by D. Ketchum,
+USGS. </LI>
+</UL>
+
+<H2><B>Needs </B></H2>
+
+<UL TYPE=CIRCLE>
+<LI>Documentation!!! </LI>
+
+<LI>Technical Support</LI>
+</UL>
+
+<HR>
+Return to main <A HREF="/EWAB">Earthworm</A> or 
+<A HREF="../sites.html">Sites</A> pages.
+
+
+</BODY>
+</HTML>

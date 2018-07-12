@@ -1,0 +1,43 @@
+
+From steve@geophys.washington.edu Wed Jun 17 11:35:55 1998
+Date: Wed, 6 May 1998 17:39:39 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: Earthworm documentation and other comments
+
+
+Dear fellow worms:
+	Several things:
+
+   1. With the latest release of v3.1 a tar of the directory tree of HTML
+documents was provided on the gldage.cr.usgs.gov machine's anonymous FTP.
+The original documents were not totally compatible with relocating them on
+a different server or in a file based way.  This has now been fixed and
+several documents updated as well.  Also, a procedure has been set up to
+routinely make the lastest version of the document tar every week.  This
+new documentation tree is located on anonymous FTP at:
+	ftp://ftp.geophys.washington.edu/pub/out/earthworm.doc.tar
+
+If you got a previous version of this tree I recommend that you get this
+latest one and plan to update that fairly often.
+
+    2. For those updating their running earthworm to v3.1 please realise
+that the format of the station configuration file for the picker,
+"pick_ew.sta" has changed.  The new picker will run fine with the old
+format but will NOT produce picks.  See the latest documents.
+
+    3. Also, with the v3.1 distribution there were several contributed
+programs from groups other than the core USGS earthworm bunch which should
+have been included and were not.  The core USGS group is working out a way
+to easily provide for `contributed' software (from us non-feds out in
+the back woods) to be easily available on their server.  If you have ideas
+or suggestions about how to do this, send them to Barbara Bogaert at
+bogaert@gldage.cr.usgs.gov.
+
+ 
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	http://www.geophys.washington.edu
+

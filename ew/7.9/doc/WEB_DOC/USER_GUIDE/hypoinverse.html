@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0048)http://gldbrick.cr.usgs.gov/eew-doc/USER_GUIDE/hypoinverse.html -->
+<HTML><HEAD><TITLE>Hypoinverse Doucmentation</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2919.6307" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff>
+<CENTER>
+<H1>Earthworm Modules:<BR>HYPOINVERSE DOCUMENTATION</H1><I>(last revised Oct 23, 2012)</I></CENTER>
+<P>Complete details of hypoinverse configuration can be found in the official 
+Hypoinverse documentation maintained by Fred Klein at: <br>
+<ul>
+<li><a href="ftp://ehzftp.wr.usgs.gov/klein/hyp1.3/docs/hyp2000-1.3.pdf"> hyp2000-1.3.pdf</a><br>
+</ul>
+<p> Fred's ftp dir: <a href="ftp://ehzftp.wr.usgs.gov/klein/">ftp://ehzftp.wr.usgs.gov/klein/</a>
+<p>
+HYPOINVERSE2000 determines earthquake locations and magnitudes 
+from seismic network data like first-arrival P and S arrival 
+times, amplitudes and coda durations. The last version 
+HYPOINVERSE2000 (version 1.2) is in routine use by the Hawaiian Volcano 
+Observatory, The Northern California Seismic Network, the 
+Nevada network, and many other networks. It is the standard 
+location program supplied with the Earthworm seismic acquisition 
+and processing system and has thus gotten wide use. Crustal 
+models can be multiple to cover different regions, and either 
+flat layer or flat layer with linear velocity gradients. Version 1.3 
+also supports negative magnitudes and crustal models from the HYPOELLIPSE program, 
+including layer models, gradient over halfspace models, depths relative to sea level, 
+negative depths above sea level, deep boreholes, and use of station elevations. It is Y2000 compatible.
+<P>
+<h3>Hypoinverse/Hyp2000_mgr Troubleshooting Tip:</h3>
+
+If hyp2000_mgr dies mysteriously when reading its .hyp file, try running
+the standalone interactive version of hyp2000. This will allow you to see
+any error messages from hypoinverse, and it allows you to step through
+a configuation one command at a time.<BR>
+Just type <B>hyp2000</B> at a command prompt, and hypoinverse will give the prompt:<br>
+<PRE>
+COMMAND?
+</PRE>
+At this prompt, invoke a complete configuration file by entering 
+<B>@configfile.hyp</B>. Or
+type a hypoinverse's 3-letter command followed by Enter and hypoinverse
+will prompt you for all the arguments for that command.  Entering each
+command individually is a great way to find configuration errors!
+
+<P>
+<h3>Some changes of note for addition of Location Code:</h3>
+<ol>
+<li>
+The "LET" command now requires five arguments:<br>
+Number of letters in the site code (2-5)<br>
+Number of letters in the net code (0-2)<br>
+Number of letters in the component code (0-3)<br>
+Number of letters in the location code in phase files (0-2)<br>
+Number of letters in the location code in other files (0-2)<br>
+Here's an example of a valid LET command for a .hyp file: <br>
+
+<PRE>
+LET 5 2 3 2 2
+</PRE>
+</ol>
+</li>
+
+<P>
+<h3>Some changes of note for Hyp2000:</h3>
+<ol>
+<li>
+Any format containing years is changed.  The changes are simple and
+generally involve expanding years from 2 to 4 digits, and moving other
+fields to the right.  The station file and shadow format had no year
+field and therefore was not changed.  Hypoinverse summary format grows
+from 154 to 164 columns, hypo71 from 93 to 95, archive format from 100
+to 111, and summary shadow did not change length.
+<li>
+The exception to 1) is there is no new phase format.  The original
+phase format is still supported, but the century (1900 or 2000) is set
+as a global parameter for the location run.
+<li>
+All magnitudes are now to 2 decimal places in all formats
+<li>
+The user selects the 2000 formats with one command.  The "200"
+command has 2 arguments:  a) T=use 2000 formats, F=use old formats  b)
+Century to assume for phase format, which has no century field.  Thus
+"cop 5" will still select archive-shadow input, which is useful to
+those of us who struggle through earthquakes at 3 in the morning.
+<li>
+The new archive format has a field specifying a code for the units
+of amplitude.  Presently only the traditional peak-to-peak mm
+(Develocorder or paper), or 0-to-peak mm (UC Berkeley) are supported.
+The amplitude field is expanded from F3.0 to F7.2.
+</li>
+</ol>
+<BR>
+<P>

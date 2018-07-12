@@ -1,0 +1,49 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:27  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:57:13  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/03/13 23:49:34  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+DCC_INCLUDE = ..\include
+DCC_LIB = ..\lib
+
+INCS = /I$(DCC_INCLUDE)
+
+
+OBJS=	steimlib.obj	\
+	steim_decode.obj
+
+all: $(OBJS) install
+
+install: $(OBJS)
+    copy *.obj $(DCC_LIB)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(INCS) $<
+
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+

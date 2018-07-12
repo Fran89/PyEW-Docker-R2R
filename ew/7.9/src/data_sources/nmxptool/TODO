@@ -1,0 +1,16 @@
+=========
+TODO LIST
+=========
+
+HIGH PRIORITY
+  - 
+
+LOW PRIORITY
+  - Add option -E in Earthworm configuration and documentation
+
+  - Add support for location code
+
+  - Exit conditions for PDS loop
+        * after t time amount of data, for example 10 seconds of data
+        * after n packets, for example like "ping"
+

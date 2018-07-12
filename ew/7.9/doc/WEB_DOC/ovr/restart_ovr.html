@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Program: restart overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Program:<BR> Restart Overview</H1>
+<I>(last revised June 28, 2011)</I></CENTER>
+
+<P>
+The <strong>restart</strong> program
+sends an Earthworm TYPE_RESTART message with the specified
+<i>pid(s)</i>
+to startstop, for manual restarting of individual modules.
+The <i>pid</i>
+can be obtained from the status message printed by
+<strong>status</strong>.
+<P>
+The module writes the TYPE_RESTART for each pid provided into
+the first ring created by startstop. For this reason, the startstop
+file must be named as per OS naming conventions, or passed in as
+the second argument after a -c flag is given. The official usage
+echoed back is provided  below:
+<PRE>
+$ restart
+Usage: restart [-c config_file] <pid> [<pid> ...]
+</PRE>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/restart_cmd.html">Restart Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

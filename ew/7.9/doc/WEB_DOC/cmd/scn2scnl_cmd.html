@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: scn2scnl commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+scn2scnl Configuration File</h1>
+<i>(last revised 1 June 2006)</i> </center>
+<p>scn2scnl is a module to convert TRACEBUF into TRACEBUF2 messages by
+tacking on a location code. <br>
+</p>
+<p><br>
+Below is a copy of the .d file with detailed notes on each
+parameter:
+</p>
+<pre>#<br>#                     Configuration file for scn2scnl<br>#<br>MyModuleId     MOD_SCN2SCNL  # Module id for this instance of scn2scnl,<br>InRing         WAVE_RING     # Where to find input messages,<br>OutRing        WAVE_RING2    # Where to put output messages,<br>                             #  InRing and OutRing may be the same ring.<br>HeartbeatInt   15            # Heartbeat interval in secs<br>                             #   if 0, send no heartbeats<br><br># List SCN's that are to be converted and the SCNL to which they are to be<br># renamed. Format is:<br># SCN  sta chan net   sta chan net loc<br># You can list SCN's explicitly or with wildcards. The only supported wildcard<br># for station and network names is "*"; no other characters should be included<br># in a station or network name if the wildcard is used.<br># For channel names, you can use "*" or two letters followed by `?', as in <br># "HH?". The `?' wildcard is supported only as the third character of the<br># channel name.<br>#<br># The output SCNL must be given explicitly if the input SCNl is given<br># explicitly.<br># If a wildcard is used in the input SCN, you can use wildcards in the output <br># SCNL except in the location code. In the output SCNL, the wildcard means<br># "use whatever was in the input S, C or N".<br># <br># The explicit SCN's will be sorted with scn2scnl starts up so that a binary<br># search can be used to quickly find a match.<br># Incoming packets will be matched against this explicit list first. <br># Any packets that don't match an explicit SCN will then be matched against<br># the wildcarded SCNs in the order they appear in this file.<br># Any packets that do not match the wildcard list WILL NOT BE CONVERTED.<br># To ensure that all packets are converted, you should end the SCN list<br># with "SCN * * *  * * * --". This will assign the location code "--" to<br># any packets not otherwise matched.<br>SCN  * * *  * * * --<br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/scn_converters_ovr.html">scn2scnl Overview</a> </center>
+<hr>
+<address> <br>
+Contact: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </address>
+</body>
+</html>

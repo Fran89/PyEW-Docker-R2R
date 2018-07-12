@@ -1,0 +1,29 @@
+
+#                    Nmake File For ewmseedarchiver - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ewmseedarchiver
+O = $(APP).obj
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+EW_LIBS = $L\rdpickcoda.obj $L\swap.obj $L\libew_mt.lib $L\mem_circ_queue.obj $L\libmseed.lib
+
+all: ewmseedarchiver
+
+ewmseedarchiver: $O .\exportfilter.obj .\dsarchive.obj $(EW_LIBS) 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $O .\exportfilter.obj .\dsarchive.obj $(EW_LIBS) \
+    -out:$B\ewmseedarchiver.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\ewmseedarchiver.exe

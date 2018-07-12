@@ -1,0 +1,46 @@
+
+From steve@geophys.washington.edu Wed Jun  3 17:05:08 1998
+Date: Sun, 25 Jan 1998 16:26:38 -0800 (PST)
+From: Steve Malone <steve@geophys.washington.edu>
+Subject: EARTHWORM Documentation ready for release
+
+
+Dear EWAB,
+	It seems the earthworm development team got the message and has
+generated a start at documentation.  Barbara and Lyn sent me a set of
+documents a week or so ago and Pete Lombard helped me put them together
+into a set of WEB pages.  While the set of documents is not complete, it
+is a good start and should provide some help to those needing either basic
+`what is earthworm' information, to some nitty gritty internals.  There
+are vast sections on EARTHWORM operations which are still missing, but I
+am assured that they will be forthcoming in a reasonable time. 
+
+	Also, included in this package is a start at an inventory about
+what is at other earthworm sites (Thanks Sue and Lyn).
+
+Please take a look at these documents; scan through them and see if they
+are not a start.  Let me know if there are important changes needed before
+these are released to the general CNSS community.  If any of you feel
+major changes are needed, just grab the source file, edit it and return it
+to me via e-mail and I will try to get it fix.  Minor changes can just be
+sent as patches in e-mail.
+	Also, if you are running a version of earthworm, please make a
+`site' page for the inventory/sites pages.  The best thing to do is grab a
+copy of an existing one (the UofUtah is one of the best) and edit that.
+Please use the same layout and style so its easy for people to see what is
+running where.
+
+OK....  You will find it all at URL:
+	http://www.cnss.org/EWAB/toc.html
+
+Note that this is not linked into any public pages yet,, but I want to do
+that be the end of this week and send out e-mail about it to the cnss
+mailing list.
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	http://www.geophys.washington.edu
+

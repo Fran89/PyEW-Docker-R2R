@@ -1,0 +1,29 @@
+#
+#
+#
+#                           Nmake File For getfile_cl
+#
+
+!include <ntwin32.mak>
+
+APP=getfile_cl
+O=$(APP).obj config.obj socket_win.obj chdir_win.obj \
+  rename_win.obj sleep_sol.o log.obj tzset_win.obj
+
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib ws2_32.lib
+
+all: $(APP).exe
+
+$(APP).exe: $O
+   link $(linkflags) $(libs) $O -out:$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(tflags) $<
+
+clean:
+   -del *.o *.obj $(APP).exe

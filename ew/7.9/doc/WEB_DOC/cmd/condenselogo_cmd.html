@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0048)/ewdoc/WEB_DOC/cmd/coaxtoring_cmd.html -->
+<HTML><HEAD><TITLE>Earthworm Modules: Coaxtoring commands</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2919.6307" name=GENERATOR></HEAD>
+<BODY aLink=#ff0000 bgColor=#fadfaf link=#0000ee text=#000000 vLink=#551a8b>
+<CENTER>
+  <H1>Condenselogo Configuration File Commands</H1>
+  <I>(last revised 22 November 2006)</I>
+</CENTER>
+<H2> EXAMPLE CONFIGURATION FILE</H2>
+<PRE><font face="Courier New, Courier, mono"># condenselogo configuration file
+#   Reads messages from a list of logos from one transport ring
+#   and writes them to another ring using its own installation and
+#   moduleid in the logo.  Does not alter the contents of the
+#   message in any way.
+
+#  Basic Earthworm setup:
+#
+MyModuleId    MOD_K2ALL      # module id for this instance of condenselogo
+InRing        TRACEBUFGEN_RING        # shared memory ring for input
+OutRing       TEST_RING_1      # shared memory ring for output
+HeartbeatInt  30             # seconds between heartbeats
+LogFile       1              # 0 log to stderr/stdout only
+                             # 1 log to stderr/stdout and to disk file
+                             # 2 log to disk file only
+
+# List the message logos to grab from InRing, WILDCARDs permitted.
+# Multiple "GetLogo" commands are allowed, with no hardcoded limit.
+#         Installation    Module      Message Types
+#-----------------------------------------------------------------
+GetLogo  INST_WILDCARD  MOD_WILDCARD  TYPE_TRACEBUF2
+
+
+# Optional commands:
+#-------------------
+MaxMessageSize      4096     # length (bytes) of largest msg to be processed
+                             # from InRing.  Default=MAX_BYTES_PER_EQ
+
+UseOriginalInstid   0        # If 0, replace both inst_id and module_id (default).
+                             # If non-zero, use original installation_id in
+                             #   outgoing logo (replace only the module_id).</font>
+
+
+</PRE>
+<P><A name=function></a>
+<HR>
+
+<CENTER>
+  <A href="../modules.html">Module Index</A>
+</CENTER><!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY></HTML>

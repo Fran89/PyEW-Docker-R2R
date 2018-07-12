@@ -1,0 +1,34 @@
+
+From withers@gandalf.ceri.memphis.edu Tue Nov 17 07:48:34 1998
+Date: Tue, 17 Nov 1998 09:34:50 -0600 (CST)
+From: "Mitchell M. Withers" <withers@gandalf.ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Cc: Kent Lindquist <kent@giseis.alaska.edu>,
+    Murray McGowan <murray@guralp.demon.co.uk>,
+    Digital Technology Associates <dta@ix.netcom.com>
+Subject: new module
+
+
+A new module is available.  It was written by Kent Lindquist and Murray McGowan
+and sponsored by DTA.  I made it v4.0 compliant (though haven't tested this
+rigourously).
+
+It listens for GCF format messages from SCREAM!, converts to trace_buf, and
+puts em on the wave_ring.  (SCREAM! is the NT interface to the Guralp
+digitizers.)  Scream2ew is available in the workingY2K directory on the earthworm
+development machine.  Be warned of the relatively large message lengths:
+Tank MPH4 BHE UM 2068 INST_MEMPHIS MOD_WILDCARD 256 10000 /dat4/mph4_bhe.tnk
+
+I have also written a program to convert from a directory of ah_xdr format
+waveform files, to a file in trace_buf format suitable for playing through
+tankplayer.  It currently requires all data files to have the same sample
+rate, start times, and end times.  It is available in the UM directory
+on the earthworm development machine.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+

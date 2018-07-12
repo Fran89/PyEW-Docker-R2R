@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: WSV_TEST commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+
+0000">
+<CENTER><H1> <BR>Wsv_test Configuration File</H1>
+  <I>(last revised 2 June, 2006)</I>
+</CENTER>
+<PRE>
+#
+#                  wsv_test's Configuration File
+#
+MyModuleId    MOD_WSV_TEST  # module id for this program,
+RingName        HYPO_RING   # transport ring to write to,
+LogFile                 1   # If 0, don't write logfile at all,
+LogAllTests             1   # If 0, only log when waveserver dies or comes alive,
+                            # Otherwise, log all waveserver tests.
+HeartBeatInterval      30   # Send heartbeats to statmgr this often (sec)
+TestInterval          300   # Test all waveservers this often (sec)
+wsTimeout           10000   # Msec to wait for reply from waveserver
+
+#
+# Test the following waveservers:
+#           IP Address    Port   Host Note<br>#           ------------  -----  ---- -----<br>Waveserver  130.118.43.3  16000  wsv1 dummy  <br>Waveserver  130.118.43.3  16032  wsv1 ad2<br>Waveserver  130.118.43.3  16033  wsv1 ad3<br>Waveserver  130.118.43.3  16025  wsv1 nano<br>Waveserver  130.118.43.3  16026  wsv1 dst</PRE>
+<CENTER>
+<A HREF="../modules.html">Module Index</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS> <B>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

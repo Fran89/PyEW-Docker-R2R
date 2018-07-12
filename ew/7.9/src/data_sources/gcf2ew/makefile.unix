@@ -1,0 +1,45 @@
+#
+# gcf2ew - Guralp to earthworm interface for Unix/Linux ONLY (serial, or internet)
+#
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lthread -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -DSTDC -D_REENTRANT ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+#B= .
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+GCF_INC = gcf/include
+GCF_LIB = gcf/liblinux32
+
+CFLAGS +=  -I$(GCF_INC) -g -Wall
+
+all: gcf2ew
+
+
+SRCS = convert.c getconfig.c main.c scn_map.c \
+	heart.c die.c logo.c options.c
+
+OBJS = convert.o getconfig.o main.o scn_map.o \
+	heart.o  die.o logo.o options.o
+
+INCLUDES = convert.h earthworm_incl.h gcf_input_types.h main.h options.h \
+	die.h externs.h heart.h misc.h scn_map.h
+ 
+EW_LIBS = \
+	$L/libew_mt.a
+
+gcf2ew: $(OBJS) $(INCLUDES)
+	$(CC) -o $B/gcf2ew $(OBJS) $(EW_LIBS) -L$(GCF_LIB) -lgcf $(SPECIFIC_FLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/gcf2ew*
+

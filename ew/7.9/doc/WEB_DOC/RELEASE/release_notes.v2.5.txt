@@ -1,0 +1,194 @@
+Release Notes:  Earthworm Version 2.5
+July 1, 1996
+
+
+NEW MODULES:
+***********
+
+WAVESERVER:
+
+wave_server.c
+Stores a user-defined number of waveform messages from a given data 
+source in a circular disk file.   Sends waveforms from requested
+time intervals to client routines via a socket.
+(see .../v2.5/user_doc/wave_server.commands for more info)
+
+WAVE CLIENT ROUTINES:
+
+wave_client.c routines
+Functions for communicating with the wave_server.  Currently, two
+keyboard-driven programs, fetchwave (uses command-line arguments) and 
+getwave (interactive), use the wave_client routines to retrieve waveform 
+data from the wave_server.
+(see .../v2.5/user_doc/wave_client.commands for more info)
+
+TANKPLAYER:
+
+tankplayer.c   
+Reads a file containing waveform messages (either TYPE_ADBUF or TYPE_DST)
+and places the messages into shared memory in pseudo real time,
+simulating a data source.  The temporal spacing of the messages is determined
+by the difference in header time-stamps of consecutive messages.
+(see v2.5/user_doc/tankplayer.commands for more info)
+
+
+IMPORT_GENERIC/EXPORT_GENERIC:
+
+
+The module pair "import_generic" and "export_generic" passes
+     selected messages from one Earthworm system to another via an
+     internet link.  The configuration file of "export_generic"
+     specifies the numeric internet address and port to be used.  The
+     configuration file of "import_generic" specifies the numeric
+     internet address and port number to connect to.
+
+     Each export module will entertain one and only one import client. If 
+     misunderstandings develop the approach is to close the socket, 
+     initialize things, and attempt to reconnect.
+
+     Currently, messages must consist of ascii text.  TCP stream sockets
+     are used.  Message framing is done by the modules: an ascii STX is
+     appended to the start of a message, and an ascii ETX to the end.  At
+     the receive end (import_generic), framing violations result in
+     closing the socket, and an attempt to reconnect. Part of the motivation
+     for this framing is to permit easy modification for binary message 
+     text.
+
+     Heartbeats are exchanged in both directions (optionally).  When
+     either module does not receive a heartbeat in the specified time
+     interval, it closes the socket and attempts to reconnect.
+     Heartbeats are ascii strings specified in the configuration file of
+     each module. 
+
+     Each module contains a stub for a 'filter' routine to process
+     outgoing and incoming messages.  The intent is to allow
+     message-specific processing, such as format conversion, and
+     selective sending and receiving to be done in such routines.  The
+     routine is given a pointer (and length) to the candidate message
+     about to be sent (or received), and returns a pointer to the
+     processed message. 
+
+     "export_generic" buffers outgoing messages: If it receives exportable
+     messages from the local transport layer faster  than they can be 
+     written to the outgoing socket, it starts building a memory-based 
+     fifo of messages.
+     The number and size of such memory buffers is set in the configuration 
+     file.
+
+     Multiple import/export modules on one system have not been tested at 
+     this time.
+     It is expected that that should work, after the style of the multiple 
+     picker:
+     The module id is taken from the configuration file. The same executable 
+     with is run with a different configuration file. The module id is taken 
+     from the configuration file. A different port number will be required
+     for each copy.
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+
+EQCODA:
+
+eqcoda.c
+Coda lengths shorter than S-minus-P time are given a 4-weight and the absolute
+value of the raw coda length from the picker is retained on the phase line of the 
+archive message.  Previously, these coda lengths were set to zero on the phase 
+line.
+
+TRANSPORT  LAYER:
+
+transport.c
+Three bugs were found and fixed in tport_getmsg and tport_copyfrom.  
+
+The first bug 
+occurred on very rare occasions when a transport header was corrupted by a writer 
+to shared memory while a reader was copying it from shared memory.  This caused 
+the reader to complain and exit.  
+
+The other two bugs dealt with message-logo 
+tracking problems when either no messages were ever found or when the first 
+message found was too long to return (GET_TOOBIG).  These caused the reader to 
+get "stuck" looking at the same message(s) over and over again.  
+See  .../v2.5/programmer_doc/transport.doc sections 4.6 thru 4.8 for more 
+detailed descriptions.
+
+STARTSTOP_OS2:
+
+In startstop_os2, programs were getting blown away before they could gracefully terminate.  When quit is typed, startstop sleeps for 5 seconds 
+to give the programs time to terminate gracefully.  If they are still 
+there after 5 seconds, startstop terminate them.
+
+
+STARTSTOP_SOLARIS:
+
+The problem was that startstop's heartbeat thread was started
+just before startstop entered a fork/exec loop to bring up the rest of 
+the earthworm modules.  So after each fork but before the exec, two startstop 
+heartbeat threads were in existence.  This sometimes resulted in duplicate 
+heartbeats with the same sequence number (evidenced by copystatus et al. 
+complaining about a sequence number gap or "missed" messages).
+The fix was to start startstop's heartbeat thread AFTER the fork/exec loop.
+
+
+
+
+
+RINGTOCOAX:
+
+ringtocoax  was changed to reject heartbeats and status messages if
+the parameter CopyStatus is set to 0. Previously, the parameter was called 
+CopyHeartBeat, and affected the passing of hearbeats only. 
+
+   Note that a new .d file is required as a result of this change.
+
+
+
+
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+
+ringtocoax.d
+
+See RINGTOCOAX notes above.
+
+
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+
+Hypoinverse:
+
+Hypoinverse will occasionally die or hang on an event.  The Earthworm
+recognizes that this has happened and sends an error message.  Once this
+happens, the system can no longer process earthquakes.
+
+It is recommended that a pager message go out when this error occurs and
+that the responder reboot the OS/2 box.
+
+
+Adsend:
+
+Picker does not pass on adsend module heartbeats, maybe no error messages either.
+
+
+Statmgr:
+
+The statmgr 'stopping' message does not always get out to pageits and email.
+
+
+
+MODULES IN PROGRESS:
+********************
+
+	Getdst
+
+	Lptrig
+
+	Mteltrg
+
+
+

@@ -1,0 +1,192 @@
+Release Notes:  Earthworm Version "working"
+Cleaned out after release of v7.6 on 11/14/2012
+
+These notes are for release v7.7
+
+Syntax for the release notes are still short and sweet, 3 lines: 
+Module name 
+short summary of new or changed module.
+Name of developer and date YYYY/MM/DD
+
+
+NEW MODULES:
+***********
+seisan_report
+Integrated in with Earthworm for compilation, tested on Mac OS X and Linux. 
+Modified BGS version to handle S arrivals from Earthwom and better WAV file matching.
+Paul Friberg, Sept 10, 2013
+
+ewmseedarchiver
+Take TYPE_MSEED packets from a ring and write them to a file based archive. Very flexible
+naming convention for the archive filenames.
+Chad Trabant June 18, 2013
+
+ew2ringserver
+Take Tbuf2 or TYPE_MSEED from a ring and send it to the IRIS ringserver SeedLink Server.
+Note this is only useful for UNIX EW systems since ringserver only works on that OS.
+Chad Trabant June 17, 2013
+
+ewexport2ringserver
+A new module that can receive TBUF2 data from an Earthworm export and send it into the IRIS ringserver. 
+More info here: https://seiscode.iris.washington.edu/projects/ewexport2ringserver
+Note this is only useful for UNIX systems since ringserver only works on that OS. The Export can come from
+an EW on any OS/platform however.
+Chad Trabant June 10, 2013
+
+mseed2tbuf
+Convert's TYPE_MSEED packets found in one ring to TBUF2 in another ring (will split the packet into two or more
+TBUF2 to make sure they don't exceed the 4096 byte tbuf2 size limit.
+Paul Friberg, June 25, 2013
+
+tbuf2mseed
+A spinoff from ringdup_scn that allows one to convert TBUF2 in one ring over to
+MiniSEED packets in a different ring. Requires an updated earthworm_global.d with
+the TYPE_MSEED packet type defined. sniffring can detect this new binary packet
+and sniffwave will soon too. It lives in the ringdup_scn directory.
+Paul Friberg, May 28, 2013
+
+webswave
+A display/diagnostic standalone tool for plotting traces and picks in real time
+using a web browser and the recent websockets standard in HTML5. The tool has
+an embedded webserver (Mongoose 3) that feeds traces and picks to any browser
+client without the need for additional software. Currently for linux and Mac OSX
+only, requiring websocket-compatible web browsers such as Firefox 16+, 
+Chrome 23+ or Safari 6+. It also works with iOS6 Safari, allowing real-time 
+traces on a smartphone.
+Ruben Luis, November 18, 2012
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+********************************************
+
+ew2moledb 1.2.3 (more details in file src/archiving/mole/HISTORY )
+       - Test MySQL connection at the beginning and exit in case of error
+       - Now can simultaneously read messages from multiple rings (based on
+         multiple threads).
+       - Management of the local queue of messages is more efficient and
+         reliable (based on semaphores).
+       - Fixed a damned bug causing loss of very few messages; fortunately,
+         only on very very rare occasions.
+       - Some parameters in ew2moledb.d are changed. There is no complete
+         backward compatibility with the previous configuration files.
+Matteo Quintiliani July 29, 2013
+
+ring2tank
+Allowed it to handle tracebuf1 packets if requested (command line option).
+Paul Friberg, July 15, 2013
+
+rock2ew
+Upgraded the jar file to 1.61 from the ISTI repository.
+Paul Friberg, July 8, 2013
+
+slink2ew 
+At version 2.4 now:
+2013.7.6: version 2.4
+        - Fix parsing of StateFile option, recognize '#' as start of comment.
+        - Add 'WriteMSEED' parameter file option to allow forwarding the
+        received miniSEED records directly to the transport ring as TYPE_MSEED 
+        messages instead of creating TYPE_TRACEBUF2 messages.
+        - Use libmseed for parsing miniSEED records instead of the limited
+        routines included with libslink.  This allows support for more encoding
+        types (e.g. 32-bit and 64-bit floats).
+        - Remove support for creating tracebuf1 messages, the 'ForceTraceBuf1'
+        option is no longer recognized.
+        - Replace nanosleep() with portable slp_usleep() included in libslink
+        and remove WINNT declarations.
+Chad Trabant, July 6, 2013
+
+
+sniffwave 
+Modified to observe and report TYPE_MSEED packets (and backward compat, meaning only works if 
+TYPE_MSEED is in earthworm_global.d)
+Paul Friberg, June 25, 2013
+
+sniffring
+Modified to observe and ignore TYPE_MSEED packet types (backward compatible too).
+Paul Friberg, June 3, 2013
+
+nmxptool
+	updated nmxptool to the version 2.1.1
+Matteo Quintiliani May 13, 2013
+
+q3302ew
+	Added a new parameter to cause the program to die after a certain number of registration attempts.
+	This avoids the endless looping many see when registration is not working and a restart is needed to get it to take.
+	RegistrationCyclesLimit is the new .d parameter
+Paul Friberg April 4, 2013
+
+gmew
+	Added parameter LookAtVersion for looking at the specific version of an event-id from an ARC message.
+Matteo Quintiliani March 21, 2013
+
+binder_ew
+	Added new ChannelNumberMapByNet feature to allow mapping of channel numbers to Orientations by network code (for Caltech)
+Paul Friberg March 19, 2013
+
+ewhtmlemail
+	Paul Friberg added residual value to waveform header
+	Billy Bugoa Rosso added gmt map out, UseRegionName as an option, and filtering for BB waveforms
+Merged and checked in by Paul Friberg, March 20, 2013
+
+statmgr
+	Fixed numerous issues with CheckAllRings capability, now that feature works as advertised.
+Tim Zander + Paul Friberg February 18, 2013
+	Added DontReportUnknownModule option to get rid of annoying messages if you really 
+	don't care that some modules are not monitored by statmgr.
+Paul Friberg April 4, 2013
+
+heli_ewII 
+	Fixed weird seg fault bug from spurious sprintf() and added version numbers.
+Paul Friberg February 20, 2013
+
+ewhtmlreport
+	Added support for sending emails of reports. If Blat is used it must support attachments. 
+Tim Zander February 5, 2013
+
+trig2disk and waveman2disk
+	Both of these have had version numbers incremented to reflect improvements in SEISAN format 
+	putaway and now MSEED putaway (formerly buggy and only tested on Solaris).
+Tim Zander, Paul Friberg January 17, 2013
+
+ewhtmlemail
+	Bug fix for a TYPE_MAGNITUDE message that arrives with no ARC message before it. Reason for
+	that might be the use of eqfilter to filter out ARC messages but MAGs were just dup'ed over...
+	as I was doing for a configuration recently to filter out events for emailing...
+Paul Friberg December 24, 2012
+
+ring2tank
+	Minor bug fix: in that if there were packets exactly at 4096 they were rejected as too big. 
+Paul Friberg November 16, 2012
+
+ms2tank
+	Added in -S -N -C -L command line options to override the SCNL found in the mseed when writing
+the tank player tank files.
+Paul Friberg December 7, 2012
+
+remux_tbuf 
+	Removed the need for EW_LOG to be set to run this command line program. If not set, it now writes
+its log to the run directory.
+Paul Friberg December 7, 2012
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+****************************************************
+
+KNOWN BUGS:
+***********
+
+KNOWN DEFICIENCIES:
+*******************
+
+StartstopService works with newer versions of Windows, ie: 7, 8, however 
+StartstopConsole does not compile with new versions of the Microsoft compiler
+and versions of StartstopConsole compiled with older compilers don't work 
+with Windows 7 or Windows 8 or Windows Server 2012. One can get command-line
+access to startstop like you could with StartstopConsole using a workaround if
+you install Cygwin. Workaround steps are described in the documentation for
+StarstopService.
+
+LIBRARY CHANGES:
+****************
+
+Libraries were made for UNIX and Windows installations, and special solaris only make files were removed. There are now
+special env vars per platform in the environment settings files.

@@ -1,0 +1,119 @@
+"README" [Read only] 58 lines, 3058 characters Changes to startstop_sol since v3.1
+
+IMPORTANT: read the last paragraph for changes needed for ringtocoax and
+coaxtoring config files!!!!
+
+
+1. Added "nice( -nice( 0 ) )" to restore normal time-sharing priority for jobs
+that must be started at reduced priority. Requested by D. Chavez, University
+of Utah.
+
+2. Added a signal handler so that startstop will shutdown gracefully upon
+receiving the TERM signal.
+
+3. Added the option to specify the config file on the command line. If no
+config file is specified, then a default file is used. This required similar
+changes to status, restart, and pau. For all of these programs, the default
+config file is specified in startstop_sol.h in the include directory. Other
+operating systems will need corresponding files to define their default config
+file. In all cases, the config file MUST be located in the EW_PARAMS
+directory.
+
+4. Added a "KillDelay" command to the config file. This specifies the number
+of seconds that startstop will wait for modules to shutdown. After this delay,
+startstop will sent the TERM signal to the modules to kill them.
+
+5. Added an optional "Agent" command to the config file, to specify the user
+and group ID of each "Process" listed in the config file. If Agent is given,
+then the real and effective user and group ID's will be set to the user and
+group names given in the Agent command. If the Agent is not given for a
+process, then the real and effective user and group IDs will be those of the
+user who ran startstop. Startstop will run with the real user ID of the user
+who started it, and the effective user ID that is set by startstop's file
+permissions and ownership. Startstop needs to be setuid root so that it can
+set real-time priority for its child modules.[H[35;1H"README" [Read only] 58 lines, 3058 characters[H[35;1H[K
+[A
+
+[AAn attempt has been made to remove a major security hole in startstop.
+
+
+[AStartstop will not allow "root" to be the Agent user. If "root" is given as
+
+
+[Athe Agent user, startstop will instead use the userid of the person who ran
+
+
+[Astartstop.
+
+
+[A
+
+[ASome sites do not allow files to have "setuid" permissions. At these sites a
+
+
+[Aperson must "su" to (or login as) root in order that startstop has root
+
+
+[Aprivileges. If they need a module to run with root privileges, omitting the
+
+
+[AAgent command for that module will give the needed privileges. Unprivileged
+
+
+[Ausers will not be able to run earthworm modules (or illicit commands) with
+
+
+[Aroot privilege.
+
+
+[A
+
+[AOther sites have the permissions on startstop setuid root. This allows
+
+
+[Aunprivileged users to run startstop and have it set designated modules to run
+
+
+[Aat Real Time priority levels. If there is some earthworm module that requires
+
+
+[Aroot privileges, that module should also be made setuid root by the[H
+
+
+[35;1H
+
+[A[J[>4h[>4lfile. In all cases, the config file MUST be located in the EW_PARAMS[H
+directory.
+
+4. Added a "KillDelay" command to the config file. This specifies the number
+of seconds that startstop will wait for modules to shutdown. After this delay,
+startstop will sent the TERM signal to the modules to kill them.
+
+5. Added an optional "Agent" command to the config file, to specify the user
+and group ID of each "Process" listed in the config file. If Agent is given,
+then the real and effective user and group ID's will be set to the user and
+group names given in the Agent command. If the Agent is not given for a
+process, then the real and effective user and group IDs will be those of the
+user who ran startstop. Startstop will run with the real user ID of the user
+who started it, and the effective user ID that is set by startstop's file
+permissions and ownership. Startstop needs to be setuid root so that it can
+set real-time priority for its child modules.
+
+An attempt has been made to remove a major security hole in startstop.
+Startstop will not allow "root" to be the Agent user. If "root" is given as
+the Agent user, startstop will instead use the userid of the person who ran
+startstop.
+
+Some sites do not allow files to have "setuid" permissions. At these sites a
+person must "su" to (or login as) root in order that startstop has root
+privileges. If they need a module to run with root privileges, omitting the
+Agent command for that module will give the needed privileges. Unprivileged
+users will not be able to run earthworm modules (or illicit commands) with
+root privilege.
+
+Other sites have the permissions on startstop setuid root. This allows
+unprivileged users to run startstop and have it set designated modules to run
+at Real Time priority levels. If there is some earthworm module that requires
+root privileges, that module should also be made setuid root by the
+superuser. But the unprivileged user will not be able to run any other[H
+

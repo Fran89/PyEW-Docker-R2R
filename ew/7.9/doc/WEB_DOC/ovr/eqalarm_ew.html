@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: eqalarm_ew overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Eqalarm_ew Overview</H1>
+<I>(last revised 2 February, 1998)</I></CENTER>
+
+<P>
+This module serves to provide Earthworm with an internal minimalist
+notification capability for installations where there may not be any other
+notification software, and to serve as a pattern making it easier for such
+installations to create their own modules.
+<P>
+Eqalarm_ew attaches to the ring carrying 'eqproc' (hypoinverse)
+output. It listens for "TYPE_H71SUM" messages, and generates a "TYPE_PAGE"
+message if the event magnitude is greater than the threshold value given
+in the module's configuration file, "eqalarm_ew.d".
+<P>
+Note that "eqalarm_ew" uses the antiquated buffering scheme that
+requires a 'private' shared memory ring named "EQALARM_EW_RING". This must
+be declared in "startstop.d" and in "earthworm.d" as one of the rings in the system.
+<P>
+The format of the output message is given below. The first two
+lines are intended to show column number; the third line is the actual
+message text.
+<P>
+00000000001111111111222222222233333333334444444444555555555566666666667777777777
+<P>
+01234567890123456789012345678901234567890123456789012345678901234567890123456789
+<pre>
+yymmdd hh:mm:ss xx xxN xxx xxE Depth:xxx Mag:x.x picks:xxx gap:xxx RMS:xx.xx EW</pre>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqalarm_ew.html">Eqalarm_ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

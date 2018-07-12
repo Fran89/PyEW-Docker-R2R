@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Decimate Configuration File</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1><BR>Decimate Configuration File </H1>
+<I>(last revised 12 December, 2008)</I></CENTER>
+<pre>
+#
+#                     Configuration File for decimate
+#
+MyModId          MOD_DECIMATE
+InRing           WAVE_RING       # Transport ring to find waveform data on,
+OutRing          WAVE_RING       # Transport ring to write output to,
+                                 # InRing and OutRing may be the same.
+HeartBeatInterval     30         # Heartbeat interval, in seconds,
+LogFile            1             # 1 -> Keep log, 0 -> no log file
+#Debug		 		 # Write out debug messages (optional)
+
+# Specify the decimation rates as one or more integer values greater than 1,
+# all on one "DecimationRates" line, enclosed in quotes.
+# These will be used in successive stages of decimation. The overall
+# decimation rate is the product of all the stage decomation rates.
+# The filters will be more efficient if several small decimation stages
+# are used instead of one large one, and if largest rates are given first.
+# Currently a maximum of 10 stages is enforced.
+DecimationRates    "5 2"     # Decimation rates of each stage, in quotes!
+
+MinTraceBuf         10       # Minimum number of samples in output TRACE_BUF.
+
+MaxGap              1.5      # Maximum gap, in sample periods, allowed
+                             # between trace data points.
+                             # When exceeded, channel is restarted.
+# If you want Decimate to compute and log its filter coefficients and then
+# exit, specify "TestMode".
+#TestMode
+
+#
+# Specify logo of the messages to grab from the InRing.
+# TYPE_TRACEBUF2 is assumed, therefore only module ID and
+# installation ID need to be specified
+#
+GetWavesFrom    INST_WILDCARD MOD_WILDCARD  # TYPE_TRACEBUF2 (assumed)
+
+#
+# List SCNL codes of trace messages to decimate and their output SCNL codes
+# Wildcard characters are not allowed here.
+#
+#        IN-SCNL     OUT-SCNL
+GetSCNL ABC EHZ UW --  ABC EWZ UW --
+
+</pre>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/decimate_ovr.html">Decimate Overview</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

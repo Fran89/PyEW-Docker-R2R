@@ -1,0 +1,13 @@
+
+I see you do the following:
+
+/* If data is not in order, throw it out
+   *************************************/
+      if ( Sta->dEndTime >= WaveHead->starttime )
+      {
+         if ( Gparm.Debug ) logit( "e", "%s out of order\n", Sta->szStation );
+         Sta->iPickStatus = 0;
+         continue;
+      }
+
+Does that mean you write a new station list, with that channel disabled?

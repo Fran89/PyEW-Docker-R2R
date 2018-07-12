@@ -1,0 +1,92 @@
+
+From bogaert@gldmutt.cr.usgs.gov Mon Aug 16 11:43:00 1999
+Date: Mon, 16 Aug 1999 12:20:59 -0600
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu, David Kragness <davek@katylyst.com>
+Subject: Earthworm Version 4.0
+
+Earthworm Version 4.0 has been released.  
+
+You can download the release from our new ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.0
+
+v4.0 is the official Y2K compliant release of Earthworm. It was verified
+that all critical modules correctly function during the following
+time intervals:
+
+ o Dec 31, 1999 - Jan 1, 2000
+ o Feb 28, 2000 - Feb 29, 2000
+ o Feb 29, 2000 - Mar 1, 2000
+ o Dec 31, 2000 - Jan 1, 2001
+
+
+Critical modules are all those modules which enable Earthworm to 
+ trigger on and locate an earthquake and save associated waveforms to 
+disk.
+
+Testing was performed under both Solaris and NT operating systems using
+trace data for two Northern California earthquakes (provided in 
+run_test/data directory). The date stamps of this trace data was shifted 
+to correspond to each testing period. In addition, the system clock on 
+the computer was also set to the time in the future being tested.
+
+
+IMPORTANT CHANGE- AFFECTS ALL MODULES
+*************************************
+*************************************
+All installation ids and global message types are now defined in
+a file called earthworm_global.d  (earthworm_inst.d has been
+expanded and renamed). The values defined in earthworm_global.d are 
+critical to proper communication and data attribution among Earthworm 
+systems around the globe.
+
+A copy of earthworm_global.d must be placed in the EW_PARAMS directory 
+(the official copy lives in the vX.X/environment directory).
+
+   DO NOT make any changes to this file.  !!!!
+The contents of this file are under the control of Earthworm Central.
+Please direct any requested additions or changes to:
+             Barbara Bogaert    bogaert@usgs.gov
+
+
+NEW MODULES
+********************
+waveman2disk: Not really a module, but a manual, interactive version
+   of trig2disk. Its purpose is to manually request trace data from
+   WaveServers and save it to disk in various supported formats. 
+   It has two modes: triglist and interactive. In triglist mode, it
+   reads a file containing one or more TYPE_TRIGLIST2K messages, then
+   requests and writes out corresponding snippets of trace data. In 
+   the interactive mode, it prompts the user for the start time and
+   duration of snippets, then gets that data from the WaveServers and
+   writes it out to disk. See the README in src/waveman2disk directory
+   for more details. 
+
+EARTHWORM DOCUMENTATION
+******************************
+
+The Earthworm web site has been upgraded to be consistent with
+Version 4.0. 
+
+CONTRIBUTED SOFTWARE
+********************
+
+Many Earthworm modules have been developed at regional networks to meet 
+their specific needs.  Since some of these may be useful to other 
+networks, we make these available at the Earthworm ftp site in the 
+Contributed_software directory.  Currently, you will find modules 
+developed at USGS Menlo Park, University of Memphis,  University of 
+Washington and University of Alaska, Fairbanks.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+
+

@@ -1,0 +1,476 @@
+<HTML>
+<HEAD>
+<!--. TH ref2ew n-->
+<TITLE></TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+<H1>
+ref2ew(n)
+</H1>
+<!--. SH NAME-->
+<H2>
+NAME
+</H2>
+ref2ew - Earthworm module for putting RefTek trace packets into wave ring.
+<!--. SH SYNOPSIS-->
+<H2>
+SYNOPSIS
+</H2>
+<!--. B ref2ew config-file-->
+<B>
+ref2ew config-file
+</B>
+<!--. SH DESCRIPTION-->
+<H2>
+DESCRIPTION
+</H2>
+<!--. B Ref2ew-->
+<B>
+Ref2ew
+</B>
+reads RefTek packets from an input source, converts the packets to
+Earthworm
+<!--. I trace_buff-->
+<I>
+trace_buff
+</I>
+packets, and puts the packets on the Earthworm wave ring. The input source can
+be either a serial port (TTY device) or a TCP connection. Raw RefTek packets
+can optionally be saved to file. This module is may be used for reading RefTek
+packets from a Terra Technology strong-motion instrument, as well as a
+standard RefTek instrument.
+<!--. SH CONFIGURATION FILE COMMANDS-->
+<H2>
+CONFIGURATION FILE COMMANDS
+</H2>
+<!--. TP -->
+<P>
+<!--. BI TtyName " name"-->
+<B>
+TtyName
+</B><I>
+ name
+</I>
+configures
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+to read from serial port
+<!--. IR name .-->
+<I>
+name
+</I>
+.
+
+This command is mutually exclusive with
+<!--. BR TcpHost .-->
+<B>
+TcpHost
+</B>
+.
+
+<!--. TP -->
+</P>
+<P>
+<!--. BI Speed " baud"-->
+<B>
+Speed
+</B><I>
+ baud
+</I>
+sets the speed of the serial port to
+<!--. IR baud .-->
+<I>
+baud
+</I>
+.
+
+This command is required if
+<!--. B TtyName-->
+<B>
+TtyName
+</B>
+is used in the configuration file; otherwise it is ignored.
+<!--. TP -->
+</P>
+<P>
+<!--. BI TtyName " host"-->
+<B>
+TtyName
+</B><I>
+ host
+</I>
+configures
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+to read data from a TCP connection to
+<!--. IR host ,-->
+<I>
+host
+</I>
+,
+
+which may be a hostname or an IP address. This command is mutually exclusive
+with
+<!--. BR TtyName .-->
+<B>
+TtyName
+</B>
+.
+
+<!--. TP -->
+</P>
+<P>
+<!--. BI Port " port"-->
+<B>
+Port
+</B><I>
+ port
+</I>
+specifies the TCP port number
+<!--. IR port .-->
+<I>
+port
+</I>
+.
+
+This command is required if
+<!--. B TcpHost-->
+<B>
+TcpHost
+</B>
+is used in the configuration file; otherwise it is ignored.
+<!--. TP -->
+</P>
+<P>
+<!--. BI Station " station"-->
+<B>
+Station
+</B><I>
+ station
+</I>
+identifies the wave trace packets as being from
+<!--. IR station .-->
+<I>
+station
+</I>
+.
+
+<!--. BI Channel "n name"-->
+<B>
+Channel
+</B><I>
+n name
+</I>
+associates RefTek channel
+<!--. I n-->
+<I>
+n
+</I>
+with channel
+<!--. IR name .-->
+<I>
+name
+</I>
+.
+
+Channels names should follow the SEED name convention. There should be one
+<!--. B Channel-->
+<B>
+Channel
+</B>
+command for each RefTek channel in use.
+<!--. TP -->
+</P>
+<P>
+<!--. BI Network " net"-->
+<B>
+Network
+</B><I>
+ net
+</I>
+sets the network string in output trace packets to
+<!--. IR net .-->
+<I>
+net
+</I>
+.
+
+The netowrk name for University of Washington is
+<!--. BR UW .-->
+<B>
+UW
+</B>
+.
+
+<!--. TP -->
+</P>
+<P>
+<!--. BI TimeShift " time"-->
+<B>
+TimeShift
+</B><I>
+ time
+</I>
+tells
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+to add
+<!--. I time-->
+<I>
+time
+</I>
+to the RefTek packet time as the packets are placed on the output ring. Raw
+RefTek packets being saved to file are not affected. There is no flag in
+Earthworm trace packets to indicate that this time correction has been
+applied. This command is optional.
+<!--. TP -->
+</P>
+<P>
+<!--. BI SampleRate " n"-->
+<B>
+SampleRate
+</B><I>
+ n
+</I>
+identifies the sample rate of packets from the RefTek as being
+<!--. I n-->
+<I>
+n
+</I>
+samples per second. This command is required.
+<!--. BI RefVar " variant"-->
+<B>
+RefVar
+</B><I>
+ variant
+</I>
+may be used to identify the
+<!--. I variant-->
+<I>
+variant
+</I>
+of the RefTek format being sent. The standard format is
+<!--. BR Reftek .-->
+<B>
+Reftek
+</B>
+.
+
+Currently the only variant is
+<!--. BR Terra ,-->
+<B>
+Terra
+</B>
+,
+
+spoken by Terra Technology IDS instruments. This command is optional.
+<!--. BI StationFile " filename"-->
+<B>
+StationFile
+</B><I>
+ filename
+</I>
+identifies
+<!--. I filename-->
+<I>
+filename
+</I>
+as the station file.
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+uses the station file to look up the pin number for each of the channels it is
+processing. The pin number is currently used by Earthworm module
+<!--. B pick_ew ,-->
+<B>
+pick_ew ,
+</B>
+although this will change in the future. This command is required.
+<!--. TP -->
+</P>
+<P>
+<!--. BI nFileBufs " n"-->
+<B>
+nFileBufs
+</B><I>
+ n
+</I>
+tells
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+to save
+<!--. I -->
+<I>
+
+</I>
+raw RefTek packets per file. If you don't want to save raw RefTek packets, set
+<!--. I n-->
+<I>
+n
+</I>
+to zero. This command is required.
+<!--. TP -->
+</P>
+<P>
+<!--. BI DirPath " directory"-->
+<B>
+DirPath
+</B><I>
+ directory
+</I>
+specifies the
+<!--. I directory-->
+<I>
+directory
+</I>
+in which raw RefTek packets will be saved. This command is required if
+<!--. B nFileBufs-->
+<B>
+nFileBufs
+</B>
+is non-zero; otherwise it is ignored.
+<!--. SS Standard Earthworm Commands-->
+<H3>
+Standard Earthworm Commands
+</H3>
+<!--. TP -->
+</P>
+<P>
+<!--. BI RingName " ring"-->
+<B>
+RingName
+</B><I>
+ ring
+</I>
+specifies the earthworm transport ring to which
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+sends its output messages. Normally this will be the WAVE_RING. This command
+is required.
+<!--. TP -->
+</P>
+<P>
+<!--. BI MyModuleId " modid"-->
+<B>
+MyModuleId
+</B><I>
+ modid
+</I>
+sets the module ID for this invocation of
+<!--. BR ref2ew .-->
+<B>
+ref2ew
+</B>
+.
+
+Module ID's are found in
+<!--. BR earthworm.d .-->
+<B>
+earthworm.d
+</B>
+.
+
+ This command is required.
+<!--. TP -->
+</P>
+<P>
+<!--. BI LogFile " n"-->
+<B>
+LogFile
+</B><I>
+ n
+</I>
+sets the diagnostic logging flag to
+<!--. IR n . -->
+<I>
+n
+</I>
+.
+
+Use 1 to cause
+<!--. B ref2ew-->
+<B>
+ref2ew
+</B>
+to write its log to disk, 0 for no logging. This command is required.
+<!--. TP -->
+</P>
+<P>
+<!--. BI HeartBeatInt " n"-->
+<B>
+HeartBeatInt
+</B><I>
+ n
+</I>
+specifies the heartbeat interval in seconds. This command is required.
+
+<!--. SH DISCUSSION-->
+<H2>
+DISCUSSION
+</H2>
+RefTek packets from a Terra Technology strong-motion instrument include a 24
+byte header and 250 4-byte data samples. With the sample rate set to 100
+samples per second, one of these packets will be delivered every 2.5
+seconds for each channel on the instrument. When these packets are converted
+to Earthworm wave trace packets, the RefTek header is replaced by the 64-byte
+Earthworm header. Thus the wave trace packets are 1064 bytes in length.
+
+<!--. SH "SEE ALSO"-->
+<H2>
+SEE ALSO
+</H2>
+<!--. nf -->
+<BR>
+Passcall RefTek manual, Earthworm documentation.
+<BR>
+<!--. fi -->
+<BR>
+<!--. SH "BUGS AND CAVEATS"-->
+<H2>
+BUGS AND CAVEATS
+</H2>
+
+<!--. SH AUTHOR-->
+<H2>
+AUTHOR
+</H2>
+<!--. nf -->
+<BR>
+Pete Lombard
+<BR>
+University of Washington
+<BR>
+
+<BR>
+Earthworm provided by Alex Bittenbinder, Barbara Bogaert,
+<BR>
+Lynn Dietz, and Will Kohler of the US Geological Survey,
+<BR>
+Menlo Park, California
+<BR>
+
+<BR>
+<!--. fi -->
+<BR>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>Pete Lombard, <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></A></B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>
+

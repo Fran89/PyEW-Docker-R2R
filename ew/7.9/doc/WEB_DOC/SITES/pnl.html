@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>PNL network recording</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+ 
+<H2 ALIGN=CENTER>Battelle, Pacific Northwest National Laboratory</H2>
+<H2 ALIGN=CENTER>Hanford Seismic Network</H2>
+ 
+<DIV ALIGN=right><P>Date: Mar. 12 1998</P></DIV>
+ 
+<H3>Location, Contact, and Address:</H3>
+ 
+<P>Battelle seismic recording center
+ 
+<P>Alan Rohay (alan.rohay@pnl.gov) 509-376-6925</P>
+ 
+<P>K6-81 Battelle PNNL<BR>
+Box 999  Richland, WA 99352
+ 
+<H3>Network Characteristics:</H3>
+Pacific Northwest National Laboratory helps maintain the eastern Washington
+portion of the Pacific Northwest Seismograph Network, a set of about 30
+analog short-period stations with radio and microwave telemetry.  These
+stations along with several local stations in the Pasco Basin are recorded
+at PNNL as part of its environmental monitoring of the Hanford region.
+
+<HR WIDTH="100%">
+<H3><CENTER>Standard EarthWorm Modules in current Use:</CENTER></H3>
+
+PNL is installing an earthworm system
+on a Pentium 200 MHz MME processor running Windows NT. 
+The system includes two external fast-wide scsi disks
+in addition to the standard EIDE internal drive
+(2x4 Gb Seagate Barracuda, on Adaptec 2940 controller),
+3Com 3C905 10/100 Mb/s network interface,
+National Instruments PCIMIO16E4 12-bit A/D converter with AMUX64T multiplexer.
+We immediately plan to use the PC and earthworm software
+to monitor approximately 40 analog-telemetry stations from the eastern
+Washington region.
+Future integration of additional broad-band and strong motion instruments is
+expected, as are automatic notification functions.
+Analysis, reporting, and data archival will be conducted by analysts using UNIX
+workstations and UW analsis software.
+<UL>
+<LI><B>startstop, copystatus, diskmgr, statmgr</B> control and status
+<LI><<B>adsend</B>    digitize analog data on NT
+<LI><B>pick_ew, binder</B>  P-picking and associations
+<LI><B>eqproc, eq_prelim, eqcoda, eqverify</B> filter & quality check
+<LI><<B>hypomgr, hypoinv, eq_alarm</B> produce locations and notify
+</UL>
+
+<H3>Associated programs/modules being developed or adapted here:</H3>
+<UL>
+<LI><B>carl_trig</B>   (Detect station triggers and network events)
+<LI><B>fftrace_save</B> (Use some sort of trace saver when available)
+</UL>
+
+<HR>
+Return to main <A HREF="/EWAB">Earthworm</A> or 
+<A HREF="../sites.html">Sites</A> pages.
+
+</BODY>
+</HTML>

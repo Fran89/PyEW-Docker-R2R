@@ -1,0 +1,75 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: HYP commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1><BR>HYP2000 Configuration Documentation </H1>
+<I>(last revised December 29, 2006)</I></CENTER>
+<P>
+Documentation for program hypoinverse can be requested from Fred Klein, USGS, Menlo Park, CA at klein@andreas.wr.usgs.gov.
+<P>
+IMPORTANT NOTE ON THE HYPOINVERSE COMMAND FILE
+<P>
+An example hypoinverse command file can be found in the example run directory, rum_test,  available from the Earthworm ftp site.  In order for HYPOINVERSE to run with Earthworm, the following command line MUST be in the HYPOINVERSE command file.
+<PRE>
+* Enable year 2000 formats
+* ************************
+200 T 1900 0
+
+     This is a new command to hypoinverse that tells it what formats
+  to expect.  It's "200" instead of "2000" because hypoinverse
+  take 3-letter commands.  The default is "old" 2-digit year format.
+     Does the fact that you see a 1900 on this line worry you?
+  It shouldn't.  The 2nd & 3rd args to this command only apply when
+  you're running "COP 1" (old phase) format input thru hypoinverse.
+  Fred Klein put those in there to support an ancient format instead
+  of changing that format.  Earthworm uses "COP 5" format.
+
+</PRE>
+<P <font color="red">
+IMPORTANT NOTE ON LOCATION CODES (EW v7.0 or greater):
+</font>
+
+<P> Here is a very important change for hyp2000 for Earthworm v7.0 and greater. With Location
+codes, you need to provide 5 values for the LET command!. If you only provide 3 in windows,
+the program will crash:
+
+<PRE>
+Here's what hyp2000 does now with LET:
+
+ncss3> hyp2000
+ HYPOINVERSE 2000 STARTING
+ 9/2005 VERSION (DUAL LOCATION CODES)
+ COMMAND? let
+ NUMBER OF LETTERS TO CHECK IN STATION SITE CODE (2-5) [cr = 4]?
+ NUMBER OF LETTERS TO CHECK IN STATION NET CODE (0-2) [cr = 0]?
+ NO. OF LETTERS TO CHECK IN STATION COMPONENT CODE (0-3) [cr = 0]?
+ NO. OF LETS TO CHECK IN LOCATION CODE IN PHASE FILES (0-2) [cr = 0]?
+ NO. OF LETS TO CHECK IN LOCATION CODE IN OTHER FILES (0-2) [cr = 0]?
+
+So some good LET commands would be:
+LET 5 2 3 2 2    # if you're using location codes
+LET 5 2 3 0 0    # if you're NOT using location codes
+</PRE>
+<P>
+EXAMPLE HORIZONTAL CRUSTAL MODEL FILE
+<PRE>
+NMT Model
+ 6.15  0.0
+  8.1 33.5
+</PRE>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/hyp2000_ovr.html">hyp2000 Overview</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY>
+</HTML>

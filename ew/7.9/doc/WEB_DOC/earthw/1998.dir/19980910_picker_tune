@@ -1,0 +1,39 @@
+
+From pechmann@seis.utah.edu Fri Sep 11 08:27:47 1998
+Date: Thu, 10 Sep 1998 17:55:26 -0600 (MDT)
+From: "James C. Pechmann" <pechmann@seis.utah.edu>
+To: earthw-list@nmt.edu
+Cc: pechmann@uuss.seis.utah.edu
+Subject: Suggested Picker Parameter Changes
+
+To:  Earthworm System Users
+Re:  Suggested Picker Parameter Changes
+
+     If you are not satisfied with the performance of Rex Allen's
+P-Picker algorithm on your network data, I invite you to take a look
+at a recently-posted web document entitled "Suggested Picker Parameter
+Changes," available at
+
+     http://www.cnss.org/EWAB/ovr/picker_tune.html
+
+This report describes and explains some provisional changes to the
+standard parameter settings which we made at the University of Utah.
+These changes were based on an analysis of the reasons for the
+picker's failure to pick arrival times for some reasonably good
+quality first arrivals recorded on our regional seismic network.  The
+changes detailed in the web document appear to have increased the
+number of usable picks routinely obtained by the picker for local
+seismic events, not only on our own Earthworm system but also on
+another Earthworm system where these changes have been implemented.
+
+--Jim Pechmann
+
+______________________________________________________________________
+
+James C. Pechmann                    Tel:  (801) 581-3858
+Research Associate Professor         FAX:  (801) 585-5585
+University of Utah
+Dept. of Geology & Geophysics        E-mail:  pechmann@seis.utah.edu
+135 S 1460 E Rm 705
+Salt Lake City, Utah 84112-0111
+______________________________________________________________________

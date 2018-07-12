@@ -1,0 +1,28 @@
+/*
+	geojson2ew - geoJSON to earthworm 
+
+	Copyright (c) 2014 California Institute of Technology.
+	All rights reserved, November 6, 2014.
+        This program is distributed WITHOUT ANY WARRANTY whatsoever.
+        Do not redistribute this program without written permission.
+
+	Authors: Kevin Frechette & Paul Friberg, ISTI.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include  "earthworm.h"
+#include  "externs.h" 
+
+static unsigned char InstId = 255;
+
+void
+setuplogo(MSG_LOGO *logo) {
+   /* only get the InstId once */
+   if (InstId == 255  && GetLocalInst(&InstId) != 0) {
+      logit("e",
+              "%s: Invalid Installation code; exiting!\n", Progname);
+      exit(-1);
+   }
+   logo->mod = QModuleId;
+   logo->instid = InstId;
+}

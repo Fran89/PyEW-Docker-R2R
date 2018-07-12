@@ -1,0 +1,125 @@
+FILE: readme                    Copyright (c), Symmetric Research, 2010
+
+srusb2ew is a program for sending data from a SR USBxCH 24 bit A/D
+data acquisition system to an Earthworm WAVE_RING buffer as
+TYPE_TRACEBUF2 messages.  It currently works a single four channel 
+USB4CH.  Future plans include having it work with eight channel USB8CH 
+systems and multiple USBxCH's.  srusb2ew is similar in concept and
+organization to the ADSEND module except it works for the SR USBxCH
+A/D's.
+
+In order to compile this modules, a copy of the Symmetric Research
+USBxCH software library and include source files are required.  A
+partial copy of the SR software can be found in the USBXCH
+subdirectory.  This contains the required source files and their
+associated driver files for both Windows and Linux.
+
+The most current and up-to-date version of the SR USBxCH software is
+always available free from the download page of our website:
+www.symres.com.
+
+In order to run srusb2ew, a USBxCH board must be properly connected to
+your computer and its device driver must be correctly installed.
+Before using the USBxCH with Earthworm, we strongly recommend you
+follow the instructions included with the full USBxCH software for
+setting up the board and installing the driver and then verify its
+correct operation using the included diag and scope programs.
+
+Once you have both Earthworm and the USBxCH working separately, you
+should edit the srusb2ew.d configuration values so they match your
+hardware setup.  You will probably also need to edit some additional
+Earthworm configuration files like startstop.d, wave_serverV.d,
+export_scn.d, etc to handle the data srusb2ew will be providing.  Some
+example steps are given below.  
+
+For additional configuration help, please refer to the readme.txt
+files in the run subdirectory.  This directory contains a consistent
+set of configuration files appropriate up for a very simple Earthworm
+setup using Symmetric Research equipment.  And can be a good starting
+point from which to customize your own configuration files.  
+
+                   ********* NOTE ********* 
+Users of equipment from other manufacturers or those wishing to run
+more complicated setups are advised to start from the Memphis Test
+suite instead.  It can be found at:
+folkworm.ceri.memphis.edu/ew-dist/v7.2/earthworm_test.memphis.tar.gz
+                   ********* NOTE ********* 
+
+For more details about how the srusb2ew module is organized, please see
+the comments at the top of the .c source file.
+    
+For support or to suggest improvements, please contact Wendy Tucker at
+Symmetric Research (email: info@symres.com).
+
+The files in this directory are:
+ makefile.nt             creates the executable for srusb2ew on Windows 2K/XP
+ makefile.ux             creates the executable for srusb2ew on Linux
+ makefile.sol            place holder for unsupported srusb2ew on Solaris
+ readme                  this file
+ srusb2ew.c              source file for the srusb2ew module
+ srusb2ew.d              configuration file read by srusb2ew
+ srusb2ew.desc           the descriptor file for srusb2ew required by statmgr
+ srusb2ew_ovr.html       HTML page with srusb2ew overview
+ srusb2ew_cmd.html       HTML page with configuration command descriptions
+ run                     directory with executables and sample config params for v7.x
+ USBXCH                  directory with minimal SR USBxCH software to compile and run
+
+
+
+To run srusb2ew, do the following:
+
+1) Install Earthworm.  Test it.
+
+2) Setup the SR hardware and software.  Install the SR software that 
+   came with your USBxCH.  Hook up the hardware and use the included
+   diagnostic program to make sure it's working properly.
+
+3) If the USBxCH drivers supplied with the SR software is different
+   than the one supplied with earthworm.  You should uninstall the 
+   former and install the latter when using earthworm.  See the note 
+   below for more details.
+
+4) Put srusb2ew.d and srusb2ew.desc in the run params directory 
+   (eg \earthworm\v7.4\run_symres\params)
+
+5) Edit srusb2ew.d to select the USBxCH model, etc that matches
+   your equipment and select the desired sampling rate, channel
+   names, etc
+
+6) Edit startstop_nt.d to also control srusb2ew (eg add lines like:
+
+   Process          "srusb2ew srusb2ew.d"
+   PriorityClass     Normal
+   ThreadPriority    Normal
+   Display           NewConsole
+
+7) Edit wave_serverV.d to save the USBxCH data into tanks 
+   eg add lines like:
+
+   Tank    CH00 SHZ SR P1 880   INST_UNKNOWN  MOD_WILDCARD       1         10000         c:\earthworm\v7.4\run_symres\data\pch00.tnk
+
+8) Edit wave_viewer.d or the config file for another viewer
+   to see the USBxCH data.
+
+Then startstop earthworm and the system will begin acquiring data.
+
+
+
+Note: If you have unexpected problems, the first thing to check is
+that you are using a consistent set of software.  It is important that
+the USBxCH driver you use matches the headers and libraries compiled
+into srusb2ew.  
+
+For example, if you plan to use the version of srusb2ew.exe from the
+standard earthworm executable directory (eg \earthworm\v7.4\bin), then
+be sure to install the matching driver from the srusb2ew\USBXCH\Driver
+directory in the EW directory tree and not from the SR directory tree.
+
+If instead you plan to use the SR drivers that came with your USBxCH
+or that you downloaded from our website (www.symres.com), be sure to
+copy srusb2ew.exe from the run directory (eg run_v7.x for EW 7.4) into
+the standard earthworm executable directory.  Recompiling srusb2ew.exe
+from the \SR\USBXCH\Extras\Earthworm directory in the SR directory tree
+will also put a consistent copy in the standard EW executable
+directory.  
+

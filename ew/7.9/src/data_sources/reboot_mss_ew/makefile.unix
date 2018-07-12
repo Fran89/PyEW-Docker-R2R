@@ -1,0 +1,23 @@
+#               Make file for reboot_mss_ew
+#
+
+LINUX_FLAGS=-lm -lnsl -lpthread
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+O = reboot_mss_ew.o rb_sol.o config.o
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = ${GLOBALFLAGS}
+
+reboot_mss_ew: $O
+	$(CC) $(CFLAGS) -o $B/reboot_mss_ew $O $L/libew.a \
+              $L/trheadconv.o $L/swap.o $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/reboot_mss_ew*

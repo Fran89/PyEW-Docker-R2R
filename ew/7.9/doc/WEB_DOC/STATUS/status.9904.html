@@ -1,0 +1,65 @@
+<HTML> <HEAD> <TITLE>EARTHWORM Status Apr. 15 1999</TITLE> </HEAD> <BODY
+TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B"
+ALINK="#FF 0000">
+
+
+<H1 ALIGN=CENTER> <B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM
+Status Report<BR> </FONT></FONT></B></H1> <HR WIDTH="100%">
+
+<H5 ALIGN=RIGHT><TT>Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+Apr. 15, 1999</TT></H4>
+
+
+<H4>Previous <I>Status Notes</I> are available for:<BR>
+<A HREF="status.9709.html">Sep 1998</A> <BR>
+<A HREF="status.9802.html">Feb 12, 1998</A><BR>
+<A HREF="status.9805.html">May 5, 1998</A><BR>
+<A HREF="status.980519.html">May 19, 1998.</A><BR>
+<A HREF="status.9809.html">Sep 9, 1998.</A></H4>
+
+<H2>Earthworm <A HREF="../RELEASE/release_notes.v3.91.txt">Version 3.91</A> has been released.</H2>
+
+You can download the release from our new ftp site:
+<DD><A HREF="ftp://ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v3.91">ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v3.91</A>
+
+<H3>NEW MODULES</H3>
+<B>q2ew:</B>  module to convert data acquired by the Quanterra data loggers into
+earthworm packets.  The Quanterra data is imported into a Solaris machine via
+the comserv program. The module q2ew interfaces to comserv and converts the
+miniSEED packets to Earthworm trace_buf packets. Written by Paul Friberg & Sid
+Hellman of ISTI.
+
+<B>ew2seisvole:</B>  Listens for hypo_sum messages, and  produces files containing
+cubic messages in a specified directory. Seisvole can be configured to retrieve
+the cubic messages from the specified directory and display on it's maps. A
+readme file can be found in the ew2seisvole source directory. 
+  
+
+<H3>IMPORTANT BUG FIXES</H3>
+carlstatrig: Fixed bug in addtrace.c where gapSize was calculated incorrectly.
+This was causing the STA/LTA values to become NaNs (Not A Number) which
+prevented triggers from that channel. 
+
+There have been many more bug fixes and enhancements to Earthworm modules with
+v3.91.  See the release notes which accompany the release for details.
+
+<H3>IMPORTANT NOTICE TO ADSEND USERS</H3>
+
+Earthworm module 'adsend' can freeze an NT system if restarted using the
+Earthworm RESTARTME mechanism.  We recommend you do not use this feature with
+'adsend'.
+
+<H3>CONTRIBUTED SOFTWARE</H3>
+
+Many Earthworm modules have been developed at regional networks to meet their
+specific needs.  Since some of these may be useful to other networks, we make
+these available at the Earthworm ftp site in the Contributed_software
+directory.  Currently, you will find modules developed at USGS Menlo Park,
+University of Memphis, University of Washington and University of Alaska,
+Fairbanks.
+<P>
+<HR>
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+</BODY>
+</HTML>

@@ -1,0 +1,74 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.4  2006/11/21 23:04:15  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.3  2003/05/06 20:47:54  lucky
+#     *** empty log message ***
+#
+#     Revision 1.2  2001/05/23 22:50:49  davidk
+#     Modified makefiles so that the latest (post Magnitude addition)
+#     version of the EWDB_API and apps now build on NT.
+#
+#     Revision 1.1  2000/09/18 17:20:29  lucky
+#     Initial revision
+#
+#     Revision 1.2  2000/03/31 18:25:33  lucky
+#     *** empty log message ***
+#
+#
+#
+
+#
+#                  Nmake File For gd Utility Routines
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all: \
+	gd \
+	gddemo \
+	gdfontg \
+	gdfontl \
+	gdfontmb \
+	gdfonts \
+	gdfontt \
+	giftogd \
+	mathmake \
+	mtables \
+	webgif \
+	install
+
+gd: gd.obj
+gddemo: gddemo.obj
+gdfontg: gdfontg.obj
+gdfontl: gdfontl.obj
+gdfontmb: gdfontmb.obj
+gdfonts: gdfonts.obj
+gdfontt: gdfontt.obj
+giftogd: giftogd.obj
+mathmake: mathmake.obj
+mtables: mtables.obj
+webgif: webgif.obj
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+install:
+   copy *.obj $L
+
+clean:
+	-del a.out core *.o *.obj *% *~
+

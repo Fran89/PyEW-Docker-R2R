@@ -1,0 +1,92 @@
+carlstatrig Triggering Parameters:
+
+Trigger ON  when eta >  0.0
+Trigger OFF when eta <= 0.0
+
+eta is calculated by:
+
+        eta =  STAR - (Ratio * LTAR) - ABS(STA - LTA) - Quiet
+              
+        eta = Term1 -    Term2      -     Term3       - Term4
+
+where:
+
+STA   = the short-term (1 second) average of the trace. 
+        Represents the current DC offset of the trace.
+
+LTA   = an 8 second average of the STA.
+        Represents the long-term DC offset of the trace.
+
+STAR  = short-term rectified average; the absolute value of the 
+        difference between the trace and the LTA, averaged for one second. 
+        Represents how much signal there is with respect to DC offset.
+
+LTAR  = long-term rectified average; the 8 second average of STAR.
+        Quiet stations have low LTAR.
+        Noisy stations have higher LTAR.
+
+Ratio = configurable parameter; as Ratio gets smaller, carlstatrig gets more
+        sensitive (more and longer triggers).
+        Ratio affects noisy stations more than quiet ones.
+        
+Quiet = configurable parameter; as Quiet gets smaller, carlstatrig gets more
+        sensitive (more and longer triggers).
+        Quiet affects all stations equally.
+
+"eta" is calculated once a second for every station independently.
+
+"eta" is calculated using the current second's updated STAs with the
+previous-second's LTAs.  After eta is calculated, LTAs are updated.
+In a sense, the LTAs are lagged by 1 second.
+
+
+Term1:  STAR
+------------ 
+   Term1, STAR, increases as the amplitude of the signal increases, thus 
+making a trigger more likely. This term has no configurable elements, but 
+is totally data-determined.
+
+Term2:  Ratio * LTAR
+--------------------
+   Term2 affects how high above background noise a signal has to be in 
+order to declare a trigger. The constant "Ratio" in Term2 is configurable.
+   For a perfectly flat trace, Term2 and Term3 are zero and triggering is 
+controlled by Term4 alone. Normal quiet traces have a low LTAR, noisy traces 
+have a higher LTAR. Changes to "Ratio" therefore have a larger impact on 
+noisy traces than on quiet traces.  As "Ratio" gets larger, larger amplitude 
+signals are required to turn the trigger ON. 
+   Since the LTAR is an 8-second average, lagged by only 1 second from the
+STAR, it "catches up" with the STAR rather quickly during an extended event.  
+Therefore, triggers will be ON for at most 8 seconds (more likely 4-5 seconds)
+at an individual station, regardless of the total duration of the signal. 
+The total duration of an event (in a network sense) is therefore controlled 
+more by the distribution of triggered subnets than by the total duration of 
+a trigger at individual stations.
+
+Term3:  ABS( STA - LTA )
+------------------------
+   Term3 works to eliminate triggers from one-sided signals, which 
+are usually noise signals. This term has no configurable elements, but is 
+totally data-determined.
+   Balanced (well-centered) signals should have similar STA & LTA values, 
+regardless of the signal's amplitude. Therefore, Term3 should be close 
+to zero for centered signals.
+   One-sided signals will have different values for STA & LTA. Depending 
+on the sense of one-sidedness, STA could be larger or smaller than LTA;
+however, Term3 is the absolute value of the difference.  Therefore, Term3 
+will have a positive value (reducing chance of trigger) when a one-sided 
+signal (usually noise) occurs. If a station is unhealthy and always produces 
+one-sided signals, Term3 will always inhibit triggers during real seismic 
+events.
+
+Term4:  QUIET
+-------------
+   Term4, QUIET, is a configurable constant representing how large a signal 
+is required to initiate a trigger. For a trace that is perfectly quiet 
+(totally flat so that Term2=Term3=0) except during an event, Term4 is the 
+maximum 1-second average absolute amplitude (STAR) allowed for an untriggered 
+trace.  That is, as soon as STAR exceeds QUIET, the trace is considered 
+triggered.
+   Changes to Term4 affect all traces equally. If QUIET is increased, 
+triggers require larger signals and visa versa.
+

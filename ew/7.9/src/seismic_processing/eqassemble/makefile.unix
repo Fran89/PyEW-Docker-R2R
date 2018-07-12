@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+EQASSEMBLE = eqassemble.o $L/site.o $L/tlay.o $L/libew.a \
+          $L/mnbrak.o $L/brent.o  $L/pipe.o \
+         $L/rdpickcoda.o    
+
+all:
+	make -f makefile.unix eqassemble
+
+eqassemble: $(EQASSEMBLE)
+	$(CC) $(CFLAGS) -o $B/eqassemble  $(EQASSEMBLE) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint eqassemble.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/eqassemble*

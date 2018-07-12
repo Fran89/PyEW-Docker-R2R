@@ -1,0 +1,1 @@
+INSERT INTO ew_region_geom VALUES (0,PolygonFromText('Polygon((%s))'),REPLACE('%s', '_', ' '));

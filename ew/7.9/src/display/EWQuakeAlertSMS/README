@@ -1,0 +1,24 @@
+EWQuakeAlert
+
+Version as of April 18, 2011 from Ruben Luis:
+
+This tool receives an import of HYP2000ARC messages and will build
+a email to send to up to 5 users. The email will contain a google map,
+a human readable text message about the event origin, and a .png image
+of the waveforms referred to in the message (with picks labelled).
+
+
+Requires Java 1.6
+
+
+To run it:
+
+java -jar EWQuakeAlert.jar
+
+Follow the configuration instructions to setup the import and where
+a wave_serverV is to get waveform info for the .png plot.
+
+Read Ruben Luis excellent instructions here:
+
+http://cvarg.azores.gov.pt/Cvarg/Info/produtos/EWQuakeAlert_software.htm
+

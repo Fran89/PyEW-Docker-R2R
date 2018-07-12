@@ -1,0 +1,31 @@
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = sgram
+O = $(APP).obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+    $L\mem_circ_queue.obj  \
+	$L\getavail.obj $L\getsysname_ew.obj $L\libew_mt.lib \
+	$L\socket_ew.obj $L\socket_ew_common.obj $L\ws_clientII.obj \
+    $L\gd.obj $L\gdfontt.obj $L\gdfonts.obj $L\gdfontmb.obj \
+	$L\gdfontl.obj $L\gdfontg.obj $L\swap.obj\
+	 -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)*

@@ -1,0 +1,557 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: srusb2ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><H1>srusb2ew Configuration File Commands</H1>
+<I>(last revised 05 March, 2010)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF="#function">Functional command listing</A><BR>
+2.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+3.  <A HREF="#sample_config">Sample Configuration File</A><BR>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, srusb2ew reads the configuration file named on the
+command line. Commands in this file set all the parameters used for
+configuring the Earthworm srusb2ew module. In the control file,
+lines may begin with a valid srusb2ew command (listed below) or
+with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). Blank lines are also permitted in the 
+control file.
+<P>
+<A NAME="function">
+<H2>1.  FUNCTIONAL COMMAND LISTING</H2>
+<P>  
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by srusb2ew, grouped by the
+function they influence.  Some of the commands are required, as noted.
+They may be specified in any order in the control file.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>
+   Earthworm system setup:
+                <A HREF="#ModuleId">ModuleId</A>                required
+                <A HREF="#RingName">RingName</A>                required
+                <A HREF="#LogFile">LogFile</A>                 required
+                <A HREF="#HeartbeatInt">HeartbeatInterval</A>       required
+                <A HREF="#OutputMsgType">OutputMsgType</A>           optional
+                <A HREF="#Debug">Debug</A>                   optional
+
+   USBxCH data acquisition parameters:
+                <A HREF="#AtodDriverName">AtodDriverName</A>          required
+                <A HREF="#AtodModelName">AtodModelName</A>           required
+                <A HREF="#SamplingRate">SamplingRate</A>            required
+
+   USBxCH GPS timing parameters:
+                <A HREF="#GpsModelName">GpsModelName</A>            required
+
+   Channel SCNL parameters:
+                <A HREF="#EwChannelScnl">EwChannelScnl</A>           optional
+
+   Summary logging parameters:
+                <A HREF="#SummaryInterval">SummaryInterval</A>         optional
+                <A HREF="#GpsReportInterval">GpsReportInterval</A>       optional
+                <A HREF="#GpsBadLimit">GpsBadLimit</A>             optional
+
+   Debugging output parameters:
+                <A HREF="#OutputPakFiles">OutputPakFiles</A>        optional
+                <A HREF="#PacketsPerFile">PacketsPerFile</A>        optional
+
+<!--    2nd board USBxCH data acquisition parameters:
+                <A HREF="#AtodDriverNameN">AtodDriverNameN</A>         optional
+                <A HREF="#AtodModelNameN">AtodModelNameN</A>          optional
+-->
+</PRE>
+
+<A NAME="alphabet">
+<H2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed 
+in alphabetical order.  Listed along with the command (bold-type) are 
+its arguments (in red), the name of the subroutine that processes the 
+command, and the function within the module that the command influences. 
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>                                       function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="AtodDriverName">  <!-- command name as anchor inside quotes --> 
+<PRE><B>AtodDriverName <font color=red>driver_name</font>                      USBxCH Configuration
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the name of the USBxCH device driver to <font color=red>driver_name</font>. 
+This name is case sensitive and must match the name used when installing the
+driver.
+<PRE><!-- Default and example go here   -->
+Default:  None
+Example:  AtodDriverName SrUsbXch0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="AtodModelName">  <!-- command name as anchor inside quotes --> 
+<PRE><B>AtodModelName <font color=red>xch_model_name</font>                    USBxCH Configuration
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Indicates which member of the USBxCH family of 24 bit data acquisition devices
+is being used.  <font color=red>xch_model_name</font> can be USB4CH, or
+USB8CH.  This name is case sensitive and must match the model you are actually
+using.
+<PRE><!-- Default and example go here   -->
+Default:  None
+Example:  AtodModelName USB4CH
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Debug">  <!-- command name as anchor inside quotes --> 
+<PRE><B>Debug <font color=red>n</font>                                         Earthworm setup 
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the log output level for srusb2ew.  Errors and warnings are always
+logged.  Level 0 adds startup info.  Level 1 adds general summaries every
+<A HREF="#SummaryInterval">SummaryInterval</A> seconds and GPS lock status summaries
+every <A HREF="#GpsReportInterval">GpsReportInterval</A> seconds.  Level 2 adds
+some additional details.  Level 3 adds time and satellite info for every 1 second buffer
+of data.  Level 4 adds NMEA messages for every buffer.  Level 5, primarily for code
+debugging, adds function calls and program variable values.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  Debug 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="EwChannelScnl">  <!-- command name as anchor inside quotes --> 
+<PRE><B>EwChannelScnl <font color=red>n sta comp net loc pin</font>            Channel Configuration
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+There should be one EwChannelScnl command for each USBxCH channel, including
+special channels like the digital and GPS PPS channels.  This information
+is used to provide the full station, component, network and location names
+(SCNL) plus pin number as headers for the earthworm trace buffer messages.
+<font color=red>n</font> indicates the USBxCH channel number while
+<font color=red>sta comp net loc pin</font> give the earthworm SCNL and
+pin values.
+<PRE><!-- Default and example go here   -->
+Default:  The channels are named CH## with component xxx, net SR and
+          location -- (indicating blank location).  The pin number is 
+          set equal to the USBxCH channel number.
+Example:  EwChannelScnl 0 CH00 xxx SR -- 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GpsBadLimit">  <!-- command name as anchor inside quotes --> 
+<PRE><B>GpsBadLimit <font color=red>nbad</font>                                Summary Logging
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+The GPS lock status is determined once a second (ie for every buffer of data
+acquired).  It is defined as good if 3 or more satellites are in view, and
+as bad otherwise.  Since there are typically many seconds in one
+<A HREF="#GpsReportInterval">GpsReportInterval</A>, we need a criteria to
+determine if the GPS lock status summarized over the interval is good or bad.
+GpsBadLimit provides this criteria.  If the GPS lock status was bad for more
+than <font color=red>nbad</font> seconds during the current GpsReportInterval,
+the summary status is defined as bad.  An error message is written to the
+Earthworm ring every time the summary GPS lock status changes.
+<PRE><!-- Default and example go here   -->
+Default:  1
+Example:  GpsBadLimit 60
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GpsModelName">  <!-- command name as anchor inside quotes --> 
+<PRE><B>GpsModelName <font color=red>gps_model_name</font>                     USBxCH Configuration
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Indicates what equipment is being used to determine GPS time.  Currently,
+<font color=red>gps_model_name</font> must be GARMIN, TRIMBLE, ONCORE, or
+PCTIME.  GARMIN is the default and refers to a Garmin GPS 16x HVS receiver.
+TRIMBLE refers to the Trimble Ace III receiver (this model has been
+discontinued by Trimble).  ONCORE refers to a Motorola Oncore GT+ unit
+(this model has been discontinued by Motorola).  PCTIME means time stamping
+of the data is done using the PC system time and assumes this time is accurate
+because it has been set using NTP (Network Time Protocol) or some other
+GPS receiver.  Other values may be allowed in the future.
+<PRE><!-- Default and example go here   -->
+Default:  GARMIN
+Example:  GpsModelName GARMIN
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GpsReportInterval">  <!-- command name as anchor inside quotes --> 
+<PRE><B>GpsReportInterval <font color=red>nsec</font>                          Summary Logging
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+A summary of the GPS lock status is written to the log file every
+<font color=red>nsec</font> seconds if the log file is turned on
+(<A HREF="#LogFile">LogFile</A>&nbsp;1), a medium log output level is selected
+(<A HREF="#Debug">Debug</A>&nbsp;>=&nbsp;1), and you are using GPS
+(<A HREF="#GpsEnable">GpsEnable</A>&nbsp;ON).  Set <font color=red>nsec</font>
+to 0 if no GPS lock status lines are desired.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  GpsReportInterval 1200
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartbeatInterval">  <!-- command name as anchor inside quotes -->    
+<PRE><B>HeartbeatInterval <font color=red>nsec</font>                          Earthworm Setup
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds, <font color=red>nsec</font>, between TYPE_HEARTBEAT 
+messages issued by srusb2ew.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartbeatInterval 60
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->     
+<PRE><B>LogFile <font color=red>n</font>                                       Earthworm Setup
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk. If 
+<font color=red>n</font> is 0, no log file will be written. If 
+<font color=red>n</font> is non-zero, srusb2ew will write daily log file(s) 
+called nnnnn_yyyymmdd.log where nnnnn is the name of the configuration file
+(with the suffix '.d' removed) and yyyymmdd is the current UTC 
+date (ex: 20040123) on the system clock. The file(s) 
+will be written in the EW_LOG directory (environment variable). 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  LogFile 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="ModuleId">  <!-- command name as anchor inside quotes -->    
+<PRE><B>ModuleId <font color=red>mod_id</font>                                 Earthworm setup
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing trigger, heartbeat, and error 
+messages. <font color=red>mod_id</font> is a character string (valid strings
+are listed in earthworm.d) that relates to a unique single-byte number. In 
+general, a different module ID is needed for each instance of srusb2ew.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_SRUSB2EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="OutputMsgType">  <!-- command name as anchor inside quotes --> 
+<PRE><B>OutputMsgType <font color=red>trace_format</font>                      Earthworm setup
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells srusb2ew whether to send waveform messages in the the old
+or new style tracebuf format.  <font color=red>trace_format</font> is
+a case sensitive character string and must be either TYPE_TRACEBUF or
+TYPE_TRACEBUF2.  For Earthworm v7.0 and later, TYPE_TRACEBUF2 is the
+default.
+<PRE><!-- Default and example go here   -->
+Default:  TYPE_TRACEBUF2 (for v7.0 and greater, TYPE_TRACEBUF otherwise)
+Example:  OutputMsgType TYPE_TRACEBUF2
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="OutputPakFiles">  <!-- command name as anchor inside quotes --> 
+<PRE><B>OutputPakFiles <font color=red>n</font>                                Debugging output
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing native USBxCH acquired data packets
+to disk in SR .pak format files. If <font color=red>n</font> is 0, no
+.pak files will be written. If <font color=red>n</font> is 1, srusb2ew
+will write .pak files in addition to the normal EW tracebuf packets.
+The .pak files can be used for debugging or for alternate processing
+with SR utilities such as Pak2Asc.  A new sub-directory will be
+created in the current working directory.  The name of the new
+directory is based on the acquisition start time and will be something
+like 2010-03-05-at-00-13-43.  The .pak files will be written into this
+new directory.  With names starting at 00000000.pak and increasing
+sequentially.  The number of packets in each .pak file is controlled
+by the <A HREF="#PacketsPerFile">PacketsPerFile</A> parameter.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  OutputPakFiles 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PacketsPerFile">  <!-- command name as anchor inside quotes --> 
+<PRE><B>PacketsPerFile <font color=red>n</font>                                Debugging output
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the number of packets to include in each output .pak file.  If the
+number given is less than the sampling rate/2 it will be increased.  This
+parameter is ignored if .pak files were not requested by setting
+<A HREF="#OutputPakFiles">OutputPakFiles</A> to 1.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  PacketsPerFile 650
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->       
+<PRE><B>RingName <font color=red>ring</font>                                   Earthworm setup
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells srusb2ew which shared memory region to use for output.
+<font color=red>ring</font> is a character string (valid strings are
+listed in earthworm.d) that relates to a unique number for the key to
+the shared memory region. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SamplingRate">  <!-- command name as anchor inside quotes --> 
+<PRE><B>SamplingRate <font color=red>sps</font>                                USBxCH Configuration
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Requests how many samples per second to acquire.  The actual sampling rate
+may be a different than the <font color=red>sps</font> requested since
+only certain rates are achievable with the USBxCH hardware.  Allowed rates
+include 39.1, 65.1, 78.1, 130.2, 651.0.  Currently, the maximum allowed
+<font color=red>sps</font> is 651.
+<PRE><!-- Default and example go here   -->
+Default:  None
+Example:  SamplingRate 130
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SummaryInterval">  <!-- command name as anchor inside quotes --> 
+<PRE><B>SummaryInterval <font color=red>nsec</font>                            Summary Logging
+</B><!-- command args ... -->           
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+A summary of the analog, GPS PPS, and GPS serial info read is written to the
+log file every <font color=red>nsec</font> seconds if the log file is turned on
+(<A HREF="#LogFile">LogFile</A>&nbsp;1) and a medium log output level is selected
+(<A HREF="#Debug">Debug</A>&nbsp;>=&nbsp;1).
+Set <font color=red>nsec</font> to 0 if no summary lines are desired.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  SummaryInterval 1200
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+
+
+<A NAME="sample_config">
+<H2><BR>3. Sample Configuration File </H2>
+<pre>
+# FILE: srusb2ew.d            Copyright (c), Symmetric Research, 2010
+#
+# This is the srusb2ew parameter file for acquiring data with a 
+# Symmetric Research USBxCH 24 bit A/D board and putting that
+# data onto an earthworm ring.
+#
+# The standard earthworm import_generic/export (or export_scnl) functions
+# can be used to transfer USBxCH tracebuf data from a local WAVE_RING to
+# a WAVE_RING on another machine.  If you have data from two different
+# USBxCH boards arriving at the same ring, you must ensure that each is
+# using a different ModuleId.  Otherwise, the two sets of data will 
+# appear to be scrambled together which leads to lots of message sequence
+# number errors.
+#
+# If you wish to use MOD_SRUSB2EW for a ModuleId instead of
+# MOD_ADSEND_C, you must first define it in your earthworm.d file.
+#
+
+Debug               2               # control amount of info sent to log file 0-8
+                                    # warnings and errors always given
+                                    # 0 adds startup info
+                                    # 1 adds status summaries every GpsReportInterval
+                                    # 2 adds config + more detail (default)
+                                    # 3 adds trace data message info every second
+                                    # 4 adds counter values, NMEA strings every second
+                                    # Remaining levels 5-8 mostly for code debugging
+
+OutputPakFiles      1               # output SR dat files in addition to the
+                                    # normal EW tracebuff packets, good for 
+                                    # debugging or alternate processing with SR
+                                    # utilities such as Pak2Asc
+PacketsPerFile     650              # packets in each .PAK file, will be adjusted
+                                    # if less than sampling rate/2
+
+#
+# Basic Earthworm parameters:
+#
+
+MyModuleId         MOD_ADSEND_C     # module id for this instance of srusb2ew
+RingName           WAVE_RING        # shared memory ring for outputting acquired data
+LogFile            1                # 0 to turn off disk log file; 1 to turn it on
+HeartBeatInterval  60               # seconds between heartbeats, only checked
+                                    # after each second of data is acquired
+#
+# Optional Earthworm parameters:
+#
+
+OutputMsgType   TYPE_TRACEBUF2      # Older style waveforms were identified by
+                                    # Station/Channel/Network (SCN), the newer
+                                    # style also includes Location.  For Earthworm 
+                                    # v7.0 and greater use, TYPE_TRACEBUF2.  If  
+                                    # you need the older style, use TYPE_TRACEBUF.
+
+#
+# Basic USBxCH parameters:
+#
+
+AtodDriverName     SrUsbXch0        # name of USBxCH kernel mode device driver installed
+AtodModelName      USB4CH           # which USBxCH is being used: USB4CH, USB8CH
+
+SamplingRate       130.1            # requested sampling rate - the actual rate may be
+                                    # different from this due to hardware considerations
+                                    # currently only  78, 130, or 650 is allowed.
+
+#
+# Basic USBxCH GPS parameters:
+#
+
+GpsModelName       GARMIN           # usually GARMIN or TRIMBLE, may be PCTIME for NTP time
+
+
+#
+# Optional logging parameters:
+#
+SummaryInterval   1200              # seconds in log file between summary info
+                                    # use 0 for no reporting
+GpsReportInterval 3600              # seconds in log file between GPS lock lines
+                                    # use 0 for no reporting
+GpsBadLimit        300              # number of bad locks allowed per interval
+                                    # before error message is sent
+
+
+#
+# Channel info: SCNL AND PIN VALUES FOR EACH A/D CHANNEL
+#
+# EwChannelScnl lines relate the USBxCH channel numbers to the SCNL and pin
+# numbers used to identify channels in an earthworm system.  The pin
+# numbers are optional.  If a pin number is not specified for a channel, 
+# the pin number is set to the A/D channel number.
+#
+# Three different versions of this section are given below showing how
+# the setup would look when using the USB4CH or USB8CH.  Only the
+# version corresponding to the USBxCH you are actually using should
+# be commented in, the other two should be commented out.
+#
+# The older keyword EwChannel is the same, except it has no location value.
+# If OutputMsgType = TYPE_TRACEBUF2 and EwChannel is used, the location field
+# defaults to "--" which means a blank location.
+#
+
+#
+# Sample EwChannelScnl section for the USB4CH
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+#EwChannelScnl   0      CH00  xxx   SR   --    0
+#EwChannelScnl   1      CH01  xxx   SR   --    1
+#EwChannelScnl   2      CH02  xxx   SR   --    2
+#EwChannelScnl   3      CH03  xxx   SR   --    3
+#EwChannelScnl   4      DGTL  xxx   SR   --    4
+#EwChannelScnl   5      PPS   xxx   SR   --    5
+#EwChannelScnl   6      CNTR  xxx   SR   --    6
+
+
+
+#
+# Sample EwChannelScnl section for the USB8CH
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+#EwChannelScnl   0      CH00  xxx   SR   --    0
+#EwChannelScnl   1      CH01  xxx   SR   --    1
+#EwChannelScnl   2      CH02  xxx   SR   --    2
+#EwChannelScnl   3      CH03  xxx   SR   --    3
+#EwChannelScnl   4      CH04  xxx   SR   --    4
+#EwChannelScnl   5      CH05  xxx   SR   --    5
+#EwChannelScnl   6      CH06  xxx   SR   --    6
+#EwChannelScnl   7      CH07  xxx   SR   --    7
+#EwChannelScnl   8      DGTL  xxx   SR   --    8
+#EwChannelScnl   9      PPS   xxx   SR   --    9
+#EwChannelScnl  10      CNTR  xxx   SR   --   10
+
+
+
+#
+# Actual EwChannelScnl section being used ...
+# replace with appropriate values for your installation
+#
+
+#              A/D      
+#            Channel   Sta   Comp  Net  Loc  Pin
+#            -------   ---   ----  ---  ---  ---
+EwChannelScnl   0      CH00  SHZ   SR   U4    0
+EwChannelScnl   1      CH01  SHZ   SR   U4    1
+EwChannelScnl   2      CH02  SHZ   SR   U4    2
+EwChannelScnl   3      CH03  SHZ   SR   U4    3
+EwChannelScnl   4      DGTL  DIG   SR   U4    4
+EwChannelScnl   5      PPS   GPS   SR   U4    5
+
+</pre>
+</BLOCKQUOTE>
+
+
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/srusb2ew_ovr.html">srusb2ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://folkworm.ceri.memphis.edu/ew-doc/cmd/srusb2ew_cmd.html]</B><BR>
+Contact: <a href="mailto:info@symres.com"><b>info@symres.com</b></a><br>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      trig2disk – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/trig2disk?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="trig2disk.html" title="View trig2disk">trig2disk</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/trig2disk?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/trig2disk?action=diff&amp;version=5" title="Version 5 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A07%3A15-07%3A00&amp;precision=second" title="2012-05-02T09:07:15-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:07:15</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="trig2disk.html#EarthwormModule:trig2disk">Earthworm Module: trig2disk</a>
+    <ol>
+      <li>
+        <a href="trig2disk.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="trig2disk.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="trig2disk.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="trig2disk.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="trig2disk.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="trig2disk.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="trig2disk.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:trig2disk"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: trig2disk</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Trig2disk module reads trigger messages and retrieves waveform data from wave_serverV into AH or SAC format files.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+trig2disk allows an Earthworm to save waveform data to several formats: sac, ah, PCSUDS, Earthworm tankplayer, GSE, and Seisan. Trig2disk reads type_triglist2k messages from its message ring (e.g. those produced by arc2trig and by carltrig) and writes triggered data files to disk. It uses the same putaway routines as waveman2disk. Minimal location code support is provided but is naturally output data format dependent.
+</p>
+<p>
+PSN4 format was added for windows in Earthworm 7.1 (contact www.webtronics.com for details).
+</p>
+<p>
+MSEED format was added for solaris in Earthworm 7.1.
+</p>
+<p>
+WFDISC format was added for Linux in Earthworm 7.4.<br />
+wfdisc format can take advantage of a wfdisc params config file which must be located at "EW_PARAMS/wfdisc_params.d" where EW_PARAMS is the EW_PARAMS env variable. The content of this file is very specific and allows one to specify station/channel specific information on chanid, calib, calper, instype and segtype. See the command document for file syntax and formatting
+</p>
+<p>
+The ah data is in xdr format which is transparent between sun/solaris and intel/NT so long as the ioroutin.c interface is used.
+</p>
+<p>
+The NT port of the xdr routines was accomplished by modifying the OpenBSD code from the ftp site at umich. Thus modifications must include this source should be careful not to remove the copyright statements and can't be sold. Cavalier commenting of pieces of this source that weren't needed to write local xdr is ubiquitous. Thus it is not rpc compatible.
+</p>
+<p>
+Will get restarted if restartMe is in the .desc
+</p>
+<p>
+This module is cloned from ora_trace_save. Thanks Alex. The putaway routines are cloned from those in earth2sac. Thanks Pete. Many others contributed the various format putaway routines.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, trig2disk reads the configuration file named on the command line. Commands in this file set all the parameters used for reading triglist2k messages and writing sac, ah, suds, gse, seisan, or tankplayer format. In the control file, lines may begin with a valid trig2disk command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @memphis.scnl).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki">#
+# Configuration file for trig2disk:
+# I listen to trigger messages (TYPE_TRIGLIST), and stuff the implied pieces
+# of trace data into an Oracle server. I do this by going to any number
+# of WaveServerV's, as listed in this configuration file.
+#
+MyModuleId                 MOD_TRIG2DISK
+RingName                   HYPO_RING
+HeartBeatInt               30
+LogFile                    1   # 0 means don't create a disc log file. 1=&gt; do.
+                               # 2 means log to disk file but not stderr/stdout
+#
+# What message logos to listen to. Can be more than one.
+# The type is hard coded to TYPE_TRIGLIST
+#
+GetEventsFrom	           INST_MENLO  MOD_WILDCARD
+
+#
+# list of ip addresses and ports of the WaveServers we're to use
+#
+WaveServer                 111.222.33.444     16022
+
+ 
+
+# Optional NEW COMMAND in EW v7.3 Postproc allows running of a program or script that will process new files
+# no arguments are sent to the script...It should know where to run and what to do with new files:
+#
+#Postproc  myscript  # the myscript or program should be in the params directory or an absolute path must be provided.
+
+
+#
+# If a WaveServer doesn't talk to us in this 
+# many seconds, we'll abort that request
+#
+TimeoutSeconds             30  
+
+#
+# Max number of traces we'll ever see in one event
+#
+MaxTraces                  500	
+
+#
+# kilobytes of the largest trace snippet we'll ever have to deal with
+#
+TraceBufferLen             1000  	
+
+#
+# Debug switch:  Debug will be logged if uncommented 
+#
+Debug
+
+#
+# SCNL list of stations to write for each trigger message,  these get
+# written in addition to SCNLs in the trigger message.
+#
+#@memphis.scnl
+
+#
+# Minimum number of seconds to save for extra channels that we
+# are saving (i.e., those channels not in the TYPE_TRIGLIST message)
+#
+MinDuration                 30
+
+#
+# number of sample periods after which we declare a gap
+#
+GapThresh 100
+
+# Optional queue commands
+# Number of trigger messages to hold in queue; default is 10
+#QueueSize 10
+
+# Optional queue dumpfile name, for saving state of queue
+QueueFile trig2disk.que
+
+# Optional delay time: trig2disk will wait this many seconds from the
+# time it receives a trigger message until it starts to process the message
+DelayTime 5
+
+
+#
+# Select format of output data and the directory where it is written
+# Only one of the following pairs should be uncommented.
+#
+#
+# SUDS
+#
+#DataFormat                  suds
+#OutDir                      "/home/earthworm/SUDS"
+#
+# SAC
+#
+DataFormat                   sac
+OutDir                       "c:\earthworm\SAC"
+#
+# AH
+#
+#DataFormat                  ah
+#OutDir                     "/home/earthworm/AH"
+#
+# SEISAN
+#
+#DataFormat                  seisan
+#OutDir                     "/home/earthworm/seisan"
+#
+# GSE
+#
+#DataFormat                  gse_int
+#OutDir                     "/home/earthworm/gse"
+#
+# Tankplayer
+#
+#DataFormat                 tank
+#OutDir                     "./tanks/"
+#
+# Mini-SEED
+# Mini-SEED output format is currently only available on Solaris
+#
+#DataFormat                 mseed
+#OutDir                     "/earthworm/data/mseed"
+#
+# PSN4
+#
+# NOTE PSN4 output format is only avialable for WINDOWS!
+#  a station.lst file must also exist in the EW_PARAMS directory too (see example in docs)
+#
+#DataFormat                 psn4
+#OutDir                     "c:\earthworm\psn4"
+#
+# Specify on what platform the output files will be used:
+# intel or sparc - with this information, files will be written out
+# in the correct byte order.
+#
+OutputFormat                sparc
+</pre><p>
+<a class="wiki" href="station.lst.html">station.lst</a>
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by trig2disk, grouped by the function they influence. All of the required commands must be specified in the control file in order for trig2disk to operate.
+</p>
+<pre class="wiki">   Earthworm system setup:
+                Debug	optional
+                GetEventsFrom	required
+                HeartBeatInt          required
+                MyModuleId              required
+                RingName          required
+
+        Waveform Control:
+                DelayTime	optional
+                GapThresh	required
+                MaxTraces	required
+                MinDuration	required
+                QueueSize	optional
+                TimeoutSeconds	required
+                TraceBufferLen	required
+                TrigStation	optional
+                WaveServer	required
+
+        Output Control:
+                DataFormat	required
+                LogFile                    required
+                OutDir	required
+                OutputFormat	required
+                QueueFile	optional
+		Postproc        optional
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and the values used by Memphis are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>DataFormat [string]</strong><br />
+Processed by: putaway<br />
+Function: Waveform control
+</p>
+<p>
+Sets the format of the output waveform files.  Valid strings defining format to use are:
+</p>
+<pre class="wiki">ah
+
+sac
+
+suds
+
+tank
+
+gse_int
+
+seisan
+ 
+mseed - solaris only
+
+psn4  - windows only
+
+wfdisc - linux only
+</pre><p>
+Only one data format can be used for a given instance of trig2disk. The ah format is xdr. The sac format is not xdr. The suds format is the PC Suds standard. The tank format is suitable for playing through the earthworm tankplayer utility. The
+gse_int format is GSE 2.0. The seisan format is suitable for use by Seisan. The putaway routines used were contributed by various authors and it is assumed that the user is familiar with the details of individual formats and they are not  explained here.
+</p>
+<pre class="wiki">Default:  none
+Example   DataFormat sac
+</pre><p>
+<strong>Debug [flag]</strong>
+</p>
+<p>
+Uncomment to turn on debugging information.
+</p>
+<p>
+<strong>DelayTime [nsec]</strong><br />
+Processed by: SnippetMaker<br />
+Function: Waveform control
+</p>
+<p>
+Sets the time (in seconds) to wait after dequeueing a type_triglist2k message and before attempting to process the message.  Some scnl's may have longer time length data packets or other latencies making it possible to generate a trigger message before all data are available in a waveserver. DelayTime allows a mechanism to account for this latency.  Large delay times in a busy queue could cause missed messages. 
+</p>
+<pre class="wiki">Default:  0
+Example   DelayTime 5
+</pre><p>
+<strong>GapThresh [nsamp]</strong><br />
+Processed by: PA_next<br />
+Function: Waveform control
+</p>
+<p>
+Sets the gap threshold to G sample intervals. Trace data packets are timestamped with a start time and a stop time, the times of the first and last samples in that packet, respectively. Thus, the expected gap between end time of one packet and the start time of the next packet is one sample interval. Some data sources, such as older digitizers, produce data with slightly larger or smaller intervals between them. The gap threshold is intended to provide a means of detecting missing packets, without falsely declaring a missing packet because of sloppy timestamps. The preferred value for this gap threshold is 1.5. Set larger values only if you have a sloppy data source. It is not clear how wave_serverV should handle intervals of much more than one sample interval between packets if these are not caused by missing packets.
+</p>
+<pre class="wiki">Default:  none
+Example   GapThresh  1.5
+</pre><p>
+<strong>GetEventsFrom [logo]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Controls the TYPE_TRIGLIST2K messages input to trig2disk. Trig2disk will only process TYPE_TRIGLIST2K messages that come from module mod_id at installation inst. inst and mod_id are character strings (valid strings are listed in earthworm_global.d and earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module (please do not modify earthworm_global.d). Multiple "GetEventsFrom" commands may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force trig2disk to process all trigger messages, regardless of their place of origin.
+</p>
+<pre class="wiki">Default:  none
+Example   GetEventsFrom  INST_WILDCARD  MOD_WILDCARD
+          GetEventsFrom  INST_MEMPHIS   MOD_CARLSUBTRIG
+</pre><p>
+<strong>HeartBeatInt [nsec]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Defines the number of seconds nsec between TYPE_HEARTBEAT messages issued by trig2disk.
+</p>
+<pre class="wiki">Default:  none
+Example: HeartBeatInt 15
+</pre><p>
+<strong>Logfile [switch]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk.  If switch is 0 , no log file will be written.  If switch is 1, trig2disk will log to stderr/stdout and to a daily log file(s) called paramfile_ccyymmdd.log where paramfile is the config file (so-called .d) of a particular instance of trig2disk and ccyymmdd is the current UTC date (ex: 20060123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable). If switch is 2, only the log file is used and not stderr/stdout.
+</p>
+<pre class="wiki">Default:  none 
+Example: LogFile 1
+</pre><p>
+<strong>MaxTraces [int]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Waveform control
+</p>
+<p>
+This is the maximum number of traces in a given triglist2k message that we'll ever have to deal with (e.g. individual scnl's).  If the total number of traces from any incoming triglist2k message exceed this value, only MaxTraces number of traces will be saved.  Excessively large values for this parameter may cause trig2disk to use an excessively large amount of memory as sufficient memory will be allocated to buffer this many traces.
+</p>
+<pre class="wiki">Default:  none
+Example: MaxTraces 1024
+</pre><p>
+<strong>MinDuration [int]</strong><br />
+Processed: trig2disk_config<br />
+Function: Waveform control
+</p>
+<p>
+The value of the MinDuration parameter defines the minimum number of seconds to save for each additional scnl trace configured using the TrigStation parameter.  For added scnl's not in the triglist2k message, start-time will be the earliest value of all scnl's in the triglist message, and duration will be the longest value of all scnl's in the triglist message. If the resulting duration is less than MinDuration seconds, then MinDuration seconds will be saved.
+</p>
+<pre class="wiki">Default:
+Example: MinDuration 30
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in  earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_TRIG2DISK
+</pre><p>
+<strong>OutDir [path]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Output control 
+</p>
+<p>
+Trig2disk will create a separate subdirectory for each event within the directory configured by OutDir.  Specific naming conventions for subdirectories and files are output format dependent but generally based on trigger time in the triglist2k message.
+</p>
+<pre class="wiki">Default:  none
+Example:  OutDir /export/home/ew/sac
+</pre><p>
+<strong>OutputFormat [string]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Output control
+</p>
+<p>
+Sets the byte order of binary waveform files that trig2disk will write. Either intel or sparc are acceptable strings.  This parameter should be configured for the platform on which the output datafiles are going to be read.
+</p>
+<pre class="wiki">Default: none
+Example: OutputFormat sparc
+</pre><p>
+<strong>Postproc [string]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Output control
+</p>
+<p>
+Runs the script/program associated with string with no arguments AFTER a trigger is converted to disk files. Must be an absolute path to the script/program to be run. Otherwise, the script must be located in the params (EW_PARAMS) directory. The program or script must be marked as executable. 
+</p>
+<pre class="wiki">Default: none
+Example: Postproc /home/ew/myscript_that_does_something_with_triggers
+</pre><p>
+<strong>QueueFile [file]</strong><br />
+Processed by: trig2disk_config <br />
+Function: Output Control
+</p>
+<p>
+Optional parameter to save waveserver queue status.  This allows trig2disk to save its message queue if a fatal error or stop or restart message is received.  On next start, trig2disk will load the queue from this file and start message processing from there.
+</p>
+<pre class="wiki">Default: none
+Example: QueueFile trig2disk.que
+</pre><p>
+<strong>QueueSize [int]</strong><br />
+Processed by: Trig2disk_config<br />
+Function: Output Control
+</p>
+<p>
+Controls the number of triglist2k messages to hold in the queue.  No more than this many messages will be dumped to the file configured in QueueFile parameter and subsequently processed on restart.
+</p>
+<pre class="wiki">Default: 10
+Example: QueueSize 10
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells trig2disk which shared memory region to use for input/output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example: RingName HYPO_RING
+</pre><p>
+<strong>TimeoutSeconds [int]</strong><br />
+Processed by: trig2disk_config <br />
+Function Waveform control
+</p>
+<p>
+If a wave_server doesn't respond to any interaction within TimeoutSeconds number of seconds, bail and move on to the next waveserver in the list.
+</p>
+<pre class="wiki">Default: none
+Example: TimeoutSeconds 30
+</pre><p>
+<strong>TraceBufferLen [int]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Waveform control
+</p>
+<p>
+This parameter sets the number of kilobytes trig2disk will ever have to deal with for a given trace.  Make sure it is large enough for expected sample rates and durations (a single floating point sample is generally 4 bytes on most platforms).
+</p>
+<pre class="wiki">Default: none
+Example: TraceBufferLen    1000
+</pre><p>
+<strong>TrigStation [scnl]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Output control
+</p>
+<p>
+Optional SCNL list of channels to write for each trigger message.  These get get written in addition to those in the trigger message.  Trace start will be set to the earliest of any scnl in the trigger message and duration will be the longest of any scnl in the trigger message (but always at least MinDuration seconds long). 
+</p>
+<pre class="wiki">Default: none
+Example: TrigStation SWET HHZ ET --
+</pre><p>
+<strong>WaveServer [ip port]</strong><br />
+Processed by: trig2disk_config<br />
+Function: Waveform Control
+</p>
+<p>
+List of waveserver ip address and port from which to gather traces.  Can have multiple waveservers configured.
+</p>
+<pre class="wiki">Default: none
+Example: WaveServer   111.222.33.444     16022
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/trig2disk?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

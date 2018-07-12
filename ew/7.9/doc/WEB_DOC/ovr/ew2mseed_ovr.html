@@ -1,0 +1,305 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.78 [en] (X11; U; SunOS 5.9 sun4u) [Netscape]">
+   <title>Earthworm Program: ew2mseed overview</title>
+</head>
+<body text="#000000" bgcolor="#FFFFCC" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+Earthworm Program:&nbsp;<br>
+<b>ew2mseed</b> (version May-15-2003) Overview</h1></center>
+
+<center><i>(last revised May 15, 2003)</i></center>
+
+<p><b>ew2mseed</b>&nbsp; is a non interactive automatic Earthworm WaveServerV
+client for archiving continuous nov-overlapping time-ordered waveforms
+in MiniSEED format.&nbsp; Like any&nbsp; Earthworm program, it has a configuration
+file <i>ew2mseed.d</i> allowing for extensive configuration. This is where
+we tell it, among other things, which waveservers to interrogate, where
+and in which format to store the trace output.
+<br>&nbsp;
+<h2>
+<b>ew2mseed </b>client provides the following capabilities<b>:</b></h2>
+
+<ul>
+<li>
+generates the MiniSEED files on per day basis;</li>
+
+<li>
+talks to multiple WaveServerV(s);</li>
+
+<li>
+creates and updates the directory/file structure in the following format:
+NET/STA/STA.NET.LOC.CHAN.YEAR.JDAY;</li>
+
+<li>
+provides extensive logging of the processing statistics (several tens of
+megabytes of log files a day!);</li>
+
+<li>
+outputs MiniSEED data in STEIM1 or STEIM2 compression (configurable);</li>
+
+<li>
+MiniSEED logical record size is also configurable;</li>
+
+<li>
+the program uses SIGUSR1 signal to generate a state-of-health report (use
+"kill -USR1 pid", where pid is a process ID of running <b>ew2mseed</b>);</li>
+
+<li>
+location code is supported;</li>
+
+<li>
+supports 4 levels of verbosity;</li>
+
+<li>
+provides a catch-up algorithm to boost a transmission of data from the
+late channels;</li>
+
+<li>
+supports locking mechanism preventing multiple copies of <b>ew2mseed </b>to
+operate over the same configuration file.</li>
+</ul>
+
+<h2>
+Runtime operation</h2>
+When started, <b>ew2mseed</b> searches the structure NET/STA/ in the directory&nbsp;
+defined by the configuration parameter MseedDir&nbsp; for the filenames
+in the format STN.NET.LOC.CHAN.YEAR.JDAY, where julian day is always represented
+by 3 digits. If the file for a specific SCNL does not exist, this file is
+created by <b>ew2mseed</b>. The date extension of this file (YEAR.JDAY)
+is set either to
+<br>(1a) the date defined by the beginning of the earthworm tank file (in
+case the parameter StartTime is omitted in <i>ew2mseed.d</i> or StartTime
+is older than the
+<br>beginning of the tank);
+<br>&nbsp;&nbsp;&nbsp; or
+<br>(1b) If the StartTime is younger than the beginning of the&nbsp; tank,&nbsp;
+the filename date extension (YEAR and JDAY) is set to the date of StartTime.
+<p>Data collection starts in case (1a) from the beginning of the tank and
+in case (1b) from the time marked by StartTime parameter.
+<p>If at the invocation of <b>ew2mseed</b>, at least a single file containing
+MiniSEED records in the correct format do exist in the directory for the
+particular SCNL, <b>ew2mseed </b>compares three parameters ((1) most recent
+date and time in the most recent data file; (b) time of StartTime parameter;
+and (c) the beginning time in the Earthworm tank). The program uses the
+most recent time among (a), (b), and (c) as the starting time for data
+retrieva<b>l.</b>
+<p><b>ew2mseed</b> will
+<br>(2a) create a new file STN.NET.LOC.CHAN.YEAR1.JDAY1 for&nbsp; data
+beginning at YEAR1 JDAY1&nbsp; if such file does not exist;
+<br>or
+<br>(2b) will use the existing file if the file in the with YEAR1 and JDAY1
+exist is for the this STN.NET.LOC.CHAN.
+<p>The considerations for&nbsp; a complex design described above are the
+following:
+<br>(a) <b>ew2mseed</b> is intended to grab as much data points from the
+WaveServer&nbsp; as possible in an automatic mode.
+<br>(b) It is assumes that if the data for the particular date are written
+into the file of it's directory structure, the data for&nbsp; all previous
+days have are also processed if <b>ew2mseed</b> operates constantly.
+<p>The obvious flip side of such an approach is that as long as the file
+STN.NET.LOC.CHAN.YEAR1.JDAY1 exists in the directory structure with at
+least a single
+<br>valid MiniSEED block, there is no way to force <b>ew2mseed </b>to get
+data before YEAR1 JDAY1 and before time defined by the latest MiniSEED
+block.
+<p>The following is also true: removing the files from the specific directory
+for the particular SCNL followed by a&nbsp; restart of <b>ew2mseed</b> would
+create a situation defined as
+<br>cases (1a) and (1b) above: <b>ew2mseed</b> might start extracting data
+which have already been received.
+<br>&nbsp;
+<h2>
+Unavailable SCNLs :</h2>
+When <b>ew2mseed </b>is started, it attempts to receive a small portion
+of data for each SCNLs. If for some reason even a single snippet for a particular
+SCNL is not available, <b>ew2mseed </b>removes this SCNL from the processing
+ring and documents this channel in the regular LOG file and also writes
+SCNL parameters into the LOCK file. Therefore, a LOCK file for a particular
+<b>ew2mseed
+</b>process
+contains an information about the unavailable SCNLs during the lifetime
+of this
+<b>ew2mseed </b>process. If the LOCK file is not used,
+<b>ew2mseed
+</b>writes
+an information about unavailable SCNLs into the stderr channel.
+<br>&nbsp;
+<h2>
+Features and limitations of <b>ew2mseed</b>:</h2>
+
+<ul>
+<li>
+This version runs on <b><u>UNIX/SOLARIS</u></b> platform only;</li>
+
+<li>
+Every instance of <b>ew2mseed </b>creates a log file in the directory defined
+by the environmental variable EW_LOG. The structure of the log file name
+is&nbsp; CONF_FILE_NAME + 0.log_ + current date, where CONF_FILE_NAME is
+the configuration file name with extension removed. For example, "<b>ew2mseed</b><i>
+ew2mseed1.d"</i> created log file ew2mseed10.log_20010118 on 18 January
+2001. To force multiple instances of<b> ew2mseed </b>to log into different
+files, the CONF_FILE_NAMEs should be different;</li>
+
+<li>
+The program writes large data files and log files. It does not check for
+the available disk space;</li>
+
+<li>
+The productivity of the program is mostly limited by the bandwidth of the
+TCP/IP connection. The program does not put a limit on the number of SCNLs
+it reads from. Therefore, if there are too many SCNLs, the speed of removing
+data from the WaveServerV can exceed the speed of reading and processing
+data by <b>ew2mseed</b> . This will lead to the additional tears in the
+disk MiniSEED files;</li>
+
+<li>
+The program uses SIGUSR1 signal to generate state-of-health reports. Nevertheless,
+the parameters to be included in the report are yet to be refined;</li>
+
+<li>
+The program does not support "wild cards", therefore, all SCNLs should be
+listed in the <i>ew2mseed.d</i> file in explicit form;</li>
+
+<li>
+&nbsp;WaveServerV is currently not warranted from havin OVERLAPPED snippets.
+OVERLAPPED snippet is defined as one with a starttime being earlier than
+the previous snippet endtime. OVERLAPPED snippets are discarded by <b>ew2mseed</b>
+and every instance of OVERLAP is logged. Removing of OVERLAPPED snippets
+create gaps. Overlapped snippets might indicate problems with the original
+data in WaveServerV.</li>
+
+<li>
+Removing the most recent files from active directories for SCNLs during
+the <b>ew2mseed</b> operation can lead to the catastrophic consequences
+and is prohibited.</li>
+
+<br>Running more than a single copy of <b>ew2mseed</b> for for the same
+SCNL/Location/file structure is prohibited.&nbsp; Despite we implemented
+a locking mechanism preventing more then one copy of <b>ew2mseed</b> to
+operate over a particular
+<i>ew2mseed.d.x</i> file, there is no automatic
+way to prevent two <b>ew2mseed</b>&nbsp; with different <i>ew2mseed.d.x</i>
+configuration files to write to the same&nbsp;&nbsp; /NET/STN/STN.NET.LOC.CHAN.YEAR.JDAY.</ul>
+
+<h2>
+Using ew2mseed with multiple WaveServers:</h2>
+
+<ul>1. Here we walk a reader through the steps of the <b>ew2mseed</b> program
+from the standpoint of multiple WaveServers usage.
+<br>Multiple WaveServers are set in the configuration file as key word
+WaveServer followed by the IP:Port, where IP address can also be human
+readable computer
+<br>name which will be resolved by gethostbyname() system call.
+<p><i># frame relay..</i>
+<br><i>WaveServer 192.168.12.10 16022</i>
+<br><i># harry...</i>
+<br><i>WaveServer 136.177.31.188 16022</i>
+<br><i># harry2...</i>
+<br><i>WaveServer 136.177.31.10 16022</i>
+<p>2. All available WaveServers are first registered in the configuration
+structure of <b>ew2mseed</b>.&nbsp; If we follow the example configuration
+above, in particular,
+<br>there will be created a WaveServer linked list containing 3 WaveServers.
+<p>3.&nbsp; ew2mseed calls a function&nbsp; int processWsAppendMenu (RINGS
+*rn, WS_MENU_QUEUE_REC *menu) , which uses EW library function wsAppendMenu()
+<br>in a loop for each WaveServer. wsAppendMenu() can either append a current
+WaveServer menu or return an error indicating that the connection to the
+<br>WaveServer is not available. The main task of processWsAppendMenu ()
+is to fill up the WaveServers structure WS_MENU_QUEUE_REC *menu. This
+<br>structure is later used for getting data snippets. As long as at least
+a single WaveServer is available, the WS_MENU_QUEUE_REC *menu structure
+is not NULL
+<br>and function processWsAppendMenu () returns the number of available
+WaveServers from the list. If no WaveServers are available, processWsAppendMenu
+()
+<br>does not return. In this case it idles for 20 seconds and attempt to
+connect to WaveServers again. An operator can examine the log file and
+kill the instance
+<br>of <b>ew2mseed </b>manually if he/she realizes that the WaveServers
+declared in the configuration will not be available.
+<p>4. Let us suppose that we passed the stage (3) and found out that, for
+example, two out of three WaveServers declared in the configuration file
+are running and their
+<br>data are available.&nbsp; We now search through every available WaveServer
+and create a list of available PSCNLs. If no PSCNLs is available, the program
+quits.
+<p>5. If we are here, it means that more than 0 WaveServers provide more
+than zero PSCNLs.&nbsp; In other words we entered the main loop of <b>ew2mseed</b>.
+<br>In the main loop, the core call is to
+<br>int wsGetTraceBin( TRACE_REQ* getThis, WS_MENU_QUEUE_REC* menu_queue,&nbsp;
+int timeout ).&nbsp; wsGetTraceBin() is a library function from WaveClient
+<br>library and it is declared as being able to extract data from multiple
+waveServers. Here is an extract from wsGetTraceBin() documentation:
+<p><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Retrieves the piece of raw trace data specified in the</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+structure 'getThis': The current menu list, as built by the</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+routines above will be searched for a matching SCNL. If a match</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+is found, the associated wave server will be contacted, and a</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+request for the trace snippet will be made. If a server returns</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+with a flag (request in gap or outside of tank), another server</i>
+<br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+in the menu queue will be tried. (<a href="http://www.cnss.org/EWAB/libsrc.html">http://www.cnss.org/EWAB/libsrc.html</a>)</i>
+<p>6. Once in while (when ew2mseed read all data until the endTime of the
+tank for a particular PSCNL),&nbsp; <b>ew2mseed</b> calls a function
+<br>int updateMenu (RINGS *rn, WS_MENU_QUEUE_REC *menu_queue), which updates
+local copies of menus of WaveServers and includes/excludes
+<br>from the WaveServer's linked list those WaveServers which&nbsp; became
+available/unavailable.
+<h2>
+Catch-up algorithm (new in version 02-Apr-2002):</h2>
+The problem description: ew2mseed receives high volume of data from heterogeneous
+set of channels; due to the various reasons (connection speed is
+<br>&nbsp;the most important), some channels are later than the others.
+We implemented an algorithm which forces&nbsp; ew2mseed to request more
+information from the
+<br>&nbsp;later channels.
+<p>&nbsp; 1) Each channel has a configuration structure. We add a new integer
+field "Priority" which indicates&nbsp; a factor at&nbsp; which we increase
+<br>the parameter RecordNumber for a given station. That is, if&nbsp; Priority&nbsp;
+is 2 for a channel, it will poll twice&nbsp; more data form the WaveServer
+<br>relative to the channels with GetTraceTimes = 1. At the init stage
+each channel sets "Priority" to the default 1.
+<p>&nbsp;2)&nbsp; We count number of loops over all channels.&nbsp; After
+<b>LoopsBeforeService </b>(configurable parameter, <u>default value = 50</u>)&nbsp;
+production loops&nbsp; for each channel we compute the
+<br>&nbsp; TIME of the snippet we currently process and&nbsp; AVERAGE TIME
+for all channels.
+<p>&nbsp;4) Next for each channel we compute Priority as: if the processing
+time on the channel is less than&nbsp; N days&nbsp; later than the Average,
+we
+<br>assign N+1 to GetTraceTimes, if the average time is later than the
+channel processing time, we set 1 to GetTraceTime.
+<br>GetTraceTimes is bounded by 1 as the lowest limit and by the configurable
+parameter <b>PriorityHighWater </b>(<u>default value = 5</u>).
+<br>Next, we increase/decrease the requested time limits for a request
+to the WaveServerV proportinally to the "Priority" parameter.
+<p>&nbsp;5) Goto 2.
+<p><b><font size=+2>StartLatency parameter (new in version 15-May-2003):</font></b>
+<br><font size=-1>StartLatency parameter in hours is used to superseed
+StartTime parameter.&nbsp; The starttime is computed as the current time
+minus StartLatency and the resultanant number is used</font>
+<br><font size=-1>to compute StartTime. Either StartTime or StartLatency
+must be present in the configuration file.&nbsp; If both of them are present,
+the program will use the parameter which is below</font>
+<br><font size=-1>than the other one in the configuration file.</font>
+<br>&nbsp;</ul>
+
+<center>
+<p><br><a href="../modules.html">EarthWorm Module
+Index</a> | <a href="../cmd/ew2mseed/ew2mseed_cmd.html">ew2mseed configuration</a></center>
+<hr>
+<address> <br>
+Contact: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </address>
+
+</body>
+</html>

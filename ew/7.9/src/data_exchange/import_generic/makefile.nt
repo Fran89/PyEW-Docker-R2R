@@ -1,0 +1,69 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5327 2013-01-31 17:40:05Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.5  2010/04/13 05:49:12  paulf
+#     modified makefiles so import_generic is a link or copy of import_ack. import_generic code will be removed in next EW distro (7.5) but not this one
+#
+#     Revision 1.4  2006/11/21 23:03:19  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.3  2005/04/25 22:26:07  dietz
+#     Added new module import_ack, partner module to export*ack.
+#     Import_ack sends an acknowledgment packet for every packet received.
+#     The socket writing thread has been merged with the socket reading
+#     thread. Most useful for low frequency, high importance packets.
+#
+#     Revision 1.2  2003/05/06 20:55:33  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 18:42:44  lucky
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For import_generic - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all:
+	emake import_ack
+#	emake import_generic
+
+import_generic: import_generic.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) \
+    import_generic.obj \
+    $L\socket_ew_common.obj  \
+    $L\libew_mt.lib -out:$B\import_generic.exe
+
+import_ack: import_ack.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) \
+    import_ack.obj \
+    $L\socket_ew.obj \
+    $L\socket_ew_common.obj \
+    $L\libew_mt.lib -out:$B\import_ack.exe
+    copy $B\import_ack.exe $B\import_generic.exe /Y
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_NTSDK $<
+
+# added -D_NTSDK to enable definition of getpid() as _getpid() LDD.
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\import_generic* $B\import_ack*

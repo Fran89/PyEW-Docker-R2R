@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Earthworm Program: ew2ringserver overview</title></head><body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Program:<br>
+ew2ringserver Overview</h1>
+<i>(last revised April 22, 2015)</i></center>
+<p>
+The <b>ew2ringserver</b> program collects TRACEBUF2 or TYPE_MSEED messages from an Earthworm ring and sends 512-byte miniSEED records to an IRIS <i>ringserver</i> SeedLink server.<br>
+<br>
+For TRACEBUF2 messages, the data are buffered and packed into 512-byte
+miniSEED records. For TYPE_MSEED messages, if the detected record
+length is 512 bytes then it is forwarded to the ringserver unmodified;
+otherwise it is ignored.<br>
+<br>
+Due to the differences between Earthworm Tracebuf packet lengths and
+miniSEED records, the program maintains a small internal buffer for
+each time series. This allows the program to create full and efficient
+miniSEED records, but also introduces a slight delay or latency in the
+data transmission. The amount of delay depends on the sample rate of
+the data and the compressability of the series. For most purposes it is
+inconsequential.</p>
+<p>For more information on the <i>ringserver</i>, visit:&nbsp; <a href="https://seiscode.iris.washington.edu/projects/ringserver" target="_blank">IRIS <i>ringserver</i> SeedLink server</a></p>
+For instructions on how to create a SeedLink server for Earthworm, visit:&nbsp; <a href="https://seiscode.iris.washington.edu/projects/ew2ringserver/wiki/A_SeedLink_server_for_Earthworm" target="_blank">A SeedLink server for Earthworm</a><br>
+<br>
+<br>
+
+<center><b><a href="../modules.html">Module Index</a> | <a href="../cmd/ew2ringserver_cmd.html">ew2ringserver Commands</a>
+</b></center>
+<!-- USGS-required stuff at the end -->
+<hr><br>
+<b>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body></html>

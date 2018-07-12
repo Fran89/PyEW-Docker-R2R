@@ -1,0 +1,3 @@
+#!/bin/csh
+# Add an item to the list archive
+mhonarc -idxfname welcome.html -modtime -msgprefix ew. -title earthw-list -add $1

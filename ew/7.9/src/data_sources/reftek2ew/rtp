@@ -1,0 +1,91 @@
+#!/bin/sh
+#*******************************************************
+# /etc/init.d script to control RTPD under Linux
+#*******************************************************
+
+RTPD_USR=cellworm
+RTPD_DIR=/home/$RTPD_USR/reftek
+PATH=/bin:/usr/bin
+
+
+#*******************************************************
+# Start RTPD
+#-------------------------------------------------------
+rtpd_start() {
+
+# Is rtpd already running?
+    id=`ps -f -u $RTPD_USR | grep rtpd | grep -v grep`
+    if test -n "$id"
+    then
+        echo "rtpd is already running"
+        exit 1
+    fi
+
+# By default, the configuration file (rtpd.ini)
+# is found in RTPD_DIR.
+    if test -d "$RTPD_DIR"
+    then
+       cd $RTPD_DIR
+    else
+       echo "Directory $RTPD_DIR does not exist"
+       exit 1
+    fi
+
+art the rtpd process
+    su $RTPD_USR -c "$RTPD_DIR/rtpd &"
+    exit
+}
+
+
+#*******************************************************
+# Stop RTPD
+#-------------------------------------------------------
+rtpd_stop() {
+# Is rtpd already stopped?
+    pid=`ps -u $RTPD_USR -o pid= -o cmd= | grep rtpd | grep -v grep | awk '{ print $1 }'`
+    if test -z "$pid"
+    then
+        echo "rtpd is already stopped"
+        exit 1
+    fi
+
+# Stomp on the rtpd process
+    kill $pid
+    echo "rtpd stopped"
+    exit
+}
+
+
+#*******************************************************
+# Get status of RTPD
+#-------------------------------------------------------
+
+rtpd_status() {
+    id=`ps -f -u $RTPD_USR | grep rtpd | grep -v grep`
+    if test -n "$id"
+    then
+        echo "rtpd is running"
+    else
+        echo "rtpd is not running"
+    fi
+    exit
+}
+
+
+#*******************************************************
+# Select the operation to perform
+#-------------------------------------------------------
+case "$1" in
+    'start')
+        rtpd_start
+        ;;
+    'stop')
+        rtpd_stop
+        ;;
+    'status')
+        rtpd_status
+        ;;
+    *)
+        echo "Usage: rtp { start | stop | status }"
+        ;;
+esac

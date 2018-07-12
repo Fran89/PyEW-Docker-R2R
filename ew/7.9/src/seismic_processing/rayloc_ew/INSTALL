@@ -1,0 +1,18 @@
+To obtain distribution, you have to check out the source code from CVS.
+rayloc_ew is tested on Solaris and Linux.
+
+Use 
+make -f makefile.sol
+for Solaris compilation
+
+Use 
+make -f makefile.linux
+to compilae on Linux platform.
+
+Several model files are required for proper operation of rayloc_ew.
+Model files are available at:
+http://www.isti.com/rayloc_ew/rayloc_model_linux.tgz
+http://www.isti.com/rayloc_ew/rayloc_model_solaris.tgz
+
+Ilya Dricker (i.dricker@isti.com)
+and ISTI team

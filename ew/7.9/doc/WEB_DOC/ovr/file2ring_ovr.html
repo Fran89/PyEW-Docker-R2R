@@ -1,0 +1,46 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+   <title>Earthworm Modules: file2ring overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+    File2ring Overview</h1>
+</center>
+
+<center>
+  <i>(last revised 30 May 2006)</i>
+</center>
+
+<p> Reads the contents of a single-message plain text file and places it in a
+  specified Earthworm transport ring with the given message logo. Look at the
+  earthworm.d and earthworm_global.d for message types you can send, and module
+  names you can send the messages to.</p>
+<p>Useful for feeding known messages to Earthworm modules for testing.</p>
+<p>Author: Lynn Dietz<br>
+</p>
+<p> Usage: <code>file2ring &lt;filename&gt; &lt;ring_name&gt; &lt;installation_id&gt;
+  &lt;module_id&gt; &lt;message_type&gt;</code><br>
+</p>
+<p>Example: <code>file2ring test.arc HYPO_RING INST_MENLO MOD_EQPROC TYPE_HYP2000ARC</code></p>
+<p>Example 2:<code> file2ring reconfigure.txt WAVE_RING INST_CIT MOD_STARTSTOP
+  TYPE_RECONFIG </code></p>
+<p><code>In Example 2 contents of reconfigure.txt is the word &quot;reconfigure&quot;...
+  This example sends &quot;Startstop&quot; the message to reconfigure, which is
+  the same as typing 'recon' in the interactive startstop console window.</code></p>
+<center>
+<p><a href="../modules.html">Module Index</a></center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address> </address>
+
+<br>
+Questions? Issues? S<a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">ubscribe
+to the Earthworm Google Groups List. </a>
+</body>
+</html>

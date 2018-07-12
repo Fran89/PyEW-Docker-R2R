@@ -1,0 +1,16 @@
+!include <ntwin32.mak>
+
+CFLAGS=-O -I..\.. -DWINNT
+
+OBJS = accept.obj attr.obj close.obj cmdpkt.obj log.obj misc.obj open.obj \
+       pid.obj recv.obj send.obj server.obj soh.obj stat.obj version.obj
+
+all: librtp.lib
+
+librtp.lib: $(OBJS)
+	-del ..\librtp.lib
+	lib /nologo /out:..\librtp.lib $(OBJS)
+
+clean:
+	-del *.obj *.o ..\librtp.*
+

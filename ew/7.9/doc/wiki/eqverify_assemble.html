@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      eqverify_assemble – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/eqverify_assemble?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="eqverify_assemble.html" title="View eqverify_assemble">eqverify_assemble</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/eqverify_assemble?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/eqverify_assemble?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-03-25T13%3A27%3A52-07%3A00&amp;precision=second" title="2012-03-25T13:27:52-07:00 in Timeline">18 months</a> ago</span>
+            <span class="trac-print">Last modified on 03/25/12 13:27:52</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="eqverify_assemble.html#EarthwormModule:eqverify_assemble">Earthworm Module: eqverify_assemble</a>
+    <ol>
+      <li>
+        <a href="eqverify_assemble.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="eqverify_assemble.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="eqverify_assemble.html#ExampleConfigurationFile">Example Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="eqverify_assemble.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:eqverify_assemble"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: eqverify_assemble</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Passes only events verified as earthquakes (part of mega-module with <a class="wiki" href="eqassemble.html">eqassemble</a>)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Eqverify is a sub-module in Earthworm's event-processing mega-module. It takes the output from eqcoda (TYPE_EVENT2K messages) and performs a number of tests to determine if the event looks like an earthquake or noise. Only those events verified to be earthquakes are passed along to the next sub-module. Eqverify starts the next sub-module specified in its "PipeTo" command (generally hypo_mgr) and communicates to it via a one-directional pipe. Eqcoda passes any messages other than TYPE_EVENT2K thru to the next link without modifying them in any way.
+</p>
+<p>
+Eqverify can perform up to four different earthquake verification tests on each event. One of the tests analyzes the distribution of arrival times reported for the event; the remaining three analyze different coda characteristics of the arrivals. Each test can be turned on or off by a configuration-file switch. Bad test results (results that show that the event looks more like noise than an earthquake) add to a count of "demerit points" for the event. If the total number of demerits meets or exceeds a (configurable) threshold, the event is declared to be noise, the complete TYPE_EVENT2K message is written to eqverify's log file, and the event is withheld from any further processing. To avoid the big mistake of mis-identifying a large earthquake as noise and withholding it, there is a "force-thru" feature in eqverify. Any event with a minimum number of arrivals and a minimum duration magnitude (defaults are 17 arrivals, magnitude 2.0) will be passed through to the next processing sub-module, regardless of its test results. We'd rather report a few bogus events than drop "the big one!"
+</p>
+<p>
+<strong>A brief description of each of the verification tests follows:</strong>
+</p>
+<ol><li>Test on Arrival Time Distribution ("test_pgroup" command):
+<ul><li>In this test, all arrivals within "MaxDeltaT" seconds (default = 30) of the first-arriving pick are examined to see if they belong to a glitch.
+</li><li>A glitch is defined as a certain number of picks within a given time interval (set by the "define_glitch" command; default is 4 picks within 0.03 seconds).
+</li><li>If 50% or more of these picks belong to glitches, the event is declared noise.
+</li><li>If 30-50% of the picks are glitch-picks, the event's demerit count is incremented by 1.
+</li></ul></li><li>Test on Coda Weight or Quality ("test_codawt" command):
+<ul><li>This test, taken from Lindh and Hirshorn's program eqmeas, calculates a coda weight (0 is a good quality coda, 4 is poor) for each pick. It then finds the average of all coda weights for the event and adds this average value to the event demerit count.
+</li></ul></li><li>Test on RMS of slope fit to Coda Amplitudes ("test_freefitrms" command):
+<ul><li>This test looks at the rms values from free-fit slopes to the coda average absolute values. This test, taken from Lindh and Hirshorn's program eqmeas, considers only the rms for each arrival where at least 3 coda average absolute values were used in determining the free-fit slope of the coda decay. Eqverify finds the median of all the rms values for such free-fit. If the median rms value is greater than 0.25 (bad fit to coda amplitudes), the event demerit count is incremented by 1. With default settings, this test by itself cannot cause an event to be declared noise.
+</li></ul></li><li>Test on Slope of Coda Decay vs Event Magnitude ("test_slopevsmag" command):
+</li></ol><p>
+This test compares the median slope of coda decay (fit to the coda window average absolute values) to the magnitude calculated from the median coda duration for each event. This test, taken from Lindh and Hirshorn's program eqmeas, increments the event demerit count by the absolute value of the result of this equation:
+</p>
+<pre class="wiki">      &lt;median slope&gt; + 0.7*&lt;magnitude from median duration&gt; + 0.5
+</pre><p>
+For a normal earthquake, the slope fit to the coda windows should be negative and the result from the above equation should be zero. For a noise event, the result from the above equation may be unbounded. This test alone may cause an event to be declared noise.
+</p>
+<p>
+<em>NOTE:</em> If you are running eqverify as part of the preliminary-event-processing mega-module (started by eqprelim), you should use ONLY the test on arrival time distribution ("test_pgroup"). All coda tests should be turned off since the event will have incomplete coda information at the time eqverify tests it.
+</p>
+<h3 id="ExampleConfigurationFile">Example Configuration File</h3>
+<pre class="wiki">#
+# This is eqverify_assemble's parameter file
+#
+MyModuleId  MOD_EQPROC  # module id to label logfile  with.
+                        # Note: eqverify_assemble is part of a mega-module
+                        # which is ultimately started by the program eqproc.
+                        # All child processes of this mega-module need to use
+                        # the same module id (thus use eqproc's module id).
+LogFile       1         # 0=no log; 1=log errors
+                        # 2=write to moduel log but not to stderr/stdout
+# send output to the following command:
+ PipeTo "log_everything"
+# PipeTo "hypo_mgr hypo_mgr.d ncal.hyp"
+
+# Required commands to turn glitch tests on or off.
+# Specify the minimum version (from eqassemble) for
+# which a test should be run.
+# eqassemble versions are: Prelim: 0; Rapid: 1; Final: 2
+# specify 3 to turn off a test for all versions
+test_slopevsmag  2
+test_freefitrms  2
+test_codawt      2
+test_pgroup      1
+
+# event weight at which event is "noise" for Prelim (version 0),
+# Rapid (version 1) or Final (version 2) reports from eqassemble
+PrelimThreshold     1
+RapidThreshold	    1
+FinalThreshold	    3
+
+# Optional commands that change eqverify_assemble test defaults
+# force_report  18 2.0    # report events with more than 18 picks
+#                         # and mag&gt;=2.0 regardless of event weight
+# define_glitch  4 0.03   # a glitch is at least 4 picks within
+                          # 0.03 seconds
+# MaxDeltaT         30.   # consider arrival times within this many
+#                         # seconds of the 1st arriving pick
+# coda_clip        820    # level at which a coda-avg-absolute-value
+#                         # is clipped (see notes in eqcoda.command)
+
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/eqverify_assemble?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

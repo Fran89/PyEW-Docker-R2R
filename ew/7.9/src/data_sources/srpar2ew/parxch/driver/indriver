@@ -1,0 +1,384 @@
+#!/bin/sh
+
+# This script installs the PARxCH kernel mode device driver.
+# It must be run from the directory containing the parxchkd.o driver 
+# object file.  The companion rmdriver script uninstalls the driver.
+
+
+# Display message showing proper indriver usage and command line args
+
+UsageMsg ()
+{
+ echo "                                                                       "
+ echo "ERROR: Command Line Usage indriver XchModel PortAddress PortIrq [DevMajor]"
+ echo "                                                                       "
+ echo "This utility installs the PARxCH device driver which supports all      "
+ echo "XchModels of the PARxCH family of A/D boards for x = 1, 4, or 8.       "
+ echo "                                                                       "
+ echo "   XchModel = PAR1CH, PAR4CH, or PAR8CH                                "
+ echo "   PortAddr = parallel port address  (like 0x378, 0x278 or 0xFFF8)     "
+ echo "   PortIrq  = parallel port IRQ      (typically 7, 5, or 17)           "
+ echo "   DevMajor = device major number    (defaults to 123)                 "
+ echo "                                                                       "
+ echo "Use cat /proc/ioports | grep parport to find your PC's available       "
+ echo "addresses and cat /proc/interrupts | grep parport to find the irqs.    "
+ echo "                                                                       "
+ echo "The default XchModel can be changed with the setmodel utility or       "
+ echo "overridden within applications like scope.                             "
+ echo "                                                                       "
+ echo "Use PortIrq of 0 to install without interrupts.  PARGPS timestamping   "
+ echo "requires interrupts to work.                                           "
+ echo "DevMajor is a device number.  Default is 123, 0 for dynamic selection. "
+ echo "                                                                       "
+ echo "INDRIVER EXAMPLES: $ indriver PAR4CH 0x378 7                           "
+ echo "                   $ indriver PAR8CH 0x278 5 125                       "
+ echo "                   $ indriver PAR1CH 0xFFF8 17 0                       "
+
+ exit 1
+}
+
+
+# Display message indicating successfull installation and giving
+# suggestions about what to do next
+
+SuccessMsg ()
+{
+  echo "                                                                      "
+  echo "SUCCESS: $ParxchDriver installed at address $PortAddr                 "
+  if [ $PortIrq -eq 0 ] ; then
+  echo "                     with no IRQ and major number $Major.             "
+  else
+  echo "                     with IRQ $PortIrq and major number $Major.       "
+  fi
+  echo "                                                                      "
+  echo "You will need the exact driver name to access the PARxCH.  If you     "
+  echo "forget it, run showdriver or /sbin/lsmod | grep ^Sr to display it     "
+  echo "again.  The name of the installed PARxCH device driver is:            "
+  echo "                                                                      "
+  echo "                           $ParxchDriver                                "
+  echo "                                                                      "
+  echo "Next, you may want to                                                 "
+  echo "   1) source setmodel to set the default PARxCH model for applications"
+  echo "   2) run diag to verify the PARxCH is working correctly              "
+  echo "   3) see the readme.txt file for tips on how to make the driver      "
+  echo "      load automatically whenever the machine reboots                 "
+  echo "   4) if using the PARGPS, install the pargps driver using its        "
+  echo "      indriver utility located in the pargps/driver directory         "
+  echo "                                                                      "
+}
+
+
+# Display message indicating installation failed and giving 
+# suggestions about what to do next
+
+FailMsg ()
+{
+    echo "                                                                    "
+    echo "FAILURE: ParXch driver NOT installed, run rmdriver to clean up      "
+    echo "                                                                    "
+    echo "The most likely causes are:                                         "
+    echo "                                                                    "
+    echo "   1) You don't have permission because you are not root (superuser)"
+    echo "   2) The parallel port is using a different address.  eg you asked "
+    echo "      for 0x378, but it is using 0x278.                             "
+    echo "   3) You already have a parxch driver installed at default major   "
+    echo "       number 123, try major number 125 instead.                    "
+    echo "                                                                    "
+    echo "Run rmdriver to remove the failed PARxCH installation.  See the     "
+    echo "troubleshooting section of readme.txt for suggestions and details   "
+    echo "on fixing the problem.  Then try the PARxCH installation again.     "
+}
+
+
+# Check the vermagic version strings to make sure they match
+# otherwise the installation will fail.
+
+CheckVersionStrings () 
+{
+
+# Extract version data from the modinfo output
+# We assume the current kernel version is represented by the parport driver
+
+VerStd=`/sbin/modinfo parport | awk '/^vermagic/ { print $2 }'`
+VerSr=`/sbin/modinfo ./$ParxchDriver.ko | awk '/^vermagic/ { print $2 }'`
+
+
+# Display an error message if the two version strings are not equal
+
+if [ $VerStd != $VerSr ] ; then
+    echo "                                                                    "
+    echo "FAILURE: Version mismatch                                           "
+    echo "         Kernel    uses $VerStd                                     "
+    echo "         $ParxchDriver uses $VerSr                                  "
+    echo "                                                                    "
+    echo "The PARxCH driver has been compiled for a different version of      "
+    echo "the Linux kernel than the one you are running.  This will prevent   "
+    echo "the PARxCH driver from installing.                                  "
+    echo "                                                                    "
+    echo "You now have two choices:                                           "
+    echo "   1) Recompile the PARxCH driver (recommended)                     "
+    echo "   2) Force load the PARxCH driver                                  "
+    echo "                                                                    "
+    echo "The best option is to recompile the PARxCH driver so it does match  "
+    echo "the current kernel.  The other option is to copy the PARxCH driver  "
+    echo "to the canonical modules directory and force load it using modprobe."
+    echo "                                                                    "
+    echo "Please see the troubleshooting section in readme.txt for more       "
+    echo "details about both options.                                         "
+    echo "                                                                    "
+    exit 1
+fi
+
+}
+
+
+# Create the setmodel and clrmodel files.  Users can source these files to
+# set and clear the environment variable which controls the default XchModel
+
+MakeSetModel ()
+{
+
+# Update the base files so they are appropriate for the current driver
+
+sed s/SrParXch./$ParxchDriver/g setmodelbase >setmodel
+sed s/SrParXch./$ParxchDriver/g clrmodelbase >clrmodel
+
+
+# Make sure they are readable
+
+  chmod 666 setmodel
+  chmod 666 clrmodel
+
+
+# Save driver installation parameters in a file
+
+  DriverDataFile=$ParxchDriver"_Data"
+
+  echo "Driver" $ParxchDriver  "is installed with:"  > $DriverDataFile
+  echo "  XchModel   = " $XchModel                  >> $DriverDataFile
+  echo "  PortAddr   = " $PortAddr                  >> $DriverDataFile
+  echo "  PortIrq    = " $PortIrq                   >> $DriverDataFile
+  echo "  MajorNum   = " $ParXchMajor               >> $DriverDataFile
+  echo "                                        "   >> $DriverDataFile
+   
+}
+
+
+
+
+#################### Main Indriver Code #################### 
+
+# Banner message
+
+echo "PARxCH driver installation script : Rev {08/15/07}"
+
+
+# Set up lists of allowed driver and XchModel names
+
+DriverNameList="SrParXch0 SrParXch1 SrParXch2"
+ModelNameList="PAR1CH PAR4CH PAR8CH"
+
+
+# Check for proper number of command line arguments (3 or 4)
+
+if [ $# -ne 3  -a  $# -ne 4 ] ; then
+    UsageMsg
+fi 
+
+
+
+# Process first command line argument for Xch model
+
+XchModel=""
+for ModelName in $ModelNameList
+do
+    if [ "$ModelName" = "$1" ] ; then
+        XchModel=$1
+        break
+    fi
+done
+
+if [ "$XchModel" = "" ] ; then
+    echo " "
+    echo ERROR: Invalid XchModel $1.  Please use $ModelNameList.
+    UsageMsg
+fi
+
+
+# Process second command line argument for parallel port address
+
+PortAddr=$2
+
+
+# Process third command line argument for parallel port irq
+
+PortIrq=$3
+
+if [ $PortIrq -lt 0  -o  $PortIrq -gt 30 ] ; then
+    echo " "
+    echo ERROR: Invalid PortIrq $PortIrq.  Typical values are 7, 5, 17, 18, 19 or 0.
+    UsageMsg
+fi
+
+
+# Process optional fourth command line argument for major number or use default
+
+if [ $# -eq 4 ] ; then
+    ParXchMajor=$4
+else
+    ParXchMajor=123
+fi
+
+
+# Display info about any drivers already installed
+
+./showdriver
+
+
+# Select first available driver name
+
+ParxchDriver=""
+InUseList=`/sbin/lsmod | awk '/^SrParXch/ { print $1 }'`
+
+for DriverName in $DriverNameList
+do
+
+    Used=0
+    for UsedName in $InUseList
+    do
+        if [ "$DriverName" = "$UsedName" ] ; then
+            Used=1
+            break
+        fi
+    done
+
+    if [ $Used = 0 ] ; then
+        ParxchDriver=$DriverName
+        break
+    fi
+done
+
+if [ "$ParxchDriver" = "" ] ; then
+     echo " "
+     echo ERROR: All driver names are in use ...  $InUseList
+     UsageMsg
+fi
+
+
+
+# Run some error checks
+# Comment this out if using modprobe with force-vermagic below
+
+CheckVersionStrings   # Does the PARxCH version match the current kernel ?
+
+
+
+
+# Check to see if driver already exists
+
+Major=`cat /proc/devices | awk "\\$2==\"$ParxchDriver\" {print \\$1}"`
+
+if [ "$Major" != "" ] ; then
+    echo PARxCH device already exists at $Major.  Please run rmdriver first.
+    exit 1
+fi
+
+
+# Remove stale driver node if it exists
+
+if [ -e /dev/$ParxchDriver ] ; then
+    rm -f /dev/$ParxchDriver
+fi
+
+
+
+# Select an unused sysfs class name and suffix
+
+ClassName="sr_instrument"
+ClassSuffix=""
+
+if [ -e /sys/class/$ClassName$ClassSuffix ] ; then
+    ClassSuffix="A"
+    if [ -e /sys/class/$ClassName$ClassSuffix ] ; then
+        ClassSuffix="B"
+        if [ -e /sys/class/$ClassName$ClassSuffix ] ; then
+            ClassSuffix="C"
+            if [ -e /sys/class/$ClassName$ClassSuffix ] ; then
+	        echo Too many PARxCH devices under /sys/class/$ClassName"X".
+	        echo Please run rmdriver first.
+		exit 1
+            fi
+        fi
+    fi
+fi
+
+
+# Install the module, passing on arguments (eg port_address=0x278)
+#
+# If not using default device node of 123, enter new device number on the
+# command line.  This will fill $ParXchMajor with the desired major number.
+# Specifying 0 allows the major number to be selected dynamically.
+#
+# If the PARxCH driver version does not match the kernel version,
+# you should really recompile the driver.  If instead you want to force 
+# load the driver, you must copy it to your modules directory, run
+# depmod, comment out the CheckVersionStrings line above and replace
+# the insmod line below (no blank lines allowed) with the following
+# modprobe line:
+#
+#if ! /sbin/modprobe --force-vermagic $ParxchDriver \
+
+if ! /sbin/insmod ./$ParxchDriver.ko \
+           xch_name=$ParxchDriver xch_address=$PortAddr \
+           xch_irq=$PortIrq xch_major=$ParXchMajor \
+	   xch_class=$ClassName xch_suffix=$ClassSuffix ; then
+        echo PARxCH device $ParxchDriver failed insmod
+        FailMsg
+        exit 1
+fi
+
+
+# Get actual major number (col 1) from /proc/devices (col 2 is device name)
+
+Major=`cat /proc/devices | awk "\\$2==\"$ParxchDriver\" {print \\$1}"`
+
+
+
+# Delay to allow creation of /dev/$ParxchDriver by driver installed by insmod
+
+StartTime=$SECONDS
+LastTime=$StartTime
+EndTime=$(($StartTime+5))
+until [ -e /dev/$ParxchDriver -o $SECONDS -eq $EndTime ] ; do
+  if [ $SECONDS -ne $LastTime ] ; then
+    LastTime=$SECONDS
+    echo Waiting 5 seconds for /dev/$ParxchDriver file ... $SECONDS
+  fi
+done
+
+
+
+# Set correct group and permissions for new character node made in /dev
+# Since distributions do it differently, look for wheel or use staff for group
+
+if grep -q '^staff:' /etc/group; then
+    group="staff"
+else
+    group="wheel"
+fi
+mode=666
+
+chgrp $group /dev/$ParxchDriver
+chmod $mode  /dev/$ParxchDriver
+
+
+
+# Make setmodel file to be sourced or included in ~/.bashrc
+
+MakeSetModel
+
+
+# Indicate successful install and
+# suggest running setmodel to indicate the default PARxCH
+
+SuccessMsg

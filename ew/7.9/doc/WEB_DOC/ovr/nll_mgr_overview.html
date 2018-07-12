@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: nll_mgr overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR>nll_mgr Overview</H1>
+<I>(last revised 25 May, 2007)</I></CENTER>
+
+<P>
+nll_mgr is an Earthworm program which calls an encapsulated version of the probabilistic, global-search location program NLLoc in the NonLinLoc package (NLL), written by Anthony Lomax.  nll_mgr gets "arc messages", containing associated picks, via a pipe from another program.  nll_mgr call NonLinLoc with the contents of the "arc message".  NonLinLoc locates the event using parameters from the nll_mgr EW Configuration File and from a static NLL control file, and writes standard NLL ouptut to disk files.  nll_mgr then creates a new "arc message" with the location results from NonLinLoc and sends that arc message to an Earthworm transport ring.
+</P>
+<P>
+The NLL location program (NLLoc) performs probabilistic, non-linear, global-search earthquake location in 1D and 3D structures. Travel-times and location are performed in a 3D Grid structure which defines a specific, gridded, rectangular volume (Non-GLOBAL mdoe) or spherical section (GLOBAL mode). A good working knowledge of the NLL package including the setting up of travel-time grids is essential before attempting to configure nll_mgr and use NLLoc within EW.  See <A HREF="http://www.alomax.net/nlloc">http://www.alomax.net/nlloc</A> for an overview, download information and sample location tutorials.
+</P>
+<P>
+nll_mgr is written in C, as is the NonLinLoc package
+</P>
+<P>
+Disclaimer: The NonLinLoc algorithm makes relatively intense usage of the CPU, depending on number of observations, program parameters, and other factors. Since the "sausage" schema uses eqbuf to hold the next earthquake(s) in buffers until the previous location processing is completed, the intense usage of the CPU will introduce additional delays in event throughput.
+</P>
+<P>
+Documentation on the NonLinLoc package and the NLL control file parameters is available at the web site: <A HREF="http://www.alomax.net/nlloc">http://www.alomax.net/nlloc</A> -> Control File
+</P>
+<P>
+</P>
+
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/nll_mgr_commands.html">NLL_mgrCommands</A>
+</CENTER>
+</P>
+
+<!-- USGS-required stuff at the end -->
+<HR></HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B>
+</ADDRESS>
+</BODY>
+</HTML>

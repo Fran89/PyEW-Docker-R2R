@@ -1,0 +1,26 @@
+1. MSS100: To do initial setup, follow directions in Installation Guide,
+   section 3.1. I think that section 3.1.1 (Using EZWebCon) is the
+   easiest. Then set parameters using the file mss.cmd (in this directory) as
+   a guide.
+
+2. Make sure serial port settings on MSS match those on the K2. When the K2 is
+   first powered up, the number of LEDs lighted on the front panel matrix
+   tells the baud rate:
+       LEDs  Baud
+         1   1200 (baud or error)
+         2   2400
+         3   4800
+         4   9600
+         5   19200 (default)
+         6   38400
+         7   57600
+         8   115200
+    Set the MSS to match this baud rate, 8 data bits, no parity, one stop bit
+   (8-n-1). This should allow you to communicate with the K2 via the
+   MSS100. Telnet to port 3001 on the MSS to make the connection to the K2.
+   Once you have communication with the K2, you can change the baud rates on
+   the K2 and then the MSS to what you want. 19200 is the minimum you will
+   want.
+
+3. [Describe how to set up an MSS for serial tunneling from PC to K2]
+

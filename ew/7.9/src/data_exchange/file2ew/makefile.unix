@@ -1,0 +1,50 @@
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BINARIES = file2ew.o $L/dirops_ew.o $L/k2evt2ew.o $L/swap.o $L/libew.a
+
+SMBIN = $(BINARIES) $L/rw_strongmotionII.o 
+
+
+all:
+	make -f makefile.unix file2ew
+	make -f makefile.unix sm_csmip2ew 
+	make -f makefile.unix sm_nsmp2ew 
+	make -f makefile.unix sm_redi2ew 
+	make -f makefile.unix sm_terra2ew 
+	make -f makefile.unix sm_tremor2ew 
+
+file2ew: $(BINARIES) raw2ew.o
+	$(CC) $(CFLAGS) -o $B/file2ew $(BINARIES) raw2ew.o $(SPECIFIC_FLAGS)
+
+sm_csmip2ew: $(SMBIN) csmip2ew.o
+	$(CC) $(CFLAGS) -o $B/sm_csmip2ew csmip2ew.o $(SMBIN) $(SPECIFIC_FLAGS)
+
+sm_nsmp2ew: $(SMBIN) nsmp2ew.o
+	$(CC) $(CFLAGS) -o $B/sm_nsmp2ew nsmp2ew.o $(SMBIN) $(SPECIFIC_FLAGS)
+
+sm_redi2ew: $(SMBIN) redi2ew.o
+	$(CC) $(CFLAGS) -o $B/sm_redi2ew redi2ew.o $(SMBIN) $(SPECIFIC_FLAGS)
+
+sm_terra2ew: $(SMBIN) terra2ew.o
+	$(CC) $(CFLAGS) -o $B/sm_terra2ew terra2ew.o $(SMBIN) $(SPECIFIC_FLAGS)
+
+sm_tremor2ew: $(SMBIN) tremor2ew.o
+	$(CC) $(CFLAGS) -o $B/sm_tremor2ew tremor2ew.o $(SMBIN) $(SPECIFIC_FLAGS)
+
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/sm_*2ew* $B/file2ew*

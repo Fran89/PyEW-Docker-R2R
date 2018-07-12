@@ -1,0 +1,70 @@
+
+Welcome to the q2ew - Quanterra to Earthworm module.
+
+This release was compiled  and tested on an UltraSparc1 running
+Solaris 2.6 and gcc 2.8.1.
+
+INSTALL
+
+To build and run this module you need the following at the same
+directory level:
+
+o	Earthworm V3.X - v3.3 was used for this writing.
+o 	COMSERV	971126 - comserv.971126 linked to comserv
+o	Berkeley's qlib2 - qlib2 
+
+		..../some_dir/
+		    /
+   ---------------------------------
+  /		   /		  /
+v3.3/		comserv/	qlib2/
+		  /
+		q2ew/
+
+This module's directory should be in the comserv directory as this
+is both a client of COMSERV and a client of Earthworm. First it
+is a client of COMSERV since without it, it won't work! So, get
+the latest version of comserv and link it to the directory name comserv.
+
+GET QLIB2 and COMSERV COMPILED
+
+This module was written using the comserv.971126 version found at
+the Berkeley ftp server quake.berkeley.edu. Also found at this site
+is a nice suite of quanterra/SEED parsing functions in the qlib2
+library by Doug Neuhauser.
+
+EDIT THE q2ew Makefile
+
+Once you have a compiled version of the above utilites, in the directory
+tree as described above, edit the Makefile to reflect what libraries or
+conversely, what .o object files are to be included (this is simply 
+commenting or uncommenting some lines that decide where and which
+libs to use).
+
+Making it under Solaris, type:
+
+	make
+
+	
+Copy the q2ew.d and q2ew.desc files to the params directory specified
+in your earthworm installation.
+
+Copy the q2ew binary to your earthworm bin directory.
+
+GET COMSERV RUNNING
+
+Configure COMSERV /etc/network.ini and /etc/stations.ini files in the /etc 
+directory and then build a stations.ini for each station being
+served by COMSERV. Examples for the Q730 are provided in this
+directory as it was setup on the ISTI network:
+	
+	/etc/network.ini 	-> network.ini
+	/etc/stations.ini	-> stations.ini
+	Q003 station.ini	-> station.ini
+
+The station.ini file should be placed in the directories specified in
+the /etc/stations.ini file.
+
+The config.tar distribution at Berkeley really helped me get this figured
+out fast. Use the examples in this distribution and Doug's excellent notes
+in the config.tar to help you get COMSERV configured.

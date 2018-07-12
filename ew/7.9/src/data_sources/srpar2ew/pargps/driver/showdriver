@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# Set up lists of valid driver names and currently installed drivers
+
+DriverNameList="SrParGps0 SrParGps1 SrParGps2"
+InstalledNameList=`/sbin/lsmod | awk '/^SrParGps/ { print $1 }'`
+
+
+
+# Print a blank line
+
+echo ""
+
+
+
+# Process all valid driver names
+
+for ParGpsDriver in $DriverNameList
+do
+
+    # Generate name of driver data file
+
+    DriverDataFile=$ParGpsDriver"_Data"
+
+    
+
+    # Check if driver is installed
+
+    IsInstalled=0
+    
+    for InstalledDriver in $InstalledNameList
+    do
+        if [ "$ParGpsDriver" = "$InstalledDriver" ] ; then
+           IsInstalled=1
+           break
+        fi
+    done
+
+
+
+    # If driver is installed, show the info from its corresponding data file
+
+    if [ $IsInstalled = 1 ] ; then
+    
+        if [ -e $DriverDataFile ] ; then
+           cat $DriverDataFile
+        else
+           echo "Driver $ParGpsDriver IS  installed, but is missing its data file"
+        fi
+
+
+    # Else driver has been removed (probably done automatically at the last 
+    # logout) so remove its corresponding data file
+
+    else
+        if [ -e $DriverDataFile ] ; then
+            rm $DriverDataFile
+        fi
+
+        echo Driver $ParGpsDriver NOT installed
+    
+    fi
+
+done
+
+
+
+# Process old 378 style driver names
+
+OldNameList="SrParGps378 SrParGps278"
+
+for ParGpsDriver in $OldNameList
+do
+
+    # Check if driver is installed
+
+    IsInstalled=0
+    
+    for InstalledDriver in $InstalledNameList
+    do
+        if [ "$ParGpsDriver" = "$InstalledDriver" ] ; then
+           IsInstalled=1
+           break
+        fi
+    done
+
+
+    # If old driver is installed, announce that fact
+
+    if [ $IsInstalled = 1 ] ; then
+    
+       echo "Old style $ParGpsDriver driver is installed"
+    fi
+
+
+done

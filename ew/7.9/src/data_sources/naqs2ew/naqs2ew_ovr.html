@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: naqs2ew overview</TITLE>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Naqs2ew Overview</H1>
+<I>(last revised April 14, 2004)</I></CENTER>
+
+<P>
+Naqs2ew is an interface through which waveform data collected by
+the Nanometrics data acquisition software, NaqsServer, can be fed into an Earthworm system
+in near-real-time.
+Naqs2ew is a client of NaqsServer's "Online Data Streams" service which allows 
+client programs to open a socket connection, subscribe to only the data they want, and
+receive the requested data over the same socket.  The "online data streams"
+protocol and data formats are described in the Nanometrics Reference Manuals.
+Currently the only NaqsServer packet types that naqs2ew can process are:  channel 
+list messages, decompressed data packets, compressed data packets, and error messages. 
+Naqs2ew is not required to run on the same computer as NaqsServer.
+<P>
+Naqs2ew is a single-threaded program. After reading its configuration file,
+allocating working buffers, and attaching to a transport ring, naqs2ew attempts
+to open a socket connection to NaqsServer, using a timeout of CONNECT_TIMEOUT 
+seconds (currently 5 s). If the connection attempt fails, naqs2ew will attempt
+to connect every CONNECT_RETRY_DT seconds (currently 10 sec) forever.  Naqs2ew will 
+continue beating its own heart while trying to establish a NaqsServer connection.
+<p>
+Once it establishs a socket connection with NaqsServer, naqs2ew initiates the
+"online data streams" protocol.  It sends a "connect message," reads and logs the list of 
+available channels, and requests only the channels listed in its own
+configuration file.  If some channels in the configuration file are not available, 
+naqs2ew logs that fact and continues.  While the socket connection remains open, 
+naqs2ew reads a complete packet (blocking), converts it to one or more Earthworm TYPE_TRACEBUF2
+messages, and writes the message(s) to the transport ring. Naqs2ew makes no attempt to reorder 
+timeseries packets. Naqs2ew does compare each new packet's timestamp against the timestamp 
+of the last data received for that channel.  If it detects a time overlap, naqs2ew will 
+ignore the entire new packet. This insures that data flowing into the Earthworm system 
+will be in chronological order. If naqs2ew detects a time gap, it optionally performs a 
+sanity check on the packet time (see TimeJumpTolerance command). If naqs2ew determines 
+that the packet time is bogus (in the future), it ignores the entire new packet.
+Naqs2ew attempts to produce one-second TYPE_TRACEBUF2 messages for 
+each channel, buffering any fractional seconds between packets from NaqsServer if
+necessary.  Time tears between packets may cause naqs2ew to produce TYPE_TRACEBUF2 packets shorter than one-second long. 
+Naqs2ew also logs any error messages it receives from NaqsServer.
+After each packet is processed, naqs2ew enters its heartbeat 
+function, and issues a heartbeat if its heartbeat timer has expired.  
+<P>  
+If naqs2ew experiences any socket errors or if NaqsServer breaks the connection, 
+naqs2ew closes the socket and issues a TYPE_ERROR message stating the reason the 
+connection was dropped.  It then goes back to looping on reconnection attempts. 
+When the connection is reestablished, naqs2ew will issue another TYPE_ERROR message
+(really an "un-error" message), stating that everything's OK again.
+<P>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../cmd/naqs2ew_cmd.html">naqs2ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://gldbrick.cr.usgs.gov/ew-doc/ovr/naqs2ew_ovr.html]</B><BR>
+Contact: <B>dietz@usgs.gov</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

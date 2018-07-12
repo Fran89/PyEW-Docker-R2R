@@ -1,0 +1,80 @@
+From bogaert@gldmutt.cr.usgs.gov Tue Feb  1 10:48:18 2000
+Date: Mon, 24 Jan 2000 14:41:56 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm V4.1 Released
+
+Earthworm Version 4.1 has been released.  
+
+You can download the release from our ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1
+
+A New Earthworm_global.d can be found at
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm.
+
+A short summary of new developments is given below.  For details of module
+enhancements 
+and bug fixes, please see the release notes attached to this email or at 
+the Earthworm ftp and/or web site.
+
+MAJOR DEVELOPMENTS
+********************
+sac2hypo:  This program works only under Solaris. It reads the headers
+   of all the SAC files in the current directory and creates a 
+   Hypoinverse archive file. 
+
+tide2ew:  This program works only under NT. It listens to
+   serial line communication from the pucks which collect tide
+   data. After NumSamples for an SCN have been collected, a new 
+   TYPE_TRACEBUF message is created
+   and written to the OutRing stamped with the SCN code given
+   in the configuration file.
+
+fir: This module implements a general-purpose FIR filter for
+   trace data. Low-pass, high-pass, multi-band-pass and notch filters
+   can be specified using simple commands in the configuration file.
+   
+decimate:  Major revision. Decimate is now a multi-stage filter-decimator.
+   The filter coefficients are computed based on the decimation rate, using
+   the Remez Exchange algorithm.
+
+wave_serverV/Tools: Three tools: inspect_tank, read_index and read_struct.
+   These three tools are to help with problems in wave_serverV tank,
+   index and structure files. These are primarily for development work.
+  
+ring2sac: Writes continuous sac files given a list of Station, Component,
+   Network names.  This software is contributed by University of Utah 
+   Seismograph Station.  
+
+trig2disk/waveman2disk:  Both modules can create SAC format file running under 
+   NT andcreate PCSUDS format files under NT.
+
+EARTHWORM DOCUMENTATION
+******************************
+The Earthworm web site has been upgraded to be consistent with
+Version 4.1. 
+
+CONTRIBUTED SOFTWARE
+********************
+Many Earthworm modules have been developed at regional networks to meet 
+their specific needs.  Since some of these may be useful to other 
+networks, we make these available at the Earthworm ftp site in the 
+Contributed_software directory.  Currently, you will find modules 
+developed at USGS Menlo Park, University of Memphis,  University of 
+Washington and University of Alaska, Fairbanks.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+
+
+    [ Part 2, Text/PLAIN  263 lines. ]
+    [ Unable to print this part. ]
+

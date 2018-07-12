@@ -1,0 +1,229 @@
+README.changes
+
+Changes to reftek2ew
+
+
+#########################################
+#########################################
+#########################################
+Converting reftek2ew to prevent bogus tracebufs
+from entering the earthworm datastream
+Davidk 06/04/2004, LynnD 6/21/2004
+
+Codework was done primarily to prvent reftek2ew from
+emitting tracebuf messages with bad timestamps,
+into the EW data stream.
+
+The code now performs the following check on each
+packet before emitting it as a tracebuf:
+  a)  starttime < endtime  (no backwards time in the packet)
+  b)  starttime > endtime_of_last_packet (no
+        backwards time between packets)
+  c)  Number of sample in each packet > 0  (no empty packets)
+  d)  starttime < system_clock + time_slop
+        (ensure that the timestamp is reasonably valid
+         and is not 20 years in the future).
+
+The changes also included the following:
+
+  a) Added support for issuing error messages via
+     the earthworm error system (statmgr).
+
+  b) Added global access (within the program)
+     to config file params
+
+  c) Improved performance of SCNL lookups for each
+     packet, by sorting the channel list and using
+     bsearch(), instead of a full list traverse.
+
+  d) Converted send.c and scn.c to use the EW logit()
+     mechanism in lieu of fprintf(stderr)
+
+
+The following three files were minimally modified
+to handle globalized params and new params:
+init.c main.c params.c
+
+The following files were heavily modified to accomodate
+the changes listed above:
+import_rtp.h
+scn.c
+send.c
+
+
+
+Added earthworm status codes for use in sending error
+messages to EW statmgr.
+
+Added program name (prog) to parameters struct.
+Added TimeJumpTolerance parameter to parameters struct.
+TimeJumpTolerance defaults to 24 hours.
+
+Made the parameters struct globally available, so that
+any function can access the params.
+
+Added get_dt_index() function to improve performance
+on SCNL lookup for each packet.
+
+Added reftek2ew_send_error() function to issue errors
+to statmgr via EW error system.
+
+Added GetLastSampleTime() / SetLastSampleTime() functions
+to get and set the last sample time for each channel.
+Used to ensure that each channels data only flows forward
+in time, and does not make errant clock jumps.
+
+scn.c
+added functions SetLastSampleTime() GetLastSampleTime()
+    get_dt_index(), add_dt_entry_to_list(), compare_lookup_table_entries()
+Modified function load_scnlp().  Broke it down into smaller parts.
+The entry array, is now in sorted order, and is accessed via bsearch().
+The matching entry record for each dt packet is retrieved via
+add_dt_entry_to_list.
+Then the scnlp header is retrieved via the index.
+Changed fprintf(stderr) calls to logit("et")
+
+send.c
+Added reftek2ew_send_error()
+Added code to  send_wav() to validate tracebuf timestamps
+before sending them into the EW data stream.
+#########################################
+#########################################
+#########################################
+
+#########################################
+#########################################
+#########################################
+Additional packet filtering based on samplerate and
+compression errors.
+The goal was to fix the screwed up logic that calculated the
+sample rate and endtime for each packet.  The previous logic
+did this based upon the contents of the current packet and the
+previous packet, and tended to blow up when the datalogger clock jumped,
+which in turn tended to cause destructive packets with incorrect data to
+be emitted from reftek2ew.
+A constraint was to not take the time and effort neccessary to wade
+into the reftek data protocol, and figure out how to extract the official
+sample rate.
+The result is a hacked up method for calculating the
+nominal sample rate of a channel, based upon the sample rate
+of the first few stable packets received per channel, and a
+list of acceptable sample rates (from the config file).
+It is envisioned that this fix, should keep reftek2ew running
+in a non-offensive manner, until RefTek (or someone else) modifies
+reftek2ew so that it obtains the official sample rate from the
+datalogger, and properly handles errors and time tears.
+Davidk 06/08/2004 (with lots of design assistance from LDD).
+
+Codework was done primarily to prvent reftek2ew from
+emitting tracebuf messages with decompression errors,
+and bad sample rates.
+
+reftek.scnl
+Added additional column SampRate, that is the nominal sample rate
+for the channel.  This parameter is optional.
+
+import_rtp.h reftek2ew.d params.c
+Added config file params:
+DropPacketsWithDecompressionErrors
+                       - filter out packets with decompression errors
+SendTimeTearPackets    - Send packets that appear immediately after a time tear.
+AcceptableSampleRates  - List of acceptable samplerates for channels emitted by reftek source.
+                         iNumAcceptableSampleRates - number of sample rates listed.
+
+
+import_rtp.h
+Added functions:
+EWIsValidPacket        - function that performs validation on tracebufs before
+                         they are sent out into EW land.
+SampleRateIsValid      - function that validates the sample rate vs. the nominal for the channel.
+SetNomSampleRate       - function that stores the nominal sample rate for the channel,
+                         given that it stored already and that the calculated rate is
+                         acceptable.
+GetNomSampleRate       - function that returns the nominal sample rate for the channel.
+SampleRateIsAcceptable - function that verifies that the sample rate is in the acceptable list.
+
+import_rtp.h params.c
+Added hardcoded parameters:
+FilterOnSampleRate     - filter out packets with questionable sample rates.
+GuessNominalSampleRate - program should try to guess the sample rates for
+                         channels not defined in the config file, by looking
+                         at the sample rate of incoming packets.
+
+scn.c
+Added functions:
+SampleRateIsValid      - function that validates the sample rate vs. the nominal
+                         for the channel. Allows for a small amount of slop defined
+                         by (ALLOWABLE_SAMPLE_RATE_SLOP).
+SetNomSampleRate       - function that stores the nominal sample rate for the channel,
+                         given that it is not stored already and that the calculated
+                         rate is acceptable.
+GetNomSampleRate       - function that returns the nominal sample rate for the channel.
+SampleRateIsAcceptable - function that verifies that the sample rate is in the acceptable
+                         list. Allows for a small amount of slop defined by
+                         (ALLOWABLE_SAMPLE_RATE_SLOP).
+Modified code to parse SCNL list file, to extract optional "Sample Rate" column.
+
+
+send.c
+Modified send_wav() to optionally drop packets with decompression errors.
+Moved all EW "bad tracebuf" filtering out of send_wav() and into a new function:
+EWIsValidPacket().
+Modified send_wav() to calculate the packet endtime and sampletime from the
+nominal sample rate that is stored in scn.c for the channel, instead of calculating
+the params from the reftek get_samprate() function.
+
+Added function:
+EWIsValidPacket        - function that performs validation on tracebufs before
+                         they are sent out into EW land.  Added support for sending
+                         of packets immediately after a time discontinuity, if
+                         SendTimeTearPackets is set to 1 in config file.
+
+Added filtering based on samplerate functionality.
+
+#########################################
+#########################################
+#########################################
+
+7/25/06 Roberta Stavely, Reftek
+Make changes to accomodate up to 18 channels.
+Make changes to decode steim2 data.
+Make changes to use EH packet to always get rate.
+Make changes to validate calculated rate to be only rate support by reftek equipment.
+	arc_api.h
+		make chm_mask 16-32 & define ALL_CHANNELS to be 18 bits
+	RTP.H
+		define MAX_CHANS to 18
+	steim2 changes:
+		Steim2 routines to decode data were already changed for other non-earthworm utilities so..
+		copied rtpd\src\lib\reftek\dt.c to reftek2ew\lib\reftek\dt.c
+		copied rtpd\src\lib\reftek\et.c to reftek2ew\lib\reftek\et.c
+		copied rtpd\src\lib\reftek\eh.c to reftek2ew\lib\reftek\eh.c
+		copied rtpd\src\lib\reftek\steim.c to reftek2ew\lib\reftek\steim.c
+		copied rtpd\src\lib\reftek\steim.h to reftek2ew\lib\reftek\steim.h
+		copied rtpd\src\lib\reftek\private.h to reftek2ew\lib\reftek\private.h
+		copied rtpd\src\lib\reftek\reftek.h to reftek2ew\reftek.h
+		copied rtpd\src\lib\reftek\rtp.h to reftek2ew\rtp.h
+		copied rtpd\src\lib\reftek\type.c to reftek2ew\lib\reftek\type.c
+	rate calc changes
+		eh.c
+			add function reftek_eh_rate to get rate from eh packet
+		reftek.h
+			add function prototype for reftek_eh_rate
+		params.c
+			use default sample rates that are consistent with our equipment.
+			change default acceptable rate list.
+			read in DropPacketsOutOfOrder
+		samprate.c
+			make a routine to get dt_list item from eh data
+			always set rate to one in scn file if specified
+			round calculated rate to integer if >= 1.0
+			change %difference threshold of rate from 1 to 5 before we reset the rate to use
+		scn.c
+			make SampleRateIsAcceptable() global
+		send.c
+			Read rate from EH packet every time we see it
+			Always set rate to value in scnl file if specified for the channel
+			otherwise use value read from EH
+			otherwise use calculated value
+			only check packet order is DropPacketsOutOfOrder is set

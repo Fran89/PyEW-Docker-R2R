@@ -1,0 +1,37 @@
+#
+#   THIS FILE IS UNDER CVS - 
+#   DO NOT MODIFY UNLESS YOU HAVE CHECKED IT OUT.
+#
+#    $Id: $
+#
+#    Revision history:
+#     $Log$
+#
+
+#     Nmake File For wftimeshifter - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = wftimeshifter   
+O = $(APP).obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O 
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $L\trheadconv.obj \
+    $L\libew.lib $L\swap.obj -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	del $B\wftimeshifter*

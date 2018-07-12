@@ -1,0 +1,69 @@
+#Phase         NAME   TAUP_ALIAS
+#RayParam      MIN    MAX
+#DistRange     MIN    MAX
+#DistDelta     DELTA
+#DepthRange    MIN    MAX
+#DepthDelta    DELTA
+#TimeDelta     DELTA
+#ExcludeRange  DMIN DMAX ZMIN ZMAX
+
+
+#entry weights:
+# AssocStrength  - strength with which this phase binds to an Event
+# LocWeight      - weight with which this phase affects origin location
+# MagThresh      - minimum magnitude of quake which this phase can
+                   be associated with.
+				   (Some distant/special phases come in very well with
+				    larger quakes, but you don't want them wrongly assoc.
+					with a small quake)
+# ResWinWidth - width of residual window (3 sigma) for the phase.
+
+############################################
+# Reflected Phases (not penetrating the core)
+############################################
+Phase           PP      PP
+DistRange       80     145
+DistDelta        5
+DepthRange       0     800
+DepthDelta      25
+TimeDelta       20
+LocWeight        0.25
+ResWinWidth     12.5
+# time 400-1600 sec
+
+Phase          PcP     PcP
+DistRange       25      55
+DistDelta      2.5
+DepthRange       0     800
+DepthDelta      25
+TimeDelta       10
+# time 745-950 sec
+
+Phase           ScP      ScP
+DistRange        20      60
+DistDelta        4
+DepthRange       0       100
+DepthDelta      25
+TimeDelta       10
+LocWeight        0.05
+# time 600 - 910  sec
+
+
+Phase           ScP      ScP
+DistRange        25      60
+DistDelta        3.5
+DepthRange     100       800
+DepthDelta      25
+TimeDelta       10
+LocWeight        0.05
+# time 600 - 910  sec
+
+Phase           pP      pP
+DistRange       20     100
+DistDelta        5
+DepthRange      35     785
+DepthDelta      25
+TimeDelta       20
+LocWeight        0.25
+# time 250 - 850 sec
+

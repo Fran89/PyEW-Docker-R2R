@@ -1,0 +1,52 @@
+#############################
+# Makefile for ewhtmlreport #
+#############################
+
+LINUX_FLAGS=$(MT_FLAG) -lpthread -lm
+SOLARIS_FLAGS=$(MT_FLAG) -lposix4 $(LINK_LIBS)
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -g -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+EWBIN = $L/libew_mt.a $L/site.o \
+	$L/read_arc.o $L/fleng.o $L/rw_mag.o $L/dirops_ew.o
+
+all:
+	make -f makefile.unix clean
+	make -f makefile.unix ewhtmlreport
+
+### Removed until alternative can be found
+#webdata.h: ewhtmlreport.html ewhtmlreport.js
+#	xxd -i ewhtmlreport.html > webdata.h
+#	xxd -i ewhtmlreport.js >> webdata.h
+#	xxd -i dygraph-combined.js >> webdata.h
+#ewhtmlreport_html.o: ewhtmlreport.html
+#	objcopy --input binary --output elf32-i386 --binary-architecture i386 \
+#	ewhtmlreport.html ewhtmlreport_html.o
+#
+#ewhtmlreport_js.o: ewhtmlreport.js
+#	objcopy --input binary --output elf32-i386 --binary-architecture i386 \
+#	ewhtmlreport.js ewhtmlreport_js.o
+#
+#dygraph.o: dygraph-combined.js
+#	objcopy --input binary --output elf32-i386 --binary-architecture i386 \
+#	dygraph-combined.js dygraph.o
+#
+
+ewhtmlreport: ewhtmlreport.o ewjson.o ew_csv.o $(EWBIN)
+	$(CC) $(CFLAGS) -o $B/ewhtmlreport ewhtmlreport.o ewjson.o ew_csv.o \
+	$(EWBIN) $(SPECIFIC_FLAGS)
+
+lint:
+	lint ewhtmlreport.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ewhtmlreport*

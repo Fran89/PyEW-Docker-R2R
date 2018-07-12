@@ -1,0 +1,524 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE></TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2 ALIGN=CENTER>TABLE of Earthworm Modules with I/O Characteristics</H2>
+<DIV ALIGN=right><P><B>Jan 7, 1999</B></P></DIV>
+
+<CENTER><TABLE BORDER=2 CELLSPACING=5 >
+<TR>
+<TD>&nbsp;</TD>
+
+<TH colspan=3 align=center>Message type (<A HREF="#note 1">note 1</A>)</TH>
+
+</TR>
+
+<TR>
+<TH align=left>Module</TH>
+
+<TH align=left>Reads</TH>
+
+<TH>Writes<BR>
+(<A HREF="#note 2">note 2</A>)</TH>
+
+<TH>Pass<BR>
+through</TH>
+
+</TR>
+
+<TR>
+<TD>ad_demux</TD>
+
+<TD>adbuf</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/adsend_cmd.html">adsend</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>arc2trig</TD>
+
+<TD>tracebuf</TD>
+
+<TD>triglist2k</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/binder_ew_cmd.html">binder_ew</A></TD>
+
+<TD>pick<BR>
+pick2k</TD>
+
+<TD>quake2k<BR>
+link</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/coaxtoring_cmd.html">coaxtoring</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>all</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/compress_UA_cmd.html">compress_ua</A></TD>
+
+<TD>tracebuf</TD>
+
+<TD>trace_comp_ua</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top>copystatus</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>error<BR>
+heartbeat</TD>
+
+</TR>
+
+<TR>
+<TD>cubic_msg</TD>
+
+<TD>h71sum2k</TD>
+
+<TD>cubic</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/decompress_UA_cmd.html">decompress_ua</A></TD>
+
+<TD>trace_comp_ua</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>diskmgr</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>error</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/earth2uw.html">earth2uw<BR>
+(UW)</A></TD>
+
+<TD>tracebuf</TD>
+
+<TD>UW2_trace_data file</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/eqalarm_ew.html">eqalarm_ew</A><BR>
+</TD>
+
+<TD>h71sum2k</TD>
+
+<TD>page</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/eqbuf_cmd.html">eqbuf</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>any</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/eqcoda_cmd.html">eqcoda</A></TD>
+
+<TD>event2k (<A HREF="#note 3">note 3</A>)</TD>
+
+<TD>hyp2000arc</TD>
+
+<TD>other</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/eqprelim_cmd.html">eqprelim</A></TD>
+
+<TD>pick2k<BR>
+coda2k<BR>
+quake2k<BR>
+link</TD>
+
+<TD valign=top>event2k (<A HREF="#note 3">note 3</A>)</TD>
+
+<TD valign=top>other</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/eqproc_cmd.html">eqproc</A></TD>
+
+<TD>pick2k<BR>
+coda2k<BR>
+quake2k<BR>
+link</TD>
+
+<TD valign=top>event2k (<A HREF="#note 3">note 3</A>)</TD>
+
+<TD valign=top>other</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/eqverify_cmd.html">eqverify</A></TD>
+
+<TD>hyp2000arc</TD>
+<TD>hyp2000arc</TD>
+
+<TD>other</TD>
+
+</TR>
+
+<TR>
+<TD>evanstrig</TD>
+
+<TD>tracebuf</TD>
+
+<TD>lptrig</TD>
+
+<TD>&nbsp</TD>
+
+</TR>
+
+<TR>
+<TD>export_generic</TD>
+
+<TD>configured</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>export_scn</TD>
+
+<TD>tracebuf or picks</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>getdst</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top>getter</TD>
+
+<TD>pick2k<BR>
+coda2k</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/hypo2000_mgr_cmd.html">hypo_mgr</A></TD>
+
+<TD valign=top>hyp2000arc</TD>
+
+<TD>hyp2000arc<BR>
+h71sum2k</TD>
+
+<TD valign=top>other</TD>
+
+</TR>
+
+<TR>
+<TD>import_generic</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>any</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>lptrig</TD>
+
+<TD>adbuf</TD>
+
+<TD>lptrig</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/menlo_report_cmd.html">menlo_repor</A>t</TD>
+
+<TD>hyp2000arc<BR>
+h71sum2k</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>nano2trace</TD>
+
+<TD>nanobuf</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>pagerfeeder</TD>
+
+<TD>page</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top>pick_ew</TD>
+
+<TD valign=top>tracebuf</TD>
+
+<TD>pick2k<BR>
+coda2k</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top>putter</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>pick2k<BR>
+coda2k</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/reftek2ew_cmd.html">ref2ew<BR>
+(UW)</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>rcv</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/ringtocoax_cmd.html">ringtocoax</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>all</TD>
+
+</TR>
+
+<TR>
+<TD valign=center><A HREF="cmd/statmgr_cmd.html">statmgr</A></TD>
+
+<TD>heartbeat<BR>
+error</TD>
+
+<TD valign=center>page message or<BR>email</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD><A HREF="cmd/sun_demux.html">sun_demux<BR>
+(UW)</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/tankplayer_cmd.html">tankplayer</A></TD>
+
+<TD>&nbsp;</TD>
+
+<TD>adbuf or<BR>
+tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>trg_assoc</TD>
+
+<TD>lptrig</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top>uw_report</TD>
+
+<TD>hyp2000arc<BR>
+h71sum2k</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>vdl</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD valign=top><A HREF="cmd/wave_serverV_cmd.html">wave_serverV</A></TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>carlstatrig</TD>
+
+<TD>tracebuf</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+<TR>
+<TD>carlstatrig</TD>
+
+<TD>&nbsp;</TD>
+
+<TD>triglist2k</TD>
+
+<TD>&nbsp;</TD>
+
+</TR>
+
+</TABLE></CENTER>
+
+<P><A NAME="note 1"></A>Note 1: See <A HREF="earthworm.d.html">earthworm.d</A>
+for definition of message types.
+</P>
+<P><A NAME="note 2"></A>Note 2: All modules generate heartbeats and error messages.
+They are not shown in the table. </P>
+<P><A NAME="note 3"></A>Note 3: Event2k is a temporary format used within the eqproc and eqprelim mega-modules.</P>
+</BODY>
+</HTML>

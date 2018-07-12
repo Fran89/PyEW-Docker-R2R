@@ -1,0 +1,81 @@
+
+
+dc2tank - datacenter to tank module
+
+	Pulls miniSEED data from a datacenter (currently only DHI enabled) and converts
+it to a tankplayer tank. Ultimately this module will allow pulling from the CWB format
+data center protocol for waveforms.
+
+	Written by Paul Friberg and Kevin Frechette of ISTI.com July 2007.
+
+ARGUMENT LIST:
+
+Usage: ./dc2tank [-n maxsamples] [-d secs] -D dir -t [d|c] -f scnlfile -p props -o tank
+Version 0.0.1 2007.07.18
+ -n maxsamples - the max number of samps per tracebuf in tank
+        defaults to 200 per tbuf, cannot be larger than 1008
+ -D workingdir - the working dir where mseeds and intermediate tanks are put
+ -p props - properties file needed for DHI type
+ -f scnlfile - SCNL file (space separated) needed for DHI type DC
+ -o tankfile - name of remuxed tank to write
+ -s YYYY/MM/DD HH:MM:SS - start time  to grab (put in quotes) required.
+ -d secs - optional duration in secs to grab (default=600secs).
+ -t d or c - type of data center d=DMC/DHI, c=CWB (not supported yet)
+
+
+
+If no args are given, the above message is spewed back to the user.
+
+REQUIREMENTS:
+
+1. Java version 1.5 or greater installed and in the path of the user:
+
+	java -version
+
+	should run for you.
+
+2. DHI properties file. An example below is for IRIS DHI and UCBerkeley:
+
+output of iris.txt:
+  NameService=corbaloc:iiop:dmc.iris.washington.edu:6371/NameService
+  NetworkDNS=edu/iris/dmc
+  NetworkDC=IRIS_NetworkDC
+  SeismogramDNS=edu/iris/dmc
+  SeismogramDC=IRIS_DataCenter
+
+output of ncedc.txt (uc berkeley):
+
+ NameService=corbaloc:iiop:transfrm.geo.berkeley.edu:1050/NameService
+ NetworkDNS=edu/berkeley/geo
+ NetworkDC=NCEDC_NetworkDC
+ SeismogramDNS=edu/berkeley/geo
+ SeismogramDC=NCEDC_DataCenter
+
+3. a SCNL file (comma separated Station Channel Network Location per line),
+	uses the -- convention for blank location codes as EW does:
+Example:
+YUH BHZ BK --
+CVS BHZ BK --
+BDM BHZ BK --
+
+4. DHI2mseed.jar jar file in the current directory where you intend to 
+ run the code (we can move this later or point to it via an env var).
+
+
+5. The ability to write to a directory for working space for miniSEED files
+	and a temporary tank file. Note the temporary tank file is removed
+	after it is remuxed.
+
+EXAMPLE RUN:
+
+dc2tank -D test -p ncedc.txt -f bk.scnl -s "2007/07/01 00:00:00" -t d -v -o testtank
+running DHI2mseed to get mseed files
+Processing BDM.BHZ.BK..20070701.000000.mseed
+Processing CVS.BHZ.BK..20070701.000000.mseed
+Remuxing tank in time order testtank
+20070720_UTC_18:44:00 remux_tbuf: finished writing file testtank
+
+The file testtank is a remux'ed  tankbuf suitable for tankplayer'ing.
+
+Note that the miniSEED files are sitting in the directory test (specified by the -D arg).
+

@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: copystatus overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Copystatus Overview</H1>
+<I>(last revised 27 July, 1998)</I></CENTER>
+
+<P>
+The status manager ("statmgr") program reads all error and heartbeat messages from a single transport ring (shared-memory region).   However, client programs to the status manager may write their error and heartbeat messages to any transport ring.  In order to make all error and heartbeat messages accessible to the status manager, the copystatus program is used to copy messages from one transport ring to another.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index |</A>
+<A HREF="../cmd/copystatus.html"> Copystatus Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

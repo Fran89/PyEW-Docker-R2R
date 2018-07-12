@@ -1,0 +1,1724 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Libsrc_functions – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Libsrc_functions?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Libsrc_functions.html" title="View Libsrc_functions">Libsrc_functions</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Libsrc_functions?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Libsrc_functions?action=diff&amp;version=9" title="Version 9 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-20T09%3A23%3A59-08%3A00&amp;precision=second" title="2012-01-20T09:23:59-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/20/12 09:23:59</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="Libsrc_functions.html#EARTHWORMLIBRARYROUTINES">EARTHWORM LIBRARY ROUTINES</a>
+    <ol>
+      <li>
+        <a href="Libsrc_functions.html#UTILITYSYSTEM-INDEPENDENTFUNCTIONS">UTILITY (SYSTEM-INDEPENDENT) FUNCTIONS</a>
+      </li>
+      <li>
+        <a href="Libsrc_functions.html#SYSTEM-DEPENDENTFUNCTIONS">SYSTEM-DEPENDENT FUNCTIONS</a>
+      </li>
+      <li>
+        <a href="Libsrc_functions.html#PROGRAMMINGWITHEARTHWORMLIBRARYROUTINES">PROGRAMMING WITH EARTHWORM LIBRARY ROUTINES</a>
+        <ol>
+          <li>
+            <a href="Libsrc_functions.html#chron3.c">chron3.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#fft_prep.c">fft_prep.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#fft99.c">fft99.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#getutil.c">getutil.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#kom.c">kom.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#logit.c">logit.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#mem_circ_queue.c">mem_circ_queue.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#parse_trig.c">parse_trig.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#putaway.c">putaway.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#queue_max_size.c">queue_max_size.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#read_arc.c">read_arc.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#site.c">site.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#socket_ew_common.c">socket_ew_common.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#swap.c">swap.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#tlay.c">tlay.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#transfer.c">transfer.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#wave_client.c">wave_client.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#ws_clientII.c">ws_clientII.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#copyfile.c">copyfile.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#dirops_ew.c">dirops_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#errexit.c">errexit.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#getavail.c">getavail.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#getsysname_ew.c">getsysname_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#pipe.c">pipe.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#sema_ew.c">sema_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#sendmail.c">sendmail.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#sendpage.c">sendpage.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#sleep_ew.c">sleep_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#socket_ew.c">socket_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#threads_ew.c">threads_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#time_ew.c">time_ew.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#transport.c">transport.c</a>
+          </li>
+          <li>
+            <a href="Libsrc_functions.html#truetime.c">truetime.c</a>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EARTHWORMLIBRARYROUTINES">EARTHWORM LIBRARY ROUTINES</h1>
+<p>
+Updated September 29, 2000
+</p>
+<p>
+Many functions which are generally useful to Earthworm modules are kept in the Earthworm library source directory, vx.x/src/libsrc (where x.x is the Earthworm version number of interest). Within this directory are a number of subdirectories:
+</p>
+<p>
+<strong>util</strong>
+</p>
+<p>
+contains system-independent functions (those which compile on all Earthworm-approved operating system)
+</p>
+<p>
+<strong>solaris</strong>
+</p>
+<p>
+contains system-dependent functions for Solaris 2 workstations.
+</p>
+<p>
+<strong>winnt</strong>
+</p>
+<p>
+contains system-dependent functions for Windows NT machines.
+</p>
+<p>
+Each file within these directories contain one or more related functions. This document briefly describes the Earthworm library functions and how to use them in Earthworm modules.
+</p>
+<p>
+The object files for these routines are kept in vx.x/lib as separate files, not as an archived library.
+</p>
+<h2 id="UTILITYSYSTEM-INDEPENDENTFUNCTIONS">UTILITY (SYSTEM-INDEPENDENT) FUNCTIONS</h2>
+<p>
+The following source code files reside in vx.x/src/libsrc/util:
+</p>
+<p>
+<strong>ahputaway.c</strong>
+</p>
+<p>
+routines for writing AH files. Use these with putaway.c instead of calling them directly.
+</p>
+<p>
+<strong>brent.c</strong>
+</p>
+<p>
+from "Numerical Recipes in C," used only in tlay.c.
+</p>
+<p>
+<strong>chron3.c</strong>
+</p>
+<p>
+time-conversion routines.
+</p>
+<p>
+<strong>fft_prep.c</strong>
+</p>
+<p>
+fft_prep contains routines for setting up the structures needed for the Singleton FFT package.
+</p>
+<p>
+<strong>fft99.c</strong>
+</p>
+<p>
+This file provides the Temperton FFT (Fast Fourier Transform) packageff.
+</p>
+<p>
+<strong>getutil.c</strong>
+</p>
+<p>
+string-to-number mapping for shared memory keys, module ids and message types.
+</p>
+<p>
+<strong>kom.c</strong>
+</p>
+<p>
+string-parsing routines for reading control files.
+</p>
+<p>
+<strong>logit.c</strong>
+</p>
+<p>
+log file routines.
+</p>
+<p>
+<strong>mem_circ_queue.c</strong>
+</p>
+<p>
+routines for queueing messages based on preallocated memory.
+</p>
+<p>
+<strong>mnbrak.c</strong>
+</p>
+<p>
+from "Numerical Recipes in C," used only in tlay.c.
+</p>
+<p>
+<strong>parse_trig.c</strong>
+</p>
+<p>
+Parse a trigger message, for preparing wave_serverV requests.
+</p>
+<p>
+<strong>putaway.c</strong>
+</p>
+<p>
+Master putaway routines, to access ahputaway.c, sacputaway.c, and sudsputaway.c
+</p>
+<p>
+<strong>queue_max_size.c</strong>
+</p>
+<p>
+routines for queueing messages. Deprecated since they allocate memory during processing; use mem_circ_queue instead
+</p>
+<p>
+<strong>read_arc.c</strong>
+</p>
+<p>
+Read a hyp2000 archive message into structures.
+</p>
+<p>
+<strong>sacputaway.c</strong>
+</p>
+<p>
+routines for writing SAC files. Use these with putaway.c instead of calling them directly.
+</p>
+<p>
+<strong>site.c</strong>
+</p>
+<p>
+load station names and lat/long from station location file.
+</p>
+<p>
+<strong>socket_ew_common.c</strong>
+</p>
+<p>
+routines for using sockets with timeouts.
+</p>
+<p>
+<strong>sudsputaway.c</strong>
+</p>
+<p>
+routines for writing SUDS files. Use these with putaway.c instead of calling them directly.
+</p>
+<p>
+<strong>swap.c</strong>
+</p>
+<p>
+byte-swapping routines for exchanging data between PCs and other computers.
+</p>
+<p>
+<strong>tlay.c</strong>
+</p>
+<p>
+travel-time calculation routines.
+</p>
+<p>
+<strong>transfer.c</strong>
+</p>
+<p>
+Routines for dealing with instrument transfer functions using pseudospectral methods and the Temperton FFT package, fft99.c.
+</p>
+<p>
+<strong>wave_client.c</strong>
+</p>
+<p>
+routines for clients to communicate with the original wave_server.
+</p>
+<p>
+<strong>geo_to_km.c</strong>
+</p>
+<p>
+Routine for computing distance on the earth's sufrace: given two locations specified by lat-lon pairs, compute the distance and bearing from the first to the second point.
+</p>
+<p>
+<strong>ws_clientII.c</strong>
+</p>
+<p>
+routines for clients to communicate with wave_serverV, with the help of the socket timing routines.
+</p>
+<h2 id="SYSTEM-DEPENDENTFUNCTIONS">SYSTEM-DEPENDENT FUNCTIONS</h2>
+<p>
+Each system-dependent directory contains all of the same functions as the other(s), with identical calling sequences and return values. So if you look in vx.x/src/libsrc/solaris, or vx.x/src/libsrc/winnt you will find the following source code files:
+</p>
+<p>
+<strong>copyfile.c</strong>
+</p>
+<p>
+transfer a file to a remote machine using rcp.
+</p>
+<p>
+<strong>dirops_ew.c</strong>
+</p>
+<p>
+file system directory operations.
+</p>
+<p>
+<strong>errexit.c</strong>
+</p>
+<p>
+Stub function for non-zero return status on Solaris
+</p>
+<p>
+<strong>getavail.c</strong>
+</p>
+<p>
+find the available disk space.
+</p>
+<p>
+<strong>getsysname_ew.c</strong>
+</p>
+<p>
+get the local system name.
+</p>
+<p>
+<strong>pipe.c</strong>
+</p>
+<p>
+message-passing within mega-module.
+</p>
+<p>
+<strong>remote_copy.c</strong>
+</p>
+<p>
+transfer a file to a remote machine using rcp; slightly different from copyfile.c.
+</p>
+<p>
+<strong>sema_ew.c</strong>
+</p>
+<p>
+semaphore functions.
+</p>
+<p>
+<strong>sendmail.c</strong>
+</p>
+<p>
+send email.
+</p>
+<p>
+<strong>sendpage.c</strong>
+</p>
+<p>
+send pager message via serial port.
+</p>
+<p>
+<strong>sleep_ew.c</strong>
+</p>
+<p>
+sleep (millisecond resolution).
+</p>
+<p>
+<strong>socket_ew.c</strong>
+</p>
+<p>
+system-dependent socket functions.
+</p>
+<p>
+<strong>threads_ew.c</strong>
+</p>
+<p>
+multi-thread functions.
+</p>
+<p>
+<strong>time_ew.c</strong>
+</p>
+<p>
+reentrant system clock functions.
+</p>
+<p>
+<strong>transport.c</strong>
+</p>
+<p>
+Earthworm message-passing protocol.
+</p>
+<p>
+<strong>truetime.c</strong>
+</p>
+<p>
+get time from True-Time PC-SG board (WindowsNT only)
+</p>
+<h2 id="PROGRAMMINGWITHEARTHWORMLIBRARYROUTINES">PROGRAMMING WITH EARTHWORM LIBRARY ROUTINES</h2>
+<p>
+At the moment, the Earthworm library routines are not a true library. Instead, they exist as object files in the vx.x/lib directory. After a module is compiled, it must be linked with the library objects that contain the library functions that have been called within the module. In this section, we give a synopsis of the functions within each of the library source file listed above. More details can be found in the comments within the source code. Many library function prototypes are given in vx.x/include/earthworm.h. Others are given in separate include files in vx.x/include.
+</p>
+<h3 id="chron3.c">chron3.c</h3>
+<p>
+This file contains time-conversion routines written by Carl Johnson, modified by Will Kohler and Lynn Dietz. In these routines, <tt>julian' refers to the number of days (or minutes or seconds) since January 1, 1600. </tt>Gregorian' dates consist of the four-digit year (1997), month numbered 1 through 12, day of the month, hours, minutes, and fractional seconds.
+</p>
+<pre class="wiki">#include &lt;chron3.h&gt;
+
+void date20( double secs, char *str );
+        Create an 20-character-long string representation of the 
+        date (in the form of "1988Jan23 1234 12.21") given the number
+        of julian seconds.
+
+void date17( double secs, char *str );
+        Create a 15-character-long string representation of the 
+        date (in the form of "19880123123412.21") given the number
+        of julian seconds.
+
+struct Greg *datime( double secs );
+        Calculate gregorian date and time from julian seconds.
+
+int epochsec17( double *sec, char *tstr )
+        Convert time in 15-character string form of yyyymmddhhmmss.ff to
+        seconds since 1970-01-01 00:00:00.0 (similar to Unix epoch
+        time, except as a type double instead of Unix type time_t)
+
+struct Greg *gregor( long days );
+        Calculate gregorian date and time from julian date.
+
+struct Greg *grg( long min ); 
+        Calculate gregorian date and time from julian minutes.
+
+long julian( struct Greg *g );
+        Calculate julian date from gregorian date.
+
+long julmin( struct Greg *g );
+        Calculate julian minutes from gregorian date.
+
+double julsec17( char *str );
+        Calculate time in julian seconds from a 15-character-long
+        string of the form 19880123123412.21
+
+time_t timegm( struct tm *tm );
+        Convert time as a struct tm to seconds since 1970-01-01 00:00:00.0
+        This function is equivalent to timegm() in SunOS 4.x.
+
+double tnow( void );
+        Return current system time in julian seconds.
+</pre><h3 id="fft_prep.c">fft_prep.c</h3>
+<p>
+fft_prep contains routines for setting up the structures needed for the Singleton FFT package, sing.c. The Singleton FFT's can be applied to sequence that are multiples of any prime integers. This provides much greater flexibility than the usual power-of-2 FFTs. However, if the sequence size is a multiple of large primes, or is prime itself, then the <tt>fft' is no longer a </tt>fast' Fourier transform. So fft_prep is used to build up a list of numbers that are multiples of powers of 2, 3 and 5. Then for any given sequence size, you can do a Singleton FFT using the next largest number in this list, padding your data to make up the difference. This saves CPU time and space. prepFFT() is the main function of interest. Other functions are primarily for debugging or internal use. prepFFT() is not required for sing.c; it's just a convenience.
+</p>
+<pre class="wiki">#include &lt;fft_prep.h&gt;
+long prepFFT( long n, FACT **pf )
+/*
+ * prepFFT: find a `suitable' FFT size for proposed size n, and return
+ * a pointer to the FACT structure that has been prepared for this FFT.
+ * Currently `suitable' is defined as the next even nfft value larger than n.
+ * In the future, a more intelligent sizing algorithm may be employed.
+ *
+ * Arguments: n   the proposed FFT size
+ *           *pf  pointer to the FACT structure that will be filled in
+ *                by prepFFT for this FFT.
+ * returns:  size of FFT on success,
+ *           -1 on failure (out of memory; not logged)
+ *           -2 on other errors, logged here
+ */
+</pre><h3 id="fft99.c">fft99.c</h3>
+<p>
+This file provides the Temperton FFT (Fast Fourier Transform) package, written by Cleve Temperton at ECMWF, modified and documented by Russ Rew at NCAR in 1980. This packages includes two important (but not unique) features: it will do FFTs on sequence that are multiples of any prime integers, not just powers of 2. Secondly, it will transform a sequence of real data efficiently. Theory tells us that the Fourier transform of a real sequence is a conjugate-symmetric complex sequence. So instead of calculating and saving the repeated conjugate-symmetric values, these routines save that time and space. (See Cooley, Lewis &amp; Welch, J. Sound Vib. (1970) 12(3) or any digital signal processing text.) For use of these routines, see the extensive comments in the source file fft99.c.
+</p>
+<pre class="wiki">#include &lt;fft99.h&gt;
+</pre><h3 id="getutil.c">getutil.c</h3>
+<p>
+Functions in this file map various Earthworm abstractions from character strings to integers. They use information from the include file vx.x/include/earthworm.h (hard-coded into each module) and from ${EW_PARAMS}/earthworm.d (configured at run-time) as well as from certain environment variables.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+long GetKey( char *str ); 
+        Convert shared memory region name to its key number using 
+        the table in earthworm.d.
+
+int  GetInst( char *str, unsigned char *inst ); 
+        Convert installation name to installation number using 
+        table in earthworm.h.
+
+int  GetModId( char *str, unsigned char *mod );
+        Convert module name to module id value using the
+        table in earthworm.d.
+
+int  GetType( char *str, unsigned char *type );
+        Convert message type (string) to message type value using 
+        the table in earthworm.d.
+
+int  GetLocalInst( unsigned char *inst );  
+        Get the local installation number from the environment
+        variable EW_INSTALLATION. 
+
+void GetUtil_LoadTable( void );       
+        Load (reload) the tables for shared memory region keys, 
+        module ids, and message types from the file earthworm.d 
+        in the EW_PARAMS directory.
+</pre><p>
+<strong>geo_to_km.c</strong> 
+</p>
+<pre class="wiki">Contributed by Harley Benz.
+ PURPOSE:  To compute the distance and azimuth between locations.
+ INPUT ARGUMENTS:
+    lat1:     Event latitude in decimal degrees, North positive. [r]
+    lon1:     Event longitude, East positive. [r]
+    lat2:     station latitude. [r]
+    lon2:     station longitude. [r]
+ OUTPUT ARGUMENTS:
+    DIST:    epicentral distance in km. [r]
+    AZM:      azimuth in degrees. [r]
+
+
+Calculations are based upon the reference spheroid of 1968 and
+are defined by the major radius (RAD) and the flattening (FL).
+</pre><h3 id="kom.c">kom.c</h3>
+<p>
+Functions in this file, written by Carl Johnson, are used to open and parse configuration files.
+</p>
+<pre class="wiki">#include &lt;kom.h&gt;
+
+int    k_open( char *filename );  Open new file for k-system input.
+
+int    k_close( void );    Close current file.
+
+char  *k_get( void );      Return pointer to current command.
+
+void   k_dump( void );     Print last line read from file.
+
+int    k_err( void );      Return last error code and clear.
+
+int    k_put( char *s );   Insert command line to be parsed. (???)
+
+int    k_rd( void );       Read a line from file into buffer.
+
+int    k_its( char *string );   Compare string of last token to
+                           given string; 1=match 0=no match.
+
+char  *k_com( void );      Return last line read from file.
+
+char  *k_str( void );      Return next token as pntr to string.
+
+double k_val( void );      Return next token as a double real.
+
+int    k_int( void );      Return next token as an integer.     
+
+long   k_long( void );     Return next token as a long integer.
+</pre><h3 id="logit.c">logit.c</h3>
+<p>
+Functions in logit.c maintain and write daily log files and optionally on-screen messages. First call logit_init(), then call logit().
+The logit functions are compiled in two versions, one is multi-thread safe, the other is not. When linking with the thread-safe version (logit_mt.o), the program must also link with time_ew.o and sema_ew.o. When linking with the non-thread-safe version (logit.o), the program only needs to link with time_ew.o.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+void logit_init( char *modname, short mid, int bufsiz, int flag ); 
+        Initialize the logging routines.  Must be called once
+        before logit().
+        modname: name of the module
+        mid: module ID number
+        bufsiz: Size of buffer to be allocated; must be large enough
+                to accomodate largest message to be written.
+        flag: 1 to log to disk; 
+              0 to turn off disk logging; 
+              2 to disable logging to stdout and stderr.
+void logit( char *flag, char *format, ... );     
+        Log a message to disk.
+        flag is a string controlling where output is written:
+           If any character is 'e', output is written to stderr.
+           If any character is 'o', output is written to stdout.
+           If any character is 't', output is time stamped.
+           If any character is 'd', output is stamped with the process id. 
+        The rest of calling sequence is identical to printf().
+</pre><h3 id="mem_circ_queue.c">mem_circ_queue.c</h3>
+<p>
+This is son of in 'queue_max_size.c', which is son of queue, which Will got from Kelley and Pohl. These were clever linked list schemes which allocated as needed. This was too scary: the system could run out of memory and fail after running for a long time. So, out with the cleverness, and in with brute force: this version pre- allocates the max amount of memory it will ever use at startup, and does the buffering in an array of message slots. The buffering is circular, as before: When we run out of message slots, we overwrite the oldest message.
+</p>
+<pre class="wiki">#include &lt;mem_circ_queue.h&gt;
+
+int initqueue( QUEUE* q, unsigned long maxElements, unsigned long 
+        elementMaxSize );
+        Initialize the message queue as a circular buffer.
+
+int enqueue( QUEUE *q, DATA x, long size, MSG_LOGO userLogo );
+        Moves message in x into the circular buffer.
+        size: the number of bytes in x.
+        userLogo: identifies the source of the data. See the transport
+           routines in transport.c.
+        Returns: 0 if no error
+                -3 if we clobbered an unsent message (stepped
+                   on our tail.)  
+
+int dequeue( QUEUE *q, DATA x, long* size, MSG_LOGO* userLogoPtr );
+        Copies oldest message and its logo into caller's space.
+        Returns 0 if no error; 
+               -1 if the queue is empty.
+</pre><h3 id="parse_trig.c">parse_trig.c</h3>
+<p>
+parseSnippet() parses a trigger message. Inspired by, and uses, strtok. Therefore, IT IS NOT MULTI-THREAD SAFE. It must be mutex protected against concurrent calls to strtok.
+</p>
+<pre class="wiki">#include &lt;parse_trig.h&gt;
+
+int parseSnippet( char* msg , SNIPPET* pSnp , char** nxtLine );
+        Parses a trigger message *msg into the SNIPPET structure *pSnp,
+        which must be allocated by the caller. For the first call, set
+        nxtLine to msg. This tells parseSnippet that we're starting a new
+        message. It will search for, and parse the event id. It will also
+        parse the first line, and stuff the elements of the SNIPPET structure.
+        It will then advance nxtLine to point to the next line to be parsed
+        and return.  Subsequent calls, with the adjusted value of nxtLine, 
+        will result in the next line of the message being parsed. 
+        When the last line has been parsed, a EW_FAILURE will be returned.  
+</pre><h3 id="putaway.c">putaway.c</h3>
+<p>
+These routines provide the ability to create seismic datafiles in several different formats from the TRACEBUF messages obtained from wave_serverV. Current formats are AH, SAC, SUDS and earthworm tankplayer files. Other formats can be added as needed.
+</p>
+<pre class="wiki">int PA_init (char *DataFormat, long TraceBufferLen, long *OutBufferLen, 
+            int *FormatInd, char *OutDir, int debug);
+        This is the Put Away startup intializer. This is called when the 
+        system first comes up. Here is a chance to look around and see if 
+        it's possible to do business, and to complain if not, BEFORE an 
+        event has to be processed.                    
+        DataFormat: one of "ah", "sac", "suds", "tank".
+        FormatInd: set by this function; used in all the following putaway
+           functions.
+        TraceBufferLen: number of bytes of trace data that will be passed to
+           PA_next().
+        OutBufferLen: set here to the required output buffer size; passed to
+           PA_NEXT(). OutBuffer is allocated here.
+        OutDir: directory in which to put the files; created if not already
+           existing. Some formats (SAC) creates subdirectories under this.
+        debug: =1 for debugging printout; =0 for silence.
+        Returns: EW_SUCCESS or EW_FAILURE.
+
+int PA_next_ev(TRACE_REQ *trace_req, int num_req, int FormatInd, 
+               char *OutDir, char *EventDate, char *EventTime, char *EventID,
+               char *EventInst, char *EventMod, int debug);
+        This is the Put Away event initializer. It's called when a snippet
+        has been received, and is about to be processed. It gets to see the 
+        pointer to the TraceRequest array, and the number of loaded trace 
+        structures.
+        trace_req: array of filled-in TRACE_REQ structures before it gets
+        passed to ws_clientII routine to get the trace data. Not currently 
+           used.
+        num_req: number of TRACE_REQ structures. Not currently used.
+        FormatInd: from PA_init().
+        OutDir: created by PA_init().
+        EventDate: date string, suggested format: yyyymmdd. (Used by SUDS and
+           tank formats.)
+        EventTime: time string, suggested format: hhmmss. (Used by SUDS and
+           tank formats.)
+        EventID: id string. (Used by AH, SUDS and tank formats)
+        EventInst: installation string. (Used by AH, SAC, SUDS and tank 
+           formats.)
+        EventMod: module string. (Used by AH, SAC, SUDS and tank formats.)
+        debug: =1 for debugging printout; =0 for silence.
+        Returns: EW_SUCCESS or EW_FAILURE.
+
+int PA_next (TRACE_REQ *getThis, int eventid, int FormatInd, double GapThresh,
+             long OutBufferLen, char *OutputFormat, int debug);
+        This is the working entry point into the disposal system. This routine
+        gets called for each trace snippet which has been recovered.
+        getThis: one TRACE_REQ structure with tracedata.
+        eventid: event id (integer), used only by SAC format.
+        FormatInd: from PA_init().
+        GapThresh: number of sample intervals before we declare a gap in the
+           data.
+        OutBufferLen: from PA_init().
+        OutputFormat: "intel" or "sparc", to select byte order of output files.
+        debug: =1 for debugging printout; =0 for silence.
+        Returns: EW_SUCCESS or EW_FAILURE.
+
+int PA_end_ev (int FormatInd, int debug);
+        This is the PutAway end-event routine. It's called after we've
+        finished processing one event.
+        OutputFormat: "intel" or "sparc", to select byte order of output files.
+        debug: =1 for debugging printout; =0 for silence.
+        Returns: EW_SUCCESS or EW_FAILURE.
+
+int PA_close (int FormatInd, int debug);
+        This is the Put Away close routine. It's called after when we're being 
+        shut down.                                          
+        OutputFormat: "intel" or "sparc", to select byte order of output files.
+        debug: =1 for debugging printout; =0 for silence.
+        Returns: EW_SUCCESS or EW_FAILURE.
+</pre><h3 id="queue_max_size.c">queue_max_size.c</h3>
+<p>
+Functions in queue_max_size.c implement a first-in/first-out message buffer. Note that these routines allocate memory whenever a new element is added to the queue. Since this may occur during a large event, when the machine is busiest, it is better to use the mem_circ_queue routines which allocate all their memory when the module starts up.
+</p>
+<pre class="wiki">#include &lt;queue_max_size.h&gt;
+
+void initqueue( QUEUE *q, unsigned long maxElements, unsigned long
+        elementMaxSize );
+        Initialize the message queue.
+
+int enqueue( QUEUE *q, DATA x, long size, MSG_LOGO userLogo );
+        Creates a new element at the rear of the queue; copies data in
+        x to the new element. 
+        size: the number of bytes in x.
+        userLogo: identifies the source of the data. See the transport
+           routines in transport.c.
+        Returns: 0 if no error
+                -1 if memory could not be allocated.
+                -2 internal error: were about to allocate
+                   beyond requested limit. 
+                -3 if we clobbered an unsent message (stepped
+                   on our tail.)  
+
+int dequeue( QUEUE *q, DATA x, long* size, MSG_LOGO* userLogo );
+        Copies data at front of queue to memory pointed to by x.
+        Fills in size with the number of bytes copied, Sets userLogo
+        to the logo of the message source.
+        Returns: 0 if no error.
+                -1 if the queue is empty.
+
+int isempty( QUEUE q );
+        Test of the queue is empty. Returns 1 for empty queue, 0 if
+        there are meesages in the queue.
+
+DATA vfront( QUEUE q );
+        Returns pointer to the data at the front (oldest) element of
+        the queue.
+</pre><h3 id="read_arc.c">read_arc.c</h3>
+<p>
+Routines for reading HYP2000ARC summary lines and phase lines. These routines are provided for the use of arc2trig and two UW-spcific modules, uw_report and eqtee. They only read the fields that are required by these modules. If you need to read more info from the HYP2000ARC message, feel free to make additions here. You probably will need to add to the structures in read_arc.h as well.
+</p>
+<pre class="wiki">#include &lt;read_arc.h&gt;
+int read_hyp( char *sumLine, char *shdw, struct Hsum *sumP );
+        Reads the hypocenter line from an archive msg into an 
+        Hsum structure (defined in read_arch.h)
+
+        Inputs: sumLine - character string holding the summary line.
+              shdw - character string holding the summary shadow line.
+              sumP - pointer to Hsum structure provided by the caller.
+        Returns 0 on success, -1 on parsing errors.
+
+int read_phs( char *phs, char *shdw, struct Hpck *pckP );
+        Reads a phase line &amp; its shadow from archive msg 
+        into an Hpck structure (defined in read_arch.h)
+
+        Inputs: phs - character string holding one phase line
+              shdw - character string holding the phase shadow line
+              pckP - pointer to Hpck structure provided by the caller
+        Returns 0 on success, -1 on parsing errors.
+</pre><h3 id="site.c">site.c</h3>
+<p>
+Functions in site.c maintain and access a table of station names and coordinates. See the modules binder and eqproc for examples.
+</p>
+<pre class="wiki">#include &lt;site.h&gt;
+
+int  site_com( void ); 
+        Process recognized commands from config file using kom.c
+        functions. Commands are "site", to specify a single
+        station-component-net (SCN); "maxsite" to allocate space for
+        this many stations; and "sitefile", to read in a file of
+        stations. Calls site_read to parse the site file. Typically
+        called by site_load or by routine that reads its module
+        configuration file.
+
+void site_read( char *fname ); 
+        Load a Hypoinverse format (with universal station codes) 
+        station file into the Site table. Normally only called from
+        site_com().
+
+int  site_load( char *fname );
+        Process a kom.c command file that contains only commands
+        recognized by site_com() (load the Site table). Calls
+        site_com() to process each command.
+
+int  site_index( char *site, char *net, char *comp );
+        Return index in the Site table of a station given the
+        3-part site or SCN code.
+
+void site_init();
+        Allocate the site table. Only called by site_com();
+</pre><h3 id="socket_ew_common.c">socket_ew_common.c</h3>
+<p>
+Contains routines for using sockets with timeouts. The timeout argument is in milliseconds. A timeout of -1 is used to turn off timing, while a time of 0 means "give it a try an honest try but return if there are delays". If you want the timing features of these routines, then you must create the socket with socket_ew() (and not socket(2)) which puts the socket in non-blocking mode. When the -1 timeout is used, the socket is set to blocking mode for the duration of the socket_ew_common call. To get details of any failures, use socketGetError_ew() in socket_ew.c. The "flags" argument is the same as for the corresponding system socket call.
+</p>
+<pre class="wiki">cc [ flag ... ] file ... -lsocket -lnsl [ library ... ]  (Solaris version)
+
+#include &lt;socket_ew.h&gt;
+
+SOCKET accept_ew (SOCKET s, struct sockaddr FAR* addr, 
+                int FAR* addrlen, int timeout); 
+        accept_ew() attempts to accept a connection on a socket.
+        timeout is the length of time in millisec. that accept_ew() 
+        will wait before returning.  Timeout is measure from the
+        point after the initial accept() call.  Pass -1 for infinite
+        accept_ew to block.  If a successful
+        connection is not accepted before the timeout expires, or
+        if an error occurs, the function returns INVALID_SOCKET.  
+        If the latest socket error was WOULDBLOCK_EW, then 
+        no connections were requested during the timeout period.
+
+int bind_ew (SOCKET s, struct sockaddr FAR* name, int namelen );
+        bind_ew() attempts to bind the socket s to a name/port number.
+
+int closesocket_ew(SOCKET s,int HowToClose);
+        closesocket_ew() closes the socket s. HowToClose indicates
+        whether the socket should be closed gracefully or immediately.
+        Use SOCKET_CLOSE_IMMEDIATELY_EW or SOCKET_CLOSE_GRACEFULLY_EW
+        to indicate closure method.
+
+int connect_ew(SOCKET s, struct sockaddr FAR* name, 
+                int namelen, int timeout);
+        connect_ew() attempts to create a socket connection during a
+        period specified by timeout.  If it succeeds it returns a
+        successful condition.  If it fails either due to a network
+        error, or a timeout, it closes the socket and returns an
+        error. 
+        *Note:  The timeout clock starts after connect_ew() calls
+        connect(), not when connect_ew() starts.
+
+int listen_ew (SOCKET s, int backlog );
+        listen_ew() signals the mysterious protocol stack god, that
+        the socket is ready to accept connections.
+
+int recv_all (SOCKET s,char FAR* buf,int len,int flags,
+                int timeout_msec)
+        recv_all attempts to receive data on a connection oriented
+        (TCP) scoket. If timeout &gt; 0, recv_all() returns when the
+        sooner of two things happens: 
+        1. The timeout after the first recv() call expires;  
+        2. "len" bytes of data are received.
+        If timeout == -1, recv_all() returns when:
+        1. "len" bytes of data are received.
+        2. EOF is detected by recv returning 0 bytes.
+        If timeout == 0, recv_all returns when:
+        1. "len" bytes of data are received.
+        2. EOF is detected by recv returning 0 bytes.
+        3. the socket would block.
+        recv_all() returns the number of bytes of data received, or
+        SOCKET_ERROR on error. The caller is responsible for noting
+        any discrepencies in the difference between the number of
+        bytes requested to be sent, and the number of reported bytes
+        sent. If there is a discrepency, then a timeout occured.
+
+int recv_ew (SOCKET s,char FAR* buf,int len,int flags, int timeout);
+        recv_ew attempts to receive data on a connection oriented
+        (TCP) socket. timeout is the length of time in millisec. that
+        recv_ew() will wait before returning (if no data is received),
+        after making the initial recv() call.  If data (or a shutdown
+        request) is not received before the timeout expires, or if an
+        error occurs, the function returns SOCKET_ERROR.  If the
+        latest socket error is WOULDBLOCK_EW, then no data was
+        received during the timeout period. As soon as data is
+        received, the function returns. The function does not attempt
+        to completely fill the buffer before returning.  If (-1) is
+        passed for timeout then recv_ew() reverts to a blocking
+        recv() call.
+
+
+int recvfrom_ew (SOCKET s, char FAR* buf, int len, int flags, 
+                  struct sockaddr FAR* from, int FAR* fromlen,
+                  int timeout);
+        recvfrom_ew() is similar to recv_ew(), except used for
+        datagram sockets.
+        
+int select_ew (int nfds, fd_set FAR * readfds, fd_set FAR * writefds, 
+                fd_set FAR * exceptfds, 
+                int timeout);
+        select_ew() determines the state of sets of sockets, by 
+        calling select(). Timeout is in milliseconds, and is
+        converted by select_ew to the select() timeout structure, and
+        passed on (to select()). Here the timeout of -1 is not
+        meaningful. If you are willing to wait foreaver, then you
+        should just try to read of write to the socket instead of
+        using select.
+
+int send_ew ( SOCKET s, const char FAR * buf, int len, int flags, 
+                int timeout);
+        send_ew attempts to receive data on a connection oriented
+        (TCP) socket. With timeout &gt; 0 send_ew() normally returns when
+        the sooner of two things happens:
+        1. The timeout, measured from the time of the first send()
+        call, expires;   
+        2.  All of the data provided by the caller is sent.
+        If timeout == -1, the socket is set to blocking and send_ew() 
+        returns when all the data is sent.
+        send_ew() returns the number of bytes of data sent, or
+        SOCKET_ERROR on error. The caller is responsible for noting 
+        any discrepencies in the difference between the number of
+        bytes requested to be sent, and the number of reported bytes
+        sent. If there is a discrepency, then a timeout occured.
+
+int sendto_ew (SOCKET s, const char FAR * buf, int len, 
+                int flags, const struct sockaddr FAR * to,
+                int tolen, int timeout); 
+        sendto_ew() is similar to send_ew(), except used for datagram
+        (UDP) sockets. sendto_ew() calls sendto() only once.
+
+SOCKET socket_ew (int af, int type, int protocol);
+        socket_ew() allocates a socket descriptor and associated
+        resources.  It first calls socket(), and then sets the socket
+        descriptor to non-blocking mode. No network I/O occurs.
+</pre><h3 id="swap.c">swap.c</h3>
+<p>
+This file contains some simple byte-swapping routines.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+void SwapInt( long *i );        Swap bytes of an integer (4 bytes).
+
+void SwapShort( short *i );     Swap bytes of a short integer 
+                                (2 bytes).
+
+void SwapLong( long *i );       Swap bytes of a long integer
+                                (4 bytes).
+
+void SwapDouble( double *d );   Swap bytes of a double (8 bytes).
+
+int WaveMsgMakeLocal( TRACE_HEADER* wvmsg );
+        Byte-swap a universal Waveform message in place. Changes the 
+        'datatype' field in the message header.
+        Returns -1 if unknown data type, 0 elsewise.
+</pre><h3 id="tlay.c">tlay.c</h3>
+<p>
+This file contains routines to calculate travel-times in a layered half space of various phases (written by Carl Johnson). Regional travel time phases are denoted by the following indices: 0 = P, 1 = S, 2 = Pn, 3 = Sn, 4 = Pg, 5 = Sg
+</p>
+<pre class="wiki">#include &lt;tlay.h&gt;
+
+int t_com( void );     
+        Process all recognized commands using kom.c funtions.
+        Velocity model gets loaded in this function.
+
+int t_region( double r, double z, TPHASE *treg );
+        Calculate regional phase travel times (P, Pg, S, and Sg)
+        given an epicentral distance &amp; hypocentral depth.
+
+double t_phase( int p, double r, double z, double *dtdr, double *dtdz );
+        Calculate travel time for a phase given the phase index,
+        epicentral distance &amp; hypocentral depth.
+
+double t_lay( double r, double z, double *dtdr, double *dtdz );
+        Calculate the minimum travel time given epicentral distance 
+        and hypocentral depth.
+</pre><h3 id="transfer.c">transfer.c</h3>
+<p>
+Routines for dealing with instrument transfer functions using pseudospectral methods and the Temperton FFT package, fft99.c. The instrument response functions used here are the poles and zeros of the Laplace transform of analog devices.
+</p>
+<pre class="wiki">#include &lt;fft_prep.h&gt;
+#include &lt;fft99.h&gt;
+#include &lt;transfer.h&gt;
+
+int convertWave(double input[], long npts, double deltat,
+                ResponseStruct *origRS, ResponseStruct *finalRS,
+                double freq[4], int retFD, long *pPadLen, long *pnfft,
+                double output[], long outBufLen, double *work, double *workFFT)
+/*
+ * convertWave: converts a waveform (time series) from its original response
+ *              function to a new response function. This conversion is done
+ *              in the frequency domain. The frequency response of the
+ *              transfer function may be tapered. The input data will be
+ *              padded in the time-domain. The amount of padding is determined
+ *              automatically unless the user provides her own pad length.
+ * Arguments: input: array of data for preocessing
+ *             npts: number of data points to process
+ *           deltat: time interval between samples, in seconds
+ *           origRS: structure defining process that generated the input data
+ *                   that is, the response function to be removed
+ *          finalRS: structure defining desired response function
+ *             freq: array of four frequencies (f0, f1, f2, f3) defining the
+ *                   taper to be applied to the frequency response function
+ *                   before it is convolved with the data. Below f0 and above
+ *                   f3, the taper is 0; between f2 and f3 the taper is 1;
+ *                   between f0-f1 and f2-f3 is a cosine taper.
+ *            retFD: flag to return result in frequency-domain (if retFD == 1)
+ *                   or in time-domain (if retFD == 0)
+ *                   If the output is to stay in the frequency domain,
+ *                   be sure you understand how the results are laid out.
+ *                   See the comments in the FFT package: currently sing.c
+ *           padlen: The pad length to be applied to data before transforming
+ *                   to frequency domain. If padlen &lt; 0, pad length will be
+ *                   estimated here and the value chosen will be returned
+ *                   in this return-value parameter.
+ *             nfft: The size of the FFT chosen, based on npts + *padlen
+ *                   If the returned value of nfft + padlen is less than
+ *                   npts, then convertWave had to effectively truncate the
+ *                   raw trace in order to fit the processed trace in
+ *                   the limit of outBufLen.
+ *           output: array of values output from the conversion
+ *                   This array must be allocated by the caller.
+ *        outBufLen: size of `output' array.
+ *             work: a work array that must be allocated by the caller.
+ *                   Its size must be outBufLen+2
+ *          workFFT: a work array needed by fft99.
+ *                   Its size must be outBufLen+1
+ *
+ * Returns: 0 on success
+ *         -1 on out-of-memory errors
+ *         -2 on too-small impulse response
+ *         -3 on invalid arguments
+ *         -4 on FFT error
+ */
+
+
+void response(long nfft, double deltat, ResponseStruct *pRS,
+              double *tfr, double *tfi)
+/*
+ * response: compute frequency response from the pole-zero-gain information.
+ *  arguments:  nfft: the number of points that will be used in the FFT
+ *            deltat: the time interval between data points in the time-domain
+ *               pRS: pointer to the Response Structure holding the poles,
+ *                    zeros and gain information for the desired function
+ *               tfr: pointer to the real part of the frequency response
+ *               tfi: pointer to the imaginary part of the frequency
+ *                    response. Both tfr and tfi must be allocated
+ *                    by the caller to contain at least nfft/2+1 values.
+ */
+
+int readPZ( char *pzfile, ResponseStruct *pRS )
+/*
+ * readPZ: read a SAC-format pole-zero file.
+ * Arguments: pzfile: the name of the pole-zero file to read
+ *               pRS: pointer to the response structure to be filled in
+ *                    The calling program must allocate the ResponseStruct;
+ *                    the individual pole and zero structures will be
+ *                    allocated here.
+ *
+ *            Pole-zero-gain files must be for input displacement in
+ *            nanometers, output in digital counts, poles and zeros of
+ *            the LaPlace transform, frequency in radians per second.
+ * returns: 0 on success
+ *         -1 on out-of-memory error
+ *         -2 if unable to read or parse the file
+ *         -3 for invalid arguments
+ *         -4 error opeing file
+ */
+
+double ftaper(double freq, double fon, double foff)
+/*
+ * ftaper: produce a cosine taper between unity (beyond fon) and zero
+ *        (beyond foff). The cosine taper is between fon and foff.
+ * Arguments: freq: the frequency at which the taper value is desired
+ *             fon: the unity end of the taper
+ *            foff: the zero end of the taper
+ *    if fon and foff are equal, then taper returns 1.0, the all-pass filter.
+ * returns: the value of the taper
+ */
+
+int respLen( ResponseStruct *rs, double deltat, double freq[4])
+/*
+ * respLen: estimate the length of the impulse response (the number of
+ *          points where it is greater than some throshold) so we know
+ *          how much padding we need for the convolution.
+ *          This is a trial algorithm that may or may not work.
+ *          We assume the the impulse response looks something like a
+ *          broadened and shifted impulse. We asssume that the width of
+ *          its peak is independent of the number of points used in
+ *          this trial FFT, as long as the peak isn't too broad.
+ *  Returns: the length of the peak (in data points) on success
+ *           NFFT_TEST when impulse response never drops below threshold
+ *          -1 when out of memory
+ *          -2 when impulse response is too small to analyze
+ *          -4 on FFT failure
+ *          -NFFT_TEST when search tp left of peak finds drop-off
+ *           but search to right doesn't find drop-off: logic error.
+ *    Exits if NFFT_TEST is not a multiple of powers of 2, 3, 5
+ *          That would be a coding error only.
+ */
+
+void taper(double *data, long npts, double percent)
+/*
+ * taper: Apply a cosine taper to a data series.
+ * Arguments:  data: array of data to be tapered
+ *             npts: number of points in data array
+ *          percent: width of taper (at each end) in percent of array length
+ */
+
+void deMean( double *data, long npts, double *mean)
+/*
+ * deMean: Compute and remove the mean from a timeseries.
+ * Arguments: data: an array of doubles from which the meanis to be removed
+ *            npts: number of values in data
+ *            mean: the computed mean value that has been removed from data.
+ */
+
+void pzCancel(ResponseStruct *rs, double tol)
+/*
+ * pzCancel: Remove cancelling pole-zero pairs from a response structure.
+ *           Search for pairs of poles and zeros whose real and imaginary
+ *           parts are within `tol' of each other. Remove any such pairs.
+ *           This will remove useless computations from the calculation
+ *           of the frequency response function in response().
+ */
+
+void cleanPZ( ResponseStruct *pRS);
+/*
+ * cleanPZ: free the space that has been allocated to store the poles
+ *          and zeors of a ResponseStruct structure.
+ */
+
+void transferDebug( int level )
+/*
+ * transferDebug: set the debug level for the transfer.c package.
+ *       Possible debug levels are any of the following values or'ed together.
+ *   levels: 0: no debug output
+ *           1: (TR_DBG_PZG) print to stdout the poles, zeros and gain of the
+ *              input and output response functions.
+ *           2: (TR_DBG_TRS) print to stdout the trial frequency response
+ *              function and the corresponding impulse response function.
+ *              This will produce about 1500 lines of output for each call
+ *              to respLen or convertWave.
+ *           4: (TR_DBG_ARS) print to stdout the full frequency response
+ *              function. This will produce about one line of output for
+ *              every two datapoints input to convertWave.
+ */
+</pre><h3 id="wave_client.c">wave_client.c</h3>
+<p>
+Functions for connecting to the original wave_server's socket, making a request for a time-chunk of waveforms, and writing the requested data to a disk file.
+</p>
+<pre class="wiki">#include "wave_client.h"
+
+int wave_request( double  ton,        /* start-time of requested waveforms */
+                  double  toff,       /* end-time of requested waveforms   */
+                  char   *pathfile ); /* where to write file of waveforms  */
+        Connects to socket, requests data, writes file, returns number of
+        messages received.
+
+int wave_inquire( double        *tstart, /* start-time of first buffer in tank */
+                  double        *tend,   /* start-time of last buffer in tank  */
+                  unsigned char *inst,   /* source installation of served data */
+                  unsigned char *module, /* source module of served waveforms  */
+                  unsigned char *type ); /* type of waveform msg being served  */
+        Asks the wave_server for the time range and and the logo (installation,
+        module and message type) of the data that's stored in the tank.
+
+void wave_client_config( char *configfile );
+        Processes command file using kom.c functions; exits if any errors are
+        encountered.
+
+int wave_client_setup( char *ipadr,    /* server's IP address    */
+                       int   port );   /* server's port number   */
+        Initializes or resets the global variables ServerIPAdr &amp; ServerPort 
+        used by wave_client routines to connect to a wave_server.
+</pre><h3 id="ws_clientII.c">ws_clientII.c</h3>
+<p>
+Version II of WaveServerV client utility routines. This file contains various routines useful for communicating with WaveServerV, and beyond. These routines are built on top of the socket_ew_common routines; thus the timeout value is given in milliseconds. The intended method of using these routines is to call wsAppendMenu() to open connections to one or more servers and learn what the servers have to offer, make the desired trace requests with wsGetTraceAscii() or wsGetTraceBin(), and then close the connections with wsKillMenu(). Except in the case of certain errors, these routines leave the socket connections open until wsKillMenu() (or wsDetachServer()) are called. Error conditions are reported via the return codes from these functions, defined in ws_clientII.h. Logging may be turned on by a call to setWsClient_ewDebug(), but normally is turned off.
+These routines are designed to be thread-safe. Thus the main data structure, menu_queue, must be allocated by the calling routine.
+</p>
+<p>
+For an example of the use of these routines, see SnippetMaker() [snippet.c] in earth2uw.
+</p>
+<pre class="wiki">#include &lt;ws_clientII.h&gt;
+
+int wsAppendMenu( char* ipAdr, char* port, 
+                WS_MENU_QUEUE_REC* menu_queue, int timeout);
+        Builds a combined menu from one or more waveservers. Called
+        with the IP address and port of one waveserver at a time. On
+        the first call it creates a linked list to store the 'menu'
+        reply (part of menu_queue) from the indicated waveserver.
+        On subsequent calls, it appends the menu replies to the list.
+                      *** WARNING ***
+        Since this routine can be called many times, the menu list menu_queue
+        must be intialized prior to the first call as follows:
+                     menu_queue-&gt;head=NULL;
+                     menu_queue-&gt;tail=NULL;
+        Otherwise a random pointer will be used, with random results.
+  Arguments:
+        ipAdr:  is the dot form of the IP address as a char string.
+         port:  TCP port number as a char string.
+   menu_queue:  caller-supplied pointer to the list of menus.
+      timeout:  timeout interval in milliseconds,
+    Returns:    WS_ERR_NONE:  if all went well.
+                WS_ERR_NO_CONNECTION: if we could not get a connection.
+                WS_ERR_SOCKET: if we could not create a socket.
+                WS_ERR_BROKEN_CONNECTION:  if the connection broke.
+                WS_ERR_TIMEOUT: if a timeout occured.
+                WS_ERR_MEMORY: if out of memory.
+                WS_ERR_INPUT: for bad or missing input parameters.
+                WS_ERR_PARSE: if menu parser failed.
+
+
+void wsKillMenu( WS_MENU_QUEUE_REC* menu_queue );
+        Gracefully closes all the server sockets and releases the
+        linked list of menus created by wsAppendMenu.
+  Arguments:
+   menu_queue:  caller-supplied pointer to the list of menus.
+
+
+int wsAttachServer( WS_MENU menu, int timeout )
+        Open a connection to the server specified in menu. The timeout
+        starts when connect() is called by connect_ew() in
+        socket_ew_common.c. This routine is called by wsAppendMenu()
+        and would not normally be used by itself.
+  Arguments:
+         menu: pointer to the menu of the server
+      timeout: time interval in milliseconds; use -1 for no timeout.
+    Returns: WS_ERR_NONE: if all went well.
+        WS_ERR_INPUT: if menu is missing or empty.
+        WS_ERR_SOCKET: if a socket error occurred.
+        WS_ERR_NO_CONNECTION: if a connection could not be established
+
+
+void wsDetachServer( WS_MENU menu );
+        Immediately disconnect from a socket if it's open.
+  Arguments:
+         menu: menu of server to be detached.
+
+
+int wsGetTraceBin( TRACE_REQ* getThis, WS_MENU_QUEUE_REC* menu_queue, 
+                int timeout )
+        Retrieves the piece of raw trace data specified in the
+        structure 'getThis': The current menu list, as built by the
+        routines above will be searched for a matching SCN. If a match
+        is found, the associated wave server will be contacted, and a
+        request for the trace snippet will be made. If a server returns 
+        with a flag (request in gap or outside of tank), another server 
+        in the menu queue will be tried.
+  Arguments:
+      getThis: a TRACE_REQ structure (see ws_clientII.h), with the
+               request portion filled in.
+   menu_queue: pointer to the list of server menus.
+      timeout: Time in milliseconds to wait for reply
+    Returns:    WS_ERR_NONE: all went well.
+                WS_WRN_FLAGGED: wave server returned an error flag
+                        instead the of trace data; not a client error.
+                WS_ERR_EMPTY_MENU: No menu list found in the queue.
+                WS_ERR_SCN_NOT_IN_MENU: SCN not found in menu list.
+        The socket will be closed for the following:
+                WS_ERR_NO_CONNECTION: if socket was already closed.
+                WS_ERR_BUFFER_OVERFLOW: trace buffer supplied is too
+                        small.
+                WS_ERR_TIMEOUT: if a timeout occured.
+                WS_ERR_BROKEN_CONNECTION: if the connection broke.
+                WS_ERR_SOCKET: problem changing socket options.
+
+
+int wsGetTraceAscii( TRACE_REQ* getThis, 
+                WS_MENU_QUEUE_REC* menu_queue, int timeout); 
+        Retrieves the ascii trace data specified in the structure
+        'getThis'. The current menu list, as buit by the routines
+        above will be searched for a matching SCN. If a match is
+        found, the associated wave server will be contacted, and a
+        request for the trace snippet will be made.
+             This routine is intended for 'casual' use. That is, the
+        returned trace data ignores any drifts in time stamps and 
+        error gaps. Gaps are filled with a fill value. This mode was
+        intended for painting displays, and not for computation.
+   Arguments:
+       getThis: a TRACE_REQ structure (see ws_clientII.h), with the
+                        request portion filled in. Note however, that
+                the end time is not set. The application is expected 
+                to count the returned data points.
+    menu_queue: pointer to list of menues.
+       timeout: timeout interval in milliseconds.
+     Returns:   WS_ERR_NONE: all went well.
+                WS_WRN_FLAGGED: wave server returned an error flag
+                        instead the of trace data; not a client error.
+                WS_ERR_EMPTY_MENU: No menu list found.
+                WS_ERR_SCN_NOT_IN_MENU: SCN not found in menu list.
+        The socket will be closed for the following:
+                WS_ERR_NO_CONNECTION: if socket was already closed.
+                WS_ERR_BUFFER_OVERFLOW: trace buffer supplied is too
+                        small.
+                WS_ERR_TIMEOUT: if a timeout occured.
+                WS_ERR_BROKEN_CONNECTION: if the connection broke.
+                WS_ERR_SOCKET: problem changing socket options.
+
+
+int wsSearchSCN( TRACE_REQ* getThis, WS_MENU* menu, WS_PSCN* pscn,
+                WS_MENU_QUEUE_REC* menu_queue );
+        Find menu and PSCN in queue which will serve this SCN. If the
+        SCN is listed more than once in the queue, only the first menu
+        and PSCN will be returned.
+  Arguments:
+      getThis: a TRACE_REQ structure with the SCN to search for.
+        menup: pointer to the menu to return. if menup is non-NULL, 
+               the search will start with the next menu after *menup; otherwise 
+               the search will start with menu_queue-&gt;head.
+        pscnp: pointer to the pscn list to return.
+    Returns:    WS_ERR_NONE: if all went well
+                WS_ERR_EMPTY_MENU: no menus in the queue
+                WS_ERR_SERVER_NOT_IN_MENU: scn not in the queue
+
+int setWsClient_ewDebug(int debug);
+        Turns debugging on (debug &gt; 0) or off (debug = 0; default) for
+        the ws_clientII routines. Returns zero.
+</pre><h3 id="copyfile.c">copyfile.c</h3>
+<p>
+This file contains a system-specific routine that transfers a file to a remote machine. Under OS/2, the file is transfered via ftp functions; under Solaris and WindowsNT, it is transfered with rcp.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int copyfile( char *fname,    /* name of file to copy                */
+              char *tname,    /* temporary remote file name          */
+              char *host,     /* remote machine to copy file to      */ 
+              char *dir,      /* directory on remote machine         */ 
+              char *userid,   /* user name on remote machine         */
+              char *passwd,   /* userid's password on remote machine */
+              char *errtxt ); /* string to return error message in   */
+        returns: 0 if all is ok
+                 1 if error creating the child process
+                 2 if error waiting for the child process to complete
+                 3 if the child process ended abnormally
+</pre><h3 id="dirops_ew.c">dirops_ew.c</h3>
+<p>
+This file contains system-specific functions for performing directory operations.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int CreateDir (char *dirname);
+        Creates a directory.
+        If dirname exists and is accessible, EW_SUCCESS is returned. Otherwise,
+        we attempt to create it. If it all goes well, we return EW_SUCCESS;
+        otherwise we report error and return EW_FAILURE.
+
+
+int  chdir_ew( char *path ); 
+        Change the working directory of this process to path.
+        Returns: 0 on success
+                -1 on failure
+</pre><h3 id="errexit.c">errexit.c</h3>
+<p>
+This file exists only for Solaris to provide a function that exists in WindowsNT.
+</p>
+<pre class="wiki">void ErrExit( int returnCode );
+        Causes the program to exit with status returnCode.
+</pre><h3 id="getavail.c">getavail.c</h3>
+<p>
+This file contains system-specific function to find the available disk space.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int  GetDiskAvail( unsigned *space );  
+        Get available disk space in kilobytes.
+        Returns: 0 on success
+                -1 on error.
+</pre><h3 id="getsysname_ew.c">getsysname_ew.c</h3>
+<p>
+Contains system-specific function to get the system name from the system.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int  getsysname_ew( char *sysname, int maxlen );
+        Copies host name into space at sysname. Space must be
+        allocated by calling routine of maxlen bytes which must
+        include terminating null byte.
+        Returns: 0 on success
+                -1 on error finding name
+                -2 name is longer than maxlen bytes.
+</pre><h3 id="pipe.c">pipe.c</h3>
+<p>
+This file contains system-specific routines to start a new process (as part of a mega-module) and to pass messages downstream by use of a pipe.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int  pipe_init( char *nextproc, unsigned long pipesize );
+        Start a process and open a pipe to it.  The pipe 
+        replaces stdin of the new process.
+        Returns 0 on success; -1 on failure.
+
+int  pipe_put( char *msg, int msgtype );
+        Write an Earthworm message to the pipe, terminating
+        with a null byte.
+        Returns 0 on success; -1 on failure.
+
+int  pipe_get( char *msg, int maxlen, int *msgtype );
+        Read an Earthworm message from the pipe (stdin) and store
+        it as a null-terminated character string at the given
+        address.
+        Returns: 0 on success
+                -1 if the message was longer than maxlen
+                -2 if EOF encountered reading message type
+
+void pipe_close( void );   
+        Close the pipe that was created with pipe_init().
+</pre><h3 id="sema_ew.c">sema_ew.c</h3>
+<p>
+This file contains system-specific functions for handling event and mutex semaphores which allow communication between processes and threads. `mutex' is short for mutual exclusion.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+void CreateSemaphore_ew( char *prog );
+        Create an event semaphore. The semaphore is not posted until
+        PostSemaphore() is called. Give the name of the program for
+        using in error messages by Solaris and WinNT versions.
+
+void PostSemaphore( void );
+        Post the semaphore to let another thread know that
+        an event happened.
+
+void WaitSemPost( unsigned long *nPost );
+        Wait for the semaphore to be posted (block indefinitely)
+        by another thread.
+
+void DestroySemaphore( void );
+        Destroy the semaphore that was created by CreateSemaphore_ew.
+
+void CreateMutex_ew( void );
+        Set up mutex semaphore to arbitrate the use of some 
+        variable by different threads.  
+
+void RequestMutex( void );
+        Block until the mutex semaphore is available, 
+        then grab it!
+
+void ReleaseMutex_ew( void );
+        Release the muxtex semaphore.
+
+void CloseMutex( void ); 
+        Destroy the semaphore that was created by CreateMutex.
+
+void CreateSpecificMutex( mutex_t* mp );
+        As above, but allows many mutexes to be created, each with a
+        different point *mp. Set up mutex semaphore to arbitrate the
+        use of some variable by different threads.  
+
+void RequestSpecificMutex( mutex_t *mp );
+        Block until the mutex semaphore *mp is available, 
+        then grab it!
+
+void ReleaseSpecificMutex_ew( mutex_t *mp );
+        Release the muxtex semaphore *mp.
+
+void CloseSpecificMutex( mutex_t *mp ); 
+        Destroy the semaphore *mp, created by CreateSpecificMutex.
+</pre><h3 id="sendmail.c">sendmail.c</h3>
+<p>
+This file contains a system-specific function for sending email.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int SendMail( char **recip, int nmail, char *msg );
+        Send the email msg (less than 32,000 bytes) to the nmail
+        addresses (up to 60) listed in string array recip.
+</pre><h3 id="sendpage.c">sendpage.c</h3>
+<p>
+This file contains system-specific function for communicating with a Pageit computer over a serial port.
+</p>
+<pre class="wiki">#include &lt;earthworm.h&gt;
+
+int SendPage( char *buff );
+        Write the character string buff to the serial port.
+        Will time out after four seconds if anything hangs.
+        Returns: 0 on success.
+                -1 on timeout
+                -2 error while writing to port.
+</pre><h3 id="sleep_ew.c">sleep_ew.c</h3>
+<p>
+This file contains a system-specific function for sleeping with millisecond resolution. Under Solaris, any executable that uses sleep_ew must be linked with the posix4 library. The granularity of this function is 10 msec on winNT, 1 msec on Solaris.
+</p>
+<pre class="wiki">cc [ flag ... ] file ...  -lposix4 [ library ... ]  (Solaris version)
+
+#include &lt;earthworm.h&gt;
+
+void sleep_ew( unsigned msec );
+        Sleep for msec milliseconds.  The calling program must make
+        sure that msec is never "negative" (which would be an 
+        extremely large unsigned integer and would essentially put the
+        process in a coma).
+</pre><h3 id="socket_ew.c">socket_ew.c</h3>
+<p>
+This file contains a few socket-related functions that are system-specific. Most socket functions are standard across all systems and are not included here.
+</p>
+<pre class="wiki">cc [ flag ... ] file ... -lsocket -lnsl [ library ... ]  (Solaris version)
+
+#include &lt;earthworm.h&gt;
+
+void SocketSysInit( void );
+        Initialize a socket system.  Required by OS/2 and WindowsNT, 
+        this function is a dummy under Solaris. 
+
+void SocketClose( int sd );
+        Close a socket. 
+
+void SocketPerror( char *note );
+        Print to stderr an error message related to a socket.
+</pre><h3 id="threads_ew.c">threads_ew.c</h3>
+<p>
+This file contains simple system-speific multi-thread-related functions.
+</p>
+<pre class="wiki">cc [ flag ... ] file ... -lthread [ library ... ]  (Solaris version)
+
+#include &lt;earthworm.h&gt;
+
+OS/2 and WindowsNT versions:
+int StartThread( void fun(void *), unsigned stk, unsigned *tid );
+
+Solaris version:
+int StartThread( void *fun(void *), unsigned stk, unsigned *tid ); 
+        Start up a new thread using the function specified (fun) 
+        and give it a stack size, stk (Solaris ignores stack size).
+        stk: Stack size of new thread in bytes,
+           If 0, stack size is set to 8192. In OS2, 4096 or 8192 is
+           recommended.
+           In SOLARIS, this argument is ignored.
+           In Windows NT, if stack_size=0, use the stack size of the
+           calling thread.
+        Returns: 0 on success
+                -1 on failure
+
+int StartThreadWithArg( void fun(void *), void* arg, 
+        unsigned stack_size, unsigned *thread_id );
+        Similar to above except that argument arg is passed to the
+        thread.
+
+void WaitThread( unsigned *tid );
+        Wait for the thread (specified by its thread id, tid) to die.
+        This is a dummy function in Solaris.
+
+int  KillThread( unsigned int tid );
+        Force the thread, tid, to exit now!
+
+int  KillSelfThread( void );
+        Makes a thread kill itself without affecting other threads
+        in the same process.
+</pre><h3 id="time_ew.c">time_ew.c</h3>
+<p>
+This file contains system-specific reentrant system clock functions.
+</p>
+<pre class="wiki">cc [ flag ... ] file ... -lposix4 [ library ... ]  (Solaris version)
+
+#include &lt;time_ew.h&gt;
+
+struct tm *gmtime_ew( const time_t *sec, struct tm *t );
+        convert time in seconds since 1970 to a time/date 
+        structure expressed as UTC (GMT).
+
+struct tm *localtime_ew( const time_t *sec, struct tm *t );
+        Convert time in seconds since 1970 to a time/date structure 
+        expressed as local time (using time zone and daylight 
+        savings corrections).
+
+char *ctime_ew( const time_t *sec, char *buf, int buflen );
+        Convert time in seconds since 1970 to a 26-character string 
+        expressed as local time (using time zone and daylight 
+        savings corrections).
+        Example:  "Fri Sep 13 00:00:00 1986\n\0"    
+
+char *asctime_ew( const struct tm *t, char *buf, int buflen );
+        Convert a time/date structure to a 26-character string 
+        Example:  "Fri Sep 13 00:00:00 1986\n\0"                
+
+double hrtime_ew( double *sec );
+        Return a high-resolution system clock time as a double
+        in seconds since 1970.  Resolution is to the millisecond 
+        level (OS/2, WindowsNT) or greater (nanoseconds on Solaris)
+</pre><h3 id="transport.c">transport.c</h3>
+<p>
+This file defines the standard system-specific intra-computer Earthworm messages-passing protocol. A more thorough description of these routines can be found in the file vx.x/programmer_doc/transport.doc.
+</p>
+<pre class="wiki">#include &lt;transport.h&gt;
+
+void tport_create( SHM_INFO *reg, long size, long key );
+        Create a shared memory region &amp; its semaphore, attach
+        to it and initialize shared memory header values.
+
+void tport_destroy( SHM_INFO *reg );
+        Destroy a shared memory region.
+
+void tport_attach( SHM_INFO *reg, long key );
+        Map to an existing shared memory region given its key.
+
+void tport_detach( SHM_INFO *reg );
+        Detach from a shared memory region.
+
+int tport_putmsg( SHM_INFO *reg, MSG_LOGO *logo, long len, char *msg );
+        Write a message into a shared memory region.
+
+int tport_getmsg( SHM_INFO *reg, MSG_LOGO *getlogo, short nget, 
+                  MSG_LOGO *logo, long *rlen, char *buf, long buflen );
+        Read a message out of shared memory.
+
+void tport_putflag( SHM_INFO *reg, short flag );
+        Set the flag in a shared memory region header.
+
+int tport_getflag( SHM_INFO *reg );
+        Return the value of the flag from a shared memory header.
+
+int tport_buffer( SHM_INFO *from, SHM_INFO *to, 
+                  MSG_LOGO *getlogo, short nget, unsigned maxsize, 
+                  unsigned char modid, unsigned char inst );
+        Start up an input buffering thread to move messages of 
+        interest from the public shared memory to a private ring.
+
+int tport_copyto( SHM_INFO *reg, MSG_LOGO *logo, 
+                  long len, char *, unsigned char seq );
+        Put a message into a shared memory region; preserve the
+        sequence number (passed as an argument) as the transport
+        layer sequence number.
+
+int tport_copyfrom( SHM_INFO *reg, MSG_LOGO *getlogo, short nget, 
+                    MSG_LOGO *logo, long *rlen, char *buf, long buflen,
+                    unsigned char *seq );
+        Get a message out of public shared memory; save the
+        sequence number from the transport layer.
+</pre><h3 id="truetime.c">truetime.c</h3>
+<p>
+(OS/2 and WindowsNT only)
+</p>
+<pre class="wiki">#include &lt;truetime.h&gt;
+
+int OpenTrueTime( int MaxPassCount );
+        Open the True-Time PC-SG clock card. 
+        MaxPassCount = Number of times the data ready bit is polled
+        before an error is reported. MaxPassCount must be larger for
+        faster processors, and for TrueTime PC-SG boards with
+        different characteristics. 
+        Returns: 0 on success
+                -1 on failure.
+
+int CloseTrueTime( void );
+        Shut down the truetime clock card.
+
+int GetTrueTime( TrueTimeStruct *pTrueTime );
+        Gets time from truetime card into pTrueTime structure.
+        Returns: 0 on success
+                -1 on device error
+                -2 on excessive passes.
+</pre><p>
+The EARTHWORM development team is headed by Alex Bittenbinder and coordinated by Barbara Bogaert; both with the U.S. Geological Survey. Advice and assistance with EARTHWORM development is provided by members of the CNSS.
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Libsrc_functions?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+========================================================================
+			Comserv June 17, 1997	(csv617.lzh)
+
+			Modified by Doug Neuhauser, doug@seismo.berkeley.edu
+
+This directory represents the modified Comserv distrution from June 17, 1997
+from Quanterra, Inc.  It has been slightly reorganized in order to make it
+easier to build on a Sun environment, and to more easily add user-contributed
+clients.  See the README.UCB file for more details.
+
+To build comserv distribution:
+
+1.  Add any additional directories for your own or user-contributed clients
+to this directory.  Add the directories to the ALL list in the master
+Makefile in this directory.  Ensure the Makefiles in each client directory
+conforms to the definitions outlined in the master Makefile.
+
+2.  Modify the Makefiles in each of the directories with the appropriate
+definitions for your system. Sample definitions are provided for SunOS and
+Solaris systems.
+
+3.  make
+	Compile all of the software, and build all executables.
+4.  make install
+	Install all of the executables in the bin directory.
+
+========================================================================
+96/02/15	Doug Neuhauser, doug@seismo.berkeley.edu
+
+This version of comserv is designed to work with UltraSHEAR Release
+35/06-0229 or later.  It is NOT guaranteed to work with earlier versions of
+UltraSHEAR due to changes in the link structure for the DA-comserv
+communucations link.
+
+Stefan Radman (radman@zamg.ac.at) is working on an X.25 interface for
+comserv, and will make it available at a later date.
+
+========================================================================

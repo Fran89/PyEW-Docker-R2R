@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v7.5 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v7.5?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v7.5.html" title="View v7.5">v7.5</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v7.5?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v7.5?action=diff&amp;version=12" title="Version 12 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-16T08%3A56%3A12-08%3A00&amp;precision=second" title="2012-01-16T08:56:12-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/16/12 08:56:12</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="v7.5.html#EarthwormReleaseNotesV7.5">Earthworm Release Notes V7.5</a>
+    <ol>
+      <li>
+        <a href="v7.5.html#NEWMODULES">NEW MODULES</a>
+        <ol>
+          <li>
+            <a href="v7.5.html#Hypo71PC">Hypo71PC</a>
+          </li>
+          <li>
+            <a href="v7.5.html#ewhtmlemail">ewhtmlemail</a>
+          </li>
+          <li>
+            <a href="v7.5.html#nq2.">nq2.…</a>
+          </li>
+          <li>
+            <a href="v7.5.html#nll_mgr">nll_mgr</a>
+          </li>
+          <li>
+            <a href="v7.5.html#EWQuakeAlert">EWQuakeAlert</a>
+          </li>
+          <li>
+            <a href="v7.5.html#cont_trig">cont_trig</a>
+          </li>
+          <li>
+            <a href="v7.5.html#trig2arc">trig2arc</a>
+          </li>
+          <li>
+            <a href="v7.5.html#seisan_report">seisan_report</a>
+          </li>
+          <li>
+            <a href="v7.5.html#ewaccel">ewaccel</a>
+          </li>
+          <li>
+            <a href="v7.5.html#sendfilemt">sendfilemt</a>
+          </li>
+          <li>
+            <a href="v7.5.html#adsendxs">adsendxs</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.5.html#MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</a>
+        <ol>
+          <li>
+            <a href="v7.5.html#carlsubtrig">carlsubtrig</a>
+          </li>
+          <li>
+            <a href="v7.5.html#hypoinverse1.3upgrade">hypoinverse 1.3 upgrade</a>
+          </li>
+          <li>
+            <a href="v7.5.html#binder_ew">binder_ew</a>
+          </li>
+          <li>
+            <a href="v7.5.html#restart">restart</a>
+          </li>
+          <li>
+            <a href="v7.5.html#tankcut">tankcut</a>
+          </li>
+          <li>
+            <a href="v7.5.html#localmag">localmag</a>
+          </li>
+          <li>
+            <a href="v7.5.html#sniffring">sniffring</a>
+          </li>
+          <li>
+            <a href="v7.5.html#tankplayer">tankplayer</a>
+          </li>
+          <li>
+            <a href="v7.5.html#eqassemble">eqassemble</a>
+          </li>
+          <li>
+            <a href="v7.5.html#nmxptool">nmxptool</a>
+          </li>
+          <li>
+            <a href="v7.5.html#sniffwave">sniffwave</a>
+          </li>
+          <li>
+            <a href="v7.5.html#localmag1">localmag</a>
+          </li>
+          <li>
+            <a href="v7.5.html#export_generic">export_generic</a>
+          </li>
+          <li>
+            <a href="v7.5.html#misc">misc</a>
+          </li>
+          <li>
+            <a href="v7.5.html#menlo_report">menlo_report</a>
+          </li>
+          <li>
+            <a href="v7.5.html#eqcoda">eqcoda</a>
+          </li>
+          <li>
+            <a href="v7.5.html#sniffwave1">sniffwave</a>
+          </li>
+          <li>
+            <a href="v7.5.html#fir">fir</a>
+          </li>
+          <li>
+            <a href="v7.5.html#statmgr">statmgr</a>
+          </li>
+          <li>
+            <a href="v7.5.html#sniffwave2">sniffwave</a>
+          </li>
+          <li>
+            <a href="v7.5.html#ew2mseed">ew2mseed</a>
+          </li>
+          <li>
+            <a href="v7.5.html#ew2mseed1">ew2mseed</a>
+          </li>
+          <li>
+            <a href="v7.5.html#trig2disk">trig2disk</a>
+          </li>
+          <li>
+            <a href="v7.5.html#gmew">gmew</a>
+          </li>
+          <li>
+            <a href="v7.5.html#startstop">startstop</a>
+          </li>
+          <li>
+            <a href="v7.5.html#startstop1">startstop</a>
+          </li>
+          <li>
+            <a href="v7.5.html#statmgr1">statmgr</a>
+          </li>
+          <li>
+            <a href="v7.5.html#startstop2">startstop</a>
+          </li>
+          <li>
+            <a href="v7.5.html#startstop3">startstop</a>
+          </li>
+          <li>
+            <a href="v7.5.html#pick_ew_analysis">pick_ew_analysis</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.5.html#CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILE">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILE</a>
+      </li>
+      <li>
+        <a href="v7.5.html#KNOWNBUGS">KNOWN BUGS</a>
+      </li>
+      <li>
+        <a href="v7.5.html#KNOWNDEFICIENCIES">KNOWN DEFICIENCIES</a>
+      </li>
+      <li>
+        <a href="v7.5.html#LIBRARYCHANGES">LIBRARY CHANGES</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormReleaseNotesV7.5">Earthworm Release Notes V7.5</h1>
+<p>
+August 18, 2011
+</p>
+<h2 id="NEWMODULES">NEW MODULES</h2>
+<h3 id="Hypo71PC">Hypo71PC</h3>
+<ul><li>This is not a module, but an independant binary used by hyp71_mgr.
+</li><li>It is a slightly modified version by Alexandre Nercessian of the widely used USGS location program.
+</li><li>Modifications allow higher number of stations, altitudes to be taken into account, earthquakes above sea level as well as stations below sea level.
+</li><li>Jean-Marie SAUREL 07/15/2011
+</li></ul><h3 id="ewhtmlemail">ewhtmlemail</h3>
+<ul><li>Written by Ruben Luis of CVARG. Produces a fancy email with HTML using embedded images and a google map. Is triggered by a TYPE_HYP2000ARC message.   This is in the reporting section of the source
+</li><li>Ruben Luis 07/07/2011
+</li></ul><h3 id="nq2.">nq2.…</h3>
+<ul><li>nq2ring
+</li><li>nq2wws
+</li><li>nq2wws_ack
+</li><li>nq2pgm
+</li><li>nq2gif
+</li><li>Written by Jim Luetgert for taking netquakes mseed data and injecting it into a ring, winston wave server, gif files and peak ground motion calcuations.
+</li><li>Moved from Contrib/Menlo to data_sources in EW7.5
+</li><li>Moved by Paul Friberg 07/07/2011
+</li></ul><h3 id="nll_mgr">nll_mgr</h3>
+<ul><li>This is a module to do for NonLinLoc what hyp2000_mgr does for hypoinverse. It basically runs NonLinLoc and converts the input and output so that it matches what hyp2000 does so that downstream programs can get a new earthquake solution.
+</li><li>This uses Anthony Lomax's NonLinLoc locator program found here:
+</li></ul><blockquote>
+<blockquote>
+<p>
+<a class="ext-link" href="http://alomax.free.fr/nlloc/"><span class="icon">​</span>http://alomax.free.fr/nlloc/</a>
+</p>
+</blockquote>
+</blockquote>
+<ul><li>The nll_mgr was contributed by INGV but written by Anthony. Formerly this was in the Contrib bundle, but it is in use in a few places as a production module.
+</li><li>NOTE that we are also including NonLinLoc with each EW release as a convenience, but if you need the latest, go to Anthony's web site link above.
+</li><li>Loaded into SVN by Paul Friberg 05/15/2011
+</li></ul><h3 id="EWQuakeAlert">EWQuakeAlert</h3>
+<ul><li>A Java 1.6 GUI that receives HYP2000ARC messages from import and creates alert emails and SMS (sms using clickatel interface) with information about the event. In addition to the origin info, it sends emails with a google map of the location and a .png display of the waveforms that had picks.
+</li><li>Written by Ruben Luis
+</li><li>Loaded into SVN by Paul Friberg 04/18/2011
+</li></ul><h3 id="cont_trig">cont_trig</h3>
+<ul><li>This module sends regularly trig2k messages in order for a listening trig2disk to produce continuous data archiving. It can replace the contrecord Perl and modules of GlowWorm package (used until v6.3).
+</li><li>Based on carlsubtrig module.
+</li><li>Tested under Linux CentOS.
+</li><li>Jean-Marie Saurel 03/12/2010
+</li></ul><h3 id="trig2arc">trig2arc</h3>
+<ul><li>This module converts trig2k messages into hyp2000_arc messages.
+</li><li>Only the stations that has been trigged are send in the output.
+</li><li>P arrival time is the trigger time for each station, and the weight is 4.
+</li><li>Tested under Linux CentOS.
+</li><li>Jean-Marie Saurel 03/12/2010
+</li></ul><h3 id="seisan_report">seisan_report</h3>
+<ul><li>This module monitors a ring for ACTIVATE_MODULE or alarm messages; generates email and posts a message to a ring for an instance of activated_scripts.
+</li><li>Scott Hunter 05/20/2011
+</li></ul><h3 id="ewaccel">ewaccel</h3>
+<ul><li>This module monitors a ring for TRACEBUF2 messages, assumed to be from sensors on different floors of a building.  The sum of the forces for the floors is computed for each sample time and, if it exceeds a specified threshold, an alarm message is written to an output ring.
+</li><li>Scott Hunter 06/08/2011
+</li></ul><h3 id="sendfilemt">sendfilemt</h3>
+<ul><li>This module is a multi-threaded version of sendfileII that runs as an Earthworm module, meaning it sends heartbeats to statmgr, and restarts like other well-behaved EW modules. Running sendfilemt is equivalent to running multiple copies of sendfileII, but only one only one configuration file is needed, and sendfilemt needs to be mentioned only once in the startstop.d and statmgr.d files.  The module was tested on Solaris and Windows, Since sendfilemt uses the standard multithread Earthworm functions, it will probably run ok on other operating systems too, if the appropriate makefiles are written.
+</li><li>Will Kohler 7/24/2011
+</li></ul><h3 id="adsendxs">adsendxs</h3>
+<p>
+Adsendxs is a rewrite the old adsend module that works with newer model DAQ hardware and GPS receivers. Here are some features of adsendxs:
+</p>
+<ul><li> Runs on National Instruments X-series DAQ modules, which come in PCI Express and USB versions.
+</li><li>Uses the NI-DAQmx API, rather than the legacy NI-DAQ API.
+</li><li>Not tested on Linux.  The NI drivers may or may not be Linux compatible.
+</li><li>Obtains accurate time from an inexpensive Trimble ThunderBolt E GPS Disciplined Clock.
+</li><li>Seismic amplitudes are scaled the same as the older adsend program, to ensure compatibility with existing downstream software.
+</li><li>Runs at a user-configurable sample rate.  Tested at sample rates up to 2000 sps.
+</li><li>Periodically updates the O/S clock, using time from Trimble GPS.
+</li><li>Will Kohler 7/24/2011
+</li></ul><h2 id="MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</h2>
+<h3 id="carlsubtrig">carlsubtrig</h3>
+<ul><li>Added in CoincidentStaTriggers option to squash triggers of telemetry spikes. This was done for the Azores network but could be applicable elsewhere.
+</li><li>Note that I also added a version number to the program which is stored in the log file AND also echoed to the command line if no args are provided.  *  All EW modules should do this.
+</li><li>Paul Friberg July 19, 2011 (with testing help from Ruben Luis).
+</li><li>On August 18, 2011, I added IgnoreCoincident to ignore the coincident check if more than a specified number of subnets triggered coincidentally. The idea being that a telemetry glitch would not cross more than this number of subnets.
+</li></ul><h3 id="hypoinverse1.3upgrade">hypoinverse 1.3 upgrade</h3>
+<ul><li>Note that the docs have changed and one command (ZTR has 2 args instead of one). This new version is really 1.35 and allows hypoellipse features which have now been integrated in. 
+</li><li>Fred Klein did all the code, Paul Friberg integrated with EW and checked it in.
+</li><li>July 18, 2011
+</li></ul><h3 id="binder_ew">binder_ew</h3>
+<ul><li>Added a new option no_S_on_Z which is a simple flag to not allow S phases to be associated with picks on vertical component channels. This option is off by default.
+</li><li>Thanks to Barry Hirshorn for the idea from binder_agl.
+</li><li>Paul Friberg 07/04/2011
+</li></ul><h3 id="restart">restart</h3>
+<ul><li>Now accepts multiple pids for restart instead of just one! 
+</li><li>I made the configfile option a flag (-c) too. Usage: restart [-c config_file]  [ ...]
+</li><li>Paul Friberg 06/28/2011
+</li></ul><h3 id="tankcut">tankcut</h3>
+<ul><li>Fixed the -e option, which apparently never worked!
+</li><li>Paul Friberg 06/10/2011
+</li></ul><h3 id="localmag">localmag</h3>
+<ul><li>Stefan and I fixed the windows compilation which produced bogus numbers and never got a magnitude (despite running fine). The issue was a output array was filled with garbage numbers (not zeroed). While this was easy to solve (zero the array before calling convertWave()), it was not easy to find!
+</li><li>Also, later we added the new configuration option ChannelNumberMap to map numbered channels to letter code orientations.
+</li><li>New version is 2.1.4 (DOES NOT EFFECT ANY UNIX build of this)
+</li><li>Paul Friberg &amp; Stefan Lisowski 06/08/2011
+</li><li>Later on added in capability to  for Z channel mags, via optional allowVerticals
+</li><li>New version after allowVerticals is 2.1.5
+</li><li>Paul Friberg 06/30/2011
+</li></ul><h3 id="sniffring">sniffring</h3>
+<ul><li>added in a -n option to allow  NO FLUSHING of messages if you want to see all the messages in a ring at a given instant you can use this new feature.
+</li><li>Paul Friberg 06/01/2011
+</li></ul><h3 id="tankplayer">tankplayer</h3>
+<ul><li>Fixed a bug where no heartbeats were issued if the Directory Scanning mode was used to playback data.
+</li><li>Paul Friberg 04/29/2011
+</li></ul><h3 id="eqassemble">eqassemble</h3>
+<ul><li>modified main tport_getmsg loop such that messages received with return codes GET_OK, GET_MISS, and GET_NOTRACK are all processed.  Previously, only msgs returned with GET_OK were processed. Msgs with GET_MISS and GET_NOTRACK returns were essentially ignored; only the return code was logged.
+</li><li>Lynn Dietz 04/01/2011
+</li></ul><h3 id="nmxptool">nmxptool</h3>
+<ul><li>updated nmxptool to version 2.0.0
+</li><li>Matteo Quintiliani 01/24/2011
+</li></ul><h3 id="sniffwave">sniffwave</h3>
+<ul><li>added in tracebuf2.1 detection capability display (to show a conversion factor instead of data quality flags). This is fully backward compatible with all prior versions.
+</li><li>Kevin Frechette 01/12/2011
+</li></ul><h3 id="localmag1">localmag</h3>
+<ul><li>Fixed a case where if multiple wave_serverV's were listed, only the first one was ever polled for data (the rest were marked as duplicates).
+</li><li>Paul Friberg 01/12/2011
+</li></ul><h3 id="export_generic">export_generic</h3>
+<ul><li>any linux module using PTHREAD_STACK set to 8192 can possibly segfault on 64-bit linux (unreliably). The thread stack size was increased to 81920 for Linux #ifdefined statement and all problems went away. This was not tested on Solaris or Windows or Mac OS X.
+</li><li>Paul Friberg 12/02/2010
+</li></ul><h3 id="misc">misc</h3>
+<p>
+tankplayer tools, wave_probe, dumpwave, cleandir, glass, startstopservice
+</p>
+<ul><li>On Windows, added kom.obj to link so that the new kom dependency to logit is taken into account.
+</li><li>Stefan Lisowski 11/11/2010
+</li></ul><p>
+tankplayer tools, ew2mseed, dumpwave, getmenu
+</p>
+<ul><li>On Solaris and Unix makefiles, added kom.o to link so that the new kom dependency to logit is taken into account.
+</li><li>Matteo Quintiliani 11/4/2010
+</li></ul><h3 id="menlo_report">menlo_report</h3>
+<ul><li>Added parameter EnableLongFileName in the configuration file of menlo_report.
+</li><li>It enables writing arc/sum files with format DATETIME_ID_VER.SUFFIX (i.e. 201011040932_0000097658_2.arc)
+</li><li>Matteo Quintiliani 11/4/2010
+</li></ul><h3 id="eqcoda">eqcoda</h3>
+<ul><li>Increased buffer size to 512 bytes for reading a line from the station file.
+</li><li>Same behaviour of pick_ew.
+</li><li>Matteo Quintiliani 8/25/2010
+</li></ul><h3 id="sniffwave1">sniffwave</h3>
+<ul><li>Fixed a misleading print statement when !WaveMsg2MakeLocal() failed on a SCNL, it showed possible spaces in the SCNL that were not really there.
+</li><li>Paul Friberg 8/19/2010
+</li></ul><h3 id="fir">fir</h3>
+<ul><li>Added QueueSize optional parameter to increase the default from 100
+</li><li>Added SleepMilliSeconds optional parameter to decrease the default from 500ms
+</li><li>Paul Friberg 8/18/2010
+</li></ul><h3 id="statmgr">statmgr</h3>
+<ul><li>Bugfix You can now comment out the line that includes an email addres so nobody gets emailed by statmgr, and you don't need to put a fake email address in to get statmgr to start. This is the behavior that is desccribed in the config file. 
+</li><li>Fix by Paul Friberg 201006
+</li></ul><h3 id="sniffwave2">sniffwave</h3>
+<ul><li>Removed hundredths of second from values of latency.
+</li><li>Changed the SCNL line output format in order to increase the readability. Now each field falls nearly at same column.
+</li><li>Quality fields are now displayed in hexadecimal. Before non-ASCII characters were improperly printed to the terminal.
+</li><li>Distinguished output for gaps and overlaps.
+</li><li>Matteo Quintiliani 6/22/2010
+</li></ul><h3 id="ew2mseed">ew2mseed</h3>
+<ul><li>Removed -D_SPARC from CFLAGS line of makefile.sol. This flag prevented proper byte-swapping on Solaris for little-endian (Intel) platform.
+</li><li>Ilya Dricker 5/05/2010
+</li></ul><h3 id="ew2mseed1">ew2mseed</h3>
+<ul><li>Bugfix to prevent overflow in printing of location code
+</li><li>Fixed a condition of a bogus 'FULLY in THE GAP' return from waverserver. Now if waverserver insists that the request is fully in the gap, but the
+requested startTime is more than 12 hours AFTER the current time, we redefine the waveServer FLAG is 'REQUEST-AFTER-THE-TANK'
+</li><li>Ilya Dricker 5/19/2010
+</li></ul><h3 id="trig2disk">trig2disk</h3>
+<ul><li>Postproc external script is now launched with tow arguments : date (YYYYMMDD) and time (HHMM) of the processed event.
+</li><li>Change by Frederic Randriamora.
+</li><li>Jean-Marie Saurel 27/12/2010
+</li></ul><h3 id="gmew">gmew</h3>
+<ul><li>Added ability to recognize ACTIVATE_MODULE messages to initiate processing; also added ability to override the set of spectral periods to be processed.
+</li><li>Scott Hunter 05/18/2011
+</li></ul><h3 id="startstop">startstop</h3>
+<ul><li>Fixed writing of empty error messages
+</li><li>Scott Hunter 5/17/2011
+</li></ul><h3 id="startstop1">startstop</h3>
+<ul><li>Restored ability of unix versions to control modules by id; made Windows version of this more robust
+</li><li>Scott Hunter 6/22/2011
+</li></ul><h3 id="statmgr1">statmgr</h3>
+<ul><li>Now allows for up to 10 mailservers; when mail is sent, each is tried in order until one works.
+</li><li>Scott Hunter 6/29/2011
+</li></ul><h3 id="startstop2">startstop</h3>
+<ul><li>Uses new transport call to clear ring flag requesting termination of a process
+</li><li>Scott Hunter 6/29/2011
+</li></ul><h3 id="startstop3">startstop</h3>
+<ul><li>Changed to reflect changes to transport library
+</li><li>Scott Hunter 7/8/2011
+</li></ul><h3 id="pick_ew_analysis">pick_ew_analysis</h3>
+<p>
+I have made very significant changes to the first version. Here is a short list of the main:
+</p>
+<ul><li>Windowed or full-screen - This allows larger traces
+</li><li>Multiple and prioritized waveform sources - One may have multiple waveform sources. The app will automatically select one according to the required station and time interval
+</li><li>List of available stations and time intervals for each source - This allows checking if a waveform source carries the data that we need. Similar to get menu but extended to other waveform sources.
+</li><li>Reads data from wave/Winston servers, tank files (SCNL only), and mini-seed files - I included the latter to be able to check data from continuous archives.
+</li><li>On-screen indication of available data for each station within requested time interval - There is a small check after each station to let the user know that there is data available for the requested time interval.
+</li><li>Facilitated automatic setting of the request time interval based on availability of the sources - I included a button to automatically set the start and end times according to the time interval available from the sources. In case of waveservers it sets the end time to NOW-1 minute (I think) and NOW-21 minutes.
+</li><li>Indication of incorrect date/time settings - Characters turn red if you make an obvious mistake or swap start and end times
+</li><li>Zoom-in and pan buttons as well as drag-to-zoom - Swarm like waveform browsing is really cool to find details.
+</li><li>Missing parameters from pickew are included: NoCoda, RestartLength and MaxGap - I had some requests for this, particularly the nocoda
+</li><li>Tooltips with the pick and coda texts 
+</li><li>Tooltips with the causes for failed picks - Same as before.
+</li><li>2011-07-06 Ruben S. Luis (commited to svn by Stefan)
+</li></ul><h2 id="CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILE">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILE</h2>
+<ul><li>Environment Variable expansion in .d files
+</li><li>Added file environment/earthworm_commonvars.d for declaring "Earthworm Common Variables"
+</li><li>It is now possible to declare variables like ${...} within .d configuration files
+</li><li>Matteo Quintiliani 11/4/2010
+</li></ul><h2 id="KNOWNBUGS">KNOWN BUGS</h2>
+<h2 id="KNOWNDEFICIENCIES">KNOWN DEFICIENCIES</h2>
+<h2 id="LIBRARYCHANGES">LIBRARY CHANGES</h2>
+<ul><li>Added a tport_flush call to the transport library; acts as if tport_getmsg were called repeatedly until no more messages were found, but doesn't incur the overhead of returning the messages (which would get ignored anyway). Scott Hunter 5/18/2011
+</li></ul><ul><li>Changed default mail program used by SendMail for MacOSX. Scott Hunter 5/20/2011
+</li></ul><ul><li>Added a tport_detachFromFlag call to support change in flag: instead of a single value, it now records all individual process IDs put to it (until TERMINATE is put to it, which effectively replaces the list) -- this prevents the flag from being changed before the target process reads it (which is now possible, due to making the stop &amp; restart commands multi-threaded).  tport_getflag now yields TERMINATE if that has been put; if it hasn't but the process's own ID is in the list, that is returned; otherwise, 0 is returned.  tport_detachFromFlag is now used to remove a value from the list (what used to be done by putting a 0). Scott Hunter 6/29/2011
+</li></ul><ul><li>In order to support legacy modules not using the new transport library, SHM_HEAD was restored to its original form, and the new list-of-IDs flag is kept in a distinct ring which is only used for this purpose.  Processes that do not use the new library will be communicated with via the old flag field (which has the original overwriting issue, but now contention is only between legacy modules). Scott Hunter 7/8/2011
+</li></ul><ul><li>Modified transport library so if a module using the new library is run with a startstop built against the transport library using the original flag representation, module will use the old style flag.  Also modified to allow key for flag ring to be specified in earthworm.d (named FLAG_RING). Scott Hunter 7/19/2011 
+</li></ul><ul><li>Modified getutils to provide a version of GetKey (GetKeyWithDefault) which takes a default value to return if the specified key does not exist;  modified  transport to use this new function to avoid error messages when FLAG_RING is not defined (and a default value is used). Scott Hunter 7/25/2011
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v7.5?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

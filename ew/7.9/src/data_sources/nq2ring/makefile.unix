@@ -1,0 +1,37 @@
+#
+# nq2ring - NetQuakes mSEED to earthworm interface
+#
+
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+QLIB_DIR = $(EW_HOME)/$(EW_VERSION)/src/libsrc/qlib2
+QLIB_LIB = $(QLIB_DIR)/lib_ew/libqlib2nl.a
+
+CFLAGS +=  -I$(QLIB_DIR) 
+
+all: nq2ring
+
+SRCS = main.c   
+
+OBJS = main.o  
+ 
+EW_LIBS = \
+	$L/dirops_ew.o \
+	$L/libew_mt.a
+
+# IGD 2006/11/16 Note that we use qlib2nl: no-leap-seconds version of Qlib2
+nq2ring: $(OBJS); \
+        $(CC) $(CFLAGS) -o $(B)/nq2ring $(OBJS) $(EW_LIBS) $(QLIB_LIB) -lutil -lpthread -lm
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/nq2ring*
+
+FORCE:

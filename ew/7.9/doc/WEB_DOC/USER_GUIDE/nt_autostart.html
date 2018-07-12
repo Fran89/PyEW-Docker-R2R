@@ -1,0 +1,163 @@
+<HTML>
+<HEAD>
+<TITLE>Appendix: Earthworm NT Autostart</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm NT Autostart</H1>
+<I>(last revised 9 October, 1999)</I></CENTER>
+<P>
+Following are steps needed to have earthworm (EW) start up
+automatically when a PC running Windows NT Workstation 4.0 boots up.
+<P>
+Overview of the steps:
+<ol>
+<li> Create new user 'earthworm'
+<li> Setup the PC so that it automatically logs in as 'earthworm' upon reboot
+<li> Setup EW so that it starts up every time user 'earthworm' logs in
+</ol>
+<P>
+Note: Selecting menu choices is denoted as follows:
+<P>
+   Start->Programs->...
+<P>
+This would mean that the Start menu is to be selected first, then Programs, etc.
+<PRE>
+Details:
+
+(1) Create new user earthworm
+  (a) Click on Start->Programs->Administrative Tools->User Manager
+     - User manager window should come up
+
+  (b) Click on User->New User
+     - New user window should come up.
+
+      Fill in the fields:
+        Username:    earthworm
+        Password:    earthworm
+
+      Make sure that the box labeled "User Must Change Password.." is
+      NOT checked.
+
+  (c) Setup groups - click on the "Groups" Icon
+     - Groups window should come up
+
+     Select all groups in the right hand screen, then click Add, then click OK.
+     Back in the New User window, Click OK.
+     Back in the User Manager, Click USER->EXIT.
+
+
+
+(2) Automatic login
+
+  (a) Start the registry editor:
+	Click on Start->Run, type  "regedt32" in the box, then click OK.
+
+  (b) Registry editor window should open. Click the Window titled
+	 "HKEY_LOCAL_MACHINE"
+
+  (c) HKEY_LOCAL_MACHINE window should come to the foreground. Double click on
+	the following:
+             Software->Microsoft->WindowsNT->CurrentVersion->WinLogon
+
+  (d) Now we need to create and/or set some values in the registry in the right
+      hand section of the window.
+	1.  AutoAdminLogon
+	    If the AutoAdminLogon exits:
+     		- Double click on the AutoAdminLogon field. Enter 1 in the
+                  pop up window.
+            If the AutoAdminLogon does not exit:
+		- From the EDIT pull down menu, choose AddValue.
+                  In the pop up window, enter "AutoAdminLogon" in the ValueName
+                  box.  Choose 'REG_SZ' for the data type.  Click OK.
+                  Enter 1 in the next pop up window; then click OK.
+
+	2.  DefaultUserName
+            Click on Edit->Add Value. A dialog box should come up. Fill in:
+        	Value Name:    DefaultUserName   click OK, another window
+                comes up. Fill in:
+                String:        earthworm
+            Click OK.
+	3. DefaultPassword
+           - Follow the step above to add another value:
+
+             Value Name:    DefaultPassword
+             String:        earthworm
+
+     When all is said and done, the following values whould be listed in
+       the right hand window:
+
+          DefaultUserName     earthworm
+          DefaultPassword     earthworm
+          AutoAdminLogon      1
+
+  (e) Click on Registry->Exit
+
+
+
+(3) Automatic Earthworm Startup during login
+
+  (a) Restart the PC.  If everything in step 1 and 2 was done correctly, the PC
+      will automatically log you in as earthworm.
+  (b) Make sure that the EW automatic startup script exists -- it should be
+      called something like c:\earthworm\run\params\autostart_ew_nt.cmd.
+	Example autostart_ew_nt.cmd:
+		call ew_nt.cmd
+		call startstop.exe
+
+  (c) Click on Start->Settings->Taskbar
+     Taskbar window should come up. Click on the "Start Menu Programs" tab.
+     Click on "Advanced". NT Explorer should come up.
+
+  (d) By double clicking on the appropriate directories, find:
+
+     c:\winnt\Profiles\earthworm\StartMenu->Programs->Startup
+
+     The right hand side window under Startup should be empty.
+
+  (e) Create a shortcut to the EW automatic startup script: In the right
+      hand side window, click the right button, then select New->Shortcut.
+
+     A new window should come up, in the box enter the full path to the
+     autostart_ew_nt script, click NEXT, and then click FINISH.  OR click on
+     Browse to select the path to the
+     script using NT Explorer, highlight the autorestart_ew_nt.cmd, click OPEN,
+     then NEXT, and then click FINISH.  Last.  then click OK in the
+     TaskBar window.
+
+
+
+NOTES OF CAUTION:
+
+  - user earthworm must have a password in order for automatic login to
+    work. This means that password cannot be blank.
+
+  - make sure that when creating user earthworm it is added to all groups,
+    particularly the administrator group, since earthworm will be the only
+    user that can log in once the registry is changed.
+
+
+
+CHANGING EARTHWORM VERSION AND CONFIGURATION DIRECTORY
+
+Whenever a new version of Earthworm is installed, or a new
+configuration directory is desired, the autostart script
+must be updated. Basically, the file autostart_ew_nt.cmd mentioned
+above consists of the main command file ew_nt.cmd (which is
+located in the params directory of the current configuration),
+with the addition of the startstop command which starts earthworm
+automatically. Therefore, whenever ANY changes are made to
+the local of the active ew_nt.cmd, the
+autostart_ew_nt.cmd file should be update.
+
+</PRE>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>
+
+
+

@@ -1,0 +1,24 @@
+#  The posix4 library is required for nanaosleep.
+#
+
+LINUX_FLAGS=-lm -lnsl
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LINUX_O = reboot_mss.o rb_mss.o rb_lin.o
+SOLARIS_O = reboot_mss.o rb_mss.o rb_sol.o
+
+O = $($(PLATFORM)_O)
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+CFLAGS = ${GLOBALFLAGS}
+
+reboot_mss: $O
+	$(CC) $(CFLAGS) -o $B/reboot_mss $O $L/sleep_ew.o $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/reboot_mss*

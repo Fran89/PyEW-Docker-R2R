@@ -1,0 +1,73 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5325 2013-01-31 17:35:02Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.4  2007/11/30 18:40:16  paulf
+#     sqlite stuff added
+#
+#     Revision 1.3  2006/11/21 23:03:09  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:48:57  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 19:58:27  lucky
+#     Initial revision
+#
+#
+#
+
+
+#                    Nmake File For wave_serverV - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = wave_serverV
+O = $(APP).obj index.obj server_thread.obj serve_trace.obj index_util.obj \
+    compare.obj tb_packet_db.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+ALL: $B\$(APP).exe tools
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug)  $(conlibsmt) $O  \
+   $L\mem_circ_queue.obj \
+   $L\socket_ew.obj $L\socket_ew_common.obj $L\swap.obj \
+   $L\sqlite3.obj \
+   $L\libew_mt.lib  -out:$B\$(APP).exe
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) /Od $<
+
+tools:: FRC
+	cd Tools
+	nmake -f makefile.nt
+	cd ..
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+	cd Tools
+	nmake -f makefile.nt clean
+	cd ..
+
+clean_bin:
+	-del $B\wave_serverV*
+	-del a.out core *.o *.obj *% *~
+	cd Tools
+	nmake -f makefile.nt clean_bin
+
+
+FRC:

@@ -1,0 +1,141 @@
+2016.10.17: version 2.8
+	- Update libslink to version 2.6.
+	- from libslink: Always send packet time with request if available.
+	- from libslink: Improved support for building on Windows.
+
+2015.5.1: version 2.7
+	- Use slp_dtime() instead of gettimeofday() in MaxRate logic handling
+	to increase portability.
+
+2013.12.16: version 2.6
+	- Update libslink to version 2.4b.
+	- Remove logic that tested SeedLink packet types and instead forward
+	all received packets, converting any records with a positive sample
+	count and non-zero sample rate to TRACEBUFs.
+
+2013.8.29: version 2.5
+	- Fix parsing of MaxRate option, thanks P. Lombard.
+
+2013.7.10: still version 2.4
+	- Only lookup the TYPE_MSEED value when the WriteMSEED option is used
+	to be more backwards compatible, suggested by Paul F.
+	- Remove embedded NULL (\0) in ring status messages, avoid compiler
+	warnings.
+
+2013.7.6: version 2.4
+	- Fix parsing of StateFile option, recognize '#' as start of comment.
+	- Add 'WriteMSEED' parameter file option to allow forwarding the
+	received miniSEED records directly to the transport ring as TYPE_MSEED 
+	messages instead of creating TYPE_TRACEBUF2 messages.
+	- Use libmseed for parsing miniSEED records instead of the limited
+	routines included with libslink.  This allows support for more encoding
+	types (e.g. 32-bit and 64-bit floats).
+	- Remove support for creating tracebuf1 messages, the 'ForceTraceBuf1'
+	option is no longer recognized.
+	- Replace nanosleep() with portable slp_usleep() included in libslink
+	and remove WINNT declarations.
+
+2012.5.31: version 2.3
+	- Update libslink to version 2.4.
+	- Incorportate patch from Jacob Crummey which adds a new SLRecSize
+	option to specify the SEED record size expected from the server.
+	A 512-byte record is the default for SeedLink, this option is only
+	for supporting specialized SeedLink servers that generate alternate
+	record lengths such as 256 or 128 bytes.
+	
+2012.5.8: version 2.2
+	- Allow StateFile parameter to be specified with an optional
+	file name to explicity be used for the state file instead of
+	generating a file name and putting it into the EW_PARAMS dir.
+
+2011.06.08: version 2.1.1
+	- made able to compile on Windows, tested there too - Paul Friberg/Stefan Lisowski
+
+2010.12.1: version 2.1
+	- Add instId parameter to override the Installation ID
+	included in TraceBuf packets.  By default this is determined
+	for the local installation defined by EW_INSTALLATION.
+
+2010.10.8:
+	- Update to libslink 2.3.
+	- Add MaxRate parameter to limit rate in bytes/second, thanks to
+	Victor Kress for initial implementation.
+	- Fix check for _WINNT instead of _INTEL when creating the
+	state file name, thanks Eric Haug.
+
+2008.3.18: version 2.0
+	- Update to libslink 2.2 including fixes for compiling for Win32.
+
+2008.3.5: version 2.0pre
+	- Update to libslink 2.1 including support for wildcard network
+	and station codes with SeedLink servers that support this extension.
+	- Check for parse/unpack errors in mseed2ewring(), log message
+	and continue operation, thanks to Matteo Quintiliani.
+
+2006.4.3: version 1.4.1
+	- Add a compile time check for TRACEBUF2 messages when running
+	the GetType() function for that type.  This should suppress a
+	message from the EW libraries that the type doesn't exist but
+	otherwise has no operational effect.
+
+2006.3.7: version 1.4
+	- Fix parsing of Stream definition (NET_STA) for single
+	character network codes.
+
+2006.1.27: version 1.3
+	- Update to libslink 1.6 including minor bug fixes.
+
+2005.7.14: version 1.2.2
+	- Fix the forcetracebuf logic so the correct message type
+	is used when the trace buf type is forced.
+
+2005.4.15: version 1.2.1
+	- Fix some uninitialized variables and compiler warnings.
+
+2005.4.14: version 1.2
+	- Implement a progressive throttling mechanism on the main loop
+	to fix data collection with high data rates.  The previous
+	throttling was too agressive and would not allow the TCP buffers
+	to be cleared fast enough.
+
+2005.4.13: version 1.1
+	- Add comments to the documentation about maximum expected
+	TRACEBUF message size.
+	- Update to libslink 1.5.
+
+2005.4.12: version 1.1pre3
+	- Fix comparison of non-NULL terminated string in mseed2ewring.
+	Thanks Jim Luetgert.
+
+2005.4.8: version 1.1pre2
+	- Add capability to create TRACEBUF2 messages on systems
+	that support them.  TRACEBUF2 messages include location codes.
+	- Add 'ForceTraceBuf1' config option to force the creation of
+	TRACEBUF messages on systems that support TRACEBUF2.
+
+2005.4.7: version 1.1pre1
+	- Update to libslink 1.5pre2.
+
+2004.1.21: version 1.0
+	- Add StateFileInt option.
+	- Update to libslink 1.0.
+
+2003.8.13: version 0.9.6
+	- Remove some unnecessary variables and #include <time.h>.
+	- Cleanup NT makefile.
+
+2003.8.12: version 0.9.5
+	- Cleanup and (hopefully) simplify the module configuration code,
+	removing the need for the interlaced parameter structures.  Most
+	of the parameters were moved to global variables.
+	- Changed the 'StateFile' configuration parameter to a boolean
+	flag, the filename is 'slink<mod id>.state' and placed in the 
+	parameter directory indicated with the EW_PARAMS environment
+	variable.  Less flexible but easier for the user.
+	- Use the current logging scheme, writing a log file during init
+	no matter what the logging level.
+	- Rename parameters: MyModId -> MyModuleId, OutRing -> RingName
+	- Update to libslink 0.9.
+
+mid-2003: version 0.9.1
+	- Initial version based on liss2ew sources.

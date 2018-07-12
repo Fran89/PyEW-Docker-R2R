@@ -1,0 +1,136 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 523 2010-05-07 18:48:36Z luetgert $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2010/05/07 18:35:58  luetgert
+#     .CVS: ----------------------------------------------------------------------
+#
+#     Revision 1.15  2007/02/28 23:03:25  stefan
+#     some linebreak funkyness; this revision should be the same as 1.12
+#
+#     Revision 1.14  2007/02/23 05:45:15  stefan
+#     *** empty log message ***
+#
+#     Revision 1.13  2007/02/23 05:44:23  stefan
+#     *** empty log message ***
+#
+#     Revision 1.12  2006/11/21 23:03:15  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.11  2005/04/27 23:31:27  labcvs
+#     Fixed problematic references to export_generic.obj
+#     Changed references to export_generic.obj(which doesn't exist)
+#     to references to export.obj (which DOES exist).
+#
+#     Revision 1.10  2005/04/25 21:49:15  dietz
+#     Corrected object files for all except export_generic
+#
+#     Revision 1.8  2004/04/20 22:58:19  dietz
+#     added directives for making export_actv and export_scn_actv
+#
+#     Revision 1.7  2003/05/06 20:55:30  lucky
+#     *** empty log message ***
+#
+#     Revision 1.6  2002/07/19 22:59:22  dietz
+#     references to scnprifilter.c changed to scnfilter.c (files merged)
+#
+#     Revision 1.5  2002/06/07 18:38:26  dietz
+#     *** empty log message ***
+#
+#     Revision 1.4  2002/03/21 17:39:10  dhanych
+#     Added build for export_scn_pri
+#
+#     Revision 1.3  2001/01/19 01:17:04  dietz
+#     added compilation of export_scn_remap
+#
+#     Revision 1.2  2001/01/02 16:56:01  lucky
+#     Added swap.o
+#
+#     Revision 1.1  2000/02/14 17:23:11  lucky
+#     Initial revision
+#
+#
+#
+#
+#                    Nmake File For export - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all:
+	emake export_generic
+	emake export_scnl
+	emake export_scnl_pri
+	emake export_gen_actv
+	emake export_scnl_actv
+	emake export_ack
+	emake export_scnl_ack
+
+
+export_generic: export.obj genericfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export.obj genericfilter.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+     -out:$B\export_generic.exe
+
+export_scnl: export.obj  scnfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export.obj scnfilter.obj \
+    $L\rdpickcoda.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj  \
+    $L\libew_mt.lib $L\socket_ew.obj  $L\socket_ew_common.obj \
+    $L\swap.obj -out:$B\export_scnl.exe
+
+export_scnl_pri: export_scn_pri.obj scnfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export_scn_pri.obj scnfilter.obj \
+    $L\rdpickcoda.obj  \
+    $L\priority_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+    $L\swap.obj -out:$B\export_scnl_pri.exe
+
+export_gen_actv: export_actv.obj genericfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export_actv.obj genericfilter.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+     -out:$B\export_gen_actv.exe
+
+export_scnl_actv: export_actv.obj scnfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export_actv.obj scnfilter.obj \
+    $L\rdpickcoda.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+    $L\swap.obj -out:$B\export_scnl_actv.exe
+
+export_ack: export_ack.obj genericfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export_ack.obj genericfilter.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+     -out:$B\export_ack.exe
+
+export_scnl_ack: export_ack.obj scnfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) export_ack.obj scnfilter.obj \
+    $L\rdpickcoda.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib $L\socket_ew.obj $L\socket_ew_common.obj \
+    $L\swap.obj -out:$B\export_scnl_ack.exe
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\export_generic* $B\export_scnl* $B\export*actv* $B\export*ack*

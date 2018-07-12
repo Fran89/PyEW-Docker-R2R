@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqprelim overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Eqprelim Overview</H1>
+<I>(last revised August 10, 1999)</I></CENTER>
+<P>
+Eqprelim is a first process in the earthquake-processing mega-module
+(sometimes referred to as "the sausage") that produces preliminary
+earthquake locations for the Earthworm system. Eqprelim is very similar to
+eqroc, which produces Earthworm's final event locations. Only eqprelim, the
+first link in the mega-module, is listed in startstop's configuration file
+to be started by startstop.  Eqprelim then starts the next process, specified
+in its "PipeTo" command, and communicates with it via a one-directional pipe.
+Each newly created sub-module starts the next link in the same way.  From
+startstop's point of view, the whole mega-module inherits the name of the
+first link (eqprelim) and that's the only name it displays.  From statmgr's
+point of view, all processes within the mega-module share one module id,
+one heartbeat, and one descriptor file.  However, each sub-module has its
+own configuration file and its own log file.
+<P>
+After starting up the next link in "the sausage," eqprelim's main job is
+to gather information from picker(s) and binder, to decide when it's time
+to report a preliminary hypocenter for a given event, to assemble all the
+information related to that event, and to pass it on to the next
+event-processing sub-module.
+<P>
+Eqprelim collects messages from the picker(s) (TYPE_PICK2K and TYPE_CODA2K) and
+from binder (TYPE_QUAKE2K and TYPE_LINK). A TYPE_PICK2K message contains
+an observed P-wave arrival-time and amplitude for a given seismic channel
+along with the installation id, module id, and pick sequence number;
+the picker releases the pick message within ~3 seconds of a P-wave detection.
+A TYPE_CODA2K message contains coda duration and amplitude information along
+with the installation id, module id, and sequence number of the pick
+it relates to; the picker releases the coda message up to 144 seconds after
+its corresponding pick message. A TYPE_QUAKE2K message contains an event id number, origin time and hypocenter; binder issues a new quake message each
+time it associates a new pick with [or deletes pick(s) from] a given event id.
+A TYPE_LINK message contains an event id, an installation id, a picker module id, a pick sequence number and a phase identifier; binder issues a new link
+message for every pick it associates with (or deletes from) an active event.
+<P>
+Eqprelim maintains two circular buffers:
+<dl>
+<dt>1. Pick list
+<dd>Contains the most recent MAXPCK (=1000) picks and their coda and
+   link information (related by installation id, module id and pick
+   sequence number) and the system-time that the pick was entered.
+<dt>2. Quake list
+<dd>Contains the most recent location and status of the last
+   MAXHYP (=100) event ids and the system-time that the location
+   was entered.
+</dl>
+<P>
+Each time eqprelim receives a TYPE_QUAKE2K message, it checks to see how many
+phases are associated with that event id. If the number of P-arrivals
+associated the event is greater than or equal to "NumPickNotify" (set in
+the configuration file), eqprelim initiates preliminary earthquake
+processing.
+<P>
+Eqprelim:
+<ol>
+<li> gathers from its pick list all picks linked to that event id.
+   If some picks do not have coda information yet, eqprelim continues
+   the preliminary processing with zeroed coda information for those picks.
+<li>builds an ascii TYPE_EVENT2K message containing the event's location and
+   all of its supporting phase information,
+<li>pipes the TYPE_EVENT2K message to the next process in the mega-module,
+<li> notes in its quake list that the status of this event id is
+   "preliminary location done."
+</ol>
+<p>
+Eqprelim will initiate only one preliminary location per binder event id, so
+NumPickNotify should be set at the number of phases where most event locations
+become stable.  Often, no coda information or only poor coda information
+is available at the time eqprelim initiates the preliminary location. Thus
+most preliminary locations will have poor or absent duration magnitudes.
+<P>
+Note: It is possible that binder may kill an event (decide it was not real)
+after eqprelim has initiated the preliminary location.  Eqprelim does not
+send out any kind of "event killed" messages.  One must assume that if a
+final location (via eqproc) does not arrive within a given time interval (say
+5-10 minutes), then the preliminary location was for a busted event.
+ <P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqprelim_cmd.html">Eqpelim Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+

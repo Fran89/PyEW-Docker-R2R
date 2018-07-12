@@ -1,0 +1,370 @@
+###################
+###################
+Wave Viewer Programmer Notes
+
+###################
+About wave_viewer and this file
+
+Wave_viewer is a program developed primarily to display data 
+from EARTHWORM wave_servers in a graphical format.
+
+During the Fall of 2001, this infamous WAVE VIEWER program
+was overhauled.
+
+A large portion of the guts of the program were rewritten.
+The goal was to produce a less finicky program that could
+be used to display all types of Earthworm based waveform
+data, and could also be more easily maintained by current
+programmers.
+
+As part of this overhaul, new documentation was produced,
+describing the design of the new wave_viewer, and the
+programattic data flow within the program.
+
+Documentation generated consists of:
+
+1) wave_viewer_programmer_comments.txt
+This file, describing the implementation of the guts of
+wave_viewer.
+
+2) wave_viewer_fd.vsd
+A diagram displaying the various components that make up the
+core portion of the wave_viewer experience.  The core wave_viewer
+classes are depicted along with dataflow between the classes and
+external processes.  
+
+3) wave_viewer_fd.gif
+A GIF formatted image of the wave_viewer_fd.vsd file.
+
+4) wave_viewer.d
+A new, well documented sample configuration file for wave_viewer.
+
+5) wave_viewer_user_doc.txt
+A brief user doc for wave_viewer
+
+6) wave_viewer_bugs.txt
+A list of known bugs for wave_viewer
+
+
+
+###################
+###################
+CONTENTS
+Core Classes
+Other Classes
+Program flow examples
+Misc. Notes
+
+
+
+###################
+###################
+Core Classes
+
+Wave_viewer is written in C++ and composed of 21 classes (at last count).
+The main functionality of wave_viewer (retrieving user requested trace data 
+from a wave_server and displaying it on the screen) is handled by 10 classes:
+
+###################
+Trace Classes
+CSite
+CTrace
+----------
+Display/ User interactive Classes
+CBand
+CDisplay
+CSurfView
+CSurfApp
+----------
+Wave_server oriented Classes
+CWaveSocket
+CWave
+CWaveDoc
+CSurfDoc
+----------
+
+###################
+class CSite : public CObject  (not listed in diagram)
+CSite stores summary information for a single channel (wave_server tank).
+It holds the Station, Channel(Component), and Network codes for the channel,
+as well as a start and end time.  The start and end times serve different duties
+depending on what the CSite object is describing.  If it is describing a wave_server
+tank, then the start and end times describe the start/end time of the tank.  If it
+is describing a "request for data", then the start/end time of the CSite describe
+the start/end time of the request.
+
+class CTrace : public CObject  (#4 in the diagram)
+CTrace contains locally cached informaiton about a single wave_server tank.
+It contains a CSite which describes the tank, an (locally cached) array of
+trace data, and flags indicating the state of trace retrieval for the tank.  
+Actual waveform data is stored in a global protected buffer that is accessed
+by the CTrace class.
+CTrace is responsible for keeping a local cache updated with data from the
+time periods the user wishes to see on the display.  So as the user moves
+the display through time, each CTrace object adjusts its cache and attempts
+to keep it full of data.
+The CTrace class deals only with the CWaveDoc and CBand classes.
+It knows of no other classes (except CSite), and thus knows nothing of
+wave_servers, displays, or users.  It gets its wave data from CWaveDoc,
+and gets its user input from CBand.
+
+From CBand, CTrace gets a time interval for which it should keep the
+local cache full.
+
+CTrace communicates with CWaveDoc to issue waveform requests (to fill it's
+local cache), and to receive data.
+
+
+class CBand : public CObject  (#5 in the diagram)
+The GUI screen that the user interacts with is made up of a menu bar, 
+several Bands of trace, and a status bar.  CBand handles the drawing of
+one channel of trace data (CTrace/tank)  on the screen.  CBand keeps track
+of the gain and the bias that is applied to a trace before drawing.
+
+CBand is responsible for drawing the trace, for a given channel, that the
+user wishes to see, in the form the user wishes to see.
+
+CBand gets instructions (user, application, & OS) from CDisplay.  CBand
+gets its data from CTrace.  CBand informs CTrace of what data it is
+interested in, and CTrace is responsible for procuring that data.
+CBand draws to the screen via the MS WIN32 API.
+
+CBand must store properties related to filtering/manipulating the data
+relative to how the user wishes to see it.  Since the data is stored
+in its natural form, it must be tweeked before drawing.  Currently 
+tweeks are limited to Gain/Scale and Bias.  If you were going to
+apply filters in the future, this is where filtering information would
+be stored.
+
+Each CBand objecet is in a particular state at any time.
+The possible states, along with a short description are given below:
+
+BAND_BOGUS	No Trace Object exists for the CBand, so it is of no use.
+BAND_INIT	State of a CBand that has been assigned a trace object, but with no
+		setup work performed, and no data available.
+BAND_SETUP	State of a CBand, once it has received a small amount of data.
+                Once a band is initialized, it goes to BAND_INIT, where it can
+                request data to fill it's CTrace local cache.  It remains
+		in BAND_INIT, until it receives data.  As soon as it receives
+                data, it performs and initial calibration on itself, and goes
+                to BAND_SETUP.
+
+BAND_ACTIVE	BAND_ACTIVE is the final state for a healthy band.  A CBand goes
+		from BAND_SETUP to BAND_ACTIVE once it has received trace data that
+		covers a 60 second span.  When a band is in state BAND_SETUP, and 
+		it receives the required amount of data, it undergoes a final
+		calibration (Scale & Bias), and then is moved into the BAND_ACTIVE 
+		state.
+
+
+class CDisplay : public CObject  (#6 in the diagram)
+The screen is comprised of a menu bar, a number of bands of trace, and a status bar.  
+CDisplay handles the portion of the screen covered by the bands of trace.
+CDisplay does no actual drawing, but it manages the drawing of the individual
+traces via the CBand class.
+
+CDisplay coordinates the drawing, and manages what time period of which traces
+is seen.  CDisplay receives instructions from CSurfview, and passes the instructions
+on to the individual CBands.  CDisplay manages the CBand classes and maintains
+an array of CBands representing the channels currently displayed.
+
+
+class CSurfView : public CView  (#8 in the diagram)
+CSurfview is the main supervisory class.  It receives commands from the user,
+in the form of mouse and keyboard input.  It issues status messages to the
+display, and supervises the other core classes.
+
+Wave_viewer is an MFC based single document application.  As such it is based on the normal
+MFC classes, including a base App, View, and Doc.  CSurfview is the base view for wave_viewer.
+It handles user actions, such as mouse movements, clicks, and menu selctions.  It converts these
+actions in to meaningful commands, primarily issued to the CDisplay object.
+
+CSurfView operates a timer, upon which all time-based code executes, such as 
+auto-advance, screen refreshes, and trace refresh.
+
+
+
+class CWaveSocket: public CAsyncSocket  (#2 in the diagram)
+CWaveSocket is the asynchronous socket class that wave_viewer uses as a
+communication channel to wave_servers.  There is not much intelligence 
+built into CWaveSocket, it is pretty much a CAsyncSocket with callback
+functions specified for when data is received or the socket is closed.
+(In version 2.00 of wave_viewer the old CWave class was broken into two
+parts:  CWaveSocket (the dumb socket class), and CWave (the smart socket 
+wrapper).
+
+CWaveSocket's prime responsibility is to transfer data to/from the 
+wave_server via a TCP socket.
+
+
+class CWave: public CObject  (#3 in the diagram)
+CWave provides a simple interface for wave_viewer to communicate with 
+wave_server.  CWave acts as a wrapper for the CWaveSocket class 
+and the lower level of the wave_server protocols.    
+CWave receives requests from CWaveDoc, via a function call.  CWave
+buffers those requests, converts them to the wave_server protocol,
+and then sends them over the CWaveSocket and receives the replies.
+Eventually passing a buffer of values back to CWaveDoc via a callback
+function.  It encapsulates all of the ugly stuff involved
+in communicationg with a wave_server over a TCP socket, such as split tokens,
+dropped connections, queueing requests, etc, so that the rest of wave_viewer 
+doesn't have to worry about that garbage. 
+
+CWave provides status updates directly to CSurfview.
+
+
+class CWaveDoc : public CDocument  (#7 in the diagram)
+CWaveDoc manages trace data and menu requests.  It receieves requests for menus
+from wave_viewer code, and requests for trace data from CTrace objects.  It passes
+those on to the CWave class and then handles/redirects the replies.  It handles
+the nastiness of the wave_server reply flags, and converts wave_server reply
+strings into trace arrays or channel arrays, before passing them to the requesting
+CTrace class.  CWaveDoc also tracks all of the CTrace objects for the wave_server.  It
+creates one CTrace object for each wave_server channel, and handles global flag
+manipulation for the array of CTrace objects.
+
+class CSurfDoc : public CWaveDoc   (#7 in the diagram)
+This is the main document.  CSurfDoc is a CWaveDoc class, that handles the
+extra garbage associated with communicating with the main View and App, and
+handling any nasty business associated with user actions that doesn't fit
+in anywhere else.  CSurfDoc handles kludging all of the nasty stuff that comes
+up because of excessive user clicks, network time delays, and MFC bugs.
+
+
+Wave_Server  (#1  in the diagram)
+Wave_Server is not a class but is an integral part of the wave_viewer 
+functionality.  Wave_Server caches waveform data and provides it to
+requesting clients over a TCP socket.
+
+
+###################
+Other classes
+
+class CSurfApp : public CWinApp
+Surf is what we breathe, it is our Catholicisim, not that it is remotely 
+related to Catholicism, or that any person would ever think of trading in
+Catholicism for surf, but if you were trying to delete the Surf* classes,
+and expected there to still be a wave_viewer, then you would be sadly 
+mistaken.  And like any good MFC C++ application, its merchandise comes 
+in three forms, a Document (CSurfDoc), a View(CSurfView), and an App(CSurfApp).  
+The CSurfApp doesn't do much other than provide a framework,
+and keep track of the Document, View, and any of the Groups listed in the config file.
+For the most part it just provides a framework and shelters you from the ugliness that
+is MFC and the Win32 API.
+
+class CAboutDlg : public CDialog
+A dialog box that describes wave_viewer.  Including author and version info.
+
+class CCatalog : public CCmdTarget
+Self managed generic array.
+
+class CComfile : public CObject
+Comfile is for File I/O operations.  It includes functions to read, write, and
+parse file input and output.
+
+class  CDate : public CObject
+It's a bird, it's a plane, no it's just Date.  This class is very likely to
+see some action in the Y2K war.
+
+class CEventDlg : public CDialog
+This appears to be a dialog box for changing time, or changing an event. It
+does support DVD though, nothing about S-Video in/out.
+
+class CGroup : public CCmdTarget
+Used for grouping traces into groups.  Yeah that's it, that's the ticket.
+If you look in one of the pull down menu's or in the config file, there is
+the idea of groups of trace, in which case you can view certain stations 
+without having to view an event, or all the stations from a certain
+wave server.
+
+class CMainFrame : public CFrameWnd
+This is the MainFrame.  I think it's a 390, but it could be a 390 ES9000.
+Anyway, it establishes our maximum presence, gives us walls to nail our
+status bars to, and makes us feel comfty cozy homey.  Standard MFC.
+
+class CPhase : public CCmdTarget
+This class stores simple phase information from a trigger message.  Namely,
+the SCN, including the S,C, and N, and the trigger time.
+
+class CQuake : public CCmdTarget
+This is basically an origin class.  It contains an origin time, and a
+CPhase array of all the SCN's associated with the quake.
+
+class CSelect : public CTreeCtrl
+An MFC tree control for selecting a quake(trig message) from a file.
+
+###################
+Program flow scenarios
+______________________
+1) User clicks the "Go Youngest" button on the Menu Bar
+	a) CSurfView receives the "Go Youngest" click event.
+	b) CSurfView tells CSurfDoc to refresh the wave_server menu, and go 
+	   to the end of the menu, once the refresh is complete.
+	c) CSurfDoc sets a flag telling it to "Go Youngest" once it gets a
+	   new menu.  It then asks CWave for a new menu.
+	d) CWave clears its request queue, and then adds a request for a menu to
+	   the queue, so that the only thing on the queue is the menu.
+	e) When the wave_server is ready to accept another request, the CWave sends
+	   the queued menu request via the CWaveSocket socket.
+	f) Wave Server gets the request and hopefully replies with a menu.
+	g) CWave is notified by CWaveSocket, when there is data to be received. CWave receives 
+	   the reply via CWaveSocket, until a complete reply has been receieved.  CWave passes
+	   the menu reply to CSurfDoc via CSurfDoc->HandleWSMenuReply().  CSurfDoc has CWaveDoc
+	   refresh the existing menu.  Then CSurfDoc looks at the flag it set earlier, and tells 
+	   CSurfView to "Go Youngest".
+	h) CSurfView tells CDisplay to move the start time to "Youngest".
+	i) CDisplay moves the display time to "Youngest" and tells each CBand to redraw itself.
+	j) CDisplay also sets a flag to tell itself that it should have each CBand to have its
+	   CTrace object check for missing trace in the local cache.
+	k) CSurfview wakes up CDisplay.  CDisplay sees that it has set a flag to check for 
+	   needed trace.  It tells each CBand to check for needed trace.
+	l) Each CBand tells its corresponding CTrace object to check it's local cache and make
+	   sure it has cached all trace data for the channel between the start and end time of
+	   the display.
+	m) Each CTrace checks for missing trace.  If it finds trace samples missing from the 
+	   local cache, then it requests those samples from the wave_server, by Requesting the
+	   trace from CWaveDoc, which passes the request on to CWave, which queues it in the
+	   request list until wave_server is ready to handle more requests.
+	(This goes on, with the trace request being submitted to wave_server, a reply coming back,
+         the reply being handed up through CWave to CWaveDoc to CTrace.  Finally CTrace records
+	 the new trace and sets a flag to alert its corresponding CBand that new trace has been
+	 received.  Which causes a partial redraw of that CBand.)
+
+
+2) User clicks the "Add A Trace" button
+	a) CSurfView receives the "Add A Trace" click event.
+	b) CSurfView tells CDisplay to add a trace.
+	c) CDisplay waves its arms maddly, and makes another trace appear if possible, resets
+	   scrollbars, adjusts the starting band if neccessary, and sets a flag to tell itself
+	   to check for new trace.
+	d) CSurfView tells Windows to refresh the screen, and resets the flags controlling CTrace
+	   retrieval status.
+	(goto step k from #1)
+	k) CSurfview wakes up CDisplay.  CDisplay sees that it has set a flag to check for 
+	   needed trace.  It tells each CBand to check for needed trace.
+	l) Each CBand tells its corresponding CTrace object to check it's local cache and make
+	   sure it has cached all trace data for the channel between the start and end time of
+	   the display.
+	m) Each CTrace checks for missing trace.  If it finds trace samples missing from the 
+	   local cache, then it requests those samples from the wave_server, by Requesting the
+	   trace from CWaveDoc, which passes the request on to CWave, which queues it in the
+	   request list until wave_server is ready to handle more requests.
+	(This goes on, with the trace request being submitted to wave_server, a reply coming back,
+         the reply being handed up through CWave to CWaveDoc to CTrace.  Finally CTrace records
+	 the new trace and sets a flag to alert its corresponding CBand that new trace has been
+	 received.  Which causes a partial redraw of that CBand.)
+
+
+	
+
+DK  09/19/01  (Augmented 10/25/01)
+
+
+
+###################
+Misc. Notes
+
+
+Wave Viewer can only connect to one wave_server at a time.
+
+

@@ -1,0 +1,141 @@
+RELEASE NOTES EARTHWORM VERSION 2.7
+1/24/96
+
+
+OPERATING SYSTEMS:
+******************
+
+Most of Version 2.7 runs on OS2 Warp 3.0 and Solaris, both on intel and SparcStations.  Exception to this are:
+	vdl:		Runs only under Solaris, either on Sparc or Intel.
+	lptrg:		Runs only under OS2
+	trg_assoc:	Runs only under OS2
+	getdst:		Runs only under OS2
+
+
+FORMAT CHANGES:
+***************
+
+A new waveform data message has been created.  It stores data from only one channel per message.  For details, see waveform.format in the DOC directory.
+
+
+NEW MODULES:
+************
+
+vdl:	
+
+VDL is the USNSN Virtual Data Logger, which is a software version of a
+Quanterra data logger. vdl has been turned into an Earthworm module.
+The vdl module retrieves the waveform data from channels specified by
+the user in the configuration file. The vdl module passes the waveform
+channels to the USNSN VDL code which  executes a trigger, and sends
+home (to the USNSN) compressed event data  (in USNSN format).
+
+
+getdst:
+
+OS2 based software used for collecting DST ( Digital telemetry system
+developed by Gray Jensen at USGS, Menlo Park ) data. The GETDST
+computer is connected to a DIGI D/DON16 16 port serial input device.
+Each port is used to receive three components from one DST station.
+Data is time-stamped at the central site using a TrueTime PC-SG clock
+catd.  Data telemetry is one way.  Data lost cannot be recovered.
+getdst detects dropouts using sync-bytes and preserves available data
+samples. getdst outputs data in the earthworm universal waveform format.
+
+
+lptrig:
+
+Runs John Evans' long-period trigger algorithm.  lptrig takes as input
+a file of channel names with a flag set for those on which the trigger
+algorithm should be run and a configuration file where the user can
+specify trigger parameters.  Outputs a long_period trigger message for
+each triggered channel.
+
+lp_assoc:
+
+Gets the long_period trigger messages and determine if there has been a long-period event.  The association parameters are set in the trg_assoc configuration file, trg_assoc.d.
+
+cubic_msg:
+
+This module converts the hypo71 summary message to a message in cubic
+format.  Currently, these messages are being exported to Alan Jones'
+program SEISMIC for display.
+
+ad_demux:
+
+Ad_demux demultiplexes the A/D mulitplexed waveform message into the single channel waveform message.
+
+ 
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+********************************************
+
+
+Import_generic:
+
+Hypoinverse:  
+
+There is now only one hypoinverse.  Prior to this release, there was
+separate hypoinverse for OS2 and solaris.  There have been a few
+command changes which are not documented at this point.
+
+
+
+CHANGES TO CONFIGURATION and DESCRIPTOR FILES:
+**********************************************
+
+Earthworm.d
+
+This file contains the Earthworm adminstrative setup rather than
+hard-coded as was previously done.  The system will not run without
+this file. The file defines all installtion-specific information on
+shared memory rings, module ids and message types.
+
+New configutation file:
+
+	vdl_ew.d
+
+	vdl_ew.desc
+
+	getdst.d
+
+	getdst.desc
+
+	lptrig_a.d
+
+	lptrig_a.desc
+
+	trg_assoc.d
+
+	trg_assoc.desc
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+
+Will has moved us from os/2 v2 to os/2 v3. v2 is no longer available,
+and v3 offers better stability; v2 seems to have some GUI bugs. Never
+mind that NT may come: we play the ball where it lies.  Will had
+to create new makefiles, as yes, they're different from OS2 v2. The files in
+earthworm/working/bin, named to_os2v2.cmd and to_os2v3.cmd copy the
+corresponding versions of the makefiles into the standard name
+"makefile.os2" found in each module's source directory.
+
+Ad_demux:
+
+Does not put error messages on the ring, so statmgr will know nothing about ad_demux error messages.  Statmgr will report if the ad_demux's heart stops beating.
+
+
+MODULES IN PROGRESS:
+********************
+
+A picker module based on the Rex Allen algorithm.  It's new features are:
+	* process the new waveform format for single channel data
+	* allow each channel to have it own picking parameters.
+
+A new wave_server which will store data and service requests on a per
+channel basis.  Uses the new waveform format.
+
+
+
+

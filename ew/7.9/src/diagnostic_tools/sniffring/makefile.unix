@@ -1,0 +1,23 @@
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = sniffring.o $L/libew.a $L/errexit.o
+
+sniffring: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/sniffring $(OBJS)  $(SPECIFIC_FLAGS)
+
+lint:
+	lint sniffring.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/sniffring*

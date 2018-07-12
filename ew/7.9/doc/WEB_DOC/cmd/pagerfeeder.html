@@ -1,0 +1,199 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Pagerfeeder commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Pagerfeeder Configuration File Commands</H1>
+<I>(last revised 5 December 1996)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, pagerfeeder reads the configuration file named on the command
+line.  Commands in this file set up all parameters used in processing
+Earthworm system TYPE_PAGE messages.  In the control file, lines may begin
+with a valid pagerfeeder command (listed below) or with one of 2 special
+characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+#                    Pager Feeder Configuration File
+#                           (pagerfeeder.cnf)
+#
+#   This file is used to control the heartbeat intervals of the
+#   pagerfeeder program.
+#
+#   In this file, comment lines are preceded by #.
+#
+#
+MyModuleId   MOD_PAGERFEEDER
+#
+#   <HeartBeatStatmgr> is the time in seconds between heartbeats
+#   sent to the status manager.  The status manager will report an error
+#   if heartbeats are not received from the status manager at regular
+#   intervals.
+#
+HeartbeatStatmgr  30
+#
+#   <RingName> is the name of the transport ring that pagerfeeder
+#   lives on.  Should be the same ring as the statmgr.
+#
+RingName       HYPO_RING
+#
+# List the message logos to grab from transport ring:
+#
+#              Installation       Module       Message Type
+GetPagesFrom   INST_MENLO      MOD_WILDCARD    # pager msg
+#
+#   <LogFile> sets switch for writing a log file to disk.
+#   If 1, write a log file; if 0, don't.
+#
+LogFile  0
+
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by pagerfeeder, grouped by the function
+they influence.  All of the commands are required; they must be specified
+in the control file in order for pagerfeeder to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>         Earthworm system setup:
+                <A HREF=#GetPagesFrom>GetPagesFrom</A>	   	required
+		<A HREF=#HeartbeatStatmgr>HeartbeatStatmgr</A> 	required
+ 		<A HREF=#MyModuleId>MyModuleId</A>	   	required
+		<A HREF=#RingName>RingName</A>	   	required
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>		   	required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="GetPagesFrom">  <!-- command name as anchor inside quotes -->
+<PRE><B>GetPagesFrom <font color=red>inst</font> <font color=red>mod_id</font>		pagerfeeder_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the pager messages input to pagerfeeder.  pagerfeeder will
+only process TYPE_PAGE messages that come from module <font color=red>mod_id</font> at
+installation <font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font> are character strings (valid
+strings are listed in earthworm.h/earthworm.d) which are related to
+single-byte numbers that uniquely identify each installation and
+module.  Up to 2 "GetPagesFrom" command may be issued; wildcards
+(INST_WILDCARD and MOD_WILDCARD) will force pagerfeeder to process
+all pager messages, regardless of their place of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   GetPagesFrom  INST_MENLO  MOD_WILDCARD
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartbeatStatmgr">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartbeatStatmgr <font color=red>nsec</font>			pagerfeeder_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds <font color=red>nsec</font> between TYPE_HEARTBEAT messages
+issued by pagerfeeder.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   HeartbeatStatmgr 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				pagerfeeder_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, pagerfeeder
+will write a daily log file(s) called pagerfeederxx.log_yymmdd
+where xx is pagerfeeder's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			pagerfeeder_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   MyModuleId MOD_PAGERFEEDER
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				pagerfeeder_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells pagerfeeder which shared memory region to use for input/output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/pagerfeeder.html">Pagerfeeder Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

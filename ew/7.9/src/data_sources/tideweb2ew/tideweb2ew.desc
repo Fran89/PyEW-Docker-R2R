@@ -1,0 +1,33 @@
+
+
+modName  tideweb2ew
+modId    MOD_TIDEWEB2EW
+instId   ${EW_INST_ID}
+
+restartMe	# restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 20  page: 0  mail: 99
+
+# these are the statmgr messages that tideweb2ew will send before dieing
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused tideweb2ew to die"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, tideweb2ew dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, tideweb2ew dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, tideweb2ew dead"
+#

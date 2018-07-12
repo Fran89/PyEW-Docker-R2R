@@ -1,0 +1,9 @@
+Revised version of arc2trig, using the new libsrc routines read_arc.c.
+
+Note that writetrig.c was previously labeled as "multi-thread safe". In fact,
+it is NOT multi-thread safe, since it stores values in static variables that
+are not protected by mutexes. Since I don't know of any multithread
+applications for writetrig.c, I have simply corrected the comment at the top
+of the source file.
+
+Pete Lombard, 12/11/98

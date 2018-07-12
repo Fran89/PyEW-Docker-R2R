@@ -1,0 +1,31 @@
+
+#
+#                    Nmake File For ringVtanks - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all:
+   emake $B\ringvtanks.exe
+
+$B\ringvtanks.exe: ringvtanks.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) ringvtanks.obj $L\ws_clientII.obj \
+    $L\socket_ew.obj \
+    $L\swap.obj $L\socket_ew_common.obj \
+    $L\libew_mt.lib -out:$B\ringvtanks.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	del $B\ringvtanks*

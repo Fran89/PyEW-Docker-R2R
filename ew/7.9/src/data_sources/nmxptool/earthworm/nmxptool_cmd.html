@@ -1,0 +1,517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: nmxptool commands</title>
+</head>
+<body alink="#ff0000" vlink="#551a8b" link="#0000ee"
+ style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);">
+<center>
+<h1>Earthworm Modules: <br>
+nmxptool configuration file </h1>
+<i>(last revised 22 October, 2010)</i></center>
+Page Index:<br>
+1. <a href="#function">Functional command listing</a><br>
+2. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+3. <a href="#advanced_description">Advanced Description</a><br>
+4. <a href="#sample_config">Sample Configuration File</a><br>
+
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, nmxptool reads the configuration file named on the command
+line. Commands in this file set all the parameters used for configuring
+the Earthworm Nanometrics client module nmxptool
+(<a href="http://www.nanometrics.ca/">Nanometrics</a>).
+In the control file, lines may begin with a valid nmxptool command (listed below) or
+with one of 2 special characters: </p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this document (commands are case sensative).&nbsp; Blank lines are also
+permitted in the control file.<br>
+<br>
+
+<h2><a name="function">1. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by nmxptool, grouped by the function
+they influence. Most of the commands are required; they may be
+specified in any order in the control file.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: -->
+<br>
+</p>
+<pre>        Earthworm system setup:<br>
+<a href="#MyModuleId">MyModuleId</a>              required<br>
+<a href="#RingName">RingName</a>                required<br>
+<a href="#HeartBeatInterval">HeartBeatInterval</a>       required<br>
+<a href="#Verbosity">Verbosity</a>		optional<br><br>
+
+Nanometrics server and connection parameters:<br>
+<a href="#NmxpHost">NmxpHost</a>                required<br>
+<a href="#NmxpPortPDS">NmxpPortPDS</a>		optional<br>
+<a href="#NmxpPortDAP">NmxpPortDAP</a>		optional<br>
+<a href="#UserDAP">UserDAP</a>			optional<br>
+<a href="#PassDAP">PassDAP</a>			optional<br>
+<a href="#ForceTraceBuf1">ForceTraceBuf1</a>		optional<br>
+<a href="#MaxTolerableLatency">MaxTolerableLatency</a>	optional<br>
+<a href="#ShortTermCompletion">ShortTermCompletion</a>	optional<br>
+<a href="#MaxDataToRetrieve">MaxDataToRetrieve</a>	optional<br>
+<a href="#TimeoutRecv">TimeoutRecv</a>		optional<br>
+<a href="#mschan">mschan</a>			optional<br>
+<a href="#DefaultNetworkCode">DefaultNetworkCode</a>	optional<br>
+<a href="#DefaultLocationCode">DefaultLocationCode</a>	optional<br>
+<a href="#ChannelFile">ChannelFile</a>		required	Xor Channel<br>
+<a href="#Channel">Channel</a>			required	Xor ChannelFile<br>
+<br>
+
+Output control:<br>
+<a href="#LogFile">LogFile</a>			required<br>
+</pre>
+
+
+<h2><a name="alphabet">2. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p> In the following section, all configuration file commands are
+listed
+in alphabetical order. Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command
+influences.
+A detailed description of the command and is also given. Default values
+and example commands are listed after each command description. </p>
+
+<pre><b><br>command <font color="red">arg </font>                                 processed by            in function</b></pre>
+
+<hr><!-- ADD HERE: all commands; below is a sample command blank: --><!-- command name as anchor inside quotes -->
+<pre><a name="Channel"><b>Channel <font color="red">streamkey</font>                 ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies one stream
+of data to be requested from the NmxpHost.
+The <font color="red">streamkey</font> is not in SCNL format. It is composed of a network, station, channel and location code
+separated by period. network and location are optional and they are used only for output.
+Station code can be &quot;&#42;&quot; that stands for all stations.
+Within channel code can appear character &quot;&#63;&quot; that stands for any characters. Default location is NULL and printed out as &quot;--&quot;.
+DO NOT USE WITH <a href="#ChannelFile">ChannelFile</a>!
+  <pre>
+Default:  none
+Example:  Channel  ES.BOB.HH?
+	  Channel  MN.TIR.HH?
+	  Channel  IV.MVVM.HH?.01
+	  Channel  SALO.HH?.03
+	  Channel  *.HHZ
+
+N.B. Network and location code will be assigned from the first pattern that includes station and channel.
+     Unless HH channels of BOB, TIR and MVVM, all other stations will have default network code from <a href="#DefaultNetworkCode">DefaultNetworkCode</a>.
+     Unless HH channels of MVVM and SALO, all other stations will have NULL location or the default location code from <a href="#DefaultLocationCode">DefaultLocationCode</a>, if it is declared.
+</pre>
+</blockquote>
+
+<hr><!-- ADD HERE: all commands; below is a sample command blank: --><!-- command name as anchor inside quotes -->
+<pre><a name="ChannelFile"><b>ChannelFile <font color="red">channel_state_file</font>                 ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies one or more streams
+of data to be requested from the NmxpHost.
+The <font color="red">streamkey</font> is the same for the <a href="#Channel">Channel</a>.
+Allow data continuity when short disconnections to NaqsServer occur
+requesting data buffered by NaqsServer (read <a href="#advanced_description">Advanced Description</a> for setting DataBufferLength) and, optionally,
+retrieving data from DataServer within seconds defined by <a href="#MaxDataToRetrieve">MaxDataToRetrieve</a>.
+This file is created by the user, nmxptool will update date and time of last sample received for each channel into the file &quot;<font color="red">channel_state_file</font>.nmxpstate&quot;. DO NOT USE WITH <a href="#Channel">Channel</a>!
+  <pre>
+Default:  none
+Example:  ChannelFile  /home/ew/list_channels_naqs1.txt
+
+Example of file created by the user:
+TIR.HHZ.01
+ARCI.HHZ.02
+MM.JOPP.HHZ
+OO.FRES.HHZ
+
+N.B. Network and location code will be assigned from the first pattern that includes station and channel.
+     See <a href="#DefaultNetworkCode">DefaultNetworkCode</a> and <a href="#DefaultLocationCode">DefaultLocationCode</a> 
+
+Example of file updated by nmxptool:
+MM.JOPP.HHZ.--  1 4321620 3596991 2012.027,23:38:33.7799 208pts lat. 4.1s
+MM.JOPP.HHZ.--  1 4321621 3596992 2012.027,23:38:35.8599 216pts lat. 2.0s
+IV.ARCI.HHZ.02  1 21431342 20706713 2012.027,23:38:27.6800 224pts lat. 10.1s
+IV.ARCI.HHZ.02  1 21431343 20706714 2012.027,23:38:29.9200 224pts lat. 8.8s
+IV.TIR.HHZ.01  1 103725441 103000812 2012.027,23:38:28.4600 224pts lat. 10.3s
+IV.ARCI.HHZ.02  1 21431344 20706715 2012.027,23:38:32.1600 224pts lat. 6.6s
+IV.TIR.HHZ.01  1 103725442 103000813 2012.027,23:38:30.7000 224pts lat. 8.1s
+IV.ARCI.HHZ.02  1 21431345 20706716 2012.027,23:38:34.4000 224pts lat. 4.4s
+IV.TIR.HHZ.01  1 103725443 103000814 2012.027,23:38:32.9400 224pts lat. 5.8s
+IV.TIR.HHZ.01  1 103725444 103000815 2012.027,23:38:35.1800 224pts lat. 3.6s
+IV.ARCI.HHZ.02  1 21431346 20706717 2012.027,23:38:36.6400 224pts lat. 2.1s
+OO.FRES.HHZ.--  1 42036166 41311537 2012.027,23:38:36.8199 128pts lat. 11.9s
+OO.FRES.HHZ.--  1 42036167 41311538 2012.027,23:38:38.0999 124pts lat. 10.7s
+OO.FRES.HHZ.--  1 42036168 41311539 2012.027,23:38:39.3399 118pts lat. 9.5s
+OO.FRES.HHZ.--  1 42036169 41311540 2012.027,23:38:40.5199 114pts lat. 8.3s
+OO.FRES.HHZ.--  1 42036170 41311541 2012.027,23:38:41.6600 116pts lat. 7.2s
+OO.FRES.HHZ.--  1 42036171 41311542 2012.027,23:38:42.8199 114pts lat. 6.0s
+MM.JOPP.HHZ.--  1 4321622 3596993 2012.027,23:38:38.0199 190pts lat. 10.1s
+OO.FRES.HHZ.--  1 42036172 41311543 2012.027,23:38:43.9600 114pts lat. 4.9s
+OO.FRES.HHZ.--  1 42036173 41311544 2012.027,23:38:45.0999 116pts lat. 3.7s
+MM.JOPP.HHZ.--  1 4321623 3596994 2012.027,23:38:39.9200 218pts lat. 7.9s
+OO.FRES.HHZ.--  1 42036174 41311545 2012.027,23:38:46.2599 114pts lat. 2.6s
+MM.JOPP.HHZ.--  1 4321624 3596995 2012.027,23:38:42.0999 198pts lat. 5.9s
+MM.JOPP.HHZ.--  1 4321625 3596996 2012.027,23:38:44.0799 224pts lat. 3.7s
+IV.ARCI.HHZ.02  1 21431347 20706718 2012.027,23:38:38.8800 224pts lat. 9.9s
+IV.TIR.HHZ.01  1 103725445 103000816 2012.027,23:38:37.4200 224pts lat. 11.3s
+IV.ARCI.HHZ.02  1 21431348 20706719 2012.027,23:38:41.1199 224pts lat. 7.6s
+IV.TIR.HHZ.01  1 103725446 103000817 2012.027,23:38:39.6600 224pts lat. 9.1s
+IV.ARCI.HHZ.02  1 21431349 20706720 2012.027,23:38:43.3599 224pts lat. 5.4s
+IV.TIR.HHZ.01  1 103725447 103000818 2012.027,23:38:41.9000 224pts lat. 6.9s
+IV.ARCI.HHZ.02  1 21431350 20706721 2012.027,23:38:45.5999 224pts lat. 3.2s
+IV.TIR.HHZ.01  1 103725448 103000819 2012.027,23:38:44.1400 224pts lat. 4.6s
+MM.JOPP.HHZ.--  1 4321626 3596997 2012.027,23:38:46.3199 220pts lat. 2.5s
+IV.TIR.HHZ.01  1 103725449 103000820 2012.027,23:38:46.3800 224pts lat. 2.4s
+...
+</pre>
+</blockquote>
+
+<hr><!-- ADD HERE: all commands; below is a sample command blank: --><!-- command name as anchor inside quotes -->
+<pre><a name="DefaultLocationCode"><b>DefaultLocationCode <font color="red">network_code</font>                 ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies default <font color="red">location code</font>
+    for channels where is omitted.
+  <pre><br>Default:  NULL location (also printed out as &quot;--&quot;)<br>Example:  DefaultLocationCode  01</pre>
+</blockquote>
+
+<hr><!-- ADD HERE: all commands; below is a sample command blank: --><!-- command name as anchor inside quotes -->
+<pre><a name="DefaultNetworkCode"><b>DefaultNetworkCode <font color="red">network_code</font>                 ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies default <font color="red">network code</font>
+    for channels where is omitted.
+  <pre><br>Default:  none<br>Example:  DefaultNetworkCode  IV</pre>
+</blockquote>
+
+<hr><!-- ADD HERE: all commands; below is a sample command blank: --><!-- command name as anchor inside quotes -->
+<pre><a name="ForceTraceBuf1"><b>ForceTraceBuf1 <font color="red">switch</font>                        ReadConfig              Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+
+<blockquote><!-- command description goes here --> Sets the on-off <font
+ color="red">switch</font> to force the creation of TRACEBUF messages on
+systems that support TRACEBUF2 messages.  By default, the module will 
+create TRACEBUF2 messages on systems that support them otherwise it will
+create the older TRACEBUF messages.  This switch has no effect on systems
+that do no support TRACEBUF2 messages.  This switch could be useful in 
+environments where a transition is occuring between TRACEBUF and
+TRACEBUF2 messages, otherwise most people will never use this.
+
+<pre><!-- Default and example go here   --><br>Default:  0 (disabled)<br>Example:  ForceTraceBuf1 1<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="HeartBeatInterval"><b>HeartBeatInterval <font color="red">interval</font>                   ReadConfig              Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Defines the <font
+ color="red">interval</font> in seconds at which the module will issue
+TYPE_HEARTBEAT messages.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  HeartBeatInterval 30<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="LogFile"><b>LogFile <font color="red">switch</font>                               ReadConfig              Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here -->Sets the on-off
+switch for writing a log file to disk. If <font color="red">switch</font>
+is 0, no log file will be written. If <font color="red">switch</font>
+is 1, nmxptool will write a daily log file(s) called
+nmxptool.log_yymmdd where xx is nmxptool's module id (set with <a
+ href="#MyModuleId">MyModuleId</a> command) and yymmdd is the current
+UTC date (ex: 960123) on the system clock. The file(s) will be written
+in the EW_LOG directory (environment variable).&nbsp; If <font
+ color="red">switch</font> is 2 the log file is written but output to
+stdout and stderr is suppressed.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  LogFile   1<br>  </pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="MaxDataToRetrieve"><b>MaxDataToRetrieve <font color="red">seconds</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Max amount of data of the past to retrieve from the DataServer when program restarts.  0 to disable connection to DataServer.
+    If this parameter is zero and <a href="#ChannelFile">ChannelFile</a> is used, only data buffered by NaqsServer will be retrieved.
+    Rather than using <a href="#MaxDataToRetrieve">MaxDataToRetrieve</a>,
+    it is preferable, inside the section Datastream of
+    the file <i>Naqs.ini</i>, setting DataBufferLength to a high value (read <a href="#advanced_description">Advanced Description</a>).
+    <a href="#MaxDataToRetrieve">MaxDataToRetrieve</a> allows to retrieve
+    much more data of the past when the program restarts but
+    it considerably slows down the execution.
+    It is extremely harmful when you have many channels,
+    in this case you might consider to subdivide the
+    channels into different nmxptool instances.
+    Range is [0..86400].
+  <pre><!-- Default and example go here   --><br>Default:  0<br>Example:  MaxDataToRetrieve  3600</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="MaxTolerableLatency"><b>MaxTolerableLatency <font color="red">seconds</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the max tolerable latency for raw stream connection. For enabling NaqsServer to send out retransmission requests for missed packets set RetxRequest (read <a href="#advanced_description">Advanced Description</a>).
+If RetxRequest is not enabled then <a href="#MaxTolerableLatency">MaxTolerableLatency</a> is ineffective. Range is [60..600]. NOT use with parameter <a href="#ShortTermCompletion">ShortTermCompletion</a>.
+  <pre><!-- Default and example go here   --><br>Default:  600<br>Example:  MaxTolerableLatency  200</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="MyModuleId"><b>MyModuleId <font color="red">mod_id</font>                            ReadConfig              Earthworm setup<br></b><br></a></pre>
+<blockquote><!-- command description goes here --> Sets the module id
+for labeling all outgoing trigger, heartbeat, and error messages. <font
+ color="red">mod_id</font> is a character string (valid strings are
+listed in earthworm.d) that relates to a unique single-byte number.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  MyModuleId MOD_NMXPTOOL<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="mschan"><b>mschan <font color="red">mSECs/nC</font>                               ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here -->
+    <font color="red">mSECs</font> are milliseconds to wait before the next request,
+    <font color="red">nC</font> is the number of channels to request at a time.
+    Delaying and requesting few channels at a time make data buffering on NaqsServer side more efficient.
+    Determined empiric values are default 280/9. 0/0 for disabling.
+    Condition: TotalNumberOfChannels * (mSECs/nC) &lt; 15 sec.
+<pre><!-- Default and example go here   --><br>Default:  280/9<br>Example:  mschan      350/12<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="NmxpHost"><b>NmxpHost <font color="red">address</font>                               ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specify the <font
+ color="red">address</font> of the Nanometrics server. This can be either
+on IP address (four period-separated numbers) or the domain name of the
+server.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  NmxpHost      naqs1a.int.ingv.it<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="NmxpPortDAP"><b>NmxpPortDAP <font color="red">port</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the IP <font
+	color="red">port</font> number for the DataServer (<a href="#NmxpHost">NmxpHost</a>). This is
+commonly 28002.
+  <pre><!-- Default and example go here   --><br>Default:  28002<br>Example:  NmxpPortDAP  28002</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="NmxpPortPDS"><b>NmxpPortPDS <font color="red">port</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the IP <font
+	color="red">port</font> number for the NaqsServer (<a href="#NmxpHost">NmxpHost</a>). This is
+commonly 28000.
+  <pre><!-- Default and example go here   --><br>Default:  28000<br>Example:  NmxpPortPDS  28000</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="PassDAP"><b>PassDAP <font color="red">password</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the <font
+	color="red">password</font> for the DataServer (<a href="#NmxpHost">NmxpHost</a>). Leave commented if password in DataServer.ini is set to &quot;none&quot;.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  PassDAP  mypass</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="RingName"><b>RingName <font color="red">ring</font>                                ReadConfig              Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Indicates which
+shared memory region to use for waveform output.&nbsp; <font
+ color="red">ring</font>
+is a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the shared
+memory region.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  RingName WAVE_RING<br></pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="ShortTermCompletion"><b>ShortTermCompletion <font color="red">seconds</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the Short-Term-Completion for Buffered stream connection. Ranges:<br />
+    <table border=0 cellpadding=0 cellspacing=0>
+	<tr>
+	    <td><b>0</b></td><td>&nbsp;&nbsp;&nbsp;</td><td> decompressed packets are received in chronological order without waiting for missing packets.</td>
+	</tr>
+	<tr>
+	    <td><b>[1..300]</b></td><td>&nbsp;&nbsp;&nbsp;</td><td> decompressed packets are received in chronological order but waiting for missing packets at most SECs seconds.</td>
+	</tr>
+    </table>
+    NOT use with parameter <a href="#MaxTolerableLatency">MaxTolerableLatency</a>.
+  <pre><!-- Default and example go here   --><br>No default<br>Example:  ShortTermCompletion  120</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="TimeoutRecv"><b>TimeoutRecv <font color="red">seconds</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies time-out for flushing buffered packets for each channel. Useful for Data On Demand (i.e. channel HN? or HL?). It sets <a href="#mschan">mschan</a> to 0/0.   Range is [10..300].
+  <pre><!-- Default and example go here   --><br>Default:  0  (No Time-out)<br>Example:  TimeoutRecv  15</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="UserDAP"><b>UserDAP <font color="red">username</font>                                  ReadConfig              nmxptool parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><!-- command description goes here --> Specifies the <font
+	color="red">username</font> for the DataServer (<a href="#NmxpHost">NmxpHost</a>). Leave commented if username in DataServer.ini is set to &quot;none&quot;.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  UserDAP  mtheo</pre>
+</blockquote>
+
+<hr><!-- command name as anchor inside quotes -->
+<pre><a name="Verbosity"><b>Verbosity  </b></a><b><font color="red">level</font></b><b>                             ReadConfig              Earthworm setup <br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Specifies the <b><font
+	    color="red">level</font></b> of logging verbosity.
+    Verbosity is a bitmap:<br>
+    1 Channel State, 2 Channel, 4 Raw Stream, 8 CRC32, 16 Connection flow, 32 Packet Management, 64 Extra, 128 Date, 256 Gap, 512 DOD, 1023 All messages.
+  <pre><!-- Default and example go here   --><br>Default:  0<br>Example:  Verbosity 80		# 16 Connection flow + 64 Extra</pre>
+</blockquote>
+
+
+
+
+
+<hr>
+<h2><a name="advanced_description"></a>3. Advanced Description</h2>
+<p>
+<h3>Data continuity when short disconnections to NaqsServer occur</h3>
+Inside the section Datastream of the file <i>Naqs.ini</i> set <u>DataBufferLength</u> to a high value.
+
+<pre>
+    [ Datastream ] 
+    Port = 28000              // TCP port for control/data connections to Naqs 
+    Password = none           // access password (not used in version 1.3) 
+    MaxConnections = 10       // maximum number of simultaneous connections 
+    SocketType = Direct       // connection type (Direct or Callback) 
+    <font color="blue">DataBufferLength = 100</font>    // Buffer length for data channels (# packets)
+</pre>
+
+</p>
+
+<p>
+<h3>Packet retransmission</h3>
+Inside the section NetworkInterface of the file <i>Naqs.ini</i> enable <u>RetxRequest</u>.
+If RetxRequest is not enabled then <a href="#MaxTolerableLatency">MaxTolerableLatency</a> is ineffective.
+
+<pre>
+    [ NetworkInterface ] 
+    Port = 32000           // UDP port for incoming NMX data (usually 32000) 
+    SendDelay = 250        // milliseconds to delay after each send 
+    <font color="blue">RetxRequest = Enabled</font>
+    MulticastGroup = 224.1.1.1 
+</pre>
+
+</p>
+
+<h2><a name="sample_config"></a>4. Sample Configuration File </h2>
+
+
+<pre>
+#
+#                     Configuration File for nmxptool
+#
+MyModuleId           MOD_NMXPTOOL
+RingName             WAVE_RING           # Transport ring to write data to.
+
+HeartBeatInterval    10                  # Heartbeat interval, in seconds.
+LogFile              1                   # 1 -> Keep log, 0 -> no log file
+                                         # 2 -> write to module log but not stderr/stdout
+
+#ForceTraceBuf1      0                   # On systems that support TRACEBUF2
+                                         # messages this flag will force the module
+                                         # to create TRACEBUF messages instead.
+                                         # Most people will never need this.
+
+Verbosity            16                  # Set level of verbosity. Verbosity is a bitmap:
+                                         # 1 Channel State, 2 Channel, 4 Raw Stream,
+                                         # 8 CRC32, 16 Connection flow,
+                                         # 32 Packet Management, 64 Extra, 128 Date,
+                                         # 256 Gap, 512 DOD, 1023 All messages.
+                                         # It is equivalent to the option -v.
+
+NmxpHost             naqs1a.int.ingv.it  # NaqsServer/DataServer hostname or IP address.
+                                         # It is equivalent to the option -H.
+
+NmxpPortPDS          28000               # Port number of NaqsServer (Default 28000)
+                                         # It is equivalent to the option -P.
+
+NmxpPortDAP          28002               # Port number of DataServer(Default 28002)
+                                         # It is equivalent to the option -D.
+#UserDAP              mtheo              # DataServer user name. Commented if 'none'.
+                                         # It is equivalent to the option -u.
+#PassDAP              mypass             # DataServer password. Commented if 'none'.
+                                         # It is equivalent to the option -p.
+
+#ShortTermCompletion  60                  # ShortTermCompletion, NOT use 'MaxTolerableLatency'.
+                                         #  0 decompressed packets are received in chronological
+                                         #    order without waiting for missing packets.
+                                         # [1..300] decompressed packets are received in
+                                         #    chronological order but waiting for missing packets
+                                         #    at most SECs seconds.
+
+MaxTolerableLatency  60                  # Raw Stream, NOT use 'ShortTermCompletion'.
+                                         # Max tolerable latency for each channel.
+                                         # (Default 600 sec.) [60..600].
+                                         # Enable NaqsServer to send out retransmission requests
+                                         # for missed packets. Inside the section NetworkInterface
+                                         # of the file Naqs.ini set RetxRequest to Enabled.
+                                         # If RetxRequest is not enabled then MaxTolerableLatency is ineffective.
+                                         # In general, DO NOT use with parameter TimeoutRecv.
+                                         # It is equivalent to the option -M.
+
+#TimeoutRecv          30                 # Time-out in seconds for flushing queued data of each channel.
+                                         # It sets mschan to 0/0 ((Default 0. No time-out) [10..300].
+                                         # Useful for retrieving Data On Demand with minimum delay.
+                                         # 'tsec' in nmxptool.desc should be greater than 'TimeoutRecv'.
+                                         # It is equivalent to the option -T.
+
+DefaultNetworkCode   IV                  # Default network code where in 'ChannelFile' or 'Channel' is not declared.
+                                         # It is equivalent to the option -N.
+
+                                         # N.B. nmxptool channel definition IS NOT equal to SCNL
+                                         # It is NSC, that is NET.STA.CHAN
+                                         # NET  is optional and used only for output.
+                                         # STA  can be '*', stands for all stations.
+                                         # CHAN can contain '?', stands for any character.
+                                         # Localtion value is always equal to "--".
+                                         # Related to the parameters 'ChannelFile' and 'Channel'.
+                                         # Network code will be assigned from the first
+                                         # pattern that includes station and channel.
+                                         # Example: N1.AAA.HH?,N2.*.HH?,MMM.BH?
+                                         # Second pattern includes the first. Unless AAA, all
+                                         # stations with HH channels will have network to N2.
+                                         # Station MMM will have default network defined by 'DefaultNetworkCode'.
+
+#MaxDataToRetrieve    3600               # Max amount of data of the past to retrieve from the
+                                         # DataServer when program restarts (default 0) [0..86400].
+                                         # 0 to disable connection to DataServer.
+                                         # It is equivalent to the option -A. Related to 'ChannelFile'.
+                                         # If 'MaxDataToRetrieve' is zero and 'ChannelFile' is used,
+                                         # only data buffered by NaqsServer will be retrieved.
+                                         # Rather than using 'MaxDataToRetrieve', it is preferable,
+                                         # inside the section Datastream of the file Naqs.ini,
+                                         # setting DataBufferLength to a high value.
+                                         # 'MaxDataToRetrieve' allows to retrieve much more data of the past
+                                         # when the program restarts but it considerably slows down the execution.
+                                         # It is extremely harmful when you have many channels,
+                                         # in this case you might consider to subdivide the
+                                         # channels into different nmxptool instances.
+
+#mschan        280/9                     # mSECs/nC
+                                         # mSECs are milliseconds to wait before the next request,
+                                         # nC is the number of channels to request at a time.
+                                         # Delaying and requesting few channels at a time make
+                                         # data buffering on NaqsServer side more efficient.
+                                         # Determined empiric values are default 280/9.
+                                         # Condition: TotalNumberOfChannels * (mSECs/nC) < 15 sec. 
+                                         # Related to -F and -b. 0/0 for disabling.
+
+ChannelFile   /home/ew/nmxptool.list.txt # List of channel patterns, as in 'Channel'. One for each line.
+                                         # This file will not be modified by nmxptool.
+                                         # Load/Save time of last sample of each channel in a file
+                                         # with the same name, same directory, appending suffix ".nmxpstate"
+                                         # It enables request of recent packets in order to allow data
+                                         # continuity when short disconnections occur or between program restarts.
+                                         # Related to 'MaxDataToRetrieve', 
+                                         # It is equivalent to the option -F. Related to 'MaxDataToRetrieve'.
+
+    # DO NOT USE parameters 'Channel' and 'ChannelFile' together.
+    # 'ChannelFile' is preferable. At restart you can retrieve data of the past
+    # from the NaqsServer and optionally from the DataServer, see 'MaxDataToRetrieve'.
+
+# Example of nmxptool channel definition
+# Channel              ES.BOB.HH?
+# Channel              MN.TIR.HH?
+# Channel              MDI.HH?
+# Channel              DOI.HH?
+# Channel              SALO.HH?
+# Channel              MONC.HH?
+# Channel              *.BHZ               # Channel selection
+
+# Please, for other details about parameters, refer to the command line "nmxptool -h"
+
+
+</pre>
+
+<hr>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/nmxptool_ovr.html">nmxptool Overview</a> </center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+</b>Contact: <b>quintiliani at ingv.it</b> - Website: <a href="http://mednet.rm.ingv.it/nmxptool.php">http://mednet.rm.ingv.it/nmxptool.php</a>
+</address>
+</body>
+</html>

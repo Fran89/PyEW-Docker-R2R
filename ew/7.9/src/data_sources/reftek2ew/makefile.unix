@@ -1,0 +1,42 @@
+# @(#)makefile.unix
+# USGS style makefile for reftek2ew
+#
+# This makefile requires that the Reftek RTP libraries already exist
+# on your system.  If you don't have it, get it from
+#
+#        ftp://ftp.reftek.com:/pub/rtp
+#
+# and follow the directions therein to build the library.  Specify the
+# directory containing the libraries and include files as shown:
+
+LINUX_FLAGS=-lreftek -lutil -lm -lpthread
+SOLARIS_FLAGS=-lreftek -lutil -lposix4 -lsocket -lnsl -mt -lm -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+RTPLDIR = ./lib
+RTPIDIR = ./
+
+CFLAGS = $(GLOBALFLAGS) -I$(RTPIDIR)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+O = main.o hbeat.o init.o notify.o params.o scn.o send.o terminate.o \
+    samprate.o $L/libew_mt.a 
+
+all: libs reftek2ew
+
+libs: FORCE
+	cd lib; make -f makefile.unix
+
+reftek2ew: $O
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $B/reftek2ew $O -L$(RTPLDIR) -lrtp $(SPECIFIC_FLAGS)
+
+clean: FORCE
+	rm -f a.out core *.o *.obj *% *~
+	cd lib; make -f makefile.unix clean
+
+clean_bin: FORCE
+	rm -f $B/reftek2ew*
+
+FORCE:

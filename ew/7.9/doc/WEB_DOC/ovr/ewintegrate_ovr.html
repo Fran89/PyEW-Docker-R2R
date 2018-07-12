@@ -1,0 +1,46 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P>ewintegrate overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR>Ewintegrate Overview</H1>
+<I>(last revised 2 March, 2010)</I></CENTER>
+<P>
+The ewintegrate module performs any non-empty subset of 3 stages of processing
+wave data (TYPE_TRACEBUF2) coming from the InRing defined in
+ewintegrate.d. Processed trace messages are written to the OutRing with their
+SCNs changed as specified in ewintegrate.d.
+<P>
+The three stages are:
+<UL>
+<li>Debiasing, as is done in the <A HREF="debias_ovr.html">debias</A> module</li>.
+It is a rolling-average filter whose window size (in seconds) is
+specified in ewintegrate.d; if no window size is specified, this stage passes its
+input unchanged to the next.
+<li>Integration.  If DoIntegration is not specified in ewintegrate.d, the result
+of the previous stage is passed unchanged to the next</li>
+<LI>High-pass filtering, which requires both the order and frequency cutoff to be
+specified; if neither is, the result of the previous stage is passed unchanged
+to the next.</LI>
+</UL>
+<P>
+As in the <A HREF="debias_ovr.html">debias</A> module, the debias stage may
+cause some time delay at the beginning of each span of contiguous
+records, as it needs to fill the window to begin computing the averages used
+to debias the data; once the window is full, it can catch up and continue with
+little delay.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/ewintegrate_cmd.html">Ewintegrate Configuration File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

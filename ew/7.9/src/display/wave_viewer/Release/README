@@ -1,0 +1,9 @@
+Please take the latest wave_viewer   (wave_viewer.exe).
+
+Older versions of wave_viewer are maintained, and their version #
+is appended to them (such as wave_viewer_2_01.exe)
+
+This should be done via RCS, but I have had problems with the binaries.
+
+DavidK 2002/01/30
+

@@ -1,0 +1,192 @@
+Release Notes:  Earthworm Version 2.8A
+7/10/97
+
+Release v2.8A is a patch. It is being released to fix a problem with
+import-export.  The problem was that export, upon loosing the socket
+connection with it's import partner, would perform a re-inititalization
+procedure which would occasionally hang.  The hang was rare and
+irregular. We observed it over long distance links, but could not
+reproduce it within our lab.
+
+	The fix released in this patch consists of the following
+	scheme: A module can assert "restartMe" in it's ".desc" file.
+Statmgr reads this file. If "restartMe" is found, statmgr will send a
+restart request to startstop if the module's hearbeat is determined to
+have ceased. Startstop, upon receiving such a restart request, will
+kill, and then restart the offending module.
+
+	This scheme was resorted to as more straightforward attempts to
+	have the module restart itsself ( via fork(), exec(), or
+system() ) all resulted in it inheriting the problems of the hung
+module. See below for details.
+
+
+
+
+
+OPERATING SYSTEMS:
+******************
+Most of Version 2.8 runs on OS2 Warp 3.0 and Solaris, both on intel and
+SparcStations.  Exceptions to this are:
+
+	vdl:		Runs only under Solaris, either on Sparc or Intel.
+	lptrg:		Runs only under OS2
+	trg_assoc:	Runs only under OS2
+	getdst:		Runs only under OS2
+
+
+FORMAT CHANGES:
+***************
+
+The new waveform data message introduced in version 2.7 has been modified. The 
+modification was required to maintain compatibility with the Iceworm, earthworm 
+integrated with DataScope.  The format still stores data from only one channel 
+per message.  For details, see the file, trace_buf.h in the v2.8/include 
+directory.
+
+
+HANDLING OF MODULE IDS, MESSAGE TYPES and SHARED MEMORY RING KEYS:
+******************************************************************
+
+The module ids, shared memory rings, and message types are defined in
+an earthworm parameter file, earthworm.d, in ~run/params.  New module
+ids and message types can be added to this file and used by the
+Earthworm system without recompiling the code. The hope is that this
+would make it easier to create new modules and integrate them, and
+perform testing.
+
+
+
+NEW MODULES:
+***********
+
+pau:
+
+This command line program provides an alternate method of shutting
+down an Earthworm system.  The standard shutdown procedure is to type
+"quit" in the window where startstop is running.  Pau can be run from
+any login on the computer running which is running earthworm.  Pau reads
+startstop's configuration file (startstop_sol.d on Solaris, startstop_os2.d
+on OS/2) to determine which shared memory regions were created, then it sets
+the termination flag in every shared memory region, and exits.
+
+pick_ew:
+
+This is the new Earthworm picker.  The program uses demultiplexed
+waveform data with header blocks consitent with the trace_buf.h format
+description.
+
+This program processes each trace individually.  Each trace can have
+its own set of pick parameters which are set in a configuration file.
+
+Pick_ew also tries to handle short data gaps.  For a data gap of
+specified length, pick_ew will interpolate and continue picking.  If the
+number of missing samples is greater than the user specified parameter,
+pick_ew will perform a restart on the single channel which has lost
+data.
+
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES OR INCLUDE FILES:
+*************************************************************
+
+vdl:  After vdl of v2.7 was installed, a number of bugs were
+discovered.  V2.8 vdl has all bug fixes through May 14, 1997.
+
+
+hypo_ew:  A bug which caused hypoinverse to hang occassionally was trapped.
+The program will issue an error message and continue instead of exitting.
+
+earthworm.h:  Was modified so that module ids, shared memory keys, and 
+message types are no longer set in earthworm.h but in configuration file, 
+earthworm.d.  This allows changes to an earthworm system without requiring
+a recompilation of all code.
+
+trace_buf.h:  Replaces v2.7's wavehead.h.  All source code using wavehead.h 
+was modified to comply with structure definitions of trace_buf.h.  Maintains
+compatibility with Iceworm.  Specific changes include:
+ - The message type TYPE_WAVEFORM was renamed to TYPE_TRACEBUF (v2.8)
+ - The message header structure WAVEHEAD was renamed to TRACE_HEADER. 
+ - The first character of the datatype field in TRACE_HEADER was changed
+   from upper case (I,S) to lower case (i,s) to conform with CSS datatype
+   codes.
+
+transport.h,
+transport.c, 
+all modules:  Previous versions of Earthworm used the word "class" to refer
+to installation id in the MSG_LOGO structure (transport.h).  However, "class"
+is also a keyword in C++.  To allow the Earthworm software to be compiled
+with a C++ compiler, we have changed all references to "class" to "instid"
+in transport.h, transport.c and all other Earthworm source code.
+
+wavehead.h:  Replaced by trace_buf.h.  See above discussion.
+
+Startstop:  Modify so it runs in background, will need status, and pau.
+
+Startstop: increased max number of rings to 50, modules to 100, and arguments
+per  command line to 50
+
+ad_demux:  Gets the Installation id from the LocalInst instead of from the
+message header.
+
+Startstop: 2.8A. Listens for messages "TYPE_RESTART" on all rings.
+These consist of the pid of the module to be restarted. Emitted by
+statmgr if "restartMe" was present in the .desc file and if the
+module's hearbeat ceases. Startstop first kills the indicated pid, and
+then restarts the module with the same arguments and methods used in
+the initial startup - i.e. as specified in the startstop.d file.
+
+Statmgr: 2.8A. If it finds the token "restartMe" in a module's .desc
+file, it will emitt a "TYPE_RESTART" message with that module's pid if
+that module's hearbeat goes missing.
+
+
+
+CHANGES TO CONFIGURATION and DESCRIPTOR FILES:
+**********************************************
+
+Earthworm.d described above.
+
+Change to descriptor files:
+
+ 	eqproc.desc    added new error code reported by hypo_ew.
+ 
+ 	eqprelim.desc  added new error code reported by hypo_ew.
+
+New configuration files:
+
+	pick_ew.d
+
+ 	pick_ew.desc
+
+	pick_ew.sta
+
+ 	ad_demux*.desc
+
+2.8A: the .desc files can now contain the token "restartMe". The meaning is that
+the module will be restarted if it's hearbeat should cease.
+
+2.8A: earthworm.d now defines  a message of type "TYPE_RESTART". It consist of the
+ascii representation of the pid of the module to be restarted.
+
+2.8A: "TYPE HEARTBEAT" messages now optionally include the pid of the sending
+module appended after the usual heartbeat message. 
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+
+hypo_ew:  While one bug which caused infrequent hangs was trapped, 
+another still remains.
+
+ad_demux:
+Does not put error messages on the ring, so statmgr will know nothing about ad_demux error messages.  Statmgr will report if the ad_demux's heart stops beating.
+
+
+MODULES IN PROGRESS:
+********************
+
+A new wave_server which will store data and service requests on a per
+channel basis.  Uses the new waveform format.
+
+
+

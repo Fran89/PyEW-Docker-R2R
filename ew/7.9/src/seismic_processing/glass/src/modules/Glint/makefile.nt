@@ -1,0 +1,20 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 2058 2006-01-19 22:36:13Z friberg $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2006/01/19 22:36:12  friberg
+#     installed for mitch withers
+#
+#     Revision 1.1  2003/08/25 23:05:46  davidk
+#     Initial revision
+#
+#
+##################################################################/
+
+!include <$(GLASS_DIR)\src\make_defs.nt>
+!include "makefile.ind"
+#!include <$(GLASS_DIR)\src\make_defs.nt>

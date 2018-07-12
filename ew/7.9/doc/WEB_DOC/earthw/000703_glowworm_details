@@ -1,0 +1,198 @@
+From tlmurray@usgs.gov Mon Jul 10 09:16:27 2000
+Date: Mon, 3 Jul 2000 11:49:47 -0700
+From: tlmurray@usgs.gov
+To: earthw-list@nmt.edu
+Cc: glowworm@tlaloc.wr.usgs.gov
+Subject: Current GlowWorm module list
+
+    [ The following text is in the "iso-8859-1" character set. ]
+    [ Your display is set for the "US-ASCII" character set.  ]
+    [ Some characters may be displayed incorrectly. ]
+
+If anyone is interested, the following gives a brief description of the NT
+modules for Earthworm that I have put together.  Though they are working
+for me, I suspect that more wide-spread use would reveal some bugs or
+shortcomings.  I have had problems with the install program, but hope that
+the last run-through got that solved (the modules are NT-specific so they
+involve getting all the right DLL's and OCX's installed and registered
+properly).
+
+One of the goals was to produce a system that completely replicated the
+capabilities, including output in compatible data formats, of the old
+PcSeis system, itself a variant of Willie Lee's IASPEI systems.  With the
+final addition of the SSAM module, that has been achieved.
+
+ Programs developed for GlowWorm
+
+Programs that access transport rings
+
+   AfmServer.exe    Establishes a TCPIP server for the client program
+                    AfmController.exe to monitor incoming data and send
+                    control messages to AFM field sites via a ring.  This
+                    program is the forerunner to a proposed more
+                    generalized InstrumentController.
+   ComPortInterface.exe   Moves data between a serial port and a transport
+                    ring.  It has special features to aid in use with
+                    radios and data transmission.
+   ComPortRepeater.exe    Sends data received from one ComPortInterface to
+                    another ComPortInterface for retransmission.
+   ContRecord.exe   Produces TrigList2k messages at set intervals.
+                    Trig2Disk uses the messages to build successive data
+                    files, thus producing a continuous record of seismic
+                    trace data.
+   DTRpulser.exe    Sends "pulse DTR" messages to ComportInterface at
+                    specified intervals to provide a hardware watchdog
+                    signal.
+   FreewaveMonitor.exe    Determines if a communication link is still
+                    active. Rainier AFM specific.
+   LaharDetector.exe      Detects lahar signals by looking at real-time AFM
+                    data.
+   MessageCopier.exe      Copies specified messages from several rings into
+                    a single ring.
+   PagerInterface.exe     Relays TYPE_VHMEMO messages produced by other
+                    modules to the 3rd party program PageMaster via a DDE.
+                    (in development)
+   RingPorky.exe    A Porky that looks at ring output from
+                    ComportInterfaces to produce Bob data files of incoming
+                    data.
+   Rsam.exe         Records 1 and 10-minute RSAM values in Bob data files,
+                    looks for RSAM events, and runs RSAM event and tremor
+                    alarms.
+   SCNxlator.exe    Replaces selected network fields produced by one
+                    ComportInterface to that of another, thus making the
+                    data look as though it had come from the second one.
+                    Rainier AFM specific.
+   SerialPortDecoder.exe  Decodes and parses data messages from
+                    ComportInterface into a standard tabular data format.
+   Ssam.exe         Records 1-minute SSAM values produced by ew2ssam.exe in
+                    ascii data files. In one directory tree are the data
+                    files compatible with the 16-band PcSeis output.  In
+                    another tree are the full 128 fft-line data for all
+                    future applications.
+   vhMailMan.exe    Sends e-mail messages from TYPE_VHMEMO messages
+                    produced by other modules.
+   vhRingToSerial.exe     Transmits and receives selected messages from
+                    selected rings from one system to another via either a
+                    serial port (spread-spectrum radio) or a TCPIP port.
+       vhStoretabledata.exe   Stores data in Tabular Messages into text,
+Bob, or Access data files.
+   vhWormManager.exe      Provides a central manager for the Earthworm
+                    system.
+
+Enhanced Earthworm modules
+
+   CarlSubTrig.exe  Added the capability to use only a subset of a subnet's
+                    stations to determine if the subnet has triggered, but
+                    record all stations in the subnet.  Thus a noisy
+                    station can be recorded in the subnet, but won't help
+                    produce false subnet triggering.  Also added the
+                    capability to designate the subnet by a 6-character
+                    alpha name instead of just a number.
+   Trig2Disk.exe    Uses the alpha subnet name in naming the data files or
+                    directories for ease-of-sorting.
+   Sgram.exe        Ported to run under NT as either standalone or in
+                    conjunction with StartStop.
+   Heli_standalone.exe    Ported to run under NT.
+
+
+New message types
+
+   TYPE_OBJECTSTATE Contains information for either setting an object state
+                    (such as set instrument sample rate=x), the current
+                    state of an object (such as radio link down, sample
+                    rate =x, etc.), or the acknowledgement of a command
+                    received.
+
+   TYPE_MEMO        Contains messages to be sent as e-mail or to a pager.
+
+   TYPE_VCOMPORT    Contains data received from or to be transmitted out of
+                    a serial port, including serial port control lines.
+
+   TYPE_VTABULARDATA      Contains one or more lines of tabular-type data.
+
+Modules for remote control of field sites
+
+   AfmController.exe      A client for AfmServer.exe, AfmController sends
+                    control messages to Afm controllers and displays
+                    incoming data.
+
+Modules for remote display of incoming data
+
+   LaharDisplay.exe Receives display information from the TCPIP server in
+                    Lahar.exe.
+   RemoteManager.exe      Receives current module status from the TCPIP
+                    server in vhWormManager.exe.
+   RsamDisplay.exe  Receives display information from the TCPIP server in
+                    Rsam.exe.
+
+Other modules
+
+   Wait.exe         Provides a delay of a specified number of seconds
+                    before continuing execution of a cmd or bat file, thus
+                    allowing all drivers to load properly before attempting
+                    to access them. The syntax for waiting 10 seconds would
+                    be:   Wait.exe 10
+
+   Archiver.exe     Copies data from the acquisition computer to an archive
+                    area where it can copied onto archive media.  Syntax is
+                    simply:    Archive.exe
+
+   StartMe.exe      Provides the means to start a program from the command
+                    line and assign it a priority of either idle, normal,
+                    or high.  The syntax is:
+                    Startme.exe "program" "arguments" "priority" "window
+                    title"
+
+Program development modules
+
+   cvoutils.dll     Contains the PowerBasic routines that provide C
+                    language capabilities that are difficult or impossible
+                    in VB.
+   transportvb.dll  Contains the routines from Earthworm's transport.c.
+   vhComPortCtrl.ocx      Wraps the standard VB comport control into an
+                    easy to use ActiveX control.  Setup menus and input
+                    file i/o are encapsulated in the control.  The control
+                    contains special features useful for data acquisition
+                    and instrument control through a radio network.
+   vhMessages.dll   Contains all selected Earthworm message objects.
+   vhDataSocket.ocx Wraps Crescent tools CITCP.ocx into an easy-to-use
+                    TCPIP socket ActiveX control.  Its login procedures
+                    mate with vhTcpServer.ocx.  Setup menus and input file
+                    i/o are encapsulated in the control.
+   VhIpDataServer.ocx     Wraps Crescent tools CIServer.ocx into a
+                    convenient TCPIP server ActiveX control.  Its login
+                    procedures mate with the vhSocket.ocx client.  Setup
+                    menus and input file i/o are encapsulated in the
+                    control.
+   vhTransportCtrl.ocx    Wraps the Earthworm transport routines in
+                    TransportVb.dll into a moderately easy-to-use ActiveX
+                    control. Setup menus and input file i/o are
+                    encapsulated in the control.
+   vhxAdo.dll       Contains the wrappers to use ADO to store data in a
+                    relational data base (in use, but still preliminary)
+                          .
+
+Required 3rd party development tools
+
+   Crescent Internet Tools     ($235) For TCPIP sockets and servers, and
+                    e-mail interfaces.
+   Microsoft Visual Basic
+          Professional   ($475) Program development platform.
+   OmniTrend PageMaster   ($70) Stand-alone program that provides a
+                    convenient interface to alphanumeric pagers and
+                    organizing group pages.  Pages are sent to it via DDE.
+                    (not tested)
+   Pinnacle Graphics Server    ($300) For real-time graphics.
+   PowerBasic DLL compiler     ($155) For building "C functions" using
+                    Basic that can be called by VB when VB lacks such
+                    functions.  PowerBasic provides Basic programmers with
+                    the capability to build programs or routines comparable
+                    to or better in performance than Microsoft C.
+   Sax Software's SaxSetup     ($199) For building installation programs.
+                    Buggy.
+   Visio2000              ($360) For system documentation.
+   Automachron.exe  (Freeware) For time synching the PC clock to an
+                    internet time server (http://www.oneguycoding.com)
+
+
+

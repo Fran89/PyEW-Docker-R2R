@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Release Notes: Earthworm Version "v5</TITLE>
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Courier New" SIZE=4><P>Release Notes: Earthworm Version "v5.1"</P>
+</FONT><FONT FACE="Courier New"><P>NEW MODULES:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>k2ew:</B> Communicates with the K2 data logger from Kinemetrics. Uses TCP or COM port for communication on WindowsNT, TCP or TTY (serial) comms on Unix. See src/data/sources/k2ew/Doc for documentation. </P>
+<B><P>ringdup:</B> Program to read messages (with user given logos) from one ring and deposit them in another. This is mainly copied from export. This is actually two programs: ringdup_generic and ringdup_scn.</P>
+<B><P>naqs2ew:</B> Interfaces with the Nanometrics digital data acquisition program, NaqsServer, requests continuous waveform data from a list of SCNs and outputs Earthworm tracebuf packets into an Earthworm transport ring. </P>
+<B><P>Event Review Using the Earthworm Database: </B>The Event Review provides Earthworm with a remote, rapid event review capability. Its intended use is permit a duty seismologist to rapidly respond to a significant event. It was NOT designed to serve as a routine analysis facility.</P>
+<P>Its features include:</P>
+<P>&#9;* Requires only browser access to the Internet.</P>
+<P>&#9;* Interacts with events via the Earthworm DBMS.</P>
+<P>&#9;* Viewing and editing of automatic event parameters.</P>
+<P>&#9;* Graphic re-picking.</P>
+<P>&#9;* Event relocation and re-insertion into DBMS.</P>
+<P>&#9;* Supports both low- and high-bandwidth connections.</P>
+<P>&#9;* Supports interlocks for concurrent reviewers.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Courier New"><P>MODIFICATIONS/BUG FIXES TO EXISTING MODULES:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>Libsrc Changes:</P>
+<P>libsrc/winnt/sendmail.c:</B> Changed the email message sender from root to root@&lt;MailHost&gt;. 
+<B><P>libsrc/util/sacputaway.c:</B> Changed the low level calls to creat/write to fopen/fwrite in order to write sac files. Previous method would sometimes write sac files (under NT only) with fewer samples than advertised in the header. </P>
+<B><P>libsrc/util/logit.c:</B> In logit_init(), moved the mutex creation to before the test of the log/nolog switch value so that the mutex is always created. Previously, if switch=0, the mutex was not created and subsequent calls to logit (on NT) caused "error releasing specific mutex" messages to appear. </P>
+<P>Added support for checking/preventing overflows of the logit buffer. Used vsnprintf() (_vsnprintf on NT) to fill a buffer without overflowing it. logit() will now write an error message to the logfile (or to stderr if disk logging is disabled) if a message that is longer than the buffer is attempted to be logged. This required an addition to platform.h. </P>
+<B><P>include/platform.h</P>
+</B><P>Added a define for vsnprintf() in the NT section. Removed comments from #define lines to prevent them from causing headaches when the #defines are substituted in code. Before, code that looked like </P>
+<P>/* return((thr_ret)0); */ </P>
+<P>would actually be</P>
+<P>/* return((thr_ret /* This is what a thread returns */)0); */</P>
+<P>and the compiler would seem to issue a syntax error for no reason.</P>
+<B><P>libsrc/winnt/transport.c</P>
+<P>libsrc/solaris/transport.c:</B> Fixed tport_putmsg and tport_copyto so that they always release the semaphore before returning or exiting.</P>
+<B><P>libsrc/util/swap.c:</B> I modified the swap.c functions so that they now work correctly, even with non-byte-alligned data. Warning: In some cases, waveserver may return non-byte-alligned tracebuf messages. This can happen if the tracebuf messages contain odd numbers of 2-byte samples. Caltech has started exporting this kind of data to Menlo Park.</P>
+<B><P>libsrc/util/socket_ew_common:</B> Fixed incorrect formats in logit calls after select() errors (several places). The error would cause segmentation violations and core dumps. </P>
+<B><P>libsrc/util/logit:</B> added value `2' to the logflag argument of logit_init(). This value will turn off logging to standard error and standard output. The config file command is typically LogSwitch to access this feature.</P>
+<B><P>libsrc/util/getutil.c:</B> removed extra `%s' from fprintf statement, identified by Chris Wood. </P>
+<B><P>libsrc/util/putaway.c:</B> corrected `=' to `==' in two if statements in PA_close(), identified by Chris Woods. </P>
+<B><P>libsrc/util/socket_ew_common.c:</B> bug fix in recvfrom_ew(). The argument passed to recvfrom was being modified so that it wouldn't work correctly later on. This function does not appear to be used in earthworm at this time. Identified by Chris Wood. </P>
+<B><P>libsrc/solaris/time_ew.c</B>: Fixed bug where the error return from nanosleep() was not always handled properly. Identified by Chris Wood. </P>
+<B><P>/libsrc/util/site.c:</B> Changed how the hypoinverse site file is parsed in site_read. Under NT, the 'E' east-west longitude designator was being interpreted as the scientific notation exponent for the decimal minutes portion of the longitude. This ultimately caused allEast longitudes to be interpreted as West longitudes, making it impossible to run binder_ew, eqproc and any other module dependant on site.c in the Eastern Hemisphere. </P>
+<B><P>ws_clientII libsrc routines:</B> wsSearchSCN claimed to return the first menu with a matching SCN; it actually returned the last menu that matched. This has been fixed. Also, if the menup argument to wsSearchSCN is non-NULL, the search will start with the next menu after *menup; otherwise the search will start with menu_queue-&gt;head. Finally, wsGetTraceAscii now takes advantage of this change to wsSearchSCN: if the server returns with a flag (request in gap or outside of tank), another server in the menu queue will be tried. This feature probably should be added to wsGetTraceAscii. Even better, the wave_server should be able to return a complete index list so that traces can be pieced together from several servers if the servers are missing different portions of the trace.</P>
+</FONT><B><FONT FACE="Courier New"><P>Transport Changes:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>tport_putmsg</B> assigns and tracks the sequence numbers for each logo. tport_putmsg has a limit to the number of different logos for which it can keep track of sequences numbers (NTRACK_PUT). This has been increased from 20 to 200. The number of logos for which tport_getmsg and toport_copyfrom can track sequence numbers has been increased from 50 to 500.</P>
+</FONT><B><FONT FACE="Courier New"><P>Module Changes:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>gaplist:</B> Added MyModuleId command to allow module id to be configured. Added logging and "unerror" msg to statmgr when data is received from a previously dead channel. </P>
+<B><P>heli_standalone:</B> Fixed bug that prevented plotting traces of 200 SPS data at the maximum update interval (same as MAXMINUTES which is 5) </P>
+<B><P>waveman2disk:</B> Fixed an interactive user prompt so that the user is now prompted for YYYYMMDDHHMMSS. Minutes were missing before. Fixed missing null string terminator, removed unused variables. Identified by Chris Wood. </P>
+<B><P>startstop_solaris/startstop.c</B>: Added tests for null strings in parsing the config file (before handing strings to strlen). Now it won't crash when a &lt;Process&gt; command contains unbalanced quotes, but will instead complain of a bad &lt;Process&gt; command. </P>
+<B><P>sniffwave:</B> Fixed so that it prints 4-byte data properly. </P>
+<B><P>wave_viewer:</B> v1.22. Fixed problems where wave_viewer displayed data spikes when it received fill values back from wave_serverV. Fixe a problem where wave_viewer would miss-parse the wave_server reply because wave_server is writing a 0x00 character after a block of fill values. Fixed problem where wave_viewer would constantly ask for data from wave_server channels that had no data, thus bogging down the client machine and the wave_server. Introduced a bug where data points returned by wave_server that are equal to 1234567890 will be plotted by wave_viewer as 1234567889. </P>
+<B><P>carlsubtrig:</B> fixed bugs in readcfg.c and readsubs.c where blank lines in config files were not handled properly.</P>
+<B><P>wave_serverV:</B> Added signal handler to allow graceful shutdowns without shutting down all of earthworm. In WindowsNT, wave_serverV can be shut down by pressing control-C in the console window of wave_serverV. Doing `restart &lt;pid&gt;' will NOT work: startstop_nt does not use signals for terminating processes. In Solaris, you can use `kill &lt;pid&gt;' or `restart &lt;pid&gt;' to terminate wave_serverV gracefully. Also numerous bug fixes; see the file README.changes in the wave_serverV directory. </P>
+<P>Fixed some bugs identified by Chris Wood: "NotDone" is now initialized before use in index_util.c; fixed possible buffer overruns in server_thread.c. Fixed return value tests for several functions, initialized "isConfigured" flag at end of config-file loop. </P>
+<P>Fixed a bug in server_thread.c that aborted a menu list when an empty tank was encountered. This bug was introduced after v5.0.</P>
+<B><P>read_index:</B> added a -g flag to list the tank gaps knwon to an index file. This provides a quick way to see the data gaps over the history of a tank file. Suggested by Steve Malone at UofW. </P>
+<B><P>getmenu:</B> fixed bug where index of outer loop (over list of servers) was also used in several inner loops. This bug had no real effect because currently getmenu has no way of putting more than one server in its list; the out loop could only be traversed one time anyway.</P>
+<B><P>statmgr:</B> Added check for return status from SendMail(); logs errors now. Added flush of transport ring on startup, so you don't get a bunch of old messages when you restart statmgr. Added the module's ID name (from the earthworm.d file) to messages reporting module death. This will help identify which module has died when you have many instances of one module running, such as k2ew. </P>
+<B><P>evansassoc:</B> moved a misplaced `return(0)' in Assoc() in doit.c Identified by Chris Wood. </P>
+<B><P>evanstrig:</B> Supplied several missing arguments to sprintf() call. Identified by Chris Wood. </P>
+<B><P>eqfilter:</B> Bug fixes: several functions declared int that should have been void. Two calls to `return(-1)' in Processor thread replaced with logit calls explaining the problem and calls to KillSelfThread(). Identified by Chris Wood. </P>
+<B><P>eqalarm:</B> Bug fix: fixed `auto' declaration of string that was being returned by a function. Identified by Chris Wood. </P>
+<B><P>export:</B> Bug fix: incorrect return value expected from accept_ew on error; it worked OK on Solaris but not on NT. Identified by Chris Wood. </P>
+<B><P>sniffring:</B> Modified argument list so that there is no more tracebuf file option -- this can be done more ellegantly with the sniffwave command. Added the possibility to sniff for message with particular logos, including wildcards. The user can specify INST_, MOD_, and TYPE_ strings desired, or omit those and only specify the ring to sniff. Therefore, "sniffring RING_NAME" is equivalent to </P>
+<P>"sniffring RING_NAME INST_WILDCARD MOD_WILDCARD TYPE_WILDCARD". </P>
+<B><P>q2ew:</B> fixed bug in options.c where the return value of getopt() was char; should be int. Identified by Chris Wood. </P>
+<B><P>pick_ew:</B> Modified pick_ra.c to calculate coda lengths correctly for non-100hz data. Strictly speaking, the program now works with data for which the sampling rate is a whole number, eg 57.0 samples/sec is ok, 57.3 samples/sec is not ok. </P>
+<B><P>eqcoda:</B> Modified to use per-channel parameters instead of global params. Per-channel params are read from the pick_ew station file. Eqcoda uses only the SCN, CodaTerm, and ClipCount fields. ClipCount is a new field to the file, specifies the maximum zero-to-peak amplitude in counts for each channel. This field was added specifically for eqcoda to calculate clipping levels. If it is omitted, a default of 2048 is used (this is the maximum counts for a standard Eworm analog channel on a 12-bit digitizer). Pick_ew ignores this field. New configfile command "StaFile filename". If this command is ommitted, eqcoda uses all the global defaults that it used to. </P>
+<B><P>startstop_nt:</B> Added display option for child process console windows. Previous options were "NewConsole" and "NoNewConsole". New option is "MinimizedConsole". Change should have no impact on current earthworm users.</P>
+<B><P>hyp2000:</B> Grabbed the latest source code from Fred Klein on 9/11/00. Contains a new command "DUG" which allows one to control which component codes will use gain corrections in the duration magnitude calculation. Also includes fixes to some obscure bugs, probably never seen in normal Earthworm use of hyp2000. </P>
+</FONT><B><FONT FACE="Courier New"><P>DBMS RELATED MODULES</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>stalist_hinv2ora: </B>fixed a bug which caused elevations over 1000 meters to be inserted incorrectly. </P>
+<B><P>usnsn_loc2ora:</B> Added functionality to process an NSN deletion message. Such events are now permanently deleted from the DB. </P>
+<B><P>archive:</B> Added another command line option NOSAVE to allow quick deletion of trace from the DB without saving it. Also, made it so that diagnostic error is printed to the stderr as well as the log file when the Debug flag is set. </P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Courier New"><P>CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:</P>
+<P>Module Name Length:  The limit for module name length has been increased from 20 to 32 characters. </P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>gaplist.d:</B> New optional command "MyModuleId". </P>
+<B><P>gaplist.desc:</B> New "error" defined; sent to statmgr when data is received from a previously dead channel. These 2 lines were added to .desc file:</P>
+<P>err: 1 nerr: 1 tsec: 0 page: 0 mail: 3</P>
+<P>text: "Channel alive."</P>
+<B><P>wave_serverV.d:</B> No new parameters, but several of the comments have been corrected to reflect the actual default values in the code. PNL 6/28/00</P>
+<B><P>statmgr.d:</B> added comment that the mail program should be a full pathanme if it is specified in the .d file. </P>
+<B><P>eqcoda.d:</B> New optional command "StaFile filename" to read in per-channel parameters. </P>
+<B><P>pick_ew station file</B>: New column ClipCount (used by eqcoda, not pick_ew) specifies the maximum zero-to-peak amplitude in counts for each channel.</P>
+<B><P>All config files:</B> now logging to standard error and standard output may be turned off by setting the LogSwitch (or similar name) to 2. </P>
+</FONT><B><FONT FACE="Courier New"><P>DBMS/WEB RELATED CONFIGURATION FILES:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>getlist:</B> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located. </P>
+<B><P>eqparam2html:</B> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located. </P>
+<B><P>ora2rsec_gif:</B> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located. </P>
+</FONT><B><FONT FACE="Courier New"><P>KNOWN BUGS or DEFICIENCIES:</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>Window NT:</B> In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock tick). On Solaris, the resolution is about 10 msec. This is a problem for ringtocoax, since packet delays need to be set to a few milliseconds.</P>
+<B><P>Adsend:</B> Automatic restarts of adsend (using the "restartMe" line in the descriptor file) can cause an NT system to hang. Therefore, you should never use the autorestart feature with adsend, but you should bring down the entire Earthworm system if adsend needs to be restarted. Comments added to adsend.desc.</P>
+<B><P>statmgr:</B> A space is needed between "tsec:" and the value. If it isn't there, things fail. </P>
+<B><P>threads functions: </B>The KillThread function on WindowsNT and Solaris terminate the thread without ensuring that no mutexes are held. If a threadholds a mutex when it dies, no other thread can get that mutex. </P>
+<B><P>carlsubtrig:</B> The system time must be set to GMT and ew_nt.cmd must have TZ=GMT in order for carlsubtrig to work. </P>
+<B><P>arc2trig:</B> on NT, exits with horrible crash when system is stopped.</P>
+<B><P>ew2seisvole:</B> on NT, exits with horrible crash when system is stopped.</P>
+<B><P>Wave_viewer</B> will display fictitious 2 to 3 sample gaps when scrolling the display. This does not happen all of the time and is only visible when there are less than 200 samples on the display (2 seconds of data for 100hz data.) </P>
+<B><P>libsrc/util/putaway.c:</B> there is no include file for the putaway routines, thus any errors in arguments passed to putaway routines are not checked by the compiler.</P>
+<B><P>Wave_serverV: </B>If a tank file is closed by the main thread while a server thread is accessing it, the next I/O error that the server thread saw would send it to the "abort" section of _writeTraceDataAscii or _writeTraceDataRaw. Here a call to fseek() would fail and lead to an endless loop of failed fseek calls. </P>
+<B><P>Startstop_solaris: </B>There MAY be a problem with the signal that startstop sends to modules during the shutdown sequence. The shutdown sequence is started (after typing "quit" to startstop or running "pau") by startstop placing a terminate message on all transport rings. Modules should see this message and start their own shutdown. After a configurable delay, startstop checks to see that all modules have exitted. Any that are still running are sent a signal to terminate them. Currently that signal is SIG_TERM. But since wave_serverV has a handler for SIG_TERM, wave_serverV sees that as essentially the same as a terminate message. So if wave_serverV is having problems completing its shutdown, SIG_TERM won't do anything. The result is that startstop may give up and exit, leaving wave_serverV running. If that happens, the operator will have to terminate wave_serverV by doing "kill -9 &lt;wave_serverV-pid&gt;". That may leave shared memory and semaphores stranded in the kernel: run the command "ipcs -a" to see. If necessary, the stranded shared memory and semaphores may be cleaned up with the ipcrc command; must be run as root; see the man page. This problem only exists on Solaris/Unix, not on WindowsNT.</P>
+</FONT><B><FONT FACE="Courier New"><P>NUMBER OF RINGS LIMITED ON SOLARIS:</P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>Under Solaris 2.6 (and probably other versions as well), the maximum number of shared memory segments is six. This means that on an out-of-the-box machine you can only configure six rings. If you try to configure more than that, you will see a cryptic message from tport_create about too many open files. The fix to this problem is to add the following lines to the /etc/system file, and then reboot the system.</P>
+<P>set shmsys:shminfo_shmmax = 4294967295</P>
+<P>set shmsys:shminfo_shmmin = 1</P>
+<P>set shmsys:shminfo_shmmni = 100</P>
+<P>set shmsys:shminfo_shmseg = 20</P>
+<P>set semsys:seminfo_semmns = 200</P>
+<P>set semsys:seminfo_semmni = 70</P>
+<P>This allows for 20 rings.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT></BODY>
+</HTML>

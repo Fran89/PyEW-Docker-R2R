@@ -1,0 +1,26 @@
+
+From alex@gldmutt.cr.usgs.gov Mon Jan 11 08:49:42 1999
+Date: Mon, 11 Jan 1999 09:29:50 -0700
+From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm Continuous Archive SIG
+
+Hi:
+
+	My apologies if you have already received this message. It was initially sent to a partial list of  potential participants. 
+	During the last Earthworm Techie Blather Hour, it was resolved that I should run a special interest group (SIG) to make recommendations on an Earthworm Archive module. This SIG will grind on until it has produced functional specs for such a module.  If you are intersted, please reply. If not...
+
+
+Background:
+
+	The idea is to produce an earthworm module to perform continuous archiving of all incoming trace data. The initial (and continued) pressure for this comes from Dave Oppenheimer, who generously regurgitates over ten gigabytes per day and is threatening more (what a guy!). 	Will Kohler has had this as a back-burner effort since forever, but having to re-hab the entire CalNet processing system has strangely slowed his progress.
+
+	Paul Okubo has made an interesting suggestion: That WaveServerV be modified to (optionally) leave a trail of tanks, rather than over-write the same tank. The resultant files could then be archived via a commercial backup-restore package. When restored, such files could be handed to WaveServerV, and be immediately 'available' to any WaveServer client program. I think Paul O's suggestion is interesting. The WaveServerV tank is nothing more than all the trace messages, back to back. Two wrinkles are that 1.each message lives in a fixed-size record, so space is wasted, and 2. each tank contains data from one channel only; so its not really the 'naked and raw' flow of trace messages as they came in. Point 1. would presumably be handled by the backup/restore compression but 2. is effectively demuxing, and information is lost - that is, the order in which the packets originally appeared in the Earthworm is lost.
+
+	Dave O is leaning toward a 'naked' archiving format - that is, write the trace data messages as they came in, with no additional stuff (such as WaveServerV index files and tank structures).
+
+	My own feelings are that the use of a commercial backup/restore package is a great idea: it offers 'free' hardware independence, compression, user interface, error processing, indexing, multi-volume handling, media handling, etc. Hardware independence is a big deal of its own. Tape standards come and go with frightening regularity, and one size does not fit all. Rumor has it that Menlo has already bought a monster tape stacker of some sort for this. Paul O likes writable CD ROM's.
+
+Alex
+
+	

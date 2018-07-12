@@ -1,0 +1,460 @@
+AAE    9.0291N  38.7655E 2442 IU Addis Ababa, Ethiopia
+AAK   42.6390N  74.4940E 1645 II Ala-Archa, Kyrgyzstan
+AAM   42.2997N  83.6561W  249 US Ann Arbor, Michigan, USA
+ABKT  37.9303N  58.1188E  678 II Alibek (Geyokcha), Turkmenistan
+ABL   34.8508N 119.2208W 1981 NC Mount Abel, California, USA
+ABTN  35.8855N  86.1090W  363 SE Auburntown, Tennessee, USA
+ACCN  43.3843N  73.6678W  340 LD Adirondack Community College, New York, USA
+ACSO  40.2318N  82.9820W  288 US Alum Creek State Park, Ohio, USA
+ADK   51.8837N 176.6844W  116 IU Adak, Alaska, USA
+AFI   13.9094S 171.7772W  706 IU Afiamalu, Western Samoa
+AGP   18.4075N  67.1410W  220 PR Aguadillo, Puerto Rico, USA
+AHID  42.7653N 111.1003W 1960 US Auburn Hatchery, Idaho, USA
+ALLY  41.6492N  80.1448W  390 LD Allegheny College, Pennsylvania, USA
+AML   42.1311N  73.6941E 3400 KN Almayashu, Kyrgyzstan
+ANM   64.5655N 165.3716W  330 AK Nome,Anvil Mountain, Alaska, USA
+ANMO  34.9461N 106.4566W 1740 IU Albuquerque, New Mexico, USA
+ANTN  36.1717N  85.2313W  612 SE Anderson, Tennessee, USA
+ANTO  39.8688N  32.7936E  883 IU Ankara, Turkey
+ARE0  69.5348N  25.5057E  403 IM ARCESS Array Site E0, Norway
+ARU   56.4000N  58.6000E  250 II Arti, Sverdlovskaya Oblast, Russia
+ARUT  37.7880N 113.4403W 1646 UU Antelope Range, Utah, USA
+ASCN   7.9326S  14.3601W  173 II Ascension (Butt Crater), Ascension
+ASMM  38.8233N 120.6833W 1214 NC Slate Mountain, California, USA
+ATKA  52.2027N 174.1955W   55 AK Atka Island, Aleutian Islands, Alaska, USA
+AQU   42.3539N  13.4019E  720 MD L'Aquila, Abruzzo, Italy
+AUP   59.3623N 153.4205W 1033 AK Augustine Pinnacle, Alaska, USA
+BAR   32.6800N 116.6720W  548 TS Barrett, California USA
+BALM  61.0361N 142.3445W 1300 AK Baldy, Alaska, USA
+BBSR  32.2712N  64.6962W  -25 IU Bermuda Biological Station for Research, Bermuda
+BDFB  15.6411S  48.0141W 1095 GT Brasilia, Distrito Federal, Brazil
+BEKR  39.8667N 120.3586W 1743 NN Beckwourth, California, USA
+BGCA   5.1761N  18.4241E  576 GT Bogoin, Central African Republic
+BGIO  31.7220N  35.0878E  760 IM Bar Giyyora, Israel
+BGU   40.9254N 113.0299W 1608 UU Big Grassy, Utah, USA
+BILL  68.0651N 166.4524E  299 IU Bilibino, Russia
+BINY  42.1993N  75.9861W  498 US Binghamton, New York, USA
+BJT   40.0183N 116.1678E  197 IC Baijiatuan, Beijing, China (Mainland)
+BLA   37.2113N  80.4210W  634 US Blacksburg, Virginia, USA
+BLO   39.1719N  86.5222W  246 NM Bloomington, Indiana, USA
+BMN   40.4314N 117.2217W 1500 LB Battle Mountain, Nevada, USA
+BMW   46.4750N 123.2280W  870 II Boistfort Mountain, Washington, USA
+BNM   34.1501N 106.6278W 2121 SC Barren Site, New Mexico, USA
+BOCO   4.5868N  74.0432W 3071 IU Bogota, Colombia
+BORG  64.7474N  21.3268W  110 II Borgarnes, Iceland
+BOS   31.5983S  64.5458W 1200 IU Bosque Alegre, Cordoba, Argentina
+BOSA  28.6140S  25.2555E 1202 GT Boshof, South Africa
+BOZ   45.6469N 111.6296W 1589 US Bozeman, Montana, USA
+BR131 39.7250N  33.6390W 1440 IM Keskin Array Site 131, Turkey
+BR31  39.8535N  32.7608E 1243 IM Belbasi Array Site 31, Turkey
+BRNJ  40.6828N  74.5660W   50 LD Basking Ridge, New Jersey, USA
+BRVK  53.0581N  70.2828E  315 II Borovoye, Kazakhstan
+BRW   71.3033N 156.7483W    0 AK Barrow, Alaska, USA
+BRYW  41.9178N  71.5388W  380 NE Bryant College (Smithfield), Rhode Island, USA
+BW06  42.7667N 109.5583W 2224 US Boulder Array, Wyoming, USA
+CART  37.5868N   1.0012W   65 GF Cartagena, Murcia, Spain
+CBKS  38.8140N  99.7373W  677 US Cedar Bluff, Kansas, USA
+CBN   38.2050N  77.3733W   70 US Corbin, Virginia, USA
+CCM   38.0556N  91.2445W  223 IU Cathedral Cave, Missouri, USA
+CHKZ  53.6761N  70.6153E  240 II Chkalovo, Kazakhstan
+CHMT  46.9143N 113.2520W 2077 MB Chamberlain Mountain, Montana, USA
+CHTO  18.8138N  98.9438E  316 IU Chiang Mai, Thailand
+CLNB  32.2641N 103.8786W 1045 SC Carlsbad, New Mexico, USA
+CM31  18.4575N  98.9428E  307 IM Chiang Mai Array Site 31, Thailand
+CMB   38.0350N 120.3850W  719 BK Columbia College, California, USA
+CMLA  37.7636N  25.5243W  332 II Cha de Macela, Azores, Portugal
+COCO  12.1901S  96.8348E  -68 II Cocos Island (Keeling Island), Cocos Islands
+COLA  64.8738N 147.8511W  195 IU College, Alaska, USA
+COR   44.5857N 123.3031W  121 IU Corvallis, Oregon, USA
+COW   33.3816N  80.6993W   60 CO Cow Castle Creek, South Carolina, USA
+CPCT  35.4497N  84.5218W  275 NM Cooper Caver, Tennessee, USA
+CPRX  33.0308N 103.8666W 1356 SC Cap Rock, New Mexico, USA
+CPUP  26.3305S  57.3291W    5 GT Villa Florida, Paraguay
+CSS   34.9622N  33.3306E  396 GF Cyprus Station -- Prodhromos 
+CSU   32.9860N  80.0706W    0 CO Charleston Southern University, South Carolina,
+CTAO  20.0883S 146.2544E  357 IU Charters Towers, Queensland, Australia
+CTGM  60.9650N 141.3333W 1554 AK Chitina Glacier, Alaska, USA
+CTU   40.6925N 111.7503W 1731 UU Camp Tracy, Utah, USA
+CVR   37.4511N 121.7991W  265 NC Calaveras Reservoir, California, USA
+CWPT  36.0091N  89.6263W   76 SE Cottonwood Point, Tennessee, USA
+DAC   36.2770N 117.5937W 1814 LB Darwin, California, USA
+DAU   40.4125N 111.2558W 2771 UU Daniels Canyon, Utah, USA
+DAWY  64.0655N 139.3909W  808 CN Dawson, Yukon Territory, Canada
+DAV    7.0877N 125.5747E   85 IU Davao, Mindanao, Philippines
+DBIC   6.6700N   4.8563W   25 GT Dimbokro, Cote d'Ivoire
+DBO   43.1192N 123.2428W  984 UW Dodson Butte, Oregon, USA
+DHH   21.2700N 157.8051W  135 HI Diamond Head, Oahu, Hawaii, USA
+DIV   61.1295N 145.7717W  931 AK Divide, Alaska, USA
+DLAR  35.8097N  90.0080W   67 SE Dell, Arkansas, USA
+DLAR  35.8097N  90.0080W   67 SE Dell, Arkansas, USA
+DLBC  58.4372N 130.0270W  978 CN Dease Lake, British Columbia, Canada
+DPC   50.3583N  16.4111E  760 IM Dobruska-Polom, Czechoslovakia
+DPW   47.8706N 118.2028W  892 II Davenport, Washington, USA
+DRLN  49.2560N  57.5042W  238 CN Deer Lake, Newfoundland, Canada
+DSB   53.2450N   6.3760W  236 IM Dublin, Eire
+DUG   40.1950N 112.8133W 1477 US Dugway, Utah, USA
+DWPF  28.1103N  81.4328W -141 IU Disney Wilderness Preserve, Florida, USA
+EBZ   35.1413N  89.3505W  169 SE Ebenezer Church, Tennessee, USA
+EBZ   35.1413N  89.3505W  169 SE Ebenezer Church, Tennessee, USA
+EFI   51.6753S  58.0636W   30 II East Falkland Island, Falkland Islands
+EIL   29.6699N  34.9512E  210 GF Elat, Isreal
+EKS2  42.6615N  73.7772E 1360 KN Erkin-Say, Kyrgyzstan
+ELK   40.7448N 115.2387W 2210 LB Elko, Nevada, USA
+ELN   37.2283N  80.7517W  634 BL Prospectdale, Virginia, USA
+ENH   30.2718N 109.4868E  487 IC Enshi, Hubei, China (Mainland)
+ERW   48.4540N 122.6250W  389 UW Mount Erie, Washington, USA
+ESK   55.3166N   3.2050W  242 II Eskdalemuir, Scotland, United Kingdom
+ESLA  39.6742N   3.9631W  752 IM Sonseca Array Site A, Castilla-La Mancha, Spain
+EMMW  44.7100N  67.4583W   35 NE East Machias, Maine, USA
+EYAK  60.5493N 145.7479W  146 AK Cordova Ski Area, Central Alaska, USA
+EYMN  47.9461N  91.4950W  475 US Ely, Minnesota, USA
+FALS  54.8573N 163.4155W   45 AK False Pass, Alaska Peninsula, Alaska, USA
+FCC   58.7617N  94.0867W   39 CN Fort Churchill, Manitoba, Canada
+FFC   54.7250N 101.9783W  338 II Flin Flon, Manitoba, Canada
+FIB   61.1663N 150.1750W   50 AK Fire Island, Alaska, USA
+FURI   8.8966N  38.6783E 2560 II Furi, Ethiopia
+FWV   37.5817N  80.8117W  756 BL Forest Hill, West Virginia, USA
+FX1   52.8821N 173.1643E  250 IM Attu Island, Alaska
+GAMB  63.7767N 171.7008W   10 AK Gambell, Saint Lawrence Island, Alaska, USA
+GDL2  32.2003N 104.3635W 1213 SC Guadalupe Mountain, New Mexico, USA
+GHMM  39.4623N 122.9300W 1486 NC Hull Mountain, California, USA
+GLA   33.0525N 114.8265W  627 TS Glamis, California, USA
+GLB   61.4418N 143.8105W  845 AK Gilahina Butte, Alaska, USA
+GLAT  36.2694N  89.2876W  120 NM Glass, Tennessee, USA
+GLD   39.7505N 105.2213W 1762 GO Golden, Colorado, USA
+GLST  36.2691N  89.2877W  122 SE Glass, Tennessee, USA
+GMW   47.5479N 122.7863W  506 II Gold Mountain, Washington, USA
+GNAR  35.9651N  90.0178W   71 NM Gosnell, Arkansas, USA
+GNI   40.0530N  44.7240E 1460 IU Garrni (Garni), Armenia
+GNW   47.5644N 122.8253W  165 UW Green Mountain, Washington, USA
+GOGA  33.4111N  83.4666W  150 US Godfrey, Georgia, USA
+GOU   61.1891N 149.8003W   71 AK Gould Hall, Alaska, USA
+GSC   35.3028N 116.8083W  990 TS Goldstone, California, USA
+GRAI  43.8093N 111.3357W 2231 RE Grandview Point, Idaho, USA
+GRFO  49.6922N  11.2152E  425 IU Graefenberg, Bayern, Germany
+GUMO  13.5878N 144.8663E  135 IU Guam, Mariana Islands
+GVD   34.8391N  24.0874E  200 GF Gavdhos, Kriti, Greece
+GWDE  38.8256N  75.6171W   19 US Greenwood, Delaware, USA
+H2O   27.8819N 141.9917W-4927 IR Hawaii-2 Observatory, USA
+HALT  35.9106N  89.3395W   85 NM Halls, Tennessee
+HAWA  46.3925N 119.5326W  364 US Hanford, Washington, USA
+HAYW  43.6395N 110.3325W 2835 RE Haystack Fork, Wyoming, USA
+HBAR  35.5550N  90.6572W   74 NM Harrisburg, Arkansas, USA
+HBF   32.9330N  80.3776W   10 CO Harts Bluff, South Carolina, USA
+HIA   49.2666N 119.7416E  610 IC Hailar, Inner Mongolia, China (Mainland)
+HKL   20.7125N 156.2554W 3233 PT Haleakala, Maui, Hawaii, USA
+HKT   29.9500N  95.8333W -121 US Hockley, Texas, USA
+HLID  43.5625N 114.4137W 1772 US Hailey, Idaho, USA
+HNH   43.7052N  72.2855W  180 NE Hanover, New Hampshire, USA
+HNR    9.4321S 159.9471E   72 IU Honiara, Solomon Islands
+HON   21.3242N 158.0006W    2 HI Honolulu, Oahu, Hawaii, USA
+HOPE  54.2836S  36.4878W   20 II Hope Point, South Georgia
+HOPS  38.9940N 123.0720W  299 BK Hopland, California, USA
+HPO   19.0880N 155.5541W   10 PT Honuapo, Hawaii, Hawaii, USA
+HRV   42.5064N  71.5583W  180 IU Harvard, Massachusetts, USA
+HRY   46.7113N 111.8311W 1341 MB Holter Research Foundation--York Bridge, Montan
+HSO   43.5258N 123.0900W 1020 US Harness Mountain, Oregon, USA
+HUMP  18.1425N  65.8497W  178 PR Colegio San Antonio Abad, Humacao, Puerto Rico
+HUMO  42.6086N 122.9583W    0 BK Hull Mountain, Oregon, USA
+HVU   41.7796N 112.7750W 1609 UU Hansel Valley, Utah, USA
+HWUT  41.6069N 111.5652W 1830 US Hardware Ranch, Utah, USA
+HYT   60.8250N 137.5037W 1416 CN Haines Junction, Yukon Territory, Canada
+ICM   17.8930N  66.5210W   25 PR Isla Caja Muertos, Puerto Rico, USA
+IMA   66.0684N 153.6786W 1380 AK Indian Mountain, Alaska, USA
+INCN  37.4830N 126.6330E    0 IU Inchon, South Korea
+INK   68.3066N 133.5200W   40 CN Inuvik, Northwest Territories, Canada
+ISA   35.6633N 118.4733W  835 TS Isabella, California, USA
+ISCO  39.7997N 105.6134W 2743 US Idaho Springs, Colorado, USA
+ISP   37.8433N  30.5093E 1100 IM Isparta, Turkey
+IVS   60.0091N 153.0808W 2332 AK Iliamna South, Alaska, USA
+JCT   30.4794N  99.8022W  591 US Junction, Texas, USA
+JER   31.7719N  35.1972E  770 GF Jerusalem, Isreal
+JFWS  42.9148N  90.2488W  318 US Jewell Farm, Wisconsin, USA
+JLDW  43.8562N 110.5873W 2074 RE Jackson Lake Dam, Wyoming, USA
+JLU   40.6019N 111.4499W 2285 UU Jordanelle, Utah, USA
+JSC   34.2816N  81.2603W  120 SE Jenkinsville, South Carolina, USA
+JTS   10.2908N  84.9525W  340 II Juntas de Abangares, Costa Rica
+KAPI   5.0141S 119.7516E   30 II Kappang, Sulawesi, Indonesia
+KEBM  42.8722N 124.3343W  818 NC Edson Butte, Oregon, USA
+KBO   42.2123N 124.2260W 1008 NC Bosley Butte, Oregon, USA
+KBRM  40.7298N 123.9556W  853 NC Barry Ridge, California, USA
+KBS   78.9175N  11.9238E   46 IU Kingsbay, Svalbard, Norway
+KCPM  39.6871N 123.5806W 1271 NC Cahto Peak, California, USA
+KDAK  57.7828N 152.5835W   52 II Kodiak Island, Alaska, USA
+KDC   57.7478N 152.4916W   13 AT Kodiak, Alaska, USA
+KEV   69.7552N  27.0066E   80 IU Kevo, Finland
+KHMM  40.8746N 123.7315W 1509 NC Horse Mountain, California, USA
+THY   63.4167N 145.7522W  732 AK Trims Highway, Alaska, USA 
+KIEV  50.6944N  29.2100E  164 IU Kiev, Ukraine
+KIP   21.4233N 158.0138W   73 IU Kipapa, Oahu, Hawaii, USA
+KIPM  39.8086N 123.4805W 1367 NC Iron Peak, California, USA
+KIV   43.9562N  42.6888E 1210 II Kislovodsk, Stavropolskiy Kray, Russia
+KKH   19.6641N 156.0089W    5 PT Kailua Kona, Hawaii, Hawaii, USA
+KMBO   1.1268N  37.2523E 1960 IU Kilima Mbogo, Kenya
+KMI   25.1233N 102.7400E 1945 IC Kunming, Yunnan, China (Mainland)
+KNB   37.0166N 112.8224W 1715 LL Kanab, Utah, USA
+KONO  59.6490N   9.5982E  216 IU Kongsberg, Norway
+KRIS  35.1780N  25.5030E    0 GF Kristallenia, Kriti, Greece
+KRMB  41.5230N 123.9080W 1265 NC Red Mountain, California, USA
+KS15  37.4421N 127.8844E  112 IM Wonju Array Site 15, South Korea
+KSU1  39.1009N  96.6094W  347 US Konza Prairie, Kansas, USA
+KTH   63.5530N 150.9217W  975 AK Kantishna Hills, Alaska, USA
+KURK  50.7154N  78.6202E  184 II Korchatov, Kazakhstan
+KWAJ   8.8018N 167.6130E    0 II Kwajalein Atoll, Marshall Islands
+KWP   49.6314N  22.7075E  448 GF Kalwaria Paclawska, Poland
+LAZ   34.4020N 107.1393W 1853 SC Ladron, New Mexico, USA
+LBNH  44.2401N  71.9258W  367 US Lisbon, New Hampshire, USA
+LBTB  25.0145S  25.5970E 1028 GT Lobatse, Botswana
+LCCM  45.8376N 111.8781W 1669 MB Lewis and Clark Caverns, Montana, USA
+LCO   29.0111S  70.7010W 2299 II Las Campanas Astronomical Observatory, Chile
+LDFC  35.0781N 115.1096W 1209 TS Landfair, California, USA
+LENM  34.1655N 106.9741W 1698 SC Lemitar, New Mexico, USA
+LGBM  41.3451N 122.1943W 2304 NC Gray Butte, California, USA
+LHS   34.4761N  80.8061W  120 CO Liberty Hill, South Carolina, USA
+LKC   37.7380N 122.0638W  312 NC Lake Chabot, California, USA
+LKWY  44.5651N 110.4000W 2424 US Lake, Wyoming, USA
+LNOR  45.8710N 118.2850W  768 II Lincton Mountain, Oregon, USA
+LON   46.7500N 121.8100W  854 UW Longmire, Washington, USA
+LOZ   44.6200N  74.5800W  482 LD Lake Ozonia, New York, USA
+LPAZ  16.2879S  68.1306W 4774 IU La Paz, Bolivia
+LPIG  24.1020N 110.3080W   46 MX La Paz, Baja California, Mexico
+LPM   34.3116N 106.6318W 1737 SC Los Pinos Mountain, New Mexico, USA
+LRV   36.4248N 121.0183W  541 NC Little Rabbit Valley, California, USA
+LRAL  33.0396N  86.9811W    0 US Lakeview Retreat, Alabama, USA
+LSA   29.7000N  91.1500E 3658 IC Lhasa, Tibet, China (Mainland)
+LSCT  41.6783N  73.2243W  318 US Lakeside, Connecticut, USA
+LSZ   15.2766S  28.1882E 1185 IU Lusaka, Zambia
+LTX   29.3338N 103.6669W 1013 US Lajitas, Texas, USA
+LUPA  40.5985N  75.3710W  236 LD Lehigh University, Pennsylvania, USA
+LVC   22.6128S  68.9113W 2165 IU Limon Verde, Antofagasta, Chile
+MA2   59.5753N 150.7678E  339 IU Magadan, Magadanskaya Oblast, Russia
+MAJO  36.5426N 138.2070E  406 IU Matsushiro, Nagano, Honshu, Japan
+MAKZ  46.8080N  81.9770E  570 IU Maganshy, Kazakhstan
+MALT  38.3134N  38.4273E 1120 GF Malatya, Turkey
+MAW   67.6038S  62.8705E   12 IM Mawson, Greater Antarctica, Antarctica
+MBAR   0.6018S  30.7381E 1390 II Mbarara, Uganda
+MBWA  21.1590S 119.7310E  194 IU Marble Bar, Australia 
+MBC   76.2416N 119.3600W   15 CN Mould Bay, Northwest Territories, Canada
+MCK   63.7323N 148.9350W  610 AK McKinley, Alaska, USA
+MCMT  44.8276N 112.8488W 2323 MB McKenzie Canyon, Montana, USA
+MCWV  39.6581N  79.8456W  280 US Mont Chateau, West Virginia, USA
+MDJ   44.6163N 129.5919E  250 IC Mudanjiang, Heilongjiang, China (Mainland)
+MDV   43.9992N  73.1812W  134 LD Middlebury, Vermont, USA
+MET   35.1220N  89.9340W   93 NM Memphis, Tennessee, USA
+MGP   18.0076N  67.0891W   60 PR Maguayo, Puerto Rico, USA
+MHA   20.1863N 155.9008W    5 PT Mahukona, Hawaii, Hawaii, USA
+MIAR  34.5457N  93.5730W  207 US Mount Ida, Arkansas, USA
+MIDW  28.2157N 177.3697W  -76 IU Midway, Midway Islands, Hawaii, USA
+MIV   44.0747N  73.5340W  317 LD Mineville-Witherbee, New York, USA
+MNV   38.4328N 118.1531W 1524 US Mina, Nevada, USA
+MOD   41.9033N 120.3058W  300 BK Modoc, California, USA
+MORC  49.7768N  17.5425E  743 GF Moravsky Beroun, Czech Republic
+MPR   18.2130N  67.1390W   25 PR Mayaguez, Puerto Rico, USA
+MPU   40.0155N 111.6333W 1909 UU Maple Canyon, Utah, USA
+MRNI  33.0120N  35.3920E  900 GF Mount Meron, Isreal
+MSAL  34.8467N  86.6735W  260 SE Monte Sano, Alabama, USA
+MSEY   4.6736S  55.4791E  475 II Mahe Island, Seychelles
+MSKU   1.6556S  13.6116E  287 IU Masuku, Gabon
+MSNY  44.9983N  74.8620W   55 LD Messena, New York, USA
+MSO   46.8292N 113.9406W 1264 US Missoula, Montana, USA 
+MSU   38.5133N 112.1741W 2141 UU Marysvale, Utah, USA
+MTE   40.4033N   7.5367W  815 GF Manteigas, Portugal
+MTP   18.0940N  65.5570W  175 PR Monte Pirata, Puerto Rico, USA
+MTPC  35.4848N 115.5533W 1582 CI Mountain Pass, California, USA
+MTUM  37.3533N 118.5635W 1810 NC Tungsten Hills, California, USA
+MVL   39.9992N  76.3506W   91 LD Millersville State College, Pennsylvania, USA
+MVU   38.5037N 112.2123W 2240 LB Marysvale, Utah, USA
+MWC   34.2238N 118.0577W 1730 TS Mount Wilson, California, USA
+MYNC  35.0738N  84.1278W  550 US Murphy, North Carolina, USA
+NAI    1.2739S  36.8036E 1692 IU Nairobi, Kenya
+NAO01 60.8442N  10.8865E  426 IM NORSAR Array Site 01A01, Norway
+NCB   43.9708N  74.2236W  500 US Newcomb, New York, USA
+NEN   35.6495N 114.8433W 1326 NN Nelson, Nevada, USA
+NEW   48.2633N 117.1200W  760 US Newport, Washington, USA
+NHSC  33.1067N  80.1778W   11 US New Hope, South Carolina, USA
+NIKO  52.9738N 168.8539W    8 AK Nikolski, Aleutian Islands, USA
+NIL   33.6500N  73.2516E  536 II Nilore, Pakistan
+NLU   39.9548N 112.0750W 2036 UU North Lily, Utah, USA
+NLW   48.0783N 120.3382W 1490 UW Nelson Butte, Washington, USA
+NNA   11.9873S  76.8421W  575 II Nana, Peru
+NOQ   40.6525N 112.1203W 1622 UU North Oquirrh Mountains, Utah, USA
+NSHM  38.5200N 122.6071W  328 NC Saint Helena Road, California, USA
+NWAO  32.9269S 117.2338E  265 IU Narrogin, Western Australia, Australia
+OBN   55.1000N  36.6000E  130 II Obninsk, Kaluzhskaya Oblast, Russia
+OCWA  47.7489N 124.1780W  671 US Octopus Mountain, Washington, USA
+OHCM  39.3356N 121.4840W   79 NC Honcut, California, USA
+OMM   37.6185N 118.9923W 2750 NN Old Mammoth Mine, California, USA
+OPA   21.6905N 158.0119W  150 PT Opana, Oahu, Hawaii, USA
+OTAV   0.2376N  78.4508W 3492 IU Otavalo, Ecuador
+ORT   35.9095N  84.3048W  370 SE Oak Ridge, Tennessee, USA
+OXF   34.5118N  89.4091W  101 US Oxford, Mississippi, USA
+PAB   39.5458N   4.3483W  938 IU San Pablo de los Montes, Spain
+PAHR  39.7065N 119.3841W 1500 NN Pah Rah Range, Nevada, USA
+PAL   41.0041N  73.9091W   91 LD Palisades, New York, USA
+PALK   7.2728N  80.7022E  460 II Pallekele, Sri Lanka
+PAX   62.9708N 145.4687W 1130 AK Paxson, Alaska, USA
+PAS   34.1483N 118.1716W  295 TS Pasadena, California, USA
+PAYG   0.6740S  90.2858W  196 IU Puerto Ayora, Galapagos, Ecuador
+PDTN  35.2733N  85.8495W  335 SE Piedmont, Tennessee, USA
+PDY31 59.6175N 112.6361E  280 IM Peleduy Array Site 31, Sakha, Russia
+PET   53.0166N 158.6499E   25 IU Petropavlovsk-Kamchatskiy, Kamchatskaya Oblast,
+PFO   33.6091N 116.4552W 1280 II Pinyon Flat Observatory, California, USA
+PGC   48.6500N 123.4508W    5 CN Pacific Geoscience Centre, Canada 
+PINI  43.5076N 111.3457W 1932 RE Pine Creek, Idaho, USA
+PINOR 43.8111N 120.8719W    0 UW Pine Mountain, Oregon, USA
+PLAL  34.9823N  88.0754W  165 US Pickwick Lake, Alabama, USA
+PLCA  40.7327S  70.5508W  956 GT Paso Flores (Cerro Alto), Rio Negro, Argentina
+PLVA  36.6673N  81.1581W 1353 SE Point Lookout, Virginia, USA
+PMG    9.4061S 147.1588E   65 IU Port Moresby, New Guinea, Papua New Guinea
+PMR   61.5922N 149.1308W  100 AT Palmer, Alaska, USA
+PMSA  64.7742S  64.0490E   10 IU Palmer Station, Antarctica
+PNT   49.3166N 119.6166W  550 CN Penticton, British Columbia, Canada
+POHA  19.7575N 155.5325W 1967 IU Pohakuloa, Island of Hawaii, Hawaii, USA
+PQI   46.6709N  68.0168W  180 NE Presque Isle, Maine, USA
+PRM   34.0833N  82.3633W  254 SE Parsons Mountain, South Carolina, USA
+PSZ   47.9184N  19.8944E  940 GF Piszkesteto, Hungary
+PTCN  25.0728S 130.0947W  195 IU Pitcairn Island, USA
+PTGA   0.7308S  59.9666W  137 IU Pitinga, Brazil
+PTI   42.8703N 112.3701W 1670 UU Pocatello Creek, Idaho, USA
+PTN   44.5700N  74.9819W  197 LD Potsdam, New York, USA
+PTRM  35.6546N 120.2111W  643 NC Twissleman Ranch, California, USA
+PVMO  36.4137N  89.6997W   98 NM Portageville, Missouri, USA
+PV01  38.1344N 108.5703W 2182 RE Paradox Valley (The Burn), Colorado, USA
+PV09  38.4986N 109.1335W 2652 RE Paradox Valley (North La Sal), Utah, USA
+PV10  38.3763N 109.0388W 2316 RE Paradox Valley (South La Sal), Colorado, USA
+PWLA  34.9800N  88.0637W  204 US Pickwick Lake, Alabama, USA
+PWV   37.3360N  81.0478W  829 BL Princeton, West Virginia, USA
+QIZ   19.0294N 109.9433E  230 CD Qiongzhong, Guangdong, China
+QLMT  44.8316N 111.4275W 2012 MB Earthquake Lake, Montana, USA
+QSPA  89.9279S 145.0000E 2927 IU Quiet Earth Sector Seismic Observatory, Antarctica
+QUAR  35.6439N  90.6491W  115 SE Qualls, Arkansas, USA
+QUA2  42.2789N  72.3525W  168 BC Belchertown, Massachusetts, USA
+RAR   21.2125S 159.7733W   28 IU Rarotonga, Cook Islands
+RC01  61.0893N 149.7366W  374 AK Rabbit Creek Array Site 1, Alaska, USA
+RCBR   5.8275S  35.9013W  420 IU Riachuelo, Rio Grande do Norte, Brazil
+REDW  43.3623N 110.8517W 2192 RE Red Top Meadow, Wyoming, USA
+RELT  36.0332N  89.3021W  107 SE Roellen, Tennessee, USA
+RES   74.6866N  94.9000W   15 CN Resolute, Northwest Territories, Canada
+RGN   54.5477N  13.3214E   15 GF Rugen, Mecklenburg-Vorpommern, Germany
+RGRS  32.9075N  80.1941W  -51 CO Roger Stewart, South Carolina, USA
+RICH  35.9195N  82.8186W  968 SE Rich Mountain, North Carolina, USA
+RMW   47.4596N 121.8053W 1024 II Rattlesnake Mountain, Washington, USA
+RPN   27.1266S 109.3344W  110 II Rapa Nui, Easter Island, Valparaiso, Chile
+RPW   48.4483N 121.5136W  850 UW Rockport, Washington, USA
+RSO   60.4621N 152.7538W 1921 AK Redoubt South, Alaska, USA
+RSSD  44.1204N 104.0361W 2060 US Black Hills, South Dakota, USA
+RUE   52.4800N  13.7800E    0 GF Ruedersdorf, Brandenburg, Germany
+RW3   38.2501N 107.6870W 2603 RE Ridgway, Colorado, USA
+RW4   38.1568N 107.6156W 2739 RE Ridgway, Colorado, USA
+RW4   38.1568N 107.6156W 2739 RE Ridgway, Colorado, USA
+RW5   38.0800N 107.8325W 2991 RE Ridgway, Colorado, USA
+RW5   38.0800N 107.8325W 2991 RE Ridgway, Colorado, USA
+RWW   46.1495N 122.7437W  460 UW Rose Valley, Washington, USA
+SAC   37.5825N 122.4171W  207 NC San Andreas, California, USA
+SACV  14.9702N  23.6085W  387 II Santiago Island, Cape Verde
+SADO  44.7693N  79.1416W  243 CN Sadowa, Ontario, Canada
+SAML   8.9488S  63.1832W   99 IU Rondonia, Brazil
+SAO   36.7650N 121.4450W  350 BK San Andreas Geophysical Obs., California, USA
+SANT  36.3710N  25.4590E    0 GF Santorini, Notion Aiyaion, Greece
+SBA   77.8488S 166.7573E   20 IU Scott Base, Greater Antarctica, Antarctica
+SCCK  35.0228N  82.9915W  701 CO Coley Creek, South Carolina, USA
+SCHQ  54.8319N  66.8335W  501 CN Schefferville, Quebec, Canada
+SDCO  37.7456N 105.5012W 2569 US Great Sand Dunes National Park, Colorado, USA
+SDMD  39.4102N  76.8403W  212 LD Soldier's Delight, Maryland, USA
+SDN   55.3413N 160.4971W   23 AT Sand Point, Alaska, USA
+SDPT  55.3493N 160.4766W   73 US Sand Point, Alaska, USA
+SDV    8.8861N  70.6333W 1580 IU Santo Domingo, Venezuela
+SELV  37.2383N   3.7277W  650 GF Sierra Elvira, Andalucia, Spain
+SFJ   67.0000N  50.7000W    0 IU Soondre Stroomfjord, Greenland
+SFS   36.4656N   6.2055W   21 GF San Fernando, Andalucia, Spain
+SFTN  35.3575N  90.0187W  -22 SE Shelby Forest, Tennessee, USA
+SFUC  36.6370N   6.1750W   88 IM San Fernando (San Cristobal), Andalucia, Spain
+SGS   33.1926N  80.5118W   24 SE St George, South Carolina, USA
+SHEL  15.9588S   5.7456W  537 II Saint Helena Island, Saint Helena
+SHW   46.1925N 122.2366W 1423 II Mount Saint Helens, Washington, USA
+SIT   57.0569N 135.3244W   19 US Sitka, Alaska, USA
+SIUC  37.7148N  89.2176W  137 NM Southern Illinois University (Carbondale), Illi
+SJG   18.1116N  66.1500W  457 IU San Juan, Puerto Rico
+SLKM  60.5078N 150.2209W  655 AK Skilak Lake, Alaska, USA
+SLM   38.6361N  90.2361W  161 NM Saint Louis, Missouri, USA
+SLTN  36.4432N  82.1205W 1280 SE Sullivan, Tennessee, USA
+SML   61.8081N 148.3329W  740 AK Sawmill, Alaska, USA
+SMY   52.7308N 174.1030E   58 US Shemya, Alaska, USA
+SNAA  71.6707S   2.8379W  846 GF Sanae, Greater Antarctica, Antarctica
+SNCC  33.2480N 119.5240W  227 TS San Nicolas Island, California, USA
+SNZO  41.3102S 174.7046E  -11 IU South Karori, North Island, New Zealand
+SPA   90.0000S   0.0000E 2927 IU South Pole, Greater Antarctica, Antarctica
+SPB4  78.1788N  16.3481E  340 IM Spitsbergen Array Site B4, Svalbard, Norway
+SPIA  57.1776N 170.2455W   84 AK Saint Paul Island, Pribilof Islands, Alaska, USA
+SPU   61.1816N 152.0543W  800 AK Mount Spurr, Alaska, USA
+SPUT  41.3086N 112.4492W 1634 UU South Promintory, Utah, USA
+SPW   47.5537N 122.2458W    8 UW Seward Park, Washington, USA
+SRU   39.1108N 110.5238W 1804 UU San Rafael, Utah, USA
+SSE   31.0955N 121.1866E   10 IC Sheshan, Shanghai, China (Mainland)
+SSLW  54.7717N 164.1213W  628 AK Shishaldin West, Alaska, USA
+SSOR  44.8560N 122.4605W 1242 II Sweet Springs, Oregon, USA
+SSPA  40.6358N  77.8880W  158 IU Standing Stone, Pennsylvania, USA
+STEW  44.0497N 110.6816W 2316 RE Steamboat Mountain, Wyoming, USA
+STKA  31.8768S 141.5952E  230 IM Stephens Creek, New South Wales, Australia
+STU   48.7719N   9.1950E  360 GF Stuttgart, Baden-Wurttemberg, German 
+SUR   32.3800S  20.8116E 1760 II Sutherland, Cape Province, South Africa
+SUW   54.0125N  23.1808E  152 GF Suwalki, Poland
+SWET  35.2163N  85.9320W  581 SE Sewanee, Tennessee, USA 
+TATO  24.9753N 121.4880E   53 IU Taipei, China (Taiwan)
+TAU   42.9099S 147.3204E  132 II Tasmania University, Tasmania, Australia
+TBT   28.6793N  17.9145W  180 IU Taburiente, Canary Islands, Spain
+TCUT  41.1182N 111.4107W 2316 UU Toone Canyon, Utah,  USA
+TIXI  71.6490N 128.8665E   50 IU Tiksi, Yakutskaya ASSR, Russia
+TKM2  42.9208N  75.5966E 2020 KN Tokmak 2, Zhambyl, Kazakhstan
+TLY   51.6806N 103.6438E  579 II Talaya, Irkutskaya Oblast', Russia
+TMI   43.3055N 111.9180W 2179 UU Taylor Mountain, Idaho, USA
+TMW   63.3245N 142.9967W  495 AK Tok Microwave, Alaska, USA
+TNA   65.5606N 167.9239W   74 AK Tin City, Alaska, USA
+TPH   38.0750N 117.2225W 1884 LB Tonopah, Nevada, USA
+TPNV  36.9488N 116.2495W 1963 US Topopah Spring, Nevada, USA
+TRTE  58.3786N  26.7205E  100 GF Tartu, Estonia
+TRQA  38.0567S  61.9795W  602 IU Tornquist, Argentina
+TSUM  19.2021S  17.5838E 1240 IU Tsumeb, Namibia
+TTA   62.9301N 156.0116W  990 AT Tatalina, Alaska, USA
+TUC   32.3097N 110.7841W  906 IU Tucson, Arizona, USA
+TWAR  35.3613N  90.5596W   61 NM Twist, Arkansas, USA
+TWB   33.1146N  80.1030W    9 CO Tillmans-Whites Bay, South Carolina, USA
+UALR  34.7753N  92.3436W  138 NM University of Arkansas, Arkansas, USA
+UCH   42.2275N  74.5134E 3850 KN Uchtor, Kyrgyzstan 
+UGM    7.9125S 110.5231E  350 IM Wanagama, Jawa, Indonesia
+ULM   50.2497N  95.8750W  281 CN Lac du Bonnet, Manitoba, Canada 
+ULN   47.5200N 107.0300E 1600 IU Ulaanbataar, Mongolia
+UNV   53.8465N 166.5020W   67 AK Unalaska Valley, Alaska, USA
+USIN  37.9651N  87.6660W  170 NM University of Southern Indiana, Indiana, USA
+UTMT  36.3423N  88.8642W  120 NM University of Tennessee at Martin, Tennessee, USA
+VGB   45.5156N 120.7775W  729 II Gordon Butte, Oregon, USA
+VIPM  44.5081N 120.6188W 1731 II Ingram Point, Oregon, USA
+VNDA  77.5172S 161.8528E  121 GT Vanda, Greater Antarctica, Antarctica
+VSL   39.4960N   9.3780E  370 MD Villasalto, Sardegna, Italy
+VTV   34.5670N 117.3333W  847 CI Victorville, California, USA
+WADM  36.3661N  89.7958W   78 SE Wardell, Missouri, USA
+WAKE  19.2833N 166.6536E    0 IU Wake Island, Wake Island, USA
+WALA  49.0586N 113.9115W 1400 CN Waterton Lakes, Alberta, Canada 
+WCI   38.2100N  86.3600W    0 US Wyandotte Cave, Indiana, USA
+WCN   39.3106N 119.7563W 1709 NN Washoe City, Nevada, USA
+WDC   40.5800N 122.5397W  300 BK Whiskeytown Dam, California, USA
+WES   42.3846N  71.3220W   60 NE Weston, Massachusetts, USA
+WFM   42.6105N  71.4905W   88 NE Westford, Massachusetts, USA   
+WJPM  35.4108N 118.4806W 1122 NC Johns Peak, California, USA
+WLF   49.6646N   6.1526E  295 GF Walferdange, Luxembourg
+WMOK  34.7378N  98.7810W  486 US Wichita Mountains, Oklahoma, USA
+WMQ   43.8211N  87.6950E  970 IC Urumqi (Wulumuchi), Xinjiang, China (Mainland)
+WMV   37.1085N  80.9705W 1157 BL Walker Mountain, Virginia, USA
+WRAB  19.9333S 134.3501E  266 II Tennant Creek, Northern Territory, Australia
+WUAZ  35.5169N 111.3739W 1592 US Wupatki, Arizona, USA
+WVL   44.5648N  69.6575W    0 NE Waterville (Colby College), Maine, USA
+WVOR  42.4339N 118.6367W 1344 US Wild Horse Valley, Oregon, USA
+WVT   36.1300N  87.8300W  153 US Waverly, Tennessee, USA
+XAN   34.0394N 108.9213E  630 IC Xian (Hsian), Shaanxi, China (Mainland)
+YAK   62.0166N 129.7166E  125 IU Yakutsk, Yakutskaya ASSR, Russia
+YBH   41.7318N 122.7105W  969 BK Yreka Blue Horn, California, USA
+YKW3  62.5608N 114.6164W  198 CN Yellowknife Array Site W3, Northwest Terr., Canada
+YMR   44.6686N 110.9650W 2149 UU Madison River, Wyoming, USA
+YSNY  42.4758N  78.5375W  628 US Yorkshire, New York, USA
+YSS   47.0166N 142.7166E   75 IU Yuzhno-Sakhalinsk, Sakhalinskaya Oblast, Russia
+ZRNK  52.9508N  69.0042E  390 II Zerendi, Kazakhstan

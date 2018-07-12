@@ -1,0 +1,71 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6297 2015-04-08 05:34:13Z et $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.2  2009/06/22 18:10:13  lombard
+#     renamed to eqverify_assemble
+#
+#     Revision 1.1  2009/06/19 18:11:47  lombard
+#     Added new program eqverify_assemble.
+#     This is a small change from eqverify that is needed to be used with
+#     eqassemble. It adds configurability to the four test_* parameters and the
+#     Threshold to work with the three different versions that eqassemble could be
+#     configured to emit.
+#     eqverify_assemble CAN be used under eqprelim or eqproc if it is properly
+#     configured.
+#     The old eqverify CANNOT be used under eqassemble if you want to use any of the
+#     coda tests.
+#
+#     Revision 1.2  2003/05/06 20:54:13  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 17:13:57  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#                    Nmake File For eqverify_assemble and arcfeeder
+#                              Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all:
+   emake $B\eqverify_assemble.exe
+   emake $B\arcfeeder.exe
+
+eqverify_assemble:
+   emake $B\eqverify_assemble.exe
+
+arcfeeder:
+   emake $B\arcfeeder.exe
+
+$B\eqverify_assemble.exe: eqverify_assemble.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) eqverify_assemble.obj $L\libew.lib \
+    $L\pipe.obj -out:$B\eqverify_assemble.exe
+
+$B\arcfeeder.exe: arcfeeder.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) arcfeeder.obj \
+      $L\pipe.obj $L\libew.lib -out:$B\arcfeeder.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\eqverify_assemble* $B\arcfeeder*

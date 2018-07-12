@@ -1,0 +1,64 @@
+#
+#
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lthread -lposix4 -lsocket
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LINUX_TCP_FLAGS=
+SOLARIS_TCP_FLAGS=-lnsl
+SPECIFIC_TCP_FLAGS=$($(PLATFORM)_TCP_FLAGS)
+
+
+CFLAGS = -g ${GLOBALFLAGS} -DDEBUG
+
+#B = ../../../bin
+#L = ../../lib
+B = ${EW_HOME}/${EW_VERSION}/bin
+L = ${EW_HOME}/${EW_VERSION}/lib
+
+all: k2ew_tcp k2ew_tty
+
+OBJS = k2ewmain.o \
+       outptthrd.o \
+       terminat.o \
+       getconfig.o \
+       k2ewerrs.o \
+       k2crctbl.o \
+       k2cirbuf.o \
+       k2pktman.o \
+       k2misc.o \
+       k2pktio.o \
+       k2ewrstrt.o \
+       heartbt.o \
+       k2info.o \
+       error_ew_un.o
+
+TCP_OBJS = k2c_tcp.o
+
+TTY_OBJS = k2c_ser_un.o
+
+EWLIBS = $L/libew_mt.a
+
+EW_SOCK_LIBS = $L/socket_ew_common.o \
+       $L/socket_ew.o
+
+
+k2ew_tcp: $(OBJS) $(TCP_OBJS)
+	$(CC) $(CFLAGS) -o $B/k2ew_tcp $(OBJS) $(TCP_OBJS) $(EWLIBS) \
+   $(EW_SOCK_LIBS) $(SPECIFIC_FLAGS) $(SPECIFIC_TCP_FLAGS)
+
+k2ew_tty: $(OBJS) $(TTY_OBJS)
+	$(CC) $(CFLAGS) -o $B/k2ew_tty $(OBJS) $(TTY_OBJS) $(EWLIBS) $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/k2ew*
+
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+

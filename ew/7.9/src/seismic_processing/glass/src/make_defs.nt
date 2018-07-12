@@ -1,0 +1,64 @@
+
+# withers modified to remove hydra dependencies 20060426
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+OBJ = obj
+
+# GLASS_DIR is set in ew_nt.cmd
+GLASS_LIB = $(GLASS_DIR)\lib
+GLASS_LIBSRC = $(GLASS_DIR)\src\lib
+EW_BIN = $(EW_HOME)\$(EW_VERSION)\bin
+EW_LIB = $(EW_HOME)\$(EW_VERSION)\lib
+EW_INCLUDE = $(EW_HOME)\$(EW_VERSION)\include
+
+TRAVELTIME_LIBS = $(LGASS_LIBSRC)\ttt.$(OBJ) \
+	$(LGASS_LIBSRC)\phase.$(OBJ)
+
+TRAVELTIME_CPP_LIBS = $(LGASS_LIBSRC)\ttt_class.$(OBJ) \
+	$(LGASS_LIBSRC)\tttlist_class.$(OBJ) \
+	$(TRAVELTIME_LIBS)
+
+
+CPP=cl.exe
+INCLUDE_DIRS = -I. -I$(EW_INCLUDE) -I$(GLASS_LIBSRC) 
+CPP_FLAGS = $(GLOBALFLAGS) /nologo $(cdebug) $(cvarsmt) $(INCLUDE_DIRS) /D_WINNT /W3 -GX
+C_FLAGS = $(CPP_FLAGS)
+
+CPP_LIB_FLAGS = 
+C_LIB_FLAGS =   $(CPP_LIB_FLAGS)
+
+LINK=link.exe
+LINK_LIBS = glass_lib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib 
+
+LINK_FLAGS = $(ldebug) /nologo /libpath:$(GLASS_LIB)
+
+MODULE_LINK_FLAGS=  /dll /out:$(GLASS_LIB)\$(MODULE).dll  $(LINK_FLAGS) $(LINK_LIBS) /IMPLIB:ignore.lib
+
+APP_LINK_FLAGS = -subsystem:windows /out:$(EW_BIN)\$(APP).exe  $(LINK_FLAGS) $(LINK_LIBS) 
+
+LIB_LINK_FLAGS = -lib /out:$(GLASS_LIB)\$(LIB) /nologo
+
+MODULE_CPP_FLAGS = /D_USRDLL
+APP_EXT = .exe
+SO_EXT  = dll
+LIB_EXT = lib
+DELETE_FILES = -erase
+
+
+
+!IFDEF NODEBUG
+ldebug = /RELEASE 
+
+!ELSE
+ldebug = -debug -debugtype:cv   /DEFAULTLIB:LIBCMTD /NODEFAULTLIB:LIBC /NODEFAULTLIB:LIBCMT 
+!ENDIF
+
+
+.cpp.obj:
+   $(CPP) $(CPP_FLAGS) $(CPP_OTHER_FLAGS) -c $< 
+
+.c.obj:
+   $(CPP) $(C_FLAGS) $(C_OTHER_FLAGS) -c $< 

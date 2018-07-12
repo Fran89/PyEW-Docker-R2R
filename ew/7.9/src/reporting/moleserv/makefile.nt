@@ -1,0 +1,35 @@
+
+#
+#                  Nmake File For  and 
+#                               Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all:
+   emake $B\moleserv.exe
+
+
+$B\moleserv.exe: moleserv.obj iriswebreq.obj websrequest.obj mongoose.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) moleserv.obj \
+    $L\libew.lib mongoose.obj websrequest.obj iriswebreq.obj $L\read_arc.obj \
+    $L\fleng.obj $L\ws_clientII.obj \
+    $L\socket_ew_common.obj $L\socket_ew.obj $L\swap.obj $L\rw_mag.obj \
+
+    -out:$B\moleserv.exe
+
+
+.c.obj:
+   $(cc) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\moleserv*

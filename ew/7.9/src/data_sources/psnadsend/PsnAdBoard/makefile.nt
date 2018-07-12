@@ -1,0 +1,58 @@
+# ----------------------------------------------------------------------
+# MakeFile for Windows version of the PsnAdBoard dll
+# ----------------------------------------------------------------------
+#
+# Instructions on how to create the executable:
+#
+#     First make sure that your environmental variables
+#     'INCLUDE' and 'LIB' are set correctly.
+#
+#     You may also load this .MAK file from Visual C++.
+#     Visual C++ will then treat it as an 'external makefile'.
+#
+#
+NODEBUG=1
+#
+!include <ntwin32.mak>
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+O = AdcBoard.obj AdcSdr24.obj Adcv1.obj Adcv2.obj Adcvm.obj GpsRef.obj GpsRefVco.obj PcRef.obj PSNADBoard.obj WwvbRef.obj WwvRef.obj
+H = AdcNew.h Adcv1.h PSNADBoard.h
+#
+#
+#
+all: PSNADBoardEw.dll
+#
+PSNADBoardEw.dll: $O
+    link /OUT:$B\PSNADBoardEw.dll /INCREMENTAL:NO /NOLOGO /DLL /IMPLIB:PSNADBoardEw.lib $O
+#    
+#
+AdcBoard.obj: AdcBoard.cpp $H
+AdcSdr24.obj: AdcSdr24.cpp $H
+Adcv1.obj: Adcv1.cpp $H
+Adcv2.obj: Adcv2.cpp $H
+Adcvm.obj: Adcvm.cpp $H
+GpsRef.obj: GpsRef.cpp $H
+GpsRefVco.obj : GpsRefVco.cpp $H
+PcRef.obj: PcRef.cpp $H
+PSNADBoard.obj: PSNADBoard.cpp $H
+WwvbRef.obj: WwvbRef.cpp $H
+WwvRef.obj: WwvRef.cpp $H
+#
+#
+.c.obj:
+    cl /c /DWIN32_64 /DWIN32 $(GLOBALFLAGS) $(cvarsmt) $(tflags) /EHsc $<
+#
+.cpp.obj:
+    cl /c /DWIN32_64 /DWIN32 $(GLOBALFLAGS) $(cvarsmt) $(tflags) /EHsc $<
+#
+# Clean-up directives
+clean:
+    -del *.obj
+    -del PSNADBoardEw.lib
+    -del PSNADBoardEw.exp
+    -del $B\PSNADBoardEw.dll
+
+clean_bin:
+    -del PSNADBoardEw.lib
+    -del $B\PSNADBoardEw.dll

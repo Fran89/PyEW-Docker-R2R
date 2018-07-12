@@ -1,0 +1,33 @@
+
+From withers@gandalf.ceri.memphis.edu Fri Jan  8 10:31:36 1999
+Date: Fri, 8 Jan 1999 10:36:57 -0600 (CST)
+From: "Mitchell M. Withers" <withers@gandalf.ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: new worm tool
+
+
+I have written a new earthworm program (NOT a module; a stand alone executable)
+called earth2ah.  It is a command line executable that queries the wave_server
+for scn's and dumps ah_xdr trace files. It is a clone of Pete Lombard's earth2sac
+with two notable exeptions:
+
+1) added -L <filename> switch where filename contains a simple list of station,
+channel, network cards (wildcards okay, comments and jumps not okay).  This
+is intended to avoid getting an entire wave_servers channels and avoid having
+to know the details of the UW trigger message format.  Must supply starttime
+and duration as the last two args to the earth2ah call.
+
+2) added NT stupidity for the masochists who insist on using this OS.
+
+An example calling script is supplied.  For those who like man pages, it's
+easiest to just look at the one Pete wrote for earth2sac 'cause I'm lazy.
+
+It is available on the earthworm development machine in earthworm/UM/earth2ah,
+by contacting me at withers@ceri.memphis.edu.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+

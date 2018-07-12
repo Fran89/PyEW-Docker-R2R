@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Modules: Liss2ew overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<H1 ALIGN=CENTER>Earthworm Modules: <BR>
+Liss2ew Overview</H1>
+
+<CENTER><P><I>(last revised 4 March, 2000)</I> </P></CENTER>
+
+Liss2ew is the earthworm module for receiving trace data from the
+ <A HREF="http://www.liss.org">Live Internet Seismic Server</A>. The LISS is a
+very simple service that provides trace data in miniSEED format in near-real-time
+over the Internet. The liss2ew module will connect to one LISS, read selected streams
+of trace data, and write that trace data into the earthworm transport ring.
+ <P>
+One LISS normally has data for a single station. One or more components are sent
+together in the data stream. In some cases, one component is provided in more than
+one sample-rate. The `location code' is used in this case to label the different kinds
+of data.
+ <P>
+The miniSEED format may contain a few other types of blockettes besides the
+Data-Only blockette. (You can read the 
+<A HREF="http://www.adobe.com/prodindex/acrobat/readstep.html">PDF</A> version of the 
+<A HREF="http://www.iris.washington.edu/manuals/acrobat/T_SEED.pdf">SEED manual</A> 
+if you want to know more.)
+Currently liss2ew ignores these non-trace-data blockettes.
+ <P>
+Besides the ASL, there are several other LISS servers. Some digital seismographs produce
+miniSEED. There is be an earthworm LISS server module, <A HREF="ew2liss_ovr.html">ew2liss</A>. This will allow the 
+exchange of earthworm trace data by an alternate format to the current 
+<A HREF="import-export_ovr.html">import/export</A> combination.
+<P>  <A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/liss2ew_cmd.html">Liss2ew
+Commands</A> 
+ <!-- USGS-required stuff at the end --> 
+<HR></P>
+
+<ADDRESS>The URL of this page is <B>[http://www.cnss.org/EWAB/ovr/liss2ew_ovr.html]<BR>
+</B>Contact: <B>lombard@geophys.washington.edu</B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>

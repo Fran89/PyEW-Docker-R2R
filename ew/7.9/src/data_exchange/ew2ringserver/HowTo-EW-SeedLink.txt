@@ -1,0 +1,4 @@
+
+For instructions to create a SeedLink server for Earthworm please visit:
+https://seiscode.iris.washington.edu/projects/ew2ringserver/wiki/A_SeedLink_server_for_Earthworm
+

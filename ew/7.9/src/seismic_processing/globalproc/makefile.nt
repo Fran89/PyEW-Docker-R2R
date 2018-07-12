@@ -1,0 +1,60 @@
+# makefile for globalproc
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = globalproc
+
+# Unused from Solaris:
+# -lposix4 -lthread -lm
+# CFLAGS = -D_REENTRANT -llibc ${GLOBALFLAGS} 
+# fft_opts = /O2
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+# Make this without being dependent on the other Oracle stuff being made
+#OL = $(APPS_DIR)\lib\
+OL =
+OLSRC = $(EW_HOME)\$(EW_VERSION)\src\seismic_processing\geqproc
+INC = $(EW_HOME)\$(EW_VERSION)\include
+
+
+
+ALL:  $(OL)\init_ewevent.obj $B\$(APP).exe
+
+OBJS = globalproc.obj \
+      $L\geo_to_km.obj \
+      $L\swap.obj \
+      $L\dirops_ew.obj \
+      $L\site.obj \
+      $L\tlay.obj \
+      $L\brent.obj \
+      $L\mnbrak.obj \
+      $L\global_amp_rw.obj \
+      $L\global_pick_rw.obj \
+      $L\global_loc_rw.obj \
+      $L\global_msg.obj \
+      $L\watchdog_client.obj \
+      $(OL)init_ewevent.obj \
+      $L\libew_mt.lib
+
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) \
+      $(LIBS) -out:$B\$(APP).exe
+
+$(OL)\init_ewevent.obj: 
+	$(CC) $(GLOBALFLAGS)  /nologo /I$(INC) $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(OLSRC)\init_ewevent.c
+
+
+# Clean-up rules
+clean:
+   -del a.out core *.o *.obj *% *~
+
+clean_bin:
+   -del $B\globalproc*
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) /Od $<
+

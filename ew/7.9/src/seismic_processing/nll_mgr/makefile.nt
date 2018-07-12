@@ -1,0 +1,27 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 397 2008-02-20 08:19:11Z quintiliani $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2008/02/20 08:19:11  quintiliani
+#     Earthworm manager for running NonLinLoc, the location algorithm developed by Anthony Lomax.
+#     The module has been funded by INGV in the framework of the DPC-S4 project.
+#
+#     Revision 1.1.1.1  2005/07/14 20:10:34  paulf
+#     Local ISTI CVS copy of EW v6.3
+#
+#     Revision 1.2  2003/05/06 20:54:17  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 18:40:56  lucky
+#     Initial revision
+#
+#
+#
+
+#                  Nmake File For nll_mgr - Windows NT version
+

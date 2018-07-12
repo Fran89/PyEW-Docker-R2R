@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: seisan_report commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1>seisan_report Configuration File</h1>
+<i>(last revised April 23, 2015)</i></center>
+<pre>
+
+# seisan_report parameter file
+
+#  Basic Earthworm setup:
+#
+MyModuleId         MOD_REPORT     # module id for this instance of report 
+RingName           SSG_HYPO_RING  # ring to get input from
+HeartBeatInterval  60             # seconds between heartbeats
+LogFile            2              # 0 -> stdout, 1 -> stdout + file, 2 -> file
+Debug              1              # 0 for no diagnostics
+
+# Delay between detection of event and sfile being written (sec)
+# For wavefile to be in sfile this needs to be at least a few minutes
+WriteDelay         600
+
+# List the message logos to grab from transport ring
+#              Installation       Module          Message Types
+GetEventsFrom  INST_WILDCARD    MOD_WILDCARD      # hyp2000arc
+
+# Directory to write seisan files in
+SfileDir  ../../data/sausage_sfiles  
+
+# Directory to find wav files
+WavDir ../../data/sausage_triggers
+
+# Agency for hypocentres and magnitudes. Note this can be a 
+# maximum of 3 characters!! (Seisan requirement)
+Agency BGS
+
+# Switch to control whether alarm messages sent 0=no
+AlarmMsg  1
+
+
+</pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/seisan_report_ovr.html">seisan_report Overview</a> </center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<br>
+<b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</address>
+</body>
+</html>

@@ -1,0 +1,41 @@
+Excerpted from notes written while experimenting to reduce the number of 
+maximum-duration triggers...  LDD
+
+First some basics on how carlsubtrig works.
+Three carlsubtrig parameters control the duration of the network triggers. 
+Here are some example settings for those parameters:
+
+NetTriggerDur    10   # Nominal duration (sec) for the base network trigger
+SubnetContrib    15   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+The current network trigger duration (let's call it NewTrig) is calculated 
+once each second based on the number of currently triggered subnets (nSubTrig)
+using the following equation:
+
+  NewTrig = NetTriggerDur + ( nSubTrig * SubnetContrib )
+
+The total network duration (TotalNetDuration) is a slightly different 
+beast, defined as the time at which the first subnet(s) triggered until 
+some time after the last subnet(s) untrigger, or until TotalNetDuration
+reaches MaxDuration.  The total network duration can reach MaxDuration 
+in one of two ways:
+
+1. Many subnets are triggered at the same time. If
+
+     nSubTrig >= ( MaxDuration - NetTriggerDur )/ SubnetContrib
+
+   then the TotalNetDuration will be be limited to MaxDuration.
+
+2. One or more subnets re-trigger at frequent intervals.
+   In the one-subnet case, TotalNetDuration will keep increasing if
+
+      ReTriggerInterval <= NetTriggerDur + SubnetContrib
+
+   In the more general case, if a current network trigger consists 
+   of nSubTrig triggered subnets, then TotalNetDuration will be 
+   extended if at least one subnet retriggers within
+
+      ReTriggerInterval <= NetTriggerDur + nSubTrig * SubnetContrib
+

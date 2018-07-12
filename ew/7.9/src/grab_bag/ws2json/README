@@ -1,0 +1,32 @@
+This is another nifty Java program, complete with source code that talks to a wave server
+and builds a JSON output file (for parsing in a web application for display).
+
+
+$ java -jar ws2json.jar 
+WS2JSON version 1.5
+
+Usage: java -jar ws2json [OPTIONS] <query string>
+
+	<query string> : Waveserver request options separated by & for the
+		station and time interval.
+		Note that this is purposely similar to a typical GET query string
+		waveserver=	: IP and port address of the WaveServer
+				   with the format aaa.bbb.ccc.ddd_ppppp
+		station=	: Required channel in S.C.N.L format
+		start=		: Required start time in format yyyymmddHHMMSS
+		duration=	: Duration of the time interval in seconds
+		encoding=	: Optional type of encoding. Available types:
+				   - int   : An array of integers (default)
+				   - gsim  : Simple encoding (60 levels)
+				   - gext  : Extended encoding (4095 levels)
+		average=	: Optional average handling
+				   - reset : Set average to zero (default)
+				   - ok    : Maintain original average
+		rate=		: Optional output data rate. Changes the
+				  output sampling rate using nearest neighbour
+				  approximation. Note: Will introduce alias.
+				  Default value is 40.
+
+Example Usage:
+	java -jar ws2json waveserver=10.19.6.62_16022&station=LFA.EHZ.CP.--&start=20111203135500&duration=30&encoding=int&average=reset&rate=40
+

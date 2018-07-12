@@ -1,0 +1,161 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.78 [en] (X11; U; SunOS 5.6 sun4u) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#CCFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+&nbsp;
+<center>
+<br><b><font size=+2>Earthworm Group Amanda Backup System Restore Procedure</font></b>
+<br><b><font size=-1>by Lucky Vidmar (October 29, 2002)</font></b></center>
+
+<br><b><font size=+2></font></b>&nbsp;
+<p><br>
+<br>
+<p><b>Background on Amanda Backup System</b>
+<p>Amanda system works by backup levels. Level 0 backs up everything, Level
+1 backs up all files that have changed since the last Level 0, Level 2
+backs up files changed since the last Level 1, etc.
+<p>Amanda also allows for multiple configurations on one backup host. On
+gldylan, we run two configurations:
+<ul>
+<li>
+<u>zero2</u>:&nbsp;&nbsp; Runs once weekly and backs up everything.</li>
+
+<li>
+<u>incr2</u>:&nbsp;&nbsp; Runs several time per week backing up only those
+files that have changed since the last backup (incremental backup).</li>
+</ul>
+
+<p><br>Tapes in each configuration are rotated in a cycle.&nbsp; There
+are 40 tapes in the zero2 configuration and 6 tapes in incr2 configuration.&nbsp;
+This means that weekly backups will be kept for 40 weeks while incremental
+backups will be recycled every week or so (depending on the frequency of
+incremental backups).
+<p>Log in to dylan with
+<br>&nbsp;&nbsp; username:&nbsp;&nbsp; operator
+<br>&nbsp;&nbsp; password:&nbsp;&nbsp; dump,master
+<br>&nbsp;
+<p><b>How to restore a file or a directory?</b>
+<br>&nbsp;
+<ul>
+<li>
+First, determine when the file was last modified;</li>
+
+<li>
+If this was only a few days ago, you may want to perform incremental restore
+(see below);</li>
+
+<li>
+Otherwise, perform restore from a zero tape (see below).</li>
+</ul>
+
+<p><b>Zero Level Restore</b>
+<p>Find the zero2 tape (labelled ZERO2_&lt;vol num>) done near the date
+of interest. Make sure that the filesystem on which the lost file resided
+was backed up&nbsp; on that tape (see the list of filesystems on the tape
+sleeve).
+<p>Insert the tape into the tape drive.
+<p>Assuming that the file to be restored was on gldrocky in directory /home/earthworm/EW6_utils,
+run the following command:
+<p>&nbsp;&nbsp;&nbsp; <tt>amrestore -p /dev/rmt/0n gldrocky /home | restore
+ivbf 2 -</tt>
+<p>Tape will fast forward looking for the /home backup.. be patient...
+<p>When tape is fast forwarded, the following will be the prompt:
+<p><tt>Dump&nbsp;&nbsp; date: Sat Jun 29 14:31:01 2002</tt>
+<br><tt>Dumped from: the epoch</tt>
+<br><tt>Level 0 dump of /home on gldrocky:/dev/dsk/c0t0d0s5</tt>
+<br><tt>Label: none</tt>
+<br><tt>Extract directories from tape</tt>
+<br><tt>Initialize symbol table.</tt>
+<br><tt>restore ></tt>
+<br>&nbsp;
+<p>On the prompt (restore>) you can use most of the usual UNIX commands
+(ls, cd), for example:
+<p><tt>restore > ls</tt>
+<br><tt>.:</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 *./&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1458711&nbsp; davidk/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5504&nbsp;
+lucky/</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2 *../&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1172545&nbsp; dec/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1381697&nbsp;
+luetgert/</tt>
+<br><tt>1502826&nbsp; Golden_OPS/&nbsp;&nbsp; 176486&nbsp; dhanych/&nbsp;&nbsp;&nbsp;&nbsp;
+1557764&nbsp; markw/</tt>
+<br><tt>&nbsp;357767&nbsp; TT_DB/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+126784&nbsp; dietz/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1563371&nbsp; mcnamara/</tt>
+<br><tt>1491790&nbsp; admin/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+33308&nbsp; dkinchen/&nbsp;&nbsp;&nbsp;&nbsp; 440534&nbsp; moran/</tt>
+<br><tt>&nbsp; 22016&nbsp; alex/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+363271&nbsp; earthworm/&nbsp;&nbsp;&nbsp; 594666&nbsp; operator/</tt>
+<br><tt>1519318&nbsp; ali/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+462517&nbsp; friberg/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 330437&nbsp; patton/</tt>
+<br><tt>&nbsp;611151&nbsp; baldwin/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 682709&nbsp;
+jnmarso/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 451535&nbsp; ptwc/</tt>
+<br><tt>&nbsp;688220&nbsp; benz/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1436717&nbsp; ketchum/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 534124&nbsp; small/</tt>
+<br><tt>&nbsp;495363&nbsp; bogaert/&nbsp;&nbsp;&nbsp;&nbsp; 1062465&nbsp;
+kohler/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 115791&nbsp; steve/</tt>
+<br><tt>&nbsp;600143&nbsp; brian/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1689971&nbsp;
+llastowka/&nbsp;&nbsp;&nbsp; 847850&nbsp; tlmurray/</tt>
+<br><tt>1266154&nbsp; buland/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1442234&nbsp;
+lomax/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1453209&nbsp; websrv1/</tt>
+<br><tt>&nbsp;385473&nbsp; carl/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1502785&nbsp; lombard/&nbsp;&nbsp;&nbsp;&nbsp; 1645903&nbsp; whitmore/</tt>
+<br><tt>&nbsp;699208&nbsp; cjbryan/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp; lost+found/&nbsp; 1458763&nbsp; withers/</tt>
+<br>&nbsp;
+<br>&nbsp;
+<p>Now, using cd, go to the directory where the lost file is:
+<p><tt>restore > cd earthworm/EW6_utils</tt><tt></tt>
+<p><tt>restore > ls</tt>
+<br><tt>./earthworm/EW6_utils:</tt>
+<br><tt>1331994&nbsp; ./&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+363271&nbsp; ../&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1579901&nbsp; nt/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1530140&nbsp; solaris/</tt>
+<p>To restore the entire directory:
+<p><tt>restore > add .</tt>
+<br><tt>Make node ./earthworm</tt>
+<br><tt>Make node ./earthworm/EW6_utils</tt>
+<br><tt>Make node ./earthworm/EW6_utils/solaris</tt>
+<br><tt>Make node ./earthworm/EW6_utils/nt</tt>
+<br>&nbsp;
+<p>To restore a specific file:
+<p><tt>restore > add solaris</tt>
+<br>&nbsp;
+<p>Use the add command to add all the files or directories to be restored.&nbsp;
+When done:
+<p><tt>restore > extract</tt>
+<br><tt>extract file ./earthworm/EW6_utils/solaris/README</tt>
+<br><tt>extract file ./earthworm/EW6_utils/solaris/apache.tar.Z</tt>
+<br><tt>extract file ./earthworm/EW6_utils/solaris/gmt.tar.Z</tt>
+<br><tt>extract file ./earthworm/EW6_utils/solaris/ImageMagick.tar.Z</tt>
+<br><tt>[ ...... ]</tt>
+<br>&nbsp;
+<p>Now, the restore procedure will begin.&nbsp; The subdirectory EW6_utils
+will
+<br>be created in your current directory, and all the files will be restored
+<br>into it.&nbsp; When restore is complete, the following prompt will
+be shown:
+<p><tt>[ ..... ]</tt>
+<br><tt>extract file ./earthworm/EW6_utils/nt/TNSNAMES.ORA</tt>
+<br><tt>extract file ./earthworm/EW6_utils/nt/achron4.exe</tt>
+<br><tt>Add links</tt>
+<br><tt>Set directory mode, owner, and times.</tt>
+<br><tt>set owner/mode for '.'? [yn]</tt>
+<p>Type:&nbsp;&nbsp;&nbsp; n
+<p>Then, at the next prompt:
+<p><tt>restore >&nbsp; quit</tt>
+<br>&nbsp;
+<p>To eject the tape:<tt></tt>
+<p><tt>mt -f /dev/rmt/0n offline</tt>
+<br>&nbsp;
+<p>Now, you can copy the restored files to the desired host (gldrocky).
+<br>&nbsp;
+<p><b>Incremental Level Restore</b>
+<p>Follow procedure equivalent to zero level, except do it in steps. Start
+with the last (most recent) Level 0, then Level 1, Level 2, etc...
+<br>&nbsp;
+</body>
+</html>

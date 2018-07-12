@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      slink2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/slink2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="slink2ew.html" title="View slink2ew">slink2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/slink2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/slink2ew?action=diff&amp;version=8" title="Version 8 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A11%3A44-07%3A00&amp;precision=second" title="2012-05-02T09:11:44-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:11:44</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="slink2ew.html#EarthwormModule:slink2ew">Earthworm Module: slink2ew</a>
+    <ol>
+      <li>
+        <a href="slink2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="slink2ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="slink2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="slink2ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="slink2ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="slink2ew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="slink2ew.html#AdvancedDescription">Advanced Description</a>
+        <ol>
+          <li>
+            <a href="slink2ew.html#SeedLinkdatatransferuni-stationandmulti-stationmode">SeedLink data transfer, uni-station and multi-station mode</a>
+          </li>
+          <li>
+            <a href="slink2ew.html#SeedLinkselectors">SeedLink selectors</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="slink2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:slink2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: slink2ew</h1>
+<p>
+<strong>Contributed by: Chad Trabant</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+SeedLink importer module (Windows and Solaris compat) (new in EW v7.0)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+slink2ew is a SeedLink client module for Earthworm.  SeedLink is the data server component of the Seismological Communication Processor, or <a class="ext-link" href="http://www.gfz-potsdam.de/geofon/seiscomp/welcome.html"><span class="icon">​</span>SeisComP</a>, originally developed at <a class="ext-link" href="http://www.gfz-potsdam.de/geofon/"><span class="icon">​</span>GEOFON</a>.
+</p>
+<p>
+The SeedLink protocol can be summarized as a simple negotiation scheme followed by the streaming of data packets from the server.  SeedLink packets are composed of a small header followed by a 512-byte Mini-SEED record (data only SEED).  The negotiation phase allows the client to request only specified data types from the server for each data stream.  A data stream is defined by a network and station code pair.
+</p>
+<p>
+By utilizing sequence numbers for each packet in a data stream the SeedLink protocol allows for connections to be resumed, eliminating most data gaps.  The ability to resume data streams is primarily dependant on how much data, time-wise, the remote SeedLink has in it's buffer.
+</p>
+<p>
+The protocol allows for two different modes of data transmission, uni-station and multi-station modes.  Uni-station mode operates by transmitting a single data stream (data from a single station) through one network connection.  In this mode the data stream does not need to be specified by the client as it is implied by the internet address and port.  Multi-station mode operates by transmitting multiplexed data streams (data from multiple stations) through a single network connection.
+</p>
+<p>
+The maxium size of the TRACEBUF messages created by slink2ew is limited to the maximum number of samples (using Steim2 compression) that can fit into a 512-byte Mini-SEED record (721 samples = 2884 bytes) plus the size of the TRACEBUF header (64 bytes). So 2948 bytes is a good estimate of the maximum size of TRACEBUF messages created by slink2ew.
+</p>
+<p>
+Version 1.1 and greater of slink2ew supports the creation of either TRACEBUF or TRACEBUF2 messages depending on which version of Earthworm the module was built for. By default the module will create TRACEBUF2 messages if the system supports them and TRACEBUF messages otherwise. Additionally there is an optional command !ForceTraceBuf1 that will force the use of TRACEBUF messages on systems that support TRACEBUF2.
+</p>
+<p>
+SeisComP and SeedLink are actively supported by the <a class="ext-link" href="http://www.gfz-potsdam.de/geofon/"><span class="icon">​</span>GEOFON Project</a>, <a class="ext-link" href="http://orfeus.knmi.nl/"><span class="icon">​</span>ORFEUS Data Center</a> and <a class="ext-link" href="http://www.iris.edu/"><span class="icon">​</span>IRIS Data Management Center</a> in addition to the user community.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, slink2ew reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm SeedLink client module (SeedLink is a component of the Seismological Communication Processor, or SeisComP, originally developed  at GEOFON). In the control file, lines may begin with a valid slink2ew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (commands are case sensative).  Blank lines are also permitted in the control file.
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by slink2ew, grouped by the function they influence. Most of the commands are required; they may be specified in any order in the control file.
+</p>
+<pre class="wiki">        Earthworm system setup:
+                MyModuleId              required
+                RingName                required
+                HeartBeatInterval       required
+                Verbosity		optional
+
+        SeedLink server and connection parameters:
+                SLaddr                  required
+                SLport                  required
+		Selectors		optional
+		Stream			optional
+		NetworkTimeout		optional
+		NetworkDelay		optional
+		KeepAlive		optional
+		ForceTraceBuf1		optional  (slink2ew &gt;= 1.1)
+
+	Output control:
+		LogFile			required
+		StateFile		optional
+		StateFileInt		optional
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>!ForceTraceBuf1 [switch]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the on-off switch to force the creation of TRACEBUF messages on systems that support TRACEBUF2 messages. By default, the module will create TRACEBUF2 messages on systems that support them otherwise it will create the older TRACEBUF messages. This switch has no effect on systems that do no support TRACEBUF2 messages. This switch could be useful in environments where a transition is occuring between TRACEBUF and TRACEBUF2 messages, otherwise most people will never use this.
+</p>
+<pre class="wiki">Default:  0 (disabled)
+Example:  ForceTraceBuf1 1
+</pre><p>
+<strong>HeartBeatInterval [interval]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Defines the interval in seconds at which the module will issue TYPE_HEARTBEAT messages.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartBeatInterval 30
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, coaxtoring will write a daily log file(s) called coaxtoringxx.log_yymmdd where xx is coaxtoring's module id (set with MyModuleId command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).  If switch is 2 the log file is written but output to stdout and stderr is suppressed.
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile   1
+</pre><p>
+  
+<strong>KeepAlive [interval]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data Selection
+</p>
+<p>
+Specifies the interval in seconds that the module will send keep alive (heartbeat) packets to the remote SeedLink server.  A value of 0 disables the feature.  This feature only works with versions of SeedLink 2.93 or greater.  This is useful for keeping a network connection open that might be closed by itermediate firewalls/gateways when the data stream only flows at intervals.
+</p>
+<pre class="wiki">Default:  0 (disabled)
+Example:  KeepAlive   600
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_SLINK2EW_GE
+</pre><p>
+<strong>NetworkDelay [delay]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the re-connection delay in seconds.  After the connection to the remote SeedLink server has been broken (network timeout or any other connection problems) the module will wait this many seconds before attempting to re-connect.
+</p>
+<pre class="wiki">Default:  30
+Example:  NetworkDelay 10
+</pre><p>
+<strong>NetworkTimeout [timeout]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the network timeout in seconds.  If the module has not received any packets from the remote SeedLink server in this amount of time the connection will be closed and re-opened if possible.  A value of 0 disables this feature.
+</p>
+<pre class="wiki">Default:  600
+Example:  NetworkTimeout 300
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Indicates which shared memory region to use for waveform output.  ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingName WAVE_RING
+</pre><p>
+<strong>Selectors [selectors]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data selection
+</p>
+<p>
+Specify the SeedLink selectors for uni-station mode or default selectors for multi-station mode.  Multiple selectors must be enclosed by quotes.  If Stream commands are also specified in the command file, implying multi-station mode, any selectors specified with this command will be used as defaults when no data stream selectors are specified with a given Stream command.
+</p>
+<pre class="wiki">Default:  none
+Example:  Selectors  "BH?.D LH?.D"
+</pre><p>
+<strong>SLaddr [address]</strong><br />
+Processed by: ReadConfig<br />
+Function: SeedLink parameters
+</p>
+<p>
+Specify the address of the SeedLink server. This can be either on IP address (four period-separated numbers) or the domain name of the server.
+</p>
+<pre class="wiki">Default:  none
+Example:  SLaddr      st27.gfz-postdam.de
+</pre><p>
+<strong>SLport [port]</strong><br />
+Processed by: ReadConfig<br />
+Function: SeedLink parameters
+</p>
+<p>
+Specifies the IP port number for the SeedLink server.  This is commonly 18000.
+</p>
+<pre class="wiki">Default:  none
+Example:  SLport  18000
+</pre><p>
+<strong>StateFile</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+If this flag is specified a file with a list of sequence numbers is written, during a clean module shutdown, to the parameter directory with the name "slink&lt;mod id&gt;.state".  During module startup these sequence numbers are used to resume data streams from the last received data.  In this way continuous data can be collected even through system restarts.  If this flag is not set the module will always request the next available data.  Using this functionality is highly recommended unless you know that it is not necessary.
+</p>
+<pre class="wiki">Default:  none
+Example:  StateFile
+</pre><p>
+<strong>StateFileInt [interval]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+This option specifies the interval for saving the state file in number of packets received.  In otherwords, using the default interval of 100, the statefile will be updated every 100 packets received.  The purpose of this functionality is to minimize the amount of duplicate data collected if the module is ever killed without saving the current state information.
+</p>
+<pre class="wiki">Default:  100
+Example:  StateFileInt 500
+</pre><p>
+<strong>Stream streamkey [selectors]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data selection
+</p>
+<p>
+Specifies one stream of data to be requested from the remote SeedLink server.  This command implies the use of multi-station mode and can be specified multiple times to requested multiple data streams.  The streamkey is composed of a network and station code separated by an underscore.  Optional SeedLink selectors may be specified after the stream key.  Multiple selectors must be enclosed in quotes.  Beware of collecting multiple data streams with the same station code and differing location codes as the rest of Earthworm does not know about location codes, so the two data streams would get mixed together with bad results.
+</p>
+<pre class="wiki">Default:  none
+Example:  Stream  GE_DSB  "BH?.D HH?.D"
+</pre><p>
+<strong>Verbosity [level]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setu
+</p>
+<p>
+Specifies the level of logging verbosity.  Level 0 is rather quiet and mostly reports errors, level 1 shows negotiation details and every received packet and level 2 shows a lot of details.
+</p>
+<pre class="wiki">Default:  0
+Example:  Verbosity 0
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+#                     Configuration File for slink2ew
+#
+MyModuleId       MOD_SLINK2EW
+RingName         WAVE_RING       # Transport ring to write output to.
+ 
+HeartBeatInterval     30         # Heartbeat interval, in seconds.
+LogFile               1          # 1 -&gt; Keep log, 0 -&gt; no log file
+                                 # 2 -&gt; write to module log but not stderr/stdout
+#Verbosity      0                # Set level of verbosity.
+
+SLhost     st27.gfz-potsdam.de   # Host address of the SeedLink server
+SLport         18000             # Port number of the SeedLink server
+
+StateFile      slink2ew.GE       # File with a list of sequence numbers which
+                                 # is read during module startup to resume
+                                 # data streams.  This file is written on a
+                                 # clean module shutdown.  If this is not
+                                 # specified as an absolute path the value of
+                                 # the environment variable EW_PARAMS will
+                                 # be pre-pended to this value.  Using this
+                                 # functionality is highly recommended.
+
+#NetworkTimeout 600              # Network timeout, after this many idle
+                                 # seconds the connection will be reset.
+                                 # Default is 600 seconds, 0 to disable.
+
+#NetworkDelay   30               # Network re-connect delay in seconds.
+
+#KeepAlive      0                # Send keepalive packets (when idle) at this
+                                 # interval in seconds.  Default is 0 (disabled).
+
+#ForceTraceBuf1 0                # On systems that support TRACEBUF2
+                                 # messages this flag will force the module
+                                 # to create TRACEBUF messages instead.
+                                 # Most people will never need this.
+
+# Selectors and Stream's.  If any Stream lines are specified the connection
+# to the SeedLink server will be configured in multi-station mode using
+# Selectors, if any, as defaults.  If no Stream lines are specified the
+# connection will be configured in uni-station mode using Selectors, if any.
+
+Selectors      "BH?.D"           # SeedLink selectors.  These selectors are used
+                                 # for a uni-station mode connection.  If one
+                                 # or more 'Stream' entries are given these are
+                                 # used as default selectors for multi-station
+                                 # mode data streams.  See description of
+                                 # SeedLink selectors below.  Multiple selectors
+                                 # must be enclosed in quotes.
+
+
+# List each data stream (a network and station code pair) that you
+# wish to request from the server with a "Stream" command.  If one or
+# more Stream commands are given the connection will be configured in
+# multi-station mode (multiple station data streams over a single
+# network connection).  If no Stream commands are specified the
+# connection will be configured in uni-station mode, optionally using
+# any specified "Selectors".  A Stream command should be followed by a
+# stream key, a network code followed by a station code separated by
+# an underscore (i.e. IU_KONO).  SeedLink selectors for a specific
+# stream may optionally be specified after the stream key.  Multiple
+# selectors must be enclosed in quotes.  Any selectors specified with
+# the Selectors command above are used as defaults when no selectors
+# are specified for a given stream.
+
+# Combined with the above specified default selectors the BHx channels
+# will be requested for each of these stations except for DSB for which
+# we also want the LHx channels.
+
+Stream  GE_DSB   "BH?.D LH?.D"
+Stream  GE_ISP
+Stream  GE_APE
+Stream  GE_STU
+</pre><h2 id="AdvancedDescription">Advanced Description</h2>
+<h3 id="SeedLinkdatatransferuni-stationandmulti-stationmode">SeedLink data transfer, uni-station and multi-station mode</h3>
+<p>
+The SeedLink protocol allows two different modes of data transfer.  Uni-station mode is the method used for transmitting a single data stream (station) over a single network connection.  In this case the client does not specify a stream key (network and station code) as the data stream is implied by which address and port the client connects to (similar to LISS Protocol ver.  1).  Multi-station mode is the method used for transmitting multiple data streams (stations) multiplexed together over a single network connection.  Uni-station mode is supported by all current SeedLink versions.  Multi-station mode is supported by SeedLink 2.5 or later (SeisComP-1.1.6 or later).
+</p>
+<p>
+For slink2ew the presence of one or more Stream commands in the configuration file triggers multi-station mode.  Otherwise the module defaults to uni-station mode.
+</p>
+<h3 id="SeedLinkselectors">SeedLink selectors</h3>
+<p>
+SeedLink selectors are used to request specific types of data within a given data stream, in effect limiting the default action of sending all data types.  A data packet is sent to the client if it matches any positive selector (without leading "!") and doesn't match any negative selectors (with a leading "!").  The general format of selectors is LLSSS.T, where LL is location, SSS is channel and T is type (one of [DECOTL] for Data, Event, Calibration, Blockette, Timing, and Log records).  "LL", ".T", and "LLSSS." can be omitted, implying anything in that field.  It is also possible to use "?" in place of L and S as a single character wildcard.  Multiple selectors are separated by space(s).
+</p>
+<p>
+Some examples:
+</p>
+<pre class="wiki">BH?          - BHZ, BHN, BHE (all record types)
+00BH?.D      - BHZ, BHN, BHE with location code '00' (data records)
+BH? !E       - BHZ, BHN, BHE (excluding detection records)
+BH? E        - BHZ, BHN, BHE &amp; detection records of all channels
+!LCQ !LEP    - exclude LCQ and LEP channels
+!L !T        - exclude log and timing records
+</pre><p>
+For slink2ew only data records will be written to the ring.  In other words, requesting any records in addition to data records is a waste and you should always append ".D" to any specified selectors.
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/slink2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

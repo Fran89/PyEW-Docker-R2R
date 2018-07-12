@@ -1,0 +1,290 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: heli_ewII overview</TITLE>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Heli_ewII Overview</H1>
+<I>(last revised February 9, 2001)</I></CENTER>
+
+<P>
+History:
+<P>
+<STRONG>heli_ewII</STRONG> creates Helicorder displays of waveforms for the WWW.  Jim Luetgert created the original heli1 10/7/98. He did all the hard work.
+        Pete Lombard then did extensive cleaning and debugging. This effort resulted in two
+        versions: heli_standalone, which was a free-standing program (although
+        using earthworm functions), and heli_ew, which ran as a Module, thus providing
+        error processing and restarts.
+<P>
+                Meanwhile, Jim Luetgert and others proceeded to develop and enhance similar
+        programs. We're aware of six such efforts. What to do. Given Pete's efforts
+        to stabilize heli_standalone, and its proven track-record for reliability, and
+        that we're to provide a mission-critical system, as well as a community effort,
+        we're producing heli_ewII as the staid, reliable, supported product. It is a combination
+        of heli_ew and heli_standalone.
+<P>
+                We will carry fancier products as contributed to us by others in the
+        earthworm/Contrib section. From time to time, we may adopt and adapt some
+        of these more advanced products into the core earthworm software.
+<P>
+Features:
+<OL>
+<LI>
+Runs on NT and Solaris.
+</LI>
+Runs as a module: Specifying earthworm parameters in its
+           configuration file will cause it to become a module. It will attach to
+           the specified ring, produce heartbeats, and use earthworm logging. It can
+           be restarted if it asserts 'restartMe' in its .desc file.
+<LI>
+Runs as a standalone program: If no Earthworm paramters are given in the
+           .d file, it will run standalone. Errors will be written to stderr.
+<LI>
+Does not try to move files to another machine. This was removed in the name
+           of security and modularity. Moving the image files to a separate server machine
+           is a reasonable option, but should be done by another facility. Shared disks via
+           operating system features or SendFile are two options.
+
+
+
+
+
+
+<P>
+heli_ewII is designed to rapidly provide GIF images of waveforms for display on the WWW.  heli_ewII periodically retrieves  data for a selected list of stations and updates GIF images which are transferred to webserver(s).  The required waveforms are obtained via requests to Earthworm waveserver(s) and plotted directly to GIF format image files.  When all of the required GIF files have been constructed, .html wrappers are built.
+<P>
+The default structure for the webserver consists of an index.html page listing the stations and dates available for viewing.  The dates are each a hotlink to an .html wrapper for each station/date helicorder GIF.
+<P>
+How to set it up:
+<P>
+The first task is to set up a directory for the GIF images
+and .html files.
+<P>
+Now comes the fun part; setting up the configuration files.
+<P>
+heli_ewII.d -
+<PRE>
+****************************************************************************************
+#
+# This is the heli_ewII parameter file. This module gets data gulps
+# from the waveserver(s), and creates helicorder displays.
+# This program runs either standalone or as an Earthworm module.
+# If any of the four Earthworm paramaters below are stated, it will asssume
+# that it's supposed to be a module. It will beat it's heart into the ring,
+# and use the Earthworm logging scheme. Other wise, it runs standalone.
+
+
+#  Basic Earthworm setup:
+#
+LogSwitch    1              # 0 to completely turn off disk log file
+MyModuleId   MOD_HELI       # module id for this instance of report
+RingName     HYPO_RING      # ring to get input from
+HeartBeatInt 15             # seconds between heartbeats
+
+wsTimeout 12 	# time limit (secs) for any one interaction with a wave server.
+
+>>>>
+>>>> We need to know a reasonable time limit for getting
+>>>> a response from any wave server.
+>>>>
+
+# List of wave servers (ip port comment) to contact to retrieve trace data.
+ WaveServer aaa.bbb.ccc.ddd  16022      "wsv2 - ad1"
+ WaveServer aa2.bb2.cc2.dd2  16023      "wsv2 - ad2"
+ WaveServer www.xxx.yyy.zzz    16024      "wsv2 - ad3"
+
+>>>>
+>>>> This is the list of waveservers to try.  If the requested
+>>>> data for a given SCNL is on more than one waveserver, the
+>>>> first listed will be preferentially used.  If a request
+>>>> fails (gap in the data, broken connection) the alternate
+>>>> server(s) will be tried.  The comment field is optional;
+>>>> it makes error messages a bit more helpful.  The maximum
+>>>> number of waveservers is specified by MAX_WAVESERVERS in
+>>>> heli1.h.
+>>>>
+
+# Directory in which to store the  .gif, and .html files.
+GifDir   /home/luetgert/GIFs/helicorder/
+
+>>>>
+>>>> This is the directory on your local machine which is used to
+>>>> store the  GIF and .html files.  For
+>>>> each SCNL, there is also a SCNL.hist file which keeps track of
+>>>> which dates are available for display.  This is used to
+>>>> construct the index.html file.
+>>>> If SaveDrifts (see below under optional commands) is set,
+>>>> a file SCNL.drft is created for each SCNL.  Each time a new
+>>>> helicorder line is started, the mean, rms, min and max
+>>>> values for the first minute of data are recorded.
+>>>>
+
+# Plot Parameters - sorry it's so complex, but that's the price of versatility
+        # The following is designed such that each SCNL creates it's own
+        # helicorder display; one per day of data.
+# S                  Site
+# C                  Component
+# N                  Network
+# L 		     Location
+
+>>>>
+>>>> These are the SCNL identifiers as they appear in the
+>>>> waveserver menu.
+>>>>
+
+# 04 HoursPerPlot    Total number of hours per gif image
+
+# 05 Plot Previous   On startup, retrieve and plot n previous hours from tank.
+
+>>>>
+>>>> This lets you fill in those little gaps left by system crashes,
+>>>> power outages, silly mistakes, etc.  I usually leave this
+>>>> set to 1 so that gaps get filled automatically if something
+>>>> bad happens and statmgr has to restart heli1.  This will only
+>>>> let you fill on past data from today's plot (i.e. <=24).
+>>>> If you need past day's plots use heli4, the offline
+>>>> helicorder gif generator.
+>>>>
+
+# 06 Local Time Diff UTC - Local.  e.g. -7 -> PDT; -8 -> PST
+# 07 Local Time Zone Three character time zone name.
+# 08 Show UTC        UTC will be shown on one of the time axes.
+# 09 Use Local       The day page will be local day rather than UTC day.
+
+>>>>
+>>>> These variables govern how the time axes are displayed on
+>>>> your plot and whether the plot starts at 00:00 UTC or local.
+>>>>
+
+# 10 XSize           Overall size of plot in inches
+# 11 YSize           Setting these > 100 will imply pixels
+
+>>>>
+>>>> These let you tailor the size of your display.
+>>>>
+
+# 12 Minutes/Line    Number of minutes per line of trace
+
+>>>>
+>>>> We have found that 15 minutes/line makes a pretty nice
+>>>> display.  If you specify a number of minutes/line which
+>>>> is not evenly divisible into 60, the program will pick
+>>>> the nearest number of minutes/line which is evenly
+>>>> divisible into 60.
+>>>>
+
+# 13 Gain Factor     Instrument gain in microvolt/bit.
+
+>>>>
+>>>> By specifying the total instrument gain, we can (at least
+>>>> approximately) calibrate the amplitudes of the plot.  For
+>>>> instance, for analog stations in the NCSN a station running
+>>>> with an attenuation of 24dB (e.g. MSL) has a total system gain
+>>>> of app. 1.0 microvolt/bit.  HSF, with an attenuation of 18dB,
+>>>> has a total system gain of app. 0.5 microvolt/bit.
+>>>>
+
+# 14 Scale Factor    Scale factor to dress up image.
+
+>>>>
+>>>> This lets you turn down the amplitude of those really noisy sites.
+>>>>
+
+# 15 Mean Removal    Mean of 1st minute of each line will be removed.
+
+>>>>
+>>>> Unfortunately, some data sources are not zero-mean and others can
+>>>> can have unacceptable drift rates.  If this flag is set, each time
+>>>> a new line is started, the mean of the first minute in the line
+>>>> is calculated and removed from the data for the rest of the line.
+>>>> This is not bulletproof! It can fail if there is a noise burst
+>>>> in that first minute.
+>>>>
+
+# Comment            A comment for the top of the display.
+#
+#     S    C   N  L 04  05  06 07   08   09  10  11   12 13 14  Comment
+
+ Plot AHID BHE US -- 12 1   -8  PST  1  0  20  20  15 0.1  1.5  1   "Alston BPA"
+ Plot ADK  SHZ AT -- 12 1   -8  PST  1  0  20  20  15 0.1  1.5  1   "Mt. Rainier Summit"
+
+
+    # *** Optional Commands ***
+
+ Days2Save     7    # Number of days to display on web page; default=7
+
+>>>>
+>>>> This variable governs how many dates are retained in the SCNL.hist
+>>>> file in your local gifs directory.
+>>>>
+
+ UpdateInt    10    # Number of minutes between updates; default=2
+
+>>>>
+>>>> Each UpdateInt minutes, heli1 wakes up and updates all its files.
+>>>>
+
+ RetryCount    2    # Number of attempts to get a trace from server; default=2
+
+>>>>
+>>>> If you can't get it in two trys, there is probably something
+>>>> seriously wrong.  Nonetheless, there may be reasons to try some more.
+>>>>
+
+ Logo    smusgs.gif # Name of logo in GifDir to be plotted on each image
+
+>>>>
+>>>> If a Logo is specified, the appropriate gif file should be
+>>>> placed in the /GIFs/helicorder/ directory so the program can
+>>>> find it.  If specified the Logo will be appear in the upper
+>>>> left corner of each SCNL/date helicorder plot.
+>>>>
+
+# We accept a command "Clip" which sets trace clipping at this many
+# vertical divisions
+Clip 5
+
+
+# We accept a command "SaveDrifts" which logs drifts to GIF directory.
+  SaveDrifts
+
+>>>>
+>>>> If SaveDrifts is set, a file SCNL.drft is created for each SCNL.
+>>>> Each time a new helicorder line is started, the mean, rms,
+>>>> min and max values for the first minute of data are recorded.
+>>>>
+
+# We accept a command "Make_HTML" to construct and ship index HTML file.
+Make_HTML
+
+# We accept a command "IndexFile" to name the HTML file.
+# Default is "index.html"
+IndexFile welcome.html
+
+# We accept a command "BuildOnRestart" to totally rebuild images on restart.
+BuildOnRestart
+
+# We accept a command "Debug" which turns on a bunch of log messages
+# Debug
+# WSDebug
+****************************************************************************************
+</PRE>
+
+<P>
+Customizing the .html wrapper:
+<P>
+The .html wrapper for the primary web page has provision for customization to
+reflect the identity and flavor of an individual earthworm site.  If you do nothing, a generic wrapper is constructed.  You may control, however, the top part of the index page and the bottom of the index page by placing the .html code you want in files named indexa.html and indexb.html respectively in the GIFs/helicorder/ directory.  The module will attempt to open and read indexa.html for the top of the page; if it can't find the file, it generates a generic beginning for the index.html file.  It then pastes in links to the helicorder GIF images.  Finally, it looks for indexb.html to finish off the page.  If there is no indexb.html, it provides a generic ending.
+</P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/heli_ewII_cmd.html">Heli_ewII Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+

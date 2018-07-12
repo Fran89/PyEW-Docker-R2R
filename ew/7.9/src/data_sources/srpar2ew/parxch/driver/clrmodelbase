@@ -1,0 +1,6 @@
+# Type . clrmodel to 'source' or run the following command
+# to clear a PARxCH environment variable.  Only run this  
+# after you have removed the corresponding PARxCH driver. 
+                                                          
+unset SrParXch0_ModelName
+

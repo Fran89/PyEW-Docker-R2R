@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      import_ida – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/import_ida?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="import_ida.html" title="View import_ida">import_ida</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/import_ida?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/import_ida?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-03-18T16%3A13%3A39-07%3A00&amp;precision=second" title="2012-03-18T16:13:39-07:00 in Timeline">18 months</a> ago</span>
+            <span class="trac-print">Last modified on 03/18/12 16:13:39</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="import_ida.html#EarthwormModule:import_ida">Earthworm Module: import_ida</a>
+    <ol>
+      <li>
+        <a href="import_ida.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="import_ida.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="import_ida.html#ExampleConfigurationFile">Example Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="import_ida.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:import_ida"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: import_ida</h1>
+<p>
+<strong>Contributed by: David Chavez</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+This program enables an Earthworm to retrieve and process continuous trace data from numerous IDA data servers.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+<a class="wiki" href="Import-Export.html">Import-Export Overview</a>
+</p>
+<p>
+Import_ida acquires data from one or more Project IDA data servers, reformats them into TracePackets and loads them into an Earthworm transport ring. The communication with the data server(s) is done using the idatap-1.2.1 toolkit available from the University of California, San Diego via
+</p>
+<blockquote>
+<p>
+<a class="ext-link" href="ftp://idahub.ucsd.edu:/pub/pickup/idatap-1.2.1.tar.Z"><span class="icon">​</span>ftp://idahub.ucsd.edu:/pub/pickup/idatap-1.2.1.tar.Z</a>
+</p>
+</blockquote>
+<p>
+In the import_ida.d parameter file the user specifies a list of servers with which to connect, and the list of stations and channels to acquire from each server. The program forks separate processes to independently manage all communication with the various servers. These processes communicate through a pipe to distinct threads in the parent. As data packets are acquired, each child process passes them back to its parent thread, which loads the packets into a message queue that feeds the transport ring via the main thread. In addition, any child log messages are formatted into special packets that are also passed back to the main thread and logged using the standard Earthworm facilities.
+</p>
+<p>
+Network timeouts are dealt with transparently to the application by the idatap library, which will retry and reconnect as necessary until successfull or until a more serious error occurs, at which point import_ida assumes the responsibility for reestablishing the connection. The import_ida.d parameter file includes an option for specifying the policy to follow when reconnecting after a loss of communication. One may chose to request the next packet in sequence (to minimize gaps in the acquired data set) or to request the most recently available data (to minimize delays).
+</p>
+<h3 id="ExampleConfigurationFile">Example Configuration File</h3>
+<pre class="wiki"># @(#)import_ida.d	1.1 12/26/97
+# import_ida parameter file
+
+#  Basic Earthworm setup:
+
+MyModuleId         MOD_IMPORT_IDA # module id for this process
+OutRing            WAVE_RING      # output ring
+HeartBeatInterval  30             # seconds between heartbeats
+
+# We need to assign unique pin numbers to each net/sta/chan triple that
+# gets sent to the output ring.  Give the name of the file that contains
+# this information.  The format of this file must be the same as what
+# pick_ew expects.  You can create your own file with IDA specific
+# entries (see ida.sta for an example), or you can add the required 
+# information to the pick_ew station file.  The picker parameters are
+# not required here, and as far as this program is concerned those fields
+# may be left blank.
+
+PinnoFile          ida.sta
+
+# It is up to the user to insure that there are entries in the above file
+# for all expected net/sta/chan triples, however the program will work even
+# if the database is incomplete.  In such a case, an unresolved net/sta/chan
+# will be assigned a default pin number of 12345.  You can override this
+# default by specifying an alternate value.
+
+DefaultPinno       12345
+
+# Define the policy to follow when reconnecting after circuit timeouts.
+# There are two choices: MINIMAL_GAP, or MINIMAL_DELAY.  If the former
+# is selected then the program will request the flow start at the end of
+# whatever has been received so far.  If the latter is selected then the
+# program will request the flow start with the most recent packet available
+# on the server.
+
+Policy             MINIMAL_DELAY
+
+# The network code for Project IDA stations is II, and that is the default
+# code which gets loaded into the packet headers.  If you want to override
+# this with some other code, enter it here.
+
+Network            II
+
+# List the server(s) and stream(s) that are desired.
+# The station channel specifications should follow the syntax
+# described in ftp://idahub.ucsd.edu:/pub/pickup/idatap-1.2.1.tar.Z
+#
+# You can give either the fully qualified host name, or its IP address
+# in the usual decmial dot notation (eg, 111.22.333.44)
+#
+#          Hostname              Station/channel list
+
+server   nnn.xxx.mmm.5        nna:bhz+pfo:bhz+sur:bhz
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/import_ida?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

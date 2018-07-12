@@ -1,0 +1,224 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource_common.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource_common.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_HEARTBEAT_PRIMARY_GREEN_1 ICON    DISCARDABLE     "res\\runner1_.ico"
+IDI_HDR_PRISORT_UP      ICON    DISCARDABLE     "res\\hdricon1.ico"
+IDI_HDR_PRISORT_DOWN    ICON    DISCARDABLE     "res\\hdr_pris.ico"
+IDI_HDR_SECONDSORT_UP   ICON    DISCARDABLE     "res\\ico00001.ico"
+IDI_HDR_SECONDSORT_DOWN ICON    DISCARDABLE     "res\\ico00002.ico"
+IDI_HEARTBEAT_PRIMARY_GREEN_2 ICON    DISCARDABLE     "res\\heartbea.ico"
+IDI_HEARTBEAT_PRIMARY_GREEN_3 ICON    DISCARDABLE     "res\\ico00003.ico"
+IDI_HEARTBEAT_PRIMARY_GREEN_4 ICON    DISCARDABLE     "res\\ico00004.ico"
+IDI_HEARTBEAT_PRIMARY_YELLOW_1 ICON    DISCARDABLE     "res\\ico00005.ico"
+IDI_HEARTBEAT_PRIMARY_YELLOW_2 ICON    DISCARDABLE     "res\\ico00006.ico"
+IDI_HEARTBEAT_PRIMARY_YELLOW_3 ICON    DISCARDABLE     "res\\ico00007.ico"
+IDI_HEARTBEAT_PRIMARY_YELLOW_4 ICON    DISCARDABLE     "res\\ico00008.ico"
+IDI_HEARTBEAT_PRIMARY_RED_1 ICON    DISCARDABLE     "res\\ico00009.ico"
+IDI_HEARTBEAT_PRIMARY_RED_2 ICON    DISCARDABLE     "res\\ico00010.ico"
+IDI_HEARTBEAT_PRIMARY_RED_3 ICON    DISCARDABLE     "res\\ico00011.ico"
+IDI_HEARTBEAT_PRIMARY_RED_4 ICON    DISCARDABLE     "res\\ico00012.ico"
+IDI_HEARTBEAT_PRIMARY_NONE_1 ICON    DISCARDABLE     "res\\icoht_none1.ico"
+IDI_HEARTBEAT_PRIMARY_NONE_2 ICON    DISCARDABLE     "res\\icoht_none2.ico"
+IDI_HEARTBEAT_PRIMARY_NONE_3 ICON    DISCARDABLE     "res\\icoht_none3.ico"
+IDI_HEARTBEAT_PRIMARY_NONE_4 ICON    DISCARDABLE     "res\\icoht_none4.ico"
+IDI_HEARTBEAT_PRIMARY_GREEN_NOCONN ICON    DISCARDABLE     "res\\hertbeat.ico"
+IDI_HEARTBEAT_PRIMARY_NONE_NOCONN ICON    DISCARDABLE     "res\\icon1.ico"
+IDI_HEARTBEAT_PRIMARY_RED_NOCONN ICON    DISCARDABLE     "res\\ico00013.ico"
+IDI_HEARTBEAT_PRIMARY_YELLOW_NOCONN ICON    DISCARDABLE     "res\\ico00014.ico"
+IDI_HEARTBEAT_SECONDARY_GREEN_1 ICON    DISCARDABLE     "res\\ico00015.ico"
+IDI_HEARTBEAT_SECONDARY_GREEN_2 ICON    DISCARDABLE     "res\\ico00016.ico"
+IDI_HEARTBEAT_SECONDARY_GREEN_3 ICON    DISCARDABLE     "res\\ico00017.ico"
+IDI_HEARTBEAT_SECONDARY_GREEN_4 ICON    DISCARDABLE     "res\\ico00018.ico"
+IDI_HEARTBEAT_SECONDARY_GREEN_NOCONN ICON    DISCARDABLE     "res\\ico00019.ico"
+IDI_HEARTBEAT_SECONDARY_NONE_1 ICON    DISCARDABLE     "res\\ico00020.ico"
+IDI_HEARTBEAT_SECONDARY_NONE_2 ICON    DISCARDABLE     "res\\ico00021.ico"
+IDI_HEARTBEAT_SECONDARY_NONE_3 ICON    DISCARDABLE     "res\\ico00022.ico"
+IDI_HEARTBEAT_SECONDARY_NONE_4 ICON    DISCARDABLE     "res\\ico00023.ico"
+IDI_HEARTBEAT_SECONDARY_NONE_NOCONN ICON    DISCARDABLE     "res\\ico00024.ico"
+IDI_HEARTBEAT_SECONDARY_RED_1 ICON    DISCARDABLE     "res\\ico00025.ico"
+IDI_HEARTBEAT_SECONDARY_RED_2 ICON    DISCARDABLE     "res\\ico00026.ico"
+IDI_HEARTBEAT_SECONDARY_RED_3 ICON    DISCARDABLE     "res\\ico00027.ico"
+IDI_HEARTBEAT_SECONDARY_RED_4 ICON    DISCARDABLE     "res\\ico00028.ico"
+IDI_HEARTBEAT_SECONDARY_RED_NOCONN ICON    DISCARDABLE     "res\\ico00029.ico"
+IDI_HEARTBEAT_SECONDARY_YELLOW_1 ICON    DISCARDABLE     "res\\ico00030.ico"
+IDI_HEARTBEAT_SECONDARY_YELLOW_2 ICON    DISCARDABLE     "res\\ico00031.ico"
+IDI_HEARTBEAT_SECONDARY_YELLOW_3 ICON    DISCARDABLE     "res\\ico00032.ico"
+IDI_HEARTBEAT_SECONDARY_YELLOW_4 ICON    DISCARDABLE     "res\\ico00033.ico"
+IDI_HEARTBEAT_SECONDARY_YELLOW_NOCONN ICON    DISCARDABLE     "res\\ico00034.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WAITDLG DIALOG DISCARDABLE  0, 0, 186, 31
+STYLE DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION
+CAPTION "Retrieving Data..."
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",PBS_SMOOTH | 
+                    WS_BORDER,7,7,172,18
+END
+
+IDD_LOC_SUMM_DIALOG DIALOG DISCARDABLE  0, 0, 333, 128
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Location Summary:",IDC_LOCATION_SUMMARY_TITLE,0,0,333,
+                    125
+    CTEXT           "Latitude:",IDC_LATITUDE_TITLE,6,12,65,10,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    CTEXT           "Longitude:",IDC_LONGITUDE_TITLE,76,12,65,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "Origin Time",IDC_ORIGIN_TIME_TITLE,215,12,65,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "RMS:",IDC_RMS_TITLE,215,98,65,10,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    CTEXT           "Num Phases:",IDC_NUMBER_PHASES_TITLE,6,98,65,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "Region",IDC_REGION_NAME_TITLE,6,56,206,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "Elapsed Time:",IDC_ELAPSED_TIME_TITLE,215,56,65,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "Gap",IDC_GAP_TITLE,76,98,65,10,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    RTEXT           "10.0",IDC_DEPTH_VALUE,146,24,65,15,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    CTEXT           "Depth:",IDC_DEPTH_TITLE,146,12,65,10,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    RTEXT           "-111.5",IDC_LONGITUDE_VALUE,76,24,65,15,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    CTEXT           "Min Dist:",IDC_MINIMUM_DISTANCE_TITLE,146,98,65,10,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    RTEXT           "45.123",IDC_LATITUDE_VALUE,6,24,65,15,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    LTEXT           "+/-",IDC_LATITUDE_ERROR_TITLE,6,40,11,10
+    LTEXT           "+/-",IDC_LONGITUDE_ERROR_TITLE,76,40,11,10
+    LTEXT           "+/-",IDC_DEPTH_ERROR_TITLE,146,40,11,10
+    RTEXT           "4.23",IDC_LATITUDE_ERROR_VALUE,18,40,53,11,SS_SUNKEN
+    RTEXT           "4.14",IDC_LONGITUDE_ERROR_VALUE,88,40,53,11,SS_SUNKEN
+    RTEXT           "3.1",IDC_DEPTH_ERROR_VALUE,158,40,53,11,SS_SUNKEN
+    CTEXT           "02/22/2005 14:15:33",IDC_ORIGIN_TIME_VALUE,215,24,65,27,
+                    SS_SUNKEN
+    LTEXT           "Off Gondor Coast",IDC_REGION_NAME_VALUE,6,67,206,27,
+                    SS_SUNKEN
+    CTEXT           "23 Day(s) 21:22:23",IDC_ELAPSED_TIME_VALUE,215,67,65,27,
+                    SS_SUNKEN
+    CTEXT           "59(221)",IDC_NUMBER_PHASES_VALUE,6,109,65,11,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "20 deg",IDC_GAP_VALUE,76,109,65,11,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    CTEXT           "11.2 deg",IDC_MINIMUM_DISTANCE_VALUE,146,109,65,11,
+                    SS_CENTERIMAGE | SS_SUNKEN
+    CTEXT           "3.24 sec",IDC_RMS_VALUE,215,109,65,11,SS_CENTERIMAGE | 
+                    SS_SUNKEN
+    GROUPBOX        "Location Summary:",IDC_MAG_LOCATION_SUMMARY_TITLE,0,0,
+                    333,98
+    CONTROL         "",IDC_LOC_SUMM_LOC_MODE,"Static",SS_BLACKFRAME | NOT 
+                    WS_VISIBLE,0,0,333,127
+    CONTROL         "",IDC_LOC_SUMM_MAG_MODE,"Static",SS_BLACKFRAME | NOT 
+                    WS_VISIBLE,0,0,333,98
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_WAITDLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 24
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_PHASEMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Name"
+    BEGIN
+        MENUITEM "",                            ID_PHASEMENUITEMBLANKTEXT
+        MENUITEM SEPARATOR
+    END
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

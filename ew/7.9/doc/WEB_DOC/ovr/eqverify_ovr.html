@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqverify overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Eqverify Overview</H1>
+<I>(last revised August 10, 1999)</I></CENTER>
+<P>
+Eqverify is a sub-module in Earthworm's event-processing mega-module.
+It takes the output from eqcoda (TYPE_EVENT2K messages) and performs a
+number of tests to determine if the event looks like an earthquake or noise.
+Only those events verified to be earthquakes are passed along to the next
+sub-module.  Eqverify starts the next sub-module specified in its "PipeTo"
+command (generally hypo_mgr) and communicates to it via a one-directional pipe.
+Eqcoda passes any messages other than TYPE_EVENT2K thru to the next link without
+modifying them in any way.
+<P>
+Eqverify can perform up to four different earthquake verification tests on
+each event.  One of the tests analyzes the distribution of arrival times
+reported for the event; the remaining three analyze different coda
+characteristics of the arrivals. Each test can be turned on or off by a
+configuration-file switch. Bad test results (results that show that the
+event looks more like noise than an earthquake) add to a count of "demerit
+points" for the event. If the total number of demerits meets or exceeds
+a (configurable) threshold, the event is declared to be noise, the complete
+TYPE_EVENT2K message is written to eqverify's log file, and the event is
+withheld from any further processing. To avoid the big mistake of
+mis-identifying a large earthquake as noise and withholding it, there is a
+"force-thru" feature in eqverify.  Any event with a minimum number of arrivals
+and a minimum duration magnitude (defaults are 17 arrivals, magnitude 2.0)
+will be passed through to the next processing sub-module, regardless of its
+test results. We'd rather report a few bogus events than drop "the big one!"
+<P>
+A brief description of each of the verification tests follows:
+<ol>
+<li> Test on Arrival Time Distribution ("test_pgroup" command):
+<ul>
+ <li>  In this test, all arrivals within "MaxDeltaT" seconds (default = 30) of
+   the first-arriving pick are examined to see if they belong to a glitch.
+ <li> A glitch is defined as a certain number of picks within a given time
+   interval (set by the "define_glitch" command; default is 4 picks within
+   0.03 seconds).
+ <li>  If 50% or more of these picks belong to glitches, the event is declared
+             noise.
+<li> If 30-50% of the picks are glitch-picks, the event's demerit count is
+             incremented by 1.
+</ul>
+
+<li> Test on Coda Weight or Quality ("test_codawt" command):
+<ul>
+<li> This test, taken from Lindh and Hirshorn's program eqmeas, calculates a
+   coda weight (0 is a good quality coda, 4 is poor) for each pick.
+   It then finds the average of all coda weights for the event and adds
+   this average value to the event demerit count.
+</ul>
+<li> Test on RMS of slope fit to Coda Amplitudes ("test_freefitrms" command):
+<ul>
+<li>This test looks at the rms values from free-fit slopes to the coda
+   average absolute values.  This test, taken from Lindh and Hirshorn's
+   program eqmeas, considers only the rms for each arrival where at least
+   3 coda average absolute values were used in determining the free-fit
+   slope of the coda decay. Eqverify finds the median of all the rms values
+   for such free-fit. If the median rms value is greater than 0.25 (bad fit
+   to coda amplitudes), the event demerit count is incremented by 1.
+   With default settings, this test by itself cannot cause an event to
+   be declared noise.
+</ul>
+<li> Test on Slope of Coda Decay vs Event Magnitude ("test_slopevsmag" command):
+<P>
+This test compares the median slope of coda decay (fit to the coda window
+   average absolute values) to the magnitude calculated from the median coda
+   duration for each event. This test, taken from Lindh and Hirshorn's program
+   eqmeas, increments the event demerit count by the absolute value of the
+   result of this equation:
+<pre>
+      &lt;median slope&gt; + 0.7*&lt;magnitude from median duration&gt; + 0.5
+</pre>
+<P>
+   For a normal earthquake, the slope fit to the coda windows should be
+   negative and the result from the above equation should be zero.  For
+   a noise event, the result from the above equation may be unbounded.
+   This test alone may cause an event to be declared noise.
+</ol>
+<P>
+NOTE: If you are running eqverify as part of the preliminary-event-processing
+      mega-module (started by eqprelim), you should use ONLY the test on
+      arrival time distribution ("test_pgroup").  All coda tests should be
+      turned off since the event will have incomplete coda information
+      at the time eqverify tests it.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqverify_cmd.html">Eqverify Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

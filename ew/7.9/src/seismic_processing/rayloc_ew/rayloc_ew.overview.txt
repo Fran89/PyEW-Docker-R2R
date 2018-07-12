@@ -1,0 +1,46 @@
+
+  Earthworm Modules:
+    RayLoc_ew Overview
+
+(last revised 13 July, 2004)
+
+Rayloc_ew is an Earthworm Module to perform global relocation of
+earthquakes and travel time computation.
+
+Rayloc_ew is an Earthworm-style wrapper around a Fortran program RayLoc
+written by Ray Bulland.
+
+Rayloc_ew attaches itself to the input ring and monitors the ring buffer
+for the TYPE_LOC_GLOBAL
+<http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html>
+messages.
+
+Rayloc_ew reformats the input and calls FORTRAN RayLoc processing
+machinery. The output of rayloc_ew
+is TYPE_RAYLOC
+<http://www.isti.com/%7Eilya/Message_Format_TYPE_RAYLOC.html> message,
+which is written to the output ring.
+
+The rayloc_ew program is compiled and tested out on a Solaris platform
+(with gcc and g77 compilers).
+
+The wrapper module is written that conforms to the Earthworm standards
+(logging, heartbeat, proper termination etc).
+
+The wrapper accepts TYPE_LOC_GLOBAL messages and outputs TYPE_RAYLOC as
+described above.
+
+Rayloc_ew requires three model files (tau.table, ak135.hed, ak135.tbl).
+These files are parts of rayloc_ew distribution.
+
+
+Module Index <http://folkworm.ceri.memphis.edu/ew-doc/modules.html> |
+RayLoc_ew Commands  | 
+<http://www.isti.com/%7Eilya/rayloc_ew_cmd.html>TYPE_LOC_GLOBAL  | 
+<http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html>TYPE_RAYLOC
+<http://www.isti.com/%7Eilya/Message_Format_TYPE_RAYLOC.html>
+<http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html>
+
+------------------------------------------------------------------------
+The URL of this page is [http://www.isti.com/~ilya/rayloc_ew.overview.html]
+Contact: i.dricker@isti.com

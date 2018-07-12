@@ -1,0 +1,319 @@
+<HTML> <HEAD> <TITLE>EARTHWORM Status Sep 9 1998</TITLE> </HEAD> <BODY
+TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B"
+ALINK="#FF 0000">
+
+
+<H1 ALIGN=CENTER> <B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM
+Status Report<BR> </FONT></FONT></B></H1> <HR WIDTH="100%">
+
+<H5 ALIGN=RIGHT><TT>Alex Bittenbinder (alex@gldage.cr.usgs.gov)
+Sep. 9, 1998</TT></H4>
+
+
+<H4>Previous <I>Status Notes</I> are available for:<BR>
+<A HREF="status.9709.html">Sep 1998</A> <BR>
+<A HREF="status.9802.html">Feb 12, 1998</A><BR>
+<A HREF="status.9805.html">May 5, 1998</A><BR>
+<A HREF="status.980519.html">May 19, 1998.</A></H4>
+<H2>I. Event Archiving - so what are we going to do about it?</H2>
+
+Earthworm started life as a rapid notification system. The objective was 
+to produce the 
+fastest and most reliable notification of a significant event. As a 
+result, we labored to 
+get ever closer to 'the now' - seconds became crucial, and hours became 
+irrelevant. However, 
+this was not to last. Our mission has changed, and we're being urged to 
+extend Earthworm's 
+attention span back into time to include processing of late-arriving data, 
+event archiving, 
+and interactive analysis.
+
+One obvious approach is to attach a commercial data base management system 
+(DBMS) to 
+Earthworm, and use it to store the various real-time outputs; then attach 
+an interactive 
+analysis system to the DBMS. The argument for using a full-blown, 
+commercial DBMS is that 
+these products have matured and have solved the basic problems associated 
+with handling 
+large sets of data (performance, crash recovery, distribution, web access, 
+concurrency, 
+integrity, archiving, platform independence, etc). This has been done as 
+part of our DBMS 
+PhaseII effort, using Earthworm, Oracle, and SAC. (see below).
+<P>
+Another approach is to say that DBMS's are overkill: They're complex, 
+expensive, hard to 
+understand, require overpriced specialists, and devour valuable personnel 
+time. Other than 
+in areas of very high seismicity, commercial DBMS's are an exotic solution 
+to a not-so-
+exotic problem. In response to this argument, We have worked toward making 
+the DBMS 
+"removable", in that it can be replaced by a 'flat-file' scheme using the 
+operating system's 
+file system. The result is that Earthworm then creates an archive of event 
+directories in a 
+chosen format(s). Two such systems are in operation, producing UW2, SAC 
+and AH archives.
+
+
+<H2>II. The Earthworm and the Database:</H2>
+
+A subset of the Earthworm development team has been playing with data 
+bases. The effort is 
+structured into three phases: PhaseI (completed) was an exploration of 
+various products. 
+PhaseII (mostly completed) was to produce a minimalist but functioning 
+lashup involving 
+Earthworm, an Oracle DBMS, and an interactive analysis system (SAC). 
+PhaseIII, (about to 
+start) is to produce a full-featured multi-node system capable of serving 
+an extended 
+geographic area with a variety of features for strong and weak motion.
+<P>
+PhaseII has been in testing for over a month, and appears to be doing 
+well. Briefly, it 
+consists of an Earthworm inserting hypoinverse parameters and the 
+associated trace data 
+segments into an Oracle DBMS in real-time (as outlined below). It also 
+offers a web-based 
+interface which allows the user to specify and view event lists, event 
+maps, event 
+parameters, and soon, images of trace data. The user may select events for 
+further analysis 
+via checkboxes on the web page. This causes the system to retrieve the 
+specified event data 
+from the DBMS, generate the implied SAC directories, and create some SAC 
+macros which offer 
+a modest quick-look, production environment. SAC has been used as a 
+demonstration analysis 
+system. Other analysis systems can be integrated, as outlined below. A 
+more comprehensive 
+PhaseII document is being prepared.
+
+
+<H2>III. Dawn at Memphis:</H2>
+
+CERI at Memphis recently received a massive infusion of energy in the form 
+of Mitch Withers. 
+The result has been that CERI is now our most active 'power user', rapidly 
+moving toward 
+operating several remote unattended Earthworm nodes communicating with a 
+central site, using 
+the distributed feature of CarlTrig (below), and about to become the first 
+customer/patron 
+of the PhaseII effort. Mitch was kind enough to respond to a request for a 
+brief statement 
+of his status and plans:
+<PR>
+<HR>
+<HR>
+<PRE>
+<B>
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+</B>
+</PRE>
+<P>
+CERI has recently upgraded their DOS/Solaris 
+earthworm to NT/Solaris v3.2. Significant changes 
+were made to the pick_ew and binder config files 
+to reflect the geology and seismicity of the 
+Central U.S. They have also employed carltrig and 
+are nearing completion of a trig2disk module that 
+listens for trigger messages and writes 
+appropriate waveform files to disk in either sac 
+or ah data format. This provides three methods 
+for recording waveforms: event and waveforms 
+produced by eqproc->arc2trig->trig2disk; more 
+conservative triggered data produced by carltrig-
+>trig2disk; infinitely conservative continuous 
+waveforms produced by wave_serverV and accessible 
+via earth2sac (earth2ah is under development). 
+CERI will deploy the Guralp to earthworm module, 
+soon to be released by UofA, to integrate data 
+from a network of 11 CMG40t's 
+<P>
+Telemetry limitations require CERI to operate 
+multiple, autonomous, remote processing nodes. 
+Conversion of these nodes to earthworm is 
+ongoing. The final configuration will consist of 
+at least three nodes and a central processing 
+facility at Memphis. TCP/IP communications 
+between the nodes and Memphis is established via 
+ISDN telephone. Thus communication must be 
+minimized to avoid excessive long-distance 
+charges (e.g. trace_buf packets are not 
+continuously fed the central facility). Only 
+least conservative event and waveform information 
+is transferred to Memphis for rapid review and 
+dissemination (more conservative triggers are 
+transferred using alternate methods). Node 
+processing systems are robust, start earthworm at 
+boot, and allow remote reset. Plans are in 
+development to operate these nodes as a National 
+Seismic System prototype.  The eastern Tennessee 
+network is operated jointly with UNC Chapel Hill 
+and forms another leg to the prototype.
+<HR>
+
+
+	
+<H2>Earthworm Enhancements:</H2>
+
+We've been working on a number enhancements to Earthworm to support event 
+processing:
+
+<H3>1.	Wave Server:</H3>
+	As documented elsewhere, this module maintains a circular, 
+disk-based memory of trace 
+data, and provides a multi-user TCP service on the Internet. This module 
+is capable of 
+serving selected segments of trace data up to weeks into the past (two 
+Gigabytes per 
+channel). It can be run as part of any earthworm system, and can be 
+accessed by any client 
+software anywhere on the Internet. A set of client-side routines are 
+available to ease the 
+chore of writing client software.
+
+<H3>2.	Event Triggers:</H3>
+	We have instituted the idea of an 'event', and a trigger message 
+type (TYPE_TRIGLIST). 
+The idea is that some 'trigger' module (or interactive program) can decide 
+that an event has 
+occurred and broadcast such a message. The message specifies the "Event 
+Number", the 
+"Author" of the event, the event time, and a list of participating trace 
+channel names 
+(<Station> <Component> <Network>'s). For each such participating channel, 
+a station trigger 
+time, and the time interval of interest ('snippet') is specified. See 
+"sample_trig.txt".  At 
+present there are three such trigger modules: 'arc2trig', which generates 
+a trigger message 
+when it receives a hypoinverse 'arc' message, 'CarlTrig', which is a 
+distributed version of 
+Carl Johnson's venerable STA/LTA trigger algorithm, and 'EvansTrig', a 
+port of John Evans' 
+long-period volcanic trigger.
+<P>
+The "Author" of an event is an ASCII string identifying the 
+creator of the event. It 
+solves (postpones?) the problems of tracking multiple sources of events. 
+In the case of 
+trigger messages, the "Author" is the ASCII representation of the logo 
+(<message type> 
+<module-id> <installation-id>) of the module (STA/LTA, hypoinverse...) 
+which created this 
+event.
+<P>
+The "Event Id" of a message is a sequential integer maintained by 
+the module creating the 
+event. Event numbers are written to disk, and continue sequentially across 
+system restarts.
+<P>
+Note that the station name in a 'snippet' specification may 
+include wildcards (*'s) in 
+any of the three fields. The result is that all channels of that 
+descriptions (available 
+from the WaveServer's at the time of the event) will be incorporated into 
+the event archive, 
+as described below.
+
+
+<H3>3. xxTraceSave:</H3>
+	We have also produced a module called 'xxTraceSave'. This module 
+listens for 
+TYPE_TRIGLIST messages produced by some trigger module, retrieves the 
+trace data 'snippets' 
+specified in the trigger message, and calls a set of standard (almost) 
+routines to reformat 
+and store this data (the PutAway routines). The idea was that one could 
+then write a set of 
+such 'PutAway' routines for a given format, and thus create a new variant 
+of xxTraceSave. To 
+date this has been done for SAC, Oracle DBMS, UW2, and AH. 
+<P>
+On startup, xxTraceSave is given a list of WaveServer addresses 
+via its configuration 
+file. When it receives a trigger message, it calls the 'PutAway' 
+initialization routine with 
+the Event Number and Author found in the trigger message. This routine 
+presumably does 
+whatever is required to create a new event in the 'xx' format. After that 
+it runs down the 
+list of participating stations in the trigger message, and attempts to 
+retrieve the 
+specified 'snippet' of trace data from the WaveServer's it was told about. 
+When it receives 
+such a snippet, it calls the 'PutAway' routine for adding another trace to 
+that event. 
+Presumably, this routine tacks this piece of trace, and the associated 
+parameters, onto the 
+event in 'xx' format. When all such snippets have been processed, the 
+'PutAway' end-of-event 
+routine is called, which does whatever is required to 'close' the event in 
+'xx' scheme. 
+<P>
+The current version of this module has the ability to wait for 
+data. Conceivably, a trace 
+snippet from a distant station (at some network far away) may be requested 
+before the 
+seismic waves have reached the sensors. The strategy is to obtain all 
+possible trace 
+snippets as soon as the message is received, to then wait for the 
+'stragglers' to come in, 
+and to then retrieve the 'stragglers'.	There is a timeout which will 
+close the event 
+unconditionally. There are also timeouts to prevent a sluggish WaveServer 
+from paralyzing 
+the process.
+<P>
+At one point there was the hope that the 'PutAway' routines could 
+be standardized, and 
+that merely linking in a new set would result in a new member of the 
+'xxTraceSave' family. 
+This did not happen. There were enough idiosyncrasies amongst the various 
+formats so that 
+defining an all-inclusive set of 'PutAway' calls got to be more trouble 
+than it was worth. 
+The result is that the xxTraceSave family now enjoys a correct degree of 
+diversity. As 
+mentioned above, versions for Oracle (ora_trace_save), UW2 (earth2uw), SAC 
+(earth2sac), and 
+SAC-AH (trig2disk) are currently in operation at Seattle, Menlo Park, and 
+Memphis.
+
+
+<H3>4. CarlTrig</H3>
+<P>
+This is a port of Carl Johnson's venerable STA/LTA trigger 
+algorithm. It generates events 
+based on coincidence of station triggers based on STA/LTA ratios, as per 
+Carl's thesis. It's 
+main virtues are a long and stable history, the ability to detect most any 
+kind of event, 
+and considerable flexibility in tuning. We've added the ability to operate 
+the algorithm on 
+a network with distributed Earthworm nodes: The algorithm consists of two 
+modules: 
+CarlStaTrig computes the STA/LTA averages for a set of local stations, and 
+generates station 
+trigger messages when a station detection occurs. These messages can then 
+be shipped to a 
+central Earthworm, where they are listened to by the CarlSubTrig module. 
+This module 
+receives the individual station trigger messages and performs the 
+sublet-coincidence logic. 
+When this logic declares a network-wide event, a trigger message 
+(TYPE_TRIGLIST) is broadcast.
+<P>
+<HR>
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+</BODY>
+</HTML>

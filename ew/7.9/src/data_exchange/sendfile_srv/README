@@ -1,0 +1,354 @@
+
+                  README FILE FOR SENDFILE_SRV, AND GETFILE_CL
+                                August 8, 2008
+
+Sendfile_srv and getfile_cl are modifications of sendfileII and getfileII to 
+allow for a reversal of their server/client roles. SendfileII and getfileII 
+operate with getfileII in the role of server; sendfileII in the role of client. 
+Under some circumstances, usually related to firewall issues, it is desireable to
+reverse these roles. Sendfile_srv and getfile_cl allow you to do this (at a price).
+There are two drawbacks. First, since getfile_cl is now the client and has no 
+idea about the availability of files to be sent, it must periodically poll 
+sendfile_srv for available files. This can lead to a lot of unproductive connections 
+and adds to the mean latency for file transfers. Second, out of laziness on my part,
+getfile_cl will only receive files from a single sendfile_srv. There is no reason
+it couldn't be modified to poll multiple servers in the future.
+
+                                                             Jim Luetgert
+
+              README FILE FOR SENDFILEII, GETFILEII, AND MAKEHBFILE
+                                December 19, 2002
+
+
+This document contains the following sections:
+
+INTRODUCTION
+INSTALLATION AND STARTUP
+COMPILING THE PROGRAMS
+SENDFILEII NOTES
+GETFILEII NOTES
+MAKEHBFILE NOTES
+PROTOCOL
+CHANGES
+DISCLAIMER
+
+
+                                INTRODUCTION
+
+The sendfileII, getfileII, and makehbfile programs are used to transfer files 
+between computers running Windows NT and/or Sun Solaris.  The programs run 
+continuously, so they are appropriate for real-time applications. These
+programs are based on the work of Will Kohler at the Menlo Park USGS
+campus. These programs are distributed as part of Earthworm, but they can do
+not depend on any other parts of Earthworm. Each of the three programs is
+self-contained; no Earthworm library functions are used in them.
+
+SendfileII and getfileII use a slightly different protocol than the original
+sendfile and getfile. THEY ARE NOT COMPATIBLE. See the CHANGES section for a
+summary of these differences and other recent changes to the programs.
+
+The sendfileII program gets files from a "queue directory", transmits the
+files via a socket connection, and deletes the files from the queue directory.
+The getfileII program receives data files from sendfileII via a socket
+connection and saves them in specified directories.  The makehbfile program
+periodically places a "heartbeat file" in the queue directory used by
+sendfileII.
+
+If the network connection between computers is down for any reason, files
+will accumulate in sendfileII's queue directory until the network comes back
+up.  Then all files will be sent immediately.
+
+One getfileII process can accept files from up to 100 sendfileII processes
+running on different computers. However, getfileII will handle only a single
+file transaction at a time. That is, getfileII is a single-threaded,
+non-forking process.
+
+WARNING: The sendfileII and getfileII programs don't do any data
+"translation".  If binary files are transferred, the data format and
+byte-order of the file may be incompatible with the receiving computer. For
+text files, no end-of-line translation is done. Thus it is up to the programs
+supplying files to sendfileII and consuming files from getfileII to agree on
+file formats.
+
+
+                          INSTALLATION AND STARTUP
+
+The distribution directory for each program contains executable files for
+Windows and Solaris.  Windows executable files are named <progname>.exe, and
+Solaris executable files are named <progname>.  To install the programs,
+simply copy the executable files to any directory which is in the user's
+search path.  The programs can also be run by typing the full path name.  The
+name of the program configuration file is specified on the command line, eg:
+
+    sendfileII sendfileII.d     or    getfileII getfileII.d
+
+On Solaris, the programs can be run from the command line, or they can be
+started automatically at boot time.
+
+On Windows NT, the executable (or a shortcut to the executable) can be placed
+in the users startup directory.  See Windows documentation for details.
+
+
+
+                          COMPILING THE PROGRAMS
+
+If it's necessary to recompile a program, change the working directory to the 
+program distribution directory.  On a Windows NT system, type:
+
+    nmake /f makefile.nt
+
+On a Solaris system, type:
+
+    make -f makefile.sol
+
+The programs were compiled using Microsoft Visual C++ 6.0 on Windows NT, and
+Sun C 4.2 on Solaris 2.7.  All user functions are included in the distribution
+directories.
+
+
+                             SENDFILEII NOTES
+
+The sendfileII program requires a configuration file, typically named
+sendfileII.d.  A sample configuration file is included in the distribution
+directory and is shown below.  Any line which begins with the # sign is
+interpreted as a comment, so feel free to add your own comment lines.
+
+The output (queue) and log directories must exist before running the program.
+They should be created manually using the mkdir command (or the equivalent
+windows/file manager operation).  In Solaris, the user must have write
+permission for these directories.
+
+The TimeZone parameter is only used on Windows NT for timestamping entries in
+the log file.
+
+
+#
+# sendfileII.d  -  Configuration file for the sendfileII program
+#
+# ServerIP      = IP address of computer running getfileII
+# ServerPort    = Well known port of getfileII program
+# TimeOut       = Send/receive will time out after TimeOut seconds.
+# AckTimeOut    = Wait AckTimeOut seconds for "ACK" from getfileII.
+#                 If ACK is not received, sendfileII assumes that getfileII
+#                 did not get the whole file, so sendfileII will try again.
+# RetryInterval = If an error occurs, retry after this many seconds
+# OutDir        = Path of directory containing files to send to getfileII
+# LogFile       = If 0, don't log to screen or disk.
+#                 If 1, log to screen only. 
+#                 If 2, log to disk only. 
+#                 If 3, log to screen and disk.   
+# TimeZone      = Timezone of computer system clock (ignored in Solaris)
+# LogFileName   = Full path name of log files. The current date will
+#                 be appended to log file names.
+#
+-ServerIP      130.118.43.31
+-ServerPort    3456
+-TimeOut       15
+-AckTimeOut    30
+-RetryInterval 60
+-LogFile       3   
+-TimeZone      GMT
+
+# Solaris
+# -------
+-OutDir        /home/earthworm/outdir
+-LogFileName   /home/earthworm/run/log/sendfileII.log
+
+# Windows
+# -------
+#-OutDir        c:\earthworm\outdir
+#-LogFileName   c:\earthworm\run\log\sendfileII.log
+
+After the sendfileII program is invoked, it patiently waits for files to
+appear in output queue directory.  When it detects a file, it opens a socket
+connection to getfileII, sends the file, and then deletes the file from the
+queue directory.
+
+Under Windows NT, if a file is copied or moved to the queue directory using
+the "copy" or "move" command (recommended), sendfileII will wait until the
+file is completely transferred to the queue directory before it is sent to
+getfileII.  This prevents a partial file from being sent.  The Windows version
+also uses the _fsopen() system call which provides file locking.  SendfileII
+waits until all other processes are done with a file before accessing it.
+
+The Solaris version of sendfileII works somewhat differently.  If a file is
+cp'd to or created in the queue directory, the file may not be complete when
+sendfileII starts to send it. Thus it is possible that sendfileII might not
+transfer the whole file. The preferred technique is to create a complete file
+in another directory in same disk partition (file system) as the queue
+directory.  Then create a hard link to the queue directory using the command:
+
+    ln <file> <queue directory)
+
+After the file has been transferred by sendfileII, sendfileII will remove the
+link, which leaves the original file intact.
+
+An alternative is to create the file on another directory on the same disk 
+partition and move it to the queue directory using the mv command.  After the 
+file has been transferred by sendfileII, sendfileII will delete the file from
+the queue directory.
+
+This directory for creating files may be located within the queue
+directory. That is because sendfileII will never attempt to transfer a
+directory; it will only transfer files.
+
+
+                             GETFILEII NOTES
+
+The getfileII program requires a configuration file, typically named
+getfileII.d.  A sample configuration file is included in the distribution
+directory and is shown below.  Any line which begins with the # sign is
+interpreted as a comment, so feel free to add your own comment lines.
+
+The input, temporary, and log directories must exist before running the
+program.  They should be created manually using the mkdir command (or the
+equivalent windows/file manager operation). The user must have write
+permission for these directories.
+
+The TimeZone parameter is used only for timestamping entries in the log file.
+
+#
+#  getfileII.d  -  Configuration file for the getfileII program
+#
+# ServerIP      = IP address of this computer's host adapter
+# ServerPort    = Well-known port used by this program
+# TimeOut       = Send/receive will time out after TimeOut seconds.
+# LogFile       = If 0, don't log to screen or disk.
+#                 If 1, log to screen only.
+#                 If 2, log to disk only.
+#                 If 3, log to screen and disk.
+# TimeZone      = Timezone of computer system clock (ignored in Solaris)
+# LogFileName   = Full path name of log files. The current date will
+#                 be appended to log file names.
+# TempDir       = Full path name of directory to contain temporary files.
+#                 This directory must be on the same partition as the
+#                 client directories.
+# Client        = IP address of trusted client, followed by the path of
+#                 directory to contain files sent by this client.
+#                 Connections from all other IP addresses are rejected.
+#                 From 1 to 100 of these lines are allowed.
+#                 The client directories must be on the same disk
+#                 partition as is TempDir.
+#
+-ServerIP    130.118.43.31
+-ServerPort  3456
+-TimeOut     15
+-LogFile     3
+-TimeZone    GMT
+-LogFileName /home/earthworm/run/log/getfileII.log
+-TempDir     /home/earthworm/indir
+-Client      130.118.43.36   /home/earthworm/indir/billy
+-Client      130.118.43.38   /home/earthworm/indir/campbell
+
+
+The getfileII program accepts connections from up to 100 sendfileII processes
+on remote systems.  Only one socket connection at a time is allowed.  If a
+sendfileII process wants to connect while the getfileII connection is busy,
+getfileII will queue the connection request.
+
+GetfileII writes data from the socket connection to a directory of temporary
+files.  After the data transfer from the socket is complete, getfileII moves
+the file from the temporary directory to the client directories.  This ensures
+that all files in the client directories are complete.
+
+
+                              MAKEHBFILE NOTES
+
+The makehbfile program makes heartbeat files and places them in a specified 
+directory.  The output directory should be the same as the sendfileII queue 
+directory, and it must exist before running makehbfile. Makehbfile uses a
+directory named "temp.dir" for creating its heartbeat files before moving them
+to the output directory. It will create this directory within the
+output directory if it does not exist at startup.
+
+The makehbfile program requires a configuration file, typically named 
+makehbfile.d.  A sample configuration file is included in the distribution 
+directory and is shown below.  Any line which begins with the # sign is 
+interpreted as a comment, so feel free to add your own comment lines.
+
+#
+# makehbfile.d  -  Configuration file for the makehbfile program
+#
+# Path     = Name of directory to contain heartbeat files.
+# HbName   = Name of the heartbeat file (without path)
+# Interval = Create a heartbeat file every "Interval" seconds
+#
+-HbName   hb.hollyhock
+-Interval 60
+
+# Solaris
+-Path     /home/earthworm/outdir
+
+# Windows
+#-Path     c:\earthworm\outdir
+
+All heartbeat files will be created with the same name, as specified in the
+makehbfile configuration file.  If a heartbeat file already exists in the
+output directory, it will be overwritten by the most recent heartbeat file.
+
+All heartbeat files contain a sequence of ASCII characters representing the 
+computer system time, in seconds since midnight, Jan 1, 1970.
+
+
+PROTOCOL
+
+SendfileII and getfileII use the following protocol for transferring files.
+
+GetfileII opens its socket to listen on the TCP "ServerPort". When sendfileII
+has a file to send, it will make a connection to the getfileII socket.
+
+Each "block" of data that sendfileII sends is preceded by a six-digit integer
+indicating the block size.
+
+SendfileII first sends the name of the file it is about to transmit (preceded
+by the name length as described above). It then sends blocks of 4096
+characters of file contents (or the remaining file contents if less than
+4096) to getfileII. Again, each block is preceded by its size.
+
+After sendfileII has completed sending the file, it sends one more six-digit
+integer of zeros, to indicate that the file transmission is complete.
+
+When getfileII accepts the connection from sendfileII and receives the file
+name, it will create a new file by this name in TempDir. GetfileII will then
+write the data it receives from sendfileII into this file. When getfileII
+receives the file block size of zero, it will close the file in TempDir and
+move it to the directory for the client from which it received the
+file. GetfileII will also send the three characters "ACK" back to sendfileII
+when getfileII has successfully written the file to disk in TempDir.
+
+If getfileII has errors receiving the file data, sending the "ACK", or times
+out receiving or sending, it will close its active socket, delete the file
+from TempDir, and go back to listening for client connections.
+
+If sendfileII has errors connecting to getfileII, has errors sending the file,
+or cannot send a packet within "TimeOut" seconds, it will close its socket,
+wait for "RetryInterval" seconds, and make another attempt to send the
+file. It will keep trying to send the file until it has received and
+acknowledgment from getfileII.
+
+
+
+CHANGES
+
+2002/12/09
+Changed names from getfile to getfileII and from sendfile to sendfileII, due
+to changes in the protocol used by these two programs.
+
+GetfileII now sends the three characters "ACK" to sendfileII after getfileII
+has received the entire file.
+
+SendfileII now waits "AckTimeOut" seconds for the "ACK" from getfileII after
+sendfileII has completed sending the file. If sendfileII does not receive
+"ACK" within the timeout interval, it assumes that getfileII did not receive
+the entire file. So sendfileII will make additional attempts to send this same
+file after waiting "RetryInterval" seconds.
+
+A bug was fixed in getfileII whereby incomplete files were moved from TempDir
+to the output directory. Now if getfileII failed to receive the complete file,
+it will delete the incomplete files from TempDir and it will not send the
+"ACK" to sendfileII.
+
+
+Questions? Issues? 
+Subscribe to the Earthworm Google Groups List.
+http://groups.google.com/group/earthworm_forum?hl=en

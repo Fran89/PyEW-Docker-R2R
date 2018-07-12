@@ -1,0 +1,224 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Hyp2000_mgr commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Hyp2000_mgr Configuration File Commands</H1>
+<I>(last revised 15 July 2016)</I></CENTER>
+
+
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#cmdline>Hypo_mgr command line arguments</A><BR>
+3.  <A HREF=#function>Functional command listing</A><BR>
+4.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<hr>
+<P <font color="red">
+IMPORTANT NOTE ON LOCATION CODES (EW v7.0 or greater):
+</font>
+
+<P> Here is a very important change for hyp2000 for Earthworm v7.0 and greater. With Location
+codes, you need to provide 5 values for the LET command!. If you only provide 3 in windows,
+the program will crash:
+
+<PRE>
+Here's what hyp2000 does now with LET:
+
+ncss3> hyp2000
+ HYPOINVERSE 2000 STARTING
+ 9/2005 VERSION (DUAL LOCATION CODES)
+ COMMAND? let
+ NUMBER OF LETTERS TO CHECK IN STATION SITE CODE (2-5) [cr = 4]?
+ NUMBER OF LETTERS TO CHECK IN STATION NET CODE (0-2) [cr = 0]?
+ NO. OF LETTERS TO CHECK IN STATION COMPONENT CODE (0-3) [cr = 0]?
+ NO. OF LETS TO CHECK IN LOCATION CODE IN PHASE FILES (0-2) [cr = 0]?
+ NO. OF LETS TO CHECK IN LOCATION CODE IN OTHER FILES (0-2) [cr = 0]?
+
+So some good LET commands would be:
+LET 5 2 3 2 2    # if you're using location codes
+LET 5 2 3 0 0    # if you're NOT using location codes
+</PRE>
+
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+#               hypo_mgr's Configuration File
+#
+MyModuleId MOD_EQPROC   # module id to label outgoing messages with.
+                        # Note: hypo_mgr is part of a mega-module which is
+                        # ultimately started by the program eqproc.  All
+                        # child processes of this mega-module need to use the
+                        # same module id (thus use eqproc's module id).
+RingName   HYPO_RING    # The transport ring to write output to,
+LogFile    2            # 0=no log; 1=errors; 2=errors & hypocenters
+SourceCode W            # character to label summary cards with to
+                        # identify them as coming from Earthworm
+</PRE>
+<P>
+<A NAME="cmdline">
+<H2>2.  HYPO_MGR COMMAND LINE ARGUMENTS</H2>
+An example command line to start hypo_mgr may look like this:
+<PRE>	hypo_mgr hypo_mgr.d ncal.hyp
+	argv[0]  argv[1]    argv[2]
+</PRE>
+<UL>
+<LI>argv[0] is the name of the executable.
+<P>
+<LI>argv[1] is the name of hypo_mgr's own configuration file which it reads on
+startup.  In this file, lines may begin with a valid hypo_mgr command,
+described later in this document, or with one of 2 special characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<LI>argv[2] is the name of Hypoinverse's startup command file.  hyp2000_mgr passes
+this file name to hyp2000, the fortran program which encapsulates the
+subroutine version of Hypoinverse.  For a description of valid commands for
+this file, please see the following Hypoinverse documentation:
+<PRE> Klein, F.W., 1989, User's guide to HYPOINVERSE, a program for VAX
+	computers to solve for earthquake locations and magnitudes,
+	U.S. Geological Survey Open-File Report 89-314, 58 pp.
+
+</PRE>
+</UL>
+
+<A NAME="function">
+<H2>3.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by hypo_mgr, grouped by the function they
+influence.  All of the commands are required; they must be specified in the
+configuration file in order for hypo_mgr to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>	Earthworm system setup:
+ 		<A HREF=#MyModuleId>MyModuleId</A>	required
+		<A HREF=#RingName>RingName</A>	required
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>		required
+		<A HREF=#SeparatePRTdir>SeparatePRTdir</A>		optional
+
+	Miscellaneous:
+		<A HREF=#SourceCode>SourceCode</A>	required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>4.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				hypo_mgr_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is non-zero, hypo_mgr
+will write daily log file(s) called hypo_mgrxx.log_yymmdd where xx is
+hypo_mgr's module id (set with "MyModuleId" command) and yymmdd is the
+current UTC date (ex: 960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).  The level
+of output written to the file is controlled by the value of <font color=red>switch</font>:
+<PRE>    <font color=red>switch</font> = 0  no log file is written
+             1  write errors to log file
+             2  write errors and hypocenters to log file
+</PRE>
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			hypo_mgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.<BR>
+<B>NOTE:</B> hypo_mgr is part of a mega-module which is ultimately started
+by the program eqproc.  All sub-modules of this megamodule should be
+given the same module id.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				hypo_mgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells hypo_mgr which shared memory region to use for output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+<A NAME="SeparatePRTdir">  <!-- command name as anchor inside quotes -->
+<PRE><B>SeparatePRTdir <font color=red>directory</font>				hypo_mgr_config		output control</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells hypo_mgr where to write individual PRT files per event. The 
+<font color=red>directory</font> specified must be created in advance.
+<PRE><!-- Default and example go here   -->
+Default:  none				optional setting
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SourceCode">  <!-- command name as anchor inside quotes -->
+<PRE><B>SourceCode <font color=red>label</font>			hypo_mgr_config		miscellaneous</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Reads in a single character <font color=red>label</font> to write in column 80 of the
+hypo71-format summary messages output by hypo_mgr.  This <font color=red>label</font>
+identifies the source of the hypocenter as the Earthworm system.
+These summary messages are placed on the output shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  SourceCode W
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/hyp2000_mgr_ovr.html">Hypo_mgr Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

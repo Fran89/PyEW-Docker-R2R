@@ -1,0 +1,470 @@
+
+	Concatenation of responses to "three questions" from Malone
+________________________________________________________
+
+
+From lomb4185@pacbell.net Sat Jun 24 13:29:50 2000
+Date: Wed, 21 Jun 2000 13:11:13 -0700 (PDT)
+From: Pete Lombard <lomb4185@pacbell.net>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Wave_serverV
+
+
+Steve,
+
+There are three `size' values in wave_server's config file. The first is the
+record size. This is the amount of space alloted for a single trace_buf
+message. It has to be a fixed size to allow the indexing to work.
+
+A trace_buf message consists of 64 bytes of header and then an arbitrary
+number of binary numbers: 2 or 4 byte integers. For a reftek packet, there are
+250 4-byte samples in one packet, for a total of 1064 bytes. The number used
+at UW of 1100 is sufficient to hold 1064, with a little wasted space. The k2ew
+packets contain 100 4-byte samples, for a total size of 464 bytes. So the
+record size can be 464 or larger. By using 1100, you are wasting a lot of
+space. 
+
+The next `size' is the file size, the total number of bytes in the tank
+file. Wave server takes this number and divides by the record size to get the
+number of trace_buf packets that can be held in the tank. Note that while the
+label in wave_server.d says `megabytes', it means 10^6, not 2^20.
+
+The final `size' value is the index size. This is the number of index entries
+that wil be kept in the index files. Every time there is a gap of more than
+GapThresh times the sample interval, a new index entry is needed. When a gap
+in the data is overwritten by the tank wrapping around, the old index entry is
+dropped from memory.
+
+In looking over wave_server code, I found one feature you could use to make
+config changes more easily. There is a flag `ReCreateBadTanks' toward the
+bottom of the config file. Currently it is commented out. If you set its value
+to 1, then the wave_server will create a new tank if it can't find an old one
+and it is listed in the config file. This is slightly dangerous, since it may
+overwrite an existing tank if it has some error trying to read it. But that
+should be a pretty rare occurrence. 
+
+The logic is a little convoluted, so perhaps I should explain the sequence
+that wave_server goes through on startup. It reads the config file, and then
+it reads the `tank structure' file (the *.str file). It assumes that the tank
+structure file has the most up-to-date information about existing tank files
+(*.tnk) and their indexes (*.inx), especially tank file size, record size, and
+tank starting position. It runs through the list of tanks from the structure
+file, verifies that that SCN is listed in the config file, and tries to open
+the tank file and its index. This is why simply changing size parameters in
+the config file (without deleting the tank and indexes) has no effect: the
+size information is read from the structure file as long as a matching SCN is
+found from the config file.
+
+If the tank and index files are read successfully, then that tank is marked as
+OK. If there are errors opening these files, then one of two things happens. If
+ReCreateBadTanks is not set, then the tank is marked as BAD and removed from
+the internal list. Otherwise, the tank is marked as unconfigured and left for
+the next step.
+
+So this first part of the initialization has been running through the list of
+tanks found in the tank structure file, making sure that each SCN is still
+listed in the config file. For the second part, the list from the config file
+is scanned. In most cases, the tank will already have been configured because
+it was an existing tank and listed in the structure file. But if you add new
+SCNs to the config file, these must be created anew. Here is where the
+ReCreateBadTanks flags becomes useful. If a tank was marked in the first pass
+as unconfigured, it will be treated the same way as a new tank here. Tank and
+index files are created (if necessary) and the tank starting point is set to
+zero. 
+
+This is where the danger lies: suppose you have a tank file with valuable
+trace data. But both index files are corrupted for some reason. That will
+cause the wave_server to fail to configure that tank on the first pass. If
+ReCreateBadTanks is not set, that tank will get removed from the wave_server's
+list, and the tank file will be untouched. Heroic efforts could be used to
+regenerate its index files for later use. Now if ReCreateBadTanks is set, that
+tank will have new index files created, and it will be overwritten as soon as
+the wave_server starts running.
+
+The wave_server has one more step to do in initialization. It has to go
+through its list of tanks and remove any that were marked as BAD in the first
+pass. There is a config flag, `PleaseContinue'. If this is not set, wave_server
+will exit here is it finds any bad tanks. If PleaseContinue is set, then the
+tank is simply removed from the internal list and forgotten. 
+
+Once this third pass is done, wave_server writes its internal list to the
+structure file and starts adding traces to their respective tanks. Each new
+packet of trace data causes the current index entry for that tank to be
+extended in time and file position. If there is a gap between the end of a
+tank and the new trace data (determined by GapThresh in config file), a new
+index entry is started. Wave_server periodically writes the index and
+structure list to disk, to save the latest information in case of wave_server
+crashes. 
+
+The problem you had Monday afternoon has to do with a failure in the third
+configuration pass. For some reason, the UPS tanks were not removed from the
+tank list even though they had been marked as BAD. Then when wave_server got
+running and tried to write an index file to disk, it found a NULL pointer for
+the index of those tanks, and crashed. The index was NULL because it had not
+been configured in the first or second passes. I found a core file from the
+second crash and was able to glean this information from it and from the log
+entries. I'm working with Dave Kragness to see if we can figure out why these
+tanks weren't removed from the tank list.
+
+Is that clean now? Yes, I know, all this needs to be added to the
+documentation. 
+
+Pete
+
+___________________________________________________________________
+
+From phil@iron.gps.caltech.edu Thu Jun 22 13:37:40 2000
+Date: Wed, 21 Jun 2000 17:36:55 -0700 (PDT)
+From: Phil Maechling <phil@iron.gps.caltech.edu>
+To: steve@geophys.washington.edu
+Cc: phil@gps.caltech.edu
+Subject: Re: Three questions for al earthwormers
+
+
+> 
+> 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+> Lamont contracting for a ew2mseed module.  No word about this since then.  
+> Actually, much better for us than a earthworm module that needs to sit on the
+> WAVE_RING would be a stand-alone program to yank traces from waveservers and
+> write mseed files.  Any one have such?
+> 
+We can get you there, but you may view it as a "long way around".
+We have a program that sits on an earthworm ring, and reads in 
+earthworm packets. It reformats the packets as miniseed packets.
+Then it multicasts the packets out onto a network.
+We also have a comserv variation called mserv, which reads in multicast
+miniseed packets, and puts them into a comserv memory area.
+You can then use a standard datalog client to log the packets to
+disk. Note that what datalog produces is not miniseed, but seed
+telemetry volumes. Software (e.g. qmerge) is needed to generate
+the miniseed files you asked for.
+
+This reformatting into miniseed packets, transmission to mserv,
+and logging by datalog is how we are acquiring the SCSN
+analog data on TriNet. It works reasonably well. Let me know if
+it is something you'd like to look at.
+
+Thanks,
+Phil M.
+
+____________________________________________________________
+
+From machen@univ-savoie.fr Thu Jun 22 13:37:48 2000
+Date: Thu, 22 Jun 2000 02:58:02 +0200
+From: Roland Machenbaum <machen@univ-savoie.fr>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+Just an idea for your second question.
+
+You could remove the waveserver from your main Earthworm machine 
+and install it on a second one with a minimal Earthworm. Connect the two 
+wave_rings across your LAN with ringtocoax and coaxtoring. Stopping 
+the waveserver should not affect the whole system now. Depending on 
+the amount of data that you collect, this can seriously load your LAN.
+
+Sincerely,
+
+Roland
+
+______________________________________________________________
+
+From withers@ceri.memphis.edu Thu Jun 22 13:38:08 2000
+Date: Thu, 22 Jun 2000 08:25:34 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+
+I believe Pete is working on some mods to wave_server that will allow
+one to shut it down gracefully without clobbering the whole works.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+______________________________________________________________
+
+From alex@gldmutt.cr.usgs.gov Thu Jun 22 13:38:21 2000
+Date: Thu, 22 Jun 2000 09:44:42 -0600
+From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: owner-earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+At 04:44 PM 6/21/00 -0700, you wrote:
+>
+>I have three problems/questions maybe someone out there can help with:
+>
+Partial answers:
+
+>2. Some reasonable way to reconfigure waveservers to change paramters, add
+>channels, remove channels without stoping and starting the entire system...
+
+There is a command which allows one to restart a specific module. ("restart <pid>")
+
+>   Also, on the same topic, waveserver can gets its butt in a ringer if one
+>tries to change channel parameters on it, even removing those tank files, and
+>even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+>tangled that it either keeps crashing or if it does run it throws out some
+>channels.  The only solution seems to be to remove ALL tanks and start from
+>scratch.
+>
+Very bad indeed. May I contact you online to see what the specifics are, and we'll see 
+about a fix.
+
+>3. A mini-seed wirter.  Notes from Alex back in winter said something about
+>Lamont contracting for a ew2mseed module...
+
+I hear that Paul Friberg of ISTI either (almost?) has a WaveServer client to do that.
+
+Alex
+
+_________________________________________________________________
+
+From MStickney@mtech.edu Thu Jun 22 13:38:44 2000
+Date: Thu, 22 Jun 2000 09:53:09 -0600
+From: "Stickney, Mike" <MStickney@mtech.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: RE: Three questions for al earthwormers
+
+Hi Steve:
+	I am probably not the best source of information for these questions
+as I am still wet behind the ears (if earthworms have ears).
+
+	Regarding 2). Our primary worm runs on NT (you are probably on
+UNIX?) so we open a new Console Window, change directories to params, set
+the environment, then use the "restart ProcessID" command to restart a
+module. It seems to work fine for the few modules I have tried.
+	I agree with the waveserver issue. Although I have not tried a lot
+of different things, the only way I can change channel parameters and get ew
+to run successfully afterwards is to wipe out all existing wave tanks and
+start from scratch. Maybe this isn't such a big deal, but I have this severe
+aversion to deleting perfectly good seismic data.
+
+	Regarding 3). Talk to Sue Nava. I believe they have recently figured
+out a way to get Utah data into miniseed for contributing it to IRIS DMC.
+Also, I believe that Harley told me that Tim Ahern now has a way to run a
+program from his end that operates in a fashion similar to Wave_Viewer in
+that it will go out and pull data out of wave tanks given the proper
+IP:Port. Tim ask me in Seattle if I was interested in having Montana data
+archived at IRIS via this mechanism and I responded with an enthusiastic
+yes!
+	Just my two cents.
+		-Mike
+
+___________________________________________________________________
+
+From dec@essw.com Thu Jun 22 13:38:56 2000
+Date: Thu, 22 Jun 2000 08:55:16 -0700
+From: David E. Chavez <dec@essw.com>
+To: Steve Malone <steve@geophys.washington.edu>
+Subject: Re: Three questions for al earthwormers
+
+Steve -
+
+> 1. A way to get state-of-health from refteks using PPP with a 422 card and
+> rtpd. In particular we need to know if the GPS clock is locking when it
+> should.  Right now we have no way of knowing this info without visiting the
+> site.
+
+I have a proposal into Reftek to develop an operator console for 
+command & control of digitizers via RTPD.  If it is accepted, then
+that would do what you want.  Alternatively, I could develop a custom
+application which monitors state of health.  I am already working on
+something similar for Ken Smith.  This program broadcasts status
+requests once per minute and then takes the replies and builds a
+digitizer voltage stream for each station which is written to an ORB.
+
+> 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+> Lamont contracting for a ew2mseed module.  No word about this since then.  
+> Actually, much better for us than a earthworm module that needs to sit on the
+> WAVE_RING would be a stand-alone program to yank traces from waveservers and
+> write mseed files.  Any one have such?
+
+I wrote a standalone SAC to mini-seed program for Utah a while back.  It would
+be a fairly straightforward process to modify this to yank its data from a
+wavserver instead of a disk file.
+
+If you would be interested in contracting for either of these programs then
+please let me know and we can discuss things in more detail.
+
+Regards,
+David Chavez
+
+_______________________________________________________________
+
+From dietz@usgs.gov Thu Jun 22 13:39:27 2000
+Date: Thu, 22 Jun 2000 09:17:17 -0700
+From: Lynn Dietz <dietz@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+
+>1. A way to get state-of-health from refteks using PPP with a 422 card and
+>rtpd. In particular we need to know if the GPS clock is locking when it
+>should.  Right now we have no way of knowing this info without visiting the
+>site.
+
+If you're running on NT, there's a nice Reftek program called NCI
+that allows you get the status of the Reftek (which includes GPS lock info) 
+on command.  It also allows you to reconfigure the Reftek remotely.
+NCI actually interfaces to RTPD via disk files; RTPD passes the request 
+to the DAS and then ships the reply back to NCI, again via disk files.
+I thought at one point that Reftek was going to make a Solaris version
+of NCI, but I don't know if that ever happened.
+
+If you're running RTPD with a reftek archive, the SOH info is written
+to the archive.  The directory structure of the archive is like:
+/archive/yeardoy/DASid#/stream/horriblefilename.  The SOH is written
+under stream=0.  horriblefilename is a mostly ascii file, so you can 
+look at it with an editor.  It should include info about GPS locks.
+Er... this may only work on NT as well... I think the Reftek archive
+utilities are all Windows executables.
+
+I guess the only solution for Solaris users is to teach reftek2ew
+to request SOH packets from RTPD and to write their contents to
+the log file.  Or to bug Reftek for a Solaris NCI-like program.
+
+Lynn
+
+__________________________________________________________________
+
+From alex@gldmutt.cr.usgs.gov Thu Jun 22 13:39:54 2000
+Date: Thu, 22 Jun 2000 10:51:50 -0600
+From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+At 04:44 PM 6/21/00 -0700, you wrote:
+>
+>I have three problems/questions maybe someone out there can help with:
+>
+>2. Some reasonable way to reconfigure waveservers to change paramters, add
+>channels, remove channels without stoping and starting the entire system. With
+>   Also, on the same topic, waveserver can gets its butt in a ringer if one
+>tries to change channel parameters on it, even removing those tank files, and
+>even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+>tangled that it either keeps crashing or if it does run it throws out some
+>channels.  The only solution seems to be to remove ALL tanks and start from
+>scratch.
+>
+We're working to fix these problems starting today.
+Alex
+
+_________________________________________________________________
+
+From pechmann@seis.utah.edu Thu Jun 22 13:56:52 2000
+Date: Thu, 22 Jun 2000 12:20:21 -0600 (MDT)
+From: James C. Pechmann <pechmann@seis.utah.edu>
+To: earthw-list@nmt.edu, steve@geophys.washington.edu
+Cc: ali@seis.utah.edu, nava@seis.utah.edu, pechmann@seis.utah.edu
+Subject: Re: Three questions for al earthwormers
+
+Steve,
+
+     I think that we can help you with your first problem:
+
+> 1. A way to get state-of-health from refteks using PPP with a 422 card and
+> rtpd. In particular we need to know if the GPS clock is locking when it
+> should.  Right now we have no way of knowing this info without visiting the
+> site.
+
+     There is a University of Utah contributed Earthworm module called
+ref2disk, written by Dave Chavez and Ali Moeinvaziri, which captures
+and stores the state-of-health information from the REF TEKs (including
+state-of-health messages about the clock).  In our current earthworm
+setup, reftektoew takes all telemetry packets received from the reftek
+data loggers via rtpd and sends them to a raw ring.  These packets are
+of various types including waveform data packets, state-of-health packets,
+and station/channel packets.  Additionally, reftektoew converts the
+waveform packets to tracebuf packets and sends them to a wave ring.
+
+     The ref2disk module reads the telemetry packets from the raw ring,
+writes the waveform data to disk files in SAC format, and writes all
+non-wavefrom packets (station/channel and state-of-health) to disk as
+binary files.  These files can be read using the Passcal program
+refpacket.  Our technicians regularly look at these files to detect and
+diagnose problems with the REF TEKs.  Ref2disk uses the station/channel
+information to set some of the SAC header variables.
+
+     The state-of-health packets are periodically sent back to the
+recording center by the REF TEKs, at least in our setup.  We don't have
+to request them.  The station/channel packets are sent back whenever
+data acquisition is started.  We are not using 422 cards in our
+REF TEKs right now, because we are still using an older REF TEK
+digital telemetry system.  However, as far as I know the same types of
+data packets should be sent back from the REF TEKs regardless of the
+telemetry protocols used.
+
+     The current documentation for ref2disk on the earthworm web site
+does not mention the treatment of the state-of-health packets.  We will 
+get that added.  In the meantime, if you have any questions about this
+module, you may contact Ali Moeinvaziri at ali@seis.utah.edu.
+
+--Jim Pechmann
+
+_____________________________________________________________
+
+From bogaert@usgs.gov Thu Jun 22 13:57:23 2000
+Date: Thu, 22 Jun 2000 13:51:10 -0600
+From: Barbara Bogaert <bogaert@usgs.gov>
+To: James C. Pechmann <pechmann@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Three questions for al earthwormers
+
+Jim,
+
+Thanks for the excellent description of ref2disk.  I'll add it to the EW
+web site.
+
+- Barbara
+
+______________________________________________________________
+
+Date: Fri, 23 Jun 2000 17:59:01 -0700
+From: Lynn Dietz <dietz@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>, David E. Chavez <dec@essw.com>
+Subject: Re: some additional reftek help please
+
+Steve,
+
+Before rtpd can write to an archive, it has to be created with the
+reftek program arccreate, which I believe is only available on Windows.
+So that's your problem there.
+
+I've never seen source code for rtpd or rtpc, or any detailed documentation
+for rtpc, so I can't be any help on that point either.
+
+Lynn
+
+
+________________________________________________________
+
+Date: Mon, 26 Jun 2000 08:02:56 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: Steve Malone <steve@geophys.washington.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Responses to my three questions
+
+On Sat, 24 Jun 2000, Steve Malone wrote:
+
+> Pete Lombard and Alex Bittenbinder.  BTW, those who suggested using the
+> "restart <pid>" method  had better look again.  The waveserver is the one
+
+Better not try it on adsend either.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+______________________________________________________________

@@ -1,0 +1,53 @@
+#####################################################################
+# moleserv Makefile
+# Includes:
+# 	iriswebreq - A set of functions to retrieve data from a mole db
+# 	mongoose - An embedded web server
+#	odbc - To access the mole mysql database
+#
+# Notes:
+#	Mongoose is compiled with websocket support for future projects
+#####################################################################
+
+
+LINUX_FLAGS=-lc -Wall
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lthread -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS) 
+
+LOCAL_LINK_LIBS=$(LINK_LIBS) $(MT_FLAG) $(SPECIFIC_FLAGS) -lpthread -lodbc
+
+CFLAGS = -DUSE_WEBSOCKET -D_REENTRANT $(GLOBALFLAGS)
+
+#LIBS = $(MT_FLAG) -lpthread -lm -lodbc
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+#B = ./
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+EWBIN = $L/kom.o $L/site.o $L/getutil.o $L/logit_mt.o $L/sema_ew.o \
+        $L/transport.o $L/sleep_ew.o $L/time_ew.o \
+	$L/read_arc.o $L/chron3.o $L/fleng.o $L/ws_clientII.o \
+	$L/socket_ew_common.o $L/socket_ew.o $L/swap.o $L/rw_mag.o \
+	iriswebreq.o mongoose.o websrequest.o
+
+all:
+	make -f makefile.unix clean;
+	make -f makefile.unix moleserv
+
+moleserv: moleserv.o $(EWBIN)
+	$(CC) $(CFLAGS) -o $B/moleserv moleserv.o \
+	$(EWBIN) $(LOCAL_LINK_LIBS)
+
+lint:
+	lint moleserv.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/moleserv*
+
+
+

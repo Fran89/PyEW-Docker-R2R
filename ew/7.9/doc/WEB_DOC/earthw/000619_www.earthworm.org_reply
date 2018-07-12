@@ -1,0 +1,111 @@
+From steve@geophys.washington.edu Tue Jun 20 08:17:03 2000
+Date: Mon, 19 Jun 2000 19:00:14 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: A reply to: www.earthworm.org
+
+Mitch calls for some actions.... So I have taken a few in response as a
+beginning of a morph.  However, I also think that some of this may be too much
+effort to make much real real improvement at this time.
+
+On Fri, 16 Jun 2000, Mitchell M. Withers wrote:
+
+> 
+> Okay so what I'm hearing is that several people have things they
+> would contribute if they could and have suggestions for the
+> todo list.
+	I am not sure what Mitch is hearing but as far as I know there have
+been, unfortunately, few responses to his original suggestion.  Ie, at least
+publically there seems to be little new to contribute.
+
+>  I'm also aware of developments out there that others
+> may not be.  Plus the contrib needs to be updated.  I propose
+> that we morph the current Earthworm pages into something more like
+> a www.earthworm.org.  It should have at least these sections.
+	What is in a name.  The current pages are one level below www.cnss.org
+and seem to have much of what he wants.  Of course one can set up another
+first level domain (takes quite a bit of effort to regester this, find domain
+name servers to handle it and does cost every year) but I don't think that
+would generate any more participation.
+	So for the details:
+> 
+> 1) Current Earthworm pages
+	OK, we got them
+> 
+> 2) prominent sign up for earthw-list
+	I have changed the pages to make this more obvious, but there are
+already over 60 people on it, almost none of whom seem to care.
+> 
+> 3) prominent contrib
+	I assume "contrib" here means earthworm modules, source, software,
+etc.  This now exists at the Golden earthworm FTP site but is not at all
+effective.  There is no documentation to what is there and no list.  One must
+paw around in the individual directories to find anything.  I agree that this
+needs a proper way of handling it.  In fact the main releases need a better
+way of providing them so that one can see the details rather then just the
+whole package and previous releases should be kept available as well.
+Maybe we just just rip this contrib stuff out of Golden and run it separately.
+
+> 
+> 4) mechanism to add to contrib
+	Good point.  I guess one sends stuff to Alex or Barbara and it gets
+put in there if one askes.  Don't know for sure and not explained anywhere.
+
+> 
+> 5) 'wish' list of desired functions.
+	It seems that the earthw-list might be a good place to start this and
+see if anyone wishes anything.  If so, it would be pretty easy to suck them
+out of the e-mail into a WEB list and formalize the process if it actually
+gets started.
+
+> 
+> 6) 'work in progress' list with names associated with who is taking the
+> lead on each task and when it is project to be completed.
+	Good idea. I again suggest that until the earthw-list has more than
+one message a month this is a good place to start.  Anyone working on
+anything?
+
+> 
+> 7) bug reports
+	Of course there are no bugs, but OK
+> 
+> 8) mechanism to add to the 'work in progress' list
+> 
+> 9) wild ones section for the yak grunt processing modules that I referred
+>    to in my June 7 email.
+> 
+> We all know that Steve Malone doesn't type as fast as he used to
+> so we will need to either move the current earthworm page or allow
+> access for a webmaster.  I've dabbled in html so can volunteer
+> to help with this (hosting and/or helping).  Or we may
+> wish to pawn this off on earthworm central or the NEIC if they have the
+> staff to do it.
+	Actually, I type much faster than I used to (and grunt like a yak as I
+do it), but have way more things to type and so do not mind help at all.  
+Also, I think I have kept up pretty well with everything I am asked to do
+regarding the WEB pages.  I don't edit the documentation (other than the first
+round), but Barbara, Lyn Dietz, and Pete Lombard have updated some of it from
+time to time.  If there are changes that should be made, send them my way and
+I will make them.
+	 I would be very glad to set up access to ANYONE, particularly Mitch,
+to jump in and add to, change or generally mess up what is on the WEB server
+here now. I can set up an access account if you ask.  Or, I am happy to
+transfer the whole thing to anyone else as well.  As the WEB page says, the
+entire directory structure for everything at www.cnss.org/EWAB
+is available as a tar file on our FTP server.  It is updated weekly so anyone
+can grab it to morph away any way you you like.
+
+	However, based on the response to these notes thus far, there seems
+little interest out there in having the earthworm organization work any better
+than it is.  Its a top down thing and few want to take any time to contribute
+or even comment on whats going on.  Thus taking much effort to change the
+WEB/list-server stuff is probably a waste of time.  I hope not, but....
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+	
+
+

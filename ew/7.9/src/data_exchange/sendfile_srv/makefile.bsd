@@ -1,0 +1,19 @@
+#
+#                     Make file for sendfile_srv
+#                         BSD Unix Version
+#
+CFLAGS = -g
+
+O = sendfile_srv.o socket_sol.o config.o chdir_sol.o getfname_sol.o \
+    sleep_sol.o log.o tzset_sol.o fopen_sol.o
+
+all: sendfile_srv
+
+sendfile_srv: $O
+	$(CC) -o sendfile_srv $O -lm -lc
+
+clean:
+	/bin/rm -f sendfile_srv *.o
+
+clean_bin:
+	/bin/rm -f sendfile_srv 

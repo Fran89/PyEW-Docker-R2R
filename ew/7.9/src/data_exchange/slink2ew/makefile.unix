@@ -1,0 +1,45 @@
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lm -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS) -Ilibslink
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LS = libslink
+
+LSLIBS = $(LS)/libslink.a
+
+LSLD = -L$(LS) -lslink
+
+EWLIBS = $L/libew_mt.a $L/socket_ew_common.o \
+         $L/socket_ew.o $L/swap.o \
+         $L/mem_circ_queue.o $L/libmseed.a
+
+PROGS = slink2ew
+
+all: $(PROGS)
+	cp $(PROGS) $B/
+
+slink2ew: slink2ew.o $(EWLIBS) $(LSLIBS)
+	$(CC) $(CFLAGS) -o slink2ew slink2ew.o $(EWLIBS) $(LSLD) $(SPECIFIC_FLAGS)
+
+$(LS)/libslink.a:
+	cd libslink; make -f Makefile static
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+lint:
+	lint slink2ew.c $(CFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f ${PROGS} a.out core *.o *.obj *% *~ 
+	cd libslink; make -f Makefile clean
+
+clean_bin:
+	rm -f $(PROGS)
+	cd $B; rm -f $(PROGS)

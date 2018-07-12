@@ -1,0 +1,21 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#                    Make file for getfileII
+#
+CFLAGS = -g
+
+O = getfileII.o config.o socket_bsd.o chdir_sol.o rename_sol.o \
+    log.o tzset_sol.o
+
+all: getfileII
+
+getfileII: $O
+	$(CC) -o getfileII $O -lm -lc
+
+clean:
+	-/bin/rm -f getfileII *.o
+
+clean_bin:
+	-/bin/rm -f getfileII 

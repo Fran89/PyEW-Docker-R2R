@@ -1,0 +1,40 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P>ewthresh overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR>Ewthresh Overview</H1>
+<I>(last revised 12 April, 2012)</I></CENTER>
+<P>
+The ewthresh module monitors a ring for TRACEBUF2X messages.  If a message's
+maximum (converted) value exceeds the threshold specified for that message's
+SCNL, an alarm message is written to the output ring identifying the SCNL,
+threshold, time, and maximum (converted) value.
+</P>
+<p>
+The primary option is what SCNLs to monitor and what threshold to use for it.
+</P>
+<p>
+If the optional ThreshVotes command is included, then whenever the specified
+number of alarms have been triggered within the specified timeframe, a 
+triglist message is generated, with a time of the specified amount before
+the first trigger of the group, and including the listed SCNLs
+</p>
+<p>
+Note that the module ID of the output THRESHALARM message will be that of
+the TRACEBUF2X generating program, not the ewthresh module. This could be made
+an option at a later date.
+</p>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/ewthresh_cmd.html">Ewthresh Configuration File</A>
+
+</CENTER>
+
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

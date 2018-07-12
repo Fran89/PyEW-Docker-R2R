@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>CERI Earthworm</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H2 ALIGN=CENTER>CERI at The University of Memphis, TN</H2>
+
+<DIV ALIGN=right><P>Date: April 14, 1999</P></DIV>
+
+<H3>Location, Contact, and Address:</H3>
+
+<P>Cooperative New Madrid Seismic Network recorded at University of Memphis,
+Memphis, TN, and at Saint Louis University, St Louis, MO </P>
+
+<P>Mitch Withers (withers@ceri.memphis.edu) 901-678-4940 <BR>
+Bob Herrmann (rbh@eas.slu.edu) 314-977-3120 </P>
+
+<P>3904 Central Ave, Memphis, TN 38152</P>
+
+<H3>Network Characteristics:</H3>
+
+<P>84 Analog stations, mostly short-period, three component, covering the
+New Madrid Seismic Zone in southwest Missouri, eastern Arkansas, and western
+Tennessee</P>
+
+<P>We are in the process of replacing <TT>eqacquire</TT> with <TT>earthworm</TT>.
+These two systems are running in parallel at Memphis.
+We will have at least 3 independent remote
+processing sites that are able to transfer pick messages via tcp links
+over ISDN telephone to a central site in Memphis that will then pull waveforms
+from the wave tanks at the remote sites as appropriate. In addition to the
+central site at CERI, we currently to have two of the three remote sites
+operating <TT>earthworm</TT> v3.9.
+
+<P>Analog data are digitized by National Instruments PCI-MIO-16E-4 a2d and
+we use a single AMUX64T mux (the remote nodes are equipped with dual muxes).
+We have installed an SMBI backplane to the mux to facilitate wiring, guid,
+and clock, and to reduce noise.  The a2d is installed on a pentium running NT 
+Server 4.0.
+
+<P>11- continuous 16-bit DST (Digital Seismic Telemetry) stations (6 channels
+each) in Guralp Compressed Format are being folded into the processing. 8
+stations are installed.
+
+<P>This web page was stolen from the USGS Menlo Park, and hacked (thanks
+Lynn).</P>
+
+<P>
+<HR></P>
+
+<H2 ALIGN=CENTER>Standard Earthworm Modules Currently in Use</H2>
+
+<H3 ALIGN=CENTER>V3.9</H3>
+
+<H3>Waveform Data Acquisition &amp; Conversion:</H3>
+
+<UL>
+<LI><B>adsend -</B> digitize waveforms.
+Production version runs on a Pentium/NT computer, digitizing 64 channels.
+(remote nodes have 128 channels).
+</LI>
+
+<LI><B>scream2ew -</B>Listen for Guralp Compressed Format packets
+broadcast by <TT>SCREAM!</TT>, convert to tbuf, and put on WAVE_RING.</LI>
+
+<LI><B>ringtocoax -</B>broadcast data from the WAVE_RING onto LAN.
+
+<P>The rest runs on a SUN Ultra-5.</P>
+
+<UL>
+<LI><B>coaxtoring -</B>move broadcast waveform data from LAN onto WAVE ring</LI>
+
+<LI><B>pick_ew -</B>pick P-arrivals from multiplexed data, output to pick
+ring</LI>
+
+<LI><B>binder</B> -Carl's associator</LI>
+
+<LI><B>eqprelim, eqbuf, eqcoda, eqverify </B>-filter, quality check, and
+output rapid pick associations</LI>
+
+<LI><B>eqproc, eqbuf, eqcoda, eqverify </B>-filter, quality check, and
+output final pick associations</LI>
+
+<LI><B>hypo_mgr, hypoinv -</B>manage and produce standard USGS hypocenter
+locations</LI>
+
+<LI><B>carltrig -</B>generate type triglist messages based on Carl Johnson's
+venerable subnet trigger algorithm.</LI>
+
+<LI><B>arc2trig -</B>convert hypo arc messages to type triglist.</LI>
+
+<LI><B>um_report -</B>listens for hyp2000arc messages, then performs
+a system call to tpage (Tom's free pager software).  This is a home-grown
+module.</LI>
+
+<LI><B>trig2disk -</B>listens for type triglist messages, queries wave_serverV
+for data, and writes associated waveforms to disk in ah_xdr format.</LI>
+
+<LI><B>heli1 -</B>queries wave_serverV every 10 minutes (configurable) to
+construct psuedo-helicorder gif images of continuous data, and construct
+associated html documents.  Viewable via the CERI seismic networks
+<A HREF="http://elwe.ceri.memphis.edu/~seisadm">
+web server.</A>
+We're actually running
+the non-worm version created by Pete Lombard (TYP).</LI>
+
+<LI><B>export_generic -</B>ships hyp2000arc messages to Golden.</LI>
+
+<LI><B>import_generic _</B>import USNSN tbuf packets from Golden.</LI>
+
+<LI>various copystatus, etc SOH monitors and restart mechanisms. And certainly
+something or other that I forgot.
+
+</UL>
+
+<H3>Auxiliary Tasks &amp; Data Exchange:</H3>
+
+<LI><B>wave_serverV -</B> maintain a circular buffer of
+waveform data and send data from requested channels and time intervals
+to a client over a socket. Current configuration is about 3 days for
+45 channels on an externally mounted FW-SCSI.</LI>
+
+<LI><B>vdl -</B>send triggered waveform data to USNSN</LI>
+
+<P>
+<HR></P>
+
+<H3>Programs/modules under development:</H3>
+
+<UL>
+<LI><B>degain -</B>We plan to develop a module that uses a fourth gain
+channel for each short-period analog station to account for gain-ranged
+isis instrumentation. </LI>
+
+<LI><B>trig2gif -</B>Create gif images of triggered waveforms on the fly
+to facilitate remote trigger review under reduced bandwidth connections.</LI>
+
+<H3>Our Additional Goals:</H3>
+
+<LI>Write better documentation of what we have.</LI>
+
+<LI>Reduce reliance on ISDN telephone or otherwise reduce
+ongoing communications costs.</LI>
+
+<LI>Develop non-coda based algorithm to quickly discriminate response
+level for a given automatically located earthquake.</LI>
+
+<LI>PhaseII to complete the loop and make earthworm a complete network
+processing system and allow RDBMS interface.</LI>
+
+<LI>Anxiously look forward to Quanterra to EW so we can incorporate SLU
+BB network.</LI>
+
+</UL>
+<HR>
+Return to main <A HREF="EWAB">Earthworm</A> or 
+<A HREF="EWAB/sites.html">Sites</A> pages.
+
+</BODY>
+</HTML>
+
+

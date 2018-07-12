@@ -1,0 +1,433 @@
+.TH "include/nmxp_chan.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp_chan.h \- 
+.PP
+Channels for Nanometrics Protocol Library.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBNMXP_META_CHAN_LIST\fP"
+.br
+.RI "\fIChannel list. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_KEY_NET\fP"
+.br
+.RI "\fIThe key/name info for one channel. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_LIST_NET\fP"
+.br
+.RI "\fIChannel list. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_KEY\fP"
+.br
+.RI "\fIThe key/name info for one channel. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_LIST\fP"
+.br
+.RI "\fIChannel list. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_PRECISITEM\fP"
+.br
+.RI "\fIPrecis Channel item. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHAN_PRECISLIST\fP"
+.br
+.RI "\fIPrecis Channel list. \fP"
+.ti -1c
+.RI "struct \fBNMXP_PRECISLISTREQUEST\fP"
+.br
+.RI "\fIPrecis list request body. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHANNELINFORESPONSE\fP"
+.br
+.RI "\fIChannel info request body. \fP"
+.ti -1c
+.RI "struct \fBNMXP_CHANNELINFOREQUEST\fP"
+.br
+.RI "\fIChannel info request body. \fP"
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNMXP_CHAN_MAX_SIZE_STR_PATTERN\fP   20"
+.br
+.ti -1c
+.RI "#define \fBMAX_N_CHAN\fP   2000"
+.br
+.RI "\fIMax number of channels. \fP"
+.ti -1c
+.RI "#define \fBNMXP_CHAN_MAX_SIZE_NAME\fP   24"
+.br
+.ti -1c
+.RI "#define \fBsep_chan_list\fP   ','"
+.br
+.RI "\fICharacter separator for channel list. \fP"
+.ti -1c
+.RI "#define \fBgetDataTypeFromKey\fP(key)   ((key >> 8) & 0xff)"
+.br
+.RI "\fIReturn type of data from a channel key. \fP"
+.ti -1c
+.RI "#define \fBgetChannelNumberFromKey\fP(key)   ((key) & 0x000f)"
+.br
+.RI "\fIReturn channel number from a channel key. \fP"
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBNMXP_META_CHAN_LIST\fP \fBNMXP_META_CHAN_LIST\fP"
+.br
+.RI "\fIChannel list. \fP"
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBNMXP_META_CHAN_LIST_SORT_TYPE\fP { \fBNMXP_META_SORT_KEY\fP =  1, \fBNMXP_META_SORT_NAME\fP, \fBNMXP_META_SORT_START_TIME\fP, \fBNMXP_META_SORT_END_TIME\fP }"
+.br
+.ti -1c
+.RI "enum \fBNMXP_DATATYPE\fP { \fBNMXP_DATA_TIMESERIES\fP =  1, \fBNMXP_DATA_SOH\fP =  2, \fBNMXP_DATA_TRANSERIAL\fP =  6 }"
+.br
+.RI "\fIType of Data. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnmxp_chan_cpy_sta_chan\fP (const char *net_dot_station_dot_channel, char *station_code, char *channel_code, char *network_code)"
+.br
+.RI "\fICopy station code and channel code from name. \fP"
+.ti -1c
+.RI "int \fBnmxp_chan_match\fP (const char *net_dot_station_dot_channel, char *pattern)"
+.br
+.RI "\fIMatch station_dot_channel against pattern, treating errors as no match. \fP"
+.ti -1c
+.RI "int \fBnmxp_chan_lookupKey\fP (char *name, \fBNMXP_CHAN_LIST\fP *channelList)"
+.br
+.RI "\fILooks up a channel key in the list using the name. \fP"
+.ti -1c
+.RI "int \fBnmxp_chan_lookupKeyIndex\fP (int32_t key, \fBNMXP_CHAN_LIST_NET\fP *channelList)"
+.br
+.RI "\fILooks up a channel name in the list using a key. \fP"
+.ti -1c
+.RI "char * \fBnmxp_chan_lookupName\fP (int32_t key, \fBNMXP_CHAN_LIST_NET\fP *channelList)"
+.br
+.RI "\fILooks up a channel name in the list using a key. \fP"
+.ti -1c
+.RI "\fBNMXP_CHAN_LIST\fP * \fBnmxp_chan_getType\fP (\fBNMXP_CHAN_LIST\fP *channelList, \fBNMXP_DATATYPE\fP dataType)"
+.br
+.RI "\fILooks up a channel with specified data type. \fP"
+.ti -1c
+.RI "\fBNMXP_CHAN_LIST_NET\fP * \fBnmxp_chan_subset\fP (\fBNMXP_CHAN_LIST\fP *channelList, \fBNMXP_DATATYPE\fP dataType, char *sta_chan_list, const char *network_code_default)"
+.br
+.RI "\fILooks up a channel with specified data type. \fP"
+.ti -1c
+.RI "void \fBnmxp_chan_sortByKey\fP (\fBNMXP_CHAN_LIST\fP *channelList)"
+.br
+.ti -1c
+.RI "void \fBnmxp_chan_sortByName\fP (\fBNMXP_CHAN_LIST\fP *channelList)"
+.br
+.ti -1c
+.RI "void \fBnmxp_chan_print_channelList\fP (\fBNMXP_CHAN_LIST\fP *channelList)"
+.br
+.ti -1c
+.RI "void \fBnmxp_chan_print_channelList_with_match\fP (\fBNMXP_CHAN_LIST\fP *channelList, char *sta_chan_list, int flag_statefile)"
+.br
+.ti -1c
+.RI "void \fBnmxp_chan_print_netchannelList\fP (\fBNMXP_CHAN_LIST_NET\fP *channelList)"
+.br
+.ti -1c
+.RI "void \fBnmxp_meta_chan_free\fP (\fBNMXP_META_CHAN_LIST\fP **chan_list)"
+.br
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_meta_chan_add\fP (\fBNMXP_META_CHAN_LIST\fP **chan_list, int32_t key, char *name, int32_t start_time, int32_t end_time, char *network, \fBNMXP_META_CHAN_LIST_SORT_TYPE\fP sorttype)"
+.br
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_meta_chan_search_key\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list, int32_t key)"
+.br
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_meta_chan_set_name\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list, int32_t key, char *name)"
+.br
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_meta_chan_set_times\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list, int32_t key, int32_t start_time, int32_t end_time)"
+.br
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_meta_chan_set_network\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list, int32_t key, char *network)"
+.br
+.ti -1c
+.RI "void \fBnmxp_meta_chan_print\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list)"
+.br
+.ti -1c
+.RI "void \fBnmxp_meta_chan_print_with_match\fP (\fBNMXP_META_CHAN_LIST\fP *chan_list, char *sta_chan_list)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Channels for Nanometrics Protocol Library. 
+
+Author: Matteo Quintiliani Istituto Nazionale di Geofisica e Vulcanologia - Italy quintiliani@ingv.it
+.PP
+\fBId:\fP
+.RS 4
+\fBnmxp_chan.h\fP,v 1.27 2010-09-14 09:38:52 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NMXP_CHAN_MAX_SIZE_STR_PATTERN   20"
+.SS "#define MAX_N_CHAN   2000"
+.PP
+Max number of channels. 
+.SS "#define NMXP_CHAN_MAX_SIZE_NAME   24"
+.SS "#define sep_chan_list   ','"
+.PP
+Character separator for channel list. 
+.SS "#define getDataTypeFromKey(key)   ((key >> 8) & 0xff)"
+.PP
+Return type of data from a channel key. 
+.SS "#define getChannelNumberFromKey(key)   ((key) & 0x000f)"
+.PP
+Return channel number from a channel key. 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBNMXP_META_CHAN_LIST\fP  \fBNMXP_META_CHAN_LIST\fP"
+.PP
+Channel list. 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBNMXP_META_CHAN_LIST_SORT_TYPE\fP"
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_META_SORT_KEY \fP\fP
+.TP
+\fB\fINMXP_META_SORT_NAME \fP\fP
+.TP
+\fB\fINMXP_META_SORT_START_TIME \fP\fP
+.TP
+\fB\fINMXP_META_SORT_END_TIME \fP\fP
+
+.SS "enum \fBNMXP_DATATYPE\fP"
+.PP
+Type of Data. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_DATA_TIMESERIES \fP\fP
+.TP
+\fB\fINMXP_DATA_SOH \fP\fP
+.TP
+\fB\fINMXP_DATA_TRANSERIAL \fP\fP
+
+.SH "Function Documentation"
+.PP 
+.SS "int nmxp_chan_cpy_sta_chan (const char * net_dot_station_dot_channel, char * station_code, char * channel_code, char * network_code)"
+.PP
+Copy station code and channel code from name. \fBParameters:\fP
+.RS 4
+\fInet_dot_station_dot_channel\fP string containing NET.STA.CHAN where NET. is optional 
+.br
+\fIstation_code\fP Pointer to string for station code 
+.br
+\fIchannel_code\fP Pointer to string for channel code 
+.br
+\fInetwork_code\fP Pointer to string for station code
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Parametes can not be NULL!
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI1\fP on success 
+.br
+\fI0\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_chan_match (const char * net_dot_station_dot_channel, char * pattern)"
+.PP
+Match station_dot_channel against pattern, treating errors as no match. \fBParameters:\fP
+.RS 4
+\fInet_dot_station_dot_channel\fP NET.STA.CHAN format (NET. is optional) 
+.br
+\fIpattern\fP N1.STA.?HZ or N2.STA.H?Z or STA.HH? or STA.?H? or ....
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI1\fP for match 
+.br
+\fI0\fP for no match 
+.br
+\fI-1\fP on error for invalid pattern 
+.br
+\fI-2\fP on error for invalid station_dot_channel 
+.RE
+.PP
+
+.SS "int nmxp_chan_lookupKey (char * name, \fBNMXP_CHAN_LIST\fP * channelList)"
+.PP
+Looks up a channel key in the list using the name. \fBParameters:\fP
+.RS 4
+\fIname\fP Channel name. 
+.br
+\fIchannelList\fP Channel list.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Key of the channel with name. -1 On error. 
+.RE
+.PP
+
+.SS "int nmxp_chan_lookupKeyIndex (int32_t key, \fBNMXP_CHAN_LIST_NET\fP * channelList)"
+.PP
+Looks up a channel name in the list using a key. \fBParameters:\fP
+.RS 4
+\fIkey\fP Channel key. 
+.br
+\fIchannelList\fP Channel list.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Index of channel with key. -1 on error. 
+.RE
+.PP
+
+.SS "char* nmxp_chan_lookupName (int32_t key, \fBNMXP_CHAN_LIST_NET\fP * channelList)"
+.PP
+Looks up a channel name in the list using a key. \fBParameters:\fP
+.RS 4
+\fIkey\fP Channel key. 
+.br
+\fIchannelList\fP Channel list.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Name of channel with key. NULL on error.
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Returned value will need to be freed! 
+.RE
+.PP
+
+.SS "\fBNMXP_CHAN_LIST\fP* nmxp_chan_getType (\fBNMXP_CHAN_LIST\fP * channelList, \fBNMXP_DATATYPE\fP dataType)"
+.PP
+Looks up a channel with specified data type. \fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel list. 
+.br
+\fIdataType\fP Type of channel.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Channel list with specified dataType. It will need to be freed!
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Returned value will need to be freed! 
+.RE
+.PP
+
+.SS "\fBNMXP_CHAN_LIST_NET\fP* nmxp_chan_subset (\fBNMXP_CHAN_LIST\fP * channelList, \fBNMXP_DATATYPE\fP dataType, char * sta_chan_list, const char * network_code_default)"
+.PP
+Looks up a channel with specified data type. \fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel list. 
+.br
+\fIdataType\fP Type of channel. 
+.br
+\fIsta_chan_list\fP String list of item STA.CHAN, separeted by comma. 
+.br
+\fInetwork_code_default\fP Default Network code
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Channel list with specified dataType. It will need to be freed!
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Returned value will need to be freed! 
+.RE
+.PP
+
+.SS "void nmxp_chan_sortByKey (\fBNMXP_CHAN_LIST\fP * channelList)"Sort list by channel key
+.PP
+\fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel List 
+.RE
+.PP
+
+.SS "void nmxp_chan_sortByName (\fBNMXP_CHAN_LIST\fP * channelList)"Sort list by channel name
+.PP
+\fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel List 
+.RE
+.PP
+
+.SS "void nmxp_chan_print_channelList (\fBNMXP_CHAN_LIST\fP * channelList)"Print channel information
+.PP
+\fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel List 
+.RE
+.PP
+
+.SS "void nmxp_chan_print_channelList_with_match (\fBNMXP_CHAN_LIST\fP * channelList, char * sta_chan_list, int flag_statefile)"Print channel information using channel pattern list
+.PP
+\fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel List 
+.br
+\fIsta_chan_list\fP Channel pattern list 
+.br
+\fIflag_statefile\fP If it is not zero the output can be redirected to create an input state file. Otherwise a more human readable output. 
+.RE
+.PP
+
+.SS "void nmxp_chan_print_netchannelList (\fBNMXP_CHAN_LIST_NET\fP * channelList)"Print channel information
+.PP
+\fBParameters:\fP
+.RS 4
+\fIchannelList\fP Channel List 
+.RE
+.PP
+
+.SS "void nmxp_meta_chan_free (\fBNMXP_META_CHAN_LIST\fP ** chan_list)"
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_meta_chan_add (\fBNMXP_META_CHAN_LIST\fP ** chan_list, int32_t key, char * name, int32_t start_time, int32_t end_time, char * network, \fBNMXP_META_CHAN_LIST_SORT_TYPE\fP sorttype)"
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_meta_chan_search_key (\fBNMXP_META_CHAN_LIST\fP * chan_list, int32_t key)"
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_meta_chan_set_name (\fBNMXP_META_CHAN_LIST\fP * chan_list, int32_t key, char * name)"
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_meta_chan_set_times (\fBNMXP_META_CHAN_LIST\fP * chan_list, int32_t key, int32_t start_time, int32_t end_time)"
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_meta_chan_set_network (\fBNMXP_META_CHAN_LIST\fP * chan_list, int32_t key, char * network)"
+.SS "void nmxp_meta_chan_print (\fBNMXP_META_CHAN_LIST\fP * chan_list)"
+.SS "void nmxp_meta_chan_print_with_match (\fBNMXP_META_CHAN_LIST\fP * chan_list, char * sta_chan_list)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

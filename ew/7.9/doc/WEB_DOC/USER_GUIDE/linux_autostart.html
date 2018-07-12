@@ -1,0 +1,52 @@
+
+To start up Earthworm automatically on a unix machine boot, you can put it in the /etc/init.d scripts.
+<p>
+Here's an example from a Linux box:
+<p>
+We've got our Earthworm directories set like this:
+<blockquote>
+/opt/earthworm/earthworm_7.3<br>
+/opt/earthworm/active_ew <- this is a link to the above; always the active EW version<br>
+/opt/earthworm/run_working/params<br>
+/opt/earthworm/run_working/logs<br>
+</blockquote>
+The contents of /etc/init.d/earthworm is:
+<pre>
+#!/bin/sh
+#This is the earthworm software start up script
+EW=/opt/earthworm
+EW_PARAMS=/opt/earthworm/run_working/params
+export EW_PARAMS
+case "$1" in
+        start)
+                if [ ! -f $EW/start_earthworm.sh ]
+                then
+                        echo "earthworm startup: cannot find start script start_earthworm.sh"  > $EW/run_working/logs/start_earthworm.log 2>&1 &
+                        exit
+                fi
+                su rtem -c $EW/start_earthworm.sh > $EW/run_working/logs/start_earthworm.log 2>&1 &
+                ;;
+        stop)
+                su rtem -c $EW/active_ew/bin/pau
+                ;;
+        restart)
+                $0 stop
+                $0 start
+                ;;
+        *)
+                echo "usage: start " # stop|start|restart"
+                ;;
+esac
+</pre>
+<br>
+We've got this symlink:<br>
+/etc/rc3.d/S99earthworm -> /etc/init.d/earthworm
+<p>
+The contents of /opt/earthworm/start_earthworm.sh is:<br>
+<pre>
+#!/bin/bash
+# Start up earthworm in background
+cd /opt/earthworm/active_ew
+source /opt/earthworm/run_working/params/ew_linux.bash
+startstop >& /opt/earthworm/run_working/logs/startstop &
+</pre>

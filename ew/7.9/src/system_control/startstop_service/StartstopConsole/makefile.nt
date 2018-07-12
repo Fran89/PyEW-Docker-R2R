@@ -1,0 +1,292 @@
+# Microsoft Developer Studio Generated NMAKE File, Based on StartstopConsole.dsp
+CFG=StartstopConsole - Win32 Release
+NO_EXTERNAL_DEPS=1
+!include <ntwin32.mak>
+
+
+!IF "$(CFG)" == ""
+CFG=StartstopConsole - Win32 Debug
+!MESSAGE No configuration specified. Defaulting to StartstopConsole - Win32 Debug.
+!ENDIF 
+
+!IF "$(CFG)" != "StartstopConsole - Win32 Release" && "$(CFG)" != "StartstopConsole - Win32 Debug"
+!MESSAGE Invalid configuration "$(CFG)" specified.
+!MESSAGE You can specify a configuration when running NMAKE
+!MESSAGE by defining the macro CFG on the command line. For example:
+!MESSAGE 
+!MESSAGE NMAKE /f "StartstopConsole.mak" CFG="StartstopConsole - Win32 Debug"
+!MESSAGE 
+!MESSAGE Possible choices for configuration are:
+!MESSAGE 
+!MESSAGE "StartstopConsole - Win32 Release" (based on "Win32 (x86) Application")
+!MESSAGE "StartstopConsole - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE 
+!ERROR An invalid configuration is specified.
+!ENDIF 
+
+!IF "$(OS)" == "Windows_NT"
+NULL=
+!ELSE 
+NULL=nul
+!ENDIF 
+
+CPP=$(CC) $(GLOBALFLAGS) 
+F90=df.exe
+MTL=midl.exe
+RSC=rc.exe
+
+HYDRA_RESOURCES=.\hydra_resources
+HYD_OBJ_SRC	= $(HYDRA_RESOURCES)\src\common\libsrc\gen\cpp 
+HYD_OBJ 	= $(HYDRA_RESOURCES)\lib\common
+HYD_OBJS	= $(HYD_OBJ)\watchdog_client.obj $(HYD_OBJ)\DatagramSocket.obj
+
+
+!IF  "$(CFG)" == "StartstopConsole - Win32 Release"
+
+OUTDIR=$(EW_HOME)\$(EW_VERSION)\bin
+INTDIR=.\Release
+
+ALL : "$(OUTDIR)\StartstopConsole.exe" "$(INTDIR)\StartstopConsole.pch" 
+
+
+CLEAN :
+	-@erase "$(INTDIR)\StartstopConsole.obj"
+	-@erase "$(INTDIR)\StartstopConsole.pch"
+	-@erase "$(INTDIR)\StartstopConsole.res"
+	-@erase "$(INTDIR)\StartstopConsoleDlg.obj"
+	-@erase "$(INTDIR)\StdAfx.obj"
+	-@erase "$(INTDIR)\vc60.idb"
+	-@erase "$(OUTDIR)\StartstopConsole.exe"
+	-@erase "$(HYD_OBJ)\watchdog_client.obj"
+	-@erase "$(HYD_OBJ)\DatagramSocket.obj"
+	-@erase "$(HYD_OBJ)\common_gen_cpp.lib"
+	-@erase "$(HYD_OBJ_SRC)\watchdog_client.obj"
+	-@erase "$(HYD_OBJ_SRC)\DatagramSocket.obj"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+F90_PROJ=/compile_only /nologo /warn:nofileopt /winapp /module:"Release/" /object:"Release/" 
+F90_OBJS=.\Release/
+CPP_PROJ=/nologo /MT /W3 /GX /O2 /I "." /I "$(HYDRA_RESOURCES)\src\common\include\gen\c"  /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_WINNT" /Fp"$(INTDIR)\StartstopConsole.pch" /YX"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+MTL_PROJ=/nologo /D "NDEBUG" /mktyplib203 /win32 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\StartstopConsole.res" /i "$(HYDRA_RESOURCES)\src\common\include\display\cpp\resources" /d "NDEBUG" 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\StartstopConsole.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+LINK32_FLAGS=nafxcw.lib watchdog_client.obj ws2_32.lib DatagramSocket.obj socket_ew.obj socket_ew_common.obj  libew.lib /nologo /subsystem:windows /incremental:no /pdb:"$(OUTDIR)\StartstopConsole.pdb" /machine:I386 /nodefaultlib:"nafxcw.lib" /out:"$(OUTDIR)\StartstopConsole.exe" /libpath:"$(HYDRA_RESOURCES)\lib\common" /libpath:"$(EW_HOME)\$(EW_VERSION)\lib"
+LINK32_OBJS= \
+	"$(INTDIR)\StartstopConsole.obj" \
+	"$(INTDIR)\StartstopConsoleDlg.obj" \
+	"$(INTDIR)\StdAfx.obj" \
+	"$(INTDIR)\StartstopConsole.res"
+	
+
+"$(OUTDIR)\StartstopConsole.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS) $(HYD_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+# make the hydra specific object files
+$(HYD_OBJS) : $(HYD_OBJ_SRC)\watchdog_client.cpp  $(HYD_OBJ_SRC)\DatagramSocket.cpp 
+	cd $(HYD_OBJ_SRC)
+	NMAKE /f makefile.nt
+	cd ..\..\..\..\..\..
+
+!ELSEIF  "$(CFG)" == "StartstopConsole - Win32 Debug"
+
+OUTDIR=.\Debug
+INTDIR=.\Debug
+# Begin Custom Macros
+OutDir=.\Debug
+# End Custom Macros
+
+ALL : "$(OUTDIR)\StartstopConsole.exe" "$(OUTDIR)\StartstopConsole.pch" "$(OUTDIR)\StartstopConsole.bsc"
+
+
+CLEAN :
+	-@erase "$(INTDIR)\StartstopConsole.obj"
+	-@erase "$(INTDIR)\StartstopConsole.pch"
+	-@erase "$(INTDIR)\StartstopConsole.res"
+	-@erase "$(INTDIR)\StartstopConsole.sbr"
+	-@erase "$(INTDIR)\StartstopConsoleDlg.obj"
+	-@erase "$(INTDIR)\StartstopConsoleDlg.sbr"
+	-@erase "$(INTDIR)\StdAfx.obj"
+	-@erase "$(INTDIR)\StdAfx.sbr"
+	-@erase "$(INTDIR)\vc60.idb"
+	-@erase "$(INTDIR)\vc60.pdb"
+	-@erase "$(OUTDIR)\StartstopConsole.bsc"
+	-@erase "$(OUTDIR)\StartstopConsole.exe"
+	-@erase "$(OUTDIR)\StartstopConsole.ilk"
+	-@erase "$(OUTDIR)\StartstopConsole.pdb"
+	-@erase "$(HYD_OBJ)\watchdog_client.obj"
+	-@erase "$(HYD_OBJ)\DatagramSocket.obj"
+	-@erase "$(HYD_OBJ)\common_gen_cpp.lib"
+	-@erase "$(HYD_OBJ_SRC)\watchdog_client.obj"
+	-@erase "$(HYD_OBJ_SRC)\DatagramSocket.obj"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+F90_PROJ=/browser:"Debug/" /check:bounds /compile_only /dbglibs /debug:full /nologo /traceback /warn:argument_checking /warn:nofileopt /winapp /module:"Debug/" /object:"Debug/" /pdbfile:"Debug/DF60.PDB" 
+F90_OBJS=.\Debug/
+CPP_PROJ=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "." /I "$(HYDRA_RESOURCES)\src\common\include\gen\c"  /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_WINNT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\StartstopConsole.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+MTL_PROJ=/nologo /D "_DEBUG" /mktyplib203 /win32 
+RSC_PROJ=/l 0x409 /fo"$(INTDIR)\StartstopConsole.res" /i "$(HYDRA_RESOURCES)\src\common\include\display\cpp\resources" /d "_DEBUG" 
+BSC32=bscmake.exe
+BSC32_FLAGS=/nologo /o"$(OUTDIR)\StartstopConsole.bsc" 
+BSC32_SBRS= \
+	"$(INTDIR)\StartstopConsole.sbr" \
+	"$(INTDIR)\StartstopConsoleDlg.sbr" \
+	"$(INTDIR)\StdAfx.sbr"
+
+"$(OUTDIR)\StartstopConsole.bsc" : "$(OUTDIR)" $(BSC32_SBRS)
+    $(BSC32) @<<
+  $(BSC32_FLAGS) $(BSC32_SBRS)
+<<
+
+LINK32=link.exe
+LINK32_FLAGS=watchdog_client.obj ws2_32.lib DatagramSocket.obj socket_ew.obj socket_ew_common.obj libew.lib /nologo /subsystem:windows /incremental:yes /pdb:"$(OUTDIR)\StartstopConsole.pdb" /debug /machine:I386 /nodefaultlib:"libcmt.lib" /out:"$(OUTDIR)\StartstopConsole.exe" /pdbtype:sept /libpath:"$(HYDRA_RESOURCES)\lib\common" /libpath:"$(EW_HOME)\$(EW_VERSION)\lib" 
+LINK32_OBJS= \
+	"$(INTDIR)\StartstopConsole.obj" \
+	"$(INTDIR)\StartstopConsoleDlg.obj" \
+	"$(INTDIR)\StdAfx.obj" \
+	"$(INTDIR)\StartstopConsole.res"
+
+"$(OUTDIR)\StartstopConsole.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS) $(HYD_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+# make the hydra specific object files
+$(HYD_OBJS) : $(HYD_OBJ_SRC)\watchdog_client.cpp  $(HYD_OBJ_SRC)\DatagramSocket.cpp 
+	cd $(HYD_OBJ_SRC)
+	NMAKE /f makefile.nt
+	cd ..\..\..\..\..\..
+
+!ENDIF 
+
+.c{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.obj::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.c{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cpp{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.cxx{$(INTDIR)}.sbr::
+   $(CPP) @<<
+   $(CPP_PROJ) $< 
+<<
+
+.SUFFIXES: .fpp
+
+.for{$(F90_OBJS)}.obj:
+   $(F90) $(F90_PROJ) $<  
+
+.f{$(F90_OBJS)}.obj:
+   $(F90) $(F90_PROJ) $<  
+
+.f90{$(F90_OBJS)}.obj:
+   $(F90) $(F90_PROJ) $<  
+
+.fpp{$(F90_OBJS)}.obj:
+   $(F90) $(F90_PROJ) $<  
+
+
+
+
+!IF "$(NO_EXTERNAL_DEPS)" != "1"
+!IF EXISTS("StartstopConsole.dep")
+!INCLUDE "StartstopConsole.dep"
+!ELSE 
+!MESSAGE Warning: cannot find "StartstopConsole.dep"
+!ENDIF 
+!ENDIF 
+
+
+!IF "$(CFG)" == "StartstopConsole - Win32 Release" || "$(CFG)" == "StartstopConsole - Win32 Debug"
+SOURCE=.\StartstopConsole.cpp
+
+!IF  "$(CFG)" == "StartstopConsole - Win32 Release"
+
+
+"$(INTDIR)\StartstopConsole.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "StartstopConsole - Win32 Debug"
+
+
+"$(INTDIR)\StartstopConsole.obj"	"$(INTDIR)\StartstopConsole.sbr" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
+SOURCE=.\StartstopConsole.rc
+
+"$(INTDIR)\StartstopConsole.res" : $(SOURCE) "$(INTDIR)"
+	$(RSC) $(RSC_PROJ) $(SOURCE)
+
+
+SOURCE=.\StartstopConsoleDlg.cpp
+
+!IF  "$(CFG)" == "StartstopConsole - Win32 Release"
+
+
+"$(INTDIR)\StartstopConsoleDlg.obj" : $(SOURCE) "$(INTDIR)"
+
+
+!ELSEIF  "$(CFG)" == "StartstopConsole - Win32 Debug"
+
+
+"$(INTDIR)\StartstopConsoleDlg.obj"	"$(INTDIR)\StartstopConsoleDlg.sbr" : $(SOURCE) "$(INTDIR)"
+
+
+!ENDIF 
+
+SOURCE=.\StdAfx.cpp
+
+!IF  "$(CFG)" == "StartstopConsole - Win32 Release"
+
+CPP_SWITCHES=/nologo /MT /W3 /GX /O2 /I "." /I "$(HYDRA_RESOURCES)\src\common\include\gen\c"  /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_WINNT" /Fp"$(INTDIR)\StartstopConsole.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+
+"$(INTDIR)\StdAfx.obj"	"$(INTDIR)\StartstopConsole.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ELSEIF  "$(CFG)" == "StartstopConsole - Win32 Debug"
+
+CPP_SWITCHES=/nologo /MTd /W3 /Gm /GX /ZI /Od /I "." /I "$(HYDRA_RESOURCES)\src\common\include\gen\c"  /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_WINNT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\StartstopConsole.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+
+"$(INTDIR)\StdAfx.obj"	"$(INTDIR)\StdAfx.sbr"	"$(INTDIR)\StartstopConsole.pch" : $(SOURCE) "$(INTDIR)"
+	$(CPP) @<<
+  $(CPP_SWITCHES) $(SOURCE)
+<<
+
+
+!ENDIF 
+
+
+!ENDIF 
+

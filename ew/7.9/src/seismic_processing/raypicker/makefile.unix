@@ -1,0 +1,28 @@
+##################################################################
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lrt
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+EWLIB=$(EW_HOME)/$(EW_VERSION)/lib
+B=$(EW_HOME)/$(EW_VERSION)/bin
+DIRSEP=/
+
+OBJ=o
+
+include makefile.ind
+
+$(APP): $(APP_OBJECTS)
+	echo "making the main app"
+	echo "have $(APP_OBJECTS)"
+	$(CC) $(CFLAGS) $(APP_OBJECTS) $(ALL_CLIENT_LIBS) $(SPECIFIC_FLAGS) -o $(APP)
+	cp $(APP) $(B)
+
+.c.$(OBJ):
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+
+clean:
+	rm -f ${FULL_APP_NAME} a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/raypicker*

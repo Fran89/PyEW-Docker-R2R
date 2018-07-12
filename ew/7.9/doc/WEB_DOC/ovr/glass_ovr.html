@@ -1,0 +1,1247 @@
+<html>
+<head>
+ <title>Earthworm Modules: glass overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h1 align=center>Earthworm Modules:<br>
+The Glass Manual</h1>
+
+<center><p><i>
+(Last revised 2006/01/19)
+</i></p></center>
+
+<p>
+This is meant to be an informal document.  As such it is not guaranteed to
+have been reviewed for things like accuracy, grammar, or spelling.
+(Take it with a grain of salt for good measure)
+
+<p>
+Initial Blame:  David Kragness,
+Hydra Development Team
+<p>
+Mitch Withers converted to earthworm documentation with no significant
+changes from Dave's original word doc.  The example configurations
+are in the <a href="../cmd/glass_cmd.html"> command reference</a>
+though this "overview" does contain configuration advice.  Carl Johnson's
+original edicts for earthworm are modularity and platform independence.
+Carl decided to focus on the science rather than the code for this
+module and it is currently hopelessly tied to the microsoft platform.
+It will not compile on any other.
+
+<a name="overview"></a>
+<p>
+<H2>Overview</h2>
+<p>
+Glass is a program designed and developed by Carl Johnson for the USGS NEIC,
+and is currently maintained by the Hydra development team.  It is an
+earthquake Associator designed for a global(earth) environment.  It has
+been integrated into Hydra, and is now an integral part of the Response Hydra
+system.
+
+<p>
+This informal document contains four(4) sections oriented at different
+individuals
+<ul>
+<li>
+The Seismologist/Network Operator section contains information on tuning
+Glass for your seismic network.
+</li>
+<li>
+The Hydra Administrator section provides information for the system
+administrator trying to configure Glass to run in an Hydra/Earthworm
+environment.
+</li>
+<li>
+The Programmer section contains information on the architecture of Glass
+code and notes for anyone looking to maintain/modify Glass.
+</li>
+<li>
+The User section contains minimal information on the interactive use of
+the Glass GUI displays.
+</li>
+</ul>
+
+<a name="toc"></a>
+<h2>
+Table Of Contents
+</h2>
+
+<ul>
+  <dt>
+  <a href=#overview><h2>OVERVIEW</h2></a>
+  </dt>
+  <dt>
+  <a href=#toc><h2>TABLE OF CONTENTS</h2></a>
+  </dt>
+  <dt>
+  <a href=#netops><h2>SEISMOLOGIST/NETWORK OPERATOR</h2></a>
+  </dt>
+  <ul>
+    <dt>
+    <a href=#nucleator><h3>THE NUCLEATOR</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#nucleatoroverview><h4>Overview</h4></a>
+      </dt>
+      <dt>
+      <a href=#nucleatortune><h4>Parameters Tunable</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#nucleatorlocpoint><h5>Location Points</h5></a>
+        </dt>
+        <dt>
+        <a href=#nucleatortimewin><h5>Time Windows</h5></a>
+        </dt>
+        <dt>
+        <a href=#nucleatortimeiter><h5>Time Iterations</h5></a>
+        </dt>
+        <dt>
+        <a href=#nucleatordepthiter><h5>Depth Iterations</h5></a>
+        </dt>
+        <dt>
+        <a href=#nucleatortravetime><h5>Travel-time Tables</h5></a>
+        </dt>
+        <dt>
+        <a href=#nucleatorstalist><h5>Station List</h5></a>
+        </dt>
+      </ul>
+      <dt>
+      <a href=#nucleatoruntune><h4>Parameters Untunable</h4></a>
+      </dt>
+    </ul>
+    <dt>
+    <a href=#assoc><h3>THE ASSOCIATOR</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#assocoverview><h4>Overview</h4></a>
+      </dt>
+      <dt>
+      <a href=#assoctune><h4>Parameters Tunable</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#assoctravtime><h5>Travel-time Tables</h5></a>
+        </dt>
+        <dt>
+        <a href=#assocstalist><h5>Station List</h5></a>
+        </dt>
+        <dt>
+        <a href=#assocaffinitytravtime><h5>Tunable Affinity Statistics Traveltime Tables</h5></a>
+        </dt>
+      </ul>
+      <dt>
+      <a href=#assocuntune><h4>Parameters - Untunable</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#assocaffinity><h5>Affinity Statistic</h5></a>
+        </dt>
+        <dt>
+        <a href=#assocorigtime><h5>Relevant Origin Time Range</h5></a>
+        </dt>
+        <dt>
+        <a href=#assocpickrange><h5>Relevant Pick Time Ranges For An Origin</h5></a>
+        </dt>
+      </ul>
+    </ul>
+    <dt>
+    <a href=#locator><h3>THE LOCATOR</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#locatoroverview><h4>Overview</h4></a>
+      </dt>
+      <dt>
+      <a href=#locatortune><h4>Parameters Tunable</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#locatorweight><h5>Location Weight</h5></a>
+        </dt>
+        <dt>
+        <a href=#locatoriter><h5>Number of Iterations</h5></a>
+        </dt>
+      </ul>
+      <dt>
+      <a href=#locatoruntune><h4>Parameters Untunable</h4></a>
+      </dt>
+    </ul>
+    <dt>
+    <a href=#filter><h3>THE FILTER</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#filteroverview><h4>Overview</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#filtercore><h5>Core Filters
+        </a></dt><dt>
+        <a href=#filtercore>
+        </a><a href=#filternetwork><h5>Network Specific Filters</h5></a>
+        </dt>
+        <dt>
+        <a href=#filteroutput><h5>Output Filters</h5></a>
+        </dt>
+      </ul>
+    </ul>
+    <dt>
+    <a href=#netopsother><h3>OTHER STUFF</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#otherrefocus><h4>Depth Refocus</h4></a>
+      </dt>
+      <dt>
+      <a href=#otherstatproc><h4>State Processing</h4></a>
+      </dt>
+    </ul>
+  </ul>
+  <dt>
+  <a href=#admin><h2>HYDRA ADMINISTRATOR</h2></a>
+  </dt>
+  <ul>
+    <dt>
+    <a href=#configglass><h3>CONFIGURING GLASS</h3></a>
+    </dt>
+    <ul>
+      <dt>
+      <a href=#dfile><h4>glass.d</h4></a>
+      </dt>
+      <ul>
+        <dt>
+        <a href=#error><h5>Error Reporting</h5></a>
+        </dt>
+      </ul>
+    </ul>
+  </ul>
+  <dt>
+  <a href=#user><h2>USER</h2></a>
+  </dt>
+  <dt>
+  <a href=#programmer><h2>PROGRAMMER</h2></a>
+  </dt>
+</ul>
+
+<a name="netops"></a>
+<h2>
+ Seismologist/Network Operator
+</h2>
+
+<p>
+Glass can be thought of as having four(4) major mechanisms for producing
+earthquake information (origins and associated phases):
+Nucleator, Associator, Locator, and Filter.  The Nucleator creates new
+earthquake origins, the Associator associates picks with existing origins,
+the Locator refines origin hypocenters, and the Filter eliminates origins
+and origin-pick associations.
+
+<p>
+<a name="nucleator"></a>
+<h3>The Nucleator</h3>
+<p>
+<a name="nucleatoroverview"></a>
+<h4>Overview</h4>
+<p>
+The Nucleator is the portion of Glass that discovers new origins.
+The Nucleator is the core Glass technology.  It is a method for associating
+a set of picks into an origin.  The Nucleator is pick driven, meaning it
+is fired up whenever a new pick is introduced into Glass that cannot be
+associated with an existing origin.  The new pick (the keystone pick),
+along with any other unassociated picks in a time window relative to the
+keystone, are thrown into the Nucleator together.  The Nucleator calculates
+a number of trial origin depths/times (based on the time of the keystone pick)
+and iterates through them.  For each prospective depth/time, the Nucleator
+obtains an epicentral distance for the keystone pick.  The distance is
+obtained via a reverse lookup of traveltime tables, based on:
+1) the delta between the origin time and keystone pick time,
+2) the origin depth, and
+3) a seismic phase type of P.
+Using the epicentral distance and the depth, the Nucleator calculates a
+linear distance.  It uses this distance as the radius of a sphere centered
+at the location of the keystone pick.  It then calculates the circle that is
+the intersection of the keystone sphere and the depth shell sphere (centered
+at the center of the earth, and radiating out (6371 depth km).  This
+intersecting circle becomes The Ring.  For each OTHER pick, the Nucleator
+calculates the intersection of that pick's sphere (as determined by depth,
+origin-pick delta time, and P phase) and The Ring.
+That intersection can be either one or two points (or zero if there is no
+intersection).  The end result is a set of points (each resembling a potential
+origin location) scattered across the circumference of the Ring. The Nucleator
+then iterates through the points and for each point calculates the distance of
+the nth closest point.  It then selects the point with the minimum
+nth-point-distance as the preferred origin location for that time/depth
+iteration.
+<p>
+Then, after it's computed the preferred origin location for each depth/time
+iteration, it compares the results from each location and selects the best
+one (as determined by nth-point-distance). Then if the resulting preferred
+(from all iterations for that keystone pick) location results in a
+sufficiently small nth-point-distance, the Nucleator declares a new origin
+with the determined parameters.
+
+<p>
+<a name="nucleatortune"></a>
+<h4>Parameters Tunable</h4>
+<p>
+With the exception of the travel time tables and the station list, all of
+the tunable parameters for the Nucleator are controlled via the
+glass_assoc.d configuration file.
+<p>
+There are 6 sets of key tunable parameters in the Nucleator:
+<ol>
+  <li>Location Points: number of and distance threshold.</li>
+  <li>Time windows for potential origins and associable picks</li>
+  <li>Size of the time iterations </li>
+  <li>Depth iterations</li>
+  <li>Travel time tables</li>
+  <li>Station List</li>
+</ol>
+
+<p>
+<a name="nucleatorlocpoint"></a>
+<h5>Location Points</h5>
+
+<p>
+A line similar to the following:<br>
+<b>
+Cut 9 50</b><br>
+<p>
+appears in the glass_assoc.d config file.  The Cut command takes two
+arguments:  number of location points, and distance threshold.  When the
+Nucleator is evaluating potential origins, it calculates nth-point-distance
+for each potential origin for each time/depth iteration.  The first argument
+defines n (the number of points), and the second argument defines the distance
+threshold of acceptable origins.  So Cut 9 50.0, would instruct the Nucleator
+to require 9 points to be within 50km of a perspective origin on The Ring, in
+order for that origin to be deemed acceptable.  Note that the Nucleator counts
+the central point in the 9, so there are only required to be 8 (n-1) other
+points within the distance.
+<it>n</it> in theory controls the number of points required in a proximate
+distance, but in practice, it can be used to determine the number of P-phases
+required to associate an origin.
+
+<p>
+<a name="nucleatortimewin"></a>
+<h5>Time Windows</h5>
+
+<p>
+A line similar to the following:<br>
+TimeRange -600.0 500.0 -820.0<br>
+
+<p>
+appears in the glass_assoc.d config file.  The Nucleator processing is
+concerned with 2 time windows.  The first time window is processed outside
+of the Nucleator, and directly determines the inputs to the Nucleator.
+The first time window defines the unassociated picks that will be sent to
+the Nucleator as picks that are associable with the current pick.  The
+second time window defines the range of potential origin times that should
+be used by the Nucleator for constructing trial origins.  The TimeRange
+command takes three arguments: the start and end of the first time
+window (Pick times), and the start of the second time window (Origin times).
+For example, if the current pick came from station XYZ at 10:45:00, then
+the above TimeRange command would cause all unassociated picks between
+10:35:00 (10:45:00  - 600) and 10:53:20 (10:45:00 + 500) to be sent to the
+Nucleator along with the current pick.  The command would also instruct the
+Nucleator to try potential origins between 10:31:20 (10:45:00 - 820) and
+10:45:00 (10:45:00 + 0).
+
+<p>
+<a name="nucleatortimeiter"></a>
+<h5>Time Iterations</h5>
+
+<p>
+A line similar to the following:<br>
+TimeStep 5.0<br>
+
+<p>
+appears in the glass_assoc.d config file. The Nucleator iterates through a set
+of trial origin times within the potential origin time window. The time delta
+between iterations in seconds is defined by the TimeStep command. So if
+TimeStep is 5.0, then the Nucleator will iterate between origins that are 5
+seconds apart. The smaller the TimeStep value, the closer the Nucleator should
+be to the actual origin time and the more processing iterations that will have
+to be done, so there is a tradeoff between accuracy and processing effort.
+There are two factors that affect what the TimeStep value should be set to:
+residual distance limits and locator ability. Because the Nucleator fixes the
+origin time and depth, any residuals are distance based. If the TimeStep value
+is set too high, then it increases the artificial distance residual that may
+be imposed on an origin because the actual event time lay between two
+iterative steps. So if an event occurs at time 1232.5, TimeStep is set to 5,
+and the closest two origin time iterations are 1230.0 and 1235.0, then an
+artificial time residual of 2.5 seconds is being imposed on the nucleated
+origin. Because the Nucleator deals only in distance residuals, that 2.5
+seconds becomes converted to a distance value. When that residual distance
+value gets to be too great then the Nucleator will no longer be able to
+associate the origin. The Nucleator is a tool to associate picks into an
+Origin, its association is not meant to be the Glass end-all final location
+answer. Within Glass there is a Locator that will refine solutions after they
+come out of the Nucleator. So a TimeStep value must be chosen that is not
+too processing intensive but is also not so wide as to preclude origins based
+on the artificial residuals between time iterations and actual event time.
+A TimeStep of 5.0, results in a maximum artificial window of 2.5 seconds,
+with a maximum P velocity of about 13km/sec, that ends up at a worst case
+artificial distance residual of 32km. If the distance Cut is set to 50km,
+this leaves only 18km available for anomalies due to actual vs. theoretical
+1-d travel times, and depth iteration intervals.
+
+<p>
+<a name="nucleatordepthiter"></a>
+<h5>Depth Iterations</h5>
+
+<p>
+Lines similar to the following:<br>
+# Shells<br>
+Shell 5.0<br>
+Shell 20.0<br>
+Shell 60.0<br>
+Shell 100.0<br>
+Shell 200.0<br>
+Shell 400.0<br>
+Shell 600.0<br>
+
+<p>
+appear in the glass_assoc.d config file. Each one of these lines defines a
+depth iteration. The Nucleator iterates through a set of trial origin depths
+as defined by the Shell commands. Shells should be defined in order of
+increasing depth. The depth iteration considerations are similar to the time
+iteration considerations. The same rules hold true for residuals. With a
+small number of depth iterations defined, the depth residuals may be quite
+large, but depth and time tend to be somewhat interchangeable, especially if
+there are enough picks at a similar origin distance to the keystone pick.
+This allows depth residual to overflow into time residual and be mitigated
+by a small enough time iteration. (To the Nucleator, an event at time 1230
+and depth 300km, will look a lot like an event at time 1235 and depth 400km).
+If the Nucleator ends up time/depth shifting an event to make the depth
+residual small enough to fit, then hopefully the Locator will be
+capable of re-shifting the event back into place with the use of other
+phase data.
+
+<p>
+<a name="nucleatortravtime"></a>
+<h5>Travel-time Tables</h5>
+
+<p>
+The Nucleator and the rest of Glass use the Hydra traveltime libraries to
+access data stored in traveltime tables.  At this point Glass uses a special
+subset of traveltime tables that were generated based on empirical ad-hoc
+observations regarding the phases being picked by the Hydra picker.  The
+actual traveltime tables used by Glass are defined in the tt_tables.d config
+file in the Hydra params directory.  The individual traveltime files must be
+generated by a separate program.  See Generating Traveltime Tables in the
+Programmer section of this document, or find a developer to do it for you.
+
+<p>
+The parameters that control the generation of the Glass specific
+traveltime tables are defined in a set of files tt_*_Glass.txt in
+the earthworm CVS tree under src/seismic_processing/glass/run/params/ttt.
+
+<p>
+Each traveltime table entry contains the following information:
+<ul>
+  <li>Traveltime</li>
+  <li>Depth</li>
+  <li>Distance</li>
+  <li>Take Off Angle</li>
+  <li>Time residual window half-width</li>
+  <li>Horizontal Slowness of the phase (dtdx)</li>
+  <li>Vertical Slowness of the phase (dtdz)</li>
+  <li>Association Strength (Pick Probability Density - not currently used)</li>
+  <li>Location Weight (used by the Glass Locator, not by the Hydra Locator)</li>
+  <li>Mag. Threshold (not currently used)</li>
+  <li>Phase Name</li>
+</ul>
+
+<p>
+The Nucleator makes use of only P phases from the crust/mantle.  The current
+list includes (Pg, Pb, Pn, p, P, Pdif),  and only the Traveltime, Depth, and
+Distance information.  Under the current code, there is probably not much that
+should/could be altered in the traveltime tables that would affect the
+Nucleator.
+
+<p>
+<a name="nucleatorstalist"></a>
+<h5>Station List</h5>
+
+<p>
+The Nucleator is fairly sensitive to the affects of noisy stations.  If
+you have stations that consistently generate non-relative picks, you may
+wish to remove them from the station list.  Noisy stations will often
+generate picks that are ripe for coincidental associations which can corrupt
+origin parameters, causing false or mislocated earthquakes.
+
+<p>
+Glass currently uses the list of stations specified in the
+Glass_data\stalist.hinv file (a list of stations in HypoInverse station
+list format).  The lower the number of Cut points, the more sensitive the
+Nucleator will be to noise picks.  Glass must be restarted in order for
+station list file changes to take effect.  There is no way to adjust the
+station list on the fly during runtime.  Glass will ignore all picks
+received from channels that are not in the station list
+
+<p>
+<a name="nucleatoruntune"></a>
+<h4>Parameters Untunable</h4>
+
+<p>
+The Nucleator only uses mantle/crust P phases for association.  It does not
+use any other kind including PKP.  This is hardwired into the code. This
+could easily be changed in a later release with potential consequences.
+
+<p>
+<a name="assoc"></a>
+<h3>The Associator</h3>
+
+<p>
+<a name="assocoverview"></a>
+<h4>Overview</h4>
+
+<p>
+The Associator is the portion of Glass that associates picks with existing
+origins.  The Associator is a simple tool that compares a pick with origins
+using traveltime tables.  The Associator is pick based.  For each pick that
+comes into the Associator, the Associator compares the pick to a list of
+origins known to it, and matches the pick up with the origin for which it
+has the best fit (as determined by an affinity statistic).  If the affinity
+statistic is above a certain threshold then the pick is associated with that
+origin, otherwise it gets passed to the Nucleator where it will attempt to
+associate it as the keystone pick.  The affinity statistic is generated based
+upon certain origin and origin-pick parameters:<br>
+<ul>
+  <li>Number of phases already associated with the origin; </li>
+  <li>Azimuthal gap between associated P-phases;  </li>
+  <li>Residual for the current phase; </li>
+  <li>Distance of the current phase relative to the median distance for the phases already associated with the origin.</li>
+</ul>
+
+At the core of the Associator is the simple task of evaluating the likelihood
+that a pick associates with an origin as a certain phase.
+
+The Associator also runs in a separate fashion, where it reevaluates how
+all of the relevant picks associate with an origin after that origin has
+been modified.  In this case there are 3 groups of picks (that are time
+relevant):<br>
+<ul>
+  <li>Picks already assigned to the origin</li>
+  <li>Picks not assigned to any origin</li>
+  <li>Picks assigned to a different origin</li>
+</ul>
+
+<p>
+For each pick currently assigned to the modified origin, the Associator
+reevaluates the association in order to recalculate the residuals and
+re-evaluate the best phase match (sometimes the picks will associate as
+a slightly different phase pP vs. P or Pg vs. Pb). Here the Associator is
+acting as a catalyst to the origin refinement process.
+
+<p>
+For each pick that IS NOT associated with any origin (but is still time
+relevant), the Associator attempts to associate the pick with the origin.
+Here, the Associator is acting as a reassociator to associate picks that
+couldn't originally be assigned because of the poor quality of the initial
+hypocenter location.
+
+<p>
+For each pick that is assigned to a DIFFERENT origin, the Associator attempts
+to associate the pick with the modified origin.  The Associator compares the
+association quality of the pick with its existing origin and the modified
+origin and if the pick now associates better with the modified origin, it
+reassigns the pick from its current origin to the modified one.  At this
+point the Associator is tasked with resolving splits that may have occurred
+due to errors in early estimates of the origin hypocenter.  The Associator
+should be taking picks away from a weaker origin and adding them to a
+stronger origin, until the stronger origin finally eats the weaker one.
+
+<p>
+<a name="assoctune"></a>
+<h4>Parameters Tunable</h4>
+
+<p>
+There are three sets of parameters that affect the Associator:<br>
+<ol>
+  <li>The traveltime tables</li>
+  <li>The station list</li>
+  <li>The affinity statistic coefficients</li>
+</ol>
+
+<p>
+The traveltime tables and station list are currently tunable.  The affinity
+statistic coefficients defined in the traveltime tables are tunable, but
+the others that are hardcoded within the Glass program are not.
+
+<p>
+<a name="assoctravtime"></a>
+<h5>Travel-time Tables</h5>
+
+<p>
+Please see Travel-time Tables under The Nucleator for an overview of the
+traveltime tables.    At this point Glass uses a special subset of traveltime
+tables that were generated based on empirical ad-hoc observations regarding
+the phases being picked by the Hydra picker.
+
+<p>
+In addition to an origin, the Associator requires two sets of inputs in order
+to perform an association:  a traveltime table for the appropriate
+distance/time, and a pick.  If there are no traveltime tables then there are
+no associations.  If there are no traveltime tables for a depth/distance/phase
+type, then there will be no associations made for that depth/distance/phase
+type.  So associations can be limited by limiting the available traveltime
+tables.  At the very least you want to limit the traveltime tables to the
+phases that are actually observed by the picker that is generating input to
+Glass.  If the picker doesn∆t pick a phase at a distance, then there
+shouldn't be a Glass traveltime table entry for that phase at that distance.
+What to do about phases that periodically appear is a more difficult question.
+They can either be excluded, or can be included and an attempt can be made to
+rig the affinity statistic coefficients in order to limit their use to where
+they will likely be seen.  Examples of this problem include PKKP, P'P', ScP.
+
+<p>
+<a name="assocstalist"></a>
+<h5>Station List</h5>
+
+<p>
+The Associator requires two sets of inputs in order to perform an
+association:  a traveltime table for the appropriate distance/time,
+and a pick.  If there are no picks, there will be no associations.  So
+associations can be limited by limiting the available picks.  Whether or
+not to limit legitimate energy picks in order to get better answers out of
+Glass is a question that's above my position on the seismology scale;
+however, limiting noisy stations that do not contribute picks that are
+relative to your end goal is a recommended activity.  For example, if you
+are interested in locating medium to large global earthquakes, then you
+probably do not want to include stations with faulty electronics, stations
+with a lot of non-seismic noise (traffic, oceans, ice breaking), or stations
+that are located close to an active seismic source that constantly releases
+energy in small magnitudes.  Noisy stations will often generate picks that
+are ripe for coincidental associations.  This can corrupt origin parameters,
+causing false or mislocated earthquakes.
+
+<p>
+<a name="assocaffinitytravtime"></a>
+<h5>Tunable Affinity Statistics Traveltime Tables</h5>
+
+<p>
+Traveltime tables are generated by a separate program, which is not currently
+setup for seismologist operation.  There are a number of configuration files
+that are used as input to the traveltime table generation program, that can
+be edited by a seismologist.  These input files currently live in
+hydra_proj\params\resp\seismic\ttt\glass\*.txt.  In these files, a
+configuration paragraph similar to the following appears for each traveltime
+table.
+
+<p>
+<table>
+<tr> <th>Phase</th><th>PKKPbc</th><th>PKKP</th> </tr>
+<tr> <td>DistRange</td><td> 85</td><td> 125</td></tr>
+<tr> <td>DistDelta</td><td> 2.5</td></tr>
+<tr> <td>DepthRange</td><td> 0</td><td> 800</td></tr>
+<tr> <td>DepthDelta</td><td> 25</td></tr>
+<tr> <td>TimeDelta</td><td> 10</td></tr>
+<tr> <td>RayParam</td><td> 2.0</td><td> 4.112</td></tr>
+<tr> <td>LocWeight</td><td> 0.05</td></tr>
+<tr> <td>ResWinWidth</td><td> 15.0</td></tr>
+</table>
+
+<p>
+The above paragraph tells the program that generates the traveltime tables
+to generate one for the phase PKKP, to be named PKKPbc, to generate it over
+the distance range of 85 to 125 degrees with an entry every 2.5 degrees,
+for a depth range of 0 to 800 with an entry every 25km;  it also tells it
+to generate a reverse lookup table based on time/depth, with entries every
+10 seconds / 25km.  It tells it to only use PKKP phases with ray params
+between 2 and 4.112 (the bc branch but not the ab).   The LocWeight entry
+is not important to the Associator but effects the weight given to this
+phase by the Glass Locator.  The last entry is SIGNIFICANT with respect
+to the Residual affinity statistic.  It tells the Associator to use a
+15 second residual window (half-width) for this phase, instead of the
+default of 10.   The residual affinity statistic is calculated based on the
+ratio of the residual to the allowable residual window.
+
+<p>
+The generation program will generate a table for each configuration
+paragraph.  Actually two tables get generated:  one based on time/depth
+and one on distance/depth.  Each entry in these tables will contain the
+following information:<br>
+<ul>
+  <li>Traveltime</li>
+  <li>Depth</li>
+  <li>Distance</li>
+  <li>Take Off Angle</li>
+  <li>Time residual window half-width</li>
+  <li>Horizontal Slowness of the phase (dtdx)</li>
+  <li>Vertical Slowness of the phase (dtdz)</li>
+  <li>Association Strength (Pick Probability Density - not currently used)</li>
+  <li>Location Weight (used by the Glass Locator, not by the Hydra Locator)</li>
+  <li>Mag. Threshold (not currently used)</li>
+  <li>Phase Name</li>
+</ul>
+
+<p>
+<a name="assocuntune"></a>
+<h4>Parameters - Untunable</h4>
+
+<p>
+<a name="assocaffinity"></a>
+<h5>Affinity Statistic</h5>
+
+<p>
+Most of the components of the affinity statistic generated for an
+origin-pick association are not tunable.  The composite affinity statistic
+is generated via the following equation:<br>
+<pre>
+Affinity = Origin.Gap_Affinity * Origin.Number_of_Arrivals_Affinity *
+           Pick.Residual_Affinity * P.Distance_Affinity * Pick.PPD_Affinity
+</pre>
+
+<p>
+Certain components of the affinity statistic can be turned on and off via
+the OPCALC_fAffinityStatistics variable.  (This variable is currently
+hardcoded and cannot be changed in a config file.)
+
+<p>
+The component affinity statistics are generated in the following manner
+
+<pre>
+Origin.Gap_Affinity
+Value:          Origin.Gap_Affinity = 4 * Bellcurve_Value(Origin.Gap / 360)
+Description:	Origin.Gap is the maximum azimuthal gap between P phases
+                associated with the origin.  If the number of existing
+                associations is too small (currently defined as less than
+                OPCALC_nMinStatPickCount = 10), then Origin.Gap_Affinity
+                is set to 1.0.
+Range:	        Artificially limited to 0.5 ˚ 2.0.  (If the gap is
+                EXCRUSIATINGLY BAD (more than 325 degrees) then it is not
+                artificially limited.)
+Reason:	        Gap is a crude measurement of the quality of the epicentral
+                location.  An origin with an azimuthal gap of 90 will generally
+                produce a more accurate location than an origin with a gap of
+                270, even if the number of phases associated with each origin
+                is the same.
+
+Origin.Number_of_Arrivals_Affinity
+Value:          Origin.Number_of_Arrivals_Affinity = log10(Origin.NumberOfPhases)
+Description:	DescOrigin.NumberOfPhases is the number of phases that were
+                used by the Locator to generate the latest hypocenter for this
+                Origin.  The affinity value is limited to a minimum of 1.0.
+Range:	        Artificially limited to 1.0+ (Under the current NEIC network
+                2.5 is the realistic maximum based on 300 phase picks).
+Reason:	        The number of arrivals associated with an origin is a crude
+                measurement of the magnitude of the quake.  This allows larger
+                quakes an improved chance of associating more phases.  This
+                aids in preventing splits where larger quakes can associate
+                phases even though they have large residuals, and in resolving
+                splits where larger origins can steal phases from smaller ones.
+
+Pick.Residual_Affinity
+Value:         Pick.Residual_Affinity =
+               2 * Bellcurve_Value(Pick.Residual / PhaseResidualWindowWidth)
+Description:   Breakeven point is one half the residual window width.  For the
+               default 10 second window, a residual of 5 seconds would net a
+               Residual_Affinity of 1.
+Range:         The range is 0 to 2, with no artificial limits.
+Reason:        The residual is the most key requirement in the association of
+               a Pick to an Origin.  You cannot associate a Pick as a P phase
+               if the pick delta time is not close to the theoretical
+               traveltime.  The affinity statistic allows picks that are
+               closer to the theoretical traveltime to garner an improved
+               affinity.
+
+Pick.Distance_Affinity
+Value:         Pick.Distance_Affinity =
+               Bellcurve_Value(Pick.Distance/(Median_Distance_Estimate*4))
+Description:   Distance based filtering is a decent mechanism for excluding
+               coincidental picks that aren∆t generated by energy released by
+               a quake.  The distance affinity statistic prevents picks outside
+               of four(4) times the median distance from being associated with
+               this origin.  The value 4 is hardcoded as OPCALC_dCutoffMultiple.
+               The breakeven point is twice the median distance estimate;
+               however the median distance estimate is fudged for very small
+               earthquakes as well as for some larger ones.  For very small
+               earthquakes the median distance is multiplied by 1.5.  For
+               certain earthquakes that are located near the heart of the
+               network such that the median distance is kept low by the
+               non-uniformity of the network (for the NEIC, imagine a M5.0+
+               earthquake located anywhere in the contiguous US), the median
+               distance is artificially inflated relative to the number of
+               phases associated with the origin.  This allows for PKP and
+               other associations that would otherwise be disallowed because
+               the median distance is only 15 degrees.
+Range:         The range is 0 to 2, with no artificial limits.
+Reason:        Distance is used as a sanity factor to prevent local or regional
+               quakes from associating with coincidental picks across the
+               globe, which have no energy from the quake associated with their
+               pick, and may corrupt the origin parameters.
+
+<p>
+<h5>Composite Affinity</h5>
+
+<p>
+Because the composite affinity statistic is a product of all the components,
+any affinity with a value of 0 automatically nixes the association.  The
+residual, dip, and distance affinity components can potentially have a value
+of 0.  So an association can be precluded because 1)the residual is too great;
+2) the distance is too great; 3) all of the picks are coming from a single
+direction(azimuthal gap).
+
+<p>
+Assuming that none of those components preclude the association, then the
+composite affinity for the pick/origin must be above a minimum affinity
+threshold in order to be eligible for association.  That threshold value is
+hardcoded to 0.9 ( as OPCALC_dAffMinAssocValue).
+Note that to allow quakes to properly build, exceptions are made to how
+affinity statistics are computed for small earthquakes.  Currently small
+quakes are defined as those with less than 10 phases (hardcoded as
+OPCALC_nMinStatPickCount).
+
+<p>
+Two examples:
+<p>
+SNZO BHZ IU 00 reports a pick 329.1 seconds after an existing origin.  The
+origin has 138 phases, an azimuthal gap of 54 degrees, and a median distance
+of 83 degrees.  54 degrees results in a Gap_Affinity of 2.0.  138 phases
+results in a Number_of_Arrivals_Affinity of 2.14.  The theoretical traveltime
+for a P phase at SNZO∆s distance and the origin∆s depth is 324.9 seconds,
+resulting in a residual of 4.25, resulting in a Residual_Affinity of 1.2.
+The distance of 24.9 degrees relative to the median distance of 83 results in
+a Distance_Affinity of 2.0.  The PPD is fixed at 1.0.  The composite affinity
+for this pick relative to the origin is 10.3 (2.0 * 2.14 * 1.2 * 2.0 * 1.0).
+It is greater than the minimum affinity requirement of 0.9, so it would be
+eligible for assignment to this origin and would very likely be assigned to
+it as the affinity is quite high.
+
+<p>
+MTE BHZ GE --  reports a pick 1223.4 seconds after the same origin
+(138 phases, gap of 54 degrees, and median distance of 83 degrees).
+54 degrees results in a Gap_Affinity of 2.0.  138 phases results in an
+Number_of_Arrivals_Affinity of 2.14.  The theoretical traveltime for a
+PKPab phase at MTE∆s distance and the origin∆s depth is 1215.0 seconds,
+resulting in a residual of 8.4, resulting in a Residual_Affinity of 0.14.
+The distance of 155.3 degrees relative to the median distance of 83 results
+in a Distance_Affinity of 1.1.  The PPD is fixed at 1.0.  The composite
+affinity for this pick relative to the origin is 0.66
+(2.0 * 2.14 * 0.14 * 1.1 * 1.0).  Because the affinity is below 0.90, this
+pick would not be eligible for assignment to the origin.
+
+<p>
+<a name="assocorigtime"></a>
+<h5>Relevant Origin Time Range</h5>
+
+<p>
+In it's primary role of trying to assign a new pick to its most likely origin,
+the Associator grabs only the origins that are time relevant to the pick.  The
+relevant origin time window relative to the pick time is hard coded.  It
+starts 2400 seconds pick (hardcoded as OPCALC_dSecondaryAssociationPrePickTime)
+prior to the pick and ends at the time of the pick.
+
+<p>
+<a name="assocpickrange"></a>
+<h5>Relevant Pick Time Ranges For An Origin</h5>
+
+<p>
+When the Associator runs in it's alternate scope of reevaluating how all of
+the time relevant picks associate with an origin after that origin has been
+modified, it uses various time windows.  (this is a bug/feature).<br>
+<ul>
+<li>Picks not assigned to any origin<br>
+The Associator uses a pick time range of (Origin_Time - 2400 seconds to
+Origin_Time) (2400 seconds is hardcoded as
+OPCALC_dSecondaryAssociationPrePickTime)</li>
+<li>Picks assigned to a different origin<br>
+The Associator uses a pick time range of (Origin_Time - 2000 seconds to
+Origin_Time)  (2000 seconds is hardcoded)</li>
+</ul>
+
+<p>
+<a name="locator"></a>
+<h3>The Locator</h3>
+
+<p>
+<a name="locatoroverview"></a>
+<h4>Overview</h4>
+
+<p>
+The Locator refines Origin parameters based on a least-squares inversion of
+the residual vectors for associated phases.  (or something like that)  The
+residual vectors are calculated based on the residual and azimuth from each
+pick along with the dtdx(horizontal slowness) and dtdz (vertical slowness)
+for the phase association.
+
+<p>
+<a name="locatortune"></a>
+<h4>Parameters Tunable</h4>
+
+<p>
+The Locator has two tunable parameters: the location weight of each phase
+(set in the traveltime tables), and the number of iterations it will run
+each time it is invoked.
+
+<p>
+<a name="locatorweight"></a>
+<h5>Location Weight</h5>
+
+<p>
+The Location Weight is set in the traveltime tables.  See Tunable Affinity
+Statistics Traveltime Tables under the Associator section for a description
+of traveltime table parameters.  Setting LocWeight to a value will cause the
+Locator to apply that weight to picks of that phase.  The default weight
+is 1.0.
+
+<p>
+<a name="locatoriter"></a>
+<h5>Number of Iterations</h5>
+
+<p>
+A line similar to the following<br>
+NumLocatorIterations 3<br>
+Can be placed in the glass_assoc.d config file. This line would cause the
+locator to be run for three iterations each time the Locator is invoked.
+The default is 1.
+
+<p>
+<a name="locatoruntune"></a>
+<h4>Parameters Untunable</h4>
+
+<p>
+The Locator has no untunable parameters.
+
+<p>
+<a name="filter"></a>
+<h3>The Filter</h3>
+
+<p>
+<a name="filteroverview"></a>
+<h4>Overview</h4>
+
+<p>
+The Filter is the portion of Glass that eliminates origins or pick-origin
+associations because they don't pass certain validity tests.  The Filter
+consists of a conglomeration of filters that are split into different portions
+of Glass.  They attempt to filter coincident origins and coincident
+pick-associations from the Glass output.  The filters can be thought of as
+falling into 3 groups:  core, network specific, and output.
+
+<p>
+<a name="filtercore"></a>
+<h5>Core Filters</h5>
+
+<p>
+The Core filters are very simple.  They ensure that existing origins and
+origin/pick associations don't violate the original association requirements.
+They are used to remove origins that don't have enough pick associations
+because the location has changed or because its picks have been stolen by
+another origin.  They are used to remove assigned picks because their affinity
+has dropped due to changes in the parameters of the origin.
+
+<p>
+<h6>Validate Origin</h6>
+<p>
+A filter will delete an origin if it discovers any of the following 3
+conditions:<br>
+<ul>
+  <li>Number of phases associated with the origin dropped below the number
+  of points required by the Nucleator to create a new origin.</li>
+  <li>Number of phases used by the locator to compute the latest hypocenter
+  for the origin dropped below the number of points required by the Nucleator
+  to create a new origin.</li>
+  <li>Number of P phases associated with the origin drops below (number of
+  points required to nucleate - 1).  The -1 is added as a bit of a buffer
+  against excessive origin deletion.</li>
+</ul>
+
+<p>
+<h6>Validate Associations</h6>
+
+<p>
+A filter will delete an origin / pick association (unassign the pick from the
+origin) if it discovers that the pick / origin affinity drops enough below the
+minimum association value to exceed a slop buffer (hardcoded as
+(OPCALC_dAffMinAssocValue - OPCALC_dAffinitySlop = 0.9 - 0.5 = 0.4 )  The
+substantial slop buffer was added for two reasons:  to prevent association
+oscillations for borderline picks (picks with affinity near the minimum
+association value); to encourage associated picks to stay associated even if
+the locator swings the origin in some direction that is not favorable to the
+pick.
+
+<p>
+<a name="filternetwork"></a>
+<h5>Network Specific Filters</h5>
+
+<p>
+Glass contains several origin oriented network specific filters that are
+capable of invalidating a given origin.  The key reason for these filters is
+to overcome anomalies in network uniformity and density.  In the NEIC Hydra
+network, the lion's share of sensors are located in North America, such that
+tuning Glass to preclude coincident events in North America would also
+preclude many valid medium sized earthquakes in the rest of the world;
+tuning Glass to include those medium sized events would also cause many
+coincident/noise events in North America to be produced.
+
+<p>
+The current set of filters defines 5 regions:<br>
+<ol>
+  <li>The Inter-mountain West region (46,-104   -  37.5,-113)</li>
+  <li>Western hemisphere (85,-140  -  45,-40)</li>
+  <li>Northwest quadrant (85,-170  -  0,-40)</li>
+  <li>North polar region (Lat > 70)</li>
+  <li>Rest of the world</li>
+</ol>
+
+<p>
+For each of these regions the filter checks for a minimum number of quality
+P phases.  The criteria for a quality phase is a residual within 2 seconds
+of the predicted arrival time.  In regions 2 - 4, phases from the networks
+UU, IW, and MB are not allowed to count towards the minimum requirement.
+
+<p>
+If the epicenter of the origin falls in regions 1 - 4, then the origin will
+be invalidated unless one of the following criteria is met: <br>
+<ul>
+  <li>10 quality P phases are associated with the origin. (10 is hardcoded
+  as MIN_QLTY_ARR)</li>
+  <li>4 quality short-range P phases are associated with the origin, where
+  short-range is defined as distance less than 10 degrees. (4 is hardcoded
+  as MIN_QLTY_CLOSEIN_ARR)</li>
+</ul>
+
+<p>
+If the epicenter of the origin falls outside regions 1-4 (inside region 5),
+then the origin will be invalidated unless there are at least x quality
+arrivals, where x = number of points required to nucleate / 2
+This is an integral equation, so if number of points is 8 then you need 5,
+if 9 then 5, if 10 then 6, in order to avoid invalidation.
+
+<p>
+<a name="filteroutput"></a>
+<h5>Output Filters</h5>
+
+<p>
+Glass contains one final set of filters that do not have a dramatic effect
+on the world of Glass, but affect what information that Glass exports to the
+outside world.  There are several filters that run in the publishing module
+that periodically exports event messages to the rest of Hydra.
+
+<p>
+<h6>Minimum Number of Phases</h6>
+
+<p>
+A filter prevents the publication of origins that have fewer than the minimum
+number of associated phases, as defined by the MinNumPhases is the
+glass_pub_params.d config file.  Events that don't reach the threshold are not
+deleted inside of Glass, but they are never published by Glass to the outside
+world.
+
+<p>
+<h6>Ancillary Phases</h6>
+
+<p>
+A filter tries to prevent certain coincidental associations with an origin,
+by requiring a minimum number of a certain phase type before phases of that
+type are published.  The current hardcoded limit is 3, and S phases closer
+than 10 degrees and all P phases are immune to this restriction.  For example,
+if there are two PKPab phases (VLC and MTE), and 4 PKPdf phases (MORC, PSZ,
+WLF, and CSS) with an origin, then there will be NO PKPab phases published
+for that origin, but all 4 of the PKPdf phases will be published.
+
+<p>
+<h6>Pdif Phases</h6>
+<p>
+A filter prevents Pdif phases > 110 degrees from being published.  I
+don't think there is a GOOD reason for this;  however Pdif phases beyond 110
+degrees for the current picker are almost always coincidental associations.
+
+<p>
+<h6>Old Events</h6>
+<p>
+A filter prevents quakes older than a threshold number of days from being
+published.  A command OldestEventToPublish in the glass_pub_params.d config
+file controls the length of the threshold in days.  For example: a quake
+occurs on 09/01/05 at 11:00 UTC, and OldestEventToPublish is set to 5.0.
+The quake is not picked up until some late arriving data enters the system
+on 09/06/05 and 12:00 UTC.  Glass now associates the quake, but does not
+publish it because it has been 5.04 days since the origin time, which is
+beyond the 5.0 day threshold.
+
+<p>
+<h6>Dead Events</h6>
+<p>
+A filter prevents an origin from being published once it is dead.  The
+publishing module tracks an origin through its life cycle in Glass, publishing
+it over and over again as it changes.  At some point the Publisher deems the
+Origin stale and marks it as dead.  This was done with the idea that Glass has
+a certain scope of time within which it operates, and at some point in time
+Glass should acknowledge that the quake has gone out of time scope for
+automatic processing and is being handled further down the processing stream.
+
+<p>
+<h6>Publication Rate</h6>
+<p>
+The publication module controls how often glass updates the outside world on
+how an origin is progressing.  Publication rate is potentially affected by
+both the amount of change an Origin is going through and the amount of time
+that has occurred after the origin.  Publication in general is controlled by
+the glass_pub_params.d config file, and the controlling parameters are
+documented within that file.
+
+<p>
+<a name="netopsother"></a>
+<h3>Other Stuff</h3>
+
+<p>
+There are several other mechanisms within Glass that affect processing, but do
+not affect output to the degree of the major four.  The Depth Refocus module
+attempts to discover alternate hypocenter depths that elude the Locator.  The
+State Processing orchestrates how origins and picks are processed by Glass.
+
+<p>
+<h4>Depth Refocus</h4>
+<p>
+Depth Refocus is a module that searches for an improved origin depth and
+time that cannot be discovered by the Locator.  Refocus assumes a correct
+epicenter, and does a depth/time grid search for a potentially better
+depth/time combination.  Refocus module utilizes all time-relative picks as
+input, regardless of their origin assignment status.  It attempts to associate
+each pick as either a P or pP phase for the origin at each point in the
+time/depth grid.  It was created to get the Locator out of local residual
+minima.  Currently there are no tunable parameters in the Focus module.
+
+<p>
+<h4>State Processing</h4>
+<p>
+Glass contains a state processing engine that controls how picks and origins
+are processed.  The engine is entity oriented where an entity is either a
+pick or an origin.  It's operation is configured by Tran commands in the
+glass_assoc.d config file.  At this point State Processing configuration is
+considered to be an engineering issue and is not meant to be modified by a
+seismologist/network operator.
+
+<p>
+<a name="admin"></a>
+<h2>Hydra Administrator</h2>
+
+<p>
+This section to be filled in later with information regarding how to configure
+Glass to run in a Hydra/Earthworm near real-time environment.
+
+<p>
+<a name="configglass"></a>
+<h3>Configuring Glass</h3>
+
+<p>
+<a name="dfile"></a>
+<h4>glass.d</h4>
+
+<p>
+<a name="error"></a>
+<h5>Error Reporting</h5>
+
+<p>
+Glass, by default writes 3 levels of status messages:<br>
+<ol>
+  <li>MAJOR ERROR
+  There are 39 Major Errors.  They include things like:<br>
+  <ul>
+    <dt>Can't open config file.</dt>
+    <dt>Can't load DLL (Module)</dt>
+    <dt>Can't allocate memory</dt>
+    <dt>Can't load traveltime tables</dt>
+    <dt>Can't get EW message types</dt>
+    <dt>Can't  access required module</dt>
+    <dt>Can't attach to shared memory</dt>
+    <dt>Can't create internal messages</dt>
+    <dt>Can't parse config file command</dt>
+    <dt>Can't write to temporary files.</dt>
+  </ul></li>
+  <li>MAJOR WARNING
+  There are 3 Major Warnings
+  They are reserved for times when glass gets "CONFUSED" internally.  It
+  continues to operate, but wants you to know that you may regret it in the
+  morning.</li>
+  <li>MINOR ERROR
+  There are somewhere around 90 Minor Errors.  They cover everything under the
+  sun, including Missed Messages, and so forth so on, and are a general catch
+  all for stuff that the operator or programmer may want to know about.</li>
+</ol>
+
+<p>
+To make matters more complicated, while the internal error levels are
+hardcoded in the code, the way glass reacts to them (i.e. what glass reports
+and how) is completely configurable via the .d files.  So you could (while not
+recommend it) configure glass via the .d file, to issue status messages for
+each DEBUG/INFO message and not issue them for any of the Major Errors.
+
+<p>
+From the default glass.d file:<br>
+<pre>
+#  DebugLevel commands
+#  CatalogDebugLevel | EarthwormDebugLevel | GlassDebugLevel | GlintDebugLevel | LocatorDebugLevel | PublisherDebugLevel
+#    Level:  0-9
+#           MAJOR_ERROR 0
+#           MAJOR_WARNING 1
+#           MAJOR_INFO 2
+#           MINOR_ERROR 3
+#           MINOR_WARNING 4
+#           MINOR_INFO 5
+#           FUNCTION_TRACE 9
+#
+#    OTF : OutputToFile
+#    OTD : OutputToDebugger
+#    OTE : OutputToError
+#    OTS : OutputTimeStamp
+#    OSM : OutputStatusMessage
+#
+#  Format:
+#  <MODULE>DebugLevel I:Level={0-9} I:OTF={0|1} I:OTD={0|1} I:OTE={0|1} I:OTS={0|1} I:OSM={0|1}
+#
+#  Default values:  {OTF,OTD,OTE,OTS,OSM}
+#  {1,1,1,1,1},  // MAJOR ERROR
+#  {1,1,1,1,1},  // MAJOR WARNING
+#  {1,1,0,0,0},  // MAJOR INFO
+#  {1,1,1,1,1},  // MINOR ERROR
+#  {1,1,1,0,0},  // MINOR WARNING
+#  {0,0,0,0,0},  // MINOR INFO
+#  {0,0,0,0,0}   // FUNCTION TRACE
+
+#
+#  Example:
+#  EarthwormDebugLevel  I:Level=2 I:OTF=1 I:OTD=0 I:OTE=0 I:OTS=0 I:OSM=0
+</pre>
+
+<p>
+<a name="user"></a>
+<h2>User</h2>
+
+<p>
+This section to be filled in later with information regarding how to operate
+the Glass displays including the ManQuake display for manually testing a
+hypothetical hypocenter.
+
+<p>
+<a name="programmer"></a>
+<h2>Programmer</h2>
+
+<p>
+This section to be filled in later with information regarding the
+architectural layout of Glass, along with notes on how to maintain/modify it.
+
+<hr>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/glass_cmd.html">
+Glass Commands</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+<B><address> Questions? Issues?
+<a href="http://groups.google.com/group/earthworm_forum?hl=en"
+target="_blank">Subscribe to the Earthworm Google Groups List.
+</a></address></B><BR>
+</ADDRESS>
+</pre></BODY>
+</HTML>
+

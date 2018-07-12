@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm modules: slink2ew overview</title>
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+<h1 align="center">Earthworm Modules: <br>
+slink2ew overview</h1>
+<center>
+<p><i>(last revised 8 March, 2005)</i> </p>
+</center>
+<br>
+slink2ew is a SeedLink client module for Earthworm.&nbsp; SeedLink is
+the data server component of the Seismological Communication Processor,
+or <a href="http://www.gfz-potsdam.de/geofon/seiscomp/welcome.html">SeisComP</a>,
+originally developed at <a href="http://www.gfz-potsdam.de/geofon/">GEOFON</a>.<br>
+<br>
+The SeedLink protocol can be summarized as a simple negotiation scheme
+followed by the streaming of data packets from the server.&nbsp;
+SeedLink packets are composed of a small header followed by a 512-byte
+Mini-SEED record (data only SEED).&nbsp; The negotiation phase allows
+the client to request only specified data types from the server for
+each data stream.&nbsp; A data stream is defined by a network and
+station code pair.<br>
+<br>
+By utilizing sequence numbers for each packet in a data stream the
+SeedLink protocol allows for connections to be resumed, eliminating
+most data gaps.&nbsp; The ability to resume data streams is primarily
+dependant on how much data, time-wise, the remote SeedLink has in it's
+buffer.<br>
+<br>
+The protocol allows for two different modes of data transmission,
+uni-station and multi-station modes.&nbsp; Uni-station mode operates
+by transmitting a single data stream (data from a single station)
+through one network connection.&nbsp; In this mode the data stream
+does not need to be specified by the client as it is implied by the
+internet address and port.&nbsp; Multi-station mode operates by
+transmitting multiplexed data streams (data from multiple stations)
+through a single network connection.<br>
+<br>
+The maxium size of the TRACEBUF messages created by slink2ew is
+limited to the maximum number of samples (using Steim2 compression)
+that can fit into a 512-byte Mini-SEED record (721 samples = 2884
+bytes) plus the size of the TRACEBUF header (64 bytes).  So 2948 bytes
+is a good estimate of the maximum size of TRACEBUF messages created by
+slink2ew.<br>
+<br>
+Version 1.1 and greater of slink2ew supports the creation of either
+TRACEBUF or TRACEBUF2 messages depending on which version of Earthworm
+the module was built for.  By default the module will create TRACEBUF2
+messages if the system supports them and TRACEBUF messages otherwise.
+Additionally there is an optional command ForceTraceBuf1 that will
+force the use of TRACEBUF messages on systems that support
+TRACEBUF2.<br>
+<br>
+SeisComP and SeedLink are actively supported by the
+<a href="http://www.gfz-potsdam.de/geofon/">GEOFON Project</a>,
+<a href="http://orfeus.knmi.nl/">ORFEUS Data Center</a> and 
+<a href="http://www.iris.edu/">IRIS Data Management Center</a> in
+addition to the user community.<br>
+<p> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/slink2ew_cmd.html">slink2ew Commands</a>
+<!-- USGS-required stuff at the end -->
+</p>
+<hr>
+</b>Contact: <b>chad at iris.washinton.edu</b><br>
+</address>
+</body>
+</html>

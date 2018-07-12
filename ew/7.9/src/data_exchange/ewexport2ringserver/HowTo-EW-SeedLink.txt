@@ -1,0 +1,58 @@
+
+This is a description of how to set up a SeedLink data server for data
+collected from an Earthworm export server using the
+ewexport2ringserver and ringserver programs.
+
+These instructions are written with the assumption that the ringserver
+and ewexport2ringserver programs will be managed using the framework
+commonly used to managed other processes in an Earthworm startstop system.
+
+1. Build latest ringserver program, source code available here:
+https://seiscode.iris.washington.edu/projects/ringserver
+
+2. Build latest ewexport2ringserver program, source code available here:
+https://seiscode.iris.washington.edu/projects/ewexport2ringserver
+
+Executable binaries should be copied or moved to a location in your PATH.
+
+3. Create a directory for the ringserver to store it's buffers (e.g. $EW_HOME/run/ring):
+
+$ mkdir $EW_HOME/run/ring
+
+4. Add export_ack module to startstop.d (e.g. startstop_unix.d):
+
+* This step can be skipped if an export feed will be available from another system.
+
+Process          "export_ack export_ack.d"
+Class/Priority    OTHER 0
+
+* Create/edit export_ack.d as needed to select data streams, set port, etc.
+
+5. Add ringserver and ewexport2ringserver commands to startstop.d (e.g. startstop_unix.d):
+
+Process          "ringserver -Rd /PATH/TO/ring -STDERR -Rs 1G -DL 16000 -SL 18000 -I XXSeismicNetwork"
+Class/Priority    OTHER 0
+Stderr            File
+
+Process          "ewexport2ringserver localhost:16005 localhost:16000"
+Class/Priority    OTHER 0
+
+The first address (host:port) for ewexport2ringserver is the
+export process that tracebufs should be collected from, the
+second address is the DataLink port of the ringserver (16000).
+
+These commands will configure the ringserver with a 1 gigabyte
+buffer size and transfer all data collected from the export process
+the ringserver. The -I option configures the ringserver (SeedLink
+server) identifier and should be changed to identify your
+organization.
+
+6. (Re)start startstop system 
+
+More options are available for the ringserver, such as enabling
+shipment logging of all SeedLink connections, changing buffer sizes,
+limiting access  addresses, etc. See the ringserver(1) man page
+for full details.
+
+Likewise, more options are available for ewexport2ringserver, see the
+usage message for more details.

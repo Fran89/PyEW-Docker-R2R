@@ -1,0 +1,116 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: pickwasher commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>pickwasher Configuration File Commands</H1>
+<I>(last revised March 31, 2007)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#alphabet">Alphabetic command listing & description</A>
+
+<p>pickwasher is the pick message converter.  Converts TYPE_PICK_SCNL
+to TYPE_PICK_GLOBAL.  There are no optional commands.
+
+<P>
+On startup, pickwasher reads the configuration file named on the
+command-line.  All commands are required. Any TYPE_PICK_SCNL found on
+the configured input ring will be converted to TYPE_PICK_GLOBAL and place
+on the configured output ring.  In the control file, lines may begin with
+a valid pickwasher command (listed below) or with one of 2 special
+characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#   pickwasher configuration file
+#
+#
+ MyModuleId     MOD_PICKWASHER  # module id for this program
+ InRing         PICK_RING       # transport ring to use for input
+ OutRing        PICK_RING       # transport ring to use for output
+ HeartBeatInt   30              # EW internal heartbeat interval (sec)
+ LogFile        1               # If 0, don't write logfile
+                                # If 1, write to module log and stderr/stdout
+                                # If 2, write to module log but not stderr/stdout
+ MaxMsgSize     128             # maximum size (bytes) for input/output msgs
+ RingSize       50              # number of msgs to buffer
+# end pickwasher config file
+
+<A NAME="alphabet">
+<H2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed in alphabetical
+order.  Listed along with the command (bold-type) are its arguments (in red)
+and a description of the command.  There are no default values so if you
+configure the command without arguments, all messages fail.
+
+<HR>
+
+<a name="HeartBeatInt">
+<pre><b>HeartBeatInt <font color=red> Seconds</font></b> </pre>
+<blockquote>
+Required command to define number of seconds between heartbeats placed on OutRing.
+</blockquote>
+<hr>
+<a name="InRing">
+<pre><b>InRing <font color=red> RingName </font></b> </pre>
+<blockquote>
+Read messages from this ring.
+</blockquote>
+<hr>
+<a name="LogFile">
+<pre><b>LogFile <font color=red> int </font></b> </pre>
+<blockquote>
+If set to 1, turn on logging. If set to 0, turn it off.
+</blockquote>
+<hr>
+<a name="MaxMsgSize">
+<pre><b>MaxMsgSize <font color=red> bytes</font></b> </pre>
+<blockquote>
+Maximum size in bytes for input/output msgs.
+</blockquote>
+<hr>
+<a name="MyModuleId">
+<pre><b>MyModuleId <font color=red> name</font></b> </pre>
+<blockquote>
+name is the instance of this module and must be defined in earthworm.d
+</blockquote>
+<hr>
+<a name="OutRing">
+<pre><b>OutRing <font color=red> RingName</font></b> </pre>
+<blockquote>
+Outgoing messages get written to RingName.
+</blockquote>
+<hr>
+<a name="RingSize">
+<pre><b>RingSize <font color=red> int </font></b> </pre>
+<blockquote>
+Number of messages from InRing to buffer.
+</blockquote>
+<hr>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/pickwasher_ovr.html">pickwasher Overview</A>
+</CENTER>
+
+<ADDRESS>
+<HR>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,173 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.78 [en] (X11; U; SunOS 5.9 sun4u) [Netscape]">
+   <title>Earthworm Program: ew2mseed commands</title>
+</head>
+<body text="#000000" bgcolor="#FADFAF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+ew2mseed Configuration File</h1></center>
+
+<center><i>(last revised May, 2003)</i></center>
+
+<h2>
+1. EXAMPLE CONFIGURATION FILE</h2>
+
+<pre># Sample configuration file for ew2mseed
+# Version 0.8
+# I.Dricker&nbsp; (i.dricker@isti.com)&nbsp;&nbsp; 15-May-2003</pre>
+
+<pre><font color="#CC0000">#New field: StartLatency (15-May-2003)</font></pre>
+
+<pre><font color="#CC0000">#New field: PriorityHighWater (02-Apr-2002)</font></pre>
+
+<pre><font color="#CC0000">#New Field: LoopsBeforeService (02-Apr-2002)</font></pre>
+
+<pre># New field: SocketReconnect (14-Mar-2001)</pre>
+
+<pre># Note that the parameters are case sensitive&nbsp;
+
+# This defines the root directory where ew2mseed writes MiniSEED files</pre>
+<b>MseedDir ../mseed</b>
+<pre># Verbosity has five levels&nbsp;
+# 1 - minimal number of messages (default if verbosity omitted in configuration)
+# 2 - more verbose
+# 3 even more verbose
+# 4 high level of verbosity
+# 5 same as 4 plus addidng debug messages from ws_clienII.c WaveServer debug messages</pre>
+
+<pre><b>Verbosity 1</b></pre>
+
+<pre># LogFile defines where to create log files
+&nbsp;#1 to log to disk;&nbsp;
+&nbsp;#0 to turn off disk logging;&nbsp;
+&nbsp;#2 to disable logging to stdout and stderr.
+&nbsp;
+
+</pre>
+
+<pre><b>LogFile 2</b></pre>
+
+<pre># Optional : LockFile:
+# If not specified, no locking mechanism is provided
+# If a valid LockFile is defined, ew2mseed is prevented from
+# running multiple copies over a single ew2mseed.d
+&nbsp;
+<b>LockFile ./ew2mseed.lock</b></pre>
+
+<pre># SCNLocSz - List SCNs, location IDs, logical MSEED record size
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and compression algorithm to save in MiniSEED format.
+#
+# Note that record size must be a power of 2!!!
+#
+# NONE for the location code means that location code is non defined.
+# It will be replaced by two spaces in the binary MiniSEED header.
+# Compression algorithm: STEIM1 or STEIM2
+#
+
+<b>#SCNLocSz BOSA BHZ GT cc&nbsp; 4096&nbsp; STEIM1
+SCNLocSz&nbsp; BMN BHZ LB NONE&nbsp; 512 STEIM2
+SCNLocSz&nbsp; BLA BHZ US bb&nbsp; 2048 STEIM1
+SCNLocSz FLET EHZ LD NONE&nbsp; 1024 STEIM2
+#SCNLocSz CHIP EHZ LD aa&nbsp; 4096 STEIM2
+#SCNLocSz ARNY EHZ LD bb&nbsp; 4096 STEIM1
+#SCNLocSz PAL&nbsp; EHE LD aa 4096 STEIM1</b></pre>
+
+<pre>#
+# OPTIONAL - specify StartTime. We are not interested in data before&nbsp;
+# this point. If this is not specified, ew2mseed will attempt to get all data&nbsp;
+# available in the tank.&nbsp;
+#&nbsp;
+# The format is mandatory and is yyyymnddhhmmss.00
+# where
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yyyy [4 chars] - year
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mn [2 chars] - month
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dd [2 chars] - day of month
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hh [2 chars] - hour of day
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mm [2 chars] - minutes
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ss [2 chars] - secs
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00 [2 chars] - usecs
+# THERE MUST be 17 symbols totally !
+#</pre>
+
+<pre><b>StartTime 20001119000000.00
+
+</b>&nbsp;
+# Setup for WaveServers we'll interrogate:
+# list of IP addresses/names and ports of the&nbsp; WaveServers we're to use</pre>
+
+<pre># Multiple servers are OK!</pre>
+
+<pre><b>WaveServer 136.177.31.188 16022</b></pre>
+
+<pre><b>WaveServer the.other.one.gov 16023</b></pre>
+
+<pre># We'll wait at most this long for the WaveServers&nbsp;
+# to respond to wsGertTraceBin() request.</pre>
+
+<pre><b>TravelTimeout&nbsp; 20</b></pre>
+
+<pre># SocketReconnect defines how often (in seconds)&nbsp;
+# ew2mseed reconnects to the socket of WaveServerV.&nbsp;
+# the default value is 3600 s. It is safe to increase this number
+# if the link to the WaveServer is reliable.</pre>
+# NOTE: parameter introduced 03/14/2001
+<pre><b>SocketReconnect&nbsp; 3000</b></pre>
+
+<pre># OPTIONAL - RecordsNumber is a&nbsp; number of MiniSEED records we are attempting to extract
+# in a single wsGetTraceBin() operation from the WaveServer.&nbsp;
+# Retrieval of more data from the server can result is faster throughput.
+# Keep in mind that there is a relation
+# between the number of records, the size of a records and the allocated
+# memory buffer, so&nbsp; RecordsNumber * Record Size * 4 is approximately equivalent&nbsp;
+# to the size of memory buffer in bytes.
+# Make sure that you computer has enough memory to handle the request.
+# Larger values of RecordsNumber also require an increase of TravelTimeout parameter.
+# Default value for RecordsNumber is 1.</pre>
+
+<pre><b>RecordsNumber 5</b></pre>
+#The next two fields are used for configuring a catch-up algorithm introduced
+in versions
+<br>#after April 2, 2002 (see http://mail.terra-bytes.org/ew2mseed/ew2mseed_cmd.html
+for detail)
+<br>#The first parameter is the maximum priority which can be assigned
+to the late channel (5 is default)
+<br>#The second parameters is the number of full loops over all channels
+before we enter the function
+<br>#which reassigns priorities depending on the channels' latencies. This
+number depends on the
+<br>#product of number of channels in ew2mseed configuration and the parameter
+"RecordNumber".
+<br>#We recommned to set the LoopsBeforeService parameter so that the Priority
+assignment function
+<br>#was hit every 30-60 minutes.
+<p><b><font color="#CC0000">PriorityHighWater 6</font></b>
+<br><b><font color="#CC0000">LoopsBeforeService 20</font></b>
+<p><font color="#CC0000"><b>#</b>StartLatency parameter in hours is used
+to superseed StartTime parameter.</font>
+<br><font color="#CC0000">#The starttime is computed as the current time
+minus StartLatency and the</font>
+<br><font color="#CC0000">#resultanant number is used to compute StartTime.
+Either StartTime or StartLatency</font>
+<br><font color="#CC0000">#must be present in the configuration file.&nbsp;
+If both of them are present,</font>
+<br><font color="#CC0000">#the program will use the parameter which is
+below</font>
+<br><font color="#CC0000">#than the other one in the configuration file.</font>
+<br><b><font color="#CC0000">StartLatency 24</font></b>
+<pre>#
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End of configuration</pre>
+
+<center>
+<p><br><a href="../modules.html">EarthWorm Module Index</a> | <a href="../ovr/ew2mseed_ovr.html">ew2mseed
+overview</a></center>
+
+<hr>
+<address> <br>
+Contact: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </address>
+
+</body>
+</html>

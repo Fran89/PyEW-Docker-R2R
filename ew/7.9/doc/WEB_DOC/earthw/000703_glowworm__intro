@@ -1,0 +1,79 @@
+From tlmurray@usgs.gov Mon Jul 10 09:11:17 2000
+Date: Mon, 3 Jul 2000 10:15:00 -0700
+From: tlmurray@usgs.gov
+To: earthw-list@nmt.edu
+Cc: jpower@usgs.gov, jnmarso@usgs.gov
+Subject: Re: EW Community Center
+
+I too have been disappointed by the lack of connection among earthworm
+community users and developers.  I have developed quite a few modules,
+especially for integrating non-seismic data streams into the earthworm
+system. Some might achieve wide-spread use.  For example, archiving
+continuous waveform data still seems to be an issue. So I wrote a simple
+module for sending triglist2k messages to trig2disk at user-specified
+intervals to produce sequential data files containing all the desired trace
+data.  Though probably not the enterprise level solution that some network
+operators require, it is perfectly suited for smaller operators such as I
+work with.
+
+But I am not sure what to do with this module or the others.  Wait until
+the formal release of a USGS Open-File Report describing them? The
+open-source proponents seem to push a test-it-in-battle approach, much more
+in keeping with my preferred style.  Does the fact they are written in
+Visual Basic and thus NT-specific make a difference?  I don't know.  I was
+expecting to funnel everything through the staff in Golden, but they are
+swamped with their own set of tasks.  Until I saw this latest exchange, I
+did not even know others shared my concerns about such issues.  Though
+unsuited to undertake a major role with the entire Earthworm community, I
+do have a certain responsibility to the users I work with.  My approach is
+perhaps instructive of what will increasingly occur unless some strong
+leadership in the Earthworm community either appears on its own or is paid
+to appear.
+
+I am in a somewhat unique position among Earthworm users.  In my role
+working with overseas volcano observatories, I am setting up numerous
+Earthworm boxes around the Pacific rim, especially Latin America.  In
+addition to monitoring volcanoes, the observatories typically run their
+country's national seismic network.  My guess is that within 3 years
+Earthworm boxes will be integral to every national seismic net in North and
+South America to as far south as at least Ecuador and possibly all the way
+to Tierra del Fuego.
+
+As part of this effort, I want to see these groups become part of an active
+user community.  To assist in this end, Jeff Marso (who is working with me
+on this project), put together a new listserver,
+http://tlaloc.wr.usgs.gov/mailman/listinfo/glowworm  We opted to produce a
+new one because the current Earthworm listserver appeared (1) moribund  (at
+the time) and (2) several generations old. He used GNU's Mailman :
+http://www.gnu.org/software/mailman/mailman.html We are hoping it will
+become the focal point of our support efforts as it provides a nice user
+interface, message threading, and all the normal benefits of a listserver.
+
+There is no content yet.  Our plan is to announce it and begin using it
+during an install in Ecuador starting next week.  By using it as the
+primary method of obtaining support from us, we hope that our colleagues
+will become accustomed to using it and eventually develop the community as
+they start to peek under the hood and can help each other.  It is also to
+be truly bilingual - messages in Spanish or English or anything in between
+will be welcome.  We may be naive in this approach, but at least it's a
+strategy of some sort.
+
+I apologize to the current listserver administrator as this is not to be
+taken as knock at you. The fact that no one was using the site drove our
+decision to go forward with one of our own as just being simpler.  In
+hindsight, we should have checked in with you anyway.  We did let Alex know
+of our plan.  But it may not be bad to have a additional listserver from
+the current one - it will be addressing a different audience.  We are
+flexible and it still early enough to change paths.  But I can't give up
+the newer generation's features as I need to entice people into using it.
+Whether this is a splintering of or enhancement to the Earthworm community
+is open to discussion.
+
+A final comment - I am pushing Earthworm technology into the non-seismic
+areas that volcano monitoring involves: strain, geodetic, chemical,
+hydrologic, etc.  A project at Mt. Rainier involves no seismic data
+whatsoever. I see it is an easy-to-use method for real-time geophysical
+data collection and distribution and a way to integrate all the different
+data streams together.  It's quite possible that Earthworm could take off
+in a much larger community than it now serves.
+

@@ -1,0 +1,44 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.unix 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2002/12/20 02:36:33  lombard
+#     Initial revision
+#
+#
+#
+
+LINUX_FLAGS=
+SOLARIS_FLAGS=-mt -lposix4 -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -g -D_REENTRANT $(GLOBALFLAGS)
+
+APP = ew2file
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BINARIES = ew2file.o $L/mem_circ_queue.o \
+	$L/getsysname_ew.o  $L/dirops_ew.o \
+	$L/read_arc.o $L/libew_mt.a 
+
+
+all: $B/$(APP)
+
+$B/$(APP): $(BINARIES)
+	$(CC) -o $B/ew2file $(CFLAGS) $(BINARIES) $(SPECIFIC_FLAGS) $(LINK_LIBS)
+
+
+lint:
+	lint ew2file.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o
+
+clean_bin:
+	rm -f $B/$(APP)

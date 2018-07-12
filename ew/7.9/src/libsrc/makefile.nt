@@ -1,0 +1,51 @@
+LIBEW_MODULES = util/earthworm_defs.obj util/chron3.obj util/kom.obj util/logit.obj util/getutil.obj winnt/sleep_ew.obj winnt/time_ew.obj winnt/transport.obj
+LIBEW_MT_MODULES = util/earthworm_defs.obj  util/chron3.obj util/kom.obj util/logit_mt.obj util/getutil.obj winnt/sleep_ew.obj winnt/time_ew.obj winnt/transport.obj winnt/threads_ew.obj winnt/sema_ew.obj
+
+all: nt_libs libew libew_mt install
+
+nt_libs:
+	@echo "Making  platform independent libraries"
+	nt_comp util
+	@echo "Making  winnt libraries"
+	nt_comp winnt
+	@echo "Making lib330"
+	nt_comp lib330
+	@echo "Making libdali"
+	nt_comp libdali
+	@echo "Making libmseed"
+	nt_comp util\libmseed
+	@echo "Making earlybird"
+	nt_comp earlybird
+
+libew:
+	@echo "Making libew.lib"
+	link.exe /lib /nologo /out:libew.lib $(LIBEW_MODULES) $(WIN_FLUSH_OBJ) 
+
+libew_mt:
+	@echo "Making libew_mt.lib"
+	link.exe /lib /nologo /out:libew_mt.lib $(LIBEW_MT_MODULES) $(WIN_FLUSH_OBJ) 
+
+clean_nt:
+	@echo "Removing EW library objects"
+	-del $(EW_HOME)\$(EW_VERSION)\lib\*.obj
+	-del $(EW_HOME)\$(EW_VERSION)\lib\*.lib
+	-del libew.lib
+	-del libew_mt.lib
+	@echo "Cleaning  platform independent libraries"
+	nt_clean util
+	@echo "Cleaning  winnt libraries"
+	nt_clean winnt
+	@echo "Cleaning lib330"
+	nt_clean lib330
+	@echo "Cleaning libdali"
+	nt_clean libdali
+	@echo "Cleaning earlybird"
+	nt_clean earlybird
+	@echo Cleaning libsrc\util\gd_lib
+	cd util
+	nt_clean gd_lib
+	cd ..
+
+install: libew.lib libew_mt.lib
+	copy libew.lib $(EW_HOME)\$(EW_VERSION)\lib
+	copy libew_mt.lib $(EW_HOME)\$(EW_VERSION)\lib

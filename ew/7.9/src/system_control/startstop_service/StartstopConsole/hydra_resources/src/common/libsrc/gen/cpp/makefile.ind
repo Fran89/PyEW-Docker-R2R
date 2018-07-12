@@ -1,0 +1,18 @@
+# THIS FILE IS UNDER CVS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+
+GEN_OBJS = 	watchdog_client.$(OBJ) \
+		DatagramSocket.$(OBJ) 
+
+
+OBJS = $(GEN_OBJS) 
+
+LIB_NAME = common_gen_cpp.lib
+
+#make_lib:
+#	link -lib /nologo $(ldebug) /out:$(HYDRA_LIB)\common_gen_cpp.lib $(ALL_OBJS)
+
+all: $(GEN_OBJS) make_lib
+

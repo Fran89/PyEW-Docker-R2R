@@ -1,0 +1,256 @@
+Welcome to the q2ew - Quanterra to Earthworm module.
+
+
+The q2ew module has been integrated into the earthworm source tree. 
+Under the q2ew module directory can be found the two utilities which are
+necessary for its proper functioning: comserv and qlib2.
+
+	   	  EW_HOME/src
+            /
+          q2ew
+       -----------
+	  /          /
+    comserv   qlib2
+
+
+Both comserv and qlib2 are compiled before any sources in q2ew are
+compiled. This is all done automatically from the top level makefile.sol.
+
+Note that the resulting comserv binary files are placed into comserv/bin
+directory. Follow the setup instructions below to install and configure
+comserv on your system.
+
+
+
+QUANTERRA DATALOGGER SETUP
+
+
+1 ROUTER SETUP 
+
+This section describes the setup where Quanterra 730 dataloggers
+are connected to a Cisco 2509 Access Server which translates the SLIP
+traffic coming out of the quanterras into IP. Each datalogger must be
+previously set up to communicate via SLIP, with a specific IP
+address, baud rate, and port number where comserv will be running on
+the host machine.
+
+The internals of the quanterra datalogger setup are left for another
+time and place. The following is the router configuration which 
+establishes 19.2K SLIP connections with two dataloggers:
+
+!
+version 11.2
+no service password-encryption
+no service udp-small-servers
+no service tcp-small-servers
+!
+hostname Q730-Router
+!
+enable secret 5 quanterra1
+enable password quanterra2
+!
+!
+interface Ethernet0
+ ip address 192.168.7.35 255.255.255.240
+!
+interface Serial0
+ no ip address
+ shutdown
+ no fair-queue
+!
+interface Serial1
+ no ip address
+ shutdown
+!
+interface Async1
+ ip address 192.168.7.225 255.255.255.252
+ ip mtu 1006
+ async dynamic routing
+ async mode dedicated
+ peer default ip address 192.168.7.226
+!
+interface Async2
+ ip address 192.168.7.229 255.255.255.252
+ ip mtu 1006
+ async dynamic routing
+ async mode dedicated
+ peer default ip address 192.168.7.230
+!
+router igrp 1
+ network 192.168.7.0
+!
+no ip classless
+!
+line con 0
+line 1 8
+ stopbits 1.5
+ rxspeed 19200
+ txspeed 19200
+line aux 0
+line vty 0 4
+ password quanterra
+ login
+!
+end
+
+
+
+2 COMSERV SETUP
+
+There must be one comserv process running for each datalogger
+(station). The setup files for comserv are:
+
+ o /etc/stations.ini - defines names of all stations, and directories
+   where each station is further defined
+
+ o /etc/network.ini - specifies log directories and other various
+   parameters for the entire network
+
+ o <stationdir>/station.ini - describes each station in detail. 
+
+For example, a setup with two Quanterra 730 data loggers (router and
+IP address setup described above) might look like this:
+
+- /etc/stations.ini:
+
+[SIT]
+dir=/home/earthworm/quanterra/etc/SIT
+desc=Test of SIT in Golden
+source=comlink
+[SYM]
+dir=/home/earthworm/quanterra/etc/SYM
+desc=Test of SYM in Golden
+source=comlink
+
+
+- /etc/network.ini:
+
+[netm]
+logdir=/home/earthworm/quanterra/logs
+cmddir=/home/earthworm/quanterra/cmds
+lockfile=/home/earthworm/quanterra/lock/netmon.lock
+server_startup_delay=10
+client_startup_delay=10
+max_check_tries=5
+poll_time=2
+min_notify=240
+re_notify=21600
+res_notify=1
+max_shutdown_wait=30
+notify_prog=/usr/ucb/mail -s "netmon notify" lucky@gldnbuffs.cr.usgs.gov
+
+
+- /home/earthworm/quanterra/etc/SIT/station.ini
+
+[comlink]
+* The following are for tcp/ip da.
+* NETTO: The number of seconds allowed to get any valid packet from the DA
+* 	before closing the connection.  Defaults is 120 seconds. 
+*	This value should be greater than the synctime on the dacommo to 
+*	avoid pointless disconnections.
+* NETDLY: The number of seconds between checking for a pending client 
+*	connection.  Default is 30 seconds.
+lockfile=/home/earthworm/quanterra/lock/SIT.comserv.lock
+ipport=17305
+netto=120
+netdly=30
+* Generic parameters
+grpsize=1
+grptime=5
+* NOTIFY works only with ultrashear release 93/05-1201 or higher.
+notify=y
+* parity is not really needed here.
+parity=no
+verbosity=2
+override=yes
+station=SIT
+* Note: THIS MUST BE UNIQUE FOR EACH STATION
+segid=8211
+pollusec=50000
+databufs=200
+detbufs=200
+timbufs=200
+calbufs=20
+msgbufs=200
+reconfig=50
+* turning off the dlog as a blocking client for now
+* client1=dlog,3600
+* uid200=32767
+* uid122=32767
+* uid0=32767
+* log_seed=lo2
+* timing_seed=ac2
+
+[netm]
+server=/home/earthworm/quanterra/bin/comserv
+* datalog may have -vN option for verbose mode.
+client1=dlog,/home/earthworm/quanterra/bin/datalog -v2
+* State: A=auto-restart S=start-once R=runable N=non-runable I=ignore
+state=A
+notify_prog=/usr/ucb/mail -s "netmon notify" lucky
+
+[dlog]
+* Pathnames for data directory, program, and pid file.
+dir=/home/earthworm/quanterra/data/SIT
+pidfile=/home/earthworm/quanterra/pid/SIT.dlog
+lockfile=/home/earthworm/quanterra/lock/SIT.dlog.lock
+* Selector specifies general selectors for data, detections, and calibrations.
+* Specific type selector lines set the data mask (y|n) for that type,
+* and optionally set specific selectors for that data type.
+selector=???
+data_selector=y
+detection_selector=y,???
+calibration_selector=y
+timing_selector=y
+log_selector=y
+*
+* ATWC Q730s are shipping 256 byte packets, trim them on disk
+*
+trimreclen=y
+*
+save=???
+data_save=y
+detection_save=y
+calibration_save=y
+timing_save=y
+log_save=y
+*
+limit=1d
+data_limit=1H,HH?,HL?
+data_limit=1H,V??,U??
+data_limit=1H,A??,
+detection_limit=1d
+calibration_limit=1d
+timing_limit=1H
+log_limit=1H
+*
+data_ext=D
+detection_ext=E
+calibration_ext=C
+timing_ext=T
+log_ext=L
+* Format specifier for filenames:
+* %S=STATION %s=station %N=NET %n=net %C=CHAN %c=chan %X=EXTENSION %x=extention
+* %Y=year %y=yr %j=doy %m=month %d=day %H=hr %M=min
+filename_format=%S.%N.%C.%X.%Y.%j.%H%M
+
+
+- /home/earthworm/quanterra/etc/SYT/station.ini
+
+ Same as above, with the names of directories changed to reflect the
+ different station name.
+
+
+
+Once these files are in place one comserv process for each station
+should be started:
+
+ > comserv SIT
+ > comserv SYM
+
+
+Note: It takes a fairly long time (about 10 minutes) for the Q730 
+dataloggers to connect with comserv and start sending data. During
+this startup time comserv will be displaying log messages indicating
+the progress of the connection negotiation.
+

@@ -1,0 +1,22 @@
+#
+#    Makefile for ew2moledb - Windows version
+# 
+#
+
+SUBDIR=ew2moledb
+
+all:: FRC
+	@echo "Making Earthworm archiving modules"
+	@nt_make_subdirs $(SUBDIR)
+
+clean:: FRC
+	@for %x in ($(SUBDIR)) \
+	do \
+		@nt_clean %x
+
+clean_bin:: FRC
+	@for %x in ($(SUBDIR)) \
+	do \
+		@nt_clbin %x
+
+FRC:

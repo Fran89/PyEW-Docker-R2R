@@ -1,0 +1,75 @@
+# Mapping file contains tables of instrument types, long station names
+# and agency names.
+# Agency net agency-name # net is standard network code;
+#    agency-name: the long agency name, up to 40 characters; NO SPACES ALLOWED
+Agency UW   Pacific Northwest Seismograph Network
+Agency UO   Univeristy of Oregon
+Agency US   US National Seismograph Network
+#
+#
+# Station sta net longName
+#  sta and net are standard station and network codes;
+#  longName is the long station name, up to 20 characters
+#
+Station ALCT UW Alcott ES, Redmond
+Station ALST UW Alston BPA, Oregon
+Station ALVY UW Alvey BPA, Oregon
+Station BEVT UW Boeing Everett 
+Station BRKS UW Brookside 
+Station COR  UO Corvallis Oregon
+Station CSEN UW Crystal Springs
+Station DBO  UO Dodson Butte, OR
+Station EARN UW East Ridge ES
+Station ELW  UW Echo Lake BPA WA
+Station ERW  UW Mt. Erie WA
+Station FINN UW Finn Hill Jr High
+Station GNW  UW Green Mountain WA
+Station HAWA US Hanford WA 
+Station HLID US Hailey, ID
+Station HOLY UW Holy Rosary
+Station KEEL UW Keeler BPA, Oregon
+Station KIMB UW Kimball School
+Station KIMR UW Kitsap Mod Risk
+Station KINR UW Kitsap Road Shed
+Station KITP UW Kitsap Road Shed
+Station LAWT UW Lawton School
+Station LEOT UW Leota Jr High
+Station LON  UW Longmire WA
+Station LTY  UW Liberty WA
+Station MARY UW Marymoore Park
+Station MBPA UW Monroe BPA
+Station MPL  UW Maple Valley
+Station MURR UW Camp Murry
+Station NEW  US Newport WA
+Station NOWS UW NOAA, Seattle
+Station OCWA US Octopus Mtn. WA
+Station PCEP UW PC East Precinct
+Station PCFR UW PC Firing Range
+Station PCMD UW PC Mountain Det
+Station PGC  CN Canada
+Station PIN  UO Pine Mt. Oregon
+Station PMB  CN Canada
+Station PNLK UW Pine Lake JH
+Station PNT  CN Canada
+Station QAW  UW Queen Anne, WA
+Station RAW  UW Raver BPA 
+Station RBEN UW Benson El.
+Station RHAZ UW Hazelwood ES 
+Station ROSS UW Ross BPA Vancouver
+Station RWW  UW Ranney Well WA 
+Station SBES UW Silver Beach ES
+Station SEA  UW UW, Seattle
+Station SP2  UW Seward Pk, Seattle
+Station SQM  UW PNNL - Sequim, WA
+Station TBPA UW Tacoma WA BPA
+Station TKCO UW King Co EOC
+Station TTW  UW Tolt Res, WA
+Station UPS  UW U. Puget Sound
+Station WISC UW Wilburton Center
+Station WVOR US Wildhorse Valley OR
+#
+# Inst sta comp net inst-type
+#   sta, comp and net are standard station, component and network codes
+#   inst-type is the instrument description, up to 50 characters
+
+

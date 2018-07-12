@@ -1,0 +1,98 @@
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+SOLARIS_CFLAGS = "-D_SOLARIS"
+SPECIFIC_CFLAGS=$($(PLATFORM)_CFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+I = -I $(EW_HOME)/$(EW_VERSION)/include
+
+QLIB_DIR = ../../libsrc/qlib2
+QLIB_LIB = $(QLIB_DIR)/lib_ew/libqlib2nl.a
+
+QINCLUDE = -I../../libsrc/qlib2 -DNO_LEAPSECONDS
+
+COMMON_CFLAGS = $(GLOBALFLAGS)  -g $(QINCLUDE)
+SNCL_CFLAG = -DSUPPORT_SCNL
+
+CFLAGS = $(COMMON_CFLAGS) $(SNCL_CFLAG) $(SPECIFIC_CFLAGS)
+ALL = ew2mseed  ew2mseed_nl
+
+OBJ = ew2mseed.o \
+      ew2mseed_config.o \
+      ew2mseed_log.o \
+      ew2mseed_files.o \
+      ew2mseed_swap.o \
+      ew2mseed_utils.o \
+      ws_requests.o \
+      isti_ws_client.o \
+      $(L)/ws_clientII.o
+
+OBJ_NL = $(L)/ws_clientII_no_location.o \
+        isti_ws_client_nl.o \
+        ws_requests_nl.o \
+        ew2mseed_utils_nl.o \
+        ew2mseed_swap_nl.o \
+        ew2mseed_nl.o \
+        ew2mseed_config_nl.o \
+        ew2mseed_log_nl.o \
+        ew2mseed_files_nl.o
+
+
+EW_LIBS = \
+        $L/socket_ew.o \
+        $L/libew_mt.a \
+        $L/swap.o \
+        $L/socket_ew_common.o
+
+SRCS = wsSniffer.c
+OBJS = $(SRCS:%.c=%.o)
+
+
+all:	$(ALL)
+
+ew2mseed: $(OBJ) ; \
+          $(CC) $(QINCLUDE) $(CFLAGS)  -o $(B)/ew2mseed  $(OBJ) $(EW_LIBS) $(I) $(QLIB_LIB) $(SPECIFIC_FLAGS)
+
+ew2mseed_nl:$(OBJ_NL); \
+          $(CC) $(QINCLUDE) $(COMMON_CFLAGS)  -o $(B)/ew2mseed_nl $(OBJ_NL) $(EW_LIBS) $(I) $(QLIB_LIB) $(SPECIFIC_FLAGS)
+
+
+#wsSniffer:  $(OBJS); \
+#           $(CC) $(QINCLUDE) $(CFLAGS)   -o $(B)/wsSniffer  $(OBJS) $(EW_LIBS) -lm -lpthread
+	
+
+ew2mseed_nl.o:  ew2mseed.c 
+	$(CC) -c  -o ew2mseed_nl.o ew2mseed.c $(COMMON_CFLAGS)
+
+ew2mseed_config_nl.o:  ew2mseed_config.c 
+	$(CC) -c  -o ew2mseed_config_nl.o ew2mseed_config.c $(COMMON_CFLAGS)
+
+ew2mseed_log_nl.o:  ew2mseed_log.c 
+	$(CC) -c  -o ew2mseed_log_nl.o ew2mseed_log.c $(COMMON_CFLAGS)
+
+ew2mseed_files_nl.o:  ew2mseed_files.c 
+	$(CC) -c  -o ew2mseed_files_nl.o ew2mseed_files.c $(COMMON_CFLAGS)
+
+ew2mseed_swap_nl.o:  ew2mseed_swap.c 
+	$(CC) -c  -o ew2mseed_swap_nl.o ew2mseed_swap.c $(COMMON_CFLAGS)
+
+ew2mseed_utils_nl.o:  ew2mseed_utils.c 
+	$(CC) -c  -o ew2mseed_utils_nl.o ew2mseed_utils.c $(COMMON_CFLAGS)
+
+ws_requests_nl.o:  ws_requests.c 
+	$(CC) -c  -o ws_requests_nl.o ws_requests.c $(COMMON_CFLAGS)
+
+isti_ws_client_nl.o:  isti_ws_client.c 
+	$(CC) -c  -o isti_ws_client_nl.o isti_ws_client.c $(COMMON_CFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f $(B)/ew2mseed $(B)/wsSniffer $(B)/ew2mseed_nl a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $(B)/ew2mseed $(B)/wsSniffer $(B)/ew2mseed_nl

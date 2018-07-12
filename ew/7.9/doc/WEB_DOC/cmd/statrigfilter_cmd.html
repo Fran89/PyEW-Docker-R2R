@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: statrigfilter commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+statrigfilter Configuration File</h1>
+<i>(last revised 1 June 2006)</i> </center>
+<p>statrigfilter is a station trigger filtering module designed to
+prevent duplicate triggers. Below is a copy of the .d file with
+detailed notes on each
+parameter
+</p>
+<pre># <br># statrigfilter configuration file<br><br># Basic Earthworm setup:<br>#------------------------<br> MyModuleId   MOD_STATRIGFILTER # module id for this instance of statrigfilter <br> InRing       PICK_RING         # shared memory ring for input<br> OutRing      FILTERPICK_RING   # shared memory ring for output<br> HeartbeatInt 30                # seconds between heartbeats<br> LogFile      1                 # 0 log to stderr/stdout only <br>                                # 1 log to stderr/stdout and to disk file<br>                                # 2 log to disk file only<br> Debug        1<br><br># List the message logos to grab from InRing, WILDCARDs permitted.<br># Multiple "GetLogo" commands are allowed, with no hardcoded limit.<br>#         Installation    Module      Message Types<br>#-----------------------------------------------------------------<br> GetLogo  INST_WILDCARD  MOD_WILDCARD # TYPE_CARLSTATRIG &amp; TYPE_CARLSTATRIG_SCNL<br><br># Trigger Filtering Parameters<br>#-----------------------------<br> TriggerHistory       5      # Keep track of this many triggers which have<br>                             # made it thru the filter for each station.<br><br> TimeTolerance        2.0    # If trigger times are within this many seconds of<br>                             # each other, they are "duplicates."<br><br> OlderTrigAllowed     1      # 0=reject any non-duplicate trigger whose <br>                             #   timestamp is earlier than the youngest <br>                             #   passed trigger for this station.<br>                             # 1=accept a non-duplicate trigger whose timestamp<br>                             #   is earlier than the youngest passed trigger,<br>                             #   but place a limit on how old it can be.<br>                             #   Must also use the "OlderTrigLimit" command.<br>                             # 2=accept any non-duplicate trigger whose <br>                             #   timestamp is earlier than the youngest   <br>                             #   passed trigger.<br><br> OlderTrigLimit       10     # Required only if OlderTrigAllowed = 1<br>                             # Accept an trigger whose timestamp is between<br>                             # TimeTolerance and OlderTrigLimit sec     <br>                             # earlier than the youngest passed trigger<br>                             # from this station.<br><br># List of Allowed Components<br>#---------------------------<br># If you want ALL component codes to be eligible to pass thru <br># statrigfilter, comment out all "AllowComponent" commands.<br># If you want to limit which component codes pass thru statrigfilter,<br># use one "AllowComponent" command for each allowed component code.<br>#AllowComponent   VDZ<br>#AllowComponent   VHZ<br>#AllowComponent   VLZ<br>#AllowComponent   SHZ<br>#AllowComponent   SLZ<br>#AllowComponent   EHZ<br>#AllowComponent   HHZ<br>#AllowComponent   BHZ<br>#AllowComponent   DP1<br>#AllowComponent   DP2<br>#AllowComponent   DP3<br>#AllowComponent   EP1<br>#AllowComponent   EP2<br>#AllowComponent   EP3<br><br># Optional commands:<br>#-------------------<br> MaxMessageSize   128        # length (bytes) of largest msg to be processed<br>                             # from InRing.  Default=MAX_BYTES_PER_EQ<br><br> UseOriginalLogo  1          # 0  apply statrigfilter's logo to any msgs that<br>                             #    pass the filter test (normal Earthworm behavior)<br>                             # non-zero means apply the original logo to any<br>                             #    messages that pass the filter test.  This<br>                             #    also requires that InRing and OutRing be <br>                             #    different to avoid "missed message" or<br>                             #    "sequence gap" storms in trigger-reading modules..<br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/statrigfilter_ovr.html">statrigfilter Overview</a> </center>
+<hr>
+<address> <br>
+Contact: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </address>
+</body>
+</html>

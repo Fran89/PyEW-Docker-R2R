@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<TITLE> EW v7.9 released on October 26, 2016</TITLE>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER>
+  <H1>Earthworm Release Notes V7.9</H1>
+  <I>(October 26, 2016)</I>
+</CENTER>
+<p> <a href="#modules">New Modules</a><br>
+  <a href="#modifications">Modifications/ Bug Fixes to Existing Modules</a> <br>
+<p>
+<PRE>
+
+<b><a name=modules>NEW MODULES:</a></b>
+
+tideweb2ew - connect to tide guage web pages and pull tide data into local data
+files and into an Earthworm TRACEBUF2 message in the ring. Thanks to PRSN for funding
+this development.
+Scott Hunter October 1, 2016
+
+eew src directory added (2 new modules sets) 
+ Central Weather Bureau (CWB) - Taiwan
+ Institut Cartogràfic i Geològic de Catalunya (ICGC) - Spain
+Thanks to both contributors!
+
+pdl2ark (NOT an EW module)
+Receives PDL data and generates near HypoARC messages/files (.ark instead of .arc)
+Scott Hunter    October 23, 2015
+
+ark2arc
+Makes .arc files from .ark files (see above)
+Scott Hunter    October 23, 2015
+
+gmewhtmlemail
+Sends email messages about events with data from gmew triggered either by PDL or ewthresh
+Scott Hunter    October 23, 2015
+
+<b><a name=modifications>MODIFICATIONS/BUG FIXES TO EXISTING MODULES:</a></b>
+
+hyp71_mgr
+Corrected several arc output message bugs.
+Phase calculated residuals were often wrongly reported.
+If a station was missing in hyp71_mgr configuration, this would lead to a complete mix in arc message output.
+In some cases, the reported result was not the calculated one.
+Corrected hyp2000arc to Hypo71 card phase conversion when second was lower than 10
+Corrected hyp2000arc to Hypo71 card phase conversion when first arrival was an S-phase
+Jean-Marie Saurel    October 10, 2016
+
+ewthresh
+Modified WaitBeforeNextThresh command to take optional second argument SameNetSta; 
+if present, looks at all of Net/Sta to decide if enough time has passed for a new message.
+Also added WaitBeforeMessages command: how long to wait after startup before generating messages.
+Scott Hunter        April 13, 2016
+
+waveman2disk
+Fixed an annoying bug that caused the wfdisc putaway to blow up with large files.
+Paul Friberg April 5, 2016
+
+nll_mgr
+Corrected bug that caused Hyp2000arcCompatibilityMode to mix events.
+Corrected bug in read_arc library that caused segfaults when using write_phs.
+Jean-Marie Saurel    February 23, 2016
+
+ewthresh
+Added TLS capability (added by Elmar Rothert of Qcon), fixed so that EW_THRESH_ALERT messages have module ID of ewthresh module, 
+and allowed Debug level 1 to show messages to logfile.
+Paul Friberg October 16, 2015
+
+gmew
+Added ability to recognize & respond to messages from ewthresh
+Scott Hunter    October 23, 2015
+
+eqfilter
+Added new filter option: within a specfied distance of a location given by lat/lon
+Scott Hunter    October 23, 2015
+
+eqfilter
+Added new filter option: reject events older than specified seconds
+Scott Hunter    November 16, 2015
+
+arc2trig
+Added option to get stations from file (within specified distance of origin)
+Scott Hunter    November 17, 2015
+
+ewthresh
+Added option for how long to wait after sending a message before sending another from that SCNL
+Scott Hunter    December 3, 2015
+
+sniffrings
+Added option for it to self-terminate after a specified number of seconds.
+Scott Hunter    October 13, 2016
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,41 @@
+#
+# nq2pgm - NetQuakes mSEED to strong ground motion
+#
+
+LINUX_FLAGS=-lutil -lpthread -lm
+SOLARIS_FLAGS = -lm -lposix4 -lsocket -lnsl -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+QLIB_DIR = $(EW_HOME)/$(EW_VERSION)/src/libsrc/qlib2
+QLIB_LIB = $(QLIB_DIR)/lib_ew/libqlib2nl.a
+
+CFLAGS +=  -g -I$(QLIB_DIR) 
+
+all: nq2pgm
+
+SRCS = main.c   
+
+OBJS = main.o  
+ 
+EW_LIBS = \
+	$L/libew_mt.a \
+	$L/dirops_ew.o \
+	$L/rw_strongmotionII.o 
+
+# IGD 2006/11/16 Note that we use qlib2nl: no-leap-seconds version of Qlib2
+nq2pgm: $(OBJS); \
+        $(CC) -o $(B)/nq2pgm $(OBJS) $(EW_LIBS) $(QLIB_LIB) $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/nq2pgm*
+
+FORCE:

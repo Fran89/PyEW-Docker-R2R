@@ -1,0 +1,68 @@
+// _DOC_ =============================
+// _DOC_ FilterPicker5
+// _DOC_ =============================
+        // _DOC_ the filter window (filterWindow) in seconds determines how far back in time the previous samples are examined.  The filter window will be adjusted upwards to be an integer N power of 2 times the sample interval (deltaTime).  Then numRecursive = N + 1 "filter bands" are created.  For each filter band n = 0,N  the data samples are processed through a simple recursive filter backwards from the current sample, and picking statistics and characteristic function are generated.  Picks are generated based on the maximum of the characteristic funciton values over all filter bands relative to the threshold values threshold1 and threshold2.
+        // _DOC_ the long term window (longTermWindow) determines: a) a stabilisation delay time after the beginning of data; before this delay time picks will not be generated. b) the decay constant of a simple recursive filter to accumlate/smooth all picking statistics and characteristic functions for all filter bands.
+        // _DOC_ threshold1 sets the threshold to trigger a pick event (potential pick).  This threshold is reached when the (clipped) characteristic function for any filter band exceeds threshold1.
+        // _DOC_ threshold2 sets the threshold to declare a pick (pick will be accepted when tUpEvent reached).  This threshold is reached when the integral of the (clipped) characteristic function for any filter band over the window tUpEvent exceeds threshold2 * tUpEvent (i.e. the average (clipped) characteristic function over tUpEvent is greater than threshold2)..
+        // _DOC_ tUpEvent determines the maximum time the integral of the (clipped) characteristic function is accumlated after threshold1 is reached (pick event triggered) to check for this integral exceeding threshold2 * tUpEvent (pick declared).
+        // _DOC_ pointer to a memory structure/object is used so that this function can be called repetedly for packets of data in sequence from the same channel.
+    // _DOC_ =============================
+    // _DOC_ apply algoritm
+    // _DOC_ set clipped limit of maximum char funct value to 5 * threshold1 to avoid long recovery time after strong events
+    // _DOC_ =============================
+    // _DOC_ loop over all samples
+        // _DOC_ update index of nTUpEvent length up event window buffers
+        // _DOC_ =============================
+        // _DOC_ characteristic function is  (E2 - mean_E2) / mean_stdDev_E2
+        // _DOC_    where E2 = (filtered band value current - filtered band value previous)**2
+        // _DOC_    where value previous is taken futher back for longer filter bands
+        // _DOC_ evaluate current signal values
+        // _DOC_ filters are applied to first difference of signal values
+        // _DOC_ loop over numRecursive filter bands
+            // _DOC_  apply two single-pole HP filters
+            // _DOC_  http://en.wikipedia.org/wiki/High-pass_filter    y[i] := α * (y[i-1] + x[i] - x[i-1])
+            // _DOC_  apply one single-pole LP filter
+            // _DOC_  http://en.wikipedia.org/wiki/Low-pass_filter    y[i] := y[i-1] + α * (x[i] - y[i-1])
+                // _DOC_ limit maximum char funct value to avoid long recovery time after strong events
+                // _DOC_ characteristic function is maximum over numRecursive filter bands
+                // _DOC_ trigger index is highest frequency with CF >= threshold1 over numRecursive filter bands
+            // _DOC_ =============================
+            // _DOC_ update uncertainty and polarity fields
+            // _DOC_ uncertaintyThreshold is at minimum char function or char funct increases past uncertaintyThreshold
+            // _DOC_ each time characteristic function rises past uncertaintyThreshold store sample index and initiate polarity algoirithm
+                // _DOC_ initialize polarity algorithm, uses derivative of signal
+            // _DOC_   accumulate derivative and sum of abs of derivative for polarity estimate
+            // _DOC_   accumulate since last indexUncertainty
+        // _DOC_ =============================
+        // _DOC_ trigger and pick logic
+        // _DOC_ only apply trigger and pick logic if past stabilisation time (longTermWindow)
+            // _DOC_ update charFunctClipped values, subtract oldest value, and save provisional current sample charFunct value
+            // _DOC_ to avoid spikes, do not use full charFunct value, may be very large, instead use charFunctClipped
+            // _DOC_ if new picks allowd, check if integralCharFunct over last tUpEvent window is greater than threshold
+                // _DOC_ find last point in tUpEvent window where charFunct rose past threshold1 and integralCharFunct greater than threshold back to this point
+                                // _DOC_ save characteristic function value as indicator of pick strenth
+                                // _DOC_ set index for pick uncertainty begin and end
+                                // _DOC_ evaluate polarity based on accumulated derivative
+                                // _DOC_    (=POS if derivative_sum > 0, = NEG if derivative_sum < 0,
+                                // _DOC_     and if ratio larger abs derivative_sum / abs_derivative_sum > 0.667,
+                                // _DOC_     =UNK otherwise)
+            // _DOC_ if no pick, check if charFunctUncertainty has dropped below threshold maxAllowNewPickThreshold to allow new picks
+        // _DOC_ =============================
+        // _DOC_ update "true", long-term statistic based on current signal values based on long-term window
+        // _DOC_ update long-term means of x, dxdt, E2, var(E2), uncertaintyThreshold
+            // _DOC_ mean_stdDev_E2 is sqrt(long-term mean var(E2))
+        // _DOC_ =============================
+        //  _DOC_ act on result, save pick if pick accepted at this sample
+                // _DOC_ if pick accepted, save pick time, uncertainty, strength (integralCharFunct) and polarity
+                // _DOC_    pick time is uncertainty threshold (characteristic function rose past
+                // _DOC_    uncertaintyThreshold) and trigger time (characteristic function >= threshold1)
+                // _DOC_    pick begin is pick time - (trigger time - uncertainty threshold)
+// _DOC_ =============================
+// _DOC_ FilterPicker5_Memory object/structure
+// _DOC_ =============================
+    // _DOC_ =============================
+    // _DOC_ picker memory for realtime processing of packets of data
+    // _DOC_ set up buffers and memory arrays for previous samples and their statistics
+    // _DOC_ criticalIntegralCharFunct is tUpEvent * threshold2
+    // _DOC_ integralCharFunctClipped is integral of charFunct values for last nTUpEvent samples, charFunct values possibly limited if around trigger time

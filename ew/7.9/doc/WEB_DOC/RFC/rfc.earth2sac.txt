@@ -1,0 +1,57 @@
+
+---------------------   REQUEST FOR COMMENT    ---------------
+   `EARTH2SAC' (generate SAC files from an Earthworm wave_server) 
+                        2/12/98
+
+	Send comments to Pete Lombard <lombard@geophys.washington.edu>
+
+
+Earth2sac is a proposed standalone program for retrieving trace data from one
+or more Earthworm wave servers and writing the data out to a set of SAC data
+files. This program will be modeled after earth2uw, a similar program for
+putting trace data into UW2-format data files. Earth2uw has been in production
+use at University of Washington since the start of 1998.
+
+The main arguments to earth2sac are used to specify the source of the trace
+data, and the stations, components, start time and duration of traces. 
+
+The default list of wave servers is obtained from a local file (path is set at
+compile time). Other servers may be used by specifying servers in the command
+line or an alternate file listing servers by domain name (or IP address) and
+port number.
+
+The list of stations can be specified in a variety of ways. A pick file in UW2
+format or a hypoinverse archive file typically includes event location
+information and a list of stations and components used to find the
+location. With this pick file as an argument, earth2sac will retrieve trace
+data for all the listed SCNs from the specified servers and place them into
+SAC files. Station and event information that can be gleaned from the pick
+file will be included in the SAC headers of the appropriate files. Command
+line options can be used to limit traces to those with only P arrivals, S
+arrivals, or to get all the SCNs that the servers have to offer.
+
+UW2 format pick files normally include a line specifying the time window of
+interest for the event. This is used to set the start time and duration of
+traces in the SAC files.
+
+Hypoinverse archive files have no such window information, so an alternate
+method is needed to set the start time and duration for traces. 
+
+SCNs, start times and durations may be specified in a text file used as an
+argument to earth2sac. Any of the stations, components and network names may
+be given as `*', the wildcard value. This wildcard will be used to match all
+the appropriate values from the menu obtained from the wave servers. In the
+most general case, a single start time a duration may be given on the command
+line to specify all the SCNs from the servers. Since event data is not given
+in this case, many of the SAC header values will be left with their default
+values.
+
+Some of the sources sending trace data to the wave servers are intermittent in
+nature, either by design or due to various interuptions. Earth2sac will fill
+in these data gaps with a value that can be specified (SAC `undefined'
+by default)
+
+Normally earth2sac will report only the number of data files created and any
+serious errors, to standard error. A flag can be set to provide verbose output
+to aid in troubleshooting.
+

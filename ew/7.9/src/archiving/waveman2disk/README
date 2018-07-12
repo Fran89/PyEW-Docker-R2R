@@ -1,0 +1,34 @@
+
+
+waveman2disk is a manual, interactive, non-earthworm module version
+of trig2disk. Its purpose is to save trace data to disk in variuos
+supported formats - currently ah, sac, and pc-suds. Like any good
+earthworm program, it has a configuration file waveman2disk.d allowing
+for extensive configuration. This is where we tell it, among other
+things, which waveservers to interrogate, where and it which format to
+store the trace output,
+
+  waveman2disk works in two modes:
+
+(1) Emergency (interactive):  the config file lists the output format 
+      and location, as well as the channels to save. The user is prompted 
+      for the start and end time of trace data to be saved.
+
+(2) Trigger-saving: a file, specified in the config file, contains
+      ascii text of one or more TYPE_TRIGLIST messages. These are processed
+      one at a time, and the trace data of the channels listed in the
+      TRIGLIST message, are saved to disk.
+
+
+
+Note on output formats:
+
+ the trig2disk module has been extensively re-packaged to allow
+for easier addition and modification of output formats. Basically,
+all functionality dealing with producing output on disk has been 
+moved into libsrc/util. The putaway.c file contains entry points
+into the trace writing system. This is where any new output format
+should be added. Associated with it are files like sacputaway.c,
+sudsputaway.c and ahputaway.c that actually implement the writing
+of various output formats to disk.
+

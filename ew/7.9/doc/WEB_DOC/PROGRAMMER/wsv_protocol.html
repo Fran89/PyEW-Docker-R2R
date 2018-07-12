@@ -1,0 +1,396 @@
+<html>
+
+<head>
+<meta name=Keywords content="">
+<meta http-equiv=Content-Type content="text/html; charset=macintosh">
+<title>WSV protocol</title>
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:"Times New Roman";
+	panose-1:0 2 2 6 3 5 4 5 2 3;}
+@font-face
+	{font-family:"Courier New";
+	panose-1:0 2 7 3 9 2 2 5 2 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:0 5 2 1 2 1 8 4 8 7;}
+@font-face
+	{font-family:Calibri;
+	panose-1:0 2 15 5 2 2 2 4 3 2;}
+@font-face
+	{font-family:Cambria;
+	panose-1:0 2 4 5 3 5 4 6 3 2;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:Cambria;}
+h1
+	{margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	font-size:16.0pt;
+	font-family:Calibri;
+	color:#345A8A;
+	font-weight:bold;}
+h2
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	font-size:13.0pt;
+	font-family:Calibri;
+	color:#4F81BD;
+	font-weight:bold;}
+h3
+	{margin-top:10.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:Calibri;
+	color:#4F81BD;
+	font-weight:bold;}
+p
+	{margin-top:.01gd;
+	margin-right:0in;
+	margin-bottom:.01gd;
+	margin-left:0in;
+	font-size:10.0pt;
+	font-family:Times;}
+table.MsoNormalTable
+	{font-size:10.0pt;
+	font-family:Cambria;}
+table.MsoTableGrid
+	{font-size:10.0pt;
+	font-family:Cambria;}
+span.Heading1Char
+	{font-size:16.0pt;
+	color:#345A8A;
+	font-weight:bold;}
+span.Heading2Char
+	{font-size:13.0pt;
+	color:#4F81BD;
+	font-weight:bold;}
+span.Heading3Char
+	{color:#4F81BD;
+	font-weight:bold;}
+p.ListParagraph, li.ListParagraph, div.ListParagraph
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:.5in;
+	font-size:12.0pt;
+	font-family:Cambria;}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+@list l0:level1
+	{text-indent:-.25in;}
+@list l0:level2
+	{text-indent:-.25in;
+	tab-stops:list 1.0in;
+	font-family:Symbol;}
+@list l1:level1
+	{text-indent:-.25in;
+	tab-stops:list .5in;
+	font-family:Symbol;}
+@list l2:level1
+	{margin-left:.75in;
+	text-indent:-.25in;
+	tab-stops:list .75in;
+	font-family:Symbol;}
+@list l3:level1
+	{text-indent:-.25in;
+	tab-stops:list .5in;
+	font-family:Symbol;}
+@list l4:level1
+	{text-indent:-.25in;
+	tab-stops:list .5in;
+	font-family:Symbol;}
+@list l4:level2
+	{text-indent:-.25in;
+	tab-stops:list 1.0in;
+	font-family:Symbol;}
+@list l5:level1
+	{text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+</head>
+
+<body bgcolor=white lang=EN-US style='tab-interval:.5in'>
+<div class=Section1>
+<h1>Earthworm Wave Server Protocol</h1>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>This appendix is taken straight from the wave_serverV.c code
+comments, as there was no formal description of the protocol for clients to use
+to get waveforms from an Earthworm Wave Server (either wave_serverV or
+Winston). ISTI made modifications and amendments to the protocol, as some items
+were not described at all, or well, in the code comments.</p>
+
+<p class=MsoNormal> Last modified April 19, 2010, Paul Friberg </p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Calibri;
+color:#4F81BD'><b>Notes</b></span>:</p>
+
+<ul style='margin-top:0in' type=disc>
+
+ <li class=MsoNormal style='tab-stops:list .5in'>&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;
+     is short-hand for site code, channel code, network and location id.</li>
+ <li class=MsoNormal style='tab-stops:list .5in'>&lt;flags&gt; :: F |
+     F&lt;letter&gt; ... &lt;letter&gt;</li>
+
+</ul>
+
+<p class=MsoNormal>            Currently Supported Flags:</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>R  - All requested data is right of the tank (after the tank).</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>L  - All requested data is left of the tank (before the tank).</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+</span></span>G  - All requested data is in a gap in the tank.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>B  - The Client's request was bad.  It contained incorrect
+syntax.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>C -  The tank from which the client requested data is corrupt.
+(Data may or may not be available for other time intervals in the tank. 
+WARNING!  This flag indicates that the tank is corrupt, this means data from
+other time intervals may be inaccurate)</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>N  - The requested channel(tank) was not found in this
+wave_server.</p>
+
+<p class=MsoNormal style='margin-left:.75in;text-indent:-.25in;tab-stops:list .75in'><span>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>U  - An unknown error occurred.</p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='tab-stops:list .5in'>&lt;datatype&gt; is two
+     character code ala CSS.  Only supports i2, i4, s2, and s4. i for Intel; s
+     for Sparc. 2 meaning two-bytes per integer, 4 ...</li>
+ <li class=MsoNormal style='tab-stops:list .5in'>Replies are ASCII, including
+     trace data.</li>
+ <li class=MsoNormal style='tab-stops:list .5in'>&lt;starttime&gt; and
+     &lt;endtime&gt; are double precision unix epochs since  Jan 1,1970,
+     including any fractions of seconds desired.</li>
+
+ <li class=MsoNormal style='tab-stops:list .5in'>The &lt;request id&gt; was
+     added later to permit the wave viewer client to keep track of which reply
+     belongs to which query. The idea is that the client sends this as part of
+     its request. To us it's an arbitrary ASCII string.  We simply echo this
+     string as the first thing in our reply. We don't care what it is. The
+     motivation is that the wave viewer would occasionally get confused as to
+     which reply belonged to which of it's requests, and it would sit there,
+     listening for a reply which never came. The request id is echoed as a
+     fixed length 12-character string, null padded on the right if required.</li>
+ <li class=MsoNormal style='tab-stops:list .5in'>&lt;sampling-rate&gt; is in
+     samples per second.</li>
+ <li class=MsoNormal style='tab-stops:list .5in'>Spaces are used between
+     request arguments.</li>
+</ul>
+
+<p class=MsoNormal style='margin-left:.25in'><span class=Heading1Char><span
+style='font-family:Calibri'>Description of Requests and Responses</span></span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>MENU:</b><span
+style='font-weight:normal'> &lt;request id&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns one line for each
+tank it has:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        pin# 
+
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; 
+&lt;datatype&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>          .      .       .        
+.          .</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        pin# 
+
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; 
+&lt;datatype&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        \n</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>MENUPIN:</b><span
+style='font-weight:normal'> &lt;request id&gt;  &lt;pin#&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns as above, but only
+for specified pin number:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;
+&lt;pin#&gt;  &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;  &lt;starttime&gt; 
+
+&lt;endtime&gt;  &lt;datatype&gt; &lt;\n&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>MENUSCNL: </b><span
+style='font-weight:normal'>&lt;request id&gt; 
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns as above, but for
+specified &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; name:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;
+&lt;pin#&gt;  &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;  &lt;starttime&gt; 
+
+&lt;endtime&gt;  &lt;datatype&gt; &lt;\n&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>GETPIN:</b><span
+style='font-weight:normal'>  &lt;request id&gt; &lt;pin#&gt; &lt;starttime&gt; 
+
+&lt;endtime&gt; &lt;fill-value&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns trace data for
+specified pin and time interval. Gaps filled with &lt;fill-value&gt;.  </p>
+
+<p class=MsoNormal style='margin-left:.5in'>   &lt;request id&gt; &lt;pin#&gt;
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>         &lt;starttime&gt;
+&lt;sampling rate&gt; sample(1) sample(2)... sample(nsamples)</p>
+
+<p class=MsoNormal style='margin-left:.25in'>         &lt;\n&gt; {the samples
+are ASCII}</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        If the requested time is
+older than anything in the tank, the reply is: &lt;request id&gt; &lt;pin#&gt;
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt; &lt;oldest time in
+tank&gt; &lt;sampling rate&gt; \n for the case when the requested interval is
+younger than anything in the tank, the reply is &lt;request id&gt; &lt;pin#&gt;
+
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        FR &lt;datatype&gt;
+&lt;youngest time in tank&gt; &lt;sampling rate&gt; \n</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        NOTE: the GETPIN request
+has never worked in wave_serverV. As pin numbers fade into the distance, it is
+unlikely that this request will ever be supported.</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>GETSCNL:</b><span
+style='font-weight:normal'> &lt;request id&gt;
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt;  &lt;endtime&gt;
+
+&lt;fill-value&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns as above, but for
+specified scnl name.</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;
+&lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt;
+
+&lt;starttime&gt; &lt;sampling-rate &gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>                 sample(1)
+sample(2)... sample(nsamples) &lt;\n&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'><b>GETSCNLRAW:</b><span
+style='font-weight:normal'> &lt;request id&gt;
+
+&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt;  &lt;endtime&gt;</span></p>
+
+<p class=MsoNormal style='margin-left:.25in'>        Returns trace data in the
+original binary form in which it was put into the tank (as a TRACEBUF2 packet).
+Whole messages will be supplied, so that the actual starttime may be older than
+requested, and the end time may be younger than requested. The reply is part
+ASCII, terminated by a &quot;\n&quot;, followed by binary messages:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;
+&lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt;
+&lt;starttime&gt; &lt;endtime&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;bytes of binary data
+to follow&gt; &lt;\n&gt;. The line above is all in . All below is binary, byte
+order as found in the tank:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;trace_buf msg&gt; ...
+&lt;trace_buf msg&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        If the requested time is
+older than anything in the tank, the reply is:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>         &lt;request id&gt;
+&lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt;
+
+&lt;oldest time in tank&gt; &lt;\n&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        For the case when the
+requested interval is younger than anything in the tank, the reply is:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        &lt;request id&gt;
+&lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FR &lt;datatype&gt;
+
+&lt;youngest time in tank&gt; &lt;\n&gt;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:.25in'>        For the case when the
+requested interval falls completely in a gap, the reply is:</p>
+
+<p class=MsoNormal style='margin-left:.25in'>         &lt;request id&gt;
+&lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FG &lt;datatype&gt;
+
+&lt;\n&gt;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
+

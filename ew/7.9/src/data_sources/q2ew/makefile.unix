@@ -1,0 +1,73 @@
+# $Id: Makefile.linux 3464 2008-12-02 15:50:21Z paulf $
+########################################################################
+# Linux definitions
+# COMMENTS: $(UTILDIR)/timeutil.c removed from the timeutil.o target line
+#           Switching to gcc
+#           Removing +w, which warns about all questionable constructs in aCC.  
+#           Putting -DLINUX flag as a default
+#CC	= gcc
+INCL	= ../include
+#CFLAGS	= -I$(INCL)  -DLINUX 
+LINUX_CFLAGS	= -I$(INCL) $(GLOBALFLAGS)
+LINUX_RANLIB = ranlib 
+########################################################################
+
+########################################################################
+# Solaris 2 definitions
+#
+#$CC	= cc
+#INCL	= ../include
+#SOLARIS_CFLAGS	= -I$(INCL) -DSOLARIS2 -g -lposix4 -lnsl -lsocket
+SOLARIS_CFLAGS = -I$(INCL) $(GLOBALFLAGS)
+SOLARIS_RANLIB	= /bin/true
+
+########################################################################
+
+RANLIB = $($(PLATFORM)_RANLIB)
+#SPECIFIC_LDLIBS = $($(PLATFORM)_LDLIBS)
+CFLAGS = $($(PLATFORM)_CFLAGS)
+
+LIB	= libutil.a
+
+OBJECTS = service.o cfgutil.o stuff.o seedutil.o timeutil.o # mmutil.o 
+
+
+.PRECIOUS:	$(LIB)
+
+ALL =		$(LIB)
+
+all:		$(ALL)
+
+$(LIB):		$(OBJECTS)
+		ar rvs $(LIB) $(OBJECTS)
+		$(RANLIB) $@
+
+timeutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/stuff.h timeutil.c
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) timeutil.c
+
+seedutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/seedstrc.h $(INCL)/stuff.h seedutil.c
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) seedutil.c
+
+mmutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/stuff.h mmutil.c
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) mmutil.c
+
+service.o:	$(INCL)/dpstruc.h $(INCL)/service.h $(INCL)/stuff.h \
+		service.c
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) service.c
+
+cfgutil.o:	$(INCL)/dpstruc.h cfgutil.c $(INCL)/stuff.h
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) cfgutil.c
+
+stuff.o:	$(INCL)/dpstruc.h stuff.c
+		$(CC) -c $(CFLAGS) $(SPECIFIC_CFLAGS) stuff.c
+
+clean:
+		-rm -f *.o $(LIB)
+
+veryclean:	clean
+		-rm -f *.o *~ *% $(LIB)
+
+install:

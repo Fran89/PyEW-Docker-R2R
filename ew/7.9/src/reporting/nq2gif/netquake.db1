@@ -1,0 +1,80 @@
+# This file lives in the parameters directory on:
+#    ebird3, ebird4, swave, image1, image2, heli1, heli2, wsv1, lonepine, campbell, elcentro
+#
+# New format including Location code and Station type.  Lat/Lon in decimal degrees.
+#
+# S N C L LatD LonD Elev Inst Inst_sens Gain Sensor Sens_unit Sens_sens SiteCorr StaType Comment
+#
+# 1 - NCSN analog = 0.9954 microv/count
+# 1 - PG&E analog = 1.22   microv/count
+# 2 - NCSN DST    = 6.865  microv/count
+# 3 - RefTek      = 1.907  microv/count
+# 3 - RefTek      = 0.0596 microv/count
+# 4 - Nanometrics = 1.037  microv/count (not w/ episensors)
+# 4 - Nanometrics = 1.275  microv/count (w/ episensors)
+# 5 - Quanterra   = 2.5    microv/count
+# 5 - Quanterra   = 2.38   microv/count (Q980 from SoCal)
+# 6 - K2          = 0.298  microv/count
+# 7 - NCSN anadig = 0.9954 microv/count (analog instr. thru HRD24)
+# 8 - NN digital  = 1.0000 microv/count (vintage Wally Nicks digital telemetry)
+# 9 - Reftek 130  = 0.7947 microv/count (ANSS)
+# 10 - NCSN anadig = 0.9954 microv/count (analog instr. thru Nanometrics Trident)
+# 11 - NCSN anadig = 0.9954 microv/count (analog instr. thru Lynx)
+# 14 - Netquake    = 
+# 15 - GERI       = 0.1000 microv/count
+#
+# 1 - L4c    = 1 v/cm/s
+# 2 - FBA-23 = 1.25 v/g = 0.001278 v/cm/s/s
+# 3 - Guralp = 8 v/cm/s
+# 4 - HS1    = 0.448 v/cm/s
+# 5 - Wilcoxon    = 10.0 v/g = 0.01022 v/cm/s/s
+# 6 - Dilatometer = 1 v/0.000001 strain
+# 7 - Streckeisen STS-1 = 24 v/cm/s
+# 8 - Streckeisen STS-2 = 15 v/cm/s
+# 9 - Episensor   = 5.00 v/g = 0.005112 v/cm/s/s  (CREST and Nanometrics)
+# 9 - Episensor   = 1.25 v/g = 0.001278 v/cm/s/s  (NCSN K2s)
+# 10 - S-13       = 3.83 v/cm/s
+# 11 - Guralp CMG3ESP    = 20.0 v/cm/s
+# 12 - Reftek 130 = 1.20 v/g = 0.001022 v/cm/s/s
+# 13 - Ranger SS-1 = 3.45 v/cm/s
+# 14 - Teledyne SD212
+# 15 - Benioff
+# 16 - L22    = 1.36993 v/cm/s or 0.333822 v/cm/s
+# 17 - Oyo GS-11 = 0.498437 v/cm/s
+# 18 - Sprengnether S6000
+# 19 - GeoSig MEMS (NetQuake) = 5.00 v/g = 0.005112 v/cm/s/s
+# 20 - GS-20DM  = 0.520 v/cm/s
+#
+#    Sens_unit = 1 (displacement); 2 (velocity); 3 (acceleration)
+#
+# Gains for analogs from their attenuations: 12->4 18->2 24->1 30->0.5 36->0.25 42->0.1250 48->0.0625
+#
+# Station Type Code
+#  1 - Small, fiberglass shelter (typically 1m X 1m X 1m; e.g., T-hut)
+#  2 - Small, prefabricated metal building (typically 1-2m X 1-2m X 2m high; e.g., Armco)
+#  3 - Sensors buried/set in ground (shallow, near-surface)
+#  4 - Reference station (1-2 story, small, light building)
+#  5 - Base of building larger than above
+#  6 - Below ground sensor, at depth
+#  7 - OBS
+# 10 - Building
+# 11 - Bridge
+# 12 - Dam
+# 20 - Other structure
+# 50 - Geotechnical array
+# 51 - Other array
+#
+#                                   Inst Inst_sens Gain  Sensor Sens_unit Sens_sens SiteCorr Sta_Type
+#                                      \         \    \      \     |        /         /         /
+#                                       \         \    \      \    |       /         /         /
+#                                        \         \    \      \   |      /         /         /
+#                                         \         \    \      \  |     /         /         /
+#                                          \         \    \      | |    /         /         /
+#                                           \         |    \     | |   |         /         /
+#                                            \___     |     |    | |   |      __/  _______/
+# NetQuake - 14                                  |    |     |    | |   |     |    |
+
+NQ000 NC ENZ 01   37.163460 -121.626450  190.0  14 0.2980  1.00 19 3  5.000 1.00  1   "NetQuakes Test Unit " 
+NQ000 NC ENN 01   37.163460 -121.626450  190.0  14 0.2980  1.00 19 3  5.000 1.00  1   "NetQuakes Test Unit " 
+NQ000 NC ENE 01   37.163460 -121.626450  190.0  14 0.2980  1.00 19 3  5.000 1.00  1   "NetQuakes Test Unit " 
+

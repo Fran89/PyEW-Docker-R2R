@@ -1,0 +1,8 @@
+# This an example of statefile for nmxptool, option -F
+# List of channel patterns, as for option -C. One for each line.
+
+ABCD.BHZ	# the network code is from 'DefaultNetworkCode'
+MN.CLTB.HH?	# mednet station
+CH.BERNI.HHZ	# station from ETH
+# Other channels
+*.HH?

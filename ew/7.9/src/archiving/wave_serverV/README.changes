@@ -1,0 +1,282 @@
+Most recent changes are at the bottom of this file!!!
+
+/***********************************************************************/
+/***********************************************************************/
+
+DavidK 7/7/98
+
+IMPORTANT!!!!!!
+Changed the format of the TANK structure, thus rendering previous
+TANK structure files useless.  If you are upgrading from v3.2, then
+this warning is for you.
+ 
+
+Fixed logging for index overwrites.
+Added a check in BuildLIndex() to check the number of disk index
+entries with the maximum number of memory index entries as set
+in the config file, in order to prevent overwriting unallocated
+memory when the number of indexes in the file is greater than
+the allocated space in memory.
+
+/***********************************************************************/
+/***********************************************************************/
+
+DavidK 09/09/1998:  Changed NumOfFinishChunks to 
+(NumOfFinishChunks * sizeof(DATA_CHUNK)) in the size parameter of a
+memcpy call in CopyLIndexintoBuffer().  This should fix problems of
+corrupted index entries in index files.
+People complained that they could not change the number of index
+entries in the config file, once a tank existed, without blowing the
+tanks away.  They actually could.  The problem was that some of the
+indexes in the tank were probably corrupted(especially the last one),
+which tended to cause BuildLIndex() to search backwards through the
+entire tank, and thus rebuild the indexes for the entire tank, appending
+them to the existing index list, which usually caused the tank to run
+out of indexes again.  Even if it did not, the indexes were still 
+corrupted, and not all that useful.
+
+/***********************************************************************/
+/***********************************************************************/
+
+DAvidk 10/05/1998:  Fixed a problem with server_thread monitoring, where
+an area of memory was being copied from the address of one pointer to
+the other, instead of from one pointer to the other.  Modified wave_server
+SCN tank searches to use the same CRT Lib qsort() and bsearch() routines
+used by pick_ew, in order to improve the performance of wave_server,and
+reduce the CPU cycles needed to search through servers with large numbers
+of tanks.  This was prompted by Will's discovery that a wave_server with
+a large number of tanks ran significantly slower than three wave_servers
+collectively covering the same set of tanks.
+
+
+/***********************************************************************/
+/***********************************************************************/
+
+DavidK 10/12/1998:  Added debug statements to attempt to determine where
+wave_serverV is hanging on shutdown.  Hang has only been observed at 
+Menlo Park on Solaris/Intel.
+
+
+/***********************************************************************/
+/***********************************************************************/
+Pete Lombard, 1/11/2000:
+Reformatted comments at head of waver_serverV.c to make them easier to read.
+
+Added ClientTimeout, used in serverThread by ListenForMsg().
+
+Change to accept_ew() in socket_ew_common: new socket must be shifted to
+non-blocking mode, since it doesn't inherit this property from the original
+socket. 
+
+Added ClientTimeout, used in serverThread by ListenForMsg(). 
+
+Change to most socket_ew_common functions: select() errors are now handled
+correctly. Function descriptions have been clarified; other cleanup.
+
+Fixed bug in wave_serverV where KillThread() was killing random threads
+(including the main thread) at the start of the shutdown sequence.
+
+Small change to index_util.c to add some detail to a logit entry in
+BuildLIndex().
+
+Cleaned up settings of ServerThreadInfo.Status in server_thread.c and
+wave_serverV.h.
+/***********************************************************************/
+/***********************************************************************/
+
+Pete Lombard, 6/25/2000:
+Fixed bugs where tank was left marked as configured from structure file after
+failed calls to OpenTankFile() and OpenIndexFile().
+
+Fixed bug in RemoveBadTanksFromList(): a `bad' tank was removed from list by
+having the last tank in the list copied into the `bad' one's place. But this
+copied tank was not being checked to see if it was `bad'.
+
+Added signal handler to allow graceful shutdowns. The handler sets the global
+variable `terminate' to 1. Now all threads check this variable and exit their
+main loops if it is set. Removed calls to KillThread() which could kill a
+thread while it was holding a mutex.
+
+Fixed bug in BulkSendFill() that caused a NULL character to be sent at the end
+of a block of null fill values.
+
+Fixed bug in SendReqDataAscii() which sometimes did not calculate the number
+of fill values correctly.
+
+Fixed several places in LocateOffset() and LocateExactOffset() where
+GRACE_PERIOD was applied inappropriately.
+
+Added flag to UpdateIndex() to turn off the index check for records
+overwritten by new data when UpdateIndex() is called during wave_serverV
+startup. Since no records are being overwritten during that phase, this check
+caused unnecessary disk operations and greatly slowed index recovery.
+
+Removed check for matching pin numbers in ConfigTANK(): pin numbers aren't
+given in config file. Added copy of pin numbers in ConfigTANK(), so they would
+be remembered from one wave_serverV run to the next.
+
+Removed "exiting" from some logit comments where it was not appropriate. 
+
+Added or corrected several comments; delete obsolete (commented out) code
+fragments. 
+
+Changed logit() calls in wave_serverV_config() and functions called from it to
+fprintf() calls. Logit_init() is called after wave_serverV_config().
+
+Added checks for buffer overflows in wave_serverV_config(); moved several
+buffer size constants to macros.
+
+Set initial value of PleaseContinue to 0; it was uninitialized before.
+
+Corrected default value of QueueReportInterval given in config file: it
+should be 30 as in wave_serverV.c, not 300. SecondsBetweenQueueErrorReports
+default is 60, not 30.
+
+/***********************************************************************/
+Pete Lombard, 10/02/2000:
+In serve_trace.c, removed calls to fseek() which were intended to restore
+the tank file position to what would be needed by the main thread. This
+was both unnecessary and causing an endless loop: if the fseek() failed
+such as when the tank file had been closed by the main thread, the code
+did a "goto abort". In the abort section was another fseek(); if it failed
+the code would again do a "goto abort". The main thread still does an
+fseek() prior to writing new data to the tank, so the write will occur
+at the correct position in the tank.
+
+/***********************************************************************/
+/***********************************************************************/
+DavidK 01/19/2001 
+
+wave_serverV was changed to:
+    return error replies when errors occur while fulfilling a client 
+     request. (formerly wave_serverV ignored the request if there
+     was an error while processing it)
+    issue status messages when hard errors occur on tanks (previously
+     a log message was issued on reads, and the program executed on
+     errors from write.)
+    continue to operate after failure of a single tank (previously
+     wave_serverV executed on a tank write error.)
+
+
+the programming changes resulted in changes to the .d and .desc files
+/********************************/
+wave_serverV.desc
+two new error messages were added to the descriptor file.
+Error 7 is issued when a hard i/o error occurs on a
+tank or index file(this does not include a failed open).
+Error 8 is issued when a server thread cannot write a
+tank summary to the client(unless it failed because there
+was no data in the tank).
+#
+err: 7  nerr: 1  tsec: 0  page: 0 mail: 99
+text: "hard i/o error on tank or index file"
+#
+err: 8  nerr: 1  tsec: 0  page: 0 mail: 99
+text: "failed to write summary for a tank"
+
+/********************************/
+wave_serverV.d
+A new command was added: AbortOnSingleTankFailure 
+The default behavior is the same as before, but setting 
+AbortOnSingleTankFailure to 0 will cause wave_serverV
+to continue even if there is a hard error on a tank.
+
+#AbortOnSingleTankFailure  Set to 0 to have wave_server continue even
+#if there is a fatal error on a tank during normal processing.
+#if this flag is not set to 0, wave_server will die if any type of 
+#IO error occurs on any tank.  If set to 1 wave_server will not exit
+#unless there is a server wide error.
+#AbortOnSingleTankFailure 1
+
+/***********************************************************************/
+/***********************************************************************/
+The new version contains the serve_trace.c timestamp of (0997463156)
+
+Moved the guts of SendReqDataAscii(), [the part that actually parses the
+trace_buf messages, decides what samples to send, and then converts
+them to ascii data and transmits them], to a separate function humorously
+called SendReqDataAscii_AndThisTimeWeMeanIt(). 
+
+Synched the logic and constants that deal with sloppy timestamps 
+in GetRoughOffset() GetOffset(), GetExactOffset(), and SendReqDataAscii().
+Removed the old GRACE_PERIOD mechanism, because its concept was flawed and
+originated from a misunderstanding of tracebuf messages and how they should
+be interpreted.  The original GRACE_PERIOD was replaced with a new 
+GRACE_PERIOD that deals with sloppy timestamps.
+
+Net effects: 
+1)Clients requesting binary data with and without sloppy timestamps:
+
+You might get an extra tracebuf message at the front or back of a
+block, if your request time was on the fringe of two messages.  For 
+the most part you should not notice a difference.  Nothing about the
+format has changed, only the logic that decides which trace_bufs to
+start and end with, and only for requests that occur on the fringe of
+or in between trace_bufs.
+
+
+2)Clients requesting ascii data without sloppy timestamps:
+You may see a couple of extra samples, especially around 
+the fringes of the tank or gaps.  Otherwise you shouldn't
+see changes.
+
+3)Clients requesting ascii data with sloppy timestamps:
+You should see a lot better data.  Phantom gaps, and double
+values for the same trace sample should disappear, and trace
+should look normal, instead of very scarey.
+To take the most advantage of the new wave_serverV version, in
+conjunction with wave_viewer, you should also grab v1.24 or 
+later of wave_viewer.
+
+*NOTE*  The allowable amount of timestamp slop has been changed from
+0 to 30%.  It is now controlled by a constant (ACCEPTABLE_TIMESTAMP_SLOP)
+in wave_serverV.h.  This has two separate meanings in the code:
+1)When searching for the offset of a request time in a tank.
+ If the requested time falls within the range
+ [(trace_buf->starttime - 30%/samplerate) , (trace_buf->endtime + 30%/samprate)]
+ then the requested time is said to be in that trace_buf, even though
+ the request time may be less than the startime of the tracebuf, or greater
+ than its endtime.  As long as a sample is within 30% of a given time, then
+ that sample satisfies that time.
+
+2)When determining when to insert fill values in the ascii protocol.
+ If the time difference between the end of the last trace_buf, and the
+ start of the next one is <= (1/samplerate + 30%/samplerate), then the
+ tracebufs are believed to be contiguous, and no fill is inserted.
+
+So the ACCEPTABLE_TIMESTAMP_SLOP means two slightly different things in
+the two different contexts.  In the first context, it is an absolute
+acceptable deviation in time.  In the second context, it is a relative
+deviation between two tracebufs.  In the first case, the constant will
+properly handle all data, as long as that data never deviates more than
+30%/samplerate from proper timestamping.  In the second case, the relative
+deviation can be no more than 30%, so if both timestamps are late by
+350%/samplerate(35 samples), then the code will still work, but if 
+the first is early by 15%, and the second is late by 16% then code 
+will fail to handle the slop and a fill value will be inserted.
+
+DavidK 08/10/01
+/***********************************************************************/
+/***********************************************************************/
+
+ *     Revision 1.25  2005/07/21 21:03:41  friberg
+ *     added in one _LINUX ifdef directive for sin_addr struct
+
+/***********************************************************************/
+/***********************************************************************/
+
+ *     Revision 1.26  2006/03/27 17:12:07  davek
+ *     Added code to check the return value from call to WaveMsg2MakeLocal(),
+ *     and reject packets which for which WaveMsg2MakeLocal() reported and error.
+ *
+ *     Changed a >= to a > comparison in the packet filtering logic that was causing
+ *     wave_serverV to reject tracebufs that only contained 1 sample.
+
+/***********************************************************************/
+/***********************************************************************/
+
+ *     Revision 1.27  2006/03/27 17:16:49  davek
+ *     Updated the wave_serverV version and timestamp.
+
+/***********************************************************************/
+/***********************************************************************/

@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>arc2trigii_ovr</TITLE>
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#fadfaf" ALINK="#FF0000">
+
+<H1 ALIGN="CENTER"><BR>
+Arc2trigII Overview</H1>
+<I><P ALIGN="CENTER">May 2003</P>
+</I><B><FONT SIZE=5><P>Arc2trigII: Details </P>
+</font></B><FONT SIZE=4><P>arc2trig creates an Earthworm "trigger message" detailing snippets of waveform data from various channels that should be saved. The list of snippets is generated based on magnitude, radius around earthquake, and user specified channels. It follows the following procedures: </P>
+<P>I. Gets the coordinates of mandatory stations. Either from the station list, or by a search of the DBMS.</P>
+<P>II. For each event:</P><DIR>
+
+<P>Select the relevant stations:</P></DIR>
+
+
+<UL>
+
+<UL>
+<LI>All stations within the distance implied by the magnitude-distance parameter table. The station list can be from a hypoinverse station list or the DBMS. If from a station list, this will have been read once at startup. If from the DBMS, the DBMS will be queried for stations within the appropriate rectangle for this event.</LI>
+<LI>All mandatory stations.</LI></UL>
+</UL>
+<DIR>
+
+<P>For each selected station, compute the snippet to be saved:</P></DIR>
+
+
+<UL>
+
+<UL>
+<LI>For picked stations within a specified epicentral distance, use the P pick and save all data from origin time through S arrival time (determined from the Travel Time Tables).</LI>
+<LI>For stations outside this distance or stations within the radius but unpicked, use the travel-time table to determine P and S.</LI></UL>
+</UL>
+<DIR>
+
+<P>All snippets will be padded with a specified safety margin of pre and post computed snippets times specified by the user.</P></DIR>
+
+</FONT><FONT SIZE=5><P>&nbsp;</P>
+</FONT><B><FONT SIZE=5><P>Travel-time Table:</P>
+</font></B><FONT SIZE=4><P>The travel-time table is supplied with the Earthworm release. It was produced using the program cal_tt which can be found in ~earthworm/src/grab_bag/makeTTTable/cal_tt. The program was written by Ray Buland at USGS, Golden.</P>
+<P>It's Solaris-specific Fortran code.</P>
+<P>The main program accepts command-line input specifying the resolution and range of the table. The output is an ascii file. The phases listed in the file are as per Harley's requirements for getting the time interval of interest for arc2trigII.</P>
+</FONT><hr><address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY>
+</HTML>

@@ -1,0 +1,29 @@
+# $Id: makefile.unix 3867 2010-03-16 20:53:02Z paulf $
+# Makefile for GRF2EW
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lpthread -lsocket -lnsl -lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -g ${GLOBALFLAGS} -D_DEBUG 
+
+B = ../../../bin
+I = ../../../include
+L = ../../../lib
+
+all: grf2ew 
+
+OBJS	= main.o mem.o sock.o grf.o config.o serialize.o ustime.o $L/libew_mt.a
+
+grf2ew: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/grf2ew $(OBJS) $(SPECIFIC_FLAGS)
+
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/grf2ew
+
+.c.o:
+	$(CC) -c -I$I ${CFLAGS} $<
+

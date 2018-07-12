@@ -1,0 +1,34 @@
+From kent@giseis.alaska.edu Thu Jun  8 15:18:03 2000
+Date: Wed, 07 Jun 2000 09:52:13 -0800
+From: "Dr. Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: Mitchell M. Withers <withers@ceri.memphis.edu>
+Cc: earthw-list@nmt.edu, Dr. Kent Lindquist <kent@giseis.alaska.edu>
+Subject: Re: EW Community Center
+
+"Mitchell M. Withers" wrote:
+> 
+> 
+> 5) Earthworm doesn't do what I want.  I need CSS or SEGY format data.
+
+Hello,
+
+We had the same problem, so in 1995 I wrote a module called css_report
+to solve this. The css_report module stores parametric and segmented
+waveform data in CSS format. In 1996 I wrote a companion module called
+archiver which stores all continuous waveform data in both CSS and
+optionally AH or SAC format. I submitted both of these to the earthworm
+team on several occasions from 1995 onwards, keeping the modules up to
+date with the latest earthworm releases. Perhaps these modules would
+help you meet your needs.
+
+Good luck,
+Kent
+
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+http://giseis.alaska.edu/Seis/Input/kent/kent.html

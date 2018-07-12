@@ -1,0 +1,365 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqverify commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Eqverify Configuration File Commands</H1>
+<I>(last revised 25 November 1996)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A><BR>
+4.  <A HREF=#notes>Notes on eqverify's default values for its constants</A>
+
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, eqverify reads the configuration file named on the command-line.
+Commands in this file set up all parameters used in verifying events to be
+earthquakes.  In the control file, lines may begin with a valid eqverify
+command (listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# This is eqverify's parameter file
+#
+MyModuleId  MOD_EQPROC  # module id to label logfile  with.
+                        # Note: eqverify is part of a mega-module which is
+                        # ultimately started by the program eqproc.  All
+                        # child processes of this mega-module need to use the
+                        # same module id (thus use eqproc's module id).
+LogFile       1         # 0=no log; 1=log errors
+
+# send output to the following command:
+# PipeTo "log_everything"
+PipeTo "hypo_mgr hypo_mgr.d ncal.hyp"
+
+# Required commands to turn glitch tests on (>0) or off (=0)
+test_slopevsmag  1
+test_freefitrms  1
+test_codawt      1
+test_pgroup      1
+
+# Optional commands that change eqverify test defaults
+# force_report  18 2.0    # report events with more than 18 picks
+#                         # and mag>=2.0 regardless of event weight
+# define_glitch  4 0.035  # a glitch is at least 4 picks within
+                          # 0.035 seconds
+# EventThreshold     3    # event weight at which event is "noise"
+# MaxDeltaT         30.   # consider arrival times within this many
+#                         # seconds of the 1st arriving pick
+# coda_clip        820    # level at which a coda-avg-absolute-value
+#                         # is clipped (see notes in eqcoda.command)
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by eqverify, grouped by the function they
+influence.  Some of the commands are marked "required"; these commands must
+be specified in the control file in order for eqverify to operate.  Other
+commands have default values which are over-ridden when a command is given.
+
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+
+<PRE>	Earthworm System Setup:
+ 		<A HREF=#MyModuleId>MyModuleId</A>	required
+                <A HREF=#PipeTo>PipeTo</A>          required
+
+        Event Verification:
+		<A HREF=#test_codawt>test_codawt</A>	required
+		<A HREF=#test_freefitrms>test_freefitrms</A> required
+		<A HREF=#test_pgroup>test_pgroup</A> 	required
+		<A HREF=#test_slopevsmag>test_slopevsmag</A> required
+		<A HREF=#coda_clip>coda_clip</A>
+ 		<A HREF=#define_glitch>define_glitch</A>
+		<A HREF=#EventThreshold>EventThreshold</A>
+		<A HREF=#force_report>force_report</A>
+		<A HREF=#MaxDeltaT>MaxDeltaT</A>
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>		required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="coda_clip">  <!-- command name as anchor inside quotes -->
+<PRE><B>coda_clip <font color=red>klipc</font>				eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Define the number of counts <font color=red>klipc</font> above which a 2-second trace data
+window's average absolute amplitude should be considered clipped.
+Eqcoda also uses the "coda_clip" command; make sure that both eqcoda
+and eqverify are using the same value for <font color=red>klipc</font>!  Eqverify uses
+<font color=red>klipc</font> in calculating an eqmeas-style coda weight that is used in
+the coda weight test (see "test_codawt" command).  This coda weight
+is slightly different than that calculated by eqcoda.
+<PRE><!-- Default and example go here   -->
+Default:  coda_clip 820			Calnet:  coda_clip 820
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="define_glitch">  <!-- command name as anchor inside quotes -->
+<PRE><B>define_glitch <font color=red>npick</font> <font color=red>nsec</font>		eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines a glitch as at least <font color=red>npick</font> arrivals within <font color=red>nsec</font> seconds.
+This definition is used in the test on the temporal distribution of
+P-arrivals (see "test_pgroup" command for an explanation).<BR>
+<B>Note:</B> <font color=red>nsec</font> should be set slightly larger than an integer multiple
+of the pick-timing resolution to avoid missing glitches due to
+round-off errors in floating point arithmetic (for example, our
+picks are reported to the nearest 0.01 seconds, so we set <font color=red>nsec</font>
+to 0.035 sec instead of 0.03 sec).
+<PRE><!-- Default and example go here   -->
+Default:  define_glitch 4 0.035		Calnet:  define_glitch 4 0.035
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="EventThreshold">  <!-- command name as anchor inside quotes -->
+<PRE><B>EventThreshold <font color=red>thresh</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the event weight <font color=red>thresh</font> below which an event is a verified
+earthquake.  Each event begins with an event weight of zero (perfect
+event).  Up to four tests (see "test_*" commands) may be performed to
+verify that the event has the characteristics of a real earthquake.
+Three of the tests evaluate coda characteristics, and the other
+evaluates the temporal distribution of P-arrivals.  Each test
+increments the event weight if non-earthquake characteristics are
+detected.  If the event weight is equal to or greater than <font color=red>thresh</font>
+after all the tests are performed, the event is declared noise and
+is written to eqverify's log file.  Events with weights less than
+<font color=red>thresh</font> are piped to the next process.
+<PRE><!-- Default and example go here   -->
+Default:  EventThreshold 3		Calnet:  EventThreshold 3
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="force_report">  <!-- command name as anchor inside quotes -->
+<PRE><B>force_report <font color=red>npick</font> <font color=red>mag</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a safety-valve to force large events to be reported regardless
+of their final event weight.  An event with more than <font color=red>npick</font> arrivals
+and a magnitude of at least <font color=red>mag</font> will always be sent along to the
+next process, even if its event weight exceeds the event threshold
+<font color=red>thresh</font>.  The event's magnitude is calculated from its median coda
+duration.  This safety-valve is necessary for large events because
+the picker terminates coda calculations at 144 seconds, before the
+coda begins to decay.  This causes the test described in the
+"test_slopevsmag" command to yield results that would call the event
+noise.  And we don't want a real large earthquake to be thrown away!<BR>
+<B>Note:</B> defaults were taken from Lindh and Hirshorn's program, eqmeas.
+<PRE><!-- Default and example go here   -->
+Default:  force_report 17 2.0		Calnet:  force_report 17 2.0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				eqverify_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, eqverify will
+write daily log file(s) called eqverifyxx.log_yymmdd where xx is
+eqverify's module id (set with "MyModuleId" command) and yymmdd is the
+current UTC date (ex: 960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MaxDeltaT">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxDeltaT <font color=red>sec</font>				eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the time interval for studying the temporal distribution of
+P-arrivals (see "test_pgroup" command).  Only picks within <font color=red>sec</font>
+seconds of the first-arriving pick are considered in the test.
+<PRE><!-- Default and example go here   -->
+Default:  MaxDeltaT 30.0		Calnet:  MaxDeltaT 30.0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			eqverify_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.<BR>
+<B>NOTE:</B> eqverify is part of a mega-module which is ultimately started by
+the program eqproc.  All sub-modules of this megamodule should be
+given the same module id.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PipeTo">  <!-- command name as anchor inside quotes -->
+<PRE><B>PipeTo <font color=red>cmdstring</font>			eqverify_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the command to which eqverify will pipe a hypoinverse-format
+archive (with shadow cards) event for the next step in earthquake
+processing.  Blank spaces are allowed in <font color=red>cmdstring</font> as long as
+the entire command is enclosed in double-quotes.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   PipeTo "hypo_mgr hypo_mgr.d ncal.hyp"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="test_codawt">  <!-- command name as anchor inside quotes -->
+<PRE><B>test_codawt <font color=red>switch</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for performing the coda weight test on each event.
+If <font color=red>switch</font> is non-zero, the test will be performed; if <font color=red>switch</font> is
+zero, it will not be performed.  This test, taken from Lindh and
+Hirshorn's program eqmeas, calculates a coda weight for each pick in
+the manner of eqmeas.  It then finds the average of all coda weights
+for the event and adds this average value to the event weight.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  test_codawt 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="test_freefitrms">  <!-- command name as anchor inside quotes -->
+<PRE><B>test_freefitrms <font color=red>switch</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for performing a test on the rms values from free-fit
+slopes to the coda average absolute values.  If <font color=red>switch</font> is non-zero,
+the test will be performed; if <font color=red>switch</font> is zero, it will not be
+performed.  This test, taken from Lindh and Hirshorn's program eqmeas,
+considers only the rms for each arrival where at least 3 coda window
+average absolute values were used in the free-fit.  It finds the median
+of all such free-fit rms's for the event.  If the median rms value is
+greater than 0.25 (bad fit to coda amplitudes), the event weight is
+incremented by 1.  Otherwise (good fit), the event weight remains the
+same.  With default settings, this test by itself cannot cause an
+event to be declared noise.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  test_freefitrms 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="test_pgroup">  <!-- command name as anchor inside quotes -->
+<PRE><B>test_pgroup <font color=red>switch</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for performing a test the temporal distribution of
+P-arrivals for each event.  If <font color=red>switch</font> is non-zero, the test will be
+performed; if <font color=red>switch</font> is zero, it will not be performed.  In this
+test, all arrivals within "MaxDeltaT" seconds (default = 30) of the
+first-arriving pick are examined to see if they belong to a glitch as
+defined by default settings (at least 4 picks within 0.03 seconds) or
+by the "define_glitch" command.  If 50% or more of all picks belong to
+glitches, the event is declared noise.  If 30-50% of the picks are
+glitch-picks, the event weight is incremented by 1.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  test_pgroup 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="test_slopevsmag">  <!-- command name as anchor inside quotes -->
+<PRE><B>test_slopevsmag <font color=red>switch</font>			eqverify_config		verification</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the switch for performing a test on the median slope (fit to the
+coda window average absolute values) versus the magnitude calculated
+from the median coda duration for each event.  If <font color=red>switch</font> is non-zero,
+the test will be performed; if <font color=red>switch</font> is zero, it will not be
+performed.  This test, taken from Lindh and Hirshorn's program eqmeas,
+increments the event weight by the absolute value of the result of
+this equation:
+<PRE>   <font color=blue>median-slope</font> + 0.7*<font color=blue>magnitude-from-median-duration</font> + 0.5
+</PRE>
+For a normal earthquake, the slope fit to the coda windows should be
+negative and the result from the above equation should be zero.  For
+a noise event, the result from the above equation may be unbounded.
+This test alone may cause an event to be declared noise.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  test_slopevsmag 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="notes">
+<H2>4.  NOTES ON EQVERIFY'S DEFAULT VALUES FOR ITS CONSTANTS</H2>
+<P>
+For historical perspective, much of the verification source code was originally
+written to work on Rex Allen RTP digitizer data which had an output range
+of +/- 2500 counts for an input signal of +/- 2.5 Volts.  The Earthworm
+system uses a 12-bit A/D; so its output ranges from +/- 2048 counts for the
+same input signal of +/- 2.5 Volts.
+<PRE>
+   For Allen RTP digitizers,      1 mV = 1.0  counts
+   For Earthworm digitizers,      1 mV = 0.82 counts
+</PRE>
+Many constants used here were originally defined for the RTP data to be
+"nice round numbers" corresponding to some number of mV.  The defaults for
+these constants have been converted for the Earthworm data; they still
+correspond to the same mV values (they just aren't "nice round numbers"
+any more).
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/eqverify_ovr.html">Eqverify Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,553 @@
+<pre>
+RELEASE NOTES: EARTHWORM VERSION "V5.2"
+
+NEW MODULES:
+***********
+
+file2ring: 
+new diagnostic tool. This command-line program allows the user to
+put the contents of a file into a specified Earthworm ring as a specified
+Earthworm logo (installation, moduleid, message type). LDD 2/9/2001
+
+gmew: 
+ground-motion analyzer. Computes PGA, PGV, PGD and spectral response
+for selected channels such as broadband and strongmotion instruments. 
+Writes TYPE_STRONGMOTIONII messages, and optionally writes a ShakeMap XML 
+file. PNL, 3/30/01
+
+reboot_mss:  
+This is a command line program to remotely reboot an MSS100.
+Reboot_mss is spawned by program reboot_mss_ew.  There is no configuration
+file.  The command-line syntax is:
+reboot_mss <MSS100 IP address> <MSS100 password> [-q]
+The reboot_mss program logs into the telnet port (port 23) of the 
+MSS100.  Then, it issues a reboot command to the MSS100 and exits. 
+If "-q" is specified, the program runs in "quiet mode", and it 
+doesn't write anything to stdout.   WMK 4/23/01
+
+reboot_mss_ew: 
+This is an Earthworm module that monitors tracebuf
+messages from any number of K2's.  If data stops being received from 
+a K2 for a specified amount of time (eg 10 minutes), reboot_mss_ew 
+assumes that the MSS100 is hung up, and it attempts to reboot the 
+appropriate MSS100 by spawning reboot_mss as a child process. 
+Rebooting seems to unhang MSS100s when they hang up.  If the ethernet 
+link is down, reboot_mss_ew will periodically attempt to reboot the
+MSS100.   WMK 4/23/01
+
+heli_ewII:  Performs the same functions as heli_ew and heli_standalone in one program.
+        1. Runs on NT and Solaris.
+        2. Runs as a module: Specifying earthworm parameters in its
+           configuration file will cause it to become a module. It will attach to
+           the specified ring, produce heartbeats, and use earthworm logging. It can
+           be restarted if it asserts 'restartMe' in its .desc file.
+        3. Runs as a standalone program: If no Earthworm paramters are given in the
+           .d file, it will run standalone. Errors will be written to stderr.
+        4. Does not try to move files to another machine. This was removed in the name
+           of security and modularity. Moving the image files to a separate server machine
+           is a reasonable option, but should be done by another facility. Shared disks via
+           operating system features or SendFile are two options.
+
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+libsrc/solaris/dirops_ew.c
+libsrc/winnt/dirops_ew.c   
+Added new function rename_ew() that allows one to rename files.  If a file 
+already exists with the same name as the desired target, the old file is 
+overwritten.  LDD 9/28/2000
+
+Added new function RecursiveCreateDir() that will create a directory along 
+withall of the parent directories that are required.  Written by Carol 
+Bryan. 04/05/2001
+  
+sendmail.c
+A bug fix to libsrc/solaris/sendmail.c: it was doing a free() on a 
+declared array. This seemingly fixed a problem with statmgr. Problem was 
+that statmgr on Solaris would exit if the mail address didn't have enough 
+periods in it. (!) Alex 3/16/1
+
+Mem_circ_queue
+Replaced queue_max_size.o with mem_circ_queue.o in the following 
+makefiles:
+  data_exchange/vdl/SCRIPTS/makefile.sol_ew
+  display/sgram/makefile.sol
+  seismic_processing/eqbuf/makefile.sol
+  seismic_processing/eqbuf/makefile.nt
+DavidK 2001/04/12
+
+gaplist:
+Program now ignores the InBufl parameter.  The trace buffer length is set 
+to MAX_TRACEBUF_SIZ from the file trace_buf.h.  gaplist also ignores the 
+MaxScn parameter.  Any number of Scn lines are permitted.  The gap bins 
+are also changed. WMK 4/19/01
+
+wave_serverV
+Fixed a bug in serve_trace.c: if a tank file was closed by the
+main thread while a server thread was accessing it, the next I/O error 
+that the server thread saw would send it to the "abort" section of 
+_writeTraceDataAscii or _writeTraceDataRaw. Here a call to fseek() would
+fail and lead to an endless loop of failed fseek calls. The fseek calls
+weren't necessary, so I removed them. PNL 10/4/2000
+
+Added error responses to wave_serverV routines that reply to client
+requests.  Wave_serverV now issues an error response to the client when
+an error occurs while handling the client's request.  There are two
+types of error replies, general ones that start with "ERROR ", and
+specific replies where the error is described by one of three new
+flags: FN, FB, or FC.  See comments at top of  wave_serverV.c for 
+more info. DK 01/08/2001
+
+Added code to issue status messages when hard errors occur on tanks
+(previously a log message was issued on reads, and the program exited
+on errors from write.) Davidk 01/19/2001
+
+Added ability to continue to operate after failure of a single tank
+(previously wave_serverV executed on a tank write error.)  Continuance
+is controlled by a new config file param: #AbortOnSingleTankFailure.
+See README.changes in wave_serverV source directory for more info.
+Davidk 01/19/2001
+
+wave_viewer:  
+Modified to handle new wave_serverV error response 
+
+flags. The only noticable change to the end user should be when 
+
+the user chooses to view a group of traces (Group tab from Menu 
+Bar), and one or more of the channels in the group is unavailable.  
+In previous releases, wave_viewer would just hang, now wave_viewer 
+will recognize the channel as being unavailable from the 
+wave_server but will continue to retrieve data for other 
+channels from the server.  New version is 1.23 DK 01/08/2001
+
+k2ew: 
+The program now calculates how long it's been since the GPS
+
+receiver locked to the satellites.  If greater than GPSLockAlarm
+
+hours, k2ew logs a warning and sends a message to statmgr.
+If the GPS synchs up later, k2ew will send another message to
+statmgr. WMK 11/7/00
+
+When the DontQuit parameter is set, the program now doesn't quit
+if it can't connect to the MSS100.  Instead, it retries the connection
+forever.  I also made cosmetic changes to the k2ew log file format.
+WMK 11/29/00
+
+gaplist: 
+The program accepts a new, optional configuration parameter,
+
+ReportDeadChan.  If a channel is dead for more than ReportDeadChan
+
+minutes, gaplist will send a message to statmgr.  In the gap table,
+if there is one star in the "Dead" column, it means the channel has
+been dead less than ReportDeadChan minutes.  If there are two stars
+in the "Dead" column, it means that the channel has been dead for more
+than ReportDeadChan minutes, and that an error message has been sent
+to statmgr.  WMK 11/20/00
+
+eqfilter: 
+Removed several unnecessary objects and system libraries
+
+from the link line of both makefiles. Since eqfilter doesn't talk to
+
+wave_servers, there is no need to link in the ws_clientII routines
+or the earthworm or system socket stuff. PNL 11/30/00
+          Fixed bug that caused eqfilter to ignoring event messages 
+if tport_getmsg returned GET_MISS or GET_NOTRACK.  LDD 4/26/2001
+
+libsrc/winnt/time_ew.c: 
+timegm_ew did not work correctly unless the system
+timezone was set to GMT; this is becuase _tzset() was not called before
+the call to mktime(). It turns out that the changes that timegm_ew was
+making to the TZ environment variable were completely unnecessary. The
+result is that timegm_ew is now much simpler. PNL 11/30/00
+
+carlstatrig: 
+changed ProcessTraceMsg() in protrace.c to log an error and
+
+return 0 immediately if WaveMsgMakeLocal fails.  Previously, it returned
+
+an error code which would cause carlstatrig to exit. Now carlstatrig will
+just skip the offending tracebuf msg and continue.  LDD 01/17/2001
+
+Fixed bugs in CopyToNew() and UpdateStation(). These bugs would
+
+occasionally cause NaN values to be inserted into a station LTA on 
+startup,preventing that station from generating any triggers. PNL 
+1/29/2001
+
+sniffring: 
+Added printing of ascii messages.  LDD 01/22/2001
+
+Added fflush(stdout) so that a file actually gets written when one
+
+redirects stdout with >fileame.  LDD 02/13/2001
+
+
+
+libsrc/solaris/time_ew.c
+libsrc/winnt/time_ew.c: 
+Fixed a roundoff bug in datestr23 and datestr23_local.
+
+These functions convert time as a double to a character string rounded to 
+
+the nearest hundredth of a second. The bug caused times with fractional 
+
+seconds >= 0.995 to be printed incorrectly (example: 30.99843 was being
+was being converted to 30.100 instead of 31.00). LDD 1/23/2001
+
+makefile.sol for many modules:
+Removed compilation flags -D_SPARC and -D_SOLARIS from CFLAGS= lines.  
+These flags should be set in a user's earthworm environment setup file,
+ew_sol_sparc.cmd or ew_sol_intel.cmd.  The existence of these flags in the
+makefile was causing trouble for anyone who wanted to compile for an
+Intel Solaris platform. In carlstatrig, these flags caused 4-byte integer
+trace data to be misinterpreted as float data, resulting in NaN for most
+triggering variables. Makefile.sol was changed for the following modules:
+ carlstatrig 
+ eqfilter
+ import_generic 
+ q2ew
+ sac2hypo
+ sm_file2ring 
+ sm_reftek2ew
+ template 
+ trig2disk 
+ waveman2disk
+LDD 1/31/2001
+
+libsrc/util/tankputaway.c: 
+removed a bunch of code that made a failed attempt
+
+to multiplex TRACEBUF messages. Now tankputaway.c writes all packets to
+
+disk in the order they are received. Use "remux_tbuf", a contributed
+program from Menlo PArk, to multiplex the output of tankputaway.c to
+make a file that can be read by tankplayer. PNL, 3/27/01
+
+naqs2ew: 
+added functionality to convert Nanometrics compressed data packets
+
+into Earthworm tracebuf messages (previously only worked with
+Nanometrics uncompressed data packets). Earthworm messages created from
+compressed NMX packets will be of varying length, with the maximum number
+of samples per packet configurable. Earthworm messages created from
+NMX uncompressed packets are generally 1 second long. LDD 4/3/2001
+
+arc2trig: 
+fixed bug that made it crash on terminate: the trig file was 
+
+being closed unconditionally, but it wasn't always opened. PNL 4/7/01
+
+
+
+libsrc/winnt/makefile.nt and libsrc/util/makefile.nt: 
+revised to make them work like real makefiles. Dpendencies are now checked 
+so that compilation proceeds only if it is really needed.  PNL 4/11/01
+
+
+
+localmag: 
+renamed site.c and site.h to lm_site.c/lm_site.h, to avoid 
+
+confusion with similar files in libsrc/utils.  PNL 4/11/01
+
+carlsubtrig: 
+
+
+putaway: 
+deleted two obsolete variables formerly used only by sudsputaway 
+
+from the PA_next_ev argument list; replaced them with a new variable used 
+to carry subnet names to sudsputaway CJB 3/21/01
+
+sudsputaway: 
+Added option to use subnet names in the filename; also, limit 
+
+eventid to 3 characters. CJB 3/21/01
+
+
+
+trig2disk and waveman2disk: 
+major overhaul to fix bugs, improve efficiency.
+
+Moved the xdr* and related files (used only by NT for ahputaway) to
+libsrc/winnt/rpc. Reorganized the putaway include files so that
+format specific header information is in sachead.h, while putaway-specific
+items are in *putaway.h All the function prototypes used to access the
+format-specific putaway routines is in pa_subs.h. Created putaway.h, that
+lists the function prototypes for the main putaway routines. Reformated
+the code so most of it isn't tabbed acorss the page; revised many 
+comments.
+See src/archiving/waveman2disk/Changes for more details. See also the
+changes to each of the config files, listed below. PNL 4/12/01
+
+hyp2000_mgr: 
+Added the 200, COP, and CAR commands to the hyp2000 startup
+
+section.  This forces hyp2000 to use the formats produced and expected
+
+by other Earthworm modules. It eliminates the need for these commands
+to be listed in the user's standard hypoinverse startup file.
+LDD 4/18/01 
+
+reboot_mss: 
+The program now uses the MSS100 remote console port (7000),
+
+instead of the telnet port (23).  Univ of Washington can't use port 23
+at K2 sites behind firewalls.  WMK 4/26/01
+
+Added the -l option, which logs out the MSS100 serial port
+rather than rebooting the MSS100.  Logging out the serial port is faster
+than rebooting.  WMK 4/26/01
+
+reboot_mss_ew: Added new configuration file parameter (Logout).  If Logout
+is set to 1, reboot_mss_ew will log out the MSS100 serial port rather than
+rebooting the MSS100.  Logging out the serial port is faster than rebooting.
+WMK 4/26/01
+
+CARLSUBTRIG: Changes made to support new features:
+
+earthworm.h:
+new definition: MAX_SUBNET_LEN - defines the length of the name of 
+subnets optionally read in carlsubtrig. The value of MAX_SUBNET_LEN is 
+currently set to 10 (i.e., a subnet name of 9 characters terminated 
+with a null character).
+
+parse_trig.h:
+The Snippet structure has been expanded to include a 
+subnet[MAX_SUBNET_LEN] variable. The variable subnet[i] contains the name 
+of the ith subnet defined in carlsubtrig.
+
+Parse_trig.c:
+Modified to look for and read the optional subnet variable.
+
+carlsubtrig.c:
+1) subnets:
+a) Non-numeric subnet names (currently <= 9 characters in length) read 
+in carlsubtrig are now stored and passed through to later routines through 
+the triglist2k message. Subnet names are optional. If the subnet name 
+read from carlsubtrig.d is numeric, no subnet is passed through to later 
+routines. Currently the subnets are used only in filenames written in 
+sudsputaway. 
+b)  If several subnets trigger simultaneously, but still less than the 
+Allsubnets parameter, the subnet code of the last triggered subnet in the 
+list in the input file will be used for the Subnet.  Therefore, if you 
+have nested subnets (say a dome subnet and a volcano subnet), the larger 
+subnet should be listed after the smaller in the input file.
+c)  If the number of subnets triggered is sufficient to meet or exceed 
+the Allsubnets parameter, the Subnet field of the triglist2k message 
+will default to "Regional".
+
+2) A "|" symbol can be used in the list of stations to differentiate those 
+stations to be used in the trigger count (stations to the left of "|") 
+and those stations that are not.  All stations in a subnet are recorded 
+if sufficient stations to the left of the "|" are triggered. 
+If no "|" symbol is present, behavior defaults to that of previous 
+versions of the program.
+
+putaway.c:
+PA_next_ev carried two arguments that were used only by sudsputaway. 
+With the new subnet variable, these two variables are now obsolete, 
+and have been deleted. The subnet variable, however,  was added to the 
+argument list of PA_next_ev. The prototype of PA_next_ev is now: 
+int     PA_next_ev (char *EventID, TRACE_REQ *trace_req, int num_req, 
+int FormatInd, char *OutDir, char *EventDate,   char *EventTime, 
+char *EventSubnet, int debug);
+
+sudsputaway.c:
+1) Subnet names (if alphanumeric) are used in the suds filenames. 
+If no subnet is named, the installation name is used in the filename. 
+Thus, suds filenames are of the form: yyyymmdd_hhmmss_subnet_evid.dmx.
+
+2)  The EventId field of the filename is set to 3 characters.  
+If the EventId is greater than 999, it is truncated to the last 3 digits. 
+Leading zeroes are added to numbers less than 100.
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+**************************************************** 
+k2ew: 
+The configuration file now has the capability to rename the
+station coming off the k2. This is an override mechanism and allows
+the name to be specified in the .d file for legacy station names. In
+this instance, the owner of the K2 wanted to keep the name as a number
+and the institution pulling data (CalTech) processed the data using
+a station NAME. The new parameter is StationID followed by the new
+station name. The location on the k2 where this comes from is the stnid
+parameter. This was tested only under Solaris using serial communications
+and works for both restart and non-restart modes.
+PAF 4/23/2001 p.friberg@isti.com
+
+Configuration files contain a new optional parameter, GPSLockAlarm.
+If the GPS hasn't locked for GPSLockAlarm hours, a warning message will
+be logged and an error will be sent to statmgr.  The k2ew descriptor file
+now contains a new error for loss of GPS synch to the satellites.  WMK 
+11/7/00
+
+gaplist: 
+Configuration file contains new optional parameter: ReportDeadChan.
+If the config file doesn't contain ReportDeadChan, 10.0 minutes is the
+default value.  WMK 11/20/00
+
+wave_serverV.d:
+A new command was added: AbortOnSingleTankFailure
+The default behavior is the same as before, but setting
+AbortOnSingleTankFailure to 0 will cause wave_serverV
+to continue even if there is a hard error on a tank.  DK 1/19/2001
+
+wave_serverV.desc:
+two new error messages were added to the descriptor file.
+Error 7 is issued when a hard i/o error occurs on a
+tank or index file (this does not include a failed open).
+Error 8 is issued when a server thread cannot write a
+tank summary to the client (unless it failed because there
+was no data in the tank).  DK 1/19/2001
+#
+err: 7  nerr: 1  tsec: 0  page: 0 mail: 99
+text: "hard i/o error on tank or index file"
+#
+err: 8  nerr: 1  tsec: 0  page: 0 mail: 99
+text: "failed to write summary for a tank"
+
+waveman2disk.d: 
+Removed TravelTimeout and MaxTraceMsg since
+they served no useful purpose.  PNL 4/12/01
+
+trig2disk.d: 
+Removed TravelTimeout since it served no useful purpose.
+Added optional QueueSize, QueueFile for saving trigger queue to disk
+and reloading on restart.
+Added optional DelayTime to delay processing of trigger message, allowing
+for traces to arrive at the wave_server.
+Removed pin number from the TriggerStation command, since it wasn't used.
+  PNL 4/12/01
+
+trig2disk.desc: 
+added the missing error messages and their config 
+parameters.  PNL 4/12/01
+
+gaplist.d:
+Program now ignores the InBufl parameter.  The trace buffer length is set 
+to MAX_TRACEBUF_SIZ from the file trace_buf.h.  gaplist also ignores the 
+MaxScn parameter.  Any number of Scn lines are permitted. WMK 4/19/01
+
+carlsubtrig.d:
+A "|" symbol can be used in the list of stations to differentiate those 
+stations to be used in the trigger count (stations to the left of "|") and 
+those stations that are not.  All stations in a subnet are recorded if 
+sufficient stations to the left of the "|" are triggered. If no "|" symbol 
+is present, behavior defaults to that of previous versions of the program.
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+
+statmgr: A space is needed between "tsec:" and the value. 
+If it isn't there, things fail. (Alex)
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+carlsubtrig:  The system time must be set to GMT and ew_nt.cmd must have 
+TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+	
+ew2seisvole: on NT, exits with horrible crash when system is stopped.
+
+Wave_viewer will display fictitious 2 to 3 sample gaps when scrolling the 
+display.
+ This does not happen all of the time and is only visible when there are less 
+than
+ 200 samples on the display (2 seconds of data for 100hz data.) DK 2000/06/01
+
+libsrc/util/putaway.c: there is no include file for the putaway routines,
+  thus any errors in arguments passed to putaway routines are not checked
+  by the compiler.   PNL 7/10/2000
+
+NUMBER OF RINGS LIMITED ON SOLARIS:
+Under Solaris 2.6 (and probably other versions as well), the maximum number 
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+ set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+
+     Lucky Vidmar (7/6/2000)
+
+
+startstop_solaris: There MAY be a problem with the signal that 
+startstop sends to modules during the shutdown sequence. The shutdown 
+sequence is started (after typing "quit" to startstop or running "pau")
+by startstop placing a terminate message on all transport rings. Modules
+should see this message and start their own shutdown. After a configurable
+delay, startstop checks to see that all modules have exitted. Any that are 
+still running are sent a signal to terminate them. Currently that signal
+is SIG_TERM. But since wave_serverV has a handler for SIG_TERM, wave_serverV
+sees that as essentially the same as a terminate message. So if wave_serverV
+is having problems completing its shutdown, SIG_TERM won't do anything. The
+result is that startstop may give up and exit, leaving wave_serverV running.
+If that happens, the operator will have to terminate wave_serverV by doing
+"kill -9 <wave_serverV-pid>". That may leave shared memory and semaphores
+stranded in the kernel: run the command "ipcs -a" to see. If necessary,
+the stranded shared memory and semaphores may be cleaned up with the
+ipcrc command; must be run as root; see the man page.
+This problem only exists on Solaris/Unix, not on WindowsNT.
+PNL, 10/4/2000
+
+libsrc/utils/kom.c: The comment above k_open() says that only one file can
+be open at a time. Yet the Kbuf array has slots for MAXBUF (currently 4) open
+files. Does this work, or is the comment to be taken at it's word?
+PNL 10/15/00
+
+libsrc/utils/site.c: The strings used for station, channel and network are
+required to be fixed length with trailing spaces added to short names. If
+the strings given to site_index do not have these trailing blanks, SCN names
+will not match. This is not documented anywhere.  PNL 10/15/00
+
+libsrc/utils/logit.c: logit_init() requires a module_id number, which it uses
+to construct the log file name. This is not helpful, since the module_id
+number is not meaningful to people. Worse, it requires that the config file be
+read and earthworm.d lookups be completed before logit calls can be made. Thus
+errors in the config file can only be reported to stderr or stdout instead of
+being saved in a file.  PNL 11/29/00
+
+trig2disk and waveman2disk: these two programs have a TravelTimeout option in 
+their config files. This feature does not work, since the "wait time" feature 
+has never been implemented in wave_serverV.  PNL 11/29/00
+FIXED PNL, 4/11/01
+
+TRACEBUF messages.
+The definition of `endtime' of the TRACEBUF message is not documented.
+Some programmers are taking it as the "expected start time of the next
+TRACEBUF packet (if the sample interval is uniform.)" The more accepted
+practice is that `endtime' is the time of the last sample of the current
+TRACEBUF packet; that is, one sample interval less than the expected
+start time of the next TRACEBUF messsage. Using this last definition, if a
+TRACEBUF packet has exactly one sample, then its starttime and endtime are
+the identical. Clearly this distinction needs to be documented. The file
+waveform_format (in the /home/earthworm/DOC directory) gives no specifics 
+about start or end times.  PNL 1/24/01
+ 
+
+</PRE>

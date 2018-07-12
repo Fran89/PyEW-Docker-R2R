@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Wave_Server_Protocol_Doc – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Wave_Server_Protocol_Doc?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Wave_Server_Protocol_Doc.html" title="View Wave_Server_Protocol_Doc">Wave_Server_Protocol_Doc</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Wave_Server_Protocol_Doc?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Wave_Server_Protocol_Doc?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-19T18%3A28%3A09-08%3A00&amp;precision=second" title="2012-01-19T18:28:09-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/19/12 18:28:09</span>
+          </div>
+          <div id="wikipage"><p>
+<strong>Earthworm Wave Server Protocol</strong>
+ 
+</p>
+<p>
+This appendix is taken straight from the wave_serverV.c code comments, as there was no formal description of the protocol for clients to use to get waveforms from an Earthworm Wave Server (either wave_serverV or Winston). ISTI made modifications and amendments to the protocol, as some items were not described at all, or well, in the code comments.
+</p>
+<p>
+Last modified April 19, 2010, Paul Friberg
+</p>
+<p>
+<strong>Notes:</strong>
+</p>
+<ul><li>&lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; is short-hand for site code, channel code, network and location id.
+</li><li>&lt;flags&gt; :: F | F&lt;letter&gt; ... &lt;letter&gt;
+</li></ul><p>
+Currently Supported Flags:
+</p>
+<ul><li>     R - All requested data is right of the tank (after the tank).
+</li></ul><ul><li>     L - All requested data is left of the tank (before the tank).
+</li></ul><ul><li>     G - All requested data is in a gap in the tank.
+</li></ul><ul><li>     B - The Client's request was bad. It contained incorrect syntax.
+</li></ul><ul><li>     C - The tank from which the client requested data is corrupt. (Data may or may not be available for other time intervals in the tank. WARNING! This flag indicates that the tank is corrupt, this means data from other time intervals may be inaccurate)
+</li></ul><ul><li>     N - The requested channel(tank) was not found in this wave_server.
+</li></ul><ul><li>     U - An unknown error occurred.
+</li></ul><ul><li>&lt;datatype&gt; is two character code ala CSS. Only supports i2, i4, s2, and s4. i for Intel; s for Sparc. 2 meaning two-bytes per integer, 4 ...
+</li><li>Replies are ASCII, including trace data.
+</li><li>&lt;starttime&gt; and &lt;endtime&gt; are double precision unix epochs since Jan 1,1970, including any fractions of seconds desired.
+</li><li>The &lt;request id&gt; was added later to permit the wave viewer client to keep track of which reply belongs to which query. The idea is that the client sends this as part of its request. To us it's an arbitrary ASCII string. We simply echo this string as the first thing in our reply. We don't care what it is. The motivation is that the wave viewer would occasionally get confused as to which reply belonged to which of it's requests, and it would sit there, listening for a reply which never came. The request id is echoed as a fixed length 12-character string, null padded on the right if required.
+</li><li>&lt;sampling-rate&gt; is in samples per second.
+</li><li>Spaces are used between request arguments.
+</li></ul><p>
+<strong>Description of Requests and Responses</strong>
+</p>
+<p>
+ 
+</p>
+<p>
+<strong>MENU:</strong> &lt;request id&gt;
+</p>
+<p>
+Returns one line for each tank it has:
+</p>
+<p>
+&lt;request id&gt;
+</p>
+<p>
+pin# &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt;
+</p>
+<p>
+. . . . .
+</p>
+<p>
+pin# &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt;
+</p>
+<p>
+\n
+<br />
+<br />
+</p>
+<p>
+<strong>MENUPIN:</strong> &lt;request id&gt; &lt;pin#&gt;
+</p>
+<p>
+Returns as above, but only for specified pin number:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt; &lt;\n&gt;
+<br />
+</p>
+<blockquote>
+<p>
+<br />
+</p>
+</blockquote>
+<p>
+<strong>MENUSCNL:</strong> &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;
+</p>
+<p>
+Returns as above, but for specified &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; name:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;datatype&gt; &lt;\n&gt;
+<br />
+<br />
+</p>
+<p>
+<strong>GETPIN:</strong> &lt;request id&gt; &lt;pin#&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;fill-value&gt;
+</p>
+<p>
+Returns trace data for specified pin and time interval. Gaps filled with &lt;fill-value&gt;.
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt;
+</p>
+<p>
+&lt;starttime&gt; &lt;sampling rate&gt; sample(1) sample(2)... sample(nsamples)
+</p>
+<p>
+&lt;\n&gt; {the samples are ASCII}
+<br />
+<br /> 
+</p>
+<p>
+If the requested time is older than anything in the tank, the reply is: &lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt; &lt;oldest time in tank&gt; &lt;sampling rate&gt; \n for the case when the requested interval is younger than anything in the tank, the reply is &lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt;
+</p>
+<p>
+FR &lt;datatype&gt; &lt;youngest time in tank&gt; &lt;sampling rate&gt; \n
+<br />
+<br /> 
+</p>
+<p>
+NOTE: the GETPIN request has never worked in wave_serverV. As pin numbers fade into the distance, it is unlikely that this request will ever be supported.
+</p>
+<p>
+<strong>GETSCNL:</strong> &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt; &lt;fill-value&gt;
+</p>
+<p>
+Returns as above, but for specified scnl name.
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt; &lt;starttime&gt; &lt;sampling-rate &gt;
+</p>
+<p>
+sample(1) sample(2)... sample(nsamples) &lt;\n&gt;
+<br />
+<br />
+</p>
+<p>
+ 
+</p>
+<p>
+<strong>GETSCNLRAW:</strong> &lt;request id&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; &lt;starttime&gt; &lt;endtime&gt;
+</p>
+<p>
+Returns trace data in the original binary form in which it was put into the tank (as a TRACEBUF2 packet). Whole messages will be supplied, so that the actual starttime may be older than requested, and the end time may be younger than requested. The reply is part ASCII, terminated by a "\n", followed by binary messages:
+<br />
+<br />
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; F &lt;datatype&gt; &lt;starttime&gt; &lt;endtime&gt;
+</p>
+<p>
+&lt;bytes of binary data to follow&gt; &lt;\n&gt;. The line above is all in . All below is binary, byte order as found in the tank:
+</p>
+<p>
+&lt;trace_buf msg&gt; ... &lt;trace_buf msg&gt;
+<br />
+<br /> 
+</p>
+<p>
+If the requested time is older than anything in the tank, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FL &lt;datatype&gt; &lt;oldest time in tank&gt; &lt;\n&gt;
+<br />
+<br /> 
+</p>
+<p>
+For the case when the requested interval is younger than anything in the tank, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FR &lt;datatype&gt; &lt;youngest time in tank&gt; &lt;\n&gt;
+<br /><br />
+</p>
+<p>
+For the case when the requested interval falls completely in a gap, the reply is:
+</p>
+<p>
+&lt;request id&gt; &lt;pin#&gt; &lt;s&gt;&lt;c&gt;&lt;n&gt;&lt;l&gt; FG &lt;datatype&gt; &lt;\n&gt;
+</p>
+<p>
+ 
+</p>
+<p>
+ 
+</p>
+<p>
+ 
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Wave_Server_Protocol_Doc?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

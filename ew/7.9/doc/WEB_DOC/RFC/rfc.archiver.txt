@@ -1,0 +1,94 @@
+---------------------   REQUEST FOR COMMENT    ---------------
+   `ARCHIVER' (continuous data archiver routine)
+                        2/12/98
+
+        Send comments to Will Kohler <kohler@andreas.wr.usgs.gov>
+
+We would like to receive comments from the Earthworm community to
+incorporate into our design of a Tape Archiving module. This module is
+being developed by Will Kohler at USGS Menlo Park.
+
+Background:
+
+Earthworm is mostly a "near-real-time" system.  Continuous waveform data
+arrive, some processing is done, and the data are then discarded.  Data
+arriving on Ethernet are often discarded within a fraction of a second.
+The wave server programs extend data lifetime to a few hours or days.  The
+purpose of an archiving module would be to extend the lifetime of data to
+longer time periods, on the order of years.
+
+Below are some design considerations and related questions for comment:
+
+Archive media:
+	The choice depends on cost of drives and media, reliability and
+	lifetime of drives, lifetime of media, how long the industry
+	will support the media and capacity of the media.
+
+	Which recording medium do you prefer, and why?
+   	    4-mm tape (Dat)
+	    8-mm tape (7 Gb uncompressed)
+	    8-mm tape (20 Gb uncompressed)
+ 	    QIC80 / TR-3 (up to 1.6Gb uncompressed)
+  	    Removeable hard drive (eg Jazz)
+   	    Magneto-optical
+    	    Recordable CD
+            Other (specify)
+
+Tandem drives and stackers:
+	Stackers may be required for large networks.  Another possibility is
+	tandem drives on the same computer.  
+
+	Do you wish to use stackers /autoloaders?
+
+	What is the total system throughput (in megabytes per second)?
+
+	Do you prefer particular brands or models of drives/stackers?
+
+Operating system:
+	Which O/S do you prefer to use?
+    		Windows NT
+    		Solaris
+    		Other
+
+
+Reliability, maintenance, and redundance issues:
+	Backup systems are needed.  The primary and backup systems could run
+	simultaneously, or a spare system could be kept offline.  Spare parts
+	(eg tape drives) may also be needed.  Related questions are:
+	
+	How long should the system work without requiring media changes?
+	
+	How long will tape drives and stackers work before they wear out?
+	
+	How long must the system run without operator intervention?(changing
+	tapes/disks, cleaning tape heads, repairs, etc)
+	
+	How much redundancy is needed?  Here are some possibilities.
+    		One computer with multiple drives or stackers
+    		A primary system with spare parts (tape drives/stackers)
+    		A primary system with a complete cold backup system
+    		Two or more systems running simultaneously
+
+Disk buffering:
+	It will probably be necessary to buffer data to disk before writing to
+	the archive medium.  This will allow tapes to be changed without
+	interrupting the system. Also, to reduce wear on the tape drive, it's
+	best to accumulate data on disk and then stream from disk to tape.
+	
+	How big should the buffers be (in minutes or hours)?
+
+Tape format:
+	The simplest is a straight dump of Earthworm tracebuf messages.  Are
+	any extra header values needed?  Fixed or variable-length blocks?  How
+	much data is stored in each tape file?  Shall we require that tracebuf
+	messages begin on file and/or block boundaries? Or should we archive in
+	a different format? SEED? Should compression be used (Steim)?
+
+Software will be needed for recovering data from tape.
+	How should the data be restored?
+		Feed tracebuf messages to a transport ring.
+		Create disk files containing raw tracebuf messages or raw 
+			'whatever format the data was archived in'.
+		Create "tank files" that can be served using wave_server.
+		Other?
+

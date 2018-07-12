@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: reftek2ew overview</TITLE>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Reftek2ew Overview</H1>
+<I>(last revised July 5, 1999)</I></CENTER>
+<P>
+INTRODUCTION
+<P>
+Module <strong>reftek2ew</strong> was developed and provided by Refraction Technologies, Inc.  The module translates data from the Reftek data server, RTP, into Earthworm trace data format and writes Earthworm trace messages to an Earthworm shared memory ring.
+<P>
+Refraction Technologies, Inc. has provided the source code for both the Solaris and Windows 2000 versions.   Along with this module,
+there are several other programs provided by Reftek which are required to run reftek2ew. Those can be found in the utils subdirectory in the reftek2ew source directory:
+<P>
+ utils/solaris:
+<UL>
+<LI>rtpd  -  rtp server daemon program used to boot up Reftek boxes and control communication with them</LI>
+<LI>rtpc  -  rtp client program used for Reftek control</LI>
+</UL>
+<P>
+ utils/winnt: (among other things)
+<UL>
+<LI>rtpudpsvc.exe - rtp server</LI>
+<LI>fsc.exe - Field Setup Controller</LI>
+<LI>nci.exe - Network Control Interface</LI>
+</UL>
+
+<P>
+<A HREF="reftek2ew_config.html">INSTALLATION AND CONFIGURATION</A>
+<P>
+<A HREF="reftek2ew_compile.html">COMPILING reftek2ew</A>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/reftek2ew_cmd.html">Reftek2ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

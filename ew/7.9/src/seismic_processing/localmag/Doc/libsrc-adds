@@ -1,0 +1,228 @@
+<h3>
+<a NAME="fft_prep"></a>fft_prep.c</h3>
+fft_prep contains routines for setting up the structures needed for the
+Singleton FFT package, sing.c, which see. The Singleton FFT's can be applied
+to sequence that are multiples of any prime integers. This provides much
+greater flexibility than the usual power-of-2 FFTs. However, if the sequence
+size is a multiple of large primes, or is prime itself, then the `fft' is no
+longer a `fast' Fourier transform. So fft_prep is used to build up a list of
+numbers that are multiples of powers of 2, 3 and 5. Then for any given
+sequence size, you can do a Singleton FFT using the next largest number in
+this list, padding your data to make up the difference. This saves CPU time
+and space. prepFFT() is the main function of interest. Other functions are
+primarily for debugging or internal use. prepFFT() is not required for sing.c;
+it's just a convenience.
+<blockquote>
+<pre>#include &lt;fft_prep.h>
+long prepFFT( long n, FACT **pf )
+/*
+ * prepFFT: find a `suitable' FFT size for proposed size n, and return
+ * a pointer to the FACT structure that has been prepared for this FFT.
+ * Currently `suitable' is defined as the next even nfft value larger than n.
+ * In the future, a more intelligent sizing algorithm may be employed.
+ *
+ * Arguments: n   the proposed FFT size
+ *           *pf  pointer to the FACT structure that will be filled in
+ *                by prepFFT for this FFT.
+ * returns:  size of FFT on success, 
+ *           -1 on failure (out of memory; not logged)
+ *           -2 on other errors, logged here
+ */
+</pre>
+</blockquote>
+
+<h3>
+<a NAME="fft99"></a>fft99.c</h3>
+This file provides the Temperton FFT (Fast Fourier Transform) package, written
+by Cleve Temperton at ECMWF, modified and documented by Russ Rew at NCAR in
+1980. This packages includes two important (but not unique)
+features: it will do FFTs on sequence that are multiples of any prime integers,
+not just powers of 2. Secondly, it will transform a sequence of real data
+efficiently. Theory tells us that the Fourier transform of a real sequence is
+a conjugate-symmetric complex sequence. So instead of calculating and saving
+the repeated conjugate-symmetric values, these routines save that time and
+space. (See Cooley, Lewis & Welch, J. Sound Vib. (1970) 12(3) or any digital
+signal processing text.) For use of these routines, see the extensive comments
+in the source file fft99.c.
+
+<blockquote>
+<pre>#include &lt;fft99.h>
+</pre>
+</blockquote>
+
+<h3>
+<a NAME="transfer"></a>transfer.c</h3>
+Routines for dealing with instrument transfer functions using pseudospectral
+methods and the Temperton FFT package, fft99.c. The instrument response
+functions used here are the poles and zeros of the Laplace transform of
+analog devices.
+<blockquote>
+<pre>#include &lt;fft_prep.h>
+#include &lt;fft99.h>
+#include &lt;transfer.h>
+
+int convertWave(double input[], long npts, double deltat, 
+                ResponseStruct *origRS, ResponseStruct *finalRS, 
+                double freq[4], int retFD, long *pPadLen, long *pnfft, 
+                double output[], long outBufLen, double *work, double *workFFT)
+/*
+ * convertWave: converts a waveform (time series) from its original response
+ *              function to a new response function. This conversion is done
+ *              in the frequency domain. The frequency response of the 
+ *              transfer function may be tapered. The input data will be
+ *              padded in the time-domain. The amount of padding is determined
+ *              automatically unless the user provides her own pad length.
+ * Arguments: input: array of data for preocessing
+ *             npts: number of data points to process
+ *           deltat: time interval between samples, in seconds
+ *           origRS: structure defining process that generated the input data
+ *                   that is, the response function to be removed
+ *          finalRS: structure defining desired response function
+ *             freq: array of four frequencies (f0, f1, f2, f3) defining the
+ *                   taper to be applied to the frequency response function
+ *                   before it is convolved with the data. Below f0 and above
+ *                   f3, the taper is 0; between f2 and f3 the taper is 1;
+ *                   between f0-f1 and f2-f3 is a cosine taper.
+ *            retFD: flag to return result in frequency-domain (if retFD == 1)
+ *                   or in time-domain (if retFD == 0)
+ *                   If the output is to stay in the frequency domain,
+ *                   be sure you understand how the results are laid out. 
+ *                   See the comments in the FFT package: currently sing.c
+ *           padlen: The pad length to be applied to data before transforming
+ *                   to frequency domain. If padlen < 0, pad length will be
+ *                   estimated here and the value chosen will be returned
+ *                   in this return-value parameter.
+ *             nfft: The size of the FFT chosen, based on npts + *padlen
+ *                   If the returned value of nfft + padlen is less than
+ *                   npts, then convertWave had to effectively truncate the 
+ *                   raw trace in order to fit the processed trace in
+ *                   the limit of outBufLen.
+ *           output: array of values output from the conversion
+ *                   This array must be allocated by the caller. 
+ *        outBufLen: size of `output' array.
+ *             work: a work array that must be allocated by the caller.
+ *                   Its size must be outBufLen+2
+ *          workFFT: a work array needed by fft99. 
+ *                   Its size must be outBufLen+1
+ *
+ * Returns: 0 on success
+ *         -1 on out-of-memory errors                   
+ *         -2 on too-small impulse response
+ *         -3 on invalid arguments
+ *         -4 on FFT error
+ */
+
+
+void response(long nfft, double deltat, ResponseStruct *pRS, 
+              double *tfr, double *tfi)
+/*
+ * response: compute frequency response from the pole-zero-gain information.
+ *  arguments:  nfft: the number of points that will be used in the FFT
+ *            deltat: the time interval between data points in the time-domain
+ *               pRS: pointer to the Response Structure holding the poles,
+ *                    zeros and gain information for the desired function
+ *               tfr: pointer to the real part of the frequency response
+ *               tfi: pointer to the imaginary part of the frequency 
+ *                    response. Both tfr and tfi must be allocated
+ *                    by the caller to contain at least nfft/2+1 values.
+ */
+
+int readPZ( char *pzfile, ResponseStruct *pRS )
+/*
+ * readPZ: read a SAC-format pole-zero file.
+ * Arguments: pzfile: the name of the pole-zero file to read
+ *               pRS: pointer to the response structure to be filled in
+ *                    The calling program must allocate the ResponseStruct;
+ *                    the individual pole and zero structures will be 
+ *                    allocated here.
+ *            
+ *            Pole-zero-gain files must be for input displacement in 
+ *            nanometers, output in digital counts, poles and zeros of
+ *            the LaPlace transform, frequency in radians per second.
+ * returns: 0 on success
+ *         -1 on out-of-memory error
+ *         -2 if unable to read or parse the file
+ *         -3 for invalid arguments
+ *         -4 error opeing file
+ */
+
+double ftaper(double freq, double fon, double foff)
+/*
+ * ftaper: produce a cosine taper between unity (beyond fon) and zero
+ *        (beyond foff). The cosine taper is between fon and foff.
+ * Arguments: freq: the frequency at which the taper value is desired
+ *             fon: the unity end of the taper
+ *            foff: the zero end of the taper
+ *    if fon and foff are equal, then taper returns 1.0, the all-pass filter.
+ * returns: the value of the taper
+ */
+
+int respLen( ResponseStruct *rs, double deltat, double freq[4])
+/*
+ * respLen: estimate the length of the impulse response (the number of
+ *          points where it is greater than some throshold) so we know
+ *          how much padding we need for the convolution.      
+ *          This is a trial algorithm that may or may not work.
+ *          We assume the the impulse response looks something like a
+ *          broadened and shifted impulse. We asssume that the width of
+ *          its peak is independent of the number of points used in
+ *          this trial FFT, as long as the peak isn't too broad.  
+ *  Returns: the length of the peak (in data points) on success
+ *           NFFT_TEST when impulse response never drops below threshold
+ *          -1 when out of memory
+ *          -2 when impulse response is too small to analyze
+ *          -4 on FFT failure
+ *          -NFFT_TEST when search tp left of peak finds drop-off
+ *           but search to right doesn't find drop-off: logic error.
+ *    Exits if NFFT_TEST is not a multiple of powers of 2, 3, 5
+ *          That would be a coding error only.
+ */
+
+void taper(double *data, long npts, double percent)
+/* 
+ * taper: Apply a cosine taper to a data series.
+ * Arguments:  data: array of data to be tapered
+ *             npts: number of points in data array
+ *          percent: width of taper (at each end) in percent of array length
+ */
+ 
+void deMean( double *data, long npts, double *mean)
+/*
+ * deMean: Compute and remove the mean from a timeseries.
+ * Arguments: data: an array of doubles from which the meanis to be removed
+ *            npts: number of values in data
+ *            mean: the computed mean value that has been removed from data.
+ */
+
+void pzCancel(ResponseStruct *rs, double tol)
+/*
+ * pzCancel: Remove cancelling pole-zero pairs from a response structure.
+ *           Search for pairs of poles and zeros whose real and imaginary
+ *           parts are within `tol' of each other. Remove any such pairs.
+ *           This will remove useless computations from the calculation
+ *           of the frequency response function in response().
+ */
+
+void cleanPZ( ResponseStruct *pRS);
+/*
+ * cleanPZ: free the space that has been allocated to store the poles
+ *          and zeors of a ResponseStruct structure.
+ */
+
+void transferDebug( int level )
+/*
+ * transferDebug: set the debug level for the transfer.c package.
+ *       Possible debug levels are any of the following values or'ed together.
+ *   levels: 0: no debug output
+ *           1: (TR_DBG_PZG) print to stdout the poles, zeros and gain of the
+ *              input and output response functions.
+ *           2: (TR_DBG_TRS) print to stdout the trial frequency response 
+ *              function and the corresponding impulse response function.
+ *              This will produce about 1500 lines of output for each call 
+ *              to respLen or convertWave.
+ *           4: (TR_DBG_ARS) print to stdout the full frequency response 
+ *              function. This will produce about one line of output for 
+ *              every two datapoints input to convertWave.
+ */
+</pre>
+</blockquote>

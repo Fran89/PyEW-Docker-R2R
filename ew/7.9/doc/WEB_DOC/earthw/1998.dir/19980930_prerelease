@@ -1,0 +1,16 @@
+
+From dietz@bruno.wr.usgs.gov Wed Sep 30 16:41:36 1998
+Date: Wed, 30 Sep 1998 11:40:13 -0700
+From: Lynn Dietz <dietz@bruno.wr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: additions to Earthworm pre-release ftp site
+
+New executables for import_generic, carl*trig and wave_serverV
+have recently been added to the Earthworm ftp site:
+
+ftp://gldage.cr.usgs.gov/pub/OUTGOING/earthworm/pre_release_modules/
+
+Please see the pre_release.README file for details on the changes
+to these modules.
+
+Lynn Dietz

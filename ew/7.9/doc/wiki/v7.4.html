@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v7.4 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v7.4?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v7.4.html" title="View v7.4">v7.4</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v7.4?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v7.4?action=diff&amp;version=7" title="Version 7 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-16T09%3A18%3A52-08%3A00&amp;precision=second" title="2012-01-16T09:18:52-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/16/12 09:18:52</span>
+          </div>
+          <div id="wikipage"><h1 id="EarthwormReleaseNotesV7.4">Earthworm Release Notes V7.4</h1>
+<p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="v7.4.html#EarthwormReleaseNotesV7.4">Earthworm Release Notes V7.4</a>
+    <ol>
+      <li>
+        <a href="v7.4.html#NEWMODULES">NEW MODULES</a>
+        <ol>
+          <li>
+            <a href="v7.4.html#ew2mseed">ew2mseed</a>
+          </li>
+          <li>
+            <a href="v7.4.html#debias">debias</a>
+          </li>
+          <li>
+            <a href="v7.4.html#ewintegrate">ewintegrate</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.4.html#MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</a>
+        <ol>
+          <li>
+            <a href="v7.4.html#hyp2000_mgr">hyp2000_mgr</a>
+          </li>
+          <li>
+            <a href="v7.4.html#tankplayer">tankplayer</a>
+          </li>
+          <li>
+            <a href="v7.4.html#tankplayer1">tankplayer</a>
+          </li>
+          <li>
+            <a href="v7.4.html#wave_serverV">wave_serverV</a>
+          </li>
+          <li>
+            <a href="v7.4.html#sgram">sgram</a>
+          </li>
+          <li>
+            <a href="v7.4.html#sac2tbintankplayer_tools">sac2tb (in tankplayer_tools)</a>
+          </li>
+          <li>
+            <a href="v7.4.html#localmag">localmag</a>
+          </li>
+          <li>
+            <a href="v7.4.html#sniffwave">sniffwave</a>
+          </li>
+          <li>
+            <a href="v7.4.html#copystatus">copystatus</a>
+          </li>
+          <li>
+            <a href="v7.4.html#statmgr">statmgr</a>
+          </li>
+          <li>
+            <a href="v7.4.html#startstop">startstop</a>
+          </li>
+          <li>
+            <a href="v7.4.html#nmxptool">nmxptool</a>
+          </li>
+          <li>
+            <a href="v7.4.html#waveman2disk">waveman2disk</a>
+          </li>
+          <li>
+            <a href="v7.4.html#waveman2disk1">waveman2disk</a>
+          </li>
+          <li>
+            <a href="v7.4.html#carlsubtrig">carlsubtrig</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.4.html#CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILES">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES</a>
+        <ol>
+          <li>
+            <a href="v7.4.html#startstop1">startstop</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.4.html#KNOWNBUGS">KNOWN BUGS</a>
+        <ol>
+          <li>
+            <a href="v7.4.html#liss2ew">liss2ew</a>
+          </li>
+          <li>
+            <a href="v7.4.html#wave_serverV1">wave_serverV</a>
+          </li>
+          <li>
+            <a href="v7.4.html#adsend">adsend</a>
+          </li>
+          <li>
+            <a href="v7.4.html#libsrcutilssite.c">libsrc/utils/site.c</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v7.4.html#KNOWNDEFICIENCIES">KNOWN DEFICIENCIES</a>
+        <ol>
+          <li>
+            <a href="v7.4.html#ringtocoax">ringtocoax</a>
+          </li>
+          <li>
+            <a href="v7.4.html#carlsubtrig1">carlsubtrig</a>
+          </li>
+          <li>
+            <a href="v7.4.html#localmag1">localmag</a>
+          </li>
+          <li>
+            <a href="v7.4.html#ew2seisvole">ew2seisvole</a>
+          </li>
+          <li>
+            <a href="v7.4.html#NUMBEROFRINGSLIMITEDONSOLARIS">NUMBER OF RINGS LIMITED ON SOLARIS</a>
+          </li>
+          <li>
+            <a href="v7.4.html#TRACEBUFmessages">TRACEBUF messages</a>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<p>
+April 27, 2010
+</p>
+<h2 id="NEWMODULES">NEW MODULES</h2>
+<h3 id="ew2mseed">ew2mseed</h3>
+<ul><li>ew2mseed from ISTI is now in the CVS repository. This was written by Ilya Dricker of ISTI. This only works on Solaris, Linux, and Mac OS X. It does compile with cygwin for WINDOZE.   Note there is no .desc file with this module since it is designed to operateas a daemon program external from an EW installation. It only reads from wave_serverV modules.
+</li><li>Paul Friberg 3/10/2010
+</li></ul><h3 id="debias">debias</h3>
+<ul><li>Computes a rolling-average for a specified time, subtracts from data to remove bias (hence the name).
+</li><li>Scott Hunter 02/24/2010
+</li></ul><h3 id="ewintegrate">ewintegrate</h3>
+<ul><li>Processes tracebuf packets in any non-empty subset of 3 stages: debias (see above), integrate, and high-pass filter.
+</li><li>Scott Hunter 03/02/2010
+</li></ul><h2 id="MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</h2>
+<ul><li>rcv/vdl removed from data_exchange as these are no longer used by USGS NEIC or anybody else as far as we can tell.
+</li><li>Paul Friberg 4/27/2010
+</li></ul><h3 id="hyp2000_mgr">hyp2000_mgr</h3>
+<ul><li>Added a _GFORTRAN compile directive since g77 is now replaced by gfortran on some platforms (newer Linux installs). To get hyp2000_mgr to compile, be sure to set FC=gfortran and to add -D_GFORTRAN compile time flag to GLOBALFLAGS
+</li><li>Paul Friberg 4/27/2010
+</li></ul><h3 id="tankplayer">tankplayer</h3>
+<ul><li>Allowed tankplayer to play back data faster with new setting: InterMessageDelayMillisecs
+</li><li>Paul Friberg 3/13/2009
+</li></ul><h3 id="tankplayer1">tankplayer</h3>
+<ul><li>Had a bad check for size of message based on nsamps. This let through bad tracebuf packets if there was an error in writing the tank. This is now limited to tracebuf max size.
+</li><li>Paul Friberg 3/19/2010
+</li></ul><h3 id="wave_serverV">wave_serverV</h3>
+<ul><li>Fixed a ReadBlockData() error for end of tanks read, thanks to Dave Kragness.
+</li><li>I just integrated the code and compile tested. Earthw users tested!
+</li><li>Paul Friberg 3/18/2010
+</li></ul><h3 id="sgram">sgram</h3>
+<ul><li>Was never made to automatically compile for a windows build. It is now.
+</li><li>Thanks to Jeff Marso for  pointing this one out.
+</li><li>Paul Friberg 3/18/2010
+</li></ul><h3 id="sac2tbintankplayer_tools">sac2tb (in tankplayer_tools)</h3>
+<ul><li>Allow (and require, for Windows) output file to be specified as a command line argument (instead of writing output to stdout); also added a switch to allow for appending to output file.
+</li><li>Scott Hunter 3/17/2010
+</li></ul><h3 id="localmag">localmag</h3>
+<ul><li>Added in Matteo Quintiliani feature to have %v for event version in the directory naming of where ML messages are written.
+</li><li>See the new option:  MlmsgOutDir in the cmd html file.
+</li><li>I just did the cvs merge, Matteo did all the work.
+</li><li>Paul Friberg 3/15/2010
+</li></ul><h3 id="sniffwave">sniffwave</h3>
+<ul><li>Now has the ability to show latency of data (Matteo's addition) and also run for n seconds and show the amount of wave data in a ring. (EW class)
+</li><li>Paul Friberg 6/12/2009
+</li><li>Made it now able to do: sniffwave ringname which translatest to "wild wild wild wild n". As of today, "sniffwave ringname y/s" is also possible.
+</li><li>These improvements come after being sick and tired of typing wild wild wild wild n too many times :)
+</li><li>Paul Friberg 3/15/2010
+</li><li>If !WaveMsg2MakeLocal fails, tracebuf is rejected
+</li><li>Scott Hunter 3/19/2010
+</li><li>Allowed SCN and SCNL searches for the same command line as it was before.
+</li><li>Paul Friberg 3/25/2010
+</li></ul><h3 id="copystatus">copystatus</h3>
+<ul><li>Now copies TYPE_STOP and TYPE_RESTART messages since statmgr needed these for stopmodule actions (especially if statmgr was not monitoring the first ring in the startstop listing).
+</li><li>Paul Friberg 3/8/2010
+</li></ul><h3 id="statmgr">statmgr</h3>
+<ul><li>When specifying the maximum number of pager or email messages, a negative value is interpreted as infinity (i.e. no limit) -- USE WITH CAUTION!
+</li><li>Scott Hunter 12/13/2009
+</li><li>Modified the statmgr to log any TYPE_STOP messages received.
+</li><li>Paul Friberg 3/8/2010
+</li></ul><h3 id="startstop">startstop</h3>
+<ul><li>Stop and restart requests are now run in independent threads, so startstop will still be responsive to further requests no matter how long the stopping and/or restarting takes
+</li><li>Scott Hunter 12/13/2009
+</li></ul><ul><li>If there is a problem encountered when reconfiguring, instead of aborting, startstop now proceeds as if no such request had been made.
+</li><li>Scott Hunter 12/13/2009
+</li></ul><ul><li>Removed corruption of PATH environment variable &amp; fixed display of paths in status
+</li><li>Scott Hunter 01/11/2010
+</li></ul><ul><li>Eliminated potential hang of status by having it read process info using non-blocking reads
+</li><li>Scott Hunter 02/12/2010
+</li></ul><ul><li>Should now reliably create its logfile
+</li><li>Scott Hunter 03/01/2010
+</li></ul><ul><li>Smarter display of arguments in Unix Status display (i.e. dropping trailing .d if that is all that makes line too long; truncating last argument from front, replacing dropped chars with &lt;; use trailing &gt; to indicate 1 or more trailing arguments not displayed)  
+</li><li>Also added optional .d command, maxStatusLineLen.
+</li><li>Scott Hunter 03/04/2010
+</li></ul><ul><li>Consolidated unix code for stopping modules; will first try setting a flag for the module to self-terminate, then try sending a terminate signal (which modules can be written to ignore); finally, if new optional .d command HardKillDelay is non-0, will use a kill signal which CAN'T be ignored.
+</li><li>Scott Hunter 03/10/2010
+</li></ul><ul><li>More consistent Status display between Windows &amp; Unix; in particular, showing arguments to the right.  Also reports modules that did not properly start in both as NoExec 
+</li><li>Scott Hunter 03/25/2010
+</li></ul><ul><li>Better enforcement of column widths in status; allow process name to be truncated as necessary
+</li><li>Scott Hunter 04/05/2010
+</li></ul><h3 id="nmxptool">nmxptool</h3>
+<ul><li>updated version 1.2.4
+</li><li>Matteo Quintiliani 2009-12-22
+</li></ul><h3 id="waveman2disk">waveman2disk</h3>
+<ul><li>Add support for consolidating multiple stations/channels in one wfdisc file
+</li><li>2010/01/11 Tim Zander
+</li></ul><h3 id="waveman2disk1">waveman2disk</h3>
+<ul><li>allowed no logging by running it interactively like this: waveman2disk waveman2disk.d n. This effectively allows a user to run waveman2disk outside of an EW environment.
+</li><li>Paul Friberg 2010/03/25
+</li></ul><h3 id="carlsubtrig">carlsubtrig</h3>
+<ul><li>Allowed a way to point to the trig_id.d file instead of having it in a stock location: TrigIdFilename is the new directive. If this is used, the line @trig_id.d should be commented out from the .d file 
+</li><li>Paul Friberg 2009/08/28
+</li></ul><h2 id="CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILES">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES</h2>
+<h3 id="startstop1">startstop</h3>
+<ul><li>Added optional HardKillDelay (# seconds before using method of last resort when killing a module in Unix) and maxStatusLineLen (maximum of individual module status lines)
+</li></ul><h2 id="KNOWNBUGS">KNOWN BUGS</h2>
+<h3 id="liss2ew">liss2ew</h3>
+<ul><li>liss2ew has been observed intermittantly producing malformed TRACE_BUF messages.  Currently the conditions for causing this problem are unknown.  Due to this, liss2ew should be treated as suspect.  Use at your own risk.  JMP 6-18-2003
+</li></ul><h3 id="wave_serverV1">wave_serverV</h3>
+<ul><li>appears not to reply to requests for a single sample of data. I noticed when testing wave_viewer, that if the start time and end time of a request were equal (in which case there should be one sample of data) then wave_serverV did not reply to the request (ASCII request) at all. No Data, No Flags, No Reply, No Nothing.  It needs to issue a reply to every request.
+</li><li>DavidK 09/25/01
+</li></ul><h3 id="adsend">adsend</h3>
+<ul><li>Automatic restarts of adsend (using the "restartMe" line in the descriptor file) can cause an NT system to hang. Therefore, you should never use the autorestart feature with adsend, but you should bring down the entire Earthworm system if adsend needs to be restarted. LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+</li></ul><h3 id="libsrcutilssite.c">libsrc/utils/site.c</h3>
+<ul><li>The strings used for station, channel and network are required to be fixed length with trailing spaces added to short names. If
+</li></ul><p>
+the strings given to site_index do not have these trailing blanks, SCN names will not match. This is not documented anywhere.  PNL 10/15/00
+</p>
+<h2 id="KNOWNDEFICIENCIES">KNOWN DEFICIENCIES</h2>
+<h3 id="ringtocoax">ringtocoax</h3>
+<ul><li>In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock tick).  On Solaris, the resolution is about 10 msec.  This is a problem for ringtocoax, since packet delays need to be set to a few milliseconds.
+</li></ul><ul><li>threads functions: The KillThread function on WindowsNT and Solaris terminate the thread without ensuring that no mutexes are held. If a thread holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+</li></ul><h3 id="carlsubtrig1">carlsubtrig</h3>
+<ul><li>The system time must be set to GMT and ew_nt.cmd must have TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+</li></ul><p>
+        
+</p>
+<h3 id="localmag1">localmag</h3>
+<ul><li>needs GMT set on the system
+</li></ul><h3 id="ew2seisvole">ew2seisvole</h3>
+<ul><li>on NT, exits with horrible crash when system is stopped.
+</li></ul><h3 id="NUMBEROFRINGSLIMITEDONSOLARIS">NUMBER OF RINGS LIMITED ON SOLARIS</h3>
+<ul><li>THIS IS MOOT after Solaris 2.8! Under Solaris 2.6 (and probably other versions as well), the maximum number of shared memory segments is six. This means that on an out-of-the-box machine you can only configure six rings. If you try to configure more than that, you will see a cryptic message from tport_create about too many open files.  The fix to this problem is to add the following lines to the /etc/system file, and then reboot the system.
+</li></ul><pre class="wiki"> set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+</pre><p>
+This allows for 20 rings.
+</p>
+<ul><li>Lucky Vidmar (7/6/2000)
+</li></ul><h3 id="TRACEBUFmessages">TRACEBUF messages</h3>
+<ul><li>The definition of <tt>endtime' of the TRACEBUF message is not documented. Some programmers are taking it as the "expected start time of the next TRACEBUF packet (if the sample interval is uniform.)" The more accepted practice is that </tt>endtime' is the time of the last sample of the current TRACEBUF packet; that is, one sample interval less than the expected start time of the next TRACEBUF messsage. Using this last definition, if a TRACEBUF packet has exactly one sample, then its starttime and endtime are the identical. Clearly this distinction needs to be documented. The file waveform_format (in the /home/earthworm/DOC directory) gives no specifics about start or end times.  
+</li><li>PNL 1/24/01
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v7.4?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

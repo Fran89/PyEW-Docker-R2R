@@ -1,0 +1,60 @@
+From steve@geophys.washington.edu Tue Jun 20 12:49:11 2000
+Date: Tue, 20 Jun 2000 08:35:56 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: Ali Moeinvaziri <ali@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: k2ew
+
+Ali,
+	Sorry about the delay getting back to you.  Yes, we are running the
+"k2ew" code over an IP link using an MSS100 terminal server.  It is working
+(mostly).  Pete Lombard (living in Berkeley and consulting for USGS and us
+<lombard@geophys.washington.edu>) is the current developer of this code and
+would be the best to provide it to you directly.  Of course, one would hope
+that a central FTP site would have such development code available to anyone
+who wanted to test it, but for now check with Pete.
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+On Thu, 15 Jun 2000, Ali Moeinvaziri wrote:
+
+> 
+> Steve,
+> 
+> Where can I get my hands on k2ew source code that works with terminal servers?
+> 
+> I just down loaded the new version of ew (5.0, including its upgrade), but
+> I don't seem to find k2ew in there. There is an old version of it (which
+> requires a com port of a pc) under Meno contributed source code.
+> 
+> Thanks for your help,
+> -AM
+> 
+
+
+From bogaert@usgs.gov Thu Jun 22 13:36:08 2000
+Date: Tue, 20 Jun 2000 12:08:25 -0600
+From: Barbara Bogaert <bogaert@usgs.gov>
+To: Steve Malone <steve@geophys.washington.edu>,
+     Ali Moeinvaziri <ali@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: k2ew
+
+Ali,
+
+The K2EW software is currently available on the machine gldrocky at Golden
+in working directory. You have an account on that system.  If you have any
+problems accessing the software, let me know.
+
+The K2EW software has been made available to the participants of the USGS
+Strong Motion Urban Upgrade Project (NCSN, PNSN, UUSN).  Since it is  not
+fully tested I have not made it available via the Earthworm ftp site.
+However, if anyone is interested in using the development version, please
+contact me at bogaert@usgs.gov.
+
+- Barbara

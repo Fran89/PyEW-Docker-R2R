@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: eqbuf overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Eqbuf Overview</H1>
+<I>(last revised 14 April, 1998)</I></CENTER>
+
+<P>
+Eqbuf is a sub-module in Earthworm's event-processing mega-module.
+It is generally the second link in the mega-module and is started by the
+first link (either eqproc or eqprelim). Eqbuf in turn starts up the third
+link (generally eqcoda) and communicates to it via a one-directional pipe.
+Once the third link is started, eqbuf's job is simply to buffer all the
+messages output by the process that started it. This allows the "head" module
+to produce events as fast as it cares to while allowing the "tail" of the
+mega-module to take its time finishing the event-processing. Eqbuf never
+looks inside a message, it just passes them thru as they are.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqbuf_cmd.html">Eqbuf Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

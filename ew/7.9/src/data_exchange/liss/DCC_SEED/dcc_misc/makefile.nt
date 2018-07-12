@@ -1,0 +1,64 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:24  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:56:47  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/03/13 23:45:14  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+DCC_INCLUDE = ..\include
+DCC_LIB = ..\lib
+
+INCS = /I$(DCC_INCLUDE)
+
+
+OBJS = 	ctx_file.obj	\
+	getmyname.obj	\
+	envfile.obj	\
+	fixopen.obj	\
+	strfuns.obj	\
+	dataswaps.obj	\
+	wildmatch.obj	\
+	log.obj		\
+	dcc_env.obj	\
+	chansubs.obj	\
+	readline.obj	\
+	bombopen.obj	\
+	bombout.obj	\
+	safemem.obj	\
+	itemlist.obj	\
+	compat_strerror.obj 
+
+all: $(OBJS) install
+
+install: $(OBJS)
+    copy *.obj $(DCC_LIB)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(INCS) $<
+
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+# extras: 	calctime.obj 	watchdog.obj

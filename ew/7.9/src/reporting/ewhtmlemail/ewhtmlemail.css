@@ -1,0 +1,69 @@
+/* 
+Style Sheet for ewhtmlemail 
+
+Currently, the main html ids to consider for the alert email are:
+DataTable -> The initial table with the basic event info
+WaveTable -> The table with all the traces
+
+This file is embeded in the automatically generated html email as is.
+Make sure that you know what you are doing before changing it.
+*/
+
+#Footer {
+   font-family: Sans-serif;
+   font-size: 12;
+   color: #000060;
+}
+
+#DataTable {
+   font-family: Sans-serif;
+   font-size: 12;
+   border-collapse: collapse;
+}
+
+#DataTable th {
+   background-color: #000060;
+   color: #DDDDFF;
+}
+
+#DataTable tr td {
+   background-color: white;
+   color: #000060;
+}
+
+#DataTable tr.alt td {
+   background-color: #DDDDFF;
+   color: #000060;
+}
+
+#WaveTable {
+   font-family: Sans-serif;
+   font-size: 10;
+   border: 1px solid black;
+   border-collapse: collapse;
+}
+
+#WaveTable th {
+   background-color: #000060;
+   color: white;
+}
+
+#WaveTable tr.WaveTableTextRowClass td {
+   background-color: #DDDDFF;
+   color: #000060;
+}
+
+#WaveTable tr.WaveTableTraceRowClass td {
+   height: 80px;
+   vertical-align: top;
+}
+
+
+.TraceClass {
+   max-height: 60px;
+   height: auto;
+   height: 60px;
+   max-width: 600px;
+   width: auto;
+   width: 600px;
+}

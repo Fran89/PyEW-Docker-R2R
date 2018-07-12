@@ -1,0 +1,23 @@
+LINUX_FLAGS=-lpthread
+SOLARIS_FLAGS=-lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = file2ring.o $L/libew.a
+
+file2ring: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/file2ring $(OBJS) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint file2ring.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/file2ring*

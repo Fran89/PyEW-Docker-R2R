@@ -1,0 +1,34 @@
+
+#
+#
+#
+#
+#
+#
+# this outputs a tool called 'tc' rather than time_converter for quick work
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = time_converter
+O = $(APP).obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $L\libew.lib \
+     -out:$B\tc.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /D_CRT_SECURE_NO_DEPRECATE  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\tc*

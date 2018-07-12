@@ -1,0 +1,49 @@
+#
+#                  Nmake File For C++ Library Objects
+#
+#
+# -------------------------------------------------------------
+#  NOTE: THIS DOES NOT (YET) INCLUDE THE util\mfc_dlog_app_base.obj
+#        NOT util\mfc_dlog_modl_base.obj BECAUSE I'M IN A HURRY.
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib_cpp
+
+OBJS =  
+OBJS = util\timefuncs.obj \
+       util\mutex.obj \
+       util\configsource.obj \
+       util\comfile.obj \
+       util\configurable.obj \
+       util\globalutils.obj \
+       util\logger.obj \
+       util\mutex.obj \
+       util\threadableobject.obj \
+       util\timefuncs.obj \
+       util\simple_mod_base.obj \
+       util\worm_signal.obj \
+       util\sockets\socket_exception.obj \
+       servers\serverbase.obj \
+       servers\ringreaderserver.obj
+
+
+all: clean set_envir $(OBJS) install
+
+set_envir:
+   set INCLUDE=%INCLUDE%;%EW_HOME%\%EW_VERSION%\include;%EW_HOME%\%EW_VERSION%\include_cpp;%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\util;%EW_HOME%\%EW_VERSION%\src\libsrc_cpp\util\sockets
+   echo %INCLUDE%
+
+.cpp.obj:
+   $(CC) $(GLOBALFLAGS)  $(cflags) $(cdebug) $(cvarsmt) /ML /GX /O2 /YX /FD /D_INTEL /D_WINNT /DNDEBUG /D_WINDOWS /D_Windows /D_MBCS $<
+
+install:
+   -del %EW_HOME%\%EW_VERSION%\lib_cpp\*.obj
+   move *.obj %EW_HOME%\%EW_VERSION%\lib_cpp
+   -del *.idb *.pch
+
+clean:
+   -del *.obj

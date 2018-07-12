@@ -1,0 +1,37 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4 $(LINK_LIBS)
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS =-D_REENTRANT $(GLOBALFLAGS)
+SRCS = arc2trig.c writetrig.c
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+ARC = arc2trig.o writetrig.o $L/libew.a $L/read_arc.o $L/site.o 
+
+arc2trig: $(ARC)
+	$(CC) $(CFLAGS) -o $(B)/arc2trig $(ARC) $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+
+lint:
+	lint arc2trig.c writetrig.c $(GLOBALFLAGS)
+
+depend:
+	makedepend -fmakefile.unix -- $(CFLAGS) -- $(SRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/arc2trig*

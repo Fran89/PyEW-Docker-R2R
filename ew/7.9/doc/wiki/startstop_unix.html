@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      startstop_unix – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/startstop_unix?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="startstop_unix.html" title="View startstop_unix">startstop_unix</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/startstop_unix?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/startstop_unix?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2011-11-15T17%3A47%3A08-08%3A00&amp;precision=second" title="2011-11-15T17:47:08-08:00 in Timeline">22 months</a> ago</span>
+            <span class="trac-print">Last modified on 11/15/11 17:47:08</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="startstop_unix.html#EarthwormModule:startstop_nt">Earthworm Module: startstop_nt</a>
+    <ol>
+      <li>
+        <a href="startstop_unix.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="startstop_unix.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="startstop_unix.html#Examplestartstop_unix.dConfigurationFile">Example startstop_unix.d Configuration File</a>
+          </li>
+          <li>
+            <a href="startstop_unix.html#FunctionalCommands">Functional Commands</a>
+            <ol>
+              <li>
+                <a href="startstop_unix.html#Sharedmemorysetup">Shared memory setup</a>
+                <ol>
+                  <li>
+                    <a href="startstop_unix.html#nRing">nRing</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#Ring">Ring</a>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <a href="startstop_unix.html#Startstop-specificinfo">Startstop-specific info</a>
+                <ol>
+                  <li>
+                    <a href="startstop_unix.html#MyModuleId">MyModuleId</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#HeartbeatInt">HeartbeatInt</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#MyClassName">MyClassName</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#MyPriority">MyPriority</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#LogFile">LogFile</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#KillDelay">KillDelay</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#HardKillDelay">HardKillDelay</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#maxStatusLineLen">maxStatusLineLen</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#Stderr">Stderr</a>
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <a href="startstop_unix.html#Earthwormmodulestorun">Earthworm modules to run</a>
+                <ol>
+                  <li>
+                    <a href="startstop_unix.html#Process">Process</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#ClassPriority">Class/Priority</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#Stderr1">Stderr</a>
+                  </li>
+                  <li>
+                    <a href="startstop_unix.html#Agent">Agent</a>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="startstop_unix.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:startstop_nt"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: startstop_nt</h1>
+<h2 id="Function">Function</h2>
+<p>
+startstop for Unix
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Startstop is a system-specific module; the configuration file described here is for the Linux version. On startup, startstop changes to the directory specified by the EW_PARAMS environment variable. Then it reads the configuration file named startstop_unix.d. This file sets up all parameters required to run an Earthworm system. In the configuration file, lines may begin with a valid startstop command (listed below) or with a # to denote a comment. Command names must be typed in the configuration file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="Examplestartstop_unix.dConfigurationFile">Example startstop_unix.d Configuration File</h3>
+<pre class="wiki">#
+#       Startstop (Linux Version) Configuration File
+#
+#    &lt;nRing&gt; is the number of transport rings to create.
+#    &lt;Ring&gt; specifies the name of a ring followed by it's size
+#    in kilobytes, eg        Ring    WAVE_RING 1024
+#    The maximum size of a ring is 1024 kilobytes.
+#    Ring names are listed in file earthworm.h.
+#
+ nRing               3
+ Ring   WAVE_RING 1024
+ Ring   PICK_RING 1024
+ Ring   HYPO_RING 1024
+#
+ MyModuleId    MOD_STARTSTOP  # Module Id for this program
+ HeartbeatInt  50             # Heartbeat interval in seconds
+ MyClassName   TS             # For this program
+ MyPriority     0             # For this program
+ LogFile        1             # 1=write a log file to disk, 0=don't
+ KillDelay      5             # seconds to wait before killing modules on
+                              #  shutdown
+ HardKillDelay  5             # seconds to wait after SIGKILL
+                              #   if absert, no SIGKILL is sent
+# maxStatusLineLen 120         # Uncomment to specify length of lines in status
+ Stderr         None          # Where to send stderr messages: None, Console or File
+#
+#    Class must be RT or TS
+#    RT priorities from 0 to 59
+#    TS priorities le 0
+#
+#    If the command string required to start a process contains
+#    embedded blanks, it must be enclosed in double-quotes.
+#    Processes may be disabled by commenting them out.
+#    To comment out a line, preceed the line by #.
+#    The optional Agent command lists the user and group names under which
+#       the command will be run. Make sure they are valid names!
+#       You cannot use "root" as the Agent user. If an earthworm module
+#       needs to run as root, you should make that module's binary setuid root.
+#
+ Process          "pick_ew pick_ew.d"
+ Class/Priority    TS 0
+ Agent             "eworm" "net"
+#
+# Process          "coaxtoring coaxtoring.d"
+# Class/Priority    RT 10
+#
+# Process          "export_generic export_picks.d"
+# Class/Priority    TS 0
+#
+ Process          "binder_ew binder_ew.d"
+ Class/Priority    TS 0
+ Stderr            File
+#
+#
+ Process          "eqproc eqproc.d"
+ Class/Priority    TS 0
+ Stderr            Console
+#
+ Process          "diskmgr diskmgr.d"
+ Class/Priority    TS 0
+#
+ Process          "pagerfeeder pagerfeeder.d"
+ Class/Priority    TS 0
+#
+ Process          "statmgr statmgr.d"
+ Class/Priority    TS 0
+#
+# Process          "eqalarm_ew eqalarm_ew.d"
+# Class/Priority    TS 0
+#
+ Process          "copystatus WAVE_RING HYPO_RING"
+ Class/Priority    RT 5
+#
+ Process          "copystatus PICK_RING HYPO_RING"
+ Class/Priority    RT 5
+#
+ Process          "menlo_report menlo_report.d"
+ Class/Priority    TS 0
+#
+</pre><h3 id="FunctionalCommands">Functional Commands</h3>
+<p>
+Unlike most other Earthworm modules, startstop expects the lines in its control file to be in a certain order. Below are the commands recognized by startstop, grouped by the function they influence and listed in the order in which they must appear in the control file. All commands are required!
+</p>
+<h4 id="Sharedmemorysetup">Shared memory setup</h4>
+<pre class="wiki">nRing		   	required
+Ring		   	required (nRing)
+</pre><h5 id="nRing">nRing</h5>
+<p>
+nRing [nRing]
+</p>
+<p>
+Specifies the number of shared memory regions (aka transport rings) that startstop will create for "public" use by the modules of this Earthworm system. nRing should be an integer from 1 to MAX_RING (currently defined to be 50).
+</p>
+<p>
+Example:  nRing 3
+</p>
+<h5 id="Ring">Ring</h5>
+<p>
+Ring [name size]
+</p>
+<p>
+Specifies the name and size, in kilobytes, of one transport ring. There must be exactly nRing "Ring" commands following the "nRing" command in the startstop_unix.d. name is a character string (up to 19 characters long, valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region. size should be an integer between 1 and 1024 (the default maximum size). When deciding how large to make a memory region, realize that the transport layer uses a portion of the memory region for its own bookkeeping. The region size is NOT required to be an even multiple of the size of the messages it will contain. However, suppose you want the region to be exactly large enough to store NUM messages of size MSGSIZE. To include space for transport bookkeeping too, the region size (in bytes) should be:
+sizeof(SHM_HEAD) + NUM * ( sizeof(TPORT_HEAD) + MSGSIZE )
+</p>
+<p>
+where SHM_HEAD and TPORT_HEAD are structures defined in transport.h. Startstop places all of its outgoing messages in the memory region specified by the first "Ring" command.
+</p>
+<p>
+Example:  Ring  WAVE_RING 1024
+</p>
+<h4 id="Startstop-specificinfo">Startstop-specific info</h4>
+<pre class="wiki">MyModuleId	   	required
+HeartbeatInt		required
+MyClassName		required
+MyPriority		required
+LogFile		   	required
+KillDelay		required
+HardKillDelay		optional
+maxStatusLineLen	optional
+Stderr			optional
+</pre><h5 id="MyModuleId">MyModuleId</h5>
+<p>
+MyModuleId [mod_id]
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (up to 30 characters, valid strings listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number. Startstop places its outgoing messages on the shared memory ring specified by the first "Ring" command in startstop_sol.d.
+</p>
+<p>
+Example:  MyModuleId MOD_STARTSTOP
+</p>
+<h5 id="HeartbeatInt">HeartbeatInt</h5>
+<p>
+HeartbeatInt [nsec]
+</p>
+<p>
+Defines the number of seconds, nsec, between TYPE_HEARTBEAT messages issued by startstop. Startstop places its heartbeats on the shared memory ring specified by the first "Ring" command in startstop_unix.d.
+</p>
+<p>
+Example:  HeartbeatInt 30
+</p>
+<h5 id="MyClassName">MyClassName</h5>
+<p>
+MyClassName [class]
+</p>
+<p>
+Sets the process class for startstop. class is a character string that must be set to either "RT" (for Real-Time) or "TS" (for Time- Share) on solaris.
+</p>
+<p>
+Example:  MyClassName RT
+</p>
+<h5 id="MyPriority">MyPriority</h5>
+<p>
+MyPriority priority
+</p>
+<p>
+Sets the process priority for startstop. See the "Class/Priority" command below for allowed values. After startstop reads its configuration file, it changes its own class/priority to the values specified in the "MyClassName" and "MyPriority" commands.
+</p>
+<p>
+Example:  MyPriority 4
+</p>
+<h5 id="LogFile">LogFile</h5>
+<p>
+LogFile [switch]
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, startstop will write a daily log file(s) called cfname_yyyymmdd.log where cfname is the name (without extension) of startstop's configuration file (ex: startstop_unix) and yyyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<p>
+Example:  LogFile 1
+</p>
+<h5 id="KillDelay">KillDelay</h5>
+<p>
+KillDelay [nsec]
+</p>
+<p>
+Gives the number of seconds nsec that startstop will wait for modules to shutdown gracefully on termination. After this delay, startstop will force modules to shut down with the TERM signal. If module still does not stop after nsec seconds, behavior is determined by the "HardKillDelay" command.
+</p>
+<p>
+Example:  KillDelay 10
+</p>
+<h5 id="HardKillDelay">HardKillDelay</h5>
+<p>
+HardKillDelay [nsec]
+</p>
+<p>
+Optional specification of number of seconds nsec that startstop will wait for modules to shutdown after being sent a KILL signal before aborting a restart of the module. If not specified, no KILL signal is issued, and any restart is aborted after sequence described in the "KillDelay" command.
+</p>
+<p>
+Example:  HardKillDelay 10
+</p>
+<h5 id="maxStatusLineLen">maxStatusLineLen</h5>
+<p>
+maxStatusLineLen [nchars]
+</p>
+<p>
+Optional specification of maximum length of a line when printing status to nchars characters; default is 80, and new value cannot be smaller. When specified, status will adjust column widths to minimize truncation of information.
+</p>
+<p>
+Example:  maxStatusLineLen 120
+</p>
+<h5 id="Stderr">Stderr</h5>
+<p>
+Stderr [target]
+</p>
+<p>
+Optional specification of what to do with messages printed to stderr; target can be either "Console" (the screen, the default), "None" (messages are eliminated), or "File" (messages get written to a file in the Log directory, named as the log file for this module would be but with the extension .err). When specified for startstop itself, it is the default for all modules (save startstop); when specified for a specific module, it overrides the specification for all modules. In the example configuration, every module's stderr messages are surpressed except for eqproc (whose go to the screen) and binder_ew (whose go to a file).
+</p>
+<p>
+Example:  Stderr File
+</p>
+<h4 id="Earthwormmodulestorun">Earthworm modules to run</h4>
+<pre class="wiki">Process		 	required \
+Class/Priority		required  |  one set
+Stderr			optional  | per module
+Agent			optional /
+</pre><h5 id="Process">Process</h5>
+<p>
+Process [cmdstring]
+</p>
+<p>
+Gives the command string, cmdstring, (up to 79 characters) that will be used to start one Earthworm module. Each "Process" command must be immediately followed by a "Class/Priority" command. If the cmdstring required to start a process contains embedded blanks, it must be enclosed in double-quotes. Startstop can create up to MAX_CHILD (currently defined as 200) child processes.
+</p>
+<p>
+Example:  Process "binder_ew binder_ew.d"
+</p>
+<h5 id="ClassPriority">Class/Priority</h5>
+<p>
+Class/Priority [class priority]
+</p>
+<p>
+Specifies the class and priority under which the module given by the previous "Process" command will be run. class is a 2-character string and priority is an integer; their values are restricted to:
+</p>
+<blockquote>
+<p>
+class     priority
+</p>
+</blockquote>
+<blockquote>
+<p>
+Real-Time     "RT"      0 to 59
+Time-Share    "TS"       &lt;= 0
+</p>
+</blockquote>
+<p>
+Class RT processes run at higher priority than class TS processes. Take care not to assign known CPU hogs (binder_ew, for example) to the RT class. Such an assignment could bog down all class TS processes, causing poor Earthworm system performance. After a "Class/Priority" line, startstop expects to find the "Process" command of the next Earthworm module it should spawn.
+</p>
+<p>
+Example:  Class/Priority  TS  0
+</p>
+<h5 id="Stderr1">Stderr</h5>
+<p>
+Stderr [target]
+</p>
+<p>
+Optional specification of what to do with messages printed to stderr; target can be either "Console" (the screen, the default), "None" (messages are eliminated), or "File" (messages get written to a file in the Log directory, named as the log file for this module would be but with the extension .err). When specified for startstop itself, it is the default for all modules (save startstop); when specified for a specific module, it overrides the specification for all modules. In the example configuration, every module's stderr messages are surpressed except for eqproc (whose go to the screen) and binder_ew (whose go to a file).
+</p>
+<p>
+Example:  Stderr File
+</p>
+<h5 id="Agent">Agent</h5>
+<p>
+Agent [user group]
+</p>
+<p>
+Optional command to specify the user and group names under which this module will run. Normally this feature will not be used. But if you need to have the output and log files from this module owned by a user other than the one who runs startstop, then you can use Agent to do this. You cannot specify root as the user agent. If you need to have a module run with root privelege, you should set that module's file permissions to make it setuid root. Make sure that user is a valid user name and group is a valid group name for your system.
+</p>
+<p>
+Example:  Agent "eworm" "net"
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/startstop_unix?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

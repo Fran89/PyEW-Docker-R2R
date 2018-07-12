@@ -1,0 +1,107 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Re: Three questions for al earthwormers -->
+<!--X-From-R13: Zlaa Rvrgm <qvrgmNhftf.tbi> -->
+<!--X-Date: Thu, 22 Jun 2000 09:17:17 &#45;0700 -->
+<!--X-Message-Id: 17336.964738880.24@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Re: Three questions for al earthwormers</TITLE>
+<LINK REV="made" HREF="mailto:dietz@usgs.gov">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00023.html">Date Prev</A>][<A HREF="ew.00025.html">Date Next</A>][<A HREF="ew.00023.html">Thread Prev</A>][<A HREF="ew.00025.html">Thread Next</A>][<A HREF="welcome.html#00024">Date Index</A>][<A HREF="threads.html#00024">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Re: Three questions for al earthwormers</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: Steve Malone &lt;<A HREF="mailto:steve@geophys.washington.edu">steve@geophys.washington.edu</A>&gt;</LI>
+<LI><em>Subject</em>: Re: Three questions for al earthwormers</LI>
+<LI><em>From</em>: Lynn Dietz &lt;<A HREF="mailto:dietz@usgs.gov">dietz@usgs.gov</A>&gt;</LI>
+<LI><em>Date</em>: Thu, 22 Jun 2000 09:17:17 -0700</LI>
+<LI><em>Cc</em>: <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A></LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+Steve,
+
+&gt;1. A way to get state-of-health from refteks using PPP with a 422 card and
+&gt;rtpd. In particular we need to know if the GPS clock is locking when it
+&gt;should.  Right now we have no way of knowing this info without visiting the
+&gt;site.
+
+If you're running on NT, there's a nice Reftek program called NCI
+that allows you get the status of the Reftek (which includes GPS lock info) 
+on command.  It also allows you to reconfigure the Reftek remotely.
+NCI actually interfaces to RTPD via disk files; RTPD passes the request 
+to the DAS and then ships the reply back to NCI, again via disk files.
+I thought at one point that Reftek was going to make a Solaris version
+of NCI, but I don't know if that ever happened.
+
+If you're running RTPD with a reftek archive, the SOH info is written
+to the archive.  The directory structure of the archive is like:
+/archive/yeardoy/DASid#/stream/horriblefilename.  The SOH is written
+under stream=0.  horriblefilename is a mostly ascii file, so you can 
+look at it with an editor.  It should include info about GPS locks.
+Er... this may only work on NT as well... I think the Reftek archive
+utilities are all Windows executables.
+
+I guess the only solution for Solaris users is to teach reftek2ew
+to request SOH packets from RTPD and to write their contents to
+the log file.  Or to bug Reftek for a Solaris NCI-like program.
+
+Lynn
+
+__________________________________________________________________
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00023.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00025.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00023.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00025.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00024"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00024"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+  <title>Earthworm Modules: startstop overview</title>
+
+  
+</head><body style="background-color: rgb(255, 255, 255);">
+<center>
+<h1>Earthworm Modules:<br>
+Startstop Overview</h1>
+<i>(last revised Apr 24, 2015)</i> </center>
+
+<p> This program starts and stops an Earthworm system. It reads its
+configuration file which specifies the message transport rings to be
+created, which modules are to be run, and the names of the parameter
+files each module is to read on startup. The program is system
+dependent, and there are versions available for the Linux, SUN Solaris
+and
+Windows NT operating systems. </p>
+
+<p> For startstop to work, it must know about the Earthworm
+environment. This is typically done by setting the environment
+variables within the environment/ew_* file specific to your platform,
+and then sourcing that file, or executing the cmd if you're on Windows.
+Startstop typically reads its configuration file from the EW_PARAMS
+directory (as defined in your environment) and creates the specified
+rings. It then starts each module as a child process, passing its
+configuration file name, and any other parameters as its command line
+paramters (argv, argc). Each module (child process) is started with the
+priority indicated in startstop*.d. Note that each module and each ring
+specified must be definined within earthworm.d or earthworm_global.d,
+which should be in the EW_PARAMS directory. The system continues to run
+until "quit&lt;cr&gt;" is typed in startstop's command window.
+Startstop then
+sets a terminate flag in each transport ring. Each well-behaved module
+(child process) should periodically check for the terminate flag, and
+exit gracefully if is set.</p>
+
+<p>Note that two copies of startstop pointing at the same startstop *d
+file are not allowed to run simultaneously. The second one started will
+fail and quit. (If you really want to do this for some reason, you'd
+need to make sure that you use all different rings in the second
+version, different ports for the modules, and a different startstop*d
+file, specified as a parameter when starting startstop.)
+</p>
+
+<p>If the user presses the "Enter" key while the startstop command
+window is selected, or enters the command "status",
+startstop will print a status table showing various
+statistics for each module, including whether it is dead or alive. If
+a module is dead because it could not be started (for example, the
+executable's name were mistyped so the executable could not be found),
+it will be reported as NoExec.
+</p>
+
+<p> Startstop will also react to 'restart' messages from statmgr. This
+is part of a scheme wich works as follows: A module may have the token
+"restartMe" it its .desc file (the file given to statmgr, which tells
+it how to process exception conditions from that module). If its
+heartbeat ceases, statmgr will send a restart request to startstop.
+Startstop will then kill the offending module, and restart it with the
+same arguments as it did at startup time. There are some system
+specific features, listed below: </p>
+
+<p>Interactive commands:
+</p>
+
+<p>Startstop will repond to the following commands from the status
+console window. There are similar command line versions of each command
+as well.
+</p>
+
+<ul>
+
+  <li>status
+    <ul>
+      <li>Startstop will display information about the status of
+Earthworm, including a listing of the rings and of modules.</li>
+      <li>Within startstop, status can be invoked by hitting the
+"Enter" key</li>
+    </ul>
+  </li>
+  <li>restart &lt;pid&gt; or restart &lt;module name&gt;
+    <ul>
+      <li>Startstop will send the module a message to exit, and may try
+and kill it if it doesn't quit by itself in a certain period of time.
+Next startstop will attempt to start the process back up.</li>
+      <li>Note that the &lt;module name&gt; must be unique for this to
+work as an argument. The command line version can only accept the pid
+(Process Id) as an argument. </li>
+    </ul>
+  </li>
+  <li>stopmodule &lt;pid&gt; or stopmodule &lt;module name&gt;
+    <ul>
+      <li>Startstop will send the module a message to exit, and may try
+and kill it if it doesn't quit by itself in a certain period of time.
+Startstop will not try to start the process back up, and statmgr
+shouldn't try to restart it either. </li>
+      <li>Note that the &lt;module name&gt; must be unique for this to
+work as an argument. The command line version can only accept the pid
+(Process Id) as an argument.</li>
+      <li>Within startstop, this can be abbreviated to just "stop
+&lt;pid&gt; or stop &lt;module name&gt;". </li>
+      <li>The command-line "stopmodule" should mark the module as
+intentionally stopped, showing up as "Stop" in the status listing. This
+differes from the command line tool "pidpau" which will simply kill a
+module. It won't be marked as "Stop" so if statmgr is set to monitor
+and restart this particular module a process killed by "pidpau" will
+get started back up again. A module stopped by "stopmodule" should not.
+      </li>
+      <li>The module is stopped only for the duration that this
+startstop session is running! If you want to permanently stop a module,
+you'll also want to remove it from the startstop*d, and the statmgr.d
+files so it doesn't get started up next time around.</li>
+    </ul>
+  </li>
+  <li>reconfigure
+    <ul>
+      <li>Startstop will re-read the startstop_nt.d, starstop_unix.d or
+startstop_sol.d, and allocate any new rings and start up any new
+modules it finds in the new .d file. In the process it rereads the
+earthworm.d and earthworm_global.d, in the event that there have been
+new module IDs or new ring IDs added there. </li>
+      <li>As the final reconfigure step, statmgr is restarted as well
+so it re-reads it's config file. Any modules that were added to
+startstop*d should be added to the statmgr.d config file as well. </li>
+      <li>The command line version does the same thing. </li>
+      <li>Within startstop, this can be abbreviated to just "recon".</li>
+    </ul>
+  </li>
+  <li>quit
+    <ul>
+      <li>Starstop will send all child processes (modules) a request to
+quit, and will kill them if they don't quit within 30 seconds or so. It
+will then shut itself down. </li>
+      <li>The command line equivalent to "quit" is called "pau". </li>
+    </ul>
+  </li>
+</ul>
+
+<p> Solaris, Linux, Mac OS X versions: </p>
+
+<ul>
+
+  <li>Solaris startstop reads a configuration file named
+'startstop_sol.d' </li>
+  <li>Mac OS X and Linux startstop reads a configuration file named
+'startstop_unix.d' </li>
+  <li>If a child process does not exit within a user specified time
+after the user types "quit&lt;cr&gt;" (or "stopmodule" or "restart"),
+startstop terminates the child
+process. Startstop will resort to a more draconian but reliable
+approach to quiting a module if the standard approach fails, but only
+if a
+command to do so is included in the configuration file.</li>
+  <li>The amount of CPU time used by each child process is listed in
+the process status table. </li>
+  <li>As of Version 3.0, Startstop can run in background. This
+modification was made by Pete Lombard at the University of Washington. <a href="startstop_sol_bg.html">Instructions </a><br>
+  </li>
+  <li>To run Earthworm as other than root, you must set the file
+charateristics. <a href="startstop_file_char.html">Instructions</a></li>
+  <li>For Mac OS X you must adjust the shared memory settings using the
+/etc/sysctl.conf file and rebooting. We recommend values like this:</li>
+</ul>
+
+<pre>		kern.sysv.shmmax=16777216<br>		kern.sysv.shmmin=1<br>		kern.sysv.shmmni=32<br>		kern.sysv.shmseg=16<br>		kern.sysv.shmall=4096<br></pre>
+
+<p> Windows, Windows Service version: </p>
+
+<ul>
+
+  <li>Windows startstop and Windows startstop service read a
+configuration file named 'startstop_nt.d' </li>
+  <li>If Windows starts up, and, for example, the binary executables
+for certain modules are missing or are misnamed, startstop will start
+up anyway. These processes will be shown with a nonexistent negative
+process ID, and "NoExec" as their status. If this process is restarted
+once the problem that caused the error has been fixed, the process ID
+will return to a normal ID, and the status will change to "Alive". </li>
+  
+  <li>Startstop can be set to <a href="../USER_GUIDE/nt_autostart.html">start
+automatically</a> when Windows boots up, but probably better than doing
+that is to <a href="../USER_GUIDE/windows_startstop_service.html">set
+startstop as a Windows service</a>. Note that if Startstop is running as a
+Windows service, other command-line utilities like
+'status' and 'restart' are used to monitor and control earthworm modules (since
+there's no interface to the Startstop service). The <a href="../USER_GUIDE/windows_StartstopPipeConsole.html">StartstopPipeConsole</a>
+may be used to interact with the service. (With newer versions of
+Windows, this can be the only way to reach the service.) The Earthworm
+Startstop service may be started and stopped using
+the Windows Services Control Panel. <br>
+    <br>
+    <center> <a href="../modules.html">Module Index</a> | <a href="../cmd/startstop_nt.html"> Windows Commands</a> | <a href="../cmd/startstop_sol.html"> Solaris Commands</a> | <a href="../cmd/startstop_linux.html"> Linux Commands</a> </center>
+<!-- USGS-required stuff at the end -->
+    <hr>
+    <address> Questions? Issues? <b><a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a> </b><br>
+    </address>
+  </li>
+
+</ul>
+
+</body></html>

@@ -1,0 +1,43 @@
+<title>Earthworm Modules: getstation overview</title>
+<body bgcolor="#FFFFFF">
+<center>
+  <h1>Earthworm Modules:<br>
+    Getstation Overview</h1>
+  <i>(last revised 1 June, 2006)</i>
+</center>
+<p> Program <strong>getstation</strong> gets a station list from an Earthworm
+  wave server.
+<blockquote>
+  <pre>Usage: getstation &lt;wsv_file&gt; &lt;station&gt; &lt;component&gt; &lt;network&gt; &lt;location&gt;<br>Where:<br>       &lt;wsv_file&gt;  = name of a file containing a waveserver TCP/IP <br>                     addresses and port number in the form:<br>                     Waveserver aaa.bbb.ccc.ddd:ppppp<br>       &lt;station&gt;   = station code,   or wild as a wildcard<br>       &lt;component&gt; = component code, or wild as a wildcard<br>       &lt;network&gt;   = network code,   or wild as a wildcard<br>       &lt;location&gt;  = location code,  or wild as a wildcard</pre>
+</blockquote>
+<p> Example:
+<p>
+
+<blockquote> echo Waveserver 127.0.0.1:16022 &gt; getstation_config.txt<br>
+  getstation getstation_config.txt wild wild wild wild<br>
+    </blockquote>
+
+  <p>Example output:
+<p>
+<pre>getstation: Read in the following 1 waveserver(s):<br>        127.0.0.1:16022
+
+  Found SCNL: RAFT.EHZ.CC.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHZ.ZZ.01 on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHZ.ZZ.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHN.ZZ.01 on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHN.ZZ.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHE.ZZ.01 on Waveserver 127.0.0.1:16022
+  Found SCNL: NP1.HHE.ZZ.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: DCP.199.NT.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: DCP.198.NT.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: DCP.197.NT.-- on Waveserver 127.0.0.1:16022
+  Found SCNL: DCP.196.NT.-- on Waveserver 127.0.0.1:16022
+</pre>
+<center>
+  <b><a href="../modules.html">Module Index</a> | <a href="../cmd/getstation_cmd.html">Getstation
+  Command File</a> </b>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a></address>

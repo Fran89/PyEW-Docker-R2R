@@ -1,0 +1,17 @@
+!include <ntwin32.mak>
+
+CFLAGS=-O -I..\.. -DWINNT
+
+OBJS = ad.obj cd.obj com.obj dcomp.obj ds.obj dt.obj eh.obj et.obj \
+       om.obj sc.obj sh.obj steim.obj reftek_string.obj \
+       testlib.obj type.obj
+
+all: libreftek.lib
+
+libreftek.lib: $(OBJS)
+	-del ..\libreftek.lib
+	lib /nologo /out:..\libreftek.lib $(OBJS)
+
+clean:
+	-del *.obj *.o ..\libreftek.* core
+

@@ -1,0 +1,21 @@
+#
+#
+
+LINUX_FLAGS=
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS) -g -D__unix
+
+O = makehbfile.o config.o chdir_sol.o mkdir_sol.o rename_sol.o
+
+all: makehbfile
+
+makehbfile: $O
+	$(CC) $(CFLAGS) -o makehbfile $O -lm -lc $(SPECIFIC_FLAGS)
+
+clean:
+	/bin/rm -f makehbfile *.o
+
+clean_bin:
+	/bin/rm -f makehbfile

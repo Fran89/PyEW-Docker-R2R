@@ -1,0 +1,21 @@
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+
+
+build_glass:
+  cd src
+  nmake nt
+  cd ..
+
+# Clean-up directives
+clean:
+  cd src
+  nmake clean_nt
+  cd ..
+
+clean_bin:
+  del $B\glass.*
+  cd src
+  nmake clean_nt
+  cd ..
+

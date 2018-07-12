@@ -1,0 +1,1388 @@
+/* FILE: SrUsbXchDrv.c
+ * COPYRIGHT: (c), Symmetric Research, 2009-2010
+ *
+ * Modified from the USB Skeleton driver - 2.2 which is
+ * Copyright (C) 2001-2004 Greg Kroah-Hartman (greg@kroah.com)
+ * and is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, version 2.
+ *
+ */
+
+#include <linux/kernel.h>
+#include <linux/errno.h>
+#include <linux/init.h>
+#include <linux/slab.h>
+#include <linux/module.h>
+#include <linux/kref.h>
+#include <asm/uaccess.h>
+#include <linux/usb.h>
+#include <linux/mutex.h>
+
+
+/* Set up controllable debugging statements */
+
+#define SRDBG -1
+
+#if (SRDBG>=0)
+#  define dbg0_printk(s,args...);  printk(KERN_NOTICE s , ## args);
+#else
+#  define dbg0_printk(s,args...); //
+#endif
+
+#define dbg_printk(s,args...);  printk(KERN_NOTICE s , ## args);
+
+
+#include "SrUsbXchDrv.h"
+
+// We would like to access and display the Device Descriptor sometimes.
+// But we need a few defines and structures to do this.  Ideally we
+// would get these from official include files.  But unfortunately, it
+// is apparently not available in a consistent user accessable area.
+// So, we temporarily duplicate the required info here.
+
+// For Linux, the USB defines appear to be in include/linux/usb/ch9.h
+// in some distributions and in include/usb.h in others.
+
+// If the offical ch9.h file has already been included, don't repeat
+
+
+#ifndef __LINUX_USB_CH9_H
+
+#define USB_DT_DEVICE			0x01
+#define USB_DT_CONFIG			0x02
+#define USB_DT_STRING			0x03
+#define USB_DT_INTERFACE		0x04
+#define USB_DT_ENDPOINT			0x05
+
+
+#include <linux/types.h>	/* __u8 etc */
+
+struct usb_device_descriptor {
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__le16 bcdUSB;
+	__u8  bDeviceClass;
+	__u8  bDeviceSubClass;
+	__u8  bDeviceProtocol;
+	__u8  bMaxPacketSize0;
+	__le16 idVendor;
+	__le16 idProduct;
+	__le16 bcdDevice;
+	__u8  iManufacturer;
+	__u8  iProduct;
+	__u8  iSerialNumber;
+	__u8  bNumConfigurations;
+} __attribute__ ((packed));
+
+struct usb_config_descriptor {
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__le16 wTotalLength;
+	__u8  bNumInterfaces;
+	__u8  bConfigurationValue;
+	__u8  iConfiguration;
+	__u8  bmAttributes;
+	__u8  bMaxPower;
+} __attribute__ ((packed));
+
+struct usb_string_descriptor {
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__le16 wData[1];		/* UTF-16LE encoded */
+} __attribute__ ((packed));
+
+struct usb_interface_descriptor {
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__u8  bInterfaceNumber;
+	__u8  bAlternateSetting;
+	__u8  bNumEndpoints;
+	__u8  bInterfaceClass;
+	__u8  bInterfaceSubClass;
+	__u8  bInterfaceProtocol;
+	__u8  iInterface;
+} __attribute__ ((packed));
+
+struct usb_endpoint_descriptor {
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__u8  bEndpointAddress;
+	__u8  bmAttributes;
+	__le16 wMaxPacketSize;
+	__u8  bInterval;
+
+	/* NOTE:  these two are _only_ in audio endpoints. */
+	/* use USB_DT_ENDPOINT*_SIZE in bLength, not sizeof. */
+	__u8  bRefresh;
+	__u8  bSynchAddress;
+} __attribute__ ((packed));
+
+#endif //  __LINUX_USB_CH9_H
+
+
+#define USB_DEVICE_DESCRIPTOR_TYPE            USB_DT_DEVICE
+#define USB_CONFIGURATION_DESCRIPTOR_TYPE     USB_DT_CONFIG
+#define USB_STRING_DESCRIPTOR_TYPE            USB_DT_STRING
+#define USB_INTERFACE_DESCRIPTOR_TYPE         USB_DT_INTERFACE
+#define USB_ENDPOINT_DESCRIPTOR_TYPE          USB_DT_ENDPOINT
+
+#define _USB_DEVICE_DESCRIPTOR                usb_device_descriptor
+#define _USB_CONFIGURATION_DESCRIPTOR         usb_config_descriptor
+#define _USB_INTERFACE_DESCRIPTOR             usb_interface_descriptor
+#define _USB_ENDPOINT_DESCRIPTOR              usb_endpoint_descriptor
+
+typedef struct _USB_DEVICE_DESCRIPTOR         USB_DEVICE_DESCRIPTOR;
+typedef struct _USB_CONFIGURATION_DESCRIPTOR  USB_CONFIGURATION_DESCRIPTOR;
+typedef struct _USB_INTERFACE_DESCRIPTOR      USB_INTERFACE_DESCRIPTOR;
+typedef struct _USB_ENDPOINT_DESCRIPTOR       USB_ENDPOINT_DESCRIPTOR;
+
+
+
+
+MODULE_AUTHOR("Symmetric Research");
+MODULE_DESCRIPTION("SR USBxCH 24 bit data acquisition system.");
+MODULE_LICENSE("GPL");
+
+
+/* Symmetric Research USBxCH vendor and product ID's */
+
+#define SRUSBXCH_VID       0x15D3
+#define SRUSBXCH_PID_4CH   0x5504
+
+
+/* Table of devices that work with this driver */
+
+static struct usb_device_id srusbxch_id_table[] = {
+	{ USB_DEVICE(SRUSBXCH_VID, SRUSBXCH_PID_4CH) },
+	{ }					/* Terminating entry */
+};
+MODULE_DEVICE_TABLE(usb, srusbxch_id_table);
+
+
+/* Get a minor range for your devices from the usb maintainer */
+
+#define SRUSBXCH_MINOR_BASE	192
+
+
+/* Set a wait time of 1 second (1000 milliseconds for bulk transfers */
+
+#define SRUSBXCH_CMD_TIMEOUT	1000 //FIX - is this ms or jiffies ???
+
+
+
+
+/* Structure to hold all of our device specific stuff */
+struct deviceinformation {
+	struct usb_device	*udev;			/* the usb device for this device */
+	struct usb_interface	*interface;		/* the interface for this device */
+	struct usb_anchor	submitted;		/* in case we need to retract our submissions */
+	unsigned int		pipe_cmd_out;		/* the pipe used for sending commands */
+	unsigned int		pipe_cmd_in;		/* the pipe used for receiving command results */
+	unsigned int		pipe_data_in;		/* the pipe used for receiving A/D data packets */
+	size_t			ep0_size;		/* the size of the EP0 data buffer */
+	unsigned char           *ep0_buffer;    	/* the buffer for EP0 data */
+	size_t			cmd_size;		/* the size of the cmd buffer */
+	unsigned char           *cmd_buffer;    	/* the buffer for cmd data */
+	size_t			data_size;		/* the size of the A/D data buffer */
+	unsigned char           *data_buffer;    	/* the buffer for A/D data */
+	int			errors;			/* the last request tanked */
+	int			open_count;		/* count the number of openers */
+	spinlock_t		err_lock;		/* lock for errors */
+	struct kref		kref;
+	struct mutex		io_mutex;		/* synchronize I/O with disconnect */
+	IRP                     ioctl_data;		/* structure with request from user */
+};
+
+
+#define to_srusbxch_devinfo(d) container_of(d, struct deviceinformation, kref)
+
+
+
+/* Function prototypes */
+
+static struct usb_driver srubxch_driver;
+
+static int __init srusbxch_init(void);
+static void __exit srusbxch_exit(void);
+
+static int srusbxch_probe(struct usb_interface *interface, const struct usb_device_id *id);
+static void srusbxch_disconnect(struct usb_interface *interface);
+
+static int srusbxch_open(struct inode *inode, struct file *file);
+static int srusbxch_release(struct inode *inode, struct file *file);
+static int srusbxch_flush(struct file *file, fl_owner_t id);
+static ssize_t srusbxch_read(struct file *file, char *buffer, size_t count, loff_t *ppos);
+static int srusbxch_ioctl(struct inode *inode, struct file *file, unsigned int cmd, unsigned long arg);
+
+static int srusbxch_bulk_write_cmd(struct deviceinformation *devinfo); 
+static int srusbxch_bulk_read_cmd(struct deviceinformation *devinfo); 
+static int srusbxch_send_vendor_request(struct deviceinformation *devinfo);
+static int srusbxch_send_standard_request(struct deviceinformation *devinfo);
+static int srusbxch_get_device_descriptor(struct deviceinformation *devinfo); 
+static int srusbxch_get_config_descriptor_size(struct deviceinformation *devinfo); 
+static int srusbxch_get_config_descriptor(struct deviceinformation *devinfo); 
+static int srusbxch_increase_data_buffer(struct deviceinformation *devinfo, size_t count);
+static int srusbxch_increase_cmd_buffer(struct deviceinformation *devinfo, size_t count);
+static void srusbxch_show_device_descriptor(struct usb_device_descriptor *dd);
+static void srusbxch_show_config_descriptor(struct usb_config_descriptor *cd);
+
+static void srusbxch_delete(struct kref *kref);
+static void srusbxch_draw_down(struct deviceinformation *devinfo);
+
+static int srusbxch_suspend(struct usb_interface *intf, pm_message_t message);
+static int srusbxch_resume(struct usb_interface *intf);
+static int srusbxch_pre_reset(struct usb_interface *intf);
+static int srusbxch_post_reset(struct usb_interface *intf);
+
+/* Driver structures */
+
+static struct usb_driver srubxch_driver = {
+	.name =		"SrUsbXch",         /* seen in usbcore interface driver msg */
+	.probe =	srusbxch_probe,
+	.disconnect =	srusbxch_disconnect,
+	.suspend =	srusbxch_suspend,
+	.resume =	srusbxch_resume,
+	.pre_reset =	srusbxch_pre_reset,
+	.post_reset =	srusbxch_post_reset,
+	.id_table =	srusbxch_id_table,
+	.supports_autosuspend = 1,
+};
+
+static const struct file_operations srusbxch_fops = {
+	.owner =	THIS_MODULE,
+	.open =		srusbxch_open,
+	.release =	srusbxch_release,
+	.read =		srusbxch_read,
+	.ioctl =	srusbxch_ioctl,
+	.flush =	srusbxch_flush,
+};
+
+/* Usb class driver info in order to get a minor number from the usb core,
+ * and to have the device registered with the driver core.
+ */
+static struct usb_class_driver srusbxch_class = {
+	.name =		"SrUsbXch%d",      /* seen in /dev directory */
+	.fops =		&srusbxch_fops,
+	.minor_base =	SRUSBXCH_MINOR_BASE,
+};
+
+
+static int __init srusbxch_init(void)
+{
+	int result;
+
+	dbg0_printk("srusbxch_init enter\n" );
+
+	/* Register this driver with the USB subsystem */
+	
+	result = usb_register(&srubxch_driver);
+	if (result)
+		err("usb_register for SrUsbXch failed. Error number %d", result);
+
+	dbg0_printk("srusbxch_init exit\n" );
+	return result;
+}
+
+static void __exit srusbxch_exit(void)
+{
+	dbg0_printk("srusbxch_exit enter\n" );
+	
+	/* Deregister this driver with the USB subsystem */
+	usb_deregister(&srubxch_driver);
+	
+	dbg0_printk("srusbxch_exit exit\n" );
+}
+
+static int srusbxch_probe(struct usb_interface *interface, const struct usb_device_id *id)
+{
+	int retval, pipeindex;
+	struct deviceinformation *devinfo;
+
+	dbg0_printk("srusbxch_probe enter\n" );
+
+
+	/* Allocate memory for our device state and initialize it */
+	
+	devinfo = kzalloc(sizeof(*devinfo), GFP_KERNEL);
+	if (!devinfo) {
+		err("Out of memory for devinfo");
+		retval = -ENOMEM;
+		goto error;
+	}
+	
+	devinfo->ep0_buffer = NULL;
+	devinfo->cmd_buffer = NULL;
+	devinfo->data_buffer = NULL;
+	
+	kref_init(&devinfo->kref);
+	mutex_init(&devinfo->io_mutex);
+	spin_lock_init(&devinfo->err_lock);
+	init_usb_anchor(&devinfo->submitted);
+
+	devinfo->udev = usb_get_dev(interface_to_usbdev(interface));
+	devinfo->interface = interface;
+
+
+	/* Select interface 0 and alternate setting 1 */
+
+	retval = usb_set_interface(devinfo->udev, 0, 1);
+	if (retval < 0) {
+		err("Failed to select interface alternate setting 1\n");
+		goto error;
+	}
+
+
+	/* Set up buffer for control pipe, EP0 */
+	
+	devinfo->ep0_size = 64; /* data stage for EP0 has 64 byte buffer */
+	devinfo->ep0_buffer = kmalloc(devinfo->ep0_size, GFP_KERNEL);
+	if (!devinfo->ep0_buffer) {
+		err("Could not allocate kernel buffer for ep0 data stage");
+		retval = -ENOMEM;
+		goto error;
+	}
+
+	
+	/* Set up cmd pipes and buffer for EP1 */
+
+	pipeindex = 0x01;
+	devinfo->pipe_cmd_in = usb_rcvbulkpipe(devinfo->udev, (pipeindex|USB_DIR_IN));
+	devinfo->pipe_cmd_out = usb_sndbulkpipe(devinfo->udev, (pipeindex|USB_DIR_OUT));
+	devinfo->cmd_size = 1000;
+	devinfo->cmd_buffer = kmalloc(devinfo->cmd_size, GFP_KERNEL);
+	if (!devinfo->cmd_buffer) {
+		err("Out of memory for command pipe");
+		retval = -ENOMEM;
+		goto error;
+	}
+
+
+	/* Set up data pipe and buffer for EP6 */
+	
+	pipeindex = 0x06;
+	devinfo->pipe_data_in = usb_rcvbulkpipe(devinfo->udev, (pipeindex|USB_DIR_IN));
+	devinfo->data_size = 320000;
+	devinfo->data_buffer = kmalloc(devinfo->data_size, GFP_KERNEL);
+	if (!devinfo->data_buffer) {
+		err("Out of memory for data pipe");
+		retval = -ENOMEM;
+		goto error;
+	}
+
+
+	/* Save our data pointer in this interface device */
+
+	usb_set_intfdata(interface, devinfo);
+
+
+	/* We can register the device now, as it is ready */
+	
+	retval = usb_register_dev(interface, &srusbxch_class);
+	if (retval) {
+		/* Something prevented us from registering this driver */
+		err("Not able to get a minor for this device.");
+		usb_set_intfdata(interface, NULL);
+		goto error;
+	}
+
+	/* Let the user know what node this device is now attached to */
+
+	info("SrUsbXch device now attached to SrUsbXch-%d", interface->minor);
+	
+	dbg0_printk("srusbxch_probe exit 0\n" );
+	return 0;
+
+error:
+	if (devinfo)
+		/* this frees allocated memory */
+		kref_put(&devinfo->kref, srusbxch_delete);
+
+	dbg0_printk("srusbxch_probe exit error\n" );
+	return retval;
+}
+
+static void srusbxch_disconnect(struct usb_interface *interface)
+{
+	int minor;
+	struct deviceinformation *devinfo;
+
+	dbg0_printk("srusbxch_disconnect enter\n" );
+
+	minor = interface->minor;
+	devinfo = usb_get_intfdata(interface);
+	usb_set_intfdata(interface, NULL);
+
+	/* Give back our minor */
+	usb_deregister_dev(interface, &srusbxch_class);
+
+	/* Prevent more I/O from starting */
+	mutex_lock(&devinfo->io_mutex);
+	devinfo->interface = NULL;
+	mutex_unlock(&devinfo->io_mutex);
+
+	usb_kill_anchored_urbs(&devinfo->submitted);
+
+	/* Decrement our usage count */
+	kref_put(&devinfo->kref, srusbxch_delete);
+
+	info("SrUsbXch-%d now disconnected", minor);
+
+	dbg0_printk("srusbxch_disconnect exit\n" );
+}
+
+static int srusbxch_open(struct inode *inode, struct file *file)
+{
+	int retval, subminor;
+	struct usb_interface *interface;
+	struct deviceinformation *devinfo;
+
+	dbg0_printk("srusbxch_open enter\n" );
+	
+	retval = 0;
+	subminor = iminor(inode);
+
+	interface = usb_find_interface(&srubxch_driver, subminor);
+	if (!interface) {
+		err ("%s - error, can't find device for minor %d",
+		     __FUNCTION__, subminor);
+		retval = -ENODEV;
+		goto exit;
+	}
+
+	devinfo = usb_get_intfdata(interface);
+	if (!devinfo) {
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+	/* Increment our usage count for the device */
+
+	kref_get(&devinfo->kref);
+
+	
+	/* Lock device for correct error handling in resumption */
+
+	mutex_lock(&devinfo->io_mutex);
+
+	if (!devinfo->open_count++) {
+		retval = usb_autopm_get_interface(interface);
+		if (retval) {
+			devinfo->open_count--;
+			mutex_unlock(&devinfo->io_mutex);
+			kref_put(&devinfo->kref, srusbxch_delete);
+			goto exit;
+		}
+	} else { /* uncomment this block if you want exclusive open */
+		devinfo->open_count--;
+		mutex_unlock(&devinfo->io_mutex);
+		kref_put(&devinfo->kref, srusbxch_delete);
+		retval = -EBUSY;
+		goto exit;
+	}
+	
+	/* Prevent the device from being autosuspended */
+	
+	/* Save our object in the file's private structure */
+
+	file->private_data = devinfo;
+	mutex_unlock(&devinfo->io_mutex); /* This should come before exit here */
+
+exit:
+	dbg0_printk("srusbxch_open exit\n" );
+	return retval;
+}
+
+static int srusbxch_release(struct inode *inode, struct file *file)
+{
+	struct deviceinformation *devinfo;
+
+	dbg0_printk("srusbxch_release enter\n" );
+	
+	devinfo = (struct deviceinformation *)file->private_data;
+	if (devinfo == NULL)
+		return -ENODEV;
+
+	/* Allow the device to be autosuspended */
+	
+	mutex_lock(&devinfo->io_mutex);
+	if (!--devinfo->open_count && devinfo->interface)
+		usb_autopm_put_interface(devinfo->interface);
+	mutex_unlock(&devinfo->io_mutex);
+
+	/* Decrement the count on our device */
+
+	kref_put(&devinfo->kref, srusbxch_delete);
+
+	dbg0_printk("srusbxch_release exit\n" );
+	return 0;
+}
+
+static int srusbxch_flush(struct file *file, fl_owner_t id)
+{
+	struct deviceinformation *devinfo;
+	int res;
+
+	dbg0_printk("srusbxch_flush enter\n" );
+
+	devinfo = (struct deviceinformation *)file->private_data;
+	if (devinfo == NULL)
+		return -ENODEV;
+
+	/* Wait for io to stop */
+
+	mutex_lock(&devinfo->io_mutex);
+	srusbxch_draw_down(devinfo);
+
+	/* Read out errors, leave subsequent opens a clean slate */
+	
+	spin_lock_irq(&devinfo->err_lock);
+	res = devinfo->errors ? (devinfo->errors == -EPIPE ? -EPIPE : -EIO) : 0;
+	devinfo->errors = 0;
+	spin_unlock_irq(&devinfo->err_lock);
+
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_flush exit\n" );
+	return res;
+}
+
+static ssize_t srusbxch_read(struct file *file, char *buffer, size_t count, loff_t *ppos)
+{
+	struct deviceinformation *devinfo;
+	int retval, bytes_read;
+
+	dbg0_printk("srusbxch_read enter\n" );
+
+	devinfo = (struct deviceinformation *)file->private_data;
+
+
+	/* Ensure kernel space buffer is big enough for all requested data */
+
+	if (devinfo->data_size < count) {
+		retval = srusbxch_increase_data_buffer(devinfo, count);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for read");
+			dbg0_printk("srusbxch_read exit error\n" );
+			return retval;
+		}
+	}
+
+
+	/* Synchronize with disconnect */
+	
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+
+	/* Do a blocking bulk read to get data from the device */
+
+	retval = usb_bulk_msg(devinfo->udev,
+			      devinfo->pipe_data_in,
+			      devinfo->data_buffer,
+			      count,
+			      &bytes_read,
+			      SRUSBXCH_CMD_TIMEOUT);
+
+
+	
+	/* If the read was successful (retval==0), copy the data to userspace */
+
+	if (!retval) {
+		if (copy_to_user(buffer, devinfo->data_buffer, bytes_read))
+			retval = -EFAULT;
+		else
+			retval = bytes_read;
+	}
+
+
+	
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_read exit\n" );
+	return retval;
+}
+
+static int srusbxch_ioctl( struct inode *inode, struct file *file,
+			   unsigned int cmd, unsigned long arg )
+{
+	struct deviceinformation *devinfo;
+	int retval;
+
+	dbg0_printk("srusbxch_ioctl enter\n" );
+
+	devinfo = (struct deviceinformation *)file->private_data;
+	if (devinfo == NULL)
+		return -ENODEV;
+
+
+	/* Create a kernel space copy of IRP passed from user space */
+
+	if (copy_from_user(&devinfo->ioctl_data, (void *)arg, sizeof(IRP))) {
+		return -EFAULT;
+	}
+	devinfo->ioctl_data.ReturnedBytes = 0;
+	retval = 0;
+
+
+	switch (cmd) {
+
+		case IOCTL_USBXCH_BULK_READ_CMD:
+			retval = srusbxch_bulk_read_cmd(devinfo);
+			break;
+
+		case IOCTL_USBXCH_BULK_WRITE_CMD:
+			retval = srusbxch_bulk_write_cmd(devinfo);
+			break;
+
+		case IOCTL_USBXCH_VENDOR_REQUEST:
+			retval = srusbxch_send_vendor_request(devinfo);
+			break;
+
+		case IOCTL_USBXCH_STANDARD_REQUEST:
+			retval = srusbxch_send_standard_request(devinfo);
+			break;
+
+		case IOCTL_USBXCH_GET_DEVICE_DESCRIPTOR:
+			retval = srusbxch_get_device_descriptor(devinfo);
+			break;
+
+		case IOCTL_USBXCH_GET_CONFIG_DESCRIPTOR_SIZE:
+			retval = srusbxch_get_config_descriptor_size(devinfo);
+			break;
+
+		case IOCTL_USBXCH_GET_CONFIG_DESCRIPTOR:
+			retval = srusbxch_get_config_descriptor(devinfo);
+			break;
+
+		case IOCTL_USBXCH_RESET_PIPE:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_RESET_PIPE\n" );
+			break;
+		case IOCTL_USBXCH_ABORT_PIPE:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_ABORT_PIPE\n" );
+			break;
+		case IOCTL_USBXCH_RESET_PORT:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_RESET_PORT\n" );
+			break;
+		case IOCTL_USBXCH_CYCLE_PORT:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_CYCLE_PORT\n" );
+			break;
+		case IOCTL_USBXCH_BULK_READ:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_BULK_READ\n" );
+			break;
+		case IOCTL_USBXCH_BULK_WRITE:
+			dbg_printk( "srusbxch requesting IOCTL_USBXCH_BULK_WRITE\n" );
+			break;
+		default:
+			dbg_printk( "srusbxch requesting IOCTL default\n" );
+	}
+
+	
+	/* Fill user space IRP to pass back results */
+
+	if (retval >= 0)
+		devinfo->ioctl_data.ReturnedBytes = retval;
+
+	retval = copy_to_user( (void *)arg, &devinfo->ioctl_data, sizeof(IRP) );
+	
+	
+	dbg0_printk("srusbxch_ioctl exit\n" );
+	return retval;
+}
+
+
+static int srusbxch_send_vendor_request(struct deviceinformation *devinfo) 
+{
+	int retval;
+	unsigned char reqtype;
+	unsigned int pipe;
+	SR_VENDOR_REQUEST_DATA vendor_request;
+
+	dbg0_printk("srusbxch_send_vendor_request enter\n" );
+
+
+	/* Create kernel space copies of the input and output data
+	   buffers passed from user space */
+
+	if ((devinfo->ioctl_data.InSize != sizeof(SR_VENDOR_REQUEST_DATA)) ||
+	    (copy_from_user(&vendor_request, devinfo->ioctl_data.InBuffer, devinfo->ioctl_data.InSize))) {
+		return -EFAULT;
+	}
+
+	if ((devinfo->ioctl_data.OutSize > devinfo->ep0_size) ||
+	    (copy_from_user(devinfo->ep0_buffer, devinfo->ioctl_data.OutBuffer, devinfo->ioctl_data.OutSize))) {
+		return -EFAULT;
+	}
+
+
+	/* Check size */
+
+	if (vendor_request.Length > devinfo->ep0_size)
+		return -EFAULT;
+
+
+	/* Set up the data for the control URB */
+	
+	pipe    = usb_sndctrlpipe(devinfo->udev, 0); /* endpoint 0 */
+	reqtype = USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_DEVICE;
+	
+
+	/* Synchronize with disconnect */
+
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+	
+	/* Send vendor request and wait for response */
+	
+	retval = usb_control_msg(devinfo->udev,          /* usb_device                            */
+		   	         pipe,                   /* pipe                                  */
+			         vendor_request.Request, /* request, eg ANCHOR_LOAD_INTERNAL 0xA0 */
+			         reqtype,                /* reqtype                               */
+			         vendor_request.Value,   /* value, u16, typically address         */
+			         vendor_request.Index,   /* index, u16, typically not used        */
+			         devinfo->ep0_buffer,    /* data, void *, data buffer             */
+			         vendor_request.Length,  /* size, u16,  length, eq 1              */
+			         SRUSBXCH_CMD_TIMEOUT);  /* timeout                               */
+
+
+	/* retval has number of bytes that were sent or errno */
+
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+	
+	dbg0_printk("srusbxch_send_vendor_request exit\n" );
+	return retval;
+}
+
+static int srusbxch_send_standard_request(struct deviceinformation *devinfo) 
+{
+	int retval;
+	unsigned char request, reqtype, dir, recip;
+	unsigned int pipe;
+	unsigned short value, index;
+	unsigned long size;
+	SR_STANDARD_REQUEST_DATA standard_request;
+
+	dbg0_printk("srusbxch_send_standard_request enter\n" );
+
+
+	/* Now create kernel space copies of the input and output data
+	   buffers passed from user space */
+
+	if ((devinfo->ioctl_data.InSize != sizeof(SR_STANDARD_REQUEST_DATA)) ||
+	    (copy_from_user(&standard_request, devinfo->ioctl_data.InBuffer, devinfo->ioctl_data.InSize))) {
+		return -EFAULT;
+	}
+
+	if ((devinfo->ioctl_data.OutSize > devinfo->ep0_size) ||
+	    (copy_from_user(devinfo->ep0_buffer, devinfo->ioctl_data.OutBuffer, devinfo->ioctl_data.OutSize))) {
+		return -EFAULT;
+	}
+
+
+
+	/* Set up the data for the control URB */
+
+	dir     = standard_request.Direction; /* request, eg USB_DIR_IN                */
+	recip   = standard_request.Recipient; /* request, eg USB_RECIP_ENDPOINT        */
+	request = standard_request.Request;   /* request, eg ANCHOR_LOAD_INTERNAL 0xA0 */
+	value   = standard_request.Value;     /* address, eg                           */
+	index   = standard_request.Index;     /* index, typically not used             */
+	size    = standard_request.Length;    /* length,  eg 1                         */
+
+	if (dir == USB_DIR_OUT) {
+		pipe    = usb_sndctrlpipe(devinfo->udev, 0); /* endpoint 0 */
+		reqtype = USB_DIR_OUT | USB_TYPE_STANDARD | recip;
+	}
+	else {
+		pipe    = usb_rcvctrlpipe(devinfo->udev, 0); /* endpoint 0 */
+		reqtype = USB_DIR_IN | USB_TYPE_STANDARD | recip;
+	}
+
+	if (size > devinfo->ep0_size)
+		return -EFAULT;
+
+
+	/* Synchronize with disconnect */
+
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+	/* Send standard request and wait for response */
+	
+	retval = usb_control_msg(devinfo->udev,          /* usb_device */
+				 pipe,                   /* pipe       */
+				 request,                /* request    */
+				 reqtype,                /* reqtype    */
+				 value,                  /* u16 value  */
+				 index,                  /* u16 index  */
+				 devinfo->ep0_buffer,    /* void *     */
+				 size,                   /* u16 size   */
+				 SRUSBXCH_CMD_TIMEOUT);  /* timeout    */
+
+
+
+	/* If direction is in, copy results back into users data */
+	
+	if (dir == USB_DIR_IN) {
+		if (size > devinfo->ioctl_data.OutSize)
+			size = devinfo->ioctl_data.OutSize;
+		if (copy_to_user( devinfo->ioctl_data.OutBuffer, devinfo->ep0_buffer, size))
+				retval = -EFAULT;
+	}
+
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+
+	dbg0_printk("srusbxch_send_standard_request exit\n" );
+	return retval;
+}
+
+static int srusbxch_bulk_write_cmd(struct deviceinformation *devinfo) 
+{
+	int retval, bytes_to_write, bytes_written;
+
+	dbg0_printk("srusbxch_bulk_write_cmd enter\n" );
+
+
+	/* Ensure kernel space buffer is big enough for all provided data */
+
+	bytes_to_write = devinfo->ioctl_data.InSize;
+
+	if (devinfo->cmd_size < bytes_to_write) {
+		retval = srusbxch_increase_cmd_buffer(devinfo,bytes_to_write);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for bulk write cmd");
+			dbg0_printk("srusbxch_bulk_write_cmd exit error\n" );
+			return retval;
+		}
+	}
+	
+
+	/* Fill kernel buffer with data from passed user space buffer */
+		
+	if (copy_from_user(devinfo->cmd_buffer, devinfo->ioctl_data.InBuffer, bytes_to_write)) {
+		retval = -EFAULT;
+		goto exit;
+	}
+
+
+	/* Synchronize with disconnect */
+	
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+
+	/* Do a blocking bulk write to send data to the device */
+
+	retval = usb_bulk_msg(devinfo->udev,
+			      devinfo->pipe_cmd_out,
+			      devinfo->cmd_buffer,
+			      bytes_to_write,
+			      &bytes_written,
+			      SRUSBXCH_CMD_TIMEOUT);
+
+
+	/*  If write was successful (retval==0), return bytes written */
+
+	if (!retval)
+		retval = bytes_written;
+
+
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_bulk_write_cmd exit\n" );
+	return retval;
+}
+
+static int srusbxch_bulk_read_cmd(struct deviceinformation *devinfo) 
+{
+	int retval, bytes_to_read, bytes_read;
+	
+	dbg0_printk("srusbxch_bulk_read_cmd enter\n" );
+
+
+	/* Ensure kernel space buffer is big enough for all requested data */
+
+	bytes_to_read = devinfo->ioctl_data.OutSize;
+
+	if (devinfo->cmd_size < bytes_to_read) {
+		retval = srusbxch_increase_cmd_buffer(devinfo, bytes_to_read);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for bulk read cmd");
+			dbg0_printk("srusbxch_bulk_read_cmd exit error\n" );
+			return retval;
+		}
+	}
+
+
+	/* Synchronize with disconnect */
+
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+
+	/* Do a blocking bulk read to get data from the device */
+	
+	retval = usb_bulk_msg(devinfo->udev,
+			      devinfo->pipe_cmd_in,
+			      devinfo->cmd_buffer,
+			      bytes_to_read,
+			      &bytes_read,
+			      SRUSBXCH_CMD_TIMEOUT);
+
+	/* If the read was successful (retval==0), copy the data to userspace */
+	
+	if (!retval) {
+
+		if (copy_to_user(devinfo->ioctl_data.OutBuffer, devinfo->cmd_buffer, bytes_read))
+			retval = -EFAULT;
+		else
+			retval = bytes_read;
+	}
+
+
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_bulk_read_cmd exit\n" );
+	return retval;
+}
+
+
+static int srusbxch_get_device_descriptor(struct deviceinformation *devinfo) 
+{
+	int retval, bytes_available, bytes_descriptor, bytes_to_copy;
+
+	dbg0_printk("srusbxch_get_device_descriptor enter\n" );
+
+
+	/* Debugging */
+	if (SRDBG >= 0)
+		srusbxch_show_device_descriptor(&devinfo->udev->descriptor);
+	
+
+	/* Prepare size */
+	
+	bytes_available = devinfo->ioctl_data.OutSize;
+	bytes_descriptor = sizeof(struct usb_device_descriptor);
+
+	bytes_to_copy = bytes_descriptor;
+	if (bytes_to_copy > bytes_available)
+		bytes_to_copy = bytes_available;
+
+
+
+	/* Copy the device descriptor data to userspace */
+
+	if (copy_to_user(devinfo->ioctl_data.OutBuffer, &devinfo->udev->descriptor, bytes_to_copy))
+		retval = -EFAULT;
+	else
+		retval = bytes_to_copy;
+
+	dbg0_printk("srusbxch_get_device_descriptor exit\n" );
+	return retval;
+}
+
+static int srusbxch_get_config_descriptor_size(struct deviceinformation *devinfo) 
+{
+	int retval, bytes_available, bytes_descriptor, bytes_to_copy;
+	unsigned int length;
+	struct usb_config_descriptor *configdesc;
+	
+	dbg0_printk("srusbxch_get_config_descriptor_size enter\n" );
+
+
+	/* Prepare size */
+
+	bytes_descriptor = sizeof(struct usb_config_descriptor); /* USB_DT_CONFIG_SIZE */
+	bytes_available = devinfo->ioctl_data.OutSize;
+
+	bytes_to_copy = 4;                                       /* just want total length */
+	if (bytes_to_copy > bytes_available)
+		bytes_to_copy = bytes_available;
+
+
+
+	/* Ensure kernel space buffer is big enough for all requested data */
+
+	bytes_to_copy = devinfo->ioctl_data.OutSize;
+
+	if (devinfo->cmd_size < bytes_to_copy) {
+		retval = srusbxch_increase_cmd_buffer(devinfo, bytes_to_copy);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for get config descriptor size");
+			dbg0_printk("srusbxch_get_config_descriptor_size exit error\n" );
+			return retval;
+		}
+	}
+
+
+	/* Synchronize with disconnect */
+
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+
+	/* Do a blocking call get the descriptor from the device */
+
+	retval = usb_get_descriptor(devinfo->udev,
+				    USB_DT_CONFIG,
+				    0,
+				    devinfo->cmd_buffer,
+				    bytes_descriptor);
+	
+
+
+	/* If the get was successful, copy the data to userspace */
+	
+	if (retval>0) {
+
+		configdesc = (struct usb_config_descriptor *)devinfo->cmd_buffer;
+		length = le16_to_cpu(configdesc->wTotalLength);
+		
+		/* Debugging */
+		if (SRDBG >= 0)
+			srusbxch_show_config_descriptor(configdesc);
+		
+
+		/* Copy the config descriptor total length to userspace */
+
+		if (copy_to_user(devinfo->ioctl_data.OutBuffer, &length, bytes_to_copy))
+			retval = -EFAULT;
+		else
+			retval = bytes_to_copy;
+	}
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_get_config_descriptor_size exit\n" );
+	return retval;
+}
+
+static int srusbxch_get_config_descriptor(struct deviceinformation *devinfo) 
+{
+	int retval, bytes_available, bytes_to_copy;
+	struct usb_config_descriptor *configdesc;
+
+	dbg0_printk("srusbxch_get_config_descriptor enter\n" );
+
+
+	/* Prepare size */
+
+	bytes_available = devinfo->ioctl_data.OutSize;
+	bytes_to_copy = sizeof(struct usb_config_descriptor); /* USB_DT_CONFIG_SIZE */
+	if (bytes_to_copy > bytes_available)
+		bytes_to_copy = bytes_available;
+
+
+
+	/* Ensure kernel space buffer is big enough for all requested data */
+
+	if (devinfo->cmd_size < bytes_to_copy) {
+		retval = srusbxch_increase_cmd_buffer(devinfo, bytes_to_copy);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for get config descriptor size");
+			dbg0_printk("srusbxch_get_config_descriptor exit error\n" );
+			return retval;
+		}
+	}
+
+
+	/* Synchronize with disconnect */
+
+	mutex_lock(&devinfo->io_mutex);
+	if (!devinfo->interface) {		/* disconnect() was called */
+		retval = -ENODEV;
+		goto exit;
+	}
+
+
+
+	/* Do a blocking call get the descriptor from the device */
+
+	retval = usb_get_descriptor(devinfo->udev,
+				    USB_DT_CONFIG,
+				    0,
+				    devinfo->cmd_buffer,
+				    bytes_to_copy);
+
+	/* Check for error, on success retval = #bytes read */
+	
+	if (retval<0)
+		goto exit;
+
+
+	/* Determine the full descriptor length */
+
+	configdesc = (struct usb_config_descriptor *)devinfo->cmd_buffer;
+	bytes_to_copy = le16_to_cpu(configdesc->wTotalLength);
+	if (bytes_to_copy > bytes_available)
+		bytes_to_copy = bytes_available;
+
+
+	/* Ensure kernel space buffer is still big enough for all requested data */
+
+	if (devinfo->cmd_size < bytes_to_copy) {
+		retval = srusbxch_increase_cmd_buffer(devinfo, bytes_to_copy);
+		if (retval<0) {
+			err("Could not allocate kernel buffer for get config descriptor size");
+			goto exit;
+		}
+	}
+
+
+
+	/* Do a blocking call get the full descriptor from the device */
+
+	retval = usb_get_descriptor(devinfo->udev,
+				    USB_DT_CONFIG,
+				    0,
+				    devinfo->cmd_buffer,
+				    bytes_to_copy);
+
+
+	/* If the get was successful (retval = #bytes), copy the data to userspace */
+
+	if (retval>0) {
+
+		if (copy_to_user(devinfo->ioctl_data.OutBuffer, devinfo->cmd_buffer, bytes_to_copy)) {
+			dbg_printk("srusbxch_get_config_descriptor fail copy_to_user on bigbuffer\n");
+			retval = -EFAULT;
+		}
+		else
+			retval = bytes_to_copy;
+	}
+
+exit:
+	mutex_unlock(&devinfo->io_mutex);
+
+	dbg0_printk("srusbxch_get_config_descriptor exit\n" );
+	return retval;
+}
+
+static int srusbxch_increase_cmd_buffer(struct deviceinformation *devinfo, size_t count)
+{
+	int retval;
+
+	dbg0_printk("srusbxch_increase_cmd_buffer enter\n" );
+
+
+	/* Free the existing buffer */
+
+	if (devinfo->cmd_buffer)
+		kfree(devinfo->cmd_buffer);
+
+
+	/* Allocate new larger buffer */
+
+	devinfo->cmd_buffer = kmalloc(count, GFP_KERNEL);
+
+	if (devinfo->cmd_buffer) {
+		devinfo->cmd_size = count;
+		retval = 0;
+	}
+	else {
+		err("Could not reallocate kernel buffer for cmd pipe");
+		devinfo->cmd_size = 0;
+		retval = -EFAULT;
+	}
+
+	dbg0_printk("srusbxch_increase_cmd_buffer exit\n" );
+	return retval;
+}
+
+static int srusbxch_increase_data_buffer(struct deviceinformation *devinfo, size_t count)
+{
+	int retval;
+
+	dbg0_printk("srusbxch_increase_data_buffer enter\n" );
+
+
+	/* Free the existing buffer */
+
+	if (devinfo->data_buffer)
+		kfree(devinfo->data_buffer);
+
+
+	/* Allocate new larger buffer */
+
+	devinfo->data_buffer = kmalloc(count, GFP_KERNEL);
+
+	if (devinfo->data_buffer) {
+		devinfo->data_size = count;
+		retval = 0;
+	}
+	else {
+		err("Could not reallocate kernel buffer for data pipe");
+		devinfo->data_size = 0;
+		retval = -EFAULT;
+	}
+
+	dbg0_printk("srusbxch_increase_data_buffer exit\n" );
+	return retval;
+}
+
+static void srusbxch_show_device_descriptor(struct usb_device_descriptor *dd)
+{
+	if (!dd)
+		return;
+
+	/* Show device descriptor fields */
+
+	dbg_printk("bLength            = %d\n", dd->bLength);
+	dbg_printk("bDescriptorType    = %d\n", dd->bDescriptorType);
+
+	dbg_printk("bcdUSB             = 0x%04X\n", dd->bcdUSB);
+
+	dbg_printk("bDeviceClass       = %d\n", dd->bDeviceClass);
+	dbg_printk("bDeviceSubClass    = %d\n", dd->bDeviceSubClass);
+	dbg_printk("bDeviceProtocol    = %d\n", dd->bDeviceProtocol);
+	dbg_printk("bMaxPacketSize0    = %d\n", dd->bMaxPacketSize0);
+
+	dbg_printk("idVendor           = 0x%04X\n", dd->idVendor);
+	dbg_printk("idProduct          = 0x%04X\n", dd->idProduct);
+	dbg_printk("bcdDevice          = 0x%04X\n", dd->bcdDevice);
+
+	dbg_printk("iManufacturer      = %d\n", dd->iManufacturer);
+	dbg_printk("iProduct           = %d\n", dd->iProduct);
+	dbg_printk("iSerialNumber      = %d\n", dd->iSerialNumber);
+	dbg_printk("bNumConfigurations = %d\n", dd->bNumConfigurations);
+}
+
+static void srusbxch_show_config_descriptor(struct usb_config_descriptor *cd)
+{
+	if (!cd)
+		return;
+
+	/* Show config descriptor fields */
+
+	dbg_printk("bLength             = %d\n", cd->bLength);
+	dbg_printk("bDescriptorType     = %d\n", cd->bDescriptorType);
+
+	dbg_printk("wTotalLength        = %d\n", cd->wTotalLength);
+	
+	dbg_printk("bNumInterfaces      = %d\n", cd->bNumInterfaces);
+	dbg_printk("bConfigurationValue = %d\n", cd->bConfigurationValue);
+	dbg_printk("iConfiguration      = %d\n", cd->iConfiguration);
+	dbg_printk("bmAttributes        = %d\n", cd->bmAttributes);
+	dbg_printk("bMaxPower           = %d\n", cd->bMaxPower);
+}
+
+static void srusbxch_delete(struct kref *kref)
+{
+	struct deviceinformation *devinfo = to_srusbxch_devinfo(kref);
+
+	dbg0_printk("srusbxch_delete enter\n" );
+
+	usb_put_dev(devinfo->udev);
+
+	if (devinfo->cmd_buffer)
+		kfree(devinfo->cmd_buffer);
+
+	if (devinfo->data_buffer)
+		kfree(devinfo->data_buffer);
+	
+	if (devinfo->ep0_buffer)
+		kfree(devinfo->ep0_buffer);
+
+	kfree(devinfo);
+	dbg0_printk("srusbxch_delete exit\n" );
+}
+
+static void srusbxch_draw_down(struct deviceinformation *devinfo)
+{
+	int time;
+
+	dbg0_printk("srusbxch_draw_down enter\n" );
+
+	time = usb_wait_anchor_empty_timeout(&devinfo->submitted, SRUSBXCH_CMD_TIMEOUT);
+	if (!time)
+		usb_kill_anchored_urbs(&devinfo->submitted);
+
+	dbg0_printk("srusbxch_draw_down exit\n" );
+}
+
+static int srusbxch_suspend(struct usb_interface *intf, pm_message_t message)
+{
+	struct deviceinformation *devinfo = usb_get_intfdata(intf);
+
+	dbg0_printk("srusbxch_suspend enter\n" );
+
+	if (!devinfo)
+		return 0;
+	srusbxch_draw_down(devinfo);
+
+	dbg0_printk("srusbxch_suspend exit\n" );
+	return 0;
+}
+
+static int srusbxch_resume(struct usb_interface *intf)
+{
+	dbg0_printk("srusbxch_resume enter+exit\n" );
+	return 0;
+}
+
+static int srusbxch_pre_reset(struct usb_interface *intf)
+{
+	struct deviceinformation *devinfo = usb_get_intfdata(intf);
+
+	dbg0_printk("srusbxch_pre_reset enter\n" );
+
+	mutex_lock(&devinfo->io_mutex); /* unlocked in post_reset */
+	srusbxch_draw_down(devinfo);
+
+	dbg0_printk("srusbxch_pre_reset exit\n" );
+	return 0;
+}
+
+static int srusbxch_post_reset(struct usb_interface *intf)
+{
+	struct deviceinformation *devinfo = usb_get_intfdata(intf);
+
+	dbg0_printk("srusbxch_post_reset enter\n" );
+
+	/* We are sure no URBs are active - no locking needed */
+	devinfo->errors = -EPIPE;
+	mutex_unlock(&devinfo->io_mutex); /* locked in pre_reset */
+
+	dbg0_printk("srusbxch_post_reset exit\n" );
+	return 0;
+}
+
+module_init(srusbxch_init);
+module_exit(srusbxch_exit);
+

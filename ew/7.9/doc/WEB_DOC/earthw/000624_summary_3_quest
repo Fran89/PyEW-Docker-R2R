@@ -1,0 +1,39 @@
+From steve@geophys.washington.edu Sat Jun 24 14:03:23 2000
+Date: Sat, 24 Jun 2000 13:52:10 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Cc: Paul Freiberg <p.friberg@isti.com>,
+     Won-Young Kim <wykim@lamont.ldgo.columbia.edu>
+Subject: Responses to my three questions
+
+	Responses (11) to my three questions have been concatenated together
+and put in the earthw-list archives for anyone interested in the details
+(also includes those sent to me personnaly rather than to the list).
+
+In a nut shell answers and solutions exist or are forthcoming.  They are:
+
+1. Getting SOH from a Reftek DAS with 422 card ain't easy but can be
+done.  Thanks to Jim Pechmann, Lynn Dietz and Dave Chavez.
+
+2. Waveserver problems, things are being fixed to make it better.  Thanks to
+Pete Lombard and Alex Bittenbinder.  BTW, those who suggested using the
+"restart <pid>" method  had better look again.  The waveserver is the one
+program that you better not use this on. Since it does not catch signals it
+will quit, possibly in the middle of something leaving the tanks in a possible
+bad state which may make things even worse.  It seems that this is being
+fixed.
+
+3. Several ways of doing mseed were suggested, anyone of which would probably
+be fine, but the simplest might be a waveserver client already done... maybe
+(?). It seems that no one at Lamont nor Paul Friberg on on the earthw-list and
+so may not know there is an outstanding question.  You out there hanging from
+some rock somewhere, Paul?  Thanks to Phil Maechling, Mike Stnickney and Alex.
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+
+

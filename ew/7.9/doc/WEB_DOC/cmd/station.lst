@@ -1,0 +1,45 @@
+# This file is used by PSN4Putaway.c to add additional information to the PSN Event 
+# file created by Earthworm. The information in the brackets [] is the SCNL 
+# (Station/Channel/Network/Location) for each channel.
+# 
+[LCN.BHN.PN.NC]
+  Latitude = 37.497
+  Longitude= -122.241
+  Orientation = Z
+  Elevation= 10
+  Incident = 0
+  Azimuth = 0
+  SensorType = A
+  Sensitivity = 0.000298078
+  ReferenceType = GPS
+  ADBits = 16
+  MagCorrection = 0.0023
+  StationLocation = Redwood City, CA
+  SensorInformation = 16 Second Lehman
+  SensorOutputVoltage = .567
+  AmplifierGain = 100
+  AdcInputVoltage = 10
+[PSN.BHN.PN.NC]
+  Latitude = 37.497
+  Longitude= -122.241
+  Elevation= 10
+  Orientation = N
+  Incident = 90
+  Azimuth = 0
+  SensorType = A
+  Sensitivity = 0.000298078
+  ReferenceType = WWV
+  ADBits = 24
+  MagCorrection = 0.0277
+[PSN.BHE.PN.NC]
+  Latitude = 37.497
+  Longitude= -122.241
+  Elevation= 10
+  Orientation = E
+  Incident = 90
+  Azimuth = 90
+  SensorType = A
+  Sensitivity = 0.000298078
+  ReferenceType = WWB
+  ADBits = 24
+  MagCorrection = 0.03477

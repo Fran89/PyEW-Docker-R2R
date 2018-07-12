@@ -1,0 +1,310 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: wave_viewer overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Wave Viewer Overview (wave_viewer.exe)</H1>
+<I>(last revised Nov 04, 2008)</I></CENTER>
+
+<P>
+
+
+Wave Viewer provides a graphic user interface(GUI) for viewing waveform
+data out of an Earthworm wave server.  In seismological ease, Wave Viewer
+acts as an electronic develecorder.  It can only interact with one server
+at a time, and runs on Microsoft Windows platforms.
+It was written by Carl Johnson and is maintained
+by Earthworm Central via David Kragness. <b>Wave Viewer is NOT SCNL compatible. If you are using a v7x Earthworm system, you will have to convert using
+scnl2scn. You could alternately use <a href="http://www.avo.alaska.edu/Software/swarm/">Swarm</a> instead. (This may be found in the Earthworm Contrib distribution at some point in the future.) - 2008 11 04</b>
+<br><br><br>
+
+
+<h2>IMPORTANT NOTES: </h2>
+VERSION INFO
+<br>
+The current version of Wave Viewer is v2.02  internally released on 01/16/2002, externally released as part of Earthworm v6.1.  All Wave Viewer releases starting with v1.04 are  Y2K compliant.
+<p>
+
+SOURCE INFO
+<br>
+Wave Viewer is written in C++, utilizing the MFC class libraries.
+<p>
+
+CONFIGURATION FILE
+<br>
+The default configuration file name is "wave_viewer.d", but you may name an alternate
+configuration file as the second argument on the command line
+<br><br><br>
+
+
+
+
+<h2>OVERVIEW</h2>
+Wave_viewer acts as a client to the Earthworm WaveServerV module. Earthworm Wave Servers maintain circular disk-based memory for specified trace data channels.  Wave Viewer is a graphical tool that allows a user to examine the data within the Wave Server.
+Wave_viewer connects to a single wave server, and provides controls for a user to navigate that wave server's tanks, and thus look at the data available for channels served by that wave server.
+<p>
+
+Wave_viewer reads a configuration file "wave_viewer.d" when it starts up. This file contains
+various parameters, including the IP address of the wave server to connect to, and the definition of the station groups, explained below.
+(*NOTE* The default configuration file name is "wave_viewer.d", but you may name an alternate
+configuration file as the second argument on the command line.)
+<p>
+
+Wave Viewer interacts with the wave server asynchronously with regard to the user's actions, thus the user is generally free to operate the controls at will. A caching algorithm tries to anticipate user motions, and pre-load the required data over the network from the Wave Server.
+<p>
+
+When the Wave Viewer program first loads, it connects to the specified wave server, and displays all channels being served(or atleast as many as it can fit on the screen), starting with the youngest data available.
+<p>
+
+Wave Viewer performance is dependent upon the speed of the machine you are using, the amount of memory the program is allowed to use for cache, and it's ability to connect and get data from the given  wave server(network bandwidth and wave-server speed).
+<p>
+
+<br><br><br>
+<h2>FEATURES</h2>
+Groups
+<br>
+The configuration file can contain a number of named groups of stations. These groups can be selected via the "Groups" Menu item. Selecting a group means that ONLY the stations named in that group are being shown on the screen.  If you would like to see only a select number of channels, instead of all of the channels from a given wave_server, you can specify a group of channels.  By selecting that group, only those channels will be displayed.
+<p>
+
+Trigger Files
+<br>
+The user can open a trigger file which must contain event triggers in
+Earthworm TYPE_TRIGLIST2K format, such as those written by arc2trig, arc2trig2,
+or carltrig.  The user can step through such events via the "+" and "-" tool buttons.  When a trigger event is selected, the trace data at the time of the event is displayed, and a red bar is  drawn at each station trigger time. The user is free to select various groups without changing the time shown. The user is also free to browse via manual controls at any time."
+<p>
+
+Display by Time
+<br>
+Selecting the menu item "Functions", submenu "Time", causes a window to appear. This window permits the user to enter a specific time, either in human notation, or as seconds since 1970 (as per Unix and Windows 2000, for engineering purposes). Entering a time value and pressing the "OK" button will cause data at that time to be displayed.
+<p>
+
+Show Time
+<br>
+Moving the mouse to a point on a trace will cause the time of that point to be displayed in a window at the bottom right of the screen. Note that the mouse has to be moved to activate this feature.
+<p>
+
+
+Scrolling
+<br>
+The vertical scroll bars operate when there are more stations to be displayed than fit on the screen. They operate in the usual manner.
+<p>
+
+Horizontal scrolling is as usual, but in addition the slider bar can be dragged left or right, and acts as a speed control. Releasing the slider bar stops the  display.
+<br><br><br>
+
+<h2>CONTROLS AND BUTTONS</h2>
+FileOpen (yellow folder):
+<br>
+Brings up a dialog box to open a trigger file.  Opening a trigger file will
+cause Wave Viewer to parse the trigger file, and create a tree of quakes
+and triggers.  This tree can be accessed by choosing "Function->Trigger"
+from the Menu Bar.
+<p>
+
+Print (printer):
+<br>
+Brings up a print dialog box.  Wave Viewer does not support printing.
+<p>
+
+Help (<b><tt>?</tt></b>):
+<br>
+Brings up the "About Wave Viewer" dialog box.
+<p>
+
+Previous Trigger (<b><tt>-</tt></b>):
+<br>
+Goes to the previous trigger in the trigger list.  See FileOpen.
+<p>
+
+Next Trigger (<b><tt>+</tt></b>):
+<br>
+Goes to the next trigger in the trigger list.  See FileOpen.
+<p>
+
+Decrease Display Time (<b><tt><-></tt></b>):
+<br>
+Cuts the time shown on the display in half.  So if there were 20 seconds of
+time on the display, then after clicking this button, there would be 10.
+The start time of the display remains the same.
+<p>
+
+Increase Display Time (<b><tt>>-<</tt></b>):
+<br>
+Doubles the time shown on the display.  So if there were 20 seconds of
+time on the display, then after clicking this button, there would be 40.
+The start time of the display remains the same.
+<p>
+
+Decrease Display Scale ("Decrease Display Time rotated 90 degrees"):
+<br>
+Cuts the scale for each trace on the display in half.  So if the scale
+for the first trace on the screen was +/- 80 counts, before the button
+was pressed then it would be +/- 40 counts afterwards.  This button
+affects every channel on the display.
+<p>
+
+Increase Display Scale ("Increase Display Time rotated 90 degrees"):
+<br>
+Doubles the scale for each trace on the display.  So if the scale
+for the first trace on the screen was +/- 80 counts, before the button
+was pressed then it would be +/- 160 counts afterwards.
+<p>
+
+Go To Oldest Data (<b><tt>|<-</tt></b>):
+<br>
+Updates the menu and moves the display so that the start time of the
+display is the oldest data currently available in the wave_server
+tank of the first channel on the screen.  Moves display to the oldest
+data in the wave_server tanks.  (*Note*, the first channel on the
+screen is used for reference.   So if the oldest data in the first
+channel is at time 10, the second at time 11, and the third at time 9,
+then the display will be moved to time 10.
+<p>
+
+Go To Newest Data (<b><tt>->|</tt></b>):
+<br>
+Updates the menu and moves the display so that the end time of the
+display is the newest data currently available in the wave_server
+tank of the first channel on the screen.  Moves display to the newest
+data in the wave_server tanks.  (*Note*, the first channel on the
+screen is used for reference.   So if the newest data in the first
+channel is at time 10, the second at time 11, and the third at time 9,
+then the display will be moved to time 10.
+<p>
+
+Auto-Scroll (<b><tt>-></tt></b>):
+<br>
+Automatically scroll the display continuously, in sink with real time.
+When Wave Viewer is in auto-scroll mode it continues to scroll.  It scrolls
+1 second for each second of clock time that passes.
+<p>
+
+Add A Trace (1 line to 2 lines)
+<br>
+Increases the number of channels on the display by 1.
+<p>
+
+Drop A Trace (2 lines to 1 line)
+<br>
+Decreases the number of channels on the display by 1.
+<p>
+
+Bias (<b><tt>BIAS</tt></b>):
+<br>
+<pre>
+The bias button causes the calibration for the band(channel) to be redone.
+This involves three different sets of behavior depending upon how
+much data wave_viewer has recorded for the given channel:
+  1) If wave_viewer has less than 30 samples of data
+	The bias is recalculated, and the scale is reset to 8 * stddev of the data points.
+  2) If wave_viewer has less than 60 seconds of data
+	The bias is recalculated, and the scale is reset to 2 * stddev of the data points.
+  3) If wave_viewer has atleast   60 seconds of data
+	Only the bias is recalculated.
+*Note* If the Scale has been set in the config file, then wave_viewer will
+never automatically adjust the scale, no matter how much data is available.
+</pre>
+<br><br><br>
+
+<h2>STATUS INDICATORS</h2>
+Block Colors  - Channel Status
+<br>
+<p>
+
+There is an area in the header of each trace channel  (the area vertically between the '+' and '-') that the wave_viewer will fill with a certain color indicating that that trace is blocked because of a particular problem.  The colors/problems are given below:
+<p>
+
+RED
+<br>
+!!!!Inidicates serious error with the tank!!!!!
+<p>
+BLUE
+<br>
+Indicates that data was requested to the right of the tank  (this color is seen frequently when the viewer is pushed too close to the tank edge)
+<p>
+GREEN
+<br>
+Indicates that no data was available for the channel,     or an error occurred while retrieving data.
+<p>
+PURPLE
+<br>
+Unknown error state!
+<p>
+
+The only color that should be seen during normal operation (other
+than clear, is BLUE.  Any other color probably indicates an error
+with the tank within the wave_server.)
+
+
+Status Bar
+<br>
+
+The Wave Viewer status bar is broken up into 6 segments:
+1) Status Segment
+<br>
+The status segment, contains the current status of the program. In auto-scroll mode, the program is frequently attempting to retrieve data from a wave_server.  At this time, the current data request to the wave_server is posted in this segment. If a wave_viewer is very busy in auto-scroll mode, then the only thing you may see in this segment is requests.  When  wave_viewer has retrieved all desired data, it will display a status of "done" in this segment.  It will also list serious errors here.
+<p>
+
+2) Station Info Segment
+<br>
+When the user places the mouse over the "header area" of a given channel, the information for that channel will be displayed in this segment.  The SCN are displayed, along with the Scale and the Bias.  The SampleRate is not displayed here, but is displayed in the channel "header area" if there is ample room.  The format is:
+<br>
+	"<STA> <CHAN> <NET> +/- <SCALE> B:<BIAS>"
+<p>
+
+3) Queue Info Segment
+<br>
+This segment displays how many data requests are currently in the request queue.  The format is:
+<br>
+	"Queue: <QUEUE DEPTH>"
+<p>
+
+4) Data Received Segment
+<br>
+This segment displays the amount of data received over the socket from the wave_server.  Each time wave_viewer receives a new packet from the server, it writes the size of the packet to this segment.  When wave_server has received a completed message from the wave_server, then it prints the size of the completed message, along with a prefix denoting the type of message.  A completed message is comprised of one or more packets.
+        Receive buffer notation
+<pre>
+	*XXXX  indicates that a complete SCN reply was received from the server
+	+XXXX  indicates that a complete menu reply was received from the server
+	-XXXX  indicates that a complete NOT UNDERSTOOD reply was received from the server.
+	Examples:
+	  	"56"	Wave Viewer received a packet of 56 bytes from the server
+		"*388"  Wave Viewer received a completed message (a Reply to a
+				request for data from a channel) of 388 bytes.
+		"+1608" Wave Viewer received a completed message (a Reply to a
+				request for a menu) of 1608 bytes.
+		"-388"  Wave Viewer received a completed message (unknown
+				message type) of 388 bytes.
+</pre>
+<p>
+
+5) Time Segment
+<br>
+When the user moves the mouse over an area of trace on the screen, this segment  displays the time for the location of the mouse pointer.
+<br>
+format:	YYYY MMMDD HHMM SS.DD
+<p>
+
+6) Trigger Segment
+<br>
+When the user is viewing an Earthworm trigger message, this segment shows the time of the current trigger.
+<p>
+
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/wave_viewer_cmd.html">Wave_viewer Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+Updated <B>04 November 2008</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+
+
+

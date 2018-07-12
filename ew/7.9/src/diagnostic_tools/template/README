@@ -1,0 +1,39 @@
+
+              Template Module Directory   
+
+This directory contains a set of sample files for a basic 
+earthworm module which:
+
+ 1) reads a configuration file using kom.c routines 
+    (template_config).
+
+ 2) looks up shared memory keys, installation ids, 
+    module ids, message types from earthworm.h tables 
+    using getutil.c functions (template_lookup).
+
+ 3) attaches to one public shared memory region for
+    input and output using transport.c functions.
+
+ 4) processes hard-wired message types from configuration-
+    file-given installations & module ids (This source
+    code expects to process TYPE_HYP2000 & TYPE_H71SUM2K
+    messages).
+
+ 5) sends heartbeats and error messages back to the
+    shared memory region (template_status).
+
+ 6) writes to a log file using logit.c functions.
+ 
+
+The files in this directory are:
+ Makefile.os2     to create the executable for template on OS/2.
+ Makefile.sol     to create the executable for template on solaris.
+ template.c       source file for the sample module.
+ template.d       configuration file read by template_config.
+ template.desc    the descriptor file for template required
+                  by Earthworm's statmgr module.
+
+
+Lynn Dietz
+January 9, 1996                               
+

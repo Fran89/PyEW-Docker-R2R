@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Windows_startstop_Service – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Windows_startstop_Service?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Windows_startstop_Service.html" title="View Windows_startstop_Service">Windows_startstop_Service</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Windows_startstop_Service?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Windows_startstop_Service?action=diff&amp;version=16" title="Version 16 by stefan">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2013-09-11T22%3A22%3A00-07%3A00&amp;precision=second" title="2013-09-11T22:22:00-07:00 in Timeline">107 seconds</a> ago</span>
+            <span class="trac-print">Last modified on 09/11/13 22:22:00</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="Windows_startstop_Service.html#EarthwormWindowsService">Earthworm Windows Service</a>
+    <ol>
+      <li>
+        <a href="Windows_startstop_Service.html#Readmeforstartstop_service">Readme for startstop_service</a>
+      </li>
+      <li>
+        <a href="Windows_startstop_Service.html#Setupofstartstop_service">Setup of startstop_service</a>
+      </li>
+      <li>
+        <a href="Windows_startstop_Service.html#Notesonrunningstartstop_service">Notes on running startstop_service</a>
+      </li>
+      <li>
+        <a href="Windows_startstop_Service.html#Removingstartstop_service">Removing startstop_service</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormWindowsService">Earthworm Windows Service</h1>
+<p>
+(last revised 11 September, 2009)
+</p>
+<h2 id="Readmeforstartstop_service">Readme for startstop_service</h2>
+<p>
+Service functionality added by:<br />
+Mark Morrison<br />
+USGS - Golden, CO<br />
+</p>
+<p>
+(Some additional edits or comments in these docs by Stefan Lisowski)
+</p>
+<h2 id="Setupofstartstop_service">Setup of startstop_service</h2>
+<p>
+(Follow these instructions carefully.)
+</p>
+<p>
+startstop_service is identical to the old startstop_nt, except that it runs as a Windows service. This means that the parameters are all the same - read from startstop_nt.d - but that startstop isn't just executed from a command window or via the scheduler. Note that this version is taken from startstop_nt, so I haven't compiled or tested any of this under Solaris or other systems. I believe it's generally felt, however, that these modifications don't apply to Solaris.
+</p>
+<p>
+To install startstop_service as a service, do the following:
+</p>
+<ul><li>Open a command window. Switch to the directory containing the startstop executable (if it's not already in the Windows path).
+</li></ul><ul><li>Type: startstop_service -install<br />
+</li></ul><p>
+This will install the service. You should get a message saying that installation was successful.
+</p>
+<ul><li>Open the Services Control Panel. (It's under Control Panel-&gt;Administrative Tools-&gt;Services.) You should see something listed as "Earthworm start-stop". Verify that this service is set to run in Automatic mode (meaning it automatically starts after a reboot, without waiting for user intervention.)
+</li></ul><ul><li>By default, startstop is set to run as the "Local Service" account. We need to change this to run as the Administrator, or else any Earthworm rings won't be accessible to other users, and typing "status" won't work. To change the user the service runs under, Select the Properties of the startstop service (double-clicking or selecting Properties from the toolbar). Select the Log On tab, select This account, and select Browse. For Win2000 machines, select the Administrator account from the list, then click OK. Type in the password twice, and click OK again. For WinXP machines, select Advanced, then click Find Now. The listbox at the bottom should show all the users locally set up on that computer. Select the Administrator, then click OK twice. Now type in the Administrator password twice, then click OK again.
+</li></ul><p>
+NOTE: This whole rigamarole means that whenever the Administrator password is changed on a machine running startstop, the password must be changed again from the Services control panel.
+</p>
+<ul><li>There's no way I've been able to find that allows environment variables to be loaded via ew_nt.cmd (or a similar file) before startstop runs. So, any environment variables required for Earthworm functionality have to be loaded systemwide before starting the startstop service. To set environment variables, select the System control panel, select the Advanced tab, and select Environment Variables. Under the "System variables" window (<strong>NOT the "user variables for XXX User" window</strong>), make sure that any environment variables you'll need are defined here. A typical subset may include:<br />
+</li><li>EW_HOME<br />
+</li><li>EW_INSTALLATION<br />
+</li><li>EW_LOG<br />
+</li><li>EW_PARAMS<br />
+</li><li>SYS_NAME<br />
+</li><li>TZ<br />
+</li></ul><p>
+In addition, make sure \earthworm\bin directory (or whichever directory contains your earthworm binaries) is included somewhere in the "Path" variable. Once these are set, click OK, and reboot the machine.
+</p>
+<p>
+(Note that setting the Timezone Here to UTC may affect how other non-earthworm applications on your machine keep track of and display time.)
+</p>
+<ul><li>If you didn't have to change any environment variables and reboot, you can now start the startstop service by clicking Start from the Services Control Panel (the triangle "Play" button). If you reboot, the service will start automatically.
+</li></ul><h2 id="Notesonrunningstartstop_service">Notes on running startstop_service</h2>
+<p>
+Apart from running as a Windows service, startstop_service behaves just as startstop_nt. One interesting note is that if you select startstop_service in the Services control panel and click Stop or Restart, then startstop will attempt to shut down all applications attached to its ring via an Earthworm TERMINATE message.
+</p>
+<p>
+<br /><br />
+If you want to look at the Status of Earthworm, or if you want to Restart an Earthworm module or Reconfigure Earthworm's modules and rings, a window may come up telling you that you have a message. If you run a 'cmd' prompt in startstop, you can switch to this layer, and run commands in your cmd prompt. 
+<br /><br />
+You may also be able  to use the deprecated StartstopConsole,  or with an old version of Windows, some of these <a class="wiki" href="Deprecated_Tips.html">Deprecated_Tips</a> for old versions of Windows might work.
+<br /><br />
+With Windows 7 or 8 here's an involved recipe that works to get command-line access to Earthworm.<br />
+It involves using Cygwin, which is a large package to install.<br />
+Install Cygwin from &lt;a href="<a class="ext-link" href="http://www.cygwin.com"><span class="icon">​</span>http://www.cygwin.com</a>"&gt;cygwin.com&lt;/a&gt;, including openssh.<br />
+Configure openssh, and install it as a service; there are good guides on the internet to do this,
+you'll likely use /usr/bin/ssh-host-config<br />
+You'll end up with /etc/passwd containing entries like:<br />
+<tt>SYSTEM:*:18:544:,S-1-5-18::</tt><br />
+</p>
+<blockquote>
+<p>
+and<br />
+</p>
+</blockquote>
+<p>
+<tt>administrator:unused:500:513:U-NDLAB-146383\Administrator,S-1-5-21-4294512713-1825936487-2278773034-500:/home/Administrator:/bin/bash</tt><br />
+I made a copy of the administrator line, but then changed the ID to be that of the system user (in this case 18), and I changed the name of this account to be ew_system, ie:<br />
+<tt>ew_system:unused:18:513:U-NDLAB-146383\root,S-1-5-21-4294512713-1825936487-2278773034-500:/home/Administrator:/bin/bash</tt><br />
+I was then able to log in with the Administrator password, but have access to the SYSTEM environment where the services are run from. So commands like 'status' and restart work, if I ssh into the system remotely, or if I ssh into the system locally. If you have trouble with this, join the Google Groups list below, and ask questions.
+<br /><br />
+</p>
+<p>
+Advertisement: Finally if all else fails; ISTI offers a not-free commercial web-based graphical tool <a class="ext-link" href="http://www.isti.com/products/ezw/"><span class="icon">​</span>http://www.isti.com/products/ezw/</a> EZW to administer your Earthworm system locally or remotely. It is compatible with StarstopService.
+</p>
+<h2 id="Removingstartstop_service">Removing startstop_service</h2>
+<p>
+If you ever need to remove startstop_service from your machine, first stop the service (as above), then open a command window and type: startstop_service -uninstall<br />
+You should also perform this step if you ever need to move the startstop binary to another directory on your hard drive; otherwise, Windows will not know where to find the executable.<br />
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Windows_startstop_Service?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

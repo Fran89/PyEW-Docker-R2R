@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      hypo_file_format – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/hypo_file_format?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="hypo_file_format.html" title="View hypo_file_format">hypo_file_format</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/hypo_file_format?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/hypo_file_format?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-29T10%3A43%3A27-07%3A00&amp;precision=second" title="2012-05-29T10:43:27-07:00 in Timeline">16 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/29/12 10:43:27</span>
+          </div>
+          <div id="wikipage"><h2 id="HypoinverseStationFileFormat">Hypoinverse Station File Format</h2>
+<pre class="wiki">FORMAT OF THE HYPOINVERSE STATION FILE FOR FULL 12-LETTER (S-C-N-L) CHANNEL NAMES
+
+The channel identifier consists of a 5-letter site code, a 2-letter network
+code unique to the owner or operator of the network, a 3-letter component
+or channel code, and a 2-letter location code.  The net, component, and
+location fields are optional to Hypoinverse, but space for these fields will
+be reserved in all input and output files.  The user of Hypoinverse may specify
+(with the LET command) how many characters (counted from the left side) in
+each field to use when matching names in station and phase files.  Full use
+of the fields will require 5, 2, 3, and 2 letters; minimum use will require
+3, 0, 0 and 0 letters.  Hypoinverse can use both a 1-letter (old USGS style)
+and 3-letter (SEED style) component field. Space for both fields will be
+reserved in all input and output files. Select whether to use the 1- or 3-letter
+field for matching station and phase names with the LES command.  It is
+sometimes useful to keep the 1-letter component field for easier recognition by
+analysts than the newer, more general 3-letter field.
+
+Cols.   Format	Data
+_____   ______ 	____
+
+1-5	A5,1X	Station site code. The first character may  not  be  a
+		number or the $ character.
+
+7-8	A2,1X	Station network code.
+
+10	A1	Optional 1-letter component code for this channel.
+11-13	A3,1X	3-letter component code for this channel.
+
+15 	A1	Station weight code (in units of 0.1) by which the weights
+ 		assigned each P &amp; S phase  are  to be multiplied.  Use the
+		digits  0-9  for the weight in tenths; "*" or "0"  for  no
+		weight; or any other character  (including blank) for full
+		weight.
+
+16-17	I2, 1X	Latitude, degrees.
+19-25	F7.4	Latitude, minutes.
+26	A1	N or blank for north latitude, S for south.
+27-29	I3, 1X	Longitude, degrees.
+31-37	F7.4	Longitude, minutes.
+38	A1	W or blank for west longitude, E for east.
+
+39-42	4X	Reserved for elevation in m. Not used by HYPOINVERSE.
+
+43-45	F3.1,2X	Default  period  (in sec) at which the  maximum  amplitude
+  		will be read for this station. Must be greater than 0.1.
+                If period is given on phase card, it overrides this value.
+
+48      A1          Put  a "2" or "A" here to designate this as  an  alternate
+                    crust model station.  Both  alternate  and primary crustal
+                    models  must be in use.  Stations may also be  tagged  for
+                    use with an alternate model in the delay file.
+
+49      A1          Optional station remark field to copy to print output.
+50-54   F5.2, 1X    P delay (sec) for delay set 1.
+56-60   F5.2, 1X    P delay (sec) for delay set 2.
+62-66   F5.2        Amplitude magnitude correction.  If in the range +/-2.4, the
+                    correction is included  (by  addition)  in  the  amplitude
+                    magnitude. If you don't want a station's magnitude used in
+                    the event magnitude, use  a  correction  of  5.0  plus the
+                    actual correction.  You can also assign a zero weight (see
+                    next).
+
+67      A1          Amplitude magnitude weight code.  Codes 0-9, "*" and blank
+                    are the same as the P &amp; S weight codes (col 15). The actual
+                    magnitude weight used is the product of those on the station
+                    and phase cards. See also col 62.
+
+68-72   F5.2        Duration  magnitude  correction  (works  the  same  as the
+                    amplitude magnitude correction).
+
+73      A1          Duration  magnitude  weight code (works the  same  as
+                    the amplitude weight code).
+
+74      I1          Instrument  type code for this station used to select  the
+                    appropriate response curve  to  derive  an equivalent Wood
+                    Anderson amplitude. Must be either 0, 1 or 2:
+                        0: Standard Wood-Anderson torsion seismograph.
+                        1: USGS standard (1 HZ geophone, .7 critical damping.)
+                        2: Hawaii-type Sprengnether seismometer.
+
+75-80   F6.2        Calibration factor for amplitude  magnitudes, equal to the
+                    peak-to-peak  amplitude of a 10 microvolt RMS signal at  5
+                    hz  applied  to  the  VCO   and  measured  in  mm  on  the
+                    Develocorder  film  viewer.  For instrument types 0 and  2
+                    this  should  generally  be  1.0.   A  cal  factor  of 0.0
+                    signifies  an  unknown  response for  which  no  amplitude
+                    magnitudes will be computed. If a cal factor is given on a
+                    phase  card it overrides this value.  The VCO  attenuation
+                    may be given in  place  of  the  cal  factor  (see the ATN
+                    command).  An entire history of station attenuations  with
+                    the  dates  of  attenuation  changes  may  be  read from a
+                    separate file with the ATE command.
+
+81-82   A2          2-letter location code.
+                    Earthworm follows the SEED convention of allowed characters
+                    (A-Z, 0-9, space).  In apparent contradiction to the previous
+                    statement, Earthworm uses the character '-' to represent
+                    'space' in all Earthworm I/O. Just remember to think 'space'
+                    when you see '-'. Lower case alphanumerics are not permitted.
+                    The location code should always contain 2 characters, either
+                    two alpha-numeric characters or two spaces ('--' or '  ').
+                    The use of a single space (or '-') adjacent to an alpha-numeric
+                    is not permitted.
+</pre><p>
+Other details of hypoinverse configuration can be found in the complete Hypoinverse documentation maintained by Fred Klein at: 
+</p>
+<ul><li><a class="ext-link" href="ftp://ehzftp.wr.usgs.gov/klein/hyp2000/docs/hyp2000-1.0.pdf"><span class="icon">​</span>ftp://ehzftp.wr.usgs.gov/klein/hyp2000/docs/hyp2000-1.0.pdf</a>
+</li><li><a class="ext-link" href="ftp://ehzftp.wr.usgs.gov/klein/docs/shadow2000.pdf"><span class="icon">​</span>ftp://ehzftp.wr.usgs.gov/klein/docs/shadow2000.pdf</a>
+</li></ul></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/hypo_file_format?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

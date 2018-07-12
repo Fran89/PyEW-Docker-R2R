@@ -1,0 +1,28 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#                     Make file for sendfileII
+#                         Linux Version
+#
+LINUX_FLAGS=-lc
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lthread -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS) 
+
+LOCAL_LINK_LIBS=$(LINK_LIBS) $(SPECIFIC_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+
+O = sendfileII.o socket_lnx.o config.o chdir_sol.o getfname_sol.o \
+    sleep_sol.o log.o tzset_sol.o fopen_sol.o
+
+all: sendfileII
+
+sendfileII: $O
+	$(CC) $(CFLAGS) -o sendfileII $O $(LOCAL_LINK_LIBS)
+
+clean:
+	/bin/rm -f sendfileII *.o
+
+clean_bin:
+	/bin/rm -f sendfileII 

@@ -1,0 +1,27 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+EWBINARIES = $L/rdpickcoda.o $L/libew.a
+
+putpick: putpick.o $(EWBINARIES)
+	$(CC) $(CFLAGS) -o $B/putpick putpick.o $(EWBINARIES) $(SPECIFIC_FLAGS)
+
+lint:
+	lint putpick.c $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/putpick*

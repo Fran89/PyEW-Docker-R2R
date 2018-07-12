@@ -1,0 +1,56 @@
+# @(#)makefile.sol	1.3 07/01/98
+# USGS style makefile for reftek2ew
+#
+# This makefile requires that the Reftek RTP libraries already exist
+# on your system.  If you don't have it, get it from
+#
+#        ftp://ftp.reftek.com:/pub/rtp
+#
+# and follow the directions therein to build the library.  Specify the
+# directory containing the libraries and include files as shown:
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = reftek2ew
+OBJS = main.obj hbeat.obj init.obj notify.obj params.obj scn.obj  \
+       send.obj terminate.obj samprate.obj
+
+RTPLDIR = .\lib
+RTPIDIR = .\include
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all: libs reftek2ew
+
+reftek2ew: $(OBJS)	
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(OBJS) \
+    $L\libew_mt.lib \
+    $(RTPLDIR)\libreftek.lib $(RTPLDIR)\libutil.lib $(RTPLDIR)\librtp.lib \
+    -out:$B\reftek2ew.exe
+
+
+libs: FORCE
+	cd lib 
+	nmake -f makefile.nt
+	cd ..
+
+.c.obj:
+	$(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+	cd lib
+	nmake -f makefile.nt clean
+	cd ..
+
+clean_bin:
+	-del $B\reftek2ew*
+
+
+	
+FORCE:

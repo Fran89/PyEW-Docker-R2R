@@ -1,0 +1,132 @@
+FILE: readme                    Copyright (c), Symmetric Research, 2004-2010
+
+SrPar2Ew is a program for sending data from a SR PARxCH 24 bit
+A/D data acquisition system to an Earthworm WAVE_RING buffer as
+TYPE_TRACEBUF2 messages.  It works with any one of the three PARxCH
+systems, one, four, and eight channels.  And can also be used with two
+PAR8CH A/D's and a shared PARGPS timing unit on a single PC to acquire
+16 channels of data.  SrPar2Ew is similar in concept and
+organization to the ADSEND module except it works for the SR PARxCH A/D's.
+
+In order to compile this modules, a copy of the Symmetric Research
+PARxCH and PARGPS software library and include source files are
+required.  A partial copy of the SR software can be found in the
+parxch and pargps subdirectories.  These contain the required source
+files and their associated driver files for both Windows and Linux.
+
+A full copy of the SR software in compressed zip and tar format is
+included with this Earthworm distribution.  The most current and
+up-to-date version of the SR software is always available free from
+the download page of our website: www.symres.com.  You should use the
+version of PARxCH software, compiled with GPS_AVAILABLE defined, that
+supports the PARGPS even if you don't plan to use the PARGPS in your
+application.
+
+In order to run SrPar2Ew, a PARxCH board must be properly
+connected to your computer and its device driver must be correctly
+installed.  Before using the PARxCH with Earthworm, we strongly
+recommend you follow the instructions included with the full PARXCH
+software for setting up the board and installing the driver and then
+verify its correct operation using the included diags and scope
+programs.
+
+Once you have both Earthworm and the PARxCH working separately, you
+should edit the srpar2ew.d configuration values so they match
+your hardware setup.  You will probably also need to edit some
+additional Earthworm configuration files like startstop.d,
+wave_serverV.d, export_scn.d, etc to handle the data SrPar2Ew
+will be providing.  Some example steps are given below.  
+
+For additional configuration help, please refer to the readme.txt
+files in the run_xxx subdirectories.  These directories contain a
+consistent set of configuration files appropriate up for a very simple
+Earthworm setup using Symmetric Research equipment.  And can be a good 
+starting point from which to customize your own configuration files.
+Users of equipment from other manufacturers are advised to start from
+the Memphis Test suite instead.  It can be found at:
+folkworm.ceri.memphis.edu/ew-dist/v7.2/earthworm_test.memphis.tar.gz
+
+For more details about how the SrPar2Ew module is organized,
+please see the comments at the top of the .c source file.
+    
+For support or to suggest improvements, please contact Wendy Tucker at
+Symmetric Research (email: info@symres.com).
+
+The files in this directory are:
+ makefile.nt             creates the executable for SrPar2Ew on Windows 2K/XP
+ makefile.ux             creates the executable for SrPar2Ew on Linux
+ makefile.sol            place holder for unsupported SrPar2Ew on Solaris
+ readme                  this file
+ srpar2ew.c              source file for the SrPar2Ew module
+ srpar2ew.d              configuration file read by SrPar2Ew
+ srpar2ew.desc           the descriptor file for SrPar2Ew required by statmgr
+ srpar2ew_ovr.html       HTML page with SrPar2Ew overview
+ srpar2ew_cmd.html       HTML page with configuration command descriptions
+ run_v6.3                directory with executables and sample config params for v6.3
+ run_v7.x                directory with executables and sample config params for v7.4
+ run_16chan              directory with sample config params for running 16 channels
+ parxch                  directory with minimal SR PARxCH software to compile and run
+ pargps                  directory with minimal SR PARGPS software to compile and run
+
+
+
+To run SrPar2Ew, do the following:
+
+1) Install Earthworm.  Test it.
+
+2) Setup the SR hardware and software.  Install the SR software that 
+   came with your PARxCH and PARGPS.  Hook up the hardware and use
+   their respective diag.exe programs to make sure they're working 
+   properly.
+
+3) If the PARxCH and PARGPS drivers supplied with the SR software
+   are different than those supplied with earthworm.  You should
+   uninstall the former and install the latter when using earthworm.
+   See the note below for more details.
+
+4) Put srpar2ew.d and srpar2ew.desc in the run params 
+   directory (eg \earthworm\v7.4\run_symres\params)
+
+5) Edit srpar2ew.d to select the PARxCH model, port mode, etc
+   that match your equipment and select the desired sampling rate, 
+   channel names, etc
+
+6) Edit startstop_nt.d to also control srpar2ew (eg add 
+   lines like:
+
+   Process          "srpar2ew srpar2ew.d"
+   PriorityClass     Normal
+   ThreadPriority    Normal
+   Display           NewConsole
+
+7) Edit wave_serverV.d to save the PARxCH data into tanks 
+   eg add lines like:
+
+   Tank    CH00 SHZ SR P1 880   INST_UNKNOWN  MOD_WILDCARD       1         10000         c:\earthworm\v7.4\run_symres\data\pch00.tnk
+
+8) Edit wave_viewer.d or the config file for another viewer
+   to see the PARxCH data.
+
+Then startstop earthworm and the system will begin acquiring data.
+
+
+
+Note: If you have unexpected problems, the first thing to check is
+that you are using a consistent set of software.  It is important that
+the PARxCH and PARGPS drivers you use match the headers and libraries
+compiled into SrPar2Ew.  
+
+For example, if you plan to use the version of srpar2ew.exe from
+the standard earthworm executable directory (eg \earthworm\v7.4\bin),
+then be sure to install the matching driver from the
+srpar2ew\parxch\driver directory in the EW directory tree and
+not from the SR directory tree.  
+
+If instead you plan to use the SR drivers that came with your PARxCH
+and PARGPS or that you downloaded from our website (www.symres.com),
+be sure to copy srpar2ew.exe from the appropriate run_ directory
+(eg run_v7.x for EW 7.4) into the standard earthworm executable
+directory.  Recompiling srpar2ew.exe from the parxch\extras\earthworm 
+directory in the SR directory tree will also put a consistent copy 
+in the standard EW executable directory.  
+

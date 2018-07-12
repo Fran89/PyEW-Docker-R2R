@@ -1,0 +1,296 @@
+ISTI == Instrumental Software Technologies, Inc.
+Web: http://www.isti.com
+Email: support@isti.com
+
+Welcome to the GCF for UNIX distribution.
+
+This README provides a quick start to
+using GCF for UNIX. For a more detailed
+explanation of the software contained
+in this distribution, please consult
+the manual pages. For a better and more
+user friendly description, consult our
+new USER MANUAL in the doc/ directory.
+
+THe documenation is in MS Word and .html
+
+The distribution notes for this release 1.3
+are at the end of this README.
+
+
+GETTING STARTED
+-------------------------------------------
+
+We are providing 4 programs to work with
+the Guralp DM24 digitizer: gcfutil, gcfserv,
+gcfclient, gcfconv. Also provided are 2 
+programs to work with SAM and DM SCSI disks.
+
+    gcfutil - allows you to confirm a 
+	connection with a DM24 via a serial
+	port and log data to disk in raw GCF
+	packet format.
+
+    gcfconv - converts GCF packets (either from
+	disk file or from a serial port) into
+	PASSCAL AH, SAC, SEGY, & miniSEED files
+	The program also supports the PASSCAL database
+	format and outputs tables.
+
+	tkgcf2mseed - a Tk/Tcl GUI that drives
+	gcfconv for the purpose of building PDB
+	tables and miniSEED files for full seed
+	capability.
+
+    gcfserv - transmits GCF packets over a 
+	TCP/IP network. Data are collected from
+	a DM24 via a serial connection. This
+	server supports SCREAM transmission
+	such that data may be sent to a 
+	SCREAM Windows95 client.
+
+    gcfclient - receive GCF packets over a
+	TCP/IP network. This utility reads data
+	from gcfserv or from a SCREAM data
+	server running on a Windows95 client.
+
+    gcfdisk - extract GCF data from a SAM SCSI 
+	disk.
+
+    xdisk - Graphical User Interface to gcfdisk.
+	Written in Tcl.
+
+To use the programs provided, make sure
+that the gcf/bin directory is added to your
+path. 
+
+	set path=(xxx/gcf/bin $path)
+
+where xxx is the directory (full pathname required)
+where you installed gcf.
+
+All programs will echo all their command line
+parameters if given the -h option.
+
+
+RUNNING gcfutil - confirming a serial connection
+-------------------------------------------
+
+Before you start logging data with gcfconv
+in PASSCAL SEGY format, make sure that the
+serial port is connected properly. Use the
+gcfutil to connect to the port to deterimine
+this. 
+
+	gcfutil -t /dev/ttya -b 19200
+
+Will echo packets received from /dev/ttya at
+a baud rate of 19200. A common problem is to
+not set permissions to the port for access.
+
+The output from gcfutil looks like:
+
+GCF Transmission, block 173 read.
+SyID: WO0080 StrmID: 0080N2 NS: 1000 SPS:   40 CFmt: 4 1997:214:02:25:28
+GCF Transmission, block 174 read.
+SyID: WO0080 StrmID: 0080Z2 NS:  480 SPS:   40 CFmt: 2 1997:214:02:25:42
+GCF Transmission, block 175 read.
+SyID: WO0080 StrmID: 0080E2 NS:  480 SPS:   40 CFmt: 2 1997:214:02:25:43
+....
+
+Consult the manual page for a translation :)
+
+	
+RUNNING gcfconv
+-------------------------------------------
+
+Now that you have confirmed that you can
+read GCF packets from the serial port, lets
+collect some data in SEGY format:
+
+	gcfconv -v -b 19200 -t /dev/ttya -l 900
+
+The -v option indicates that the program
+should be verbose and echo lots of messages
+to standard output. This command line will
+read from the same serial device we listed
+above, /dev/ttya, at the same baud rate, 19200. 
+The -l 900 indicates that the SEGY data should 
+be 900 seconds (15 min) in length. The SEGY data 
+will be stored in directories with the name 
+G19YY.DDD/ where YY is the year, now 97, and DDD 
+is the day of the year. Use the PASSCAL pql utility 
+to view the traces and other PASSCAL utilities to 
+convert the data to other formats. 
+
+The program will run until the computer
+stops working or a  SIGINT, ^C, is sent
+to it.
+
+
+MANUALS
+-------------------------------------------
+
+To view the GCF FOR UNIX manuals, add the
+path to the gcf/man directory to your 
+MANPATH environment variable:
+
+	setenv MANPATH xxx/gcf/man:$MANPATH
+
+Where xxx is the pathname where you installed
+the GCF FOR UNIX distribution.
+
+
+WHERE CAN I GET THE PASSCAL UTILITIES?
+-------------------------------------------
+You can obtain the PASSCAL software release from:
+
+	http://www.passcal.nmt.edu
+
+
+
+HELP gcfutil
+-------------------------------------------
+gcfutil: Version 98.014
+gcfutil: [-S][-d] [-b baud] [-t terminal] [-D file]
+-b baud 1200,2400,9600,19200,38400 are valid baud rates
+-S print status blocks to stdout
+-d pass disk files in via stdin
+-D pass serial data to file specified
+.
+.
+.
+
+
+HELP gcfconv
+-------------------------------------------
+gcfconv:	-t port [-b baud] [-l file_len] 
+		[-d directory] [-s station]
+		[-P packet_len] [-L logdir] [-x][-v|-D|-a|-c|-f format]
+	-t port = serial device (default: /dev/ttyS1) (use "-" for stdin)
+ Option Summary: 
+	-l file_len = length of output files in seconds. (default: 15)
+	-b baud = set serial baud rate (default: .) 
+	-d directory = top dir in which to place files. (default: .) 
+	-s station = station name to use for files (<= 5 chars only).
+	-L logdir = directory for logfile to be written
+	-P packet_len = length of packet for PDATA output
+	   see -D option.
+	-D = echo DEBUG messages to stderr and 
+	   output PDATA stream for analysis.
+	-v = verbose mode, tell all to stdout.
+	-a = Write data out in AH format
+	-c = Write data out in SAC format
+
+HELP gcfserv
+-------------------------------------------
+gcfserv: Version 99.054
+gcfserv: [-b baud][-t terminal][-w][-vl][-B][-H host][-P port-number][-a auth]
+-b baud 1200,2400,9600,19200,38400 are valid baud rates
+-t terminal - serial input device
+-v Verbose mode (default is quiet)
+-w act as a SCREAM server (default is GCF-UNIX)
+-P port-number (1567 is default)
+-H hostname or broadcast address
+-B force broadcasting (SCREAM server only!)
+-l syslog diag msgs (GCF-UNIX server only!)
+-a authfile - authorize clients (GCF-UNIX server only!)
+
+HELP gcfclient
+-------------------------------------------
+gcfclient: Version 99.054
+gcfclient: [-p][-w][-q][-H host][-P port-number][-o|-D filename]
+-w act as a SCREAM client (default is GCF-UNIX)
+-p ping a GCF-UNIX server and exit
+-P port-number (1567 is default)
+-H server hostname
+-o pass GCF disk packets to stdout
+-D filename - pass serial data to file specified
+-q quiet mode (echo nothing!) default is verbose
+
+
+
+DIRECTORY STRUCTURE
+-------------------------------------------
+
+The directory hierarchy is as follows:
+
+gcf/
+	README
+	COPYRIGHT 
+	VERSION
+	gcf_hba.conf
+	bin/
+		gcfconv
+		gcfutil
+		gcfserv
+		gcfclient
+		gcfdisk
+		xdisk
+	include/
+		ahhead.h
+		gcf.h
+		gcf_term.h
+		gcf_error.h
+		gcf_udp.h
+		gcf_byte_order.h
+	lib/
+		libgcf.a
+	man/
+		man1/
+			gcfutil.1
+			gcfconv.1
+			gcfserv.1
+			gcfclient.1
+			gcfdisk.1
+			xdisk.1
+		man3/
+			gcflib.3
+
+
+RELEASE NOTES
+-------------------------------------------
+1.00	Aug 1, 1997	
+	
+	o First edition of GCF FOR UNIX is released
+	   for SunOS and Linux platforms.
+	o gcflib library provided for programmers
+	o gcfutil allows logging to UNIX filesystem
+	o gcfconv supports conversion to PASSCAL SEGY  
+	    format
+
+	ToDo: 	+	mSEED, AH, and SAC support
+		+	Complete Solaris port
+		+	TCP/IP connectivity in library
+		+	SCSI disk support
+
+1.10	Jan 18, 1997
+	o Second edition GCF-UNIX released as Linux
+	   executables.
+	o SCSI support added for Linux
+	o TCP/IP solution provided
+
+	ToDo: 	+	add syslog to gcfserv
+		+	create gcfmserv (master server)
+		+	provide control of DMs
+		+	provide SCREAM pass through
+
+1.20	Feb 23, 1998
+	o Added in capability for BRP protocol -rewinds the DM24 if
+		back packet  checksums are encountered.
+	o syslog logging for gcfserv implemented
+	o Solaris tests completed! Solaris/Intel and Solaris/SPARC
+		distributions now available.
+
+1.2.1	March 9, 1998
+	o Added in Solaris disk reading capability
+	o Wrote a User's Manual
+	o Added a gcf/doc directory to contain user manual
+	o Increased robustness of BRP recovery on serial ports
+	o gcfconv now supports SAC output
+
+		Still ToDo:
+		+	provide control of DMs
+		+	provide SCREAM pass through
+		+	provide TCP/IP reliability
+		+	work with GSL for HNY protocol release

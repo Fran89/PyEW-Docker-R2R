@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm modules: nmxptool overview</title>
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+<h1 align="center">Earthworm Modules: <br>
+nmxptool overview</h1>
+<center>
+<p><i>(last revised 31 March, 2008)</i> </p>
+</center>
+	<p>
+	The Nanometrics servers <i>NaqsServer</i> and <i>DataServer</i> can provide on-line access to seismic data and state-of-health information accepting TCP/IP connections and forwarding the requested data to each client program. <i>NaqsServer</i> collates and stores in near-real-time incoming data in ringbuffers whereas <i>DataServer</i> provides data of the past stored in <i>NaqsServer</i> ringbuffers. In order to implement the Nanometrics subscription protocols, the author developed a software consisting of a library called libnmxp and a tool called nmxptool. The library exposes a set of documented APIs which allow to communicate with the Nanometrics servers. The tool, based on libnmxp, allows to retrieve or monitor real-time data and data of the past.
+	</p>
+
+	<p>
+	<b>nmxptool</b> can be used in three different ways:
+	<ul>
+	<li>stand-alone to monitor data or save retrieved data in mini-seed records
+	<li>launched as an <b><i>Earthworm</i></b> module to redirect data into the EW-rings
+	<li>like a <b><i>Seed-Link</i></b> plug-in to feed the SL-server
+	</ul>
+	The main contribute, as regards other similar software, is the capability to manage Raw Stream connections by buffering and sorting all received packets, included the retransmitted ones, guaranteeing a good compromise between data continuity and low latency. Besides, nmxptool allows to retrieve Data-On-Demand with minimum delay after request. Software is open-source and released under GNU Library General Public License. It has been written in C language using the GNU Build Tools (automake, autoconf and configure script) and taking in account the cross-platform compilation aspects, in fact, it can run on almost all the Unix-like operating systems, Mac OS X, Windows and either 32-bit or 64-bit architectures.
+	</p>
+
+	<p><hr></p>
+
+<p>
+Why a new software client for Nanometrics Server?<br>
+When we connect to a NaqsServer by a Short-term data stream connection we get a gap for each retransmitted packet. Unfortunately, previous available software were not able to reorder retransmitted packets.
+nmxptool is capable to manage a buffer of packets and order them chronologically when is needed, that is when a retransmission occurs. The management of this buffer reduce number of gaps in spite of the increment of latency. However, some tests showed that almost all packets are retrivied maximum within 60 seconds.
+</p>
+
+<p>
+Main parameter to set for Raw Stream is the max tolerable latency you can accept, a sort of short-term-completion but managed by the client and not by the server.<br>
+</p>
+
+<p>
+Moreover, nmxptool is capable of:
+<ul>
+    <li>allowing data continuity when disconnections to NaqsServer occur
+    <li>retrieving &quot;Data On Demand&quot; with minimum delay
+</ul>
+</p>
+
+<p>
+The maximum size of the TRACEBUF messages created by nmxptool is
+limited to the maximum number of samples
+that can fit into a Nanometrics compressed packet
+(17 * N, where N is any odd integer from 1 to 59, that is 17 * 59 = 1003 samples = 4012 bytes), 
+<!-- (272 samples = 1088 bytes) -->
+plus the size of the TRACEBUF header (64 bytes).  So 4076 bytes
+is a good estimate of the maximum size of TRACEBUF messages created by
+nmxptool.</p>
+
+<p>
+nmxptool supports the creation of either
+TRACEBUF or TRACEBUF2 messages depending on which version of Earthworm
+the module was built for.  By default the module will create TRACEBUF2
+messages if the system supports them and TRACEBUF messages otherwise.
+Additionally there is an optional command ForceTraceBuf1 that will
+force the use of TRACEBUF messages on systems that support
+TRACEBUF2.
+</p>
+
+<p>
+nmxptool is open-source and actively supported by the
+<a href="http://www.ingv.it/">Istituto Nazionale di Geofisica e Vulcanologia</a>. (Author: <i>Matteo Quintiliani</i>)
+<br>
+<p> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/nmxptool_cmd.html">nmxptool Commands</a>
+<!-- USGS-required stuff at the end -->
+</p>
+
+<hr>
+<address>
+</b>Contact: <b>quintiliani at ingv.it</b> - Website: <a href="http://mednet.rm.ingv.it/nmxptool.php">http://mednet.rm.ingv.it/nmxptool.php</a>
+</address>
+</body>
+</html>

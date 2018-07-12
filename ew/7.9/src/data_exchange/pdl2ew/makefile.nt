@@ -1,0 +1,82 @@
+#
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5320 2013-01-30 20:04:07Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.10  2010/04/13 06:05:10  paulf
+#     cleaned up clean_nt_bin
+#
+#     Revision 1.9  2006/11/21 23:03:16  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.8  2003/05/06 20:58:03  lucky
+#     *** empty log message ***
+#
+#     Revision 1.7  2002/06/05 16:19:44  lucky
+#     I don't remember
+#
+#     Revision 1.6  2001/03/27 01:14:01  dietz
+#     *** empty log message ***
+#
+#     Revision 1.5  2001/02/09 22:00:31  dietz
+#     Added file2ew to compilation list
+#
+#     Revision 1.4  2001/02/08 16:45:27  dietz
+#     changed to produce an executable specific to each incoming format.
+#
+#     Revision 1.3  2001/02/08 16:36:02  dietz
+#     *** empty log message ***
+#
+#     Revision 1.2  2000/09/26 22:59:05  dietz
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 19:19:05  lucky
+#     Initial revision
+#
+#
+#
+
+
+#                    Nmake File For sm_file2ew  - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP  = pdl2ew
+O    = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+LIBFUNC = $L\libew.lib \
+    $L\swap.obj $L\dirops_ew.obj $L\k2evt2ew.obj
+
+SMLIB = $(LIBFUNC) $L\rw_strongmotionII.obj
+
+all:
+	emake pdl2ew
+
+
+
+pdl2ew: $O rpdl2ew.obj
+	$(link) $(conlflags) $(ldebug) $(conlibsmt) $O pdl2ew.obj $(LIBFUNC) \
+	-out:$B\pdl2ew.exe
+
+
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\pdl2ew.*

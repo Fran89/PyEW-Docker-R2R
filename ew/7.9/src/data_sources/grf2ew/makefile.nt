@@ -1,0 +1,32 @@
+# $Id: makefile.nt 5328 2013-01-31 17:43:52Z paulf $
+# Win32 makefile for GRF2EW.
+
+NODEBUG=1
+#PROFILE=1
+
+!include <ntwin32.mak>
+
+cflags = $(cflags) -D_INTEL -D_CRT_SECURE_NO_DEPRECATE
+
+O = main.obj mem.obj sock.obj grf.obj ustime.obj config.obj serialize.obj
+
+EW_LIBS = $L\libew_mt.lib 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all: $B\grf2ew.exe
+
+$B\grf2ew.exe: $O 
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+   $(EW_LIBS) -out:$B\grf2ew.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_NTSDK -DDEBUG $<
+
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\grf2ew*
+

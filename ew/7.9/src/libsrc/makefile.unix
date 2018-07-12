@@ -1,0 +1,73 @@
+LINUX_MODULES=util unix qlib2$(EWBITS) lib330 libdali earlybird uw libew.a libew_mt.a
+SOLARIS_MODULES= util solaris qlib2$(EWBITS) lib330 libdali earlybird uw libew.a libew_mt.a
+SPECIFIC_MODULES = $($(PLATFORM)_MODULES)
+
+SOLARIS_DIR = solaris
+LINUX_DIR = unix
+SPECIFIC_DIR = $($(PLATFORM)_DIR)
+
+LIBEW_COMMON_MODULES = util/earthworm_defs.o util/chron3.o util/kom.o util/getutil.o $(SPECIFIC_DIR)/sleep_ew.o $(SPECIFIC_DIR)/time_ew.o $(SPECIFIC_DIR)/transport.o
+LIBEW_MODULES = $(LIBEW_COMMON_MODULES) util/logit.o
+LIBEW_MT_MODULES = $(LIBEW_COMMON_MODULES) util/logit_mt.o $(SPECIFIC_DIR)/threads_ew.o $(SPECIFIC_DIR)/sema_ew.o
+
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+ALL:  $(SPECIFIC_MODULES)
+	@echo Successfully built libsrc
+
+
+util:: FRC
+	(cd util; make -f makefile.unix)
+
+gdlib:: FRC
+	(cd util/gd_lib; make -f makefile.unix)
+
+unix:: FRC
+	(cd unix; make -f makefile.unix)
+
+libdali:: FRC
+	(cd libdali; make; mv libdali.a $L)
+
+solaris:: FRC
+	(cd solaris; make -f makefile.unix)
+
+qlib2:: FRC
+	(cd qlib2; make all32; mkdir -p lib_ew; cp lib/*.a lib_ew)
+
+qlib232:: FRC
+	(cd qlib2; make all32; mkdir -p lib_ew; cp lib/*.a lib_ew)
+
+qlib264:: FRC
+	(cd qlib2; make all64; mkdir -p lib_ew; cp lib64/*.a lib_ew)
+
+lib330:: FRC
+	(cd lib330; make clean; make)
+
+uw:: FRC
+	(cd uw; make -f makefile.unix clean; make -f makefile.unix)
+
+earlybird:: FRC
+	(cd earlybird; make -f makefile.unix)
+
+libew.a: $(LIBEW_MODULES)
+	ar rvs libew.a $(LIBEW_MODULES)
+	cp $@ $L
+
+libew_mt.a: $(LIBEW_MT_MODULES)
+	ar rvs libew_mt.a $(LIBEW_MT_MODULES)
+	cp $@ $L
+
+clean: FRC
+	(cd ../../lib; echo Cleaning in:; pwd; \
+	rm -f lib*.a *.o *.obj *% *~);
+	(cd util; make -f makefile.unix clean)
+	(cd unix; make -f makefile.unix clean)
+	(cd solaris; make -f makefile.unix clean)
+	(cd qlib2; make clean; rm -f lib_ew/*.a)
+	(cd lib330; make clean)
+	(cd libdali; make clean)
+	(cd earlybird; make -f makefile.unix clean)
+ 
+FRC: 
+	
+

@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+SRCS = copyfile.c dirops_ew.c getavail.c getsysname_ew.c pipe.c sema_ew.c\
+   sendmail.c sendpage.c sleep_ew.c socket_ew.c threads_ew.c time_ew.c\
+   transport.c wait_timer.c errexit.c remote_copy.c service_ew.c lockfile_ew.c
+OBJS = copyfile.o dirops_ew.o getavail.o getsysname_ew.o pipe.o sema_ew.o\
+   sendmail.o sendpage.o sleep_ew.o socket_ew.o threads_ew.o time_ew.o\
+   transport.o wait_timer.o errexit.o remote_copy.o service_ew.o lockfile_ew.o
+
+all: $(OBJS)
+
+.c.o:
+	$(CC) -c $(CFLAGS)  $<
+	cp $@ $L
+
+lint:
+	lint $(SRCS) $(GLOBALFLAGS)
+
+clean:
+	/bin/rm -f $(OBJS)
+
+realclean: clean
+	sh -c 'for o in $(OBJS) ;\
+	do /bin/rm -f $L/$$o;\
+	done'

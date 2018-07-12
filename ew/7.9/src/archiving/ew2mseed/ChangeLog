@@ -1,0 +1,286 @@
+
+This is a place where we intend to log the changes in ew2mseed
+I.Dricker (i.dricker@isti.com), ISTI
+=====================================================================
+04/23/10
+      * Removed annoying message ( Unable to represent difference in <= 30
+      bits) from qlib2/pack.c
+      * Fixed a message about failed ms_pack() in ew2mseed_files.c
+04/21/10
+      * Fixed the code for EW below version 7.0
+09/17/07 
+      * Working on porting of ew2mseed to EW7.1 and linux
+07/17/06
+      * Replaced qllib2 with 2006 NOEXIT version
+      * Added init_qlib2(1) function for no_exit init of qlib2
+      * Modified createMseed to handle MS_ERROR return from qlib2_pack_data()
+03/22/05 
+      * Fixed alighnment of data in BUD volumes
+05/15/03
+      * StartLatency parameter in hours is used to superseed StartTime parameter. 
+	The starttime is computed as the current time minus StartLatency and the 
+	resultanant number is used to compute StartTime. Either StartTime or StartLatency 
+	must be present in the configuration file.  If both of them are present, 
+	the program will use the parameter which is below 
+	than the other one in the configuration file. 
+03/12/03
+      * One more patch to the previous patch
+03/11/03
+      * Patched the program to prevent crashes related to the bogus endtime
+	from the waveServer. Enchanced logging. The problem has been discovered
+	at UU TCU (HHZ and HHN)
+03/06/03
+      * Fixed a bug in logging timeout condition in EW library ws_clientII.c
+01/08/03
+      * Added printing of datatype in the routine which determines sample
+	rate;
+12/18/02
+      * Byte-swapping problem with shorts and doubles is resolved: byteswapping
+	is done on the original data, not on the convertion to int.
+11/22/02
+      * Moved the code which updates the file name from the main() to the
+	function which delas with a single channel By doing this we presumably
+	eliminate creation of empty files.
+
+05/02/02
+       * Fixed a bug which made ew2mseed to place the records in the incorrect
+         BUD files. 
+04/11/02
+       * Made usePriority a configurable option and NO by default.
+	 With NO the catchup mechanism is disabled.
+04/04/02 
+	* Fixed a bug in processWsGetTraceBin(): processing of 0 sample rate
+	  is meaningful only is the waveServer returned WS_ERR_NONE; for
+	  flagged messages it makes sense....
+
+04/02/02
+	* Catchup algorithm
+02/21/02 
+	* Bug fix in the stop parameter of "for" loop in checkNetDirs()
+          We checked until rn->sc_avail channels, however, the unavalable
+	  stations were not removed from SCN loop yet, that caused the last
+	  few stations to never create corresponding files. Thanks, Tim and
+          Sandy.
+        * Same exactly problem is fixed in the main loop of setMseedFiles()
+        * Similar modification is in getParamsFromWS() where we finally remove
+          the dead channels for real
+01/24/02
+	Added sleep() if if (retVal == EW2MSEED_TOO_EARLY) at Sandy's request
+11/19/01
+	Moved from RCS to CVS
+	--------------------------------
+	ew2mseed_files.c (createMseed()):
+	buffer = (int *) calloc(1, trace->actLen); 
+	/* IGD 11/19/01 New method of computing the size of the 
+	interim buffer. Old method below turn to fail because in
+	some cases (BOZ HHZ, f.e.) the actual time span of SNIPPETS 
+	is larger than the time declared in trace header: bus error 	
+03/14-15/01
+	ew2mseed.h:
+	Declared a new function ew2mseedUpdateTimeout()
+	-------------
+	#define EW2MSEED_ALARM
+	-------------
+	#define  EW2MSEED_TIME2_UPDATE_MENU -808
+	--------------
+	time_t updateMenuTime inserted in RINGS
+---------------------------------------------------------------------
+	isti_ws_client.c:
+	Inserted a declaration:
+	extern Time_ew adjustTimeoutLength(int);
+--------------------------------------------------------------------
+	ew2mseed_config.c:
+	"TimeoutSeconds" parameter is renamed to "SocketReconnect"
+	-------------------------
+ 	TimeoutSeconds variable is set to 3600 by default
+	------------------------
+	ew2mseed_config():
+	Statement
+	rn->scnRing->traceRec.timeout =  rn->TimeoutSeconds;
+	is removed because this is true only if the timeout parameter
+	preceeds SCN description in the config file
+------------------------
+	function   void ew2mseedUpdateTimeout (RINGS *rn) is implemented
+	I fill traceRec.timeout with configfile values
+	------------------------
+	ew2mseed_logconfig(RINGS *rn)
+		cosmetic modifications
+-------------------------------------------------------------------
+	ew2mseed.c
+	main():
+	function ew2mseedUpdateTimeout (&rn); is inserted after
+	retVal = ew2mseed_config (&rn);
+	-------------------------------------
+	main() loop is rewritten to accept alarms which force 
+	ew2mseed to econnect to the socket. Multiple changes of the
+	code..
+--------------------------------------
+	main() loop: logic after updateSingleSCNtimes() is chaged,
+	so if the return flag is EW2MSEED_TIME2_UPDATE_MENU, the
+	menu is updated. IF the flag is EW2MSEED_TOO_EARLY, the 
+	menu is not updated! 	
+	-------------------------------------------------------------------
+	ew2mseed_cmd.html:
+	"SocketReconnect" parameter is documented 
+-------------------------------------------------------------------
+	ew2mseed_utils.c:
+	void signal_handler() modified to accomodate SIGALRM
+-------------------------------------------------------------------
+ws_requests.c:
+	processWsAppendMenu() and updateMenu() now fills rn->updateMenuTime
+	with the time of the most recent menu update
+	-----------------
+	updateSingleSCNtimes() is rewritten to return EW2MSEED_TOO_EARLY
+	flag is there is not enough data in the WS and to return
+	EW2MSEED_TIME2_UPDATE_MENU if there is not enough data, but it is
+	time to request an update of menu  
+=====================================================================
+02/28/01
+	isti_ws_client.c:
+	Modified leading comments for 
+		 int wsAppendMenuNoSocketReconnect()	
+=====================================================================
+02/26-27/01
+ew2mseed.h:
+	new function declared: int updateMenu (RINGS *,  WS_MENU_QUEUE_REC *);
+	new error flag is defined  #define CANNOT_OPEN_FILE -807
+	declared int wsAppendMenuNoSocketReconnect(WS_MENU_REC *, int, int);
+----------------------------------------------------------
+ew2mseed.c updateMenu()	replaces processWsAppendMenu() in main
+	if (retVal == EW2MSEED_TOO_EARLY)
+main()" postprocessing after processSingleSCN() is modified.
+if processSingleSCN() returned a value indicating that the The socket was closed
+we use 	wsKillMenu(&menu_queue); rn.WS_avail = processWsAppendMenu(&rn, &menu_queue);
+otherwise we go for updateMenu()
+---------------------------
+ int processSingleSCN (RINGS *rn, WS_MENU_QUEUE_REC *mq)
+modified to return WS_ERR... values not EW_SUCCESS or EW_FAILURE.
+The problem is that EW_FAILURE == WS_ERR_NONE == 0, which kinda confusing	
+----------------------------------------------------------
+ws_requests.c: updateMenu() is created from strongly modified processWsAppendMenu()
+-----------------------------------------------------------
+isti_ws_client.c: a function wsAppendMenuNoSocketReconnect() is created by strong
+	modifications of wsAppendMenu()
+=========================================================================
+
+02/22/01
+isti_ws_client.c
+is created
+----------------------------------------------------------
+makefile.sol 
+a file isti_ws_client.o  is added to a list of makefile targets
+----------------------------------------------------------
+makefile_export.sol
+a file isti_ws_client.o  is added to a list of makefile targets
+---------------------------------------------------------
+ws_requests.c 
+	a call to wsServersReAttach () is removed since it has not been used
+ 
+-----------------------------------------------------------------
+ew2mseed.h 
+a reference to a call to wsServersReAttach () is removed since it
+has not been used...
+ 
+--------------------------------------------------------------
+ew2mseed.c added the level 5 of verosity w_clientsII.c debug.... 
+---------- 
+in main()
+	/* Get fresh copy of the menu
+ 	*******************************/
+		if (j==30*rn.SCN_avail)  /* IGD 02/23/01 increased from 30 */
+	
+==================================================================
+02/13/01
+ws_requests.c
+getSampleRate()
+	We compute sample rate as
+	if ((wf->samprate+0.5) >= 1)
+		sampRate = floor(wf->samprate+0.5); /* IGD 02/13/01 insead of verySmall */	
+	else
+		sampRate = wf->samprate; 
+Got knows how large verySmall should be
+========================================================================
+02/12/01
+ws_requests.c
+getSampeRate()
+	sample rate is computed now as 
+	sampRate = floor(wf->samprate + smallValue)
+#include <math.h> is added
+smallValue is redefined as 0.0001
+---------------------------------------------------------------------
+ew2meed.h
+sample rate is redefined as double in ew2mseed.h
+=====================================================================
+02/06/01
+ws_requests.c and ew2mseed_utils.c
+Functions logFailedSCN() resetWsTrace() are moved to ew2mseed_utils.c
+----------------------------------------------------------------------
+ew2mseed_utils.c 
+Functions  logFailedSCN() and  checkLock() are changed, so you can actually
+write data into them, and still use them for locking. int lockfd is now a global
+variable 
+==============================================================================
+02/05/01 -
+I am rewriting ew2mseed so that it could skip sick SNCs without quitting
+In ws_requests.c ( int getParamsFromWS (RINGS *rn, WS_MENU_QUEUE_REC *menu_queue))
+logic of the program is changed, so if one of the lower-level functions return negative
+value, getParamsFromWS removes  the SNC_Ring element (trace) permanently from the processing
+loop and logs this trace in log file and lock file (stderr in case of no lock file)
+In order to do this a new function: logFailedSCN (struct SCN_ring *failedTrace, char *lockFN)	
+is created.
+---------------
+(double getSampleRate()) is rewriten so that all exits are replaced by returns (-n)
+ function resetWsTrace() is created which is called to clean up the TRACE_REQ* structure when the
+getSampleRate is returned. Also timeshift is changed from 3000 s to 300 to work slower but to sample
+data denser whil looking for a sample rate. Also a check for a sample rate validity is now set to
+	if (sampRate <= verySmall || sampRate > 10000000), where verySmall is  0.000000000001;
+Previouly it was a zero.
+--------------
+(updateSingleSCNtimes())
+logit ("pt", "updateSingleSCNtimes: requested end time %s; endTanktime = %s\n",
+is now only used if verbosity is 3 and higher to prevent large amount of statements
+in case of ew2mseed is faster than real-time...
+----------------
+In processWsAppendMenu()
+	logging message about wsAppendMenu is now printed only is the return is not WS_ERR_NONE
+		or if the verbosity is  2
+-----------------------------------------------------------------------------
+ew2mseed.h 
+Two new functions are declared here now:
+	void logFailedSCN (struct SCN_ring *, char *);	/* IGD 02/05/01 Add */
+	int resetWsTrace (TRACE_REQ*, double, double); /* IGD 02/05/01 Add */
+-----------------------------------------------------------------------------
+ew2mseed_utils.c (in  int checkLock (char * lockfile))
+Added code  to make sure is that the content of the lockfile is truncated to zero.
+We are writing bad channels in it!
+-----------------------------------------------------------------------------
+ew2mseed_files.c (in createMseed()) -
+ new variable writeOut is used to monitor the status of fwrite()	 
+------------------------------------------------------------------------------
+ew2mseed.c (main())
+	code is added to prevent writing MSEED records (calling processSingleSCN) if
+	the endTime on tank is before requested endTime. This prevents ew2mseed from creating
+	MSEED records with too few data points in cases ew2mseed preformance is faster
+	 than real-time
+===============================================================================
+
+18 January, 2001
+1) Console messages about TEAR and increase of memory buffer are removed.
+	Check log files for these information
+
+2) A  bug fix: incorrect end time of MSEED records was written into the log file in case of data tear.
+
+3) Simultaneous running of multiple instances of ew2mseed is tested. 
+
+4) Multiple instances logging problem is fixed. Previously multiple
+instance logged itself into the directory defined by the EW_LOG environmental
+variable. The log filename was constructed as constant "ew2mseed0.log_" + the
+current date. Now, the name of the log file is defined as CONF_FILE_NAME + 0.log_ + current date, where CONF_FILE_NAME is the configuration file name without extension. For example, ew2mseed ew2mseed1.d writes to the log file
+ew2mseed10.log_20010118 on 18 January 2001.
+ 
+5) The case of data OVERLAPS in WaveServerV is instrumented. OVERLAPPED snippet is defined as one with a starttime being earlier than the previous snippet endtime. OVERLAPPED snippet is not used and every instance of OVERLAP is 
+logged. Removing of OVERLAPPED snippets naturally creates a gap which is
+also logged. The reasons of OVERLAPS are currently discussed with EarthWorm managers.
+ 
+ IGD Nov. 17, 2000 
+	First stable release is registered at RCS

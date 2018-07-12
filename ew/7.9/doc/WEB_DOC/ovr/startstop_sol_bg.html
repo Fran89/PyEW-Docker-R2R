@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<TITLE>Instructions for Running Startstop in Background</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+
+<CENTER><H1> Instructions for Running Startstop in Background</H1>
+<I>(last revised 23 July 1998)</I></CENTER>
+
+<P>
+To run startstop in background from the run/params directory with shells like
+csh, use a command like:
+<P>
+startstop >>& ../log/startstop_log &
+<P>
+This will collect the standard output and standard error from startstop AND
+all the modules controlled by startstop into the log file. If you don't want
+to save this output, you can replace "../log/startstop_log" with "/dev/null".
+<P>
+To get the status of Earthworm while startstop is running in background, use
+the Earthworm program "status". To stop a running Earthworm, use "pau". Both
+"status" and "pau" are used without any arguments.
+<P>
+NOTE: "status" and "pau" need the environment of the running Earthworm in
+order to communicate with it. If you change that environment, including the
+startstop_sol.d file, in anticipation of stopping and restarting Earthworm,
+then "pau" may not be able to tell the running Earthworm to shut down.
+If you specify an alternate command file when you run startstop, then you
+should also specify this command file for "status" and "pau".
+<P>
+Also, you should wait a few seconds after starting Earthworm before running
+"status", to let the Earthworm modules get going.
+<P>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,631 @@
+; FILE: symres.inf            Copyright (c), Symmetric Research, 2003-2007
+;
+; Installation file for all Symmetric Research Instrumentation drivers
+;
+
+
+[Version]
+Signature   = $CHICAGO$
+Class       = %SrInstrumentationClass%
+ClassGuid   = {AD1787FF-EF97-45D4-A4A8-620D8A00AC56}
+DriverVer   = 01/08/2007,%SrInstrumentationVersion%
+Provider    = %Symres%
+;;CatalogFile = symres.cat
+
+
+; ================= Format reminders section =====================
+
+;[SourceDisksNames]
+;diskid = desc,tagfile,unused_on_NT,subdir_of_installation_root
+
+;[SourceDisksFiles]
+;filename = diskid,subdir_of_srcdisknames_path,size
+
+;[SrInstrumentationModels]
+;product_model = install_section, hw_id, compat_id
+
+;[XxxAddReg]
+; reg_root(Class/{...}/000X),subkey,entry_name,flags,value
+;HKR,,"XxxEntryName",,"XxxParmE"
+;HKR,"XxxSubkey",,,"XxxParmS"
+
+;[XxxHwAddReg]
+; reg_root(Enum/Root/xxx/000X/Device Parameters),subkey,entry_name,flags,value
+;HKR,,%XxxDriverName%,,%XxxDriverDesc%
+
+;[XxxEvAddReg]
+; reg_root(Services/Eventlog/System/xxx),subkey,entry_name,flags,value
+; value must really be all on one line
+;HKR,,TypesSupported,0x00010001,7
+;HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\drivers\xxx.sys;
+                                   %%SystemRoot%%\System32\IoLogMsg.dll"
+
+
+
+
+
+
+; ================= Destination and disk layout section =====================
+
+[DestinationDirs]
+DefaultDestDir = 12
+;ParXchCopyFiles = 12 ; for this section below
+
+[SourceDisksNames]
+1 = %ParXchDiskId%,,,"..\..\parxch\driver"
+2 = %GpsDiskId%,,,"..\..\pargps\driver"
+;1 = %ParXchBuildDirId%,,,
+
+[SourceDisksFiles]
+srxch0.sys    = 1,,
+srxch1.sys    = 1,,
+srxch2.sys    = 1,,
+srxch378.sys  = 1,,
+srxch278.sys  = 1,,
+srgps0.sys    = 2,,
+srgps1.sys    = 2,,
+srgps2.sys    = 2,,
+srgps.sys     = 2,,
+srgps378.sys  = 2,,
+srgps278.sys  = 2,,
+
+
+
+
+
+; ================= Sr Instrumentation Class section =====================
+
+[ClassInstall32]
+AddReg = SrInstrumentationAddReg
+
+[SrInstrumentationAddReg]
+HKR,,,,%SrInstrumentationClassDesc%
+HKR,,"Icon",,-9      ; neg value takes icon from setupapi.dll
+HKR,,Class,,%SrInstrumentationClass%
+HKR,,Ver,,%SrInstrumentationVersion%
+
+
+
+
+; ================= Driver Mfg/Model section =====================
+
+[Manufacturer]
+%Symres% = SrInstrumentationModels
+
+[SrInstrumentationModels]
+%ParXch0Model%    = ParXch0Install,    Root\%SrInstrumentationClass%&%ParXch0DriverName%,    DETECTED\%ParXch0DriverName%
+%ParXch1Model%    = ParXch1Install,    Root\%SrInstrumentationClass%&%ParXch1DriverName%,    DETECTED\%ParXch1DriverName%
+%ParXch2Model%    = ParXch2Install,    Root\%SrInstrumentationClass%&%ParXch2DriverName%,    DETECTED\%ParXch2DriverName%
+%Gps0Model%       = Gps0Install,       Root\%SrInstrumentationClass%&%Gps0DriverName%,       DETECTED\%Gps0DriverName%
+%Gps1Model%       = Gps1Install,       Root\%SrInstrumentationClass%&%Gps1DriverName%,       DETECTED\%Gps1DriverName%
+%Gps2Model%       = Gps2Install,       Root\%SrInstrumentationClass%&%Gps2DriverName%,       DETECTED\%Gps2DriverName%
+%GpsModel%        = GpsInstall,        Root\%SrInstrumentationClass%&%GpsDriverName%,        DETECTED\%GpsDriverName%
+
+; old style
+%ParXch378Model%  = ParXch378Install,  Root\%SrInstrumentationClass%&%ParXch378DriverName%,  DETECTED\%ParXch378DriverName%
+%ParXch278Model%  = ParXch278Install,  Root\%SrInstrumentationClass%&%ParXch278DriverName%,  DETECTED\%ParXch278DriverName%
+%Gps378Model%     = Gps378Install,     Root\%SrInstrumentationClass%&%Gps378DriverName%,     DETECTED\%Gps378DriverName%
+%Gps278Model%     = Gps278Install,     Root\%SrInstrumentationClass%&%Gps278DriverName%,     DETECTED\%Gps278DriverName%
+
+
+
+; ================= PARxCH section =====================
+
+[ParXch0Install.NT]
+CopyFiles = ParXch0CopyFiles
+AddReg = ParXch0AddReg
+
+[ParXch0Install.NT.HW]
+AddReg = ParXch0HwAddReg
+
+[ParXch0Install.NT.Services]
+AddService = %ParXch0DriverName%, 2, ParXch0Service, ParXch0EventLog
+
+[ParXch0CopyFiles]
+srxch0.sys
+
+[ParXch0Service]
+DisplayName    = %ParXch0ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Data acquisition
+ServiceBinary  = %12%\srxch0.sys
+Dependencies   = Parport
+;ServiceBinary  = c:\sr\parxch\driver\parxchkd.sys
+;Dependencies   = +"Parallel arbitrator",Parport
+;Description    = %ParXch0ServiceDesc%
+
+[ParXch0EventLog]
+AddReg = ParXch0EvAddReg
+
+[ParXch0AddReg]
+HKR,,"DriverName",,%ParXch0DriverName%
+
+[ParXch0HwAddReg]
+HKR,,%ParXch0DriverName%,,%ParXch0DriverDesc%
+
+[ParXch0EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srxch0.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+[ParXch1Install.NT]
+CopyFiles = ParXch1CopyFiles
+AddReg = ParXch1AddReg
+
+[ParXch1Install.NT.HW]
+AddReg = ParXch1HwAddReg
+
+[ParXch1Install.NT.Services]
+AddService = %ParXch1DriverName%, 2, ParXch1Service, ParXch1EventLog
+
+[ParXch1CopyFiles]
+srxch1.sys
+
+[ParXch1Service]
+DisplayName    = %ParXch1ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Data acquisition
+ServiceBinary  = %12%\srxch1.sys
+Dependencies   = Parport
+
+[ParXch1EventLog]
+AddReg = ParXch1EvAddReg
+
+[ParXch1AddReg]
+HKR,,"DriverName",,%ParXch1DriverName%
+
+[ParXch1HwAddReg]
+HKR,,%ParXch1DriverName%,,%ParXch1DriverDesc%
+
+[ParXch1EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srxch1.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+
+[ParXch2Install.NT]
+CopyFiles = ParXch2CopyFiles
+AddReg = ParXch2AddReg
+
+[ParXch2Install.NT.HW]
+AddReg = ParXch2HwAddReg
+
+[ParXch2Install.NT.Services]
+AddService = %ParXch2DriverName%, 2, ParXch2Service, ParXch2EventLog
+
+[ParXch2CopyFiles]
+srxch2.sys
+
+[ParXch2Service]
+DisplayName    = %ParXch2ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Data acquisition
+ServiceBinary  = %12%\srxch2.sys
+Dependencies   = Parport
+
+[ParXch2EventLog]
+AddReg = ParXch2EvAddReg
+
+[ParXch2AddReg]
+HKR,,"DriverName",,%ParXch2DriverName%
+
+[ParXch2HwAddReg]
+HKR,,%ParXch2DriverName%,,%ParXch2DriverDesc%
+
+[ParXch2EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srxch2.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+; old style
+[ParXch378Install.NT]
+CopyFiles = ParXch378CopyFiles
+AddReg = ParXch378AddReg
+
+[ParXch378Install.NT.HW]
+AddReg = ParXch378HwAddReg
+
+[ParXch378Install.NT.Services]
+AddService = %ParXch378DriverName%, 2, ParXch378Service, ParXch378EventLog
+
+[ParXch378CopyFiles]
+srxch378.sys
+
+[ParXch378Service]
+DisplayName    = %ParXch378ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Data acquisition
+ServiceBinary  = %12%\srxch378.sys
+Dependencies   = Parport
+
+[ParXch378EventLog]
+AddReg = ParXch378EvAddReg
+
+[ParXch378AddReg]
+HKR,,"DriverName",,%ParXch378DriverName%
+
+[ParXch378HwAddReg]
+HKR,,%ParXch378DriverName%,,%ParXch378DriverDesc%
+
+[ParXch378EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srxch378.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+
+[ParXch278Install.NT]
+CopyFiles = ParXch278CopyFiles
+AddReg = ParXch278AddReg
+
+[ParXch278Install.NT.HW]
+AddReg = ParXch278HwAddReg
+
+[ParXch278Install.NT.Services]
+AddService = %ParXch278DriverName%, 2, ParXch278Service, ParXch278EventLog
+
+[ParXch278CopyFiles]
+srxch278.sys
+
+[ParXch278Service]
+DisplayName    = %ParXch278ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Data acquisition
+ServiceBinary  = %12%\srxch278.sys
+Dependencies   = Parport
+
+[ParXch278EventLog]
+AddReg = ParXch278EvAddReg
+
+[ParXch278AddReg]
+HKR,,"DriverName",,%ParXch278DriverName%
+
+[ParXch278EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srxch278.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+
+; ================= ParGps section =====================
+
+[Gps0Install.NT]
+CopyFiles = Gps0CopyFiles
+AddReg = Gps0AddReg
+
+[Gps0Install.NT.HW]
+AddReg = Gps0HwAddReg
+
+[Gps0Install.NT.Services]
+AddService = %Gps0DriverName%, 2, Gps0Service, Gps0EventLog
+
+[Gps0CopyFiles]
+srgps0.sys
+
+[Gps0Service]
+DisplayName    = %Gps0ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps0.sys
+;ServiceBinary  = c:\sr\pargps\driver\pargpskd.sys
+;Dependencies   = none
+;Description    = %Gps0ServiceDesc%
+
+[Gps0EventLog]
+AddReg = Gps0EvAddReg
+
+[Gps0AddReg]
+HKR,,"DriverName",,%Gps0DriverName%
+
+[Gps0HwAddReg]
+HKR,,%Gps0DriverName%,,%Gps0DriverDesc%
+
+[Gps0EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps0.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+[Gps1Install.NT]
+CopyFiles = Gps1CopyFiles
+AddReg = Gps1AddReg
+
+[Gps1Install.NT.HW]
+AddReg = Gps1HwAddReg
+
+[Gps1Install.NT.Services]
+AddService = %Gps1DriverName%, 2, Gps1Service, Gps1EventLog
+
+[Gps1CopyFiles]
+srgps1.sys
+
+[Gps1Service]
+DisplayName    = %Gps1ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps1.sys
+
+[Gps1EventLog]
+AddReg = Gps1EvAddReg
+
+[Gps1AddReg]
+HKR,,"DriverName",,%Gps1DriverName%
+
+[Gps1HwAddReg]
+HKR,,%Gps1DriverName%,,%Gps1DriverDesc%
+
+[Gps1EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps1.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+[Gps2Install.NT]
+CopyFiles = Gps2CopyFiles
+AddReg = Gps2AddReg
+
+[Gps2Install.NT.HW]
+AddReg = Gps2HwAddReg
+
+[Gps2Install.NT.Services]
+AddService = %Gps2DriverName%, 2, Gps2Service, Gps2EventLog
+
+[Gps2CopyFiles]
+srgps2.sys
+
+[Gps2Service]
+DisplayName    = %Gps2ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps2.sys
+
+[Gps2EventLog]
+AddReg = Gps2EvAddReg
+
+[Gps2AddReg]
+HKR,,"DriverName",,%Gps2DriverName%
+
+[Gps2HwAddReg]
+HKR,,%Gps2DriverName%,,%Gps2DriverDesc%
+
+[Gps2EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps2.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+[GpsInstall.NT]
+CopyFiles = GpsCopyFiles
+AddReg = GpsAddReg
+
+[GpsInstall.NT.HW]
+AddReg = GpsHwAddReg
+
+[GpsInstall.NT.Services]
+AddService = %GpsDriverName%, 2, GpsService, GpsEventLog
+
+[GpsCopyFiles]
+srgps.sys
+
+[GpsService]
+DisplayName    = %GpsServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps.sys
+
+[GpsEventLog]
+AddReg = GpsEvAddReg
+
+[GpsAddReg]
+HKR,,"DriverName",,%GpsDriverName%
+
+[GpsHwAddReg]
+HKR,,%GpsDriverName%,,%GpsDriverDesc%
+
+[GpsEvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+; old style
+[Gps378Install.NT]
+CopyFiles = Gps378CopyFiles
+AddReg = Gps378AddReg
+
+[Gps378Install.NT.HW]
+AddReg = Gps378HwAddReg
+
+[Gps378Install.NT.Services]
+AddService = %Gps378DriverName%, 2, Gps378Service, Gps378EventLog
+
+[Gps378CopyFiles]
+srgps378.sys
+
+[Gps378Service]
+DisplayName    = %Gps378ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps378.sys
+
+
+[Gps378EventLog]
+AddReg = Gps378EvAddReg
+
+[Gps378AddReg]
+HKR,,"DriverName",,%Gps378DriverName%
+
+[Gps378HwAddReg]
+HKR,,%Gps378DriverName%,,%Gps378DriverDesc%
+
+[Gps378EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps378.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+[Gps278Install.NT]
+CopyFiles = Gps278CopyFiles
+AddReg = Gps278AddReg
+
+[Gps278Install.NT.HW]
+AddReg = Gps278HwAddReg
+
+[Gps278Install.NT.Services]
+AddService = %Gps278DriverName%, 2, Gps278Service, Gps278EventLog
+
+[Gps278CopyFiles]
+srgps278.sys
+
+[Gps278Service]
+DisplayName    = %Gps278ServiceName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+LoadOrderGroup = Extended base
+ServiceBinary  = %12%\srgps278.sys
+
+[Gps278EventLog]
+AddReg = Gps278EvAddReg
+
+[Gps278AddReg]
+HKR,,"DriverName",,%Gps278DriverName%
+
+[Gps278HwAddReg]
+HKR,,%Gps278DriverName%,,%Gps278DriverDesc%
+
+[Gps278EvAddReg]
+HKR,,EventMessageFile,%FLG_ADDREG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\drivers\srgps278.sys;%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%FLG_ADDREG_TYPE_DWORD%,7
+
+
+
+
+; ================= String section =====================
+
+[Strings]
+
+; Common and class strings
+; Note: 0.0.0.0 is an invalid version and results in "not available"
+;       showing on the driver details dialog
+
+Symres                     = "Symmetric Research"
+SrInstrumentationClass     = "SrInstrumentationClass"
+SrInstrumentationClassDesc = "SR Instrumentation"
+SrInstrumentationVersion   = "0.0.0.0"
+
+
+; ParXch strings
+
+ParXchDiskId          = "PARxCH Device Installation Disk"
+ParXchBuildDirId      = "PARxCH Build Directory"
+
+ParXch0Model          = "Data Acquisition (SrParXch0)"
+ParXch0ServiceDesc    = "Runs SR PARxCH 0 data acquisition service"
+ParXch0DriverName     = "SrParXch0"
+ParXch0DriverDesc     = "SrParXch0 AtoD Device Driver"
+ParXch0ServiceName    = "SrParXch0 AtoD Service Name"
+
+ParXch1Model          = "Data Acquisition (SrParXch1)"
+ParXch1ServiceDesc    = "Runs SR PARxCH 1 data acquisition service"
+ParXch1DriverName     = "SrParXch1"
+ParXch1DriverDesc     = "SrParXch1 AtoD Device Driver"
+ParXch1ServiceName    = "SrParXch1 AtoD Service Name"
+
+ParXch2Model          = "Data Acquisition (SrParXch2)"
+ParXch2ServiceDesc    = "Runs SR PARxCH 2 data acquisition service"
+ParXch2DriverName     = "SrParXch2"
+ParXch2DriverDesc     = "SrParXch2 AtoD Device Driver"
+ParXch2ServiceName    = "SrParXch2 AtoD Service Name"
+
+; old style
+ParXch378Model        = "Data Acquisition (SrParXch378)"
+ParXch378ServiceDesc  = "Runs SR PARxCH 378 data acquisition service"
+ParXch378DriverName   = "SrParXch378"
+ParXch378DriverDesc   = "SrParXch378 AtoD Device Driver"
+ParXch378ServiceName  = "SrParXch378 AtoD Service Name"
+
+ParXch278Model        = "Data Acquisition (SrParXch278)"
+ParXch278ServiceDesc  = "Runs SR PARxCH 278 data acquisition service"
+ParXch278DriverName   = "SrParXch278"
+ParXch278DriverDesc   = "SrParXch278 AtoD Device Driver"
+ParXch278ServiceName  = "SrParXch278 AtoD Service Name"
+
+
+
+; GPS strings
+
+GpsDiskId             = "PARGPS Device Installation Disk"
+GpsBuildDirId         = "PARGPS Build Directory"
+
+Gps0Model             = "GPS Timing (SrParGps0)"
+Gps0ServiceDesc       = "Runs SR PARGPS timing service"
+Gps0DriverName        = "SrParGps0"
+Gps0DriverDesc        = "SrParGps0 Timing Device Driver"
+Gps0ServiceName       = "SrParGps0 Timing Service Name"
+
+Gps1Model             = "GPS Timing (SrParGps1)"
+Gps1ServiceDesc       = "Runs SR PARGPS timing service"
+Gps1DriverName        = "SrParGps1"
+Gps1DriverDesc        = "SrParGps1 Timing Device Driver"
+Gps1ServiceName       = "SrParGps1 Timing Service Name"
+
+Gps2Model             = "GPS Timing (SrParGps2)"
+Gps2ServiceDesc       = "Runs SR PARGPS timing service"
+Gps2DriverName        = "SrParGps2"
+Gps2DriverDesc        = "SrParGps2 Timing Device Driver"
+Gps2ServiceName       = "SrParGps2 Timing Service Name"
+
+GpsModel              = "GPS Timing (SrParGps)"
+GpsServiceDesc        = "Runs SR PARGPS timing service"
+GpsDriverName         = "SrParGps"
+GpsDriverDesc         = "SrParGps Timing Device Driver"
+GpsServiceName        = "SrParGps Timing Service Name"
+
+; old style
+Gps378Model           = "GPS Timing (SrParGps378)"
+Gps378ServiceDesc     = "Runs SR PARGPS 378 timing service"
+Gps378DriverName      = "SrParGps378"
+Gps378DriverDesc      = "SrParGps378 Timing Device Driver"
+Gps378ServiceName     = "SrParGps378 Timing Service Name"
+
+Gps278Model           = "GPS Timing (SrSrGps278)"
+Gps278ServiceDesc     = "Runs SR PARGPS 278 timing service"
+Gps278DriverName      = "SrParGps278"
+Gps278DriverDesc      = "SrParGps278 Timing Device Driver"
+Gps278ServiceName     = "SrParGps278 Timing Service Name"
+
+SERVICE_KERNEL_DRIVER = 1
+SERVICE_AUTO_START    = 2
+SERVICE_DEMAND_START  = 3
+SERVICE_ERROR_NORMAL  = 1
+
+FLG_ADDREG_TYPE_EXPAND_SZ = 0x00020000
+FLG_ADDREG_TYPE_DWORD     = 0x00010001

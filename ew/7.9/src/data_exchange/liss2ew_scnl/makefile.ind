@@ -1,0 +1,56 @@
+#                make File For liss2ew_scnl
+
+###############################
+#Set APP to your program name.
+###############################
+APP = liss2ew_scnl
+FULL_APP_NAME = $(HYDRA_BIN)\$(APP)$(EXE)
+
+###############################
+#Set APP_OBJECTS to your object 
+# files
+#Set APP_OTHER to any other bind
+# options or libraries that you
+# need specially for your app.
+###############################
+APP_OBJECTS = 	$(APP).$(OBJ) $(DCC_LIBS)
+
+APP_OTHER = 
+
+
+# Add DCC library include directories
+cflags  = $(cflags) -I. -Iinclude -Iinclude\seed -D__STDC__
+
+###############################
+#Set ALL_CLIENT_LIBS to all non DB
+# objects needed by your app.
+###############################
+EW_LIBS =       $(EW_LIB)\kom.$(OBJ) \
+				$(EW_LIB)\getutil.$(OBJ) \
+				$(EW_LIB)\logit.$(OBJ) \
+				$(EW_LIB)\mem_circ_queue.$(OBJ) \
+				$(EW_LIB)\sleep_ew.$(OBJ) \
+				$(EW_LIB)\swap.$(OBJ) \
+				$(EW_LIB)\time_ew.$(OBJ) \
+				$(EW_LIB)\threads_ew.$(OBJ) \
+				$(EW_LIB)\socket_ew.$(OBJ) \
+				$(EW_LIB)\socket_ew_common.$(OBJ) \
+				$(EW_LIB)\transport.$(OBJ) 
+
+DCC_LIBS = 	seed_data.$(OBJ) \
+			strfuns.$(OBJ) \
+			reportError.$(OBJ) \
+			dataswaps.$(OBJ) \
+			st_addtotime.$(OBJ) \
+			st_setupdate.$(OBJ) \
+			st_timenorm.$(OBJ) \
+			steimlib.$(OBJ) \
+			st_unixtimes.$(OBJ) \
+			st_getjulian.$(OBJ) \
+			st_julian.$(OBJ) \
+			TCPSocket.$(OBJ) \
+			st_getcurrent.$(OBJ) 
+	
+ALL_CLIENT_LIBS = $(DCC_LIBS) $(EW_LIBS) $(WATCHDOG_LIBS) 
+
+ALL_ORA_API_LIBS = 

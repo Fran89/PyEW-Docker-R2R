@@ -1,0 +1,10 @@
+# Type . setmodel to 'source' or run the following command 
+# to set an environment variable indicating the default    
+# PARxCH model.  You may also want to include this file    
+# inside your ~/.bashrc or /etc/bashrc file so this command
+# is run on startup or when new shells are started.        
+# To change the default XchModel, edit the XchModel line   
+# in the appropriate SrParXch?_Data file and source this   
+# file again.                                              
+
+export SrParXch0_ModelName=`cat SrParXch0_Data | awk "\\$1==\"XchModel\" {print \\$3}"`

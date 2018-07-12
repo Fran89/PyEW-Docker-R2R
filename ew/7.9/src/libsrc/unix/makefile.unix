@@ -1,0 +1,51 @@
+# Solaris flags
+CFLAGS.sun = -D_REENTRANT
+LIBS.sun =
+
+# IRIX flags
+CFLAGS.sgi = -D_POSIX_C_SOURCE=199506L
+LIBS.sgi =
+
+CFLAGS = $(GLOBALFLAGS)
+
+#CFLAGS = -I$(I) $(COPTS) $(CFLAGS.$(ARCH)) $(GLOBALFLAGS)
+LIBS = $(LIBS.$(ARCH))
+
+B = ../../../bin
+L = ../../../lib
+I = ../../../include
+
+SRCS = copyfile.c dirops_ew.c getavail.c getsysname_ew.c pipe.c sema_ew.c \
+	sendmail.c sendpage.c sleep_ew.c socket_ew.c threads_ew.c time_ew.c \
+	transport.c wait_timer.c errexit.c remote_copy.c lockfile_ew.c
+OBJS = $(SRCS:.c=.o)
+
+#ttim:	ttim.o 
+#	$(CC) ttim.o -o ttim
+all: $(OBJS)
+
+.c.o:
+	${CC} -g -c ${CFLAGS} $<
+	cp $@ $L
+
+threads_ew.o: threads_ew.c
+	${CC} -g -c ${CFLAGS} threads_ew.c -pthread
+	cp $@ $L
+
+clean:
+	/bin/rm -f $(OBJS)
+
+realclean: clean
+	sh -c 'for o in $(OBJS) ;\
+	do /bin/rm -f $L/$$o;\
+	done'
+
+socket_ew.o: $(I)/socket_ew.h $(I)/earthworm.h
+socket_ew.o: $(I)/platform.h
+time_ew.o: $(I)/time_ew.h
+transport.o: $(I)/transport.h $(I)/platform.h
+transport.o: $(I)/earthworm.h
+wait_timer.o: $(I)/earthworm.h $(I)/platform.h
+z:
+	env
+	echo $(CFLAGS)

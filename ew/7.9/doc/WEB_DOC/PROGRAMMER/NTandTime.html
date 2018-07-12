@@ -1,0 +1,153 @@
+<HTML><HEAD><TITLE>How Microsoft Windows NT 4.0 Handles Internal Time.</TITLE>
+
+<BODY aLink=#ff0000 bgColor=#fac0a2 link=#0000ee text=#000000 vLink=#551a8b>
+
+<H1 align=center></A>
+<B><FONT color=#ff0000><FONT size=+4>How Microsoft Windows NT 4.0 Handles Internal Time<BR>
+</FONT></FONT></B></H1>
+
+<HR width="100%">
+
+<H5 align=right><TT>Updated October 26, 1998</TT></H5>
+<H5 align=right><TT>Sandhill Consulting October 1998 abrause@widebandtech.com</TT></H5><!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<br>Planning to use an external time source with NT 4.0? Read on.....
+<p>Date and Time are stored in a PC with a battery powered chip set called
+the CMOS RAM/ Real Time Clock. The BIOS calls the Real Time Clock to get
+the current time/date on boot-up and passes this data to the operating
+system. DOS works this way, but NT 4.0 does it differently.
+<p>At boot time, Windows NT 4.0 gets the SYSTEM time directly from the
+Real Time Clock (instead of the BIOS). SYSTEM time is a data structure
+stored in RAM. In bypassing the BIOS code and going directly to the Real
+Time Clock for time, Windows NT 4.0 can avoid any problems associated with
+non-compliant BIOS code. (Microsoft's explanation)
+<br>No other applications or services may read or write to the Real Time
+Clock because NT 4.0 prevents any direct calls. NT 4.0's access to the
+Real Time Clock is via the Win32 SetSystemTime() function. TIME and NET
+TIME commands in a cmd window are examples of the use of this function.
+<p>SYSTEM time is maintained by the operating system (via the CPU) with
+an 18.2-Hertz timer chip that updates the time data structure every 55
+milliseconds. This timer has much greater precision than the Real Time
+Clock (which updates approximately every second). But for some unknown
+reason, Microsoft chooses to keep SYSTEM time synchronized with the CMOS/RAM
+Real Time Clock. This is called CMOS synchron-ization is enforced by the
+"time daemon".
+<p>The NT 4.0 kernel calls the time daemon hourly to compare SYSTEM time
+with the Real Time Clock. If the two are significantly different (more
+than one minute different), the time daemon updates SYSTEM time from the
+relatively poor precision Real Time Clock. Stated another way, when the
+two clocks drift apart or SYSTEM time is updated (or changed) from a different
+source, they are re-set (synchronized) to the CMOS/Real Time Clock time
+by the time daemon.
+<p>CMOS synchronization in Windows NT 4.0 can be defeated by the Win32
+function
+<br>SetSystemTimeAdjustment(). By specifying the bTimeAdjustmentDisabled
+= FALSE option, SYSTEM time will be updated using only the 18.2-Hertz timer.
+This option should be considered whenever external time sources are used
+for setting SYSTEM time in Windows NT 4.0. Time servers, such as Timeserv.exe
+in the Microsoft NT 4.0 Server Resource Kit use this option.
+<p>With CMOS synchronization enabled, (the default action in NT) any attempt
+to achieve continuous accurate time from an outside source will eventually
+fail because the time daemon will re-set the SYSTEM time data structure
+to the low-precision Real Time Clock time whenever it sees a one minute
+difference in time.
+<p>=========================================================================================
+<br>Attachment 1:
+<p>This is part of the documentation from an app called Timeserv.exe which
+is in the NT Resource Kit (server only) The program allows you use an external
+timesource to set time on an NT box. It can use the Naval Observatory (via
+modem) a GPS signal (via a com port) or even a user supplied hardware board
+(using his .dll to communicate with it) Once configured, this app runs
+as an NT service with no user intervention.
+<br>The author's homepage is http://home1.gte.net/dougho/TimeServ.html
+<p>Accuracy Information for Windows NT
+<br>From TimeServ documentation
+<br>http://home1.gte.net/dougho/TimeServ.html
+<p>A default entry in timeserv.ini is TASync=no. This is one of the main
+reasons that TimeServ is not supported for Windows NT 3.1. It specifies
+that the TimeAdjustment flag in the system should be fixed and skew compensation
+allowed. By default, Windows NT regularly syncs the time to the CMOS RTC
+(on 3.51 or later it only does this when time is off by at least one minute).
+By specifying this option on the first time set after each boot, the clock
+will run using only the 8254-based timer which has greater precision and
+can result in greater stability. In this mode, skew compensation is possible
+(for error in the rate of the system timer). Of course, if CMOS sync is
+not disabled, the long term clock will take on the characteristics of the
+CMOS RTC with poor precision. Assuming that CMOS sync is disabled and using
+the popular i486 or uniprocessor Pentium CPU type, setting your time daily
+should result in a clock with maximum +/-.45 second error (twice daily
++/-.22s, four times daily +/-.10s, etc). These figures are for TimeServ
+obtaining the time from a non-network source. Detailed skew compensation
+is not normally attempted when using a network source because of inconsistent
+delays over the network. In such cases if you notice time drifting more
+with TimeServ than you had experienced before, you might want to set TASync=yes.
+<p>Warning: For skew compensation to work properly, you should never set
+the time manually while TimeServ is running. If you must set the time manually,
+either stop the Time Service first (and restart it after, if desired),
+or set TASync=yes.
+<br>=================================================================================================
+<p>This documentation is from the Microsoft SDK for SetSystemTimeAdjustment().
+<p>The SetSystemTimeAdjustment function tells the system to enable or disable
+periodic time adjustments to its time of day clock. Such time adjustments
+are used to synchronize the time of day with some other source of time
+information. When periodic time adjustments are enabled, they are applied
+at each clock interrupt.
+<br>BOOL SetSystemTimeAdjustment(
+<br>&nbsp;
+<p>DWORD dwTimeAdjustment, // size, in 100-nanosecond units, of a periodic
+time adjustment
+<br>BOOL bTimeAdjustmentDisabled // whether periodic time adjustment is
+to be disabled or enabled
+<br>);
+<p>Parameters
+<p>dwTimeAdjustment
+<br>Specifies the number of 100-nanosecond units added to the time-of-day
+clock at each clock interrupt if periodic time adjustment is enabled.
+<p>bTimeAdjustmentDisabled
+<br>Specifies the time adjustment mode that the system is to use. Periodic
+system time adjustments can be disabled or enabled.
+<p>A value of TRUE specifies that periodic time adjustment is to be disabled.
+The system is free to adjust time of day using its own internal mechanisms.
+The value of dwTimeAdjustment is ignored. The system's internal adjustment
+mechanisms may cause the time-of-day clock to jump noticeably when adjustments
+are made.
+<p>A value of FALSE specifies that periodic time adjustment is to be enabled,
+and will be used to adjust the time-of-day clock. The system will not interfere
+with the time adjustment scheme, and will not attempt to synchronize time
+of day on its own. The system will add the value of dwTimeAdjustment to
+the time of day at each clock interrupt.
+<p>Return Value
+<br>If the function succeeds, the return value is TRUE.
+<br>If the function fails, the return value is FALSE. To get extended error
+information, call GetLastError. One way the function can fail is if the
+caller does not possess the SE_SYSTEMTIME_NAME privilege.
+<p>Remarks
+<br>The GetSystemTimeAdjustment and SetSystemTimeAdjustment functions support
+algorithms that synchronize the time-of-day clock, reported via GetSystemTime
+and GetLocalTime, with another time source using a periodic time adjustment.
+<p>The SetSystemTimeAdjustment function supports two modes of time synchronization:
+time-adjustment - disabled and time-adjustment - enabled.
+<p>In the first mode, bTimeAdjustmentDisabled is set to FALSE. At each
+clock interrupt, the system adds the value of dwTimeAdjustment to the time
+of day. The clock interrupt rate may be determined by calling GetSystemTimeAdjustment,
+and looking at the returned value of the DWORD value pointed to by lpTimeIncrement.
+<p>In the second mode, bTimeAdjustmentDisabled is set to TRUE. At each
+clock interrupt, the system adds the interval between clock interrupts
+to the time of day. No adjustment to that interval is made. The system
+is free to periodically refresh the time-of-day clock using other techniques.
+Such other techniques may cause the time-of-day clock to jump noticeably
+when adjustments are made.
+<p>An application must have system-time privilege (the SE_SYSTEMTIME_NAME
+privilege) for this function to succeed. The SE_SYSTEMTIME_NAME privilege
+is disabled by default. Use the AdjustTokenPrivileges function to enable
+the privilege before calling SetSystemTimeAdjustment, and then to disable
+the privilege after the SetSystemTimeAdjustment call.
+<p>See Also
+<br>AdjustTokenPrivileges, GetSystemTimeAdjustment, SetLocalTime, SetSystemTime,
+SystemTimeToTzSpecificLocalTime
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<p>==========================================================================================
+</body>
+</html>

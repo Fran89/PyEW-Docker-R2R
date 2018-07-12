@@ -1,0 +1,43 @@
+#
+#   
+#   
+#
+#    $Id: makefile.nt,v 1.1 2016 
+#
+#
+#
+#
+#
+#
+#
+#          Nmake File For ewpublish -  Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+eqproc:
+   emake $B\ewpublish.exe
+
+
+$B\ewpublish.exe: eqproc.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) eqproc.obj $L\site.obj \
+    $L\tlay.obj $L\logit.obj $L\time_ew.obj $L\kom.obj $L\chron3.obj \
+    $L\mnbrak.obj $L\brent.obj $L\getutil.obj $L\transport.obj \
+    $L\sleep_ew.obj -out:$B\ewpublish.exe
+
+
+.c.obj:
+   $(cc) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\eqproc* 
+

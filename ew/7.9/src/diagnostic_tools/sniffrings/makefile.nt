@@ -1,0 +1,52 @@
+#
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 2513 2006-11-21 23:05:02Z stefan $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:57  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:41:33  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 19:31:49  lucky
+#     Initial revision
+#
+#
+#
+
+
+#                    Nmake File For sniffrings - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = sniffrings
+O = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+OBJFILESPATH = $L/mem_circ_queue.obj $L/libew_mt.lib
+OBJFILES = etutil.obj mem_circ_queue.obj libew_mt.lib
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJFILESPATH) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+sniffrings: sniffrings.obj
+        ilink $(LFLAGS) sniffrings.obj $(OBJFILES)
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\sniffrings*

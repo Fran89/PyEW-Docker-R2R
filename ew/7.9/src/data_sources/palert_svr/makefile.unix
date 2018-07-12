@@ -1,0 +1,20 @@
+CFLAGS = $(GLOBALFLAGS)
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+EWBINARIES = $L/libew.a \
+             $L/rdpickcoda.o $L/lockfile_ew.o $L/lockfile.o 
+
+eew_svr: eew_svr.o $(EWBINARIES)
+	$(CC) $(CFLAGS) -o $B/eew_svr eew_svr.o $(EWBINARIES) -lm -lpthread
+
+lint:
+	lint eew_svr.c $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/eew_svr*

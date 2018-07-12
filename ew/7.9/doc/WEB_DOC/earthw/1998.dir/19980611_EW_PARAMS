@@ -1,0 +1,16 @@
+
+From kent@giseis.alaska.edu Wed Jun 17 11:24:35 1998
+Date: Thu, 11 Jun 1998 17:24:15 -0800
+From: "Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: earthw-list@nmt.edu
+Cc: kent@giseis.alaska.edu
+Subject: consistent use of EW_PARAMS
+
+
+Hello,
+	
+	The newer startstop for solaris checks the EW_PARAMS environment
+variable and changes to that directory in order to run. I propose that
+all earthworm modules should have this feature.
+
+Kent

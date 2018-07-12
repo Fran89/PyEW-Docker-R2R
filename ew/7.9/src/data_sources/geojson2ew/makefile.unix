@@ -1,0 +1,38 @@
+#
+# geojson2ew - geoJSON to earthworm interface
+#
+
+LINUX_FLAGS=-lutil  -lpthread -lm
+SOLARIS_FLAGS=-lutil -lsocket -lnsl -lposix4 -lthread -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS) -lrabbitmq -ljansson
+
+CFLAGS = -D_REENTRANT -D_LOGITMT ${GLOBALFLAGS} -Wall -Wextra -O
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+all: geojson2ew
+
+SRCS = getconfig.c main.c heart.c die.c logo.c options.c \
+       geojson_map.c geojson_process.c json_conn.c
+
+OBJS = getconfig.o main.o heart.o die.o logo.o options.o \
+       geojson_map.o geojson_process.o json_conn.o
+ 
+EW_LIBS = \
+	$L/logit_mt.o $L/libew_mt.a $L/socket_ew_common.o $L/socket_ew.o
+
+geojson2ew: $(OBJS); \
+	$(CC) $(CFLAGS) -o $(B)/geojson2ew $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+
+geojson2ew_socket: $(OBJS); \
+	$(CC) $(CFLAGS) -DSOCKET_ONLY -o $(B)/geojson2ew $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/geojson2ew*
+
+FORCE:

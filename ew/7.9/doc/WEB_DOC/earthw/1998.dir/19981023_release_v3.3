@@ -1,0 +1,76 @@
+
+From bogaert@gldage.cr.usgs.gov Fri Oct 23 08:47:57 1998
+Date: Fri, 23 Oct 1998 09:21:58 -0600 (MDT)
+From: Barbara Bogaert <bogaert@gldage.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Cc: nava@seis.utah.edu
+Subject: Earthworm Version 3.3 
+
+
+Earthworm Version 3.3 is now available.  
+
+WHERE TO GET IT:
+The Earthworm ftp site at 		
+	gldage.cr.usgs.gov:pub/OUTGOING/earthworm/current_release.
+
+HIGHLIGHTS OF V3.3
+*******************
+A detailed description of Version 3.3 can be found in the release notes distributed with the tar or zip.
+
+IMPORTANT CHANGES IN V3.3
+
+New Name for 'Binder':
+	The name for the associator program has been changed from
+	'binder' to 'binder_ew'. The name 'binder' was an executable in
+	the Solaris Openwindows software. If an user's path was not set
+	up correctly, the Openwindows 'binder' would be run with hard
+	to decipher error messages.  This modification will prevent
+	this from happening to un-suspecting users in the future.
+
+New Format for Wave_serverV Tank Structure:
+	In Wave_serverV.  changed the format of the TANK
+	structure, thus rendering previous TANK structure files
+	useless.  If you are upgrading from v3.2, then this warning is
+	for you.  There is a fix4_3.3 program, that converts tanks from
+	version 3.X to 3.3 compliant tanks.  See the src/wave_serverV
+	directory for details.
+
+NEW MODULES:
+
+heli1:
+	heli1 is designed to rapidly provide GIF images of waveforms
+	for helicorder style display on the WWW.  heli1 periodically
+	retrieves current data for a selected list of stations and
+	updates GIF images which are transferred to webserver(s).  The
+	required waveforms are obtained via requests to Earthworm
+	waveserver(s) and plotted directly to GIF format image files.
+	When all of the required GIF files have been constructed, .html
+	wrappers are built and the entire suite of files is copied via
+	rcp to webserver(s) for viewing. Heli1 is a Solaris only
+	module.  The NT version is in the works.
+
+trig2disk:
+	trig2disk reads type_triglist messages (e.g. those produced by
+	arc2trig and  carltrig) and writes either sac or ah triggered
+	data files to disk.  WARNING:  If you want to use the SAC
+	conversion, you must specify the system architecture at compile
+	time.  See the README in the source directory for details.
+
+
+BUG FIXES and CONFIGURATION CHANGES
+
+A number of bug fixes and configuration file changes were made for this
+release.  They are described in  details in the release notes.
+ 
+If you have any questions, please contact me.
+
+- Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@gldage.cr.usgs.gov	        Box 25046, Stop 967
+office:  303-273-8491                   Denver Federal Center
+FAX:     303-273-8600          		Denver, CO 80225
+
+
+----- End Included Message -----
+

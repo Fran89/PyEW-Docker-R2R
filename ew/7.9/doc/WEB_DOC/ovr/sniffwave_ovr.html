@@ -1,0 +1,114 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+   <title>Earthworm Program: sniffwave overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+Sniffwave Overview</h1></center>
+
+<center>
+  <i>(last revised April 23, 2015)</i>
+</center>
+
+<p>The <b>sniffwave</b> program reads waveform messages from an Earthworm transport ring and, for each
+  message, prints the logo and header information to the screen.</p>
+
+<pre>
+Usage: sniffwave &lt;ring name&gt; [sta] [comp] [net] [loc] [y/n/s/time] [v]
+
+       Note: All parameters are positional, and all but first are optional.
+
+       Appending the optional 'v' or 'verbose' argument causes module,
+       installation and type names to be printed in addition to usual ID numbers.
+
+       The [y/n/s] flag is a data flag or 'time in seconds'. If 'y' is specified
+       the full data contained in the packet is printed out.
+       If flag set to s, provides max/min/avg statistics of the trace data.
+       If flag set to numeric value, program runs only for that number of seconds.
+       If sta comp net (but not loc) are specified then only TraceBuf
+       packets will be fetched (not TraceBuf2); otherwise both are fetched.
+
+       Example: sniffwave WAVE_RING PHOB wild NC wild n
+       Example: sniffwave WAVE_RING wild wild wild y verbose
+
+       MSEED capability starting with version 2.5.1, prints mseed headers
+       of TYPE_MSEED packets (no filtering yet).
+</pre>
+
+Specifying the sta, comp and net (but not loc) arguments will sniff for matching TYPE_TRACEBUF and TYPE_TRACE_COM_UA packets.  Specifying with any other combination of SCNL will also sniff for TYPE_TRACEBUF2 and TYPE_TRACE2_COM_UA packets.
+Specifying just the ring name argument will display all messages found in the ring.
+
+<p>Appending the optional "verbose" argument causes module, installation
+       and type names to be printed in addition to usual ID numbers.</p>
+
+<p>Examples:
+<pre>
+sniffwave WAVE_RING PHOB wild NC wild n
+sniffwave WAVE_RING NP1  HHZ  ZZ 01   n
+sniffwave WAVE_RING wild wild wild    y verbose
+sniffwave WAVE_RING
+</pre>
+</p>
+
+This would result in the output (not consider the header in italic font style):
+<PRE><i>     SCNL         V1   V2   P  T  N   SR                 ST                                       ET                          Q1   Q2   I   M   T    L          D       F
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</i>
+ CAFE.HNZ.IV.-- (0x32 0x30) 0 s4 408 200.0 2010/06/22 14:15:55.67 (1277216155.6650) 2010/06/22 14:15:57.70 (1277216157.7000) 0x00 0x00 i73 m52 t19 len1696 [D: 6.3s F: 0.2s]
+ CAFE.HNE.IV.-- (0x32 0x30) 0 s4 408 200.0 2010/06/22 14:15:55.43 (1277216155.4250) 2010/06/22 14:15:57.46 (1277216157.4600) 0x00 0x00 i73 m52 t19 len1696 [D: 6.5s F: 0.2s]
+  TIP.HHZ.MN.-- (0x32 0x30) 0 s4 412 100.0 2010/06/22 14:15:53.64 (1277216153.6425) 2010/06/22 14:15:57.75 (1277216157.7525) 0x00 0x00 i73 m52 t19 len1712 [D: 6.2s F: 0.2s]
+  MGR.HHZ.IV.--  overlap of   4.84s        2010/06/22 14:10:36.29 (1277215836.2900) 2010/06/22 14:10:41.13 (1277215841.1300)
+  MGR.HHZ.IV.-- (0x32 0x30) 0 s4 484 100.0 2010/06/22 14:10:36.29 (1277215836.2900) 2010/06/22 14:10:41.12 (1277215841.1200) 0x00 0x00 i73 m52 t19 len2000 [D:322.9s F:20.9s]
+ BLLA.EHN.IV.-- (0x32 0x30) 0 s4 404 100.0 2010/06/22 14:16:53.36 (1277216213.3600) 2010/06/22 14:16:57.39 (1277216217.3900) 0x00 0x00 i73 m52 t19 len1680 [D: 5.5s F: 0.2s]
+ CDCA.EHE.IV.-- (0x32 0x30) 0 s4 336 100.0 2010/06/22 14:16:52.64 (1277216212.6400) 2010/06/22 14:16:55.99 (1277216215.9900) 0x00 0x00 i73 m52 t19 len1408 [D: 6.9s F: 7.9s]
+ CIGN.HHN.IV.--  overlap of   1.00s        2010/06/22 14:16:52.67 (1277216212.6700) 2010/06/22 14:16:53.67 (1277216213.6700)
+ CIGN.HHN.IV.-- (0x32 0x30) 0 s4 412 100.0 2010/06/22 14:16:52.67 (1277216212.6700) 2010/06/22 14:16:56.78 (1277216216.7800) 0x00 0x00 i73 m52 t19 len1712 [D: 6.1s F: 7.1s]
+ CRAC.EHN.IV.-- (0x32 0x30) 0 s4 328 100.0 2010/06/22 14:16:54.76 (1277216214.7600) 2010/06/22 14:16:58.03 (1277216218.0300) 0x00 0x00 i73 m52 t19 len1376 [D: 4.9s F: 0.3s]
+  CRE.HHZ.IV.-- (0x32 0x30) 0 s4 334 100.0 2010/06/22 14:16:55.02 (1277216215.0200) 2010/06/22 14:16:58.35 (1277216218.3500) 0x00 0x00 i73 m52 t19 len1400 [D: 4.6s F: 0.2s]
+ CSNT.HHZ.IV.-- (0x32 0x30) 0 s4 378 100.0 2010/06/22 14:16:56.98 (1277216216.9800) 2010/06/22 14:17:00.75 (1277216220.7500) 0x00 0x00 i73 m52 t19 len1576 [D: 2.2s F: 0.2s]
+  MGR.HHN.IV.-- (0x32 0x30) 0 s4   5 100.0 2010/06/22 14:05:37.11 (1277215537.1100) 2010/06/22 14:05:37.15 (1277215537.1500) 0x00 0x00 i73 m52 t19 len  84 [D:606.1s F:10.1s]
+  MGR.HHN.IV.--      gap of   2.24s        2010/06/22 14:05:37.16 (1277215537.1600) 2010/06/22 14:05:39.40 (1277215539.4000)
+  MGR.HHN.IV.-- (0x32 0x30) 0 s4 432 100.0 2010/06/22 14:05:39.40 (1277215539.4000) 2010/06/22 14:05:43.71 (1277215543.7100) 0x00 0x00 i73 m52 t19 len1792 [D:599.5s F: 0.0s]
+  MGR.HHN.IV.-- (0x32 0x30) 0 s4 432 100.0 2010/06/22 14:05:43.72 (1277215543.7200) 2010/06/22 14:05:48.03 (1277215548.0300) 0x00 0x00 i73 m52 t19 len1792 [D:595.2s F: 0.0s]
+ SMPL.BHZ.FR.00 (0x32 0x30) 0 s4  25  25.0 2010/06/22 14:15:39.23 (1277216139.2268) 2010/06/22 14:15:40.19 (1277216140.1868) 0x00 0x00 i73 m52 t19 len 164 [D: 3.1s F: 1.0s]
+MUGIO.HHN.CH.-- (0x32 0x30) 0 s4 218 120.0 2010/06/22 14:15:40.36 (1277216140.3583) 2010/06/22 14:15:42.17 (1277216142.1666) 0x64 0x00 i73 m50 t19 len 936 [D: 1.1s F: 1.9s]
+PLONS.HHE.CH.-- (0x32 0x30) 0 s4 240 120.0 2010/06/22 14:15:38.80 (1277216138.7966) 2010/06/22 14:15:40.79 (1277216140.7883) 0x64 0x00 i73 m50 t19 len1024 [D: 2.5s F: 2.1s]
+  VTS.BHZ.MN.-- (0x32 0x30) 0 s4 412  20.0 2010/06/22 14:15:19.52 (1277216119.5191) 2010/06/22 14:15:40.07 (1277216140.0691) 0x00 0x00 i73 m52 t19 len1712 [D: 3.2s F:21.0s]
+ SALO.HHE.IV.-- (0x32 0x30) 0 s4 224 100.0 2010/06/22 14:14:53.64 (1277216093.6400) 2010/06/22 14:14:55.87 (1277216095.8700) 0x64 0x00 i73 m51 t19 len 960 [D:48.2s F: 0.0s]
+ MURB.HHZ.IV.--      gap of   2.06s        2010/06/22 14:14:24.87 (1277216064.8700) 2010/06/22 14:14:26.93 (1277216066.9300)
+ MURB.HHZ.IV.-- (0x32 0x30) 0 s4 206 100.0 2010/06/22 14:14:26.93 (1277216066.9300) 2010/06/22 14:14:28.98 (1277216068.9800) 0x00 0x00 i73 m52 t19 len 888 [D:75.1s F:38.0s]
+ SALO.HHE.IV.-- (0x32 0x30) 0 s4 224 100.0 2010/06/22 14:14:55.88 (1277216095
+</PRE>
+<p>where <br/>
+<table border="0" cellspacing="3" cellpadding="0">
+    <tr><td><i>SCNL</i></td><td> is Station.Channel.Network.Location</td></tr>
+    <tr><td><i>V1</i></td><td> is the version field 1</td></tr>
+    <tr><td><i>V2 </i></td><td>is the version field 2</td></tr>
+    <tr><td><i>P </i></td><td>is the pin number (obsolete)</td></tr>
+    <tr><td><i>T</i></td><td> is the sample type.  &quot;s4&quot; means that the data is four-byte signed integers in Sparc byte order. "i4" would indicate four-byte, Intel order</td></tr>
+    <tr><td><i>N</i></td><td> is the number of sample in the packet</td></tr>
+    <tr><td><i>SR </i></td><td>is the nominal sampling rate, as advertised by the producer of the packet</td></tr>
+    <tr><td><i>ST</i>,  <i>ET</i>&nbsp;</td><td> are the actual times of the first and last samples in the packet, in human readable form, and (seconds since 1970)</td></tr>
+    <tr><td><i>Q1</i></td><td> is the data quality field 1</td></tr>
+    <tr><td><i>Q2</i></td><td> is the data quality field 2</td></tr>
+    <tr><td><i>I</i></td><td> is the ID number of the Installation</td></tr>
+    <tr><td><i>M</i></td><td> is the ID number of the Module</td></tr>
+    <tr><td><i>T</i></td><td> is the ID number of the Type of packet</td></tr>
+    <tr><td><i>L</i></td><td> is the length of packet in bytes</td></tr>
+    <tr><td><i>D</i></td><td> is the latency of the data, that is the difference between NOW and the last sample time for that SCNL</td></tr>
+    <tr><td><i>F</i></td><td> is the latency of feeding, that is the difference between NOW and the time when last packet for that SCNL has been received</td></tr>
+</table>
+</p>
+<br>
+<center><a href="../modules.html">Module Index</a></center>
+<hr>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a></address>
+
+</body>
+</html>

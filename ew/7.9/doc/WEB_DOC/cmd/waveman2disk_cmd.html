@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Program: waveman2disk commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Waveman2disk Configuration File </h1>
+<i>(last revised Jan 11, 2010)</i> </center>
+<p>
+</p>
+<h2>1. EXAMPLE CONFIGURATION FILE</h2>
+<p>
+</p>
+<pre># Configuration file for waveman2disk:<br>#<br># If you wish to write PC-SUDS files suitable for viewing with  <br># sudsplot you will need to run waveman2disk on a Windows 2000 machine AND <br># with all earthworm modules compiled with the /Zp1 flag (accomplished<br># by adding /Zp1 to %EW_HOME%\%EW_VERSION%\environment\tools.ini file)<br>#   (Lucky Vidmar Mon Mar 15 12:04:59 MST 1999)<br>#<br>#<br><br>LogFile 		1		# 0 means don't create a disc log file. 1=&gt; do.<br><br>#<br># Debug switch: the token "Debug" (without the quotes) can be stated.<br># If it is, lots of weird debug messages will be produced <br>#Debug<br><br>#<br># Data input method:<br>#  triglist - read the file specified by TrigFile option, and <br>#             process the TYPE_TRIGLIST2K messages in there<br>#<br>#  interactive - specify one of more SaveSCNL entries in this file<br>#                 or an external file included with @. Then, the <br>#                 user is prompted for start and end time of trace<br>#                 snippets to be saved<br>#<br>#InputMethod triglist<br>InputMethod interactive<br><br>#<br># TrigFile - name of the file containing TYPE_TRIGLIST2K msgs<br>#  required only if InputMethod is triglist.<br>#<br>TrigFile /home/lucky/working/src/waveman2disk/trigmsg<br><br>#<br># SaveSCNL - List SCNLs to save in the interactive mode. The user <br>#           will specify start and end time <br>#  required only if InputMethod is interactive.<br>#<br>#SaveSCNL * EHZ MB *<br>SaveSCNL LYMT EHZ MB --<br>SaveSCNL CHMT EHZ MB 10<br>SaveSCNL LRM EHZ MB 01<br><br>#<br># OPTIONAL - specify StartTime and Duration for the interactive<br>#   trace request. If these are not specified, waveman2disk will<br>#   prompt the user for them.<br>#   StartTime Format: yyyymmddhhmmss<br>#<br><br>StartTime 19990804140000<br>Duration  60<br><br><br># Setup for WaveServers we'll interrogate:<br># list of ip addresses and ports of the  WaveServers we're to use<br>WaveServer aaa.bbb.ccc.ddd 16022<br><br># If a WaveServer doesn't talk to us in this <br># many seconds, we'll abort that request<br>#<br># NOTE: If you are requesting large blocks of time, e.g <br>#  in the tank mode, you will want to set this value to <br>#  something quite high - longer than the time interval <br>#  requested.<br>#<br><br>#TimeoutSeconds 30	<br>TimeoutSeconds 500<br><br># Sizes of trace memory. Determines how much memory we'll try to grab<br># Max number of traces we'll ever see in one event<br>MaxTraces 100<br><br># largest trace snippet we'll ever have to deal with<br># in bytes/1000.<br># NOTE: if you intend to produce PC-SUDS files for viewing <br># with sudsplot viewer, you will want to keep this number <br># low (around 1000) because of sudsplot's memory limitations<br>TraceBufferLen 1000<br><br>#<br># number of sample periods to declare a gap<br>#<br>GapThresh 20<br><br>#<br># SCNL list of stations to write for each trigger message,  these get<br>#      written in addition to scn's in the trigger message, or<br>#      those listed in SaveSCN section<br># This is OPTIONAL and only meaningful in triglist mode<br>#<br>TrigStation GCMT EHZ MB --<br>TrigStation BZMT EHZ MB *<br>#<br># Minimum length duration (in integer seconds) for stations in StationFile<br>#<br>MinDuration 60<br>#<br># format of data output (sac, ah, suds, seisan, gse, and tank are currently supported)<br>#<br># output base directory for trigger files<br>#      <author_time> subdirectory is made in this directory<br>#<br># SUDS<br>#<br>#DataFormat                  suds<br>#OutDir                      "/home/earthworm/SUDS"<br>#<br># SAC<br>#<br>DataFormat                   sac<br>OutDir                       "c:\earthworm\SAC"<br>#<br># AH<br>#<br>#DataFormat                  ah<br>#OutDir                     "/home/earthworm/AH"<br>#<br># SEISAN<br>#<br>#DataFormat                  seisan<br>#OutDir                     "/home/earthworm/seisan"<br>#<br># GSE<br>#<br>#DataFormat                  gse_int<br>#OutDir                     "/home/earthworm/gse_int"<br>#<br># Tankplayer<br>#<br>#DataFormat                 tank<br>#OutDir                     "./tanks/"<br>#<br>#<br># Mini-SEED<br># Mini-SEED output format is currently only available on Solaris<br>#<br>#DataFormat                 mseed<br>#OutDir                     "/earthworm/data/mseed"</author_time># PSN4<br>#<br># NOTE PSN4 output format is only avialable for WINDOWS!<br>#  a <a
+ href="station.lst">station.lst</a> file must also exist in the EW_PARAMS directory too (see example in docs)<br>#<br>#DataFormat                 psn4<br>#OutDir                     "c:\earthworm\psn4"<br><br>#<br># WFDISC<br>#<br># NOTE WFDISC output format is only avialable for Linux!<br>#DataFormat                 wfdisc<br>#OutDir                     "/home/earthworm/wfdisc_ouput"<br><br># Specify on what platform the output files will be used:<br># intel or sparc - with this information, files will be written out<br># in the correct byte order.<br>OutputFormat sparc<br></pre>
+<h3>EXAMPLE wfdisc_waveman.d CONFIGURATION FILE</h3>
+<p>This file must be located in the EW_PARAMS directory to be used.
+</p>
+<pre>#w_location directory
+#Allows you to specify a different directory than the wfdisc saved directory
+#You can specify a relative or absolute path here
+w_location ./w
+#calib station channel chanid calib calper instype segtype
+calib I59H1  BDF              1         1.000000         1.000000 Geotec   d
+calib I59H1  LWS              2         1.000000         1.000000 Geotec   d
+calib I59H1  LWD              3         1.000000         1.000000 Geotec   d
+calib I59H1  LKO              4         1.000000         1.000000 Geotec   d
+calib I59H2  BDF              5         1.000000         1.000000 Geotec   d
+calib I59H3  BDF              6         1.000000         1.000000 Geotec   d
+calib I59H4  BDF              7         1.000000         1.000000 Geotec   d
+#wfdisc_spec output_dir station channel
+#These commands are processed in the order written
+#So if a more general line is above a more specific line,
+#The more specific line will have no effect.
+#For wildcard use the * symbol
+#output_dir can be no longer than 8 characters long
+#wfdisc_spec test I59H1 *
+#wfdisc_spec test2 * *
+</pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/waveman2disk_ovr.html">Waveman2disk Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Contact: <b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</address>
+</body>
+</html>

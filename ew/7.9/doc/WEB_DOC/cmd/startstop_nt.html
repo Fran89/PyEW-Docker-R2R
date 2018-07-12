@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Startstop commands (Windows 2000 version)</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<CENTER><H1>Earthworm Modules: <BR>Startstop Configuration File <BR>
+    (Windows NT, Windows 2000, Windows XP)</H1>
+  <I>(last revised 9 April 2010)</I>
+</CENTER>
+
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+Startstop is a system-specific module; the control file described here is for
+the 2000 version. NOTE: SAME AS WINDOWS NT
+<p>
+
+<PRE>
+#                 Startstop Configuration File for Windows 2000
+#
+#    <nRing> is the number of transport rings to create.
+#    <Ring> specifies the name of a ring followed by it's size
+#    in kilobytes, eg        Ring    WAVE_RING 1024
+#    The maximum size of a ring is 1024 kilobytes.
+#    Ring names are listed in file earthworm.h.
+#
+  nRing               4
+  Ring   AD_RING   1024
+  Ring   WAVE_RING 1024
+  Ring   PICK_RING 1024
+  Ring   HYPO_RING 1024
+#
+ MyModuleId       MOD_STARTSTOP  # Module Id for this program
+ HeartbeatInt     15             # Heartbeat interval in seconds
+ MyPriorityClass  Normal         # For startstop
+ LogFile           1             # 1=write a log file to disk, 0=don't,
+				         # 2=write to module log but not stderr/stdout
+ KillDelay        10             # number of seconds to wait on shutdown
+                                 #  for a child process to self-terminate
+                                 #  before killing it
+# maxStatusLineLen 120            # Uncomment to specify length of lines in status
+
+#
+#    PriorityClass values:
+#       Idle            4
+#       Normal          9 forground, 7 background
+#       High            13
+#       RealTime        24
+#
+#    ThreadPriority values:
+#       Lowest          PriorityClass - 2
+#       BelowNormal     PriorityClass - 1
+#       Normal          PriorityClass
+#       AboveNormal     PriorityClass + 1
+#       Highest         PriorityClass + 2
+#       TimeCritical    31 if PriorityClass is RealTime; 15 otherwise
+#       Idle            16 if PriorityClass is RealTime; 1 otherwise
+#
+#    Display can be either NewConsole, NoNewConsole, or MinimizedConsole.
+#
+#    If the command string required to start a process contains
+#    embedded blanks, it must be enclosed in double-quotes.
+#    Processes may be disabled by commenting them out.
+#    To comment out a line, preceed the line by #.
+#
+#
+ Process          "pick_ew pick_ew.d"
+ PriorityClass     Normal
+ ThreadPriority    Normal
+ Display           NewConsole
+#
+ Process          "binder binder.d"
+ PriorityClass     Normal
+ ThreadPriority    Normal
+ Display           NewConsole
+#
+ Process          "eqproc eqproc.d"
+ PriorityClass     Normal
+ ThreadPriority    Normal
+ Display           NewConsole
+#
+ Process          "statmgr statmgr.d"
+ PriorityClass     Normal
+ ThreadPriority    Normal
+ Display           NoNewConsole
+</PRE>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/startstop_ovr.html">Startstop Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,12 @@
+
+DELIMITER $$
+DROP FUNCTION IF EXISTS `fn_get_client_hostname`$$
+CREATE  DEFINER = CURRENT_USER  FUNCTION `fn_get_client_hostname`(
+) RETURNS CHAR(80) NOT DETERMINISTIC
+BEGIN
+
+  RETURN SUBSTRING( user(), LOCATE('@', user())+1 );
+
+END$$
+DELIMITER ;
+

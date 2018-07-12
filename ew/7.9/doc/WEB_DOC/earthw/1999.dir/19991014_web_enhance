@@ -1,0 +1,35 @@
+
+From bogaert@gldmutt.cr.usgs.gov Tue Oct 19 14:37:34 1999
+Date: Thu, 14 Oct 1999 13:11:54 -0600
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Enhancements to the Earthworm web pages
+
+Enhancements to the Earthworm web pages:
+
+Configuration of Binder_ew:  
+	A detailed description of how to configure binder can be found in the
+Appendix.  It is also reference form the module description table.
+
+Revised Earthworm NT Autostart documentation.
+	Missing details have been added.  Please let me know if there are still
+problems.
+
+Earthworm_global.d
+	The values defined in earthworm_global.d are critical to proper
+communication and data distribution among Earthworm systems around the
+globe.  A copy of this file can be found in the Appendix or at the
+Earthworm ftp site: ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/
+
+Wsv_test (contributed by USGS, Menlo Park)
+	Program to request menu from a list of wave_serverVs and report to the
+status manager if any wave server process is dead. Developed by Will Kohler
+at USGS, Menlo Park.  This program can be found in the contributed software
+directory at the Earthworm ftp site:
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/.
+
+Barbara Bogaert			U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+

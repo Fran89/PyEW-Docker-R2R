@@ -1,0 +1,32 @@
+#
+#
+# Nmake File For libpsnms - MS Visual C++ version
+# Use 'nmake -f makefile.nt'
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+INCS = -I.
+OPTS = -D_CRT_SECURE_NO_WARNINGS
+LIB = libpsnms.lib
+
+OBJS=	pack.obj	\
+	packdata.obj	\
+	unpack.obj	\
+	unpackdata.obj  \
+	genutils.obj	\
+	msrutils.obj
+
+all: lib
+
+lib: $(OBJS)
+	link.exe /lib /nologo /out:$(LIB) $(OBJS)
+
+.c.obj:
+	$(cc) /c /DWIN32 $(GLOBALFLAGS) $(cvarsmt) $(tflags) /EHsc $<
+	
+# Clean-up directives
+clean:
+	-del libpsnms.lib
+	-del *.obj

@@ -1,0 +1,38 @@
+#
+#   THIS FILE IS UNDER CVS - 
+#   DO NOT MODIFY UNLESS YOU HAVE CHECKED IT OUT.
+# 
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+SRCS = statrigfilter.c
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJ = statrigfilter.o $L/libew.a
+
+statrigfilter: $(OBJ)
+	$(CC) $(CFLAGS) -o $B/statrigfilter  $(OBJ) $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) $(CFLAGS) -c ${CFLAGS} $<
+
+lint:
+	lint statrigfilter.c $(GLOBALFLAGS)
+
+depend:
+	makedepend -fmakefile.unix -- $(CFLAGS) -- $(SRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/statrigfilter*

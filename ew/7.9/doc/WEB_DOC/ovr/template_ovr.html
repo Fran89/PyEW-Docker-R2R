@@ -1,0 +1,52 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+   <title>Earthworm Program: template overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+    Template Overview</h1>
+</center>
+
+<center>
+  <i>(last revised 1 June, 2006)</i>
+</center>
+
+<p><br>
+  Template Module Directory </p>
+<p>This directory contains a set of sample files for a basic earthworm module
+  which:</p>
+<p> 1) reads a configuration file using kom.c routines (template_config).</p>
+<p> 2) looks up shared memory keys, installation ids, module ids, message types
+  from earthworm.h tables using getutil.c functions (template_lookup).</p>
+<p> 3) attaches to one public shared memory region for input and output using
+  transport.c functions.</p>
+<p> 4) processes hard-wired message types from configuration-file-given installations
+  &amp; module ids (This source code expects to process TYPE_HYP2000 &amp; TYPE_H71SUM2K
+  messages).</p>
+<p> 5) sends heartbeats and error messages back to the shared memory region (template_status).</p>
+<p> 6) writes to a log file using logit.c functions.<br>
+</p>
+<p>The files in the src/diganostic_tools/template/ directory are:<br>
+  Makefile.os2 to create the executable for template on OS/2.<br>
+  Makefile.sol to create the executable for template on solaris.<br>
+  template.c source file for the sample module.<br>
+  template.d configuration file read by template_config.<br>
+  template.desc the descriptor file for template required by Earthworm's statmgr
+  module.<p>
+  Lynn Dietz<br>
+  January 9, 1996 <br>
+</p>
+<center>
+<p><a href="../modules.html">Module Index</a></center>
+<hr>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a></address>
+
+</body>
+</html>

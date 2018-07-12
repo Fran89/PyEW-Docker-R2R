@@ -1,0 +1,34 @@
+
+#                    Nmake File For heli_ewII - Windows NT version
+# Alex 9/19/00
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = heli_ewII
+O = $(APP).obj 
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+    $L\getavail.obj $L\getsysname_ew.obj \
+    $L\socket_ew.obj $L\socket_ew_common.obj $L\ws_clientII.obj \
+    $L\libew.lib $L\gd.obj \
+    $L\gdfontt.obj $L\gdfonts.obj $L\gdfontmb.obj \
+	$L\gdfontl.obj $L\gdfontg.obj \
+	 -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\heli_ewII*

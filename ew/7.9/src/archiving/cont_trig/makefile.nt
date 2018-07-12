@@ -1,0 +1,55 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt,v 1.0  2010/06/10 18:00:00  JMS Exp $
+#
+#     Revision 1.0  2010/06/10 18:00:00  JMS
+#     Initial revision
+#	Based on carlsubtrig module
+#
+#
+#
+
+#
+#            Nmake File For cont_trig - Windows NT version
+#
+APP = cont_trig
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+!include <ntwin32.mak>
+
+CTOBJS = $(APP).obj \
+         cmprscn.obj  \
+	 initpars.obj \
+	 initsta.obj \
+	 prodtrig.obj \
+	 readcnfg.obj \
+	 readewh.obj \
+	 readstas.obj \
+	 sbntthrd.obj \
+         statrpt.obj \
+	 $L\swap.obj \
+	 $L\libew_mt.lib
+
+compflags= /c /W3 /MT /nologo -D_INTEL
+
+linkflags= /release /nologo
+
+libs= libcmt.lib
+
+$B\$(APP).exe: $(CTOBJS)
+   link $(linkflags) $(libs) $(CTOBJS) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(CFLAGS) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\cont_trig*

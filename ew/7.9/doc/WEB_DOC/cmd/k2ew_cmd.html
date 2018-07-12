@@ -1,0 +1,708 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: k2ew commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+K2ew Configuration File </h1>
+<i>(last revised March 7, 2007)</i></center>
+Page Index:<br>
+1. <a href="#function">Functional command listing</a><br>
+2. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+3. <a href="#sample_config">Sample Configuration File</a><br>
+<p>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On startup,
+k2ew reads the configuration file named on the command
+line. Commands in this file set all the parameters used for configuring
+the Earthworm k2ew module. In the control file, lines may begin with a
+valid k2ew command (listed below) or with one of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!). Blank lines are also permitted in
+the control file.
+<p><a name="function"></a></p>
+<h2><a name="function">1. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by k2ew, grouped by the function they
+influence. Some of the commands are required, as noted. They may be
+specified in any order in the control file, with the exception of the
+K2 communications mode settings:
+these must be listed in the order shown here.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --></a></p>
+<pre><a name="function">   Earthworm system setup:<br>                </a><a
+ href="#ModuleId">ModuleId</a>                required<br>                <a
+ href="#RingName">RingName</a>                required<br>                <a
+ href="#LogFile">LogFile</a>                 required<br>                <a
+ href="#HeartbeatInt">HeartbeatInt</a>            required<br>                <a
+ href="#Debug">Debug</a>                   optional<br><br>   The two commands for any ONE of the three communication modes:<br>        K2 communication parameters: TCP mode<br>                <a
+ href="#TcpAddr">TcpAddr</a>                 required<br>                <a
+ href="#TcpPort">TcpPort</a>                 required<br><br>        K2 Communications parameters: Solaris TTY mode<br>                <a
+ href="#TtyName">TtyName</a>                 required<br>                <a
+ href="#Speed">Speed</a>                   required<br><br>	K2 Location Code configs<br>                <a
+ href="#LCFlag">LCFlag</a>                  optional<br>		<a
+ href="#LocationNames">LocationNames</a>		optional<br><br>        K2 communication parameters: Windows 2000 COM port<br><br>                <a
+ href="#ComPort">ComPort</a>                 required<br>                <a
+ href="#Speed">Speed</a>                   required<br><br>        k2ew buffer and timing parameters:<br>                <a
+ href="#CommTimeout">CommTimeout</a>             optional<br>                <a
+ href="#MaxRestartAge">MaxRestartAge</a>           optional<br>                <a
+ href="#WaitTime">WaitTime</a>                optional<br>                <a
+ href="#DontQuit">DontQuit</a>                optional<br>                <a
+ href="#RestartFile">RestartFile</a>             optional<br>                <a
+ href="#MaxBlkResends">MaxBlkResends</a>           optional<br>                <a
+ href="#MaxReqPending">MaxReqPending</a>           optional<br>                <a
+ href="#ResumeReqVal">ResumeReqVal</a>            optional<br>                <a
+ href="#WaitResendVal">WaitResendVal</a>           optional<br>                <a
+ href="#RestartComm">RestartComm</a>             optional<br>		<a
+ href="#ForceBlockMode">ForceBlockMode</a>		optional<br><br>        K2 configuration, status and alarm parameters:<br>                <a
+ href="#Network">Network</a>                 required<br>                <a
+ href="#StationID">StationID</a>               optional<br>                <a
+ href="#ChannelNames">ChannelNames</a>            optional<br>		<a
+ href="#LocationNames">LocationNames</a>		optional<br>                <a
+ href="#InvPolFlags">InvPolFlags</a>             optional<br>                <a
+ href="#BasePinno">BasePinno</a>               optional<br>                <a
+ href="#StatusInterval">StatusInterval</a>          optional<br>                <a
+ href="#ExtStatus">ExtStatus</a>               optional<br>                <a
+ href="#HighTempAlarm">HighTempAlarm</a>           optional<br>                <a
+ href="#OnBattery">OnBattery</a>               optional<br>                <a
+ href="#LowBattAlarm">LowBattAlarm</a>            optional<br>                <a
+ href="#LowTempAlarm">LowTempAlarm</a>            optional<br>                <a
+ href="#MinDiskKB">MinDiskKB</a>               optional<br>		<a
+ href="#LCFlag">LCFlag</a>			optional<br></pre>
+<a name="alphabet">
+</a>
+<h2><a name="alphabet">2. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. Default values
+and example commands are listed after each command description.
+</a></p>
+<pre><a name="alphabet"><b>
+command <font color="red">arg1</font>                                       function<br></b></a></pre>
+<hr>
+<!-- ADD HERE: all commands; below is a sample command blank: --><a
+ name="BasePinno"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="BasePinno"><b>BasePinno <font color="red">n</font>                                 K2ew Configuration<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="BasePinno"><!-- command description goes here -->
+Sets the base pin number to <font color="red">n</font>. Earthworm pin
+numbers are
+assigned to each trace packet using this base number plus the K2 stream
+numbers,
+which normally range from 0 to 5. </a>
+  <pre><!-- Default and example go here   -->
+<a name="BasePinno">Default:  0<br>Example:  BasePinno 1001<br></a></pre>
+</blockquote>
+<hr>
+<a name="ChannelNames"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ChannelNames"><b>ChannelNames <font color="red">names-list</font>                      K2 Configuration<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ChannelNames"><!-- command description goes here -->
+Sets the channel (or component) names for earthworm trace packets to
+the given <font color="red">names-list</font>. All earthworm trace
+packets are identified by
+their station, component, and network names (SCN). K2ew obtains a
+station
+name from the K2. (The K2 is configured separately from k2ew; see the
+K2 User Manual from Kinemetrics.) The <b>StationID</b> command may be
+used to set the
+station name. The K2 may also have its channel (or component) names
+configured
+in it, and these names will be used if no <b>ChannelNames</b> entries
+are given.
+In the <font color="red">names-list</font> argument, one or more
+channel names are
+listed, separated by spaces or commas. Each position in the list
+corresponds to
+a channel (or stream) in the K2. Using a comma-separated list, empty
+positions
+may be specified (i.e.: ChannelNames HLE,,HLZ), allowing the
+K2-configured names
+to be used on those channels. If no channel names are configured in the
+K2 and no <b>ChannelNames</b> entries are given then the channels will
+be named
+"C01",
+"C02", etc. </a>
+  <pre><!-- Default and example go here   -->
+<a name="ChannelNames">Default:  (The channel names configured in the K2)<br>Example:  ChannelNames HLE,HLN,HLZ<br></a></pre>
+</blockquote>
+<hr>
+<a name="ComPort"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ComPort"><b>ComPort <font color="red">n</font>                                     Windows 2000 COM mode<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ComPort"><!-- command description goes here -->
+Sets the Windows 2000 communications port to COM<font color="red">n</font>.
+This command can only be used with k2ew_com on Windows 2000. K2ew
+supports COM port numbers up to 256; the PC must be specially
+configured to use anything
+besides COM port 1 or 2. </a>
+  <pre><!-- Default and example go here   -->
+<a name="ComPort">Default:  none<br>Example:  ComPort 1<br></a></pre>
+</blockquote>
+<hr>
+<a name="CommTimeout"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="CommTimeout"><b>CommTimeout <font color="red">N</font>                                K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="CommTimeout"><!-- command description goes here -->
+Sets the time k2ew will wait for communications with the K2 to <font
+ color="red">N</font> milliseconds. If nothing is heard from
+the K2 in this interval and the 'DontQuit' flag is not enabled
+then 'k2ew' will terminate. If a </a><a href="#RestartFile">RestartFile</a>
+is specified, k2ew will record all the information it needs for a
+restart so that it can attempt to resume the data stream when k2ew
+is restarted, such as by statmgr.
+  <p>Note that when a TCP-to-serial connection is used, a <b>CommTimeout</b>
+value of 10000 or larger may be needed to allow enough time for K2
+responses to be received during program initialization. </p>
+  <pre><!-- Default and example go here   -->
+Default:  5000
+Example:  CommTimeout 25000
+  </pre>
+</blockquote>
+<hr>
+<a name="Debug"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Debug"><b>Debug <font color="red">N</font>                                     Earthworm setup <br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here --> Sets
+the debug level for k2ew. Level 0 is no
+debug logging, level 5 is very verbose logging. </a>
+  <pre><!-- Default and example go here   -->
+<a name="Debug">Default:  0<br>Example:  Debug 1<br></a></pre>
+</blockquote>
+<hr>
+<a name="DontQuit"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="DontQuit"><b>DontQuit                                K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="DontQuit"><!-- command description goes here -->
+If present, this command tells k2ew not to quit on timeout conditions
+while attempting to read data from teh K2. Instead of quiting, a log
+entry will be
+made when the timeout condition starts, and when k2ew resumes reading
+data
+from the K2. </a>
+  <pre><!-- Default and example go here   -->
+<a name="DontQuit">Default:  off<br>Example:  DontQuit<br></a></pre>
+</blockquote>
+<hr>
+<a name="ExtStatus"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ExtStatus"><b>ExtStatus                                K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ExtStatus"><!-- command description goes here -->
+Configures 'k2ew' to request K2 'extended' status in addition to the
+regular
+status messages. See </a><a href="k2ew_cmd.html#StatusInterval">StatusInterval</a>
+for
+obtaining K2 status messages. The extended status message includes
+temperature
+at the K2, last K2 restart time, and fault indicators for K2
+parameters, flash
+memory, RAM, DSP system. Thresholds can be set for <a
+ href="k2ew_cmd.html#HighTempAlarm">high</a>
+and <a href="k2ew_cmd.html#LowTempAlarm">low</a> temperature alarms.
+Most (all?) K2
+instruments
+do not support the extended status message.
+  <pre><!-- Default and example go here   --><br>Default:  off<br>Example:  ExtStatus<br><br></pre>
+  <hr style="width: 100%; height: 2px;">
+  <pre><br>  </pre>
+</blockquote>
+<pre><a name="ForceBlockMode"><b>ForceBlockMode                           K2ew communications Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ExtStatus"><!-- command description goes here -->
+Configures 'k2ew' to request control from the modem during SDS
+streaming in cases where a K2 has both the modem and the frontpanel SDS
+streaming active. The modem will gain control of the command task on
+the K2 and not release it unless forced to do so. This behavior is
+because the modem will regain control after 5 minutes of inactivity in
+the communications with the command task.</a>
+  <pre><!-- Default and example go here   -->
+Default:  0
+Example:  ForceBlockMode 1 
+  </pre>
+</blockquote>
+<hr>
+<a name="HeartbeatInterval"><!-- command name as anchor inside quotes -->
+</a>
+<pre><a name="HeartbeatInterval"><b>HeartbeatInterval <font color="red">nsec</font>                             Earthworm Setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="HeartbeatInterval"><!-- command description goes here -->
+Defines the number of seconds, <font color="red">nsec</font>, between
+TYPE_HEARTBEAT messages issued by k2ew. </a>
+  <pre><!-- Default and example go here   -->
+<a name="HeartbeatInterval">Default:  none<br>Example:  HeartbeatInterval 30<br></a></pre>
+</blockquote>
+<hr>
+<a name="HighTempAlarm"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HighTempAlarm"><b>HighTempAlarm <font color="red">N</font>                          K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="HighTempAlarm"><!-- command description goes here -->
+Sets the threshold for the K2 high temperature to <font color="red">N</font>
+tenths
+of a degree C. That is, for an alarm at 30 C, use a setting of 300
+here.
+When this threshold is exceeded, k2ew sends a status message to
+statmgr,
+which can be configured to send email or pages. </a>
+  <pre><!-- Default and example go here   -->
+<a name="HighTempAlarm">Default:  1000   # (for an alarm at 100 C, essentially no alarm)<br>Example:  HighTempAlarm 350  # For an alarm at 35.0 C<br></a></pre>
+</blockquote>
+<hr>
+<a name="InvPolFlags"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="InvPolFlags"><b>InvPolFlags <font color="red">flags-list</font>                   K2 Configuration<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="InvPolFlags"><!-- command description goes here -->
+This command may be used instruct 'k2ew' to invert the polarity of the
+data
+values received from the K2 for any given channel before sending them
+to the
+Earthworm ring buffer. The <font color="red">flags-list</font>
+argument must
+contain one or more flag values (0 or 1), separated by spaces or
+commas. Each
+position in the list corresponds to a channel (or stream) in the K2. A
+value
+of 1 instructs 'k2ew' to invert the polarity of the data values; a
+value of 0
+instructs 'k2ew' to leave the data values unchanged. The polarity
+inversion
+is accomplished by multiplying each data value by -1. </a>
+  <pre><!-- Default and example go here   --><br><a name="InvPolFlags">Default:  (No data values are polarity-inverted)<br>Example:  InvPolFlags 1,0,1<br><br></a></pre>
+</blockquote>
+<hr style="width: 100%; height: 2px;">
+<pre><a name="LCFlag"></a><br><br></pre>
+<pre><b>LCFlag <font color="red">switch</font>                           Earthworm Setup</b><br><br></pre>
+<blockquote>Indicator for action on missing <a href="ChannelNames">ChannelNames</a>
+and LocationNames. A value of 1 for the switch will use the default
+location code and channel code if none found in the k2ew configuration.
+A value of 2 will cause the program to exit with error if any data
+channel is not assigned in the ChannelName and LocationName commands.
+  <blockquote><!-- command description goes here -->
+    <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  LCFlag   <br></pre>
+  </blockquote>
+  <blockquote></blockquote>
+</blockquote>
+<hr style="width: 100%; height: 2px;">
+<pre><a name="LocationNames"></a><br><br><span style="font-family: mon;"><span
+ style="font-weight: bold;">LocationNames</span></span><b> <span
+ style="color: rgb(255, 0, 0);">loc,loc,loc</span>                 Earthworm Setup</b><br><br><br></pre>
+<blockquote>This command if present will assign location codes to the
+TRACEBUF2 packets as specified per channel. This should be a comma
+separated list of location codes. Otherwise, the default location code
+will be assigned "--".
+  <blockquote><!-- command description goes here -->
+    <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  LocationNazmes   01,01,01<br></pre>
+  </blockquote>
+  <pre><br></pre>
+</blockquote>
+<blockquote></blockquote>
+<hr>
+<a name="LogFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="LogFile"><b>LogFile <font color="red">switch</font>                           Earthworm Setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="LogFile"><!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk. If <font
+ color="red">switch</font> is 0, no log file will be written. If <font
+ color="red">switch</font> is non-zero, k2ew will write daily log
+file(s) called nnnnnxx.log_yyyymmdd where nnnnn is the name of the
+configuration file
+(with the suffix '.d' removed), xx is k2ew's module id (set with </a><a
+ href="#ModuleId">ModuleId</a> command) and yyyymmdd is the current UTC
+date (ex: 19960123) on the system clock. The file(s) will be written in
+the EW_LOG directory (environment variable).
+  <p>The log file is particularly useful for k2ew because it records <a
+ href="#StatusInterval">status</a> and event messages sent by the K2.
+These
+messages also appear on the k2ew console window when running on Windows
+2000. </p>
+  <pre><!-- Default and example go here   -->
+Default:  none
+Example:  LogFile   1
+  </pre>
+</blockquote>
+<hr>
+<a name="LowBattAlarm"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="LowBattAlarm"><b>LowBattAlarm <font color="red">N</font>                           K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="LowBattAlarm"><!-- command description goes here -->
+Sets the low battery voltage alarm threshold to <font color="red">N</font>
+tenths of a volt. When this threshold is exceeded, k2ew sends a status
+message to statmgr, which can be configured to send email or pages. The
+K2 reports its
+battery voltage in the </a><a href="#StatusInterval">status</a>
+message. When the
+K2 is powered from external sources, it reports the voltage as '0'. The
+actual
+battery voltage is reported only when the K2 is running off the
+internal battery. See the K2 User Manual for recommended battery
+voltages and
+maintenance.
+  <pre><!-- Default and example go here   -->
+Default:  -1    #(no alarm)
+Example:  LowBattAlarm 110  # (for an alarm at 11.0 Volts.)
+  </pre>
+</blockquote>
+<hr>
+<a name="LowTempAlarm"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="LowTempAlarm"><b>LowTempAlarm <font color="red">N</font>                           K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="LowTempAlarm"><!-- command description goes here -->
+Sets the threshold for the K2 low temperature to <font color="red">N</font>
+tenths
+of a degree C. That is, for an alarm at 20 C, use a setting of 200
+here.
+When this threshold is exceeded, k2ew sends a status message to
+statmgr,
+which can be configured to send email or pages. </a>
+  <pre><!-- Default and example go here   -->
+<a name="LowTempAlarm">Default:  -1000   # (for an alarm at -100 C, essentially no alarm)<br>Example:  LowTempAlarm 150  # For an alarm at 15.0 C<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxBlkResends"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxBlkResends"><b>MaxBlkResends <font color="red">N</font>                           K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="MaxBlkResends"><!-- command description goes here -->
+Sets the maximum number of times a resend request may be sent to the K2
+asking for a given packet. </a>
+  <pre><!-- Default and example go here   -->
+<a name="MaxBlkResends">Default:  4<br>Example:  MaxBlkResends 3<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxReqPending"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxReqPending"><b>MaxReqPending <font color="red">N</font>                           K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="MaxReqPending"><!-- command description goes here -->
+Sets the maximum for the total number of data blocks upon which resend
+requests may be pending to the K2 at any given time. Once
+'MaxReqPending'
+resend requests is reached, no additional data blocks are requested
+until
+'MaxReqPending'-'ResumeReqVal' or fewer resend requests are pending. </a>
+  <pre><!-- Default and example go here   -->
+<a name="MaxReqPending">Default:  6<br>Example:  MaxReqPending 3<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxRestartAge"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxRestartAge"><b>MaxRestartAge <font color="red">N</font>                           K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="MaxRestartAge"><!-- command description goes here -->
+Sets the maximum acceptable age of the </a><a href="#RestartFile">restart
+file</a>
+to <font color="red">N</font> seconds. When k2ew starts up, it reads
+the restart
+file if it exists. If the restart file is younger than this limit, k2ew
+will
+attempt to resume stream data from the K2 at the last packet k2ew sent
+before last shut down. This will allow the trace data from this K2 to
+be sent to
+earthworm in time-order, though it will be late in arriving at the
+earthworm
+transport <a href="#RingName">ring</a>. <b>MaxRestartAge</b> should
+be less than <a href="#WaitTime">WaitTime</a>.
+For this restart feature to work, the K2 stream
+packet sequence number must not have been reset since k2ew last wrote
+the
+restart file.
+  <p>Because of limitations in the K2, it is recommended that this
+value be limited
+to about 120 seconds. When trying to recover from longer restarts, the
+K2 may not be able to keep up with its processing. The result will be
+gaps in the trace data with no accompanying gaps in packet sequence
+numbers. </p>
+  <pre><!-- Default and example go here   -->
+Default:  0   # turns off use of restart file
+Example:  MaxRestartAge 60  # max age of restart file is 1 minute
+  </pre>
+</blockquote>
+<hr>
+<a name="MinDiskKB"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MinDiskKB"><b>MinDiskKB <font color="red">Na Nb</font>                            K2ew Status and Alarms<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="MinDiskKB"><!-- command description goes here -->
+Sets the alarm thresholds for low disk space for disk A to <font
+ color="red">Na</font> KiloBytes and disk B to <font color="red">Nb</font>
+KiloBytes. When this threshold is exceeded, k2ew sends a status message
+to statmgr, which can be configured to send email or pages. The K2
+reports free disk space in the </a><a href="#StatusInterval">status</a>
+message. Some
+K2s have a disk (actually a PCMCIA solid-state memory device) installed
+only
+in slot 'A'; in that case <font color="red">Nb</font> should be set to
+-1 to
+disable the alarm for that disk.
+  <pre><!-- Default and example go here   -->
+Default:  -1 -1  # For no alarms
+Example:  MinDiskKB 500 -1  # for 500 KB on disk A and no alarm on disk B
+  </pre>
+</blockquote>
+<hr>
+<a name="ModuleId"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ModuleId"><b>ModuleId <font color="red">mod_id</font>                                  Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ModuleId"><!-- command description goes here -->
+Sets the module id for labeling all outgoing trigger, heartbeat, and
+error messages. <font color="red">mod_id</font> is a character string
+(valid strings
+are listed in earthworm.d) that relates to a unique single-byte number.
+In general, a different module ID is needed for each instance of k2ew. </a>
+  <pre><!-- Default and example go here   -->
+<a name="ModuleId">Default:  none<br>Example:  MyModuleId MOD_K2_SEA<br></a></pre>
+</blockquote>
+<hr>
+<a name="Network"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Network"><b>Network <font color="red">net-code</font>                              K2 Configuration<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="Network"><!-- command description goes here -->
+Sets the network name for earthworm trace packets to <font color="red">net-code</font>.
+All earthworm trace packets are identified by
+their station, component, and network names (SCN). K2ew obtains a
+station
+name from the K2. (The K2 is configured separately from k2ew; see the
+K2 User Manual from Kinemetrics.) The <b>StationID</b> command may be
+used to set the
+station name. The K2 may also have its component names configured in
+it. If so,
+k2ew will use these names; otherwise it will name the components "C01",
+"C02",
+etc. (The component names may also be set by the <b>ChannelNames</b>
+command.) The third part of the SCN is set by the <b>Network</b>
+command. </a>
+  <pre><!-- Default and example go here   -->
+<a name="Network">Default:  none<br>Example:  Network NC<br></a></pre>
+</blockquote>
+<hr>
+<a name="OnBattery"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="OnBattery"><b>OnBattery                           K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="OnBattery"><!-- command description goes here -->
+If present, this command enables reporting of "loss of external power"
+alarm.
+The K2 reports battery voltage in its status message. When external
+power is
+provided, the K2 reports battery voltage as zero. Since a real battery
+voltage of zero would not let the K2 do anything, this is reasonable.
+When
+the K2 first reports battery voltage as non-zero (indicating external
+power
+has been lost) k2ew will report this fact if this command is present.
+This
+command applies to both internal and external batteries. But since the
+K2
+does not normally have external power (from a 110 VAC power adapter)
+while
+using an external battery, this command should not be used when using
+an external battery. Any provision for charging an external battery is
+separate
+from the K2 and would not be monitored by k2ew. </a>
+  <pre><!-- Default and example go here   -->
+<a name="OnBattery">Default:      #(no alarm)<br>Example:  OnBattery<br></a></pre>
+</blockquote>
+<hr>
+<a name="RestartComm"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="RestartComm"><b>RestartComm                                 K2ew Status and Alarm Parameters<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="RestartComm"><!-- command description goes here -->
+This command is pertinent only when the 'DontQuit' command is present.
+In this
+case, when 'k2ew' detects a timeout condition (and 'RestartComm' is
+set), the
+communications link to the K2 will be closed and reopened before 'k2ew'
+resumes
+reading data. These actions are logged. </a>
+  <pre><!-- Default and example go here   -->
+<a name="RestartComm">Default:  off<br>Example:  RestartComm<br></a></pre>
+</blockquote>
+<hr>
+<a name="RestartFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="RestartFile"><b>RestartFile <font color="red">filename</font>                              K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="RestartFile"><!-- command description goes here -->
+This command is used to specify the name of the restart file. <font
+ color="red">filename</font> can be an absolute or relative (to
+the
+EW_PARAMS directory) file name. This command, in conjunction with </a><a
+ href="#MaxRestartAge">MaxRestartAge</a> is used to control the
+restart
+mechanism that k2ew uses with the K2. If <font color="red">filename</font>
+is the
+null string (""), or the <b>Restart</b> command is absent, the restart
+mechanism is disabled and now restart file will be written.
+  <p>The restart file name must be unique for each instance of k2ew.
+This is because k2ew reads the station name from this file instead of
+from the K2. If
+this file contains the wrong station name, then the trace data will be
+labeled
+incorrectly. K2ew now requests a 'params' message from the K2 after
+starting
+up with a restart file. If the K2's station name does not match the
+name in the
+restart file, k2ew will write an error message and exit. </p>
+  <pre><!-- Default and example go here   -->
+Default:  ""  # the null string, for no restart file
+Example:  RestartFile "SEA.k2"
+  </pre>
+</blockquote>
+<hr>
+<a name="ResumeReqVal"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ResumeReqVal"><b>ResumeReqVal <font color="red">N</font>                            K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="ResumeReqVal"><!-- command description goes here -->
+Sets the number of pending "waiting" blocks that must be received
+before new
+resend requests are resumed after reaching the 'MaxReqPending' limit. </a>
+  <pre><!-- Default and example go here   -->
+<a name="ResumeReqVal">Default:  2<br>Example:  ResumeReqVal 3<br></a></pre>
+</blockquote>
+<hr>
+<a name="RingName"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="RingName"><b>RingName <font color="red">ring</font>                                      Earthworm setup<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="RingName"><!-- command description goes here -->
+Tells k2ew which shared memory region to use for output. <font
+ color="red">ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in
+earthworm.d) to a
+unique number for the key to the shared memory region. </a>
+  <pre><!-- Default and example go here   -->
+<a name="RingName">Default:  none<br>Example:  RingName WAVE_RING<br></a></pre>
+</blockquote>
+<hr>
+<a name="Speed"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Speed"><b>Speed <font color="red">N</font>                                     K2ew COM and TTY modes<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="Speed"><!-- command description goes here --> Sets
+the serial port speed to <font color="red">N</font> bits per second.
+This speed must match the speed setting of whatever device is connected
+to
+the COM or TTY ports (on Windows 2000 or Unix, respectively.) This may
+be the K2 if it is connected directly to the computer by RS-232 cable,
+or another device
+such as a </a><a href="http://www.lantronix.com">Lantronix</a> MSS100
+for serial
+tunneling over IP. This command is required, and must follow, after
+either
+the <a href="#ComPort">ComPort</a> (on Windows 2000) or the <a
+ href="#TtyName">TtyName</a> (on Unix) commands if they are used.
+  <pre><!-- Default and example go here   -->
+Default:  none
+Example:  Speed 19200
+  </pre>
+</blockquote>
+<hr>
+<a name="StationID"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="StationID"><b>StationID <font color="red">station-name</font>                    K2 Configuration<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="StationID"><!-- command description goes here -->
+Sets the station name for earthworm trace packets to <font color="red">station-name</font>.
+All earthworm trace packets
+are identified
+by their station, component, and network names (SCN). K2ew obtains a
+station
+name from the K2. (The K2 is configured separately from k2ew; see the
+K2 User Manual from Kinemetrics.) When this command is specified, the
+given <font color="red">station-name</font> is used instead. The K2
+may also have its
+component names configured in it. If so, k2ew will use these names;
+otherwise
+it will name the components "C01", "C02", etc. (The component names may
+also
+be set by the <b>ChannelNames</b> command.) The third part of the SCN
+is set by
+the <b>Network</b> command. </a>
+  <pre><!-- Default and example go here   -->
+<a name="StationID">Default:  (The station name configured in the K2)<br>Example:  StationID MIS<br></a></pre>
+</blockquote>
+<hr>
+<a name="StatusInterval"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="StatusInterval"><b>StatusInterval <font color="red">N</font>                           K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="StatusInterval"><!-- command description goes here -->
+Configures k2ew to request a status message from the K2 every <font
+ color="red">N</font> minutes. If configured, the </a><a
+ href="#ExtStatus">extended</a> status message will be requested at the
+same time. The status message from the K2 includes K2 time, battery
+voltage,
+hardware status flag (OK/FAULT), alarm and trigger status, and disk
+status.
+All information from the status message is logged in the k2ew log file
+and printed to the standard-error output stream.
+  <pre><!-- Default and example go here   -->
+Default:  30
+Example:  StatusInterval 10  # Every ten minutes
+  </pre>
+</blockquote>
+<hr>
+<a name="TcpAddr"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="TcpAddr"><b>TcpAddr <font color="red">address</font>                           K2 TCP communications<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="TcpAddr"><!-- command description goes here -->
+Sets the IP <font color="red">address</font> of the network device
+that is
+connected to the serial port of the K2, for TCP communications mode on
+Windows 2000 and Unix. Note that the K2 does not have a network device
+installed,
+this is a separate piece of hardware. This address can be a numerical
+IP
+address, or if your nameserver is configured, a domain name. This
+command can
+only be used with k2ew_tcp. </a>
+  <pre><!-- Default and example go here   -->
+<a name="TcpAddr">Default:  none<br>Example:  TcpAddr moonunit.seismo.podunk.edu<br></a></pre>
+</blockquote>
+<hr>
+<a name="TcpPort"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="TcpPort"><b>TcpPort <font color="red">N</font>                                K2 TCP Communication Mode<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="TcpPort"><!-- command description goes here -->
+Sets TCP port number for the network device connected to the K2 to <font
+ color="red">N</font>. This is the port number for establishing
+communications through the network device to the K2. This command is
+allowed only after the </a><a href="#TcpAddr">TcpAddr</a>, where it is
+required.
+  <pre><!-- Default and example go here   -->
+Default:  none
+Example:  TcpPort 3001
+  </pre>
+</blockquote>
+<hr>
+<a name="TtyName"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="TtyName"><b>TtyName <font color="red">tty</font>                              K2 TTY Communications<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="TtyName"><!-- command description goes here -->
+Sets the TTY device name to <font color="red">tty</font> for
+establishing
+communications to the K2 via a serial port on a Unix computer. This
+command is
+allowed and required only for k2ew_tty on Unix. It could be used when
+the K2
+is connected directly to the computer by an RS-232 cable, or when a
+device
+such as a Lantronix MSS100 is connected to the computer for serial
+tunneling
+over IP. </a>
+  <pre><!-- Default and example go here   -->
+<a name="TtyName">Default:  none<br>Example:  /dev/sts/ttyC29<br></a></pre>
+</blockquote>
+<hr>
+<a name="WaitResendVal"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="WaitResendVal"><b>WaitResendVal <font color="red">N</font>                     K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="WaitResendVal"><!-- command description goes here -->
+Sets the change in the data sequence values (from the K2) that must
+occur before
+a resend request for a given missing packet is reissued to the K2. This
+value
+affects the length of time that 'k2ew' will wait for resend-requested
+packets to
+arrive, and generally equates to seconds. </a>
+  <pre><!-- Default and example go here   -->
+<a name="WaitResendVal">Default:  20<br>Example:  WaitResendVal 50<br></a></pre>
+</blockquote>
+<hr>
+<a name="WaitTime"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="WaitTime"><b>WaitTime <font color="red">N</font>                           K2ew Buffer and Timing<br></b><!-- command args ... -->           <br></a></pre>
+<blockquote><a name="WaitTime"><!-- command description goes here -->
+Sets the maximum time that k2ew will wait for packets to be resent from
+the K2 to <font color="red">N</font> seconds. After this time limit,
+these
+packets will be skipped. K2ew places 'waiting' slots in its internal
+buffer to be filled when it receives the requested packets from the K2.
+Output from k2ew to the transport ring will wait until either the
+requested
+packet is received or the time limit expires for a waiting packet. This
+ensures
+that trace packets are sent to the earthworm ring buffer in time order.
+  </a>
+  <pre><!-- Default and example go here   -->
+<a name="WaitTime">Default:  60<br>Example:  WaitTime 120<br></a></pre>
+</blockquote>
+<hr>
+<a name="sample_config"></a>
+<h2><a name="sample_config"><br>
+3. Sample Configuration File </a></h2>
+<pre><a name="sample_config">#<br># k2ew configuration file<br>#<br># This code receives serial data stream (SDS) packets from the K2 via<br># a TCP/IP port, converts them into Earthworm trace buf messages, and<br># stuffs them into a wave ring.<br>#<br><br>TcpAddr         mss-1           # IP address or domain name of K2 interface<br>TcpPort         3001            # TCP port number of K2 interface<br><br>ModuleId	MOD_K2EW	# module id for this import<br>RingName	WAVE_RING	# transport ring to use for input/output<br><br>LogFile		1		# If 0, don't output to logfile<br><br>HeartbeatInt    30              # Heartbeat interval in seconds<br><br>Network		NC		# Network name for EW msg headers<br><br># Optional commands:<br><br>BasePinno     1001              # Earthworm pin numbers are assigned by<br>                                # adding this base number to the stream <br>                                # number (0 - 5) of each packet <br>                                # default: 0<br><br># RestartFile     "SEA.k2"        # If you want to attempt a K2 restart, give<br>                                # a name for the restart file. It MUST be<br>                                # a unique name for this K2 or gross confusion<br>                                # will result! <br>                                # default: none<br><br>MaxRestartAge   120             # Maximum age of the restart file, in seconds<br>                                # If the restart file is older than this<br>                                # when k2ew restarts, a normal start will <br>                                # be used.<br>                                # Should be less than WaitTime (below)<br>                                # default: 0 (seconds)<br><br>CommTimeout   25000             # If unable to communicate with K2 for X<br>                                # milliseconds, retry socket or terminate<br>                                # default: 5000 (milliseconds)<br><br>WaitTime  120                   # Maximum number of seconds to wait for a<br>                                # packet to be resent from the k2<br>                                # default: 60 (seconds)<br><br>DontQuit                        # Optional command; if present, k2ew will<br>                                # not quit on timeouts. K2ew will quit on<br>                                # errors in any event.<br><br># MaxBlkResends  4                # Maximum number of resend requests per block<br>                                # default: 4<br><br># MaxReqPending  6                # Maximum total number of pending resend requests<br>                                # default: 6<br><br># ResumeReqVal  2                 # Number of pending blocks that must be received<br>                                # before new resend requests are resumed after<br>                                # reaching 'MaxReqPending' limit; default:  2<br><br># WaitResendVal  20               # Number of data sequences between resend requests<br>                                # default: 20<br><br># RestartComm                   # if 'DontQuit' enabled then close and reopen <br>                                # communications to the K2 after a comm timeout<br><br>StatusInterval   30             # Interval in minutes between requests for<br>                                # K2 status (if 0, then no status requests)<br>                                # default: 30 (minutes)<br><br>OnBattery                       # Report when K2 loses external power and is<br>                                # running on battery power.<br>                                # default: do not report<br><br>LowBattAlarm 110                # In tenths of volts, threshold for low<br>                                # battery alarm (if -1, then no alarm)<br>                                # default: -1<br><br>MinDiskKB  500  -1              # Low disk alarm threshold in Kilobytes, for<br>                                # disk A and disk B (if -1, then no alarm)<br>                                # default: -1 -1<br><br>ExtStatus                       # Request extended status with normal status<br>                                # Comment this out for no extended status<br>                                # default: no extended status<br><br>LowTempAlarm  150               # Low temperature alarm threshold, in tenths<br>                                # degree, C; default: -1000<br><br>HighTempAlarm 350               # High temperature alarm threshold, in tenths<br>                                # degree, C; default: 1000<br><br>Debug 0                         # debug level: 0 or commented out for no debug<br>                                # logging; 1 - 4 for increasing verbosity<br>                                # default: no debug output<br></a></pre>
+<hr>
+<center><a name="sample_config"> </a><a href="../modules.html">Module
+Index</a> | <a href="../ovr/k2ew_ovr.html">K2ew Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>Contact: <b>support@isti.com</b><br>
+</body>
+</html>

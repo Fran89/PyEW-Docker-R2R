@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: pick_recorder commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+pick_recorder Configuration File</h1>
+<i>(last revised Sept 1, 2006)</i> </center>
+<p>pick_recorder is a&nbsp; utility for reading in messages from a file
+(in
+binary form) and injecting them into a ring.
+</p>
+<p>Below is a copy of the .d file with detailed notes on each
+parameter
+</p>
+<pre># <br>#                     Configuration File for pick_recorder<br>#<br>MyModId        MOD_PICK_RECORDER<br>InRing           PICK_RING       # Transport ring to find PICK data on,<br>HeartBeatInterval     15         # Heartbeat interval, in seconds,<br>LogFile                1         # 1 -&gt; Keep log, 0 -&gt; no log file<br>                                 # 2 to log to module log but not to stderr/stdout<br>#Debug           0               # OPTIONAL,  0-no debug<br>                                 #            1-basic debug<br>                                 #            2-super debug<br><br><br>#<br># Specify logos of the messages to grab from the InRing.<br># TYPE_PICK2K and TYPE_PICK_SCNL are assumed, therefore only module ID and <br># installation ID need to be specified. Specify as many as necessary.<br>#<br>GetPicksFrom    INST_WILDCARD MOD_WILDCARD  # TYPE_PICK2K (assumed)<br><br><br>#<br># TargetDir - directory where picks will be written<br>#<br>TargetDir ./pick_dir<br><br>     <br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/pick_recorder.html">pick_recorder Overview</a> </center>
+<hr>
+<address> <br>
+Contact: </address>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</body>
+</html>

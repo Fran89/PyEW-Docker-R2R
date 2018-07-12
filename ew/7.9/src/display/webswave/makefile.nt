@@ -1,0 +1,36 @@
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = webswave
+O = $(APP).obj mongoose.obj
+
+HTML = webswave.html
+
+WEBPAGE = -D_HTMLVAR=webswave_html_gz -D_HTMLVARLEN=webswave_html_gz_len
+
+LOCALCFLAGS = -DUSE_WEBSOCKET -D_REENTRANT $(WEBPAGE)  $(GLOBALFLAGS)
+
+EWBIN = $L\libew_mt.lib $L\site.o $L\fleng.o $L\ws_clientII.o \
+        $L\socket_ew_common.obj $L\socket_ew.o $L\swap.o $L\rw_mag.o \
+        $L\rdpickcoda.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+   $(EWBIN) \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(LOCALCFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)*

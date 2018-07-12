@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Modules: CarlTrig overview</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<H1 ALIGN=CENTER>Earthworm Modules: <BR>
+CarlTrig Overview</H1>
+
+<CENTER><P><I>(last revised August 16, 2011)</I> </P></CENTER>
+
+<H2>Introduction</H2>
+
+<P>The pair of modules, <I>carlstatrig</I> and <I>carlsubtrig</I> implement
+Carl Johnson's STA/LTA with subnet coincidence trigger on Earthworm. This
+trigger can be tuned to be a fairly sensitive detection algorithm that
+has rather weak discrimination between noise and seismic signals. </P>
+
+<P> As the names imply, <I>carlstatrig</I> performs trigger calculations
+for one or more stations, while <I>carlsubtrig</I> does the subnet and
+network trigger logic. <I>Carlstatrig</I> writes a TYPE_CARLSTATRIG_SCNL message
+for each station that triggers; these messages are placed on an earthworm
+transport ring. <I>Carlsubtrig</I> reads these station trigger messages
+from the transport ring. Thus there can be more than one <I>carlstatrig</I>
+or <I>carlsubtrig</I> module running at once. Using export_generic/import_generic,
+station trigger messages can be exchanged between different computers and
+installations, allowing great flexibility in the configuration. Provision
+is made for slow delivery of station trigger messages. The subnet calculations
+are performed after a configurable latency period has elapsed. </P>
+
+<P> <I>Carlsubtrig</I> writes a TYPE_TRIGLIST_SCNL message to a transport ring. Among
+other uses, this message is intended to be used for retrieving trace data
+from one or more <I>wave_serverV</I> modules. <I>trig2disk</I> and <I>ora_trace_save</I> are examples of such an application. The TRIGLIST_SCNL message gives event
+start time and duration, as well as a list of stations and the times they
+triggered. </P>
+
+<H2>Carlstatrig</H2>
+
+<P>The station trigger algorithm works as follows. For each configured
+station, the short-term average (STA) of the trace is calculated. The time
+length of the averaging window (STAtime) is one second by default, but can
+optionally be specified by the user.  A weighted average of previous STAs
+is then taken to get the long-term average (LTA) of the trace. The number
+of STAs used to calculate the LTA (LTAtime) is eight by default, but can
+optionally be specified by the user.  LTAtime is the number of STAs over which the
+time-dependent weighting factor used in the averaging decreases by a factor
+of approximately 1/e. In addition to these two `straight' averages,
+there are corresponding rectified averages. The short-term rectified average
+(STAR) is taken from the absolute value of the difference between the trace
+and the LTA, averaged over one second (by default) or optionally over the
+user-specified window length described above. The long-term rectified average
+(LTAR) is a weighted average of previous STARs, calculated in a manner
+analogous to LTA.
+</P>
+
+
+<P> These four averages are combined to determine the station trigger status,
+using a modified version of Carl Johnson's magic formula: </P>
+
+<P> </P>
+
+<PRE>        <I>eta</I> = STAR - Ratio * LTAR - | STA - LTA | - Quiet</PRE>
+
+<P>In its original form this calculation was done in integer arithmetic.
+In that case, the value of Ratio was in the form Enumer / Edenom. The current
+calculations are performed in floating-point arithmetic. This obviates
+the need for some subtle adjustments used in the earlier code, and seems
+to make the algorithm more sensitive. </P>
+
+<P> If <I>eta</I> is greater than 0.0, the station is considered triggered,
+the trigger turns off when eta &lt;= 0.0. When the station trigger turns
+on, one CARLSTATRIG message is sent to the transport ring. When the station
+trigger turns off, another trigger message is sent. This provides some
+redundancy in case one of these messages does not get delivered to <I>carlsubtrig</I>.
+If the `OFF' message is never received, <I>carlsubtrig</I> assumes a (configurable)
+maximum duration for the station trigger. </P>
+
+<H2>Carlsubtrig</H2>
+
+<P>As mentioned above, <I>carlsubtrig</I> reads CARLSTATRIG messages from
+one or more <I>carlstatrig</I> modules and performs the subnet trigger
+logic. One of the configuration files is a list of `subnets' and the stations
+assigned to each. The list also includes the number of stations required
+to trigger each subnet. </P>
+
+<P> As station trigger messages are received by <I>carlsubtrig</I>, they
+are stored in queues by station. <I>Carlsubtrig</I> maintains an internal
+clock which is set a fixed number of seconds (the latency period) behind
+wall-clock (real, system) time. This latency period allows for delayed delivery
+of station trigger messages. <I>Carlsubtrig</I> uses this internal clock
+to compare to station trigger times. Once the station trigger-on or -off
+time is later than the internal clock time, this trigger status change
+is noticed by <I>carlsubtrig</I>. In order for times to be compared between
+machines, all machines should be synchronized within a few seconds or better.
+Xntp (available with Solaris2.6 and also public domain) is a good choice for
+time synchronization. <B>In addition, the system time must be set to data time, i.e. GMT.</B></P>
+
+<P> After the station trigger off time has expired, the station is still
+considered triggered for an additional <I>TimeToLive</I> (configurable).
+This feature is to allow for the difference in travel times of the P-wave
+to each of the stations in a subnet. The idea is that for a subnet to trigger
+for an event, some minimum (configurable) number of its station triggers
+must be on at the same time. The <I>TimeToLive</I> parameter is set to
+provide this coincidence within a subnet. </P>
+
+<P> When any one subnet is triggered, the network becomes triggered and
+an event (TRIGLIST2K) message will eventually be released and optionally.
+The duration of the network trigger depends on the maximum number of subnets
+that trigger, up to a configured maximum trigger length. When the network
+trigger finally expires, then the TRIGLIST2K message is sent to the transport
+ring. All the subnets are reset and the module waits for the next event.
+</P>
+
+<H2>Subnet configuration issues</H2>
+
+<P>In any given network there will usually be several subnets defined with
+many stations appearing in different subnets. Stations which are geographically
+near each other should be grouped in a subnet and these groups should be
+overlapping in such a way that most stations are part of two or three subnets.
+A particularly low-noise station might be included in any subnet more than
+once to let it have a much stronger influence in causing a trigger. If
+telemetry noise is common to several stations it is wise to try and divide
+these stations over several subnets so that that the coincidence of telemetry
+glitches are less likely to cause a trigger. Typical subnets might have
+from 5 to 20 stations and require from 3 to 5 station triggers to cause
+an event trigger. </P>
+
+<H2> Notes from Lynn Dietz on carlstatrig</H2>
+<UL>
+<LI>  <A HREF="carlstatrig.notes">Lynn's Notes on CarlStaTrig</A>
+<LI>  <A HREF="carltrig-mammoth.tuning">CarlStaTrig tuning at Mammoth California</A>
+</UL>
+
+<P>  <A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/carlstatrig_cmd.html">CarlStaTrig
+Commands</A> | <A HREF="../cmd/carlsubtrig_cmd.html">CarlSubTrig Commands</A>
+ <!-- USGS-required stuff at the end -->
+<HR></P>
+
+</B>Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>

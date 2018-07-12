@@ -1,0 +1,469 @@
+.TH "include/nmxp.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp.h \- 
+.PP
+Nanometrics Protocol Library.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'nmxp_base.h'\fP
+.br
+\fC#include 'nmxp_crc32.h'\fP
+.br
+\fC#include 'nmxp_memory.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBNMXP_CONNECT_REQUEST\fP"
+.br
+.RI "\fIBody of ConnectRequest message. \fP"
+.ti -1c
+.RI "struct \fBNMXP_DATA_REQUEST\fP"
+.br
+.RI "\fIBody of DataRequest message. \fP"
+.ti -1c
+.RI "struct \fBNMXP_RAW_STREAM_DATA\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNMXP_MAX_MSCHAN_MSEC\fP   15000"
+.br
+.ti -1c
+.RI "#define \fBNMXP_MAX_SIZE_USERNAME\fP   12"
+.br
+.ti -1c
+.RI "#define \fBNMXP_MAX_FUNC_PD\fP   10"
+.br
+.ti -1c
+.RI "#define \fBTIME_TOLLERANCE\fP   0.001"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBNMXP_BUFFER_FLAG\fP { \fBNMXP_BUFFER_NO\fP =  0, \fBNMXP_BUFFER_YES\fP =  1 }"
+.br
+.RI "\fIFlag for buffered packets. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnmxp_sendConnect\fP (int isock)"
+.br
+.RI "\fISends the message 'Connect' on a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendTerminateSubscription\fP (int isock, \fBNMXP_SHUTDOWN_REASON\fP reason, char *message)"
+.br
+.RI "\fISends the message 'TerminateSubscription' on a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_receiveChannelList\fP (int isock, \fBNMXP_CHAN_LIST\fP **pchannelList)"
+.br
+.RI "\fIReceive message 'NMXP_CHAN_LIST' from a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendAddTimeSeriesChannel\fP (int isock, \fBNMXP_CHAN_LIST_NET\fP *channelList, int32_t shortTermCompletion, int32_t out_format, \fBNMXP_BUFFER_FLAG\fP buffer_flag, int n_channel, int n_usec, int flag_restart)"
+.br
+.RI "\fISends the message 'AddTimeSeriesChannels' on a socket. \fP"
+.ti -1c
+.RI "\fBNMXP_DATA_PROCESS\fP * \fBnmxp_receiveData\fP (int isock, \fBNMXP_CHAN_LIST_NET\fP *channelList, const char *network_code, int timeoutsec, int *recv_errno)"
+.br
+.RI "\fIReceive Compressed or Decompressed Data message from a socket and launch func_processData() on the extracted data. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendConnectRequest\fP (int isock, char *naqs_username, char *naqs_password, int32_t connection_time)"
+.br
+.RI "\fISends the message 'ConnectRequest' on a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_readConnectionTime\fP (int isock, int32_t *connection_time)"
+.br
+.RI "\fIRead connection time from a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_waitReady\fP (int isock)"
+.br
+.RI "\fIWait the message 'Ready' from a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendDataRequest\fP (int isock, int32_t key, int32_t start_time, int32_t end_time)"
+.br
+.RI "\fISends the message 'DataRequest' on a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendRequestPending\fP (int isock)"
+.br
+.RI "\fISends the message 'RequestPending' on a socket. \fP"
+.ti -1c
+.RI "\fBNMXP_CHAN_LIST\fP * \fBnmxp_getAvailableChannelList\fP (char *hostname, int portnum, \fBNMXP_DATATYPE\fP datatype, int(*func_cond)(void))"
+.br
+.RI "\fIGet the list of available channels from a server. \fP"
+.ti -1c
+.RI "\fBNMXP_META_CHAN_LIST\fP * \fBnmxp_getMetaChannelList\fP (char *hostname, int portnum, \fBNMXP_DATATYPE\fP datatype, int flag_request_channelinfo, char *datas_username, char *datas_password, \fBNMXP_CHAN_LIST\fP **pchannelList, int(*func_cond)(void))"
+.br
+.RI "\fIGet the list of the start and end time for the available data for each channel. \fP"
+.ti -1c
+.RI "int \fBnmxp_raw_stream_seq_no_compare\fP (const void *a, const void *b)"
+.br
+.RI "\fIBase function for qsort() in order to sort an array of pointers to pointers to \fBNMXP_DATA_PROCESS\fP. \fP"
+.ti -1c
+.RI "void \fBnmxp_raw_stream_init\fP (\fBNMXP_RAW_STREAM_DATA\fP *raw_stream_buffer, int32_t max_tolerable_latency, int timeoutrecv)"
+.br
+.RI "\fIAllocate and initialize fields inside a \fBNMXP_RAW_STREAM_DATA\fP structure. \fP"
+.ti -1c
+.RI "void \fBnmxp_raw_stream_free\fP (\fBNMXP_RAW_STREAM_DATA\fP *raw_stream_buffer)"
+.br
+.RI "\fIFree fields inside a \fBNMXP_RAW_STREAM_DATA\fP structure. \fP"
+.ti -1c
+.RI "int \fBnmxp_raw_stream_manage\fP (\fBNMXP_RAW_STREAM_DATA\fP *p, \fBNMXP_DATA_PROCESS\fP *a_pd, int(*p_func_pd[NMXP_MAX_FUNC_PD])(\fBNMXP_DATA_PROCESS\fP *), int n_func_pd)"
+.br
+.RI "\fIExecute a list of functions on an chronological ordered array of \fBNMXP_DATA_PROCESS\fP structures. \fP"
+.ti -1c
+.RI "int \fBnmxp_raw_stream_manage_flush\fP (\fBNMXP_RAW_STREAM_DATA\fP *p, int(*p_func_pd[NMXP_MAX_FUNC_PD])(\fBNMXP_DATA_PROCESS\fP *), int n_func_pd)"
+.br
+.RI "\fIExecute a list of functions on remaining \fBNMXP_DATA_PROCESS\fP structures. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Nanometrics Protocol Library. 
+
+Author: Matteo Quintiliani Istituto Nazionale di Geofisica e Vulcanologia - Italy quintiliani@ingv.it
+.PP
+\fBId:\fP
+.RS 4
+\fBnmxp.h\fP,v 1.55 2009-03-11 16:52:32 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NMXP_MAX_MSCHAN_MSEC   15000"
+.SS "#define NMXP_MAX_SIZE_USERNAME   12"
+.SS "#define NMXP_MAX_FUNC_PD   10"
+.SS "#define TIME_TOLLERANCE   0.001"
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBNMXP_BUFFER_FLAG\fP"
+.PP
+Flag for buffered packets. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_BUFFER_NO \fP\fP
+.TP
+\fB\fINMXP_BUFFER_YES \fP\fP
+
+.SH "Function Documentation"
+.PP 
+.SS "int nmxp_sendConnect (int isock)"
+.PP
+Sends the message 'Connect' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendTerminateSubscription (int isock, \fBNMXP_SHUTDOWN_REASON\fP reason, char * message)"
+.PP
+Sends the message 'TerminateSubscription' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIreason\fP Reason for the shutdown. 
+.br
+\fImessage\fP String message. It could be NULL.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_receiveChannelList (int isock, \fBNMXP_CHAN_LIST\fP ** pchannelList)"
+.PP
+Receive message 'NMXP_CHAN_LIST' from a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIpchannelList\fP List of channels. It will need to be freed!
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendAddTimeSeriesChannel (int isock, \fBNMXP_CHAN_LIST_NET\fP * channelList, int32_t shortTermCompletion, int32_t out_format, \fBNMXP_BUFFER_FLAG\fP buffer_flag, int n_channel, int n_usec, int flag_restart)"
+.PP
+Sends the message 'AddTimeSeriesChannels' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIchannelList\fP List of channel. 
+.br
+\fIshortTermCompletion\fP Short-term-completion time = s, 1<= s <= 300 seconds. 
+.br
+\fIout_format\fP Output format. -1 Compressed packets. 0 Uncompressed packets. 0 < out_format, requested output sample rate. 
+.br
+\fIbuffer_flag\fP Server will send or not buffered packets. 
+.br
+\fIn_channel\fP number of channels to add any time 
+.br
+\fIn_usec\fP frequency to add remaining channels (microseconds) 
+.br
+\fIflag_restart\fP reset index for requesting channels. In general, first time 1, then 0.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "\fBNMXP_DATA_PROCESS\fP* nmxp_receiveData (int isock, \fBNMXP_CHAN_LIST_NET\fP * channelList, const char * network_code, int timeoutsec, int * recv_errno)"
+.PP
+Receive Compressed or Decompressed Data message from a socket and launch func_processData() on the extracted data. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIchannelList\fP Channel list. 
+.br
+\fInetwork_code\fP Network code. It can be NULL. 
+.br
+\fItimeoutsec\fP Time-out in seconds 
+.br
+\fIrecv_errno\fP errno value after recv()
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fIPointer\fP to the structure \fBNMXP_DATA_PROCESS\fP on success 
+.br
+\fINULL\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendConnectRequest (int isock, char * naqs_username, char * naqs_password, int32_t connection_time)"
+.PP
+Sends the message 'ConnectRequest' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fInaqs_username\fP User name (maximum 11 characters), zero terminated. 
+.br
+\fInaqs_password\fP Password. 
+.br
+\fIconnection_time\fP Time that the connection was opened.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_readConnectionTime (int isock, int32_t * connection_time)"
+.PP
+Read connection time from a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIconnection_time\fP Time in epoch.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_waitReady (int isock)"
+.PP
+Wait the message 'Ready' from a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendDataRequest (int isock, int32_t key, int32_t start_time, int32_t end_time)"
+.PP
+Sends the message 'DataRequest' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIkey\fP Channel key for which data are requested. 
+.br
+\fIstart_time\fP Start time of the interval for which data are requested. Epoch time. 
+.br
+\fIend_time\fP End time of the interval for which data are requested. Epoch time.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendRequestPending (int isock)"
+.PP
+Sends the message 'RequestPending' on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fISOCKET_OK\fP on success 
+.br
+\fISOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "\fBNMXP_CHAN_LIST\fP* nmxp_getAvailableChannelList (char * hostname, int portnum, \fBNMXP_DATATYPE\fP datatype, int(*)(void) func_cond)"
+.PP
+Get the list of available channels from a server. \fBParameters:\fP
+.RS 4
+\fIhostname\fP host name 
+.br
+\fIportnum\fP port number 
+.br
+\fIdatatype\fP Type of data contained in the channel. 
+.br
+\fIfunc_cond\fP Pointer to function for exit condition from loop.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Channel list. It will need to be freed.
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Returned value will need to be freed. 
+.RE
+.PP
+
+.SS "\fBNMXP_META_CHAN_LIST\fP* nmxp_getMetaChannelList (char * hostname, int portnum, \fBNMXP_DATATYPE\fP datatype, int flag_request_channelinfo, char * datas_username, char * datas_password, \fBNMXP_CHAN_LIST\fP ** pchannelList, int(*)(void) func_cond)"
+.PP
+Get the list of the start and end time for the available data for each channel. \fBParameters:\fP
+.RS 4
+\fIhostname\fP host name. 
+.br
+\fIportnum\fP port number. 
+.br
+\fIdatatype\fP Type of data contained in the channel. 
+.br
+\fIdatas_username\fP DataServer user name. 
+.br
+\fIdatas_password\fP DataServer password. 
+.br
+\fIflag_request_channelinfo\fP Request information about Network. 
+.br
+\fIpchannelList\fP pointer to a pointer of channel list. 
+.br
+\fIfunc_cond\fP Pointer to function for exit condition from loop.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Channel list. It will need to be freed.
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Returned value will need to be freed. 
+.RE
+.PP
+
+.SS "int nmxp_raw_stream_seq_no_compare (const void * a, const void * b)"
+.PP
+Base function for qsort() in order to sort an array of pointers to pointers to \fBNMXP_DATA_PROCESS\fP. \fBParameters:\fP
+.RS 4
+\fIa\fP pointer to a pointer to \fBNMXP_DATA_PROCESS\fP 
+.br
+\fIb\fP pointer to a pointer to \fBNMXP_DATA_PROCESS\fP 
+.RE
+.PP
+
+.SS "void nmxp_raw_stream_init (\fBNMXP_RAW_STREAM_DATA\fP * raw_stream_buffer, int32_t max_tolerable_latency, int timeoutrecv)"
+.PP
+Allocate and initialize fields inside a \fBNMXP_RAW_STREAM_DATA\fP structure. \fBParameters:\fP
+.RS 4
+\fIraw_stream_buffer\fP pointer to \fBNMXP_RAW_STREAM_DATA\fP struct to initialize 
+.br
+\fImax_tolerable_latency\fP Max tolerable latency 
+.br
+\fItimeoutrecv\fP value of time-out within receving packets 
+.RE
+.PP
+
+.SS "void nmxp_raw_stream_free (\fBNMXP_RAW_STREAM_DATA\fP * raw_stream_buffer)"
+.PP
+Free fields inside a \fBNMXP_RAW_STREAM_DATA\fP structure. \fBParameters:\fP
+.RS 4
+\fIraw_stream_buffer\fP pointer to \fBNMXP_RAW_STREAM_DATA\fP struct to initialize 
+.RE
+.PP
+
+.SS "int nmxp_raw_stream_manage (\fBNMXP_RAW_STREAM_DATA\fP * p, \fBNMXP_DATA_PROCESS\fP * a_pd, int(*[])(\fBNMXP_DATA_PROCESS\fP *) NMXP_MAX_FUNC_PD, int n_func_pd)"
+.PP
+Execute a list of functions on an chronological ordered array of \fBNMXP_DATA_PROCESS\fP structures. \fBParameters:\fP
+.RS 4
+\fIp\fP pointer to \fBNMXP_RAW_STREAM_DATA\fP 
+.br
+\fIa_pd\fP pointer to \fBNMXP_DATA_PROCESS\fP struct to insert into the array 
+.br
+\fIp_func_pd\fP array of functions to execute on a single item \fBNMXP_DATA_PROCESS\fP 
+.br
+\fIn_func_pd\fP number of functions into the array p_func_pd 
+.RE
+.PP
+
+.SS "int nmxp_raw_stream_manage_flush (\fBNMXP_RAW_STREAM_DATA\fP * p, int(*[])(\fBNMXP_DATA_PROCESS\fP *) NMXP_MAX_FUNC_PD, int n_func_pd)"
+.PP
+Execute a list of functions on remaining \fBNMXP_DATA_PROCESS\fP structures. \fBParameters:\fP
+.RS 4
+\fIp\fP pointer to \fBNMXP_RAW_STREAM_DATA\fP 
+.br
+\fIp_func_pd\fP array of functions to execute on a single item \fBNMXP_DATA_PROCESS\fP 
+.br
+\fIn_func_pd\fP number of functions into the array p_func_pd 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

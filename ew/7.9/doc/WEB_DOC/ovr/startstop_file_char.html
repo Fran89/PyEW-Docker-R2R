@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE> Earthworm Modules:  Startstop File Characteristics</TITLE>
+</HEAD>
+
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> Startstop File Characteristics</H1>
+<I>(last revised 6 February 1998)</I></CENTER>
+
+<P>
+For a more secure operation Earthworm should be run by a user other than <I>root</I>;
+however, some modules need to have root permissions to set their priority.
+To set it up to do this you should:
+<p>
+Login as 'root'.
+<p>
+	cd /home/earthworm/vX.X/bin
+<P>
+	chown root startstop
+<P>
+	chmod 4775 startstop
+<P>
+You should now be able to run earthworm without being root.
+<P>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+

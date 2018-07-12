@@ -1,0 +1,74 @@
+#!/bin/sh
+# /etc/init.d script to start/stop earthworm under Solaris
+
+# Change USER to the user you want earthworm to run as.
+# Change the value of PARAM_DIR to reflect the earthworm
+# configuration which is to be started at boot time.
+#
+USER=ppicker
+PARAM_DIR=/home/earthworm/run/params
+ENV_FILE=ew_sol_sparc.cmd
+
+case "$1" in
+'start')
+
+        # Verify processes not already running
+
+        PROCESS_LIST="startstop"
+        for PROC in $PROCESS_LIST; do
+        id=`/usr/bin/ps -ef | /usr/bin/grep $PROC | /usr/bin/grep -v grep | /usr/bin/awk '{print $2}'`
+        if test -n "$id"
+        then
+                echo "$PROC already running"
+                exit 1
+        fi
+        done
+
+        # Start up from a known location
+        cd /tmp
+        echo "starting earthworm as $USER"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/$ENV_FILE ] ; then
+                su $USER -c "source $PARAM_DIR/$ENV_FILE >& /dev/null; startstop >& /dev/null &"
+        else
+                echo "$PARAM_DIR/$ENV_FILE file not found. Exiting."
+        fi
+
+        # Start the processes
+
+        ;;
+
+'stop')
+
+        # Stop from a known location
+        cd /tmp
+        echo "Stopping earthworm as $USER"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/$ENV_FILE ] ; then
+                su $USER -c "source $PARAM_DIR/$ENV_FILE >& /dev/null; pau >& /dev/null"
+        else
+                echo  "$PARAM_DIR/$ENV_FILE file not found. Exiting."
+        fi
+
+        ;;
+
+'status')
+
+        # Go to a known location
+        cd /tmp
+        echo "Getting earthworm status"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/ew_sol_sparc.cmd ] ; then
+                csh -c "source $PARAM_DIR/ew_sol_sparc.cmd >& /dev/null; status"
+        else
+                echo  "$PARAM_DIR/ew_sol_sparc.cmd file not found. Exiting."
+        fi
+
+        ;;
+*)
+        echo "Usage: /etc/init.d/earthworm { start | stop | status }"
+        ;;
+esac

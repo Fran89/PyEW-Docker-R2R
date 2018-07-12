@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P> decimate  overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR> Decimate Overview</H1>
+<I>(last revised 12 December, 2008)</I></CENTER>
+<P>
+The Decimate module implements multi-stage filter and decimation routines to
+process wave data (TYPE_TRACEBUF2) coming from the InRing defined in
+decimate.d. Decimated trace messages are written to the OutRing with their
+SCNs changed as specified in decimate.d. The decimated trace message retains
+its TYPE_TRACEBUF2 type, but it (normally) has a new SCNL name.
+<P>
+Decimate uses FIR filters to reduce the incoming wave frequency content down
+to the Nyquist frequency of the output wave. FIR filters have the advantage of
+being strictly causal and stable. However, there is considerable delay
+introduced by a FIR filter. Fortunately FIR filters have linear phase so the
+delay does not change the shape of the wave. The delay will be removed from
+the data by adjusting their timestamps. This adjustment makes the filter
+acausal: small precursory artifacts will be seen in front of impulsive wave
+arrivals. This is an inherent characteristic of FIR filters. See "Of Poles and
+Zeros" by Frank Scherbaum for a method of removing these artifacts.
+<P>
+The decimation is performed as part of the filter routine for efficiency. The
+FIR filter coefficients are determined from the specified decimation rate,
+using the Remez Exchange algorithm. This produces an equi-ripple
+filter. Currently the ripple limits are hard coded to 0.005 in the pass band
+and 0.0031 in the stop band (see decimate.h in the source directory.) The
+foefficients zeroes of each filter, as well as the effective delay, are logged
+on startup. FIR filters have no poles.
+<P>
+<CENTER> <A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/decimate_cmd.html">Decimate Configuration File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,113 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5327 2013-01-31 17:40:05Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.7  2006/11/21 23:03:23  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.6  2006/11/21 22:22:50  stefan
+#     cl to $(CC) $(GLOBALFLAGS)  and include <ntwin32.mak>
+#
+#     Revision 1.5  2003/05/06 20:57:21  lucky
+#     *** empty log message ***
+#
+#     Revision 1.4  2000/08/09 18:36:44  lucky
+#     Added ew2liss and dumpseed to clean_bin directive
+#
+#     Revision 1.3  2000/03/31 21:41:08  lucky
+#     replaced B and L to point to the correct, environment defined, directories
+#
+#     Revision 1.2  2000/03/13 23:50:24  lombard
+#     Removed some unneeded DCC objects
+#
+#     Revision 1.1  2000/03/05 21:46:02  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+all: liss2ew ew2liss
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+D = DCC_SEED\lib
+DCC_INCS = /IDCC_SEED\include /IDCC_SEED\include\seed
+
+EW_LIBS = $L\socket_ew.obj \
+    $L\socket_ew_common.obj \
+    $L\libew_mt.lib $L\swap.obj \
+    $L\mem_circ_queue.obj
+
+DCC_LIBS = $D\seed_data.obj $D\strfuns.obj $D\dataswaps.obj \
+    $D\st_addtotime.obj $D\st_setupdate.obj $D\st_timenorm.obj \
+    $D\steimlib.obj $D\st_unixtimes.obj $D\st_getjulian.obj \
+    $D\st_julian.obj $D\st_getcurrent.obj 
+
+DCC_TIMESTAMP = $D\timestamp
+
+E2L_OBJS = ew2liss.obj e2l_procthrd.obj e2l_server.obj
+
+liss2ew: $B\liss2ew.exe
+
+$B\liss2ew.exe: liss2ew.obj $(DCC_TIMESTAMP)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) liss2ew.obj $(EW_LIBS)\
+   $(DCC_LIBS) -out:$B\liss2ew.exe
+
+ew2liss: $B\ew2liss.exe
+
+$B\ew2liss.exe: $(E2L_OBJS) $(DCC_LIBS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(E2L_OBJS) $(EW_LIBS)\
+   $(DCC_LIBS) -out:$B\ew2liss.exe
+
+dumpseed: $B\dumpseed.exe
+
+DS_LIBS = $D\seed_data.obj $D\strfuns.obj $D\dataswaps.obj \
+    $D\seed_dec_sro.obj $D\seed_dec_cdsn.obj $D\seed_dec_16.obj \
+    $D\seed_dec_32.obj $D\seed_dec_seed.obj $D\seed_dec_ascii.obj \
+    $D\st_addtotime.obj $D\steim_decode.obj $D\bombout.obj \
+    $D\seed_data_dec.obj $D\st_setupdate.obj $D\st_timenorm.obj \
+    $D\steimlib.obj  $D\st_julian.obj $D\st_getcurrent.obj \
+    $D\st_printdate.obj $D\sel_mem.obj $D\wildmatch.obj $D\safemem.obj \
+    $D\itemlist.obj $D\st_parsetime.obj $D\st_timecomp.obj \
+    $D\st_cleandate.obj $D\st_timepar.obj $D\readline.obj 
+
+DS_OBJS = dumpseed.obj readseedport.obj getopt.obj
+
+$B\dumpseed.exe: $(DS_OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(DS_OBJS) \
+   $(DS_LIBS) -out:$B\dumpseed.exe
+
+# added -D_NTSDK to enable definition of getpid() as _getpid() LDD.
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(DCC_INCS) \
+   -D_NTSDK $<
+
+$(DCC_TIMESTAMP):
+    cd DCC_SEED
+    nmake -f makefile.nt all
+    cd ..
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+      cd DCC_SEED
+      emake clean
+
+clean_bin:
+	-del $B\liss2ew* $B\ew2liss* $B\dumpseed*
+
+inc:
+        $(CC) $(GLOBALFLAGS)  /nologo /E -W3 -DCRTAPI1=_cdecl -DCRTAPI2=_cdecl -nologo -D_X86_=1 \
+		-D_WINNT -D_WIN32_WINNT=0x0400 -D_WIN32_IE=0x0300 -DWINVER=0x0400 -Ox -DWIN32  \
+		-D_WIN32 -D_MT -MT /D_INTEL /D_WINNT /Od /Op /IDCC_SEED\include \
+		/IDCC_SEED\include\seed  -D_NTSDK liss2ew.c  > liss2ew.E

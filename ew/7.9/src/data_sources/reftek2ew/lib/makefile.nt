@@ -1,0 +1,31 @@
+# Make all libraries
+
+!include <ntwin32.mak>
+
+all: goreftek gortp goutil
+
+goreftek: FORCE
+	cd reftek
+	nmake -f makefile.nt
+	cd ..
+
+gortp: FORCE
+	cd rtp 
+	nmake -f makefile.nt
+	cd ..
+
+goutil: FORCE
+	cd util 
+	nmake -f makefile.nt
+	cd  ..
+
+clean: FORCE
+	cd reftek
+	nmake -f makefile.nt clean
+	cd ..\rtp
+	nmake -f makefile.nt clean
+	cd ..\util
+	nmake -f makefile.nt clean
+	cd ..
+
+FORCE:

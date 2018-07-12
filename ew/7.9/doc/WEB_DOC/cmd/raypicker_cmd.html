@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: raypicker commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Earthworm Modules: <BR>raypicker Configuration File Commands</H1>
+<I>(last revised June 6, 2006)</I></CENTER>
+
+<p>
+This is the earthworm global phase picker intended for use with
+glass.  It is based on Ray Buland's fortran originally developed
+in the early 1980's.  Its unpublished and the details on how it
+works are left as an exercise for the enterprising student.
+
+<p>
+Example configuration file raypicker.d:<br>
+
+<pre>
+#
+#                     Configuration File for raypicker
+#
+MyModId              MOD_RAYPICKER   # Module Name
+InRing               WAVE_RING       # Transport ring from which to get waveform data
+OutRing              PICK_RING       # Transport ring to which to write output
+HeartBeatInterval    60              # Heartbeat interval, in seconds,
+                                     # WARNING: Heartbeat interval is also used to check on thread status;
+                                     # No NOT MAKE THIS NUMBER SMALLER THAN THE TIME IT TAKES TO
+                                     # PROCESS A MESSAGE OR THE PROGRAM WILL CONSTANTLY RESTART!!!
+                                     # (default min: 15 secs)
+PickIDFile           pickfile        # File containing Pick IDs
+
+# List of SCNLs to include
+# SCNL               JSA VHZ NC --
+SCNL                 JSA VHZ NC
+SCNL                 JEG VHZ NC
+
+# Optional Commands
+LogFile              1               # no logging; 1 = disk and stderr/stdout; 2 = disk only
+Debug                2               # 0-no debug
+                                     # 1 - some debugging
+                                     # 2 - super debug
+MaxSampleRate        101.0           # Maximum sampling rate (default: 101 Hz-
+                                     # NB: make this slightly larger than desired, ie.
+                                     # 101 Hz for 100 Hz data, to allow for minimal
+                                     # tolerance in floating point comparisons in code)
+MaxTriggerSecs       600.0           # Maximum length of trigger (default: 10 minutes)
+MaxGapNoTriggerSecs 1080.0           # Max gap before resetting if no trigger (default: 3 hours)
+MaxGapInTriggerSecs 3600.0           # Max gap when a trigger exists
+QueueSize              500           # Max number of messages to queue (default: 500)
+MaxPreFilters           20           # Max no of prefilters to allow (need at least 2xnumber of different
+                                     #   sampling rates of data expected - one for BB data and one for
+                                     #   data SP; default = 20)
+
+</pre>
+
+<hr>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> | <A HREF="../ovr/raypicker_ovr.html"
+>Raypicker Overview</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>

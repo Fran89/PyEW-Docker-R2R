@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>HOW TO COMPILE REFTEK2 EW</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>How to Compile Reftek2ew</H1>
+<I>(last revised January 13, 1999)</I></CENTER>
+<PRE>
+
+In order to build this program, you need to define the following in
+your earthworm.d file:
+
+RAW_RING       - transport ring for raw packets from the RTP server
+MOD_IMPORT_RTP - module id for this process
+TYPE_REFTEK    - message type for raw RTP server packets
+
+If you want to assign pin numbers, you will need to define them in a
+parameter file.  See import_rtp.d for the specification syntax, and
+see reftek.scn for an example.
+
+All dialog with the RTP server is done via the Refraction Technology
+API and libraries.  You can get a copy of this toolkit from
+
+                    ftp://ftp.reftek.com:/pub/rtp
+
+Install the libraries and include files as per the instructions provided
+with the toolkit.  You will need to specify the installation location in
+your makefile.  See the comments in the makefile appropriate for your
+system.
+</PRE>

@@ -1,0 +1,12 @@
+May 17, 2006
+
+gcf2ew is contributed to the Earthworm distributions in source code form. 
+
+This module has only been tested on Solaris, it might work on Linux.
+
+The gcflib toolkit from ISTI is required to compile this module and the 
+latest version of that is included in the gcf sub directory included
+with this contribution.  Note that gcflib is not provided in source code
+form at this time. Inquire with Guralp Systems if you wish a source code
+copy of gcflib. If you have problems with that, contact ISTI directly
+or go use scream2ew :^)

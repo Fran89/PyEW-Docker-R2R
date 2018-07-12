@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Program: waveman2disk overview</title>
+</head>
+<body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Program: <br>
+Waveman2disk Overview</h1>
+<i>(last revised Jan 11, 2010)</i></center>
+<p>
+<strong>waveman2disk</strong> is a manual, interactive version
+of trig2disk. Its purpose is to save trace data to disk in variuos
+supported formats - currently ah_xdr, sac, pc-suds, seisan, gse, wfdisc, and
+tankplayer.
+Like any good
+earthworm program, it has a configuration file waveman2disk.d allowing
+for extensive configuration. This is where we tell it, among other
+things, which waveservers to interrogate, where and it which format to
+store the trace output,
+</p>
+<p> waveman2disk works in two modes:
+</p>
+<pre>(1) Interactive:  the config file lists the output format <br>      and directory, as well as the channels to save. The user is prompted <br>      for the start and end time of trace data to be saved.<br><br>(2) Trigger-saving: a file, specified in the config file, contains<br>      ascii text of one or more TYPE_TRIGLIST2K messages. These are processed<br>      one at a time, and the trace data of the channels listed in the<br>      TRIGLIST2K message, are saved to disk.<br></pre>
+<p>
+Note on output formats:
+</p>
+<p>The trig2disk module has been extensively re-packaged to allow
+for easier addition and modification of output formats. Basically,
+all functionality dealing with producing output on disk has been moved
+into libsrc/util. The putaway.c file contains entry points
+into the trace writing system. This is where any new output format
+should be added. Associated with it are files like sacputaway.c,
+sudsputaway.c and ahputaway.c that actually implement the writing
+of various output formats to disk.<br>
+</p>
+<p>PSN4 format was added for windows in Earthworm 7.1 (contact <a
+ href="http://www.webtronics.com/">www.webtronics.com</a> for details).<br>
+</p>
+<p>MSEED format was added for solaris in Earthworm 7.1.<br>
+</p>
+</p>
+<p>WFDISC format was added for Linux in Earthworm 7.4.<br>
+wfdisc format can take advantage of a wfdisc params config file which must be
+located at "EW_PARAMS/wfdisc_waveman.d" where EW_PARAMS is the EW_PARAMS env
+variable.  The content of this file is very specific and allows one to specify
+station/channel specific information on chanid, calib, calper, instype and
+segtype, as well alternative locations for .w datafiles and wfdisc consolidation rules.  See the command document for file syntax and formatting<br>
+</p>
+<p>
+</p>
+<p></p>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/waveman2disk_cmd.html">waveman2disk Commands</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Contact: <b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</address>
+</body>
+</html>

@@ -1,0 +1,103 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6262 2015-03-12 07:05:52Z et $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.7  2006/11/21 23:03:30  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.6  2006/06/06 19:20:28  paulf
+#     upgraded for Hydra Block_scnl command
+#
+#     Revision 1.5  2005/11/16 22:47:41  dietz
+#     Modified to include all library objects required by ringdup_scn
+#
+#     Revision 1.4  2004/05/27 17:54:51  dietz
+#     added swap.obj
+#
+#     Revision 1.3  2004/05/27 16:42:09  dietz
+#     Modified to link with genericfilter and scnfilter objects from the
+#     ../export source directory to avoid massive code duplication. This change
+#     instantly gave SCNL support to ringdup* executable.
+#
+#     Revision 1.2  2003/05/06 20:57:25  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/05/24 17:53:07  lucky
+#     Initial revision
+#
+#     Revision 1.1  2000/03/29 16:16:00  whitmore
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For ringdup - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ringdup
+O = $(APP).obj
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+E = ..\export
+INCLUDE=$(INCLUDE);$E
+
+all:
+	emake ringdup_generic
+	emake ringdup_scn
+	emake tbuf2mseed
+	emake mseed2tbuf
+
+ringdup_generic: $O $E\genericfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $E\genericfilter.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj \
+    $L\libew_mt.lib -out:$B\ringdup_generic.exe
+
+ringdup_scn: $O $E\scnfilter.obj 
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $E\scnfilter.obj \
+    $L\mem_circ_queue.obj $L\getsysname_ew.obj $L\swap.obj \
+    $L\libew_mt.lib $L\rdpickcoda.obj $L\libmseed.lib \
+    -out:$B\ringdup_scn.exe
+
+BINARIES=$L\mem_circ_queue.obj $L\getsysname_ew.obj $L\swap.obj \
+	$E\scnfilter.obj $L\libew_mt.lib $L\rdpickcoda.obj
+
+MS_LIB=$L\libmseed.lib
+
+tbuf2mseed: $(BINARIES) tbuf2mseed.obj
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $(BINARIES) tbuf2mseed.obj \
+	$(MS_LIB) -out:$B\tbuf2mseed.exe
+
+tbuf2mseed.obj: ringdup.c
+	$(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) \
+		/c -D_TBUF2MSEED /Fo  ringdup.c
+         move ringdup.obj tbuf2mseed.obj
+
+mseed2tbuf: $(BINARIES) mseed2tbuf.obj
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $(BINARIES) mseed2tbuf.obj \
+	$(MS_LIB) -out:$B\mseed2tbuf.exe
+
+mseed2tbuf.obj: ringdup.c
+	$(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) \
+		/c -D_MSEED2TBUF /Fo  ringdup.c
+         move ringdup.obj mseed2tbuf.obj
+
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+   
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\ringdup_generic* $B\ringdup_scn* $B\mseed2tbuf.exe $B\tbuf2mseed.exe

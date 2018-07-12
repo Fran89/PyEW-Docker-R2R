@@ -1,0 +1,205 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Re: Three questions for al earthwormers -->
+<!--X-From-R13: "Re. Yrag Zvaqdhvfg (Ervfzbybtvfg)" <xragNtvfrvf.nynfxn.rqh> -->
+<!--X-Date: Mon, 26 Jun 2000 17:12:35 &#45;0800 -->
+<!--X-Message-Id: 17336.964738880.29@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Re: Three questions for al earthwormers</TITLE>
+<LINK REV="made" HREF="mailto:kent@giseis.alaska.edu">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00030.html">Date Prev</A>][<A HREF="ew.00031.html">Date Next</A>][<A HREF="ew.00027.html">Thread Prev</A>][<A HREF="ew.00028.html">Thread Next</A>][<A HREF="welcome.html#00029">Date Index</A>][<A HREF="threads.html#00029">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Re: Three questions for al earthwormers</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: Steve Malone &lt;<A HREF="mailto:steve@geophys.washington.edu">steve@geophys.washington.edu</A>&gt;, <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A></LI>
+<LI><em>Subject</em>: Re: Three questions for al earthwormers</LI>
+<LI><em>From</em>: &quot;Dr. Kent Lindquist (Seismologist)&quot; &lt;<A HREF="mailto:kent@giseis.alaska.edu">kent@giseis.alaska.edu</A>&gt;</LI>
+<LI><em>Date</em>: Mon, 26 Jun 2000 17:12:35 -0800</LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+Steve Malone wrote:
+&gt; 
+&gt; I have three problems/questions maybe someone out there can help with:
+&gt; 
+&gt; 
+&gt; 2. Some reasonable way to reconfigure waveservers to change paramters, add
+&gt; channels, remove channels without stoping and starting the entire system. With
+&gt; lots of new stations being installed and our earthworm having lots of
+&gt; inport/export modules its a big long dance for it to shut down everything and
+&gt; come back up everytime a small configuration change needs to be made. Not very
+&gt; robust, no?
+&gt;    Also, on the same topic, waveserver can gets its butt in a ringer if one
+&gt; tries to change channel parameters on it, even removing those tank files, and
+&gt; even if the "ReCreateBadTanks" variable is set.  It will sometimes get so
+&gt; tangled that it either keeps crashing or if it does run it throws out some
+&gt; channels.  The only solution seems to be to remove ALL tanks and start from
+&gt; scratch.
+&gt; 
+&gt; 3. A mini-seed wirter.  Notes from Alex back in winter said something about
+&gt; Lamont contracting for a ew2mseed module.  No word about this since then.
+&gt; Actually, much better for us than a earthworm module that needs to sit on the
+&gt; WAVE_RING would be a stand-alone program to yank traces from waveservers and
+&gt; write mseed files.  Any one have such?
+&gt; 
+
+
+Hello,
+	These problems have been fully solved at least once. I recognize that
+not everyone may want to follow the Alaskan model, however I feel
+compelled to present to those interested that the work has been done. 
+Please forgive me if I repeat two points I've made earlier in order to
+expand on them for this discussion. 
+
+	A short-as-possible technical history may help. The first wave-server,
+written by Will Kohler in 1995 to support our first integration of
+Earthworm and Datascope [Johnson et al., IRIS Newsletter Fall 1995],
+collected, buffered, and distributed packets of multiplexed trace-data
+from the old-style earthworm digitizer. In late 1995 and early 1996 we
+in Alaska recognized our need to incorporate data-streams from digital
+data-sources as well, so we designed the predecessor to the current
+earthworm tracebuf format (different from the current version only by
+the two fields 'quality' and 'pad', which were included at the request
+of the earthworm team). This allowed us to write an on-the-fly
+demultiplexer called ad_demux. In addition, I segmented the wave_server
+tank into mini-tanks, putting the now-demultiplexed packets into a tank
+for each channel. One of the first of our realizations was that we
+needed to write a "stand-alone program to yank traces from waveservers
+and write" ...[insert format here]... "files." This is the archiver
+module I wrote in early 1996. This took 6 months and five full rewrites
+for me to get correct--there are some definite gotchas. The archiver I
+wrote, and have mentioned previously, compartmentalized all the
+data-output routines into a single subroutine-hook. Thus with an
+archiver.d switch I could change the output format from Alaskan AH to
+SAC to raw-data output, with the idea that any other format would be
+easily implemented simply by inserting the desired subroutine in the
+code. The ad_demux module, the wave-server, and the archiver, as I've
+previously mentioned, were submitted to the Earthworm team in November
+1996 for what I assumed was to be inclusion in the next release. As it
+turns out the archiver was never included, the ad_demux module was
+rewritten by the USGS, and the wave_server was rewritten albeit with
+very similar design principles by the USGS and contractors, as I
+understand. Traces of this are still visible as late as the Earthworm
+v3.0 release of February, 1998, where one sees wave-server (the Will
+Kohler Original); wave-serverIII (the USGS rewrite of the multi-tank
+version); and wave-serverIV (an improvement to III). The omitted number
+2 refers to the Alaskan version. I actually have no care whatsoever if
+my software is ignored and rewritten, since it has already achieved its
+main goal, namely to solve Alaskan regional network problems. Yet the
+past does draw attention to the type of coordination problems that the
+Earthworm community may still be having, for example with the
+much-welcomed POSIX-compliance fixes from Chris Wood. Also, simililarity
+in design principles of the wave-server (II and III at least, perhaps II
+and V) may allow the Alaskan archiver still to be useful to somebody as
+a platform for the development of Earthworm archiving in other formats.
+At least that was the intent. 
+
+	In Alaska we have moved on from both our wave-server and our archiver
+due to difficulties echoing those listed by Steve Malone. First, the
+architecture of the wave-server is inherently not dynamic, and the
+import/export utilities are only partially so. In addition, we also
+decided to store data in miniseed format. Of course we could have
+continued to expand the earthworm functions. However, that is an
+extensive excercise. Much dedicated and extensive work already done by
+Dan Quinlan provided the orbserver program for data buffering and it's
+companion program orb2db, which saves data in a variety of formats,
+including miniseed. Unlike my wave-server, and unlike the current
+Earthworm utilities, the orbserver and orb2db are fully dynamic.
+Channels may be added and data-flow paths changed, expanded, or pruned
+without stopping the system at all. Data acquisition may be paused to
+harmlessly remove channels and clean up databases without loss of
+incoming data. Finally, especially with the versions of orb2db running
+for the last couple years, "tangles" [as Steve Malone calls them] are
+virtually nonexistent. Due to these technical advantages, we switched
+from the archiver/waveserver to orbserver and orb2db in late 1997 and
+have been running them since with great reliability. As a clarification
+for those not as familiar with the Alaskan work, Earthworm data are
+easily used with orbserver and orb2db given the small 'glue' utilities
+we have written in Alaska. 
+
+	In order for these points to come across with the neutrality of
+constructive input with which they're intended, I am not selling,
+promoting, or otherwise advocating my software or Antelope software for
+anybody but the Alaskan seismic lab. I do experience a bit of poignancy
+seeing multiple reinventions of the same low-level data-handling tasks
+when there's lots of interesting science to do, making me possibly
+personally remiss for not fully communicating what has been made
+available. I think the software I've written may help address the issues
+Steve Malone raises. Also, I've indeed thrown out what I've written in
+favor of the superior Antelope products. "Superior" to me means that I
+sleep at night and escape on weekends rather than sitting in the lab
+addressing "tangles."  Adressing Steve Malone's issues requires a
+significant outlay of resources, be it tax dollars or for example
+"contracting for a ew2mseed module." Antelope is not free, as
+occasionally pointed out. However nor are contractors, nor is the time
+of the people who will rewrite these functions. If the community expends
+resources to add dynamic capability to the wave-server or rewrite
+another miniseed archiver, it should be with full clarity about why
+those rewrites are necessary rather than buying the solution off the
+shelf. 
+
+Feedback welcome,
+Kent
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+<A  HREF="http://giseis.alaska.edu/Seis/Input/kent/kent.html">http://giseis.alaska.edu/Seis/Input/kent/kent.html</A>
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00030.html">recent discussions</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00031.html">Re: EW Community Center</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00027.html">Re: Three questions for al earthwormers</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00028.html">Responses to my three questions</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00029"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00029"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

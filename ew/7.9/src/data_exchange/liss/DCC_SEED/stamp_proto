@@ -1,0 +1,15 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: stamp_proto 1347 2004-03-17 21:41:31Z lombard $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2004/03/17 21:36:52  lombard
+#     Initial revision
+#
+#
+#
+
+This is a dummy file to help nmake.

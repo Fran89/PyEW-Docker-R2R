@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Earthworm utility: wsSniffer overview</title>
+<body  bgcolor="#ffffff">
+<center><h1>Earthworm utility: <br> wsSniffer Overview</h1>
+<i>(last revised July 24, 2003)</i></center>
+wsSniffer is a utility used for performing diagnostics on a wave_serverV
+server.  It performs two tests.  
+<P>
+First, it makes several requests for data
+from the tank, and determines whether the actual start and end times of the
+returned data are within a tolerable range of the requested start and end
+times.  This range defaults to 100 seconds, but can be changed on the 
+command line.
+<P>
+Second, it reads through the data and looks for gaps.  Gaps are found by
+getting Ascii data from the wave_serverV server with a specified fill value.
+If more than a certian number of samples that match this fill value are found
+sequentially, the gap is reported.  The default number of samples that 
+constitutes a gap is 3, but can be changed on the command line.
+<P>
+Command:<P>
+<blockquote>
+wsSniffer [-sane SANITY_SECONDS] [-mingap MINIMUM_GAP] [-v] IP Port Sta Chan
+</blockquote>
+Command line switches:<P>
+-sane N<P>
+<blockquote>
+  Sets the number of seconds that defines the tolerable range between 
+  requested start/stop and actual start/stop to N.
+</blockquote>
+<P>
+-mingap N<P>
+<blockquote>
+  sets the minimum number of sequential "fill value" samples that should
+  be considered a gap.
+</blockquote>
+-v<P>
+<blockquote>
+  Verbose mode
+</blockquote>
+<p>

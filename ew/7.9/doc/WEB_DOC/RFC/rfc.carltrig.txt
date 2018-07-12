@@ -1,0 +1,213 @@
+---------------------   REQUEST FOR COMMENT    ---------------
+   `CARLTRIG' (produce trigger message based on Carl STA/LTA and subnets)
+                        2/12/98
+
+        Send comments to Brian Moon <brian.d.moon@pnl.gov>
+
+
+CarlTrig Description
+
+
+	CarlTrig is a port of the old, traditional Carl Johnson STA/LTA
+trigger algorith, using the algorithm published in his dissertation.
+
+	Briefly, the algorithm is as follows: The network is divided into any
+number of subnets. A station may belong to any number of subnets. Each
+subnet is assigned a threshold count of triggered stations. If more than
+that number of stations is triggered for any given subnet, an event is
+declared. A station is considered triggered if its short-term average
+exceeds the long-term average my more than a specified ratio. The
+equations include a term which rejects one-sided signals, as commonly
+encountered in voice-grade telephone lines.  An event is defined as
+lasting from a fixed amount of time before the first subnet to trigger,
+to a calculated amount of time after the last subnetwork de-triggers.  A
+subnetwork de-triggers as soon as the number of member stations that are
+currently triggered falls back below the threshold.  Each station
+de-triggers after a fixed time has passed since the short-term over
+long-term average fell back below another threshold value.
+
+	Design considerations included:
+
+	* How to deal with delayed data. The solution was to use a
+user-specified maximum delay time: the algorithm would 'wait' for late
+data up to maximum delay. If tardy data arrived before that, it would be
+included in the triggering logic. If not, the triggering calculations
+would proceed without it.
+
+There was some debate as to whether this was needed, and it not certain
+at this time whether it will be included in the first version.
+
+	* A suggestion has been made that the various STA/LTA parameters should
+be specified for separately for each staition, rather than one global
+set. It has been agreed that the initial version will at least have the
+hooks for this in the code, if not the full feature.
+
+	* One implementation of this algorithm included a subnet-specific
+'contribution' to the trigger on-time. This was to correct for premature
+event termination for large events.
+
+
+Suggestions and questions welcome.
+
+
+
+
+Sample parameter file starts below this line and ends before the line of
+**'s:
+
+
+#
+
+# CarlTrig's Parameter File
+
+#
+
+
+#
+
+#  Basic Earthworm Setup
+
+#
+
+#MyModuleId	MOD_CARLTRIG	# Module id for this instance of CarlTrig 
+
+Debug		1		# Write out debug messages? (0 = No, 1 = Yes)
+
+RingNameIn	WAVE_RING	# Name of ring from which trace data will be
+
+				#   read - REQUIRED.
+
+RingNameOut	PICK_RING	# Name of ring to which triggers will be
+
+				#   written - REQUIRED.
+
+HeartBeatInterval	15	# Heartbeat Interval (seconds).
+
+
+#
+
+# CarlTrig Specific Setup
+
+#
+
+StationFile	"carltrig.sta"	# Name of file containing station information
+-
+
+				#   REQUIRED.
+
+SubnetFile	"carltrig.sub"	# Name of file containing subnet information 
+-
+
+				#   REQUIRED.
+
+MaxGap		15		# Maximum gap between trace data points that
+
+				#   can be interpolated (otherwise restart the
+
+				#   station).
+
+StartLength	100		# Minimum number of trace data points needed to
+
+				#   begin trigger calculations for a station.
+
+PreEventTime	10		# Event start time adjustment (seconds).
+
+PostEventTime	30		# Event end time adjustment (seconds).
+
+
+# List the message logos to grab from transport ring
+
+#              Installation       Module          Message Types
+
+#GetEventsFrom  INST_WILDCARD    MOD_WILDCARD    # TYPE_TRACEBUF
+
+
+***************************************************************************************
+
+Sample .sub file starts below this line and ends before the line of
+**'s:
+
+
+# Subnet definition file for the CarlTrig Earthworm module
+
+# carl_trig.sub - 98/02/12
+
+# QA subnet list
+
+#
+
+# First non-comment line contains CarlTrig parameters: enumer, edenom,
+equiet
+
+9 4 4
+
+# Rest of the non-comment lines contain subnet information
+
+# Subnet Minimum to List of Station
+
+# Number Trigger    Codes
+
+# ------ ---------- ---------------
+
+  0      3          HGS HJG KGM WBS KHB MBO JMG NMC
+
+  1      4          HGW KGM MGL CAS MEM BSM MBO MRC JSA NLH NMW
+
+  2      3          JBM MRF NBP JSC NAD NLH NMC
+
+  3      5          MCU BCK MLR JJR JPL BEN JSA POC NLN LPG MDC KBS
+
+
+***************************************************************************************
+
+Sample station file starts below this line and ends before the line of
+**'s:
+
+
+#
+
+#   carl_trig.sta
+
+#      98/02/12
+
+#
+
+#   QA station list
+
+#
+
+# Arbitrary Channel Station Component Channel Trigger
+
+#           Number  Code    Code      Code    Time To Live
+
+# --------- ------- ------- --------- ------- ------------
+
+  station     0     HGS     VHZ       NC      10
+
+  station     1     HGW     VHZ       NC      10
+
+  station     2     HJG     VHZ       NC      10
+
+  station     3     HJS     VHZ       NC      10
+
+  station     4     KGM     VHZ       NC      10
+
+  station     5     KSX     VHZ       NC      10
+
+  station     6     CPI     VHZ       NC      10
+
+  station     7     LSF     VHZ       NC      10
+
+  station     8     WBS     VHZ       CI      10
+
+  station     9     KPK     VHZ       WR      10
+
+  station    10     MGL     VHZ       WR      10
+
+  station    11     ORV     VHZ       WR      10
+
+  station    12     GUID    ---       NC      10
+
+  station    13     PHO     VHZ       NC      10
+
+  

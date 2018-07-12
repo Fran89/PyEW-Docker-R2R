@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: q2ew overview</TITLE>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Q2ew Overview</H1>
+<I>(last revised November 21, 2006)</I></CENTER>
+
+<P>
+q2ew is a Quanterra/COMSERV data feeding program for Earthworm. The utility
+was written for the Alaska Tsunami Warning Center's Quanterra Q730 digitizers,
+but should work with any Quanterra digitizer that is COMSERV compatible.
+COMSERV is a software freeware 
+product developed by Quanterra and other Quanterra users. It is a 
+middleware software layer
+between the digitizer and the data acquisition software (clients). 
+In short, COMSERV insulates the
+developer/user from changes to the QSL communications protocol and acts as a
+multithreaded switch for client processes to access data from the digitizers.
+<P>
+COMSERV must be configured on the same host as the Earthworm system in order
+for this program to work.   Berkeley is the ftp repository for the 
+<A HREF="ftp://quake.geo.berkeley.edu/pub/quanterra/"> COMSERV software.</A>
+Please refer to the COMSERV documentation on how to correctly install and
+configure this system.
+<P>
+q2ew is designed as a multi-threaded program. The main thread loops polling
+the COMSERV shared memory region, using COMSERV cs_scan() calls, for new 
+packets arriving from digitizers. Once data arrives, the main thread converts
+the data into an earthworm trace buffer and ships the data off to the 
+earthworm transport ring. The second thread, the heartbeat,
+checks that data are coming in from COMSERV in the main thread 
+and issues regular 
+heartbeats. Should there be a fatal problem with the COMSERV server for any of
+the stations, the heartbeat thread detects this 
+and a message is sent to statmgr 
+and the process dies. The cs_status() call is a critical one to adjust to
+fine tune the program to modify the severity of reactions to problems/changes
+observed with COMSERV.
+All of the fatal errors will cause q2ew to die, but some of the recoverable
+errors are now set to cause q2ew to die (in particular CSCR_DIED). 
+As we gain more experience with the robustness of COMSERV, 
+we can adjust the recoverable errors to simply provide
+status messages, but for now lets play it cautious.
+<P>
+The program q2ew has been tested on Solaris and Linux platforms.
+<P>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../cmd/q2ew_cmd.html">q2ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>support@isti.com</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,219 @@
+diemsg.c
+        BOOL diemsg(char *file, int line, char *date)
+
+seed_blockettes.c
+        BLOCKETTE *CreateBlockette()
+        VOID SetupBlockette(BLOCKETTE *InBlock,int BlockType,int BlockVer)
+        VOID ExtendBlockette(BLOCKETTE *InBlock,ULONG Increments)
+
+seed_comments.c
+        COMMENT_ENTRY *InitCom()
+        void LinkInStatCom(STATION_LIST *instat,COMMENT_ENTRY *incom)
+        void LinkInChanCom(CHANNEL_LIST *inchan,COMMENT_ENTRY *incom)
+        void AddStatCom(STATION_LIST *inroot,STDTIME startime,STDTIME endtime,
+	   int comnum,ULONG level)
+        void AddChanCom(CHANNEL_LIST *inroot,STDTIME startime,STDTIME endtime,
+	   int comnum,ULONG level)
+        
+seed_comp.c
+        ULONG _SD_SetCtlType(int pos,ULONG val,ULONG *outctl)
+        VOID _SD_ClearContext(SD_Context *context)
+        SD_Context *SD_CreateChannel(UBYTE *network,
+           UBYTE *station, UBYTE *location, UBYTE *channel, int subchan,
+           VOID (*flushroutine)(VOID *), int format, int len, LONG ms_sam)
+        VOID SD_DestroyChannel(SD_Context *context)
+        VOID SD_PutSample(SD_Context *context, LONG delta, LONG sample, 
+           BOOL flush)
+        VOID SD_FlushRecord(SD_Context *context)
+        VOID SD_PutData(SD_Context *context, STDTIME datetime, int numsamps,
+           LONG *dataarray)
+        
+seed_data.c
+        void SH_Big_Endian()
+        void SH_Little_Endian()
+        WORD SH_SWAP_WORD(WORD i)
+        LONG SH_SWAP_LONG(LONG i)
+        STDFLT SH_Cvt_Float(NETFLT inflt)
+        STDTIME SH_Cvt_Time(NETTIME intim)
+        STDTIME SH_Start_Time(SEED_DATA *pblk)
+        int SH_Number_Samples(SEED_DATA *pblk)
+        int SH_Start_Data(SEED_DATA *pblk)
+        STDFLT SH_Record_Rate(SEED_DATA *pblk)
+        LONG SH_Record_Time(SEED_DATA *pblk)
+        LONG SH_Sample_Time(SEED_DATA *pblk)
+        STDFLT SH_Sample_FltTime(SEED_DATA *pblk)
+        STDTIME SH_Cal_Samp_Time(SEED_DATA *inrec, int samn)
+        STDTIME SH_End_Time(SEED_DATA *pblk)
+        LONG SH_Record_Number(SEED_DATA *pblk)
+        VOID SH_Get_Idents(SEED_DATA *pblk,
+           char *net, char *stat, char *loc, char *chan)
+        VOID SH_Get_Spankey(SEED_DATA *pblk, char *retspan)
+        
+seed_data_dec.c
+        int SH_Data_Decode(char *format, long data[], SEED_DATA *inrec,int
+        swdata)
+        WORD SH_DEC_SWAP_WORD(WORD i,int swdata)
+        LONG SH_DEC_SWAP_LONG(LONG i,int swdata)
+        
+seed_dec_16.c
+        int SH_Decode_16(long data[], SEED_DATA *inrec,int swdata)
+        
+seed_dec_32.c
+        int SH_Decode_32(long data[], SEED_DATA *inrec,int swdata)
+        
+seed_dec_ascii.c
+        int SH_Decode_ASCII(long data[], SEED_DATA *inrec,int swdata)
+
+seed_dec_cdsn.c
+        int SH_Decode_CDSN(long data[], SEED_DATA *inrec,int swdata)
+        
+seed_dec_seed.c
+        int SH_Decode_SEED(long data[], SEED_DATA *inrec,int swdata,int level)
+        int SH_Decode_SEED_S2(long data[], SEED_DATA *inrec,int swdata)
+        int SH_Decode_SEED_S3(long data[], SEED_DATA *inrec,int swdata)
+        int SH_Decode_SEED_S1(long data[], SEED_DATA *inrec,int swdata)
+        
+seed_dec_sro.c
+        int SH_Decode_SRO(long data[], SEED_DATA *inrec,int swdata)
+        
+seed_dicts.c
+        ABBREV *SearchAbbrev(char *inkey)
+        ABBREV *SearchAbbrevIdx(LONG inkey)
+        ABBREV *InitAbbrev()
+        void LinkInAbbrev(ABBREV *inabbrev)
+        void AddAbbrev(char *key,char *comment)
+        VOID CountAbbrev(ABBREV *inabbrev)
+        UNIT *SearchUnit(char *inkey)
+        UNIT *SearchUnitIdx(LONG inkey)
+        UNIT *InitUnit()
+        void LinkInUnit(UNIT *inunit)
+        void AddUnit(char *key,char *comment)
+        VOID CountUnit(UNIT *inunit)
+        COMMENT *SearchComment(int inid)
+        COMMENT *InitComment()
+        void LinkInComment(COMMENT *incomment)
+        void AddComment(int comnum,char class,char *text,char *level)
+        VOID CountComment(COMMENT *incomment)
+        FORMAT *SearchFormat(char *inkey)
+        FORMAT *SearchFormatIdx(LONG inkey)
+        FORMAT *InitFormat()
+        void LinkInFormat(FORMAT *informat)
+        void AddFormat(char *key,char *name,int family,
+        VOID CountFormat(FORMAT *informat)
+        ZEROS_POLES *SearchZerosPoles(char *inkey)
+        void LinkInZeroPoleDict(ZEROS_POLES *inpz)
+        COEFFICIENTS *SearchCoefficients(char *inkey)
+        void LinkInCoefficientsDict(COEFFICIENTS *incoeff)
+        DECIMATION *SearchDecimation(char *inkey)
+        void LinkInDecimationDict(DECIMATION *indm)
+        
+seed_membase.c
+        VOID InitializeVolume(STDTIME starttime,STDTIME endtime)
+        
+seed_misc.c
+        char *FixKey(char *inkey)
+        char *OKNull(char *inc)
+        
+seed_responses.c
+        ZEROS_POLES	*InitZerosPoles(int numzeros,int numpoles)
+        COEFFICIENTS	*InitCoefficients(int numnum,int numden)
+        DECIMATION	*InitDecimation()
+        SENSITIVITY	*InitSensitivity(int numcals)
+        void DeleteResponses(CHANNEL_TIMES *inchan, RESPONSE *inresp)
+        void InsertResponse(CHANNEL_TIMES *inchan, RESPONSE *inresp)
+        RESPONSE *AddResponse(CHANNEL_TIMES *inchannel,char intype,
+        void LinkInZerosPoles(CHANNEL_TIMES *inchannel,ZEROS_POLES *inzero, 
+        void LinkInCoefficients(CHANNEL_TIMES *inchannel,COEFFICIENTS *incoef,
+        void LinkInDecimation(CHANNEL_TIMES *inchannel,DECIMATION *indeci,
+        void LinkInSensitivity(CHANNEL_TIMES *inchannel,SENSITIVITY *insens,
+        RESPONSE *DupResponse(RESPONSE *inresp)
+        VOID CopyResponses(RESPONSE *instart,
+        int ResponseValue(RESPONSE *inresp)
+        
+seed_statchan.c
+        STATION_LIST *SearchStation(char *innet,char *instat)
+        STATION_TIMES *SearchStationTime(STATION_LIST *instation, 
+        STATION_ENTRY *InitStationEntry()
+        STATION_LIST *CreateStation(char *net, char *stat)
+        VOID BreakStationTimes(STATION_LIST *instation, STDTIME timetobreak)
+        STATION_TIMES *LinkInStation(STATION_LIST *instation,
+        CHANNEL_LIST *SearchChannel(STATION_LIST *station,char *loc,char
+        *chan)
+        CHANNEL_TIMES *SearchChannelTime(CHANNEL_LIST *inchannel, 
+        CHANNEL_LIST *CreateChannel(STATION_LIST *stat, char *loc, char *chan)
+        CHANNEL_ENTRY *InitChannelEntry()
+        VOID ChanText(CHANNEL_LIST *chan,char *buf)
+        BOOL ChanComp(CHANNEL_LIST *chan1,CHANNEL_LIST *chan2)
+        void BreakChannelTimes(CHANNEL_LIST *inchannel, STDTIME timetobreak)
+        CHANNEL_TIMES *LinkInChannel(CHANNEL_LIST *inchannel,
+        ULONG CnvChanFlags(char *inflags)
+        VOID ChannelModifiedDate(CHANNEL_LIST *chan, STDTIME mod, 
+        
+seed_write.c
+        LOGICAL_RECORD *CreateRecordBuff(int creexp,BOOL (*writertn)())
+        VOID AppendBlockette(BLOCKETTE *InBlock,char *DataBuf,int DataLen)
+        VOID PackString(BLOCKETTE *InBlock,char *InStr,int MaxStr,BOOL Upcase)
+        VOID PackChar(BLOCKETTE *InBlock,char InChar,BOOL Upcase)
+        VOID PackVariable(BLOCKETTE *InBlock,char *InStr,int MaxStr,BOOL
+        Upcase)
+        BOOL PackInteger(BLOCKETTE *InBlock,int InNum,int FldLen,BOOL Signed)
+        BOOL PackFixed(BLOCKETTE *InBlock,VOLFLT InFlt,
+           int FldLen,int Decpls,BOOL Signed)
+        VOID PackExponent(BLOCKETTE *InBlock,VOLFLT InFlt,int FldLen)
+        VOID PackTime(BLOCKETTE *InBlock,STDTIME InTime)
+        VOID FlushRecord(LOGICAL_RECORD *inrecord)
+        VOID NoiseRecord(LOGICAL_RECORD *inrecord)
+        VOID NewHeader(LOGICAL_RECORD *inrecord,char headtype)
+        VOID RecordPack(BLOCKETTE *inblock,LOGICAL_RECORD *inrecord)
+        BOOL VolumeBlockette(BLOCKETTE *inblock,LOGICAL_RECORD *inrecord,
+           BOOL station, char *organization, char *label)
+        BOOL AbbrevBlockette(ABBREV *inabbrev,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrecord)
+        BOOL DumpAbbrevBlockettes(BLOCKETTE *blockbuf,LOGICAL_RECORD *inrecord)
+        BOOL PackAbbrev(BLOCKETTE *inblock,ABBREV *inabbrev)
+        BOOL UnitBlockette(UNIT *inunit,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrecord)
+        BOOL DumpUnitBlockettes(BLOCKETTE *blockbuf,LOGICAL_RECORD *inrecord)
+        BOOL PackUnit(BLOCKETTE *inblock,UNIT *inunit)
+        BOOL CommentBlockette(COMMENT *incomment,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrecord)
+        BOOL DumpCommentBlockettes(BLOCKETTE *blockbuf,LOGICAL_RECORD *inrecord)
+        BOOL PackComment(BLOCKETTE *inblock,COMMENT *incomment)
+        BOOL FormatBlockette(FORMAT *informat,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrecord)
+        BOOL DumpFormatBlockettes(BLOCKETTE *blockbuf,LOGICAL_RECORD *inrecord)
+        BOOL PackFormat(BLOCKETTE *inblock,FORMAT *informat)
+        BOOL SetupDictionaryIDs()
+        BOOL StationBlockette(STATION_LIST *instation,
+           STATION_TIMES *intime, BLOCKETTE *WriteBlock, 
+           LOGICAL_RECORD *WriteRec)
+        BOOL ChannelBlockette(CHANNEL_LIST *inchannel,
+           CHANNEL_TIMES *intime, STATION_TIMES *stattime,
+           BLOCKETTE *WriteBlock, LOGICAL_RECORD *WriteRec)
+        BOOL SensBlockette(SENSITIVITY *insens,int stage,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrec) 
+        BOOL DeciBlockette(DECIMATION *indeci,int stage,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrec)
+        BOOL ZerosBlockette(ZEROS_POLES *inzero, int stage,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrec)
+        BOOL CoefBlockette(COEFFICIENTS *incoef, int stage,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrec)
+        BOOL RespBlockette(RESPONSE *inresp,
+           BLOCKETTE *inblock,LOGICAL_RECORD *inrec)
+        BOOL ComBlockette(COMMENT_ENTRY *incom,BLOCKETTE *inblock,
+           LOGICAL_RECORD *inrec,BOOL station)
+
+sel_mem.c
+        VOID SelectInit(struct sel3_root *root)
+        VOID SelectList(struct sel3_root *root)
+        VOID SelectLoadup(struct sel3_root *root,char *infilename)
+        BOOL SelectStatInteresting(struct sel3_root *root,
+           char *network,char *station, char *location,char *channel,
+	   ITEMLIST **taglist)
+        BOOL SelectChainInteresting(struct sel3_chain *root,
+           char *network,char *station, char *location,char *channel,
+	   ITEMLIST **taglist)
+        BOOL SelectDateInteresting(struct sel3_root *root,
+           STDTIME btime,STDTIME etime,	char *network,char *station,
+	   char *location,char *channel, ITEMLIST **taglist)
+

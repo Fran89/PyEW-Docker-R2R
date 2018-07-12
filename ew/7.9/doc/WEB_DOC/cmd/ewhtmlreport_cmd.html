@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: ewhtmlreport commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+ewhtmlreport Configuration File Commands</h1>
+<i>(last revised October 27, 2012)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+4. <a href="#standalone">Standalone mode</a><br>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, ewhtmlemail reads the configuration file named on the command
+line. Commands in this file set up all parameters. In the control file,
+lines may begin with a valid ewhtmlreport command (listed below) or with one
+of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @pick_ew.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).<br>
+</a></p>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre>
+<a name="example">
+#
+# EWHTMLREPORT CONFIGURATION FILE
+#
+ MyModuleId     MOD_EWHTMLREPORT       # This instance of ewhtmlreport
+ InRing         HYPO_RING              # Transport ring to send heartbeat messages
+ HeartbeatInt   30                     # Heartbeat interval in seconds
+ LogFile        1                      # If 0. don't write logfile; if 1. do
+ Debug          1                      # If 1, print debugging msgs
+ 
+ MaxMessageSize 16384                  # Maximum size of HYP2000ARC or MAGNITUDE files
+ site_file      memphis2.hinv          # hypoinverse file to locate stations
+ ArcFolder      arc                    # Folder where HYP2000ARC files are stored
+ MagFolder      mag                    # Folder where MAGNITUDE files are stored
+ HTMLFile       temp/report            # Folder and file format of html reports
+ ReportInt      1                      # Interval between reports, in days
+ ReportTime     -1                     # UTC time of the report 0 - 23. -1 means send at start time
+ ReportPeriod   200                    # Number of days considered for each report
+                                       # Beware that this amy lead to VERY large files
+ MaxDist        10                     # Maximum distance in km considered for the average event count per station (10)
+
+</a>
+</pre>
+<a name="function">
+</a>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by ewhtmlreport, grouped by the function
+they influence. Not all of the commands are required and they may be
+specified in any order.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: -->
+</a></p>
+<pre>
+<a name="function">	Earthworm system setup:</a>
++		<a href="#MyModuleId">MyModuleId</a>	Module id (mandatory)
++		<a href="#InRing">InRing</a>		Shared memory region for input (mandatory)
++		<a href="#HeartBeatInt">HeartBeatInt</a> 	Interval between heartbeats (mandatory)
++		<a href="#MaxMessageSize">MaxMessageSize</a> 	Maximum size of HYP2000ARC or MAGNITUDE files
+
+<a name="function">	Processing:</a>
++		<a href="#site_file">site_file</a> 	Hypoinverse stations file (mandatory)
++		<a href="#HTMLFile">HTMLFile</a> 	Output folder and prefix for html report (mandatory)
++		<a href="#ArcFolder">ArcFolder</a> 	Folder of HYP2000ARC files (mandatory)
++		<a href="#MagFolder">MagFolder</a> 	Folder of MAGNITUDE files (optional)
++		<a href="#HTMLBaseFile">HTMLBaseFile</a>	HTML file used as base for the html reports (mandatory)
++		<a href="#ReportInt">ReportInt</a>	Interval in days between reports (optional)
++		<a href="#ReportTime">ReportTime</a>	UTC time when each report is generated (mandatory)
++		<a href="#ReportPeriod">ReportPeriod</a>	Period of time considered for the generation of each report, in days
++		<a href="#MaxDist">MaxDist</a>		Maximum distance to consider for local average event count (optional)
+
+<a name="function">	Output Control:</a>
++		<a href="#LogFile">LogFile</a>		Log flag (mandatory)
++		<a href="#Debug">Debug</a>		Debugging flag (optional)
+</pre>
+
+
+
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given.
+</a></p>
+<pre><a name="alphabet"><b>
+command <font color="red">arg1</font>				processed by		function<br></b></a></pre>
+<hr>
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+<a name="ArcFolder"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ArcFolder"><b>ArcFolder <font color="red">folder</font>				config			ScanArcFolder</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here -->
+Sets the location of a folder containing one or more HYP2000ARC files. Each file
+should contain a single HYP2000ARC message.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		ArcFolder arc
+</pre>
+</blockquote>
+
+<hr>
+<a name="Debug"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Debug"><b>Debug <font color="red">flag</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here -->
+Sets a flag to control the volume of debugging information
+output by ewhtmlemail. If <font color="red">flag</font> is zero, no debug
+info is written. If <font color="red">flag</font> is non-zero, debug
+information is written to the logfile and screen.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	0
+Sample:		Debug 0
+</pre>
+</blockquote>
+
+<hr>
+
+<a name="HeartBeatInt"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HeartBeatInt"><b>HeartBeatInt <font color="red">nsec</font>			config			earthworm setup</b><br></a></pre>
+<blockquote><a name="HeartBeatInt"><!-- command description goes here -->
+Defines the number of seconds, <font color="red">nsec</font>, between
+TYPE_HEARTBEAT messages issued by ewhtmlreport.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		HeartBeatInt 30
+</pre>
+</blockquote>
+
+<hr>
+<a name="HTMLBaseFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HTMLBaseFile"><b>HTMLBaseFile <font color="red">filename</font>			PrintHTMLReport			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="HTMLBaseFile"><!-- command description goes here -->
+File containing the base html file used to generate the html reports. This file can be found in the src folder and contains
+the required html and javascript to produce a dataless report that is then populated with the event data from the HYP2000ARC files.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		HTMLBaseFile  ewhtmlreport.html
+</pre>
+</blockquote>
+
+<hr>
+<a name="HTMLFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HTMLFile"><b>HTMLFile <font color="red">filename</font>			PrintHTMLReport			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="HTMLFile"><!-- command description goes here -->
+Base name for the html files generated by ewhtmlreport.
+The actual filenames will be given by "<font color="red">filename</font>yyyymmddHHMMSS.html".
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		HTMLFile  home/earthworm/events/rep
+</pre>
+</blockquote>
+
+<hr>
+<a name="InRing"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="InRing"><b>InRing <font color="red">ring</font>				config			earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="InRing"><!-- command description goes here -->
+Tells ewhtmlreport which shared memory region to place heartbeat messages.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		InRing HYPO_RING
+</pre>
+</blockquote>
+
+<hr>
+<A NAME="LogFile"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				config			output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, ewhtmlreport
+will write a daily log file(s) called ewhtmlreportxx.log_yymmdd
+where xx is statmgr's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:	none
+Sample:		LogFile 0
+</PRE>
+</BLOCKQUOTE>
+
+<hr>
+<a name="MagFolder"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MagFolder"><b>MagFolder <font color="red">folder</font>				config			ScanArcFolder</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here -->
+Sets the location of a folder containing one or more MAGNITUDE files. Each file
+should contain a single MAGNITUDE message.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		MagFolder mag
+</pre>
+</blockquote>
+
+
+<hr>
+<a name="MaxDist"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxDist"><b>MaxDist <font color="red">dist</font>				PrintHTMLReport		output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxDist"><!-- command description goes here -->
+ewhtmlreport produces among other things, a chart with the event count per station. In order to verify if that event count is
+consistent with the surrounding stations, it also computes an average event count of all the stations within a radius
+<font color="red">dist</font> km of each station, refered as the local average event count.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	10
+Sample:		MaxDist  20
+</pre>
+</blockquote>
+
+<hr>
+<a name="MaxMessageSize"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxMessageSize"><b>MaxMessageSize <font color="red">size</font>			ScanArcFolder		Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxMessageSize"><!-- command description goes here -->
+Specifies the maximum <font color="red">size</font> in bytes of the HYP2000ARC and MAGNITUDE files to retrieve
+from the ArcFolder and MagFolder, respectively. Note that HYP2000ARC messages may be very large.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	40000
+Sample:		MaxMessageSize  40000
+</pre>
+</blockquote>
+
+<hr>
+<a name="MyModuleId"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MyModuleId"><b>MyModuleId <font color="red">mod_id</font>			config			earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MyModuleId"><!-- command description goes here -->
+Sets the module id. <font
+ color="red">mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number. If more than
+one ewhtmlemail is running at the same time, they must be given different
+module ids!
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		MyModuleId  MOD_EWHTMLREPORT
+</pre>
+</blockquote>
+
+<hr>
+<a name="ReportInt"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ReportInt"><b>ReportInt <font color="red">rint</font>			main			processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="ReportInt"><!-- command description goes here -->
+ReportInt sets the interval between consecutive 
+reports as <font color="red">rint</font> days.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	1
+Sample:		ReportInt  10
+</pre>
+</blockquote>
+
+<hr>
+<a name="ReportPeriod"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ReportPeriod"><b>ReportPeriod <font color="red">rper</font>			main			processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="ReportPeriod"><!-- command description goes here -->
+ReportPeriod sets the time interval (<font color="red">rper</font> in days) considered
+for the generation of each report. Hence, each report will use a time interval ending at the instant
+of its generation and starting <font color="red">rper</font> days before. Note that if 
+<font color="red">rper</font> is very high, the generated reports can be very large, reaching several
+hundreds of kB each. Hence this command should be used with moderation.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	60
+Sample:		ReportPeriod  30
+</pre>
+</blockquote>
+<hr>
+
+<hr>
+<a name="ReportTime"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ReportTime"><b>ReportTime <font color="red">rtime</font>			main			processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="ReportTime"><!-- command description goes here -->
+ReportTime sets the UTC time at which the reports will be generated. Setting <font color="red">rtime</font> to -1 
+sets the generation of a reports at the start time, for debugging.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		ReportTime  8
+</pre>
+</blockquote>
+<hr>
+
+<a name="site_file"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="site_file"><b>site_file <font color="red">filename</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="site_file"><!-- command description goes here -->
+Enters site codes and station locations into the site table by reading a
+HYPOINVERSE format station file called filename. In this file, stations
+are described by a 5-letter site name, a 2-letter network code and a 3-letter
+component code. The picker and binder must also be using this station-naming convention.
+The format of the file is described under <a href = "http://folkworm.ceri.memphis.edu/ew-doc/USER_GUIDE/hypoinv_sta.html">"HYPOINVERSE STATION FILE FOR FULL 12-LETTER (S-N-C-L) CHANNEL NAMES"</a>.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		site_file  cvarg.hinv
+</pre>
+</blockquote>
+
+
+
+
+
+<hr>
+<a name="standalone"></a>
+<h2><a name="station">4. STANDALONE MODE</a></h2>
+<p>
+Ewhtmlreport can operate as a standalone module. Type ewhtmlreport for the 
+available commands.
+</p>
+
+
+
+
+<center><a name="reference"> </a><a href="../modules.html">Module Index</a>
+| <a href="../ovr/ewhtmlreport_ovr.html">ewhtmlreport Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Contact: <b></b></address>
+<address><b> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></b></address>
+<br>
+</body>
+</html>

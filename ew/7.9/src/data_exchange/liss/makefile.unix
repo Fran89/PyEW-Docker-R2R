@@ -1,0 +1,66 @@
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lm -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS) -IDCC_SEED/include -IDCC_SEED/include/seed
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+SL = DCC_SEED/lib
+SEEDLIBS = $(SL)/libdcc_seed.a $(SL)/libsteim123.a $(SL)/libdcc_time.a \
+      $(SL)/libdcc_misc.a
+
+SEEDLD = -L$(SL) -ldcc_seed -lsteim123 -ldcc_time -ldcc_misc
+SYSLIBS = $(SPECIFIC_FLAGS)
+
+EWLIBS = $L/libew_mt.a $L/socket_ew_common.o\
+           $L/socket_ew.o  \
+           $L/swap.o $L/mem_circ_queue.o
+
+E2LOBJS = ew2liss.o e2l_procthrd.o e2l_server.o
+
+PROGS = liss2ew ew2liss dumpseed
+
+all: $(PROGS)
+	cp $(PROGS) $B/
+
+
+liss2ew: liss2ew.o $(EWLIBS) $(SEEDLIBS)
+	$(CC) $(CFLAGS) -o liss2ew liss2ew.o $(EWLIBS) $(SEEDLD) $(SYSLIBS)
+
+ew2liss: $(E2LOBJS) $(EWLIBS) $(SEEDLIBS)
+	$(CC) $(CFLAGS) -o ew2liss $(E2LOBJS) $(EWLIBS) $(SEEDLD) $(SYSLIBS)
+
+liss2ew-test: liss2ew-test.o $(EWLIBS) $(SEEDLIBS)
+	$(CC) $(CFLAGS) -o liss2ew-test liss2ew-test.o $(EWLIBS) $(SEEDLD) $(SYSLIBS)
+
+dumpseed: dumpseed.o readseedport.o $(SEEDLIBS)
+	$(CC) $(CFLAGS) -o dumpseed dumpseed.o readseedport.o $(SEEDLD) $(SYSLIBS)
+
+$(SL)/libdcc_seed.a:
+	cd DCC_SEED; make -f makefile.unix dcc_seed
+
+$(SL)/libsteim123.a:
+	cd DCC_SEED; make -f makefile.unix steim123
+
+$(SL)/libdcc_time.a:
+	cd DCC_SEED; make -f makefile.unix dcc_time
+
+$(SL)/libdcc_misc.a:
+	cd DCC_SEED; make -f makefile.unix dcc_misc
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+
+# Clean-up rules
+clean:
+	rm -f $(PROGS) liss2ew-test a.out core *.o *.obj *% *~
+	cd DCC_SEED; make -f makefile.unix clean
+
+clean_bin:
+	rm -f $(PROGS)
+	cd $B; rm -f $(PROGS)
+

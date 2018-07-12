@@ -1,0 +1,566 @@
+.TH "include/nmxp_data.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp_data.h \- 
+.PP
+Data for Nanometrics Protocol Library.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint.h>\fP
+.br
+\fC#include <stdio.h>\fP
+.br
+\fC#include <time.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBNMXP_TM_T\fP"
+.br
+.RI "\fIstruct tm plus ten thousandth second field \fP"
+.ti -1c
+.RI "struct \fBNMXP_MESSAGE_HEADER\fP"
+.br
+.RI "\fIHeader for all messages. \fP"
+.ti -1c
+.RI "struct \fBNMXP_DATA_PROCESS\fP"
+.br
+.RI "\fIParameter structure for functions that process data. \fP"
+.ti -1c
+.RI "struct \fBNMXP_DATA_SEED\fP"
+.br
+.RI "\fIParameter structure for functions that handle mini-seed records. \fP"
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNMX_SIGNATURE\fP   0x7abcde0f"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_IS_LEAP\fP(yr)   ( yr%400==0 || (yr%4==0 && yr%100!=0) )"
+.br
+.ti -1c
+.RI "#define \fBNMXP_MAX_LENGTH_DATA_BUFFER\fP   (4092 * 2)"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_MAX_SIZE_DATE\fP   200"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_NETWORK_LENGTH\fP   10"
+.br
+.RI "\fILength in bytes of channel strings. \fP"
+.ti -1c
+.RI "#define \fBNMXP_DATA_STATION_LENGTH\fP   10"
+.br
+.RI "\fILength in bytes of station strings. \fP"
+.ti -1c
+.RI "#define \fBNMXP_DATA_CHANNEL_LENGTH\fP   10"
+.br
+.RI "\fILength in bytes of channel strings. \fP"
+.ti -1c
+.RI "#define \fBNMXP_DAP_TIMEOUT_KEEPALIVE\fP   15"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_MAX_SIZE_FILENAME\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_MAX_NUM_OPENED_FILE\fP   200"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_TRIM_EXCLUDE_FIRST\fP   2"
+.br
+.ti -1c
+.RI "#define \fBNMXP_DATA_TRIM_EXCLUDE_LAST\fP   4"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBNMXP_SHUTDOWN_REASON\fP { \fBNMXP_SHUTDOWN_NORMAL\fP =  1, \fBNMXP_SHUTDOWN_ERROR\fP =  2, \fBNMXP_SHUTDOWN_TIMEOUT\fP =  3 }"
+.br
+.RI "\fIDefines the type for reason of shutdown. \fP"
+.ti -1c
+.RI "enum \fBNMXP_MSG_CLIENT\fP { \fBNMXP_MSG_CONNECT\fP =  100, \fBNMXP_MSG_REQUESTPENDING\fP =  110, \fBNMXP_MSG_CANCELREQUEST\fP =  205, \fBNMXP_MSG_TERMINATESUBSCRIPTION\fP =  200, \fBNMXP_MSG_ADDTIMESERIESCHANNELS\fP =  120, \fBNMXP_MSG_ADDSOHCHANNELS\fP =  121, \fBNMXP_MSG_ADDSERIALCHANNELS\fP =  124, \fBNMXP_MSG_ADDTRIGGERCHANNELS\fP =  122, \fBNMXP_MSG_ADDEVENTS\fP =  123, \fBNMXP_MSG_REMOVETIMESERIESCHANNELS\fP =  130, \fBNMXP_MSG_REMOVESOHCHANNELS\fP =  131, \fBNMXP_MSG_REMOVESERIALCHANNELS\fP =  134, \fBNMXP_MSG_REMOVETRIGGERCHANNELS\fP =  132, \fBNMXP_MSG_REMOVEEVENTS\fP =  133, \fBNMXP_MSG_CONNECTREQUEST\fP =  206, \fBNMXP_MSG_CHANNELLISTREQUEST\fP =  209, \fBNMXP_MSG_PRECISLISTREQUEST\fP =  203, \fBNMXP_MSG_CHANNELINFOREQUEST\fP =  226, \fBNMXP_MSG_DATASIZEREQUEST\fP =  229, \fBNMXP_MSG_DATAREQUEST\fP =  227, \fBNMXP_MSG_TRIGGERREQUEST\fP =  231, \fBNMXP_MSG_EVENTREQUEST\fP =  232 }"
+.br
+.RI "\fIDefines the client message types. \fP"
+.ti -1c
+.RI "enum \fBNMXP_MSG_SERVER\fP { \fBNMXP_MSG_CHANNELLIST\fP =  150, \fBNMXP_MSG_ERROR\fP =  190, \fBNMXP_MSG_COMPRESSED\fP =  1, \fBNMXP_MSG_DECOMPRESSED\fP =  4, \fBNMXP_MSG_TRIGGER\fP =  5, \fBNMXP_MSG_EVENT\fP =  6, \fBNMXP_MSG_READY\fP =  208, \fBNMXP_MSG_PRECISLIST\fP =  253, \fBNMXP_MSG_CHANNELHEADER\fP =  256, \fBNMXP_MSG_DATASIZE\fP =  257, \fBNMXP_MSG_NAQSEVENT\fP =  260, \fBNMXP_MSG_NAQSTRIGGER\fP =  259 }"
+.br
+.RI "\fIDefines the server message types. \fP"
+.ti -1c
+.RI "enum \fBNMXP_DATA_SEED_TYPEWRITE\fP { \fBNMXP_TYPE_WRITESEED_SDS\fP =  0, \fBNMXP_TYPE_WRITESEED_BUD\fP }"
+.br
+.RI "\fIFor SDS or BUD directory structure. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnmxp_data_init\fP (\fBNMXP_DATA_PROCESS\fP *pd)"
+.br
+.RI "\fIInitialize a structure \fBNMXP_DATA_PROCESS\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_unpack_bundle\fP (int32_t *outdata, unsigned char *indata, int32_t *prev)"
+.br
+.RI "\fIUnpack a 17-byte Nanometrics compressed data bundle. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_to_str\fP (char *out_str, double time_d)"
+.br
+.RI "\fIConvert epoch in string. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_year_from_epoch\fP (double time_d)"
+.br
+.RI "\fIReturn year from epoch. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_yday_from_epoch\fP (double time_d)"
+.br
+.RI "\fIReturn julian day from epoch. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_trim\fP (\fBNMXP_DATA_PROCESS\fP *pd, double trim_start_time, double trim_end_time, unsigned char exclude_bitmap)"
+.br
+.RI "\fITrim data within a time interval. \fP"
+.ti -1c
+.RI "time_t \fBnmxp_data_gmtime_now\fP ()"
+.br
+.RI "\fIReturn number of epochs in GMT. \fP"
+.ti -1c
+.RI "double \fBnmxp_data_latency\fP (\fBNMXP_DATA_PROCESS\fP *pd)"
+.br
+.RI "\fICompute latency from current time and struct \fBNMXP_DATA_PROCESS\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_log\fP (\fBNMXP_DATA_PROCESS\fP *pd, int flag_sample)"
+.br
+.RI "\fIPrint info about struct \fBNMXP_DATA_PROCESS\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_parse_date\fP (const char *pstr_date, \fBNMXP_TM_T\fP *ret_tmt)"
+.br
+.RI "\fIParse string and set value in ret_tm. \fP"
+.ti -1c
+.RI "double \fBnmxp_data_tm_to_time\fP (\fBNMXP_TM_T\fP *tmt)"
+.br
+.RI "\fIWrapper for timegm. \fP"
+.ti -1c
+.RI "char * \fBnmxp_data_gnu_getcwd\fP ()"
+.br
+.RI "\fIReturn path of the current directory. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_dir_exists\fP (char *dirname)"
+.br
+.RI "\fICheck if the directory exists. \fP"
+.ti -1c
+.RI "char * \fBnmxp_data_dir_abspath\fP (char *dirname)"
+.br
+.RI "\fICheck if the directory exists. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_mkdir\fP (const char *dirname)"
+.br
+.RI "\fICreate the directory. Wrapper for mkdir() over different systems. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_mkdirp\fP (const char *filename)"
+.br
+.RI "\fICreate the directory and subdirectories if is needed. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_seed_init\fP (\fBNMXP_DATA_SEED\fP *data_seed, char *default_network, char *outdirseed, \fBNMXP_DATA_SEED_TYPEWRITE\fP type_writeseed)"
+.br
+.RI "\fIInitialize a structure \fBNMXP_DATA_SEED\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_seed_fopen\fP (\fBNMXP_DATA_SEED\fP *data_seed)"
+.br
+.RI "\fIOpen file in a structure \fBNMXP_DATA_SEED\fP, in case close file before. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_seed_fclose\fP (\fBNMXP_DATA_SEED\fP *data_seed, int i)"
+.br
+.RI "\fIClose file in a structure \fBNMXP_DATA_SEED\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_seed_fclose_all\fP (\fBNMXP_DATA_SEED\fP *data_seed)"
+.br
+.RI "\fIClose all file in a structure \fBNMXP_DATA_SEED\fP. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_get_filename_ms\fP (\fBNMXP_DATA_SEED\fP *data_seed, char *dirseedchan, char *filenameseed)"
+.br
+.ti -1c
+.RI "int \fBnmxp_data_msr_pack\fP (\fBNMXP_DATA_PROCESS\fP *pd, \fBNMXP_DATA_SEED\fP *data_seed, void *pmsr)"
+.br
+.RI "\fIWrite mini-seed records from a \fBNMXP_DATA_PROCESS\fP structure. \fP"
+.ti -1c
+.RI "void \fBnmxp_data_swap_2b\fP (int16_t *in)"
+.br
+.RI "\fISwap 2 bytes. \fP"
+.ti -1c
+.RI "void \fBnmxp_data_swap_3b\fP (unsigned char *in)"
+.br
+.RI "\fISwap 3 bytes. \fP"
+.ti -1c
+.RI "void \fBnmxp_data_swap_4b\fP (int32_t *in)"
+.br
+.RI "\fISwap 4 bytes. \fP"
+.ti -1c
+.RI "void \fBnmxp_data_swap_8b\fP (double *in)"
+.br
+.RI "\fISwap 8 bytes. \fP"
+.ti -1c
+.RI "int \fBnmxp_data_bigendianhost\fP ()"
+.br
+.RI "\fIDetermine the byte order of the host machine. Due to the lack of portable defines to determine host byte order this run-time test is provided. The code below actually tests for little-endianess, the only other alternative is assumed to be big endian. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Data for Nanometrics Protocol Library. 
+
+Author: Matteo Quintiliani Istituto Nazionale di Geofisica e Vulcanologia - Italy quintiliani@ingv.it
+.PP
+\fBId:\fP
+.RS 4
+\fBnmxp_data.h\fP,v 1.40 2010-09-01 20:18:23 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NMX_SIGNATURE   0x7abcde0f"First 4 bytes of all messages. 
+.SS "#define NMXP_DATA_IS_LEAP(yr)   ( yr%400==0 || (yr%4==0 && yr%100!=0) )"
+.SS "#define NMXP_MAX_LENGTH_DATA_BUFFER   (4092 * 2)"
+.SS "#define NMXP_DATA_MAX_SIZE_DATE   200"
+.SS "#define NMXP_DATA_NETWORK_LENGTH   10"
+.PP
+Length in bytes of channel strings. 
+.SS "#define NMXP_DATA_STATION_LENGTH   10"
+.PP
+Length in bytes of station strings. 
+.SS "#define NMXP_DATA_CHANNEL_LENGTH   10"
+.PP
+Length in bytes of channel strings. 
+.SS "#define NMXP_DAP_TIMEOUT_KEEPALIVE   15"Time-out for keeping the DataServer connection alive 
+.SS "#define NMXP_DATA_MAX_SIZE_FILENAME   1024"
+.SS "#define NMXP_DATA_MAX_NUM_OPENED_FILE   200"
+.SS "#define NMXP_DATA_TRIM_EXCLUDE_FIRST   2"
+.SS "#define NMXP_DATA_TRIM_EXCLUDE_LAST   4"
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBNMXP_SHUTDOWN_REASON\fP"
+.PP
+Defines the type for reason of shutdown. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_SHUTDOWN_NORMAL \fP\fP
+.TP
+\fB\fINMXP_SHUTDOWN_ERROR \fP\fP
+.TP
+\fB\fINMXP_SHUTDOWN_TIMEOUT \fP\fP
+
+.SS "enum \fBNMXP_MSG_CLIENT\fP"
+.PP
+Defines the client message types. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_MSG_CONNECT \fP\fP
+.TP
+\fB\fINMXP_MSG_REQUESTPENDING \fP\fP
+.TP
+\fB\fINMXP_MSG_CANCELREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_TERMINATESUBSCRIPTION \fP\fP
+.TP
+\fB\fINMXP_MSG_ADDTIMESERIESCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_ADDSOHCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_ADDSERIALCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_ADDTRIGGERCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_ADDEVENTS \fP\fP
+.TP
+\fB\fINMXP_MSG_REMOVETIMESERIESCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_REMOVESOHCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_REMOVESERIALCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_REMOVETRIGGERCHANNELS \fP\fP
+.TP
+\fB\fINMXP_MSG_REMOVEEVENTS \fP\fP
+.TP
+\fB\fINMXP_MSG_CONNECTREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_CHANNELLISTREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_PRECISLISTREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_CHANNELINFOREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_DATASIZEREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_DATAREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_TRIGGERREQUEST \fP\fP
+.TP
+\fB\fINMXP_MSG_EVENTREQUEST \fP\fP
+
+.SS "enum \fBNMXP_MSG_SERVER\fP"
+.PP
+Defines the server message types. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_MSG_CHANNELLIST \fP\fP
+.TP
+\fB\fINMXP_MSG_ERROR \fP\fP
+.TP
+\fB\fINMXP_MSG_COMPRESSED \fP\fP
+.TP
+\fB\fINMXP_MSG_DECOMPRESSED \fP\fP
+.TP
+\fB\fINMXP_MSG_TRIGGER \fP\fP
+.TP
+\fB\fINMXP_MSG_EVENT \fP\fP
+.TP
+\fB\fINMXP_MSG_READY \fP\fP
+.TP
+\fB\fINMXP_MSG_PRECISLIST \fP\fP
+.TP
+\fB\fINMXP_MSG_CHANNELHEADER \fP\fP
+.TP
+\fB\fINMXP_MSG_DATASIZE \fP\fP
+.TP
+\fB\fINMXP_MSG_NAQSEVENT \fP\fP
+.TP
+\fB\fINMXP_MSG_NAQSTRIGGER \fP\fP
+
+.SS "enum \fBNMXP_DATA_SEED_TYPEWRITE\fP"
+.PP
+For SDS or BUD directory structure. 
+.PP
+\fBEnumerator: \fP
+.in +1c
+.TP
+\fB\fINMXP_TYPE_WRITESEED_SDS \fP\fP
+.TP
+\fB\fINMXP_TYPE_WRITESEED_BUD \fP\fP
+
+.SH "Function Documentation"
+.PP 
+.SS "int nmxp_data_init (\fBNMXP_DATA_PROCESS\fP * pd)"
+.PP
+Initialize a structure \fBNMXP_DATA_PROCESS\fP. \fBParameters:\fP
+.RS 4
+\fIpd\fP Pointer to a \fBNMXP_DATA_PROCESS\fP structure. 
+.RE
+.PP
+
+.SS "int nmxp_data_unpack_bundle (int32_t * outdata, unsigned char * indata, int32_t * prev)"
+.PP
+Unpack a 17-byte Nanometrics compressed data bundle. \fBParameters:\fP
+.RS 4
+\fIoutdata\fP 
+.br
+\fIindata\fP 
+.br
+\fIprev\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Number of unpacked data samples, -1 if null bundle.
+.RE
+.PP
+Author: Doug Neuhauser UC Berkeley Seismological Laboratory doug@seismo.berkeley.edu 
+.SS "int nmxp_data_to_str (char * out_str, double time_d)"
+.PP
+Convert epoch in string. 
+.SS "int nmxp_data_year_from_epoch (double time_d)"
+.PP
+Return year from epoch. 
+.SS "int nmxp_data_yday_from_epoch (double time_d)"
+.PP
+Return julian day from epoch. 
+.SS "int nmxp_data_trim (\fBNMXP_DATA_PROCESS\fP * pd, double trim_start_time, double trim_end_time, unsigned char exclude_bitmap)"
+.PP
+Trim data within a time interval. \fBParameters:\fP
+.RS 4
+\fIpd\fP Pointer to struct \fBNMXP_DATA_PROCESS\fP 
+.br
+\fItrim_start_time\fP Start time. 
+.br
+\fItrim_end_time\fP End time. 
+.br
+\fIexclude_bitmap\fP Bitmap for excluding or not the first and/or the last sample.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI2\fP On success, data has not been trimmed. 
+.br
+\fI1\fP On success, data has been trimmed. 
+.br
+\fI0\fP On error. 
+.RE
+.PP
+
+.SS "time_t nmxp_data_gmtime_now ()"
+.PP
+Return number of epochs in GMT. 
+.SS "double nmxp_data_latency (\fBNMXP_DATA_PROCESS\fP * pd)"
+.PP
+Compute latency from current time and struct \fBNMXP_DATA_PROCESS\fP. \fBParameters:\fP
+.RS 4
+\fIpd\fP Pointer to struct \fBNMXP_DATA_PROCESS\fP 
+.RE
+.PP
+
+.SS "int nmxp_data_log (\fBNMXP_DATA_PROCESS\fP * pd, int flag_sample)"
+.PP
+Print info about struct \fBNMXP_DATA_PROCESS\fP. \fBParameters:\fP
+.RS 4
+\fIpd\fP Pointer to struct \fBNMXP_DATA_PROCESS\fP 
+.br
+\fIflag_sample\fP If it is not equal to zero sample values will be printed 
+.RE
+.PP
+
+.SS "int nmxp_data_parse_date (const char * pstr_date, \fBNMXP_TM_T\fP * ret_tmt)"
+.PP
+Parse string and set value in ret_tm. 
+.SS "double nmxp_data_tm_to_time (\fBNMXP_TM_T\fP * tmt)"
+.PP
+Wrapper for timegm. 
+.SS "char* nmxp_data_gnu_getcwd ()"
+.PP
+Return path of the current directory. Return value need to be freed! 
+.SS "int nmxp_data_dir_exists (char * dirname)"
+.PP
+Check if the directory exists. \fBReturn values:\fP
+.RS 4
+\fI1\fP exists, 0 otherwise. 
+.RE
+.PP
+
+.SS "char* nmxp_data_dir_abspath (char * dirname)"
+.PP
+Check if the directory exists. Return value need to be freed! 
+.SS "int nmxp_data_mkdir (const char * dirname)"
+.PP
+Create the directory. Wrapper for mkdir() over different systems. 
+.SS "int nmxp_data_mkdirp (const char * filename)"
+.PP
+Create the directory and subdirectories if is needed. 
+.SS "int nmxp_data_seed_init (\fBNMXP_DATA_SEED\fP * data_seed, char * default_network, char * outdirseed, \fBNMXP_DATA_SEED_TYPEWRITE\fP type_writeseed)"
+.PP
+Initialize a structure \fBNMXP_DATA_SEED\fP. \fBParameters:\fP
+.RS 4
+\fIdata_seed\fP Pointer to a \fBNMXP_DATA_SEED\fP structure. 
+.br
+\fIdefault_network\fP String containing default network code. 
+.br
+\fIoutdirseed\fP Root output directory for SDS or BUD structure. 
+.br
+\fItype_writeseed\fP Declare SDS or BUD structure. 
+.RE
+.PP
+
+.SS "int nmxp_data_seed_fopen (\fBNMXP_DATA_SEED\fP * data_seed)"
+.PP
+Open file in a structure \fBNMXP_DATA_SEED\fP, in case close file before. \fBParameters:\fP
+.RS 4
+\fIdata_seed\fP Pointer to a \fBNMXP_DATA_SEED\fP structure.
+.RE
+.PP
+N.B. \fBnmxp_data_seed_fopen()\fP reads information from data_seed->pd. 
+.SS "int nmxp_data_seed_fclose (\fBNMXP_DATA_SEED\fP * data_seed, int i)"
+.PP
+Close file in a structure \fBNMXP_DATA_SEED\fP. \fBParameters:\fP
+.RS 4
+\fIdata_seed\fP Pointer to a \fBNMXP_DATA_SEED\fP structure. 
+.br
+\fIi\fP Index of the file descriptor to delete. 
+.RE
+.PP
+
+.SS "int nmxp_data_seed_fclose_all (\fBNMXP_DATA_SEED\fP * data_seed)"
+.PP
+Close all file in a structure \fBNMXP_DATA_SEED\fP. \fBParameters:\fP
+.RS 4
+\fIdata_seed\fP Pointer to a \fBNMXP_DATA_SEED\fP structure. 
+.RE
+.PP
+
+.SS "int nmxp_data_get_filename_ms (\fBNMXP_DATA_SEED\fP * data_seed, char * dirseedchan, char * filenameseed)"
+.SS "int nmxp_data_msr_pack (\fBNMXP_DATA_PROCESS\fP * pd, \fBNMXP_DATA_SEED\fP * data_seed, void * pmsr)"
+.PP
+Write mini-seed records from a \fBNMXP_DATA_PROCESS\fP structure. \fBParameters:\fP
+.RS 4
+\fIpd\fP Pointer to struct \fBNMXP_DATA_PROCESS\fP. If it is NULL then flush all data into mini-SEED file. 
+.br
+\fIdata_seed\fP Pointer to struct \fBNMXP_DATA_SEED\fP. 
+.br
+\fIpmsr\fP Pointer to mini-SEED record.
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+pmsr is used like (void *) but it has to be a pointer to MSRecord !!!
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Returns the number records created on success and -1 on error. Return value of msr_pack(). 
+.RE
+.PP
+
+.SS "void nmxp_data_swap_2b (int16_t * in)"
+.PP
+Swap 2 bytes. \fBParameters:\fP
+.RS 4
+\fIin\fP Variable length 2 bytes. 
+.RE
+.PP
+
+.SS "void nmxp_data_swap_3b (unsigned char * in)"
+.PP
+Swap 3 bytes. \fBParameters:\fP
+.RS 4
+\fIin\fP Variable length 3 bytes. 
+.RE
+.PP
+
+.SS "void nmxp_data_swap_4b (int32_t * in)"
+.PP
+Swap 4 bytes. \fBParameters:\fP
+.RS 4
+\fIin\fP Variable length 4 bytes. 
+.RE
+.PP
+
+.SS "void nmxp_data_swap_8b (double * in)"
+.PP
+Swap 8 bytes. \fBParameters:\fP
+.RS 4
+\fIin\fP Variable length 8 bytes. 
+.RE
+.PP
+
+.SS "int nmxp_data_bigendianhost ()"
+.PP
+Determine the byte order of the host machine. Due to the lack of portable defines to determine host byte order this run-time test is provided. The code below actually tests for little-endianess, the only other alternative is assumed to be big endian. \fBReturn values:\fP
+.RS 4
+\fI0\fP if the host is little endian. 
+.br
+\fI1\fP otherwise. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

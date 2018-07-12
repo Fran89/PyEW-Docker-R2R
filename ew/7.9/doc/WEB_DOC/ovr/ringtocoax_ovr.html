@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: ringtocoax overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> Ringtocoax Overview</H1>
+<I>(last revised 27 July, 1998)</I></CENTER>
+
+<P>
+Program to broadcast Earthworm messages from a shared memory transport ring onto Ethernet.  Messages may be of any installation id, message type, and module id.  To prevent bursty data on the Ethernet, the program sleeps between outgoing packets.  A parameter in the configuration file controls whether heartbeat and error messages are passed or blocked.  If heartbeats and error messages are not sent, they should be handled by a local copy of the statmgr program.
+<P>
+This module does connection-less broadcasts.
+In normal usage, it broadcasts onto an isolated, dedicated class b
+subnet. There must be no routing to or from that subnet.
+The broadcast is restricted to the subnet specified in the configuration file.
+Note that the companion module, coaxtoring, has strange
+system-specific addressing requirements.
+<P>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/ringtocoax_cmd.html">Ringtocoax Commands</A>
+</CENTER>
+
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,25 @@
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+RINGTOCOAX = ringtocoax.o sender.o $L/socket_ew.o $L/libew.a
+
+ringtocoax: $(RINGTOCOAX)
+	$(CC) $(CFLAGS) -o $B/ringtocoax $(RINGTOCOAX) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint ringtocoax.c sender.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ringtocoax*

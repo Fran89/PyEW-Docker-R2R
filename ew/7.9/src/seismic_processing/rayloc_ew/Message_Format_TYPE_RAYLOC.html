@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Earthworm Global Processing Message Format TYPE_RAYLOC (DRAFT
+#1)</title>
+</head>
+<body alink="#ff0000"
+ style="background-color: rgb(250, 192, 162); color: rgb(0, 0, 0);"
+ link="#0000ee" vlink="#551a8b">
+<h1 align="center"><b> <font color="#ff0000" size="+4"> Earthworm
+Global Processing<br>
+Message Format TYPE_RAYLOC (DRAFT #1)<br>
+</font></b></h1>
+<br>
+<hr width="100%">
+<h5 align="right"><tt>July 13, 2004</tt></h5>
+<h5 align="right"><tt>Ilya Dricker (i.dricker@isti.com)<br>
+</tt></h5>
+<h2>GENERAL:</h2>
+<pre><br>This document describes message pertaining to global processing:<br><br>1.    TYPE_RAYLOC<br><br>This is not a final version of the message format, but just an unauthorized draft<br><br>All fields will be blank-separated.<br><br>All fields will have at least one printing (non-whitespace) character.<br><br></pre>
+<h2>TYPE_RAYLOC:</h2>
+<pre>=============================================<br><br>This message shall consist of one or more 'lines'.<br>Each line will start with a 'line name' string followed by an ascii space.<br>Each line terminates with a ascii newline character ['\n']<br>Each line will consist of blank-separated fields.<br>Additional fields can be added to the end of each line as the message evolves.<br>The message terminates with an additional \n  [message ends in two \n]<br>The first line of the message must be a RLC (rayloc) line.  There shall be only one RLC line per message.<br>Following the RLC line, data lines can appear in any order.<br>The RLC line will be versioned<br>For version 1, data line types are PCK (picks).<br><br>NOTE: These are not fixed-width fields, the counter is only to assist with in determining the maximum size<br><br></pre>
+<h3>rayloc header &lt;RLC&gt; 01</h3>
+<pre><br>          1         2         3         4         5         6         7         8         9         0         1<br> 12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890<br><br> RLC 001002003 vv xxxxxxxxxx.xxx +xx.xxxx +xxx.xxxx xxx.xx xxxx xxxx xxxx xxxx xxx xxx.xx l<br> RLC author version event_id    Origin        elat     elon    depth nsta npha suse puse gap  dmin  f<br><br> xxx.xx xxxx.x xxxx.x xxxx.x xxx.xx xxxx.x xxxx.x xxxx.x a<br>  oterr laterr lonerr deperr   se    errh   errz    avh  q<br><br> xxxx.x xxx +xx xxxx.x xxx +xx xxxx.x xxx +xx<br>  axis1 az1 dp1  axis2 az2 dp2  axis3 az3 dp3<br><br><br><br>** Where:<br>**   Origin   Event origin time in epoch seconds<br>**   Elat     Geographical event latitude in signed decimal degrees (WGS84)<br>**   Elon     Geographical event longitude in signed decimal degrees (WGS84)<br>**   Depth    Event depth in kilometers (WGS84)<br>**   Gap      Largest azimuthal gap in degrees<br>**   Nsta     Number of stations associated<br>**   Npha     Number of phases associated<br>**   Suse     Number of stations used in the solution<br>**   Puse     Number of phases used in the solution<br>**   Dmin     Distance to the nearest station in degrees<br>**   F        Fixed depth flag (T if depth was held, F otherwise)*<br>**   Oterr    90% marginal confidence interval for origin time<br>**   Laterr   90% marginal confidence interval for latitude<br>**   Lonerr   90% marginal confidence interval for longitude<br>**   Deperr   90% marginal confidence interval for depth<br>**   Se       Standard error of the residuals in seconds<br>**   Errh     Maximum horizontal projection of the error ellipsoid in kilometers<br>**   Errz     Maximum vertical projection of the error ellipsoid in kilometers<br>**   Avh      Equivalent radius of the horizontal error ellipse in kilometers<br>**   Q        Quality flag (i.e., 'A', 'B', 'C', 'D')<br>**   Axis1-3  Length in kilometers of the principle axies of the error ellipsoid<br>**   Az1-3    Azimuth in degrees of the principle axies of the error ellipsoid<br>**   Dp1-3    Dip in degrees of the principle axies of the error ellipsoid<br><br>===============<br></pre>
+<h3>rayloc picks &lt;PCK&gt; 01 line</h3>
+<pre><br>         1         2         3         4         5         6         7         8           9         0         1<br><br>1234567890123456789012345678901234567890123456789012345678901234567890123456789090123456789012345678901234567890<br><br>PCK 001002003 vv xxxxxxxxxx aaaaa aaa aa aa aaaaaaaa +xx.x xxx.x xxx l<br><br>PCK author version PickID    sta  cmp nt lc  phase    res   dist azm w<br><br>** Where:<br>**  PickID   DBMS ID of pick (unsigned long)<br>**  Sta      Station code (upper case)<br>**  Cmp      Component code (upper case)<br>**  Nt       Network code (upper case)<br>**  Lc       Location code<br>**  Phase    Phase code (e.g., 'P', 'S', or 'PKP')<br>**  Res      Travel-time residual in seconds<br>**  Dist     Source-receiver distance in decimal degrees<br>**  Azm      Receiver azimuth in degrees (from the source)<br>**  W        Phase weight flag (i.e., T for 1, F for 0)*<br>===============<br></pre>
+<hr>See also:<br>
+<a href="http://www.isti.com/%7Eilya/rayloc_ew.overview.html">rayLoc_ew
+Overview</a> <br>
+<a href="http://www.isti.com/%7Eilya/rayloc_ew_cmd.html">RayLoc_ew
+Commands</a><br>
+<a
+ href="http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html">TYPE_LOC_GLOBAL</a><br>
+<hr>The URL of this page is <b>[http://www.isti.com/~ilya/Message_Format_TYPE_RAYLOC.html]</b><br>
+Contact: <span style="font-weight: bold;">i.dricker@isti.com</span><br>
+<span style="font-family: monospace;"><br>
+<br>
+</span>
+</body>
+</html>

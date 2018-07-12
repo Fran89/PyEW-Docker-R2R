@@ -1,0 +1,890 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: binder_ew commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Binder_ew Configuration File Commands</h1>
+<i>(last revised March 2, 2012)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a>
+<p>On startup, binder_ew reads the configuration file named on the
+command-line. Commands in this file set up all parameters used in
+stacking picks, locating events, and associating phases with events. In
+the control file, lines may begin with a valid binder_ew command
+(listed below) or with one of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).
+<p><a name="example"></a></p>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre><a name="example"># This is binder_ew's parameter file!<br>#<br>MyModuleId   MOD_BINDER    # module id for this instance of binder_ew<br>RingName     PICK_RING     # transport ring for I/O<br>LogFile      1             # 0 to completely turn off disk log file<br>HeartbeatInt 30            # Seconds between heartbeats<br><br># List the message logos to grab from transport ring<br>#              Installation       Module       Message Type<br>GetPicksFrom   INST_WILDCARD    MOD_WILDCARD    # pick2k<br><br># Set level of output for writing log file<br>#<br>log_stack          # comment out to turn of grid-stack logging<br>hypcode    7<br><br># Load station list<br>#<br>maxsite 2000<br>site_file "calsta.hinv.qa"<br><br># Load Central California crustal model<br>#<br>@ncal_model.d<br><br># Define the association grid.  Set stacking parameters.<br>#<br>dspace          4.0<br>grdlat         32.5             43.0<br>grdlon       -125.0           -114.5<br>grdz            0.0             20.0<br>rstack 100.0<br>tstack 0.65<br>stack  50<br>thresh 18<br>focus  30<br>grid_wt 0 4<br>grid_wt 1 3<br>grid_wt 2 2<br>grid_wt 3 1<br><br># Set parameters for associating picks with active hypocenters<br>#<br>rAvg_Factor 7.0<br>taper   0.0     1.0<br>taper   50.0    1.0<br>taper   200.0   2.5<br>taper   400.0   4.5<br># bfh: 11/5/94: "variable taper" proportional to Origin Time Uncertainty:<br># Set both to 0.0 to get Carl's original distance taper only.<br>taper_OT 2.0 1.0<br>t_dif   -3.0   120.<br><br># Set parameters for locating events<br>#<br>wt 0 1.0<br>wt 1 0.5<br>wt 2 0.25<br>wt 3 0.125<br>ph P  1.0<br>ph Pn 0.5<br>ph Pg 0.5<br>r_max  400.0<br>zrange 1.0 30.0<br>MaxStep 25.0  5.0<br>MinXYZstep 0.1<br>MaxIter 4<br>MaxDeltaRms 1.0001<br>locate_eq  25   2<br>locate_eq  50   4<br>locate_eq  75   8<br>locate_eq 100  16<br><br># Set parameters for assessing groups of picks<br># with Bill Ellsworth's resampling technique:<br>assess_pk  8  12<br>maxtrial   500<br>maxwt      3<br>v_halfspace  5.0<br>residual_cut  5.0  10.0<br>#log_accepted<br><br># Load in the next valid quake sequence number<br>#<br>@quake_id.d<br><br># end of parameter file<br></a></pre>
+<p>
+<a name="function"></a></p>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p>
+<a name="function">Below are the commands recognized by binder_ew,
+grouped by the function they influence. A few of the commands are
+marked "required"; they describe the
+Earthworm system setup and network and stacking parameters; these
+variables
+have no default values. The required commands must be specified in the
+control file in order for binder_ew to operate.
+</a></p>
+<pre><a name="function">	Earthworm system setup:<br>  		</a><a
+ href="#GetPicksFrom">GetPicksFrom</a>	required<br> 		<a
+ href="#MyModuleId">MyModuleId</a>	required<br>		<a href="#RingName">RingName</a>	required<br>		<a
+ href="#BufferRing">BufferRing</a>	required<br>			<br>	Seismic network/model definition:<br>		<a
+ href="#lay">lay</a> 		required	<br>		<a href="#psratio">psratio</a> 	<br>		<a
+ href="#site">site</a> 		\  site list required; specify with<br>		<a
+ href="#site_file">site_file</a> 	/  either "site" or "site_file"<br>		<a
+ href="#maxsite">maxsite</a> <br><br>	Phase stacking:<br>		<a
+ href="#dspace">dspace</a>		required<br>		<a href="#grdlat">grdlat</a>    	required <br>		<a
+ href="#grdlon">grdlon</a>    	required<br>		<a href="#grdz">grdz</a>		required	<br>		<a
+ href="#thresh">thresh</a>		required<br>		<a href="#define_glitch">define_glitch</a>   <br>		<a
+ href="#focus">focus</a>
+		<a href="#grid_wt">grid_wt</a>
+		<a
+ href="#grid_wt_instid">grid_wt_instid</a>
+		<a href="#next_id">next_id</a>  (@quake_id.d)	<br>		EventFileId (to point to quake_id file in case of multiple binder_ew's)<br>		<a
+ href="#rstack">rstack</a>
+		<a href="#stack">stack</a>
+		<a href="#tstack">tstack</a>
+		<a href="#rmsgrid">rmsgrid</a>		no longer used<br><br>	Event location:<br>		<a
+ href="#FixDepth">FixDepth</a>
+		<a href="#locate_eq">locate_eq</a>
+		<a href="#MaxIter">MaxIter</a>
+		<a href="#MaxDeltaRms">MaxDeltaRms</a>
+		<a href="#maxpix">maxpix</a>
+		<a href="#MaxStep">MaxStep</a>
+		<a href="#MinXYZstep">MinXYZstep</a>
+		<a href="#ph">ph</a>
+		<a href="#r_max">r_max</a>
+		<a href="#rmscut">rmscut</a>
+		<a href="#rmscut">rmscut_pick</a>
+		<a href="#wt">wt</a>
+		<a href="#zrange">zrange</a>
+
+	Phase association:
+		<a href="#rAvg_Factor">rAvg_Factor</a>
+		<a href="#t_dif">t_dif</a>
+		<a href="#taper">taper</a>
+		<a href="#taper_OT">taper_OT</a>
+		<a href="#no_S_on_Z">no_S_on_Z</a>
+		<a href="#no_P_on_Horiz">no_P_on_Horiz</a>
+		<a href="#ChannelNumberMap">ChannelNumberMap</a>
+
+	Pick-group assessment:
+		<a
+ href="#assess_pk">assess_pk</a>
+		<a href="#maxwt">maxwt</a>
+		<a
+ href="#maxtrial">maxtrial</a>
+		<a href="#residual_cut">residual_cut</a>
+		<a
+ href="#v_halfspace">v_halfspace</a>
+
+	Output control:
+		<a
+ href="#LogFile">LogFile</a>		required<br>		<a href="#hypcode">hypcode</a>
+		<a
+ href="#log_accepted">log_accepted</a>    <br>		<a href="#log_stack">log_stack</a>    <br>		<a
+ href="#ray">ray</a>
+		<a href="#raytst">raytst</a>
+		<a href="#region">region</a>
+
+</pre>
+<a name="alphabet">
+</a>
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical
+order. Listed along with the command (bold-type) are its arguments (in
+red),
+the name of the subroutine that processes the command, and the function
+within the module that the command influences. A detailed description
+of the command and is also given. Default values and the values used by
+Calnet are listed after each command description.
+</a></p>
+<pre><a name="alphabet"><b>
+command <font color="red">arg1</font>				processed by		function<br></b></a></pre>
+<hr>
+<a name="assess_pk"> </a>
+<pre><a name="assess_pk"><b>assess_pk <font color="red">minpk maxpk</font></b>			assess_com		pick assess</a></pre>
+<blockquote> <a name="assess_pk">Defines the range for assessing a
+group of picks
+using the resampling
+technique of Bill Ellsworth. When an event has between <font
+ color="red">minpk</font> and <font color="red">maxpk</font>
+(inclusive) picks associated with it, its pick set will be assessed
+before the event is relocated. If an event stacks with more than <font
+ color="red">maxpk</font> picks, its picks will be assessed at least
+once. Pick-assessment is a multiple pass process based on Rex Allen's
+pick associator. First, the set of picks is examined for glitches. Then
+the exact, four-station hypocenter solution method of Ingelada and
+resampling (four picks at a time) are used to determine the station set
+that is consistent with an earthquake hypocenter. A first pass samples
+from the earliest (up to 25) P-phase picks which meet the testing
+criteria; this pass is used to winnow the data to arrivals with median
+residuals below a cutoff value. A second pass resamples the winnowed
+data to determine the trial hypocenter. If any picks are rejected as
+glitches or outliers, they are freed to restack or reassociate. To turn
+off pick-assessing totally, set <font color="red">minpk</font> and <font
+ color="red">maxpk</font> to zero.
+Related commands include "define_glitch", "maxtrial", "maxwt",
+"residual_cut", "v_halfspace". </a>
+  <pre><a name="assess_pk">Default:  assess_pk 6 12                Calnet:  assess_pk 8 12<br></a></pre>
+</blockquote>
+<hr>
+<pre><a name="BufferRing"><b>BufferRing <font color="red">ring</font></b>				bndr_config		Earthworm setup</a></pre>
+<div style="margin-left: 40px;">Tells binder_ew which shared memory
+region to use for private ring buffering of picks. <font color="red">ring</font>
+is a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the
+shared memory region. This rings name must be declared in earthworm.d <span
+ style="font-weight: bold;">BUT MOST NOT BE LISTED</span> in
+startstop.d!!!<br>
+</div>
+<pre style="margin-left: 40px;">Default:  none				Calnet:  BufferRing BINDER_EW_RING</pre>
+<br>
+<hr style="width: 100%; height: 2px;"><a name="define_glitch"></a>
+<pre><a name="define_glitch"><b>define_glitch <font color="red">npick nsec</font></b>		grid_com		stack</a></pre>
+<blockquote> <a name="define_glitch">Sets up the definition of a
+glitch for
+filtering arrivals before
+stacking them. A glitch is defined as at least <font color="red">npick</font>
+arrivals within <font color="red">nsec</font> seconds. Picks that
+belong to such a glitch are NOT used in the stacking process. If you
+want to turn off pre-stack glitch filtering (ie, to make binder_ew
+stack every pick), set <font color="red">npick</font> to zero (example
+"define_glitch 0 0.0"). This same glitch definition
+is used in the pick-assessing process (see command "assess_pk") to
+recognise glitch-picks that have associated with an event (after it is
+stacked) and to remove them.<br>
+  <b>Note:</b> <font color="red">nsec</font> should be set slightly
+larger than an integer multiple of the pick-timing resolution to avoid
+missing glitches due to round-off errors in floating point arithmetic
+(for example, our picks are reported to the nearest 0.01 seconds, so we
+set <font color="red"> nsec</font> to 0.035 sec instead of 0.03 sec). </a>
+  <pre><a name="define_glitch">Default:  define_glitch 4 0.035          Calnet:  define_glitch 4 0.035<br></a></pre>
+</blockquote>
+<hr>
+<a name="dspace"></a>
+<pre><a name="dspace"><b>dspace <font color="red">dspace</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="dspace">Defines the side-length (<font
+ color="red">dspace</font>
+in km) of a cell in the stacking volume. The same spatial resolution is
+used for latitude, longitude and depth. Decreasing cell size increases
+the time required for stacking as the third power, so adjust these
+values judiciously. The cell size you choose may also depend on your
+network station spacing; if too many stations fall within the same
+grid-cell, stacks may often be null-
+focused. </a>
+  <pre><a name="dspace">Default:  none                          Calnet:  dspace  4.0<br></a></pre>
+</blockquote>
+<hr><br>
+<pre><a name="EventIdFile"><b>EventIdFile <font color="red">filename_of_quake_id</font></b>			bind_com			bind</a></pre>
+&nbsp;&nbsp;&nbsp; This allows the operator to run multiple binder_ew
+instances and have each use a different quake_id file.<br>
+<pre>Default:  Not SET,  uses quake_id.d by default then</pre>
+<br>
+<hr style="width: 100%; height: 2px;">
+<pre><a name="FixDepth"><b>FixDepth <font color="red">dmin trialz</font></b>			hyp_com			location</a></pre>
+<blockquote> <a name="FixDepth">Sets the trial depth (km) to use for
+earthquakes
+which have no nearby
+stations. If an earthquake has no picks within <font color="red">dmin</font>
+km, set its depth to <font color="red">trialz</font> km and locate it
+with a fixed-depth solution. This prevents events with no depth
+resolution from flailing. </a>
+  <pre><a name="FixDepth">Default:  FixDepth 50.0 8.0             Calnet:  FixDepth 50.0 8.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="focus"></a>
+<pre><a name="focus"><b>focus <font color="red">nfocus</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="focus">Defines how focused a stack must be to
+consider
+declaring a new quake.
+A stack must have no more than <font color="red">nfocus</font> cells
+in its maximum-count list and the maximum count value must be greater
+than or equal to mthresh (see "thresh" command) in order to declare a
+new event. Since the trial hypocenter is calculated by averaging the
+center
+positions of all the cells in the maximum-count list, a larger nfocus
+will increase the probability of a poor starting location (which has
+its own attendant problems). A smaller <font color="red">nfocus</font>
+value, however, will tend to reject distant events. The optimal value
+for nfocus may also
+depend on the grid granularity ("dspace" command). Considerable
+experimentation may be required to determine an optimum value for any
+specific network. </a>
+  <pre><a name="focus">Default:  focus 5                       Calnet:  focus 30<br></a></pre>
+</blockquote>
+<hr>
+<a name="GetPicksFrom"></a>
+<pre><a name="GetPicksFrom"><b>GetPicksFrom <font color="red">inst mod_id</font></b>		bndr_config		Earthworm setup</a></pre>
+<blockquote> <a name="GetPicksFrom">Controls the picks input to
+binder_ew.
+Binder_ew will only process picks that come from module <font
+ color="red">mod_id</font> at installation <font color="red">inst</font>.
+  <font color="red">inst</font> and <font color="red">mod_id</font>
+are character strings (valid strings are listed in
+earthworm.h/earthworm.d) which are related to single-byte numbers that
+uniquely identify each installation and module. Up to 2 "GetPicksFrom"
+commands may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will
+force binder_ew to process all picks, regardless of their place of
+origin. <br>
+  <b>Note:</b> both binder_ew and eqproc should be set to listen to the
+same pick source(s)! </a>
+  <pre><a name="GetPicksFrom">Default:  none<br>Calnet:   GetPicksFrom  INST_WILDCARD MOD_WILDCARD<br></a></pre>
+</blockquote>
+<hr>
+<a name="grdlat"></a>
+<pre><a name="grdlat"><b>grdlat <font color="red">lat1 lat2</font></b>			grid_com		stack</a></pre>
+<blockquote> <a name="grdlat">Defines the latitude range (decimal
+degrees;
+positive to the north) of the volume containing all trial stacking
+hypocenters (set the latitude
+boundaries of the regional grid). Once an event is stacked, it may
+relocate outside of this range, and it will continue to associate picks
+correctly. </a>
+  <pre><a name="grdlat">Default:  none                          Calnet:  grdlat   32.5   43.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="grdlon"></a>
+<pre><a name="grdlon"><b>grdlon <font color="red">lon1 lon2</font></b>			grid_com		stack</a></pre>
+<blockquote> <a name="grdlon">Defines the longitude range (decimal
+degrees;
+positive to the east) of the volume containing all trial stacking
+hypocenters (set the longitude
+boundaries of the regional grid). Once an event is stacked, it may
+relocate outside of this range, and it will continue to associate picks
+correctly. </a>
+  <pre><a name="grdlon">Default:  none                          Calnet:  grdlon -125.0 -114.5<br></a></pre>
+</blockquote>
+<hr>
+<a name="grdlon"> </a><a name="grdz"></a>
+<pre><a name="grdz"><b>grdz <font color="red">z1 z2</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="grdz">Defines the depth range (km; positive
+down) of the
+volume containing all trial stacking hypocenters (set the depth
+boundaries of the regional grid). The range from z1+(dspace/2) to
+z2-(dspace/2) must not be greater than the depth range specified in the
+"zrange" command; otherwise, events may stack outside of the zrange
+limit and this could cause locator logic errors. </a>
+  <pre><a name="grdz">Default:  none                          Calnet:  grdz    0.0   20.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="grid_wt"></a>
+<pre><a name="grid_wt"><b>grid_wt <font color="red">quality increment</font></b>		grid_com		stack</a></pre>
+<blockquote> <a name="grid_wt">Allows picks to be weighted in the
+stacking process
+based on their quality assigned by the picker. For a pick with a given <font
+ color="red">quality</font> (0 = most reliable, 4 = least reliable),
+add <font color="red">increment</font> to the count in the cells which
+meet the stacking criteria. This command is included so that poor
+quality picks can still contribute to a stack, but with less impact
+than better quality picks. The increment values set by grid_wt should
+be reflected in the mthresh value (set by the "thresh" command) used to
+declare new events (mthresh should be greater
+than three times the largest grid_wt increment specified). If no
+"grid_wt" command is issued, only 0-quality picks will be stacked, with
+an increment of 1. If at least one "grid_wt" command is issued, a pick
+whose quality was not specified by grid_wt will not used in the stack. </a>
+  <pre><a name="grid_wt">Default:  stack only quality=0 		Calnet:  grid_wt 0 4<br>          using increment=1			 grid_wt 1 3<br>					         grid_wt 2 2<br>					         grid_wt 3 1<br></a></pre>
+</blockquote>
+<hr>
+<a name="grid_wt_instid"></a>
+<pre><a name="grid_wt_instid"><b>grid_wt_instid <font color="red">quality increment instid</font></b>            grid_com                stack</a></pre>
+<blockquote> <a name="grid_wt_instid">Allows picks to be weighted in
+the stacking
+process based not only on the
+quality assigned by the picker, but also by the installation id that
+produced them. For a pick with a given <font color="red">quality</font>
+(0 = most reliable, 4 = least reliable) from a given <font color="red">instid</font>
+(character string
+found in earthworm_global.d), add <font color="red">increment</font>
+to the count
+in the cells which meet the stacking criteria. This command is
+included so that picks from one installation can be weighted
+differently
+in a stack than picks from another installation and should only be used
+by
+networks that are exchanging pick information.
+The increment values
+set by grid_wt_instid and grid_wt should be reflected in the mthresh
+value (set by the
+"thresh" command) used to declare new events (mthresh should be greater
+than three times the largest <font color="red">increment</font>
+specified). If no
+"grid_wt_instid" or "grid_wt" command is issued, all 0-quality picks
+will be stacked,
+with an increment of 1. If at least one "grid_wt_instid" or "grid_wt"
+command is issued,
+a pick whose quality and/or instid was not specified will not used in
+the stack. grid_wt_instid commands can be used in combination with
+grid_wt commands;
+a "grid_wt" command is equivalent to a "grid_wt_instid" command with
+instid set to INST_WILDCARD. </a>
+  <pre><a name="grid_wt_instid">Default:  stack only quality=0         Example:  grid_wt        0 4 <br>          from any installation                  grid_wt        1 3<br>          using increment=1                      grid_wt_instid 2 2 INST_MENLO<br>                                                 grid_wt_instid 2 0 INST_CIT<br></a></pre>
+</blockquote>
+<hr>
+<a name="hypcode"></a>
+<pre><a name="hypcode"><b>hypcode	<font color="red">value</font></b>				bind_com	 	output</a></pre>
+<a name="hypcode"> </a>
+<blockquote><a name="hypcode">Sets a value to specify how much
+information should be included in
+binder_ew's log file after each event relocation. Possible values (0-7)
+and the corresponding output are a sum of: </a>
+  <blockquote><a name="hypcode">0 no output from locator (default)<br>
+1 include summary location for each iteration<br>
+2 include final phase description for each associated pick<br>
+4 include final rms and dmin </a></blockquote>
+  <a name="hypcode">Generally, this parameter should only be included
+during testing and tuning, since significant increases in the size of
+the log file and a corresponding decrease in associator efficiency is
+incurred when it is present and non-zero. </a>
+  <pre><a name="hypcode">Default:  hypcode 0<br></a></pre>
+</blockquote>
+<hr>
+<a name="lay"></a>
+<pre><a name="lay"><b>lay <font color="red">depth velocity</font></b>			t_com			model</a></pre>
+<blockquote> <a name="lay">Defines the layered velocity structure to
+be used for
+calculating travel times. <font color="red">depth</font> is the
+distance (km) to the top of the layer, and <font color="red">velocity</font>
+is the seismic P-wave velocity (km/sec) within that layer. No default
+velocity structure is defined; therefore, the user must always supply
+one in the control file. Up to 20 layers can be specified, and they
+should be listed in order of increasing depth. </a>
+  <pre><a name="lay">Default:  none				Calnet:  lay   0.0  4.0<br>						 lay   3.5  5.9<br>						 lay  15.0  6.85<br> 						 lay  25.0  7.85<br></a></pre>
+</blockquote>
+<hr>
+<a name="locate_eq"></a>
+<pre><a name="locate_eq"><b>locate_eq <font color="red">npick interval</font></b>		bind_com		location</a></pre>
+<blockquote> <a name="locate_eq">Allows intermittent relocations of an
+event; an
+earthquake with more than <font color="red">npick</font> picks will
+relocate with every additional <font color="red">interval</font> picks
+associated. This increases binder_ew's efficiency by skipping cpu-
+intensive relocations of stable events. Up to 10 "locate_eq" commands
+can be supplied (in order of increasing npick values) to set multiple
+npick-break-points and location intervals. An event with fewer picks
+than the smallest npick value will locate after each additional pick is
+associated. </a>
+  <pre><a name="locate_eq">Default: locate after every pick	Calnet:  locate_eq  25   2<br>						 locate_eq  50   4<br>						 locate_eq  75   8<br>						 locate_eq 100  16<br></a></pre>
+</blockquote>
+<hr>
+<a name="LogFile"></a>
+<pre><a name="LogFile"><b>LogFile <font color="red">switch</font></b>				bndr_config		output</a></pre>
+<blockquote> <a name="LogFile">Sets the on-off switch for writing a
+log file to
+disk. If <font color="red">switch</font>
+is 0, no log file will be written. If <font color="red">switch</font>
+is 1, binder_ew will
+write a daily log file(s) called binder_ewxx.log_yymmdd where xx is
+binder_ew's module id (set with "MyModuleId" command) and yymmdd is the
+current UTC date (ex: 960123) on the system clock. The file(s) will be
+written in the EW_LOG directory (environment variable). The amount of
+information written to the file(s) can also be controlled with the
+"log_stack" and "hypcode" commands. </a>
+  <pre><a name="LogFile">Default:  none<br></a></pre>
+</blockquote>
+<hr>
+<a name="LogFile"> </a><a name="log_accepted"></a>
+<pre><a name="log_accepted"><b>log_accepted</b>				assess_com		output</a></pre>
+<blockquote> <a name="log_accepted">Tells the pick-assessing function
+(see
+"assess_pk" command) to log detailed information for all accepted
+picks, in addition to info about rejected picks. If this command is
+ommitted, only information about picks rejected as glitches or outliers
+will be written to the log file. </a>
+  <pre><a name="log_accepted">Default:  don't log accepted picks	<br></a></pre>
+</blockquote>
+<hr>
+<a name="log_stack"></a>
+<pre><a name="log_stack"><b>log_stack</b>				grid_com		output</a></pre>
+<blockquote> <a name="log_stack">Tells the program to print a
+graphical
+representation of the stack
+to the log file each time a new hypocenter is declared. Each grid cell
+in the depth layer containing the hypocenter is represented by a value
+(0-9,a-z) denoting the number of "hits" in that cell. The trial
+hypocenter is found by averaging the positions of all the cells
+which have the maximum number of hits. </a>
+  <pre><a name="log_stack">Default:  don't log the stack <br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxDeltaRms"></a>
+<pre><a name="MaxDeltaRms"><b>MaxDeltaRms <font color="red">factor</font></b>			hyp_com			location</a></pre>
+<blockquote> <a name="MaxDeltaRms"> Sets a factor in the test for
+divergence of an
+event's average weighted
+residual (rms). Solution diverges if rms &gt; previous rms * <font
+ color="red">factor</font>. </a>
+  <pre><a name="MaxDeltaRms">Default:  MaxDeltaRms 1.01		Calnet:  MaxDeltaRms 1.0001<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxIter"></a>
+<pre><a name="MaxIter"><b>MaxIter <font color="red">num</font></b>				hyp_com			location</a></pre>
+<blockquote> <a name="MaxIter">Sets the maximum number of iterations
+to perform on
+each relocation. </a>
+  <pre><a name="MaxIter">Default:  MaxIter 4			Calnet:  MaxIter 4<br></a></pre>
+</blockquote>
+<hr>
+<a name="maxpix"></a>
+<pre><a name="maxpix"><b>maxpix <font color="red">maxpix</font></b>				hyp_com			location</a></pre>
+<blockquote> <a name="maxpix">Defines the maximum size of the problem
+that can be
+accommodated by the location algorithm. Sufficient space is allocated
+to allow the location of an event with <font color="red">maxpix</font>
+picks. The reason for providing this command is so that space need only
+be allocated once, preventing considerable overhead in the location
+process. </a>
+  <pre><a name="maxpix">Default:  maxpix 256			Calnet:  maxpix 256<br></a></pre>
+</blockquote>
+<hr>
+<a name="maxsite"></a>
+<pre><a name="maxsite"><b>maxsite <font color="red">nsite</font></b>				site_com		model</a></pre>
+<blockquote> <a name="maxsite">Allocates memory to store <font
+ color="red">nsite</font>
+station locations in the site table. </a>
+  <pre><a name="maxsite">Default:  maxsite 1000			Calnet:  maxsite 1000<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxStep"></a>
+<pre><a name="MaxStep"><b>MaxStep <font color="red">xystep zstep</font></b>			hyp_com			location</a></pre>
+<blockquote> <a name="MaxStep">Sets maximum limits (km) on the
+horizontal (xystep)
+and vertical (zstep) distance a hypocenter can move in each iteration.
+If either
+value is exceeded, all 4 dimensions (x, y, z and time) of the step-
+vector are equally damped, preserving the direction of the vector, such
+that each dimension is within its limit. </a>
+  <pre><a name="MaxStep">Default:  MaxStep 10.0 2.0		Calnet:  MaxStep 25.0  5.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="maxtrial"></a>
+<pre><a name="maxtrial"><b>maxtrial <font color="red">ntrial</font></b>				assess_com		pick assess</a></pre>
+<blockquote> <a name="maxtrial">Restricts the pick-assessing process
+to a maximum
+of <font color="red">ntrial</font> resamplings. Given n picks sampled
+4 at a time, the total number of unique combinations is n!/(4!*(n-4)!).
+If this number is less than <font color="red">ntrial</font>, all
+possible combinations will be
+considered, with no
+duplication. If the total is greater than <font color="red">ntrial</font>,
+then <font color="red">ntrial</font> random samples of 4 picks will be
+considered, and duplication is
+possible. </a>
+  <pre><a name="maxtrial">Default:  maxtrial 500			Calnet:  maxtrial 500<br></a></pre>
+</blockquote>
+<hr>
+<a name="maxwt"></a>
+<pre><a name="maxwt"><b>maxwt <font color="red">wt</font></b>				assess_com		pick assess</a></pre>
+<blockquote> <a name="maxwt">Defines the maximum pick quality <font
+ color="red">wt</font>
+to consider in the resampling
+pick-assessing process (see "assess_pk" command). <font color="red">wt</font>
+must be a
+character from 0 thru 4. Picks with qualities higher than <font
+ color="red">wt</font> (poorer quality) may be rejected as glitches,
+but will not be used
+in resampling to find outliers. </a>
+  <pre><a name="maxwt">Default:  maxwt 3			Calnet:  maxwt 3<br></a></pre>
+</blockquote>
+<hr>
+<a name="MinXYZstep"></a>
+<pre><a name="MinXYZstep"><b>MinXYZstep <font color="red">minstep</font></b>			hyp_com			location</a></pre>
+<blockquote> <a name="MinXYZstep">Defines the step length (km) at
+which to stop
+iterating. If the x-y-z step is less than <font color="red">minstep</font>
+km, the hypocenter is considered stable and no more iterations are done
+on this call to hyp_l1. </a>
+  <pre><a name="MinXYZstep">Default:  MinXYZstep 0.1		Calnet:  MinXYZstep 0.1<br></a></pre>
+</blockquote>
+<hr>
+<a name="MyModuleId"></a>
+<pre><a name="MyModuleId"><b>MyModuleId <font color="red">mod_id</font></b>			bndr_config		Earthworm setup</a></pre>
+<blockquote> <a name="MyModuleId">Sets the module id for labeling all
+outgoing
+messages. <font color="red">mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number. </a>
+  <pre><a name="MyModuleId">Default:  none				Calnet:  MyModuleId MOD_BINDER_EW<br></a></pre>
+</blockquote>
+<hr>
+<a name="next_id"></a>
+<pre><a name="next_id"><b>next_id <font color="red">quakeid</font></b>				bind_com		stack</a></pre>
+<blockquote> <a name="next_id">Defines the sequence number (quakeid+1)
+to assign
+to the next stacked
+event. Each time an event is created, binder_ew updates a file called
+"quake_id.d" which contains next available sequence number in the
+"next_id" command. To ensure sequential, non-duplicated event id's
+between runs, the parameter file "binder_ew.d" must contain the command
+"@quake_id.d". If this command is omitted, event sequence numbers will
+be issued beginning at 1 each time binder_ew is restarted. </a>
+  <pre><a name="next_id">Default:  next_id 1 			Calnet:  @quake_id.d	<br></a></pre>
+</blockquote>
+<hr>
+<pre><a name="ChannelNumberMap"></a><b>ChannelNumberMap</b> <font color="#ff0000">ENZ</font></pre>
+<blockquote>
+Convert channels with Number orientations to letter orientations using the mapping string <font color="#ff0000">ENZ</font> provided.
+The Map string maps 1 to the first letter, 2 to the second
+letter, and 3 to the last letter of the three char string provided. For example, a map of ENZ
+that means channels named EH1 would be seen as a East
+component horizontal and channel EH2 would be seen as a north component horizontal.
+Note that binder_ew does not recognize numbers, so this conversion is needed for no_S or no_P options described below.
+</blockquote>
+<pre> Default: ZNE</pre>
+
+<hr>
+<a name="no_P_on_Horiz"></a>
+<pre><a name="no_P_on_Horiz"><b>no_P_on_Horiz</b></pre>
+<blockquote> Don't try and associate a horizontal channel pick as an P phase. If vertical
+channels are picked on, there is a possibility that a horizontal could be used for a usually vertically polarized
+P phase (probably not the best idea in most cases). This simple flag, no argument needed, will
+prevent any P phases from being associated from a horizontal component pick. Note this uses the 
+<A href=#ChannelNumberMap>ChannelNumberMap</A> option to map numbered channels to horizontals.
+  <pre><a name="no_P_on_Horiz">Default:  off 				<br></a></pre>
+</blockquote>
+<hr>
+<a name="no_S_on_Z"></a>
+<pre><a name="no_S_on_Z"><b>no_S_on_Z</b></pre>
+<blockquote> Don't try and associate a vertical channel pick as an S phase. If horizontal
+channels are picked on, there is a possibility that a vertical could be used for a horizontal
+S phase (probably not the best idea in most cases). This simple flag, no argument needed, will
+prevent any S phases from being associated on a vertical component pick. Note this uses the 
+<A href=#ChannelNumberMap>ChannelNumberMap</A> option to map numbered channels to verticals.
+  <pre><a name="no_S_on_Z">Default:  off 				<br></a></pre>
+</blockquote>
+<hr>
+<a name="ph"></a>
+<pre><a name="ph"><b>ph <font color="red">phase weight</font></b>				bind_com		location</a></pre>
+<blockquote> <a name="ph">Allows for differential weighting and
+exclusion of
+various associated phases in the event location process. The weighting
+is based on the phase assigned to the pick by the associator. </a>
+  <blockquote><a name="ph"><font color="red">phase</font> can be any of
+P, S, Pn, Sn, Pg, or Sg<br>
+    <font color="red">weight</font> can be a number between 0.0 and
+1.0, inclusive </a></blockquote>
+  <a name="ph">If no "ph" commands are supplied, all phases receive a
+phase-weight of 1.0. If at least one "ph" command is supplied, other
+phases that have not been listed by "ph" are weighted 0.0. The overall
+weight of a pick in the location is the product of its phase-weight and
+quality-
+weight ("wt" command) divided by the taper value ("taper" command)
+at the appropriate distance. </a>
+  <pre><a name="ph">Default:  all phases/1.0 weight		Calnet:  ph P  1.0<br>						 ph Pn 0.5<br>						 ph Pg 0.5<br></a></pre>
+</blockquote>
+<hr>
+<a name="psratio"></a>
+<pre><a name="psratio"><b>psratio <font color="red">value</font></b>				t_com			model</a></pre>
+<blockquote> <a name="psratio">Sets the value of the P/S seismic
+velocity ratio. </a>
+  <pre><a name="psratio">Default:  psratio  1.72			Calnet:	 psratio  1.72<br></a></pre>
+</blockquote>
+<hr>
+<a name="r_max"></a>
+<pre><a name="r_max"><b>r_max <font color="red">rmax</font></b>				bind_com		location</a></pre>
+<blockquote> <a name="r_max">Sets the maximum epicentral distance (km)
+for
+weighting picks in the location process. Picks from stations at
+distances greater than <font color="red">rmax</font> km are not
+weighted. </a>
+  <pre><a name="r_max">Default:  r_max 150.0			Calnet:  r_max 400.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="r_max"> </a><a name="rAvg_Factor"></a>
+<pre><a name="rAvg_Factor"><b>rAvg_Factor <font color="red">factor</font></b>			bind_com		association</a></pre>
+<blockquote> <a name="rAvg_Factor">Sets a factor (scalar) which
+controls the
+distance cutoff for associating picks with a given event. If a pick is
+from a station at an epicentral distance greater than <font color="red">factor</font>*(average
+epicentral distance of all associated picks), binder_ew will not
+attempt to assocate that pick with that event. </a>
+  <pre><a name="rAvg_Factor">Default:  rAvg_Factor 10.0		Calnet:  rAvg_Factor  7.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="ray"></a>
+<pre><a name="ray"><b>ray <font color="red">z r</font></b>					t_com			output</a></pre>
+<blockquote> <a name="ray">Prints the travel time from an event at <font
+ color="red">z</font> km depth to a station on the surface at an
+epicentral distance of <font color="red">r</font> km. This command is
+used mostly for testing, but might be of some interest in checking
+travel
+time calculations or plotting travel time curves. </a></blockquote>
+<hr>
+<a name="raytst"></a>
+<pre><a name="raytst"><b>raytst <font color="red">z rmax rdel</font></b>			t_com			output</a></pre>
+<blockquote> <a name="raytst">Prints out something dealing with the
+velocity model
+and travel times. </a></blockquote>
+<hr>
+<a name="region"></a>
+<pre><a name="region"><b>region <font color="red">z rmax rdel</font></b>			t_com			output</a></pre>
+<blockquote> <a name="region">Prints out the travel times of all
+possible phases
+at series of points on the surface from an earthquake at <font
+ color="red">z</font> km depth. Those surface points are at epicentral
+distances from <font color="red">rdel</font> km to <font color="red">rmax</font>
+km and are spaced <font color="red">rdel</font> km apart. This
+command, mostly for testing, is useful for plotting travel-time curves.
+  </a></blockquote>
+<hr>
+<a name="residual_cut"></a>
+<pre><a name="residual_cut"><b>residual_cut <font color="red">median mad</font></b>			assess_com		pick assess</a></pre>
+<blockquote> <a name="residual_cut">Sets cutoff thresholds (in
+seconds) for
+travel-time residuals in the
+pick-assessing process. Given a group of picks, up to <font color="red">ntrial</font>
+(see "maxtrial" command) hypocenters are determined from various
+combinations of four picks. For each pick, the travel-time residual is
+calculated with respect to each hypocenter using a uniform-velocity
+halfspace. If the absolute value of the median of those residuals is
+greater than <font color="red">median</font> sec, the pick is rejected
+as an outlier. And if the median of the absolute deviations from the
+median residual is greater than <font color="red">mad</font> sec, the
+pick is also rejected as an outlier. </a>
+  <pre><a name="residual_cut">Default:  residual_cut 3.0 10.0		Calnet:  residual_cut 3.0 10.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="RingName"></a>
+<pre><a name="RingName"><b>RingName <font color="red">ring</font></b>				bndr_config		Earthworm setup</a></pre>
+<blockquote> <a name="RingName">Tells binder_ew which shared memory
+region to use
+for input and output. <font color="red">ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in
+earthworm.d) to a unique number for the key to the
+shared memory region. </a>
+  <pre><a name="RingName">Default:  none				Calnet:  RingName PICK_RING<br></a></pre>
+</blockquote>
+<hr>
+<a name="rmscut"></a>
+<pre><a name="rmscut"><b>rmscut <font color="red">value</font></b>				bind_com		location</a></pre>
+<blockquote> <a name="rmscut">Sets a maximum value (seconds) for the
+average absolute residual (rms) for a successful location. If this value is exceeded as a result of
+culling, scavenging, or associating a new phase, the event is marked as
+destroyed and all of its phases are deassigned. </a>
+  <pre><a name="rmscut">Default:  rmscut 1.0 			Calnet:  rmscut 1.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="rmscut_npick"></a>
+<pre><a name="rmscut_pick"><b>rmscut_pick <font color="red">threshold number_of_picks</font></b>				bind_com		location</a></pre>
+<blockquote> <a name="rmscut_pick">Sets a maximum value (seconds) <font color="red">threshold</font> for the
+average absolute residual (rms)
+for a successful location that
+must be met unless <font color="red">number_of_picks</font> is observed.
+If this value is exceeded as a result of
+culling, scavenging, or associating a new phase, and not enough picks are observed, then the event is marked as
+destroyed and all of its phases are deassigned. Please note that you can have as many of these rmscut_pick commands as you need but
+the threshold must be in increasing order. At Caltech we found that when a mainshock and foreshock were close together
+in time, then the mainshock event would get killed if just an RMS of 1.0 was used. By creating this
+command  we allowed many picks (indicating it was a largish event, to overrule the rmscut threshold and allow the automatic location to go through).</a>
+  <pre><a name="rmscut">Default:  NOT USED 			Calnet:  rmscut_pick 1.0 100<br></a></pre>
+</blockquote>
+<hr>
+<a name="rmscut"> </a><a name="rmsgrid"></a>
+<pre><a name="rmsgrid"><b>rmsgrid <font color="red">value</font></b> 				grid_com		stack</a></pre>
+<blockquote> <a name="rmsgrid">No longer used. </a></blockquote>
+<hr>
+<a name="rstack"></a>
+<pre><a name="rstack"><b>rstack <font color="red">rstack</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="rstack">Defines the distance (km) over which
+phases are
+allowed to interact with other phases during the stacking analysis. <font
+ color="red">rstack</font> defines the
+dimensions of the stacking travel-time template, whose cell size is
+defined by "dspace" (an rstack of 100 and a dspace of 10 would yield a
+10 x 10 travel time template). Phases from stations that are more than
+2*<font color="red">rstack</font> km apart will not stack together
+other because their stacking templates will not overlap. </a>
+  <pre><a name="rstack">Default:  rstack  100.0			Calnet:  rstack  100.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="site"></a>
+<pre><a name="site"><b>site <font color="red">name latitude longitude</font></b>		site_com		model</a></pre>
+<blockquote> <a name="site">Enters a station location into the station
+site table,
+where <font color="red">name</font> is the station code used by the
+picker, and <font color="red">latitude</font> and <font color="red">longitude</font>
+are expressed in decimal degrees (positive to the north and east). Use
+either multiple "site" commands or one "site_file" command to load
+the station list into binder_ew. </a></blockquote>
+<hr>
+<a name="site_file"></a>
+<pre><a name="site_file"><b>site_file <font color="red">filename</font></b>			site_com		model</a></pre>
+<blockquote> <a name="site_file">Enters site codes and station
+locations into the
+site table by reading
+a HYPOINVERSE format station file called <font color="red">filename</font>.
+In this file,
+stations are described by a 5-letter site name, a 2-letter network
+code and a 3-letter component code. The picker must also be using this
+station-naming convention. The format of the file is described under </a><a
+ href="../USER_GUIDE/hypoinv_sta.html">"HYPOINVERSE STATION FILE FOR
+FULL 12-LETTER (S-N-C-L) CHANNEL NAMES"</a>. Use either one "site_file"
+command or
+multiple "site" commands to load the station list into binder_ew.
+</blockquote>
+<hr> <a name="stack">
+</a>
+<pre><a name="stack"><b>stack <font color="red">mstack</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="stack">Determines how many previously received
+picks are to
+be considered in the stacking process. A value of 50 to 100 seems
+appropriate, although
+if the scatter in reporting delays is large, a larger value of <font
+ color="red">mstack</font> may be required. </a>
+  <pre><a name="stack">Default:  stack 20			Calnet:  stack 50<br></a></pre>
+</blockquote>
+<hr>
+<a name="t_dif"></a>
+<pre><a name="t_dif"><b>t_dif <font color="red">tmin tmax</font></b>				bind_com		associaton</a></pre>
+<blockquote> <a name="t_dif">Defines a time range (seconds) around an
+event
+origin-time (origin-time minus tmin to origin-time plus tmax). If a
+pick-time falls outside of this time range for a given event, binder_ew
+will not
+attempt to associate that pick with that event. </a>
+  <pre><a name="t_dif">Default:  t_dif -1.0 120.0  		Calnet:  t_dif -3.0 120.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="t_dif"> </a><a name="taper"></a>
+<pre><a name="taper"><b>taper <font color="red">r resmax</font></b>				bind_com		association</a></pre>
+<blockquote> <a name="taper">Defines a distance-dependent tolerance
+for
+associating, culling, or scavenging a phase, where <font color="red">r</font>
+is the distance (km) and <font color="red">resmax</font> is the
+maximum allowed residual (seconds). Multiple taper commands (up to 100)
+can be issued, in order of increasing <font color="red">r</font>, to
+define the tolerance function. Between the distances specified, the
+value of the cutoff residual changes linearly between corresponding <font
+ color="red">resmax</font> values. For distances less than the lowest
+value specified, the cutoff
+residual is constant at the <font color="red">resmax</font> value for
+the smallest distance; for distances exceeding the maximum specified,
+the cutoff is constant at the <font color="red">resmax</font> value
+set for the maximum distance. If no "taper"
+commands are supplied, the cutoff residual is a constant 1.0 sec for
+all distances. </a>
+  <pre><a name="taper">Default:  constant 1.0 sec		Calnet:  taper   0.0   1.0<br>						 taper  50.0   1.0<br>						 taper  200.0  2.5<br>						 taper  400.0  4.5<br></a></pre>
+</blockquote>
+<hr>
+<a name="taper_OT"></a>
+<pre><a name="taper_OT"><b>taper_OT <font color="red">const1 const2</font></b>			bind_com		association</a></pre>
+<blockquote> <a name="taper_OT">Sets constants for two additional
+terms to be
+added to the residual- tolerance function (described for "taper"
+command). These 2 terms widen the residual-tolerance for events with
+greater location uncertainty. The first added term (multiplied by <font
+ color="red">const1</font>) depends on the event rms and the number of
+picks associated with the event. The second additional term is: <font
+ color="red">const2</font> * log10(distance of closest station)
+To eliminate the event origin-time uncertainty terms, use the command:
+taper_OT 0.0 0.0 </a>
+  <pre><a name="taper_OT">Default:  taper_OT 2.0 2.0		Calnet:  taper_OT 2.0 1.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="taper_OT"> </a><a name="thresh"></a>
+<pre><a name="thresh"><b>thresh <font color="red">mthresh</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="thresh">Sets the cell-count above which to
+consider
+declaring an earthquake from a stack. A completed stack is examined to
+prepare a list of cells that share the maximum count value and the same
+minimum distance to the initiating phase. The associator declares a new
+hypocenter from the stack only if the maximum count value is greater
+than <font color="red">mthresh</font> and the number of cells in the
+list is less than nfocus (see "focus" command). The trial hypocenter
+for the declared event is calculated by averaging the center positions
+of all the cells in the maximum-count list. <font color="red">mthresh</font>
+should be greater than 3 times
+the maximum increment specified by "grid_wt" commands to ensure that at
+least 4 phases contribute to declaration of a new earthquake. </a>
+  <pre><a name="thresh">Default:  thresh 6			Calnet:	 thresh 14<br></a></pre>
+</blockquote>
+<hr>
+<a name="tstack"></a>
+<pre><a name="tstack"><b>tstack <font color="red">tstack</font></b>				grid_com		stack</a></pre>
+<blockquote> <a name="tstack">Defines how close (in seconds) the
+back-projection
+of one phase must lie with respect to the back-projection of another
+phase for the two
+phases to be considered coherent (ie, from the same source). The value
+of <font color="red">tstack</font> should reflect the degree of
+crustal heterogeneity as shown in the range of station delays. As a
+first approximation, <font color="red">tstack</font> should be at
+least the number of seconds it takes for a P-wave to cross a grid cell
+of <font color="red">dspace</font> km. </a>
+  <pre><a name="tstack">Default:  tstack 0.5			Calnet:  tstack  0.65<br></a></pre>
+</blockquote>
+<hr>
+<a name="v_halfspace"></a>
+<pre><a name="v_halfspace"><b>v_halfspace <font color="red">vel</font></b>				assess_com		pick assess</a></pre>
+<blockquote> <a name="v_halfspace">Sets the P-wave velocity <font
+ color="red">vel</font>
+in km/sec of the halfspace used in the pick-assessing process to locate
+events by the Ingelada method and to calculate travel-times residuals
+(see "assess_pk" command). </a>
+  <pre><a name="v_halfspace">Default:  v_halfspace 5.0		Calnet:  v_halfspace 5.0<br></a></pre>
+</blockquote>
+<hr>
+<a name="v_halfspace"> </a><a name="wt"></a>
+<pre><a name="wt"><b>wt <font color="red">quality weight</font></b>			bind_com		location</a></pre>
+<blockquote> <a name="wt">Controls the weight of a pick in the event
+location
+process based on the quality assigned to the pick by the picker. Picks
+with a quality
+of 0 are the most reliable, those with quality 4 are least reliable. </a>
+  <blockquote><a name="wt"><font color="red">quality</font> is any of
+the values 0, 1, 2, 3, or 4<br>
+    <font color="red">weight</font> is a number between 0.0 and 1.0,
+inclusive. </a></blockquote>
+  <a name="wt">If no "wt" commands are supplied, all picks receive a
+quality-weight
+of 1.0. If at least one "wt" command is supplied, other qualites that
+have not been listed by "wt" are weighted 0.0. The overall weight of a
+pick in the location is the product of its phase-weight (see "ph"
+command) and quality-weight divided by the taper value (see "taper"
+command) at the appropriate distance. </a>
+  <pre><a name="wt">Default:  all qualities/1.0 weight	Calnet:  wt 0 1.0<br>						 wt 1 0.5<br>						 wt 2 0.25<br>						 wt 3 0.125<br></a></pre>
+</blockquote>
+<hr>
+<a name="zrange"></a>
+<pre><a name="zrange"><b>zrange <font color="red">zmin zmax</font></b>			hyp_com			location</a></pre>
+<blockquote> <a name="zrange">Defines the valid range (km) for
+computed
+hypocentral depth. The range specified by <font color="red">zmin</font>
+and <font color="red">zmax</font> must span the depth range set in the
+"grdz" command; otherwise, events may stack outside of the zrange limit
+and this could cause locator logic errors. If during the iteration
+process, the depth falls outside of the zmin-zmax range, a fixed-depth
+solution is calculated starting at the previous iteration's hypocenter.
+This feature is useful in controlling locations from network "glitches"
+where all picks are concurrent and the apparent high phase velocity
+would try to locate the quake at the center of the Earth. </a>
+  <pre><a name="zrange">Default:  zrange 2.0 20.0		Calnet:  zrange 1.0 30.0<br></a></pre>
+</blockquote>
+<hr>
+<center><a name="zrange"> </a><a href="../modules.html">Module Index</a>
+| <a href="../ovr/binder_setup.html">Binder_ew Overview</a>
+</center>
+<br>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+<br>
+</body>
+</html>

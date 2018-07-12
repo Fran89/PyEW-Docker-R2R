@@ -1,0 +1,44 @@
+Date: Wed, 26 Jul 2000 12:08:46 -0700
+From: kohler@usgs.gov
+To: earthw-list@nmt.edu
+Subject: Wave_serverV recovery need
+X-MIMETrack: Serialize by Router on gscamnlh01/SERVER/USGS/DOI(Release 5.0.2b |December
+ 16, 1999) at 07/26/2000 12:08:37 PM
+MIME-Version: 1.0
+Content-type: text/plain; charset=us-ascii
+
+
+To:  Earthworm Community,
+
+I have a suggestion for a modification to wave_serverV which I think would
+benefit the Earthworm community.
+
+Currently, if a hard drive containing waveserver tank files develops a bad
+sector or sectors, and wave_serverV attempts to read the bad sector, the
+wave_serverV process will exit.  Even though the bad sector may lie in only
+one tank file, none of channels served by the wave_serverV process will
+continue being served after this time.  It would be preferable if, instead
+of exiting, wave_serverV quit serving data from the channel with the bad
+tank file and continued to serve the rest of its channels.  The program
+should also send out a pager and/or email message notifying someone of the
+problem.
+
+The reason this is important is that when wave_serverV decides to exit,
+there may be no one available to fix the problem, and a lot of data could
+be lost.  Currently, when a wave_server process dies in Menlo Park, it's a
+pageing offense, which means that someone may be awakened at night or the
+weekend (undesirable).  And, several times I have had to visit the office
+myself on a weekend to repair or replace a bad disk drive.  If only one
+channel were being lost, instead of all channels on a waveserver process, I
+wouldn't send out pages.  I would just fix the problem on Monday morning.
+
+Does anyone else think this is a problem?  Is anyone willing to modify the
+code?
+
+Thanks, Will
+
+
+
+
+----- End Included Message -----
+

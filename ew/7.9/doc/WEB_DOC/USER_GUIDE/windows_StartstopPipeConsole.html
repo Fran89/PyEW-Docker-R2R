@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>Earthworm StartstopPipeConsole</title>
+  <meta content="ISTI" name="author">
+</head><body bgcolor="#ffffff">
+<center>
+  <h1>Earthworm StartstopPipeConsole</h1>
+  <i>(last revised 28 October 2014)</i>
+</center>
+<p> Readme for StartstopPipeConsole<br>
+  ----------------------------
+</p><p>Functionality implemented by:<br>Eric Thomas, ISTI</p><p>--------------------------</p>
+<p>The StartstopPipeConsole tool provides a way to interact with the
+'startstop' process using a console window.&nbsp; This is useful on
+Windows installations with 'startstop' service installed, where the
+service is otherwise difficult to access.</p>
+<p>In the "startstop_nt.d" configuration file used by the 'startstop' service, the 'PipeName' entry should set to "EarthwormStartstopPipe" (or a 'PipeName'
+entry should not be specified).&nbsp; For more information on the
+'startstop' service see the "Earthworm Windows Startstop Service"
+documentation.</p>
+<p>To run the StartstopPipeConsole program, open a Command Prompt and enter <tt>StartstopPipeConsole</tt>.&nbsp;
+The program sends a message to the 'startstop' service requesting that
+a pipe-console be started.&nbsp; For the message to get through (via an
+operating-system pipe), administrator-level user access is
+required.&nbsp; The StartstopPipeConsole program will request this
+access when it is run.</p>
+<p>If the pipe-console startup is successful, the StartstopPipeConsole
+program window may then be used to interact with the 'startstop'
+service.&nbsp; Only one instance of a StartstopPipeConsole may be
+active at a time (any previous instance will be terminated).&nbsp;
+Earthworm programs (such as "status", "pau", "sniffring", etc) may be
+run in the StartstopPipeConsole.<br>
+</p>
+<p>To stop a StartstopPipeConsole, enter the command "<tt>exit</tt>".&nbsp; If a program is actively generating output (i.e., "sniffring"), it may be terminated by hitting Ctrl-C.<br>
+</p>
+<br>
+<hr>
+<address>Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+
+</body></html>

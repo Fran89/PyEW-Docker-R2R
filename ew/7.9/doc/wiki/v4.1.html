@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v4.1 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v4.1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v4.1.html" title="View v4.1">v4.1</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v4.1?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v4.1?action=diff&amp;version=5" title="Version 5 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-17T12%3A53%3A42-08%3A00&amp;precision=second" title="2012-01-17T12:53:42-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/17/12 12:53:42</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">Earthworm Release Notes V4.1
+
+(January 20, 2000)
+NEW MODULES:
+***********
+
+sac2hypo:  This program works only under Solaris. It reads the headers
+   of all the SAC files in the current directory and creates a 
+   Hypoinverse archive file. This archive file can be used to relocate 
+   the event. This program was written some time ago by someone else 
+   (I presume Lynn Dietz). It has now been made into an earthworm
+   utility program.   LV 8/12/1999
+
+tide2ew:  This program works only under NT. It listens to
+   serial line communication from the pucks which collect tide
+   data. It connects to a COM port (given the serial communication
+   parameters from the config file) and asks each puck for its
+   reading every WaitTime seconds. After NumSamples for an SCN
+   have been collected, a new TYPE_TRACEBUF message is created
+   and written to the OutRing stamped with the SCN code given
+   in the configuration file.
+   Besides creating earthworm messages, this module can write
+   tide readings to the screen and to files. The format of the
+   output files is taken from ATWC.  This program is part of the 
+   ATWC contributed software.   LV 8/2/1999
+
+fir: This module implements a general-purpose FIR filter for
+   trace data. Low-pass, high-pass, multi-band-pass and notch filters
+   can be specified using simple commands in the configuration file.
+   Filter coefficients are computed using the Remez Exchange 
+   algorithm to give an optimal equiripple filter. The filter
+   zeroes are logged on startup. Using the "TestMode" command in
+   the config file, the module will compute coefficients, log the
+   zeroes and then quit. Uses many of the components in the revised
+   decimate module.   PNL 10/27/1999 
+
+wave_serverV/Tools: Three tools: inspect_tank, read_index and read_struct.
+   These three tools are to help with problems in wave_serverV tank,
+   index and structure files. These are primarily for development work.
+   PNL, 1/12/2000
+
+ring2sac: Writes continuous sac files given a list of Station, Component,
+   Network names.  This software is contributed by University of Utah 
+   Seismograph Station.  
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+
+compress_UA/decompress_UA:  Renamed compression/decompression 
+   routines supplied by Boulder Real Time Technologies to 
+   brtt_gencompress and brtt_genuncompress. By suggestion from 
+   Kent Lindquist -- apparently the official releases of these
+   routines are part of the Antelope software, so using their
+   generic names causes compilation problems whenever Antelope
+   libraries have to be linked in. LV 12/27/1999
+
+trig2disk/waveman2disk:  Modified the sac putaway routine to 
+   enable correct creation of SAC files on NT. Since there are
+   (I think) no SAC tools for NT, the OutputFormat should be set
+   to sparc. Care should be taken when transferring files between
+   NT and Solaris (ASCII mode in ftp works best). LV 12/20/1999.
+   Modified to correctly create PCSUDS format files under NT.
+
+carlsubtrig:  Added the "MaxTrigMsgLen" command to set the size of the
+   buffer used to write TYPE_TRIGLIST2K messages to.  This buffer is
+   allocated at startup (previously, a minimal buffer was allocated
+   on startup, then was realloc'd in 1024 byte increments as necessary).
+   If a triglist message would overflow this buffer, carlsubtrig will
+   stop writing to the buffer, but will continue to write the complete
+   triglist message to its log. It will also send this error message
+   to statmgr:  "incomplete triglist msg sent for eventid:%d".
+   Also, if the event triggered enough subnets such that a wildcard
+   would be added to the triglist message, the wildcard is now written
+   at the beginning of the message instead of the end (just in case
+   that big triglist message would overflow the buffer, the wildcard
+   will always be included!).  LDD 8/6/1999
+
+export_generic
+export_scn    :  Fixed a memory leak in export.c.  Previously, each
+   thread allocated its own working buffer(s).  But when export did a
+   internal restart, it would kill the threads, never freeing
+   the memory. The threads would be restarted, malloc another working
+   buffer...  Enough internal restarts and export would suck up all
+   available memory.  Changed so that all working buffers are allocated
+   in the main thread, before any other threads are started.  All
+   buffers are freed when the program exits.  LDD 9/7/1999  
+
+decimate:  Major revision. Decimate is now a multi-stage filter-decimator.
+   The filter coefficients are computed based on the decimation rate, using
+   the Remez Exchange algorithm. Since each channel requires several buffers
+   to be allocated at startup, channels must be explicitly listed in the
+   config file (no wildcards.) Thus it didn't seem convenient to keep Lucky's
+   cool rewrite rules: Now output SCNs get listed explicitly with the input
+   SCNs. PNL 10/18/1999
+
+read_arc.c: (part of libsrc/util) Corrected the reading for coda length (was reading 
+   the raw coda; now reads the eqcoda-corrected coda) and added the reading of
+   coda weight. Added codawt to Hpck structure in read_arc.h. PNL, 10/20/1999
+     Added reading of preferred magnitude fields from the summary line.
+   Added labelpref,Mpref,wtpref to the Hsum structure in read_arc.h. LDD 11/08/1999
+
+wave_serverV: Removed "fix4_3.3" from the default target of the makefile. 
+   No one should need this program any more; it was only for converting tank 
+   structures from an old format to a new one provided by v3.3. 
+   PNL, 10/28/1999
+
+getmenu: Fixed bug that prevented hostname lookup from working on NT. The
+   problem was that SocketSysInit() was not being called before the
+   hostname lookup occurred. Now you can give getmenu a hostname or and
+   IP address (followed by ":portnumber") on NT as well as Unix.
+   PNL, 11/19/1999
+
+export: It was such that if the connection to import broke while a
+   message was being sent, that that message would be lost. Fix is
+   to save the message until it was sent ok (as per socket return value),
+   and re-send the message after closing and re-opening the connection.
+   Alex 11/20/99
+
+arc2trig: Added two optional parameters:
+	 PrePickTime (default=15)
+	 PostCodaTime (default=10)
+   which specify how much data to save preceding the p-pick, and 
+   following
+   coda cutoff.
+   Alex 11/24/99
+
+statmgr: Changed logit message about "Descriptor file of statmgr not loaded".
+   This error is also generated when the EW_INSTALLATION environment variable
+   doesn't match instId in statmgr.desc. PNL, 11/24/99
+
+heli_standalone: Changed GIF file names so they would be the same on local
+   and (optional) remote machines, as well as in the HTML file. HTML file
+   will now list separate GIFs when less than 24 hours is plotted on one
+   GIF. Fixed bug that caused core-dumps when socket debugging was turned on.
+   Added optional command to name the HTML file.  PNL, 11/29/99
+
+carlstatrig: Added LTAtime as a configurable parameter, as requested by
+   Tom Murray. Previously this was hardwired to 8 seconds. This is an
+   optional parameter, defaults to 8 seconds. PNL, 1/10/00
+
+hyp2000: New version grabbed from Fred Klein 1/11/00.
+     Fixes a bug which had caused a core dump or crash with an error about
+   writing to unit 5.  Symptom was known to occur on startup when a
+   crustal velocity model file (CRH command) contained a blank line at 
+   the end.  Now hyp2000 writes an error message an exits.
+     Also fixes bugs that are related to shadow cards. Used to write Pmag
+   information to summary shadow whether the mag was being calculated or
+   not, and wrote Pmag info to phase shadows sometimes when not necessary.
+     Also has a new command, FIL, which determines the format of the 
+   input file set with the PHS command.  It discriminates between hypo71 
+   phase, *.cod and *.arc files (with and without shadow cards, both old 
+   and y2000 formats).  It also warns you if you are reading a pre-y2000
+   file in y2000 mode, and vice versa.  It sets the correct formats with 
+   the COP and CAR commands.  The FIL code also senses the 4 different 
+   summary formats and tells you what the file is, but of course warns you 
+   that you should not be trying to locate a summary file.  The FIL command
+   should be useful interactively, but it is not necessary for real-time
+   use.  LDD, 1/11/00
+
+hyp2000_mgr: Edited makefiles to work with the newest version of 
+   hyp2000 (new command in new source file).  LDD, 1/11/00
+
+socket_ew_common.c (in libsrc/utils): accept_ew now sets the new socket
+   to nonblocking mode as required for sockets used by socket_ew_common;
+   previously it was assumed that this property was inherited from the
+   original socket. Most functions now properly react to select() errors;
+   previously they were ignored. Most function comments have been updated
+   to be more meaningful. Fixed bug in accept_ew where it would close the
+   old socket if no connection was accepted without the timeout interval.
+   PNL, 1/12/2000
+
+export: (scn and generic) Export no longer quits when SocketTimeoutLength
+   is less than RcvAliveInt; now it sets SocketTimeoutLength to 1500 times
+   RcvAliveInt and logs it. (RcvAliveInt is in seconds, SocketTimeoutLength
+   is in milliseconds.) Removed some unneeded if's from binEscape() to 
+   improve efficiency. Moved start of MessageStacker to after successful
+   accept_ew call, to reduce number of lapped messages in queue. Removed
+   flush of internal queue. Export now uses a timeout for the accept_ew
+   call. The interval is the internal heartbeat interval, so statmgr doesn't
+   complain when export isn't connected. If a connection is not made in 
+   the timeout interval, export sends a complaint but otherwise keeps
+   listening and beating its heart. When a connection is made, export
+   sends a "connected" message only if it complained earlier. This adds
+   two new error messages to the descriptor file. 
+   When export has a problem sending or receiving, it kills the socket
+   threads, closes and reopens the socket and tries another connection.
+   The MessageStacker does not get killed in the recycling.
+   Fixed a bug where BinSize was not being set to zero after a message
+   was successfully sent. This bug resulted in one message being resent
+   when the SocketSender restarted. PNL 1/13/2000
+
+wave_serverV: Added optional parameter "ClientTimeout", used in
+   serverThread. When no traffic is heard from a connected client in
+   this timeout interval, the socket is closed and the serverThread exits.
+   Previously, wave_serverV.d stated that this was the function of
+   SocketTimeout, which it was not. Fixed bug in shutdown sequence
+   where KillThread was being called with uninitialized values. Sometimes
+   this would kill the main thread, aborting the shutdown sequence. This
+   may have been the cause of Menlo's wave_serverV hanging on shutdown.
+   Cleaned up settings of ServverThreadInfo.Status in server_thread.c
+   and wave_serverV.h. Small change to index_util.c to add some detail
+   to logit error entry in BuildLIndex(). Reformatted comments at head of
+   wave_serverV to make them easier to read.  PNL, 1/12/2000
+
+rcv_ew and vdl_ew:  Both modules have been updated to the newest version of 
+   rcv and vdl from Dave Ketchum.  BB 1/16/2000
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+**************************************************** 
+carlsubtrig.d: Added "MaxTrigMsgLen nbytes" command to control the size
+   of the output buffer.
+
+carlstatrig.d:
+   Added "LTAtime" command to set nominal time of LTA average. This is an
+   optional parameter, defaults to 8 seconds.
+
+carlsubtrig.desc:  Added a new error code for the case when the triglist
+   message would overflow the output buffer:
+    err: 23  nerr: 1  tsec: 0  page: 10  mail: 20
+    text: "Incomplete triglist message sent."
+
+adsend.desc: Added a new error code:
+    err: 7  nerr: 1  tsec: 0  page: 0  mail: 10
+    text: "Fewer samples were obtained than requested."
+
+decimate.d and decimate.desc: Several new commands due to the extensive
+    changes in the module.
+
+heli_standalone: Added optional command to name the HTML file; default name
+is "index.html". Added description of optional "Target" command to conf file.
+This option was always available, but left out of the working config file.
+
+export_*.desc: two new error messages to report slow connections.
+
+wave_serverV.d: optional command ClientTimeout; corrected comments for
+  SocketTimeout
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+
+carlsubtrig: Occasionally (once every few months in Menlo Park), the
+event id gets reset to zero.  This smacks of a memory clobber, but we
+haven't tracked it down yet. This has been observed in v4.0 carlsubtrig
+on x86 Solaris. LDD 9/28/1999
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+The Solaris version of SendMail calls popen to invoke the Mail program.
+If the mail program can't be found, Solaris prints the message:
+               sh: /usr/ucb/Mail: not found
+The SendMail function returns 0 (no error), instead of -1 (error), so the
+calling program can't tell that an error occurred.  
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v4.1?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

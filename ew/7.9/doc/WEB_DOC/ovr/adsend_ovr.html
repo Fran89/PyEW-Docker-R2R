@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: adsend overview</title>
+</head>
+<body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Modules: <br>
+Adsend Overview</h1>
+<i>(last revised 26 May 2006)</i></center>
+<p>
+Adsend is the digitizing program for Earthworm. Adsend, which runs
+under Windows 2000, produces demultiplexed data. It does not work for
+Linux yet, but this is a work in progress. It was converted to SCNL as
+of Earthworm Version 7.0. </p>
+<p>This program was designed to work with a single National Instruments
+DAQ board (model PCI-MIO-16E-4) and up to four MUX boards (model
+AMUX-64T). The DAQ board can be used without MUXs as a 16 channel
+system. Up to four MUX boards can be used, for a maximum of 256
+channels, 64 channels per MUX.
+Adsend uses the NIDAQ function library, supplied by National
+Instruments. The NIDAQ functions may not be used in multi-threaded
+applications. For this reason, adsend is compiled single threaded, and
+it is linked with single-threaded versions of the earthworm library
+functions.
+</p>
+<p>Adsend is designed to produce the highest quality data it can, but
+to keep running even if there is a loss of the IRIGE signal or external
+A/D trigger.
+</p>
+<p>TIME STAMPING ADSEND DATA
+</p>
+<p>Adsend time stamps the trace data by de-coding an IRIGE time
+channel. At least one channel must contain IRIGE time code, which is
+decoded in software and used to time-stamp the data. When the program
+starts up, it will not send data until the IRIGE time signal is in
+sync. After adsend syncs to IRIGE, it will keep sending data even if
+time sync is lost. If the IRIGE sync is lost, a bit is set in the trace
+header to indicate "time code out of sync". </p>
+<p>If the parameter SendBadTime is set in the adsend configuration
+file, adsend will use the PC system clock instead of an IRIGE signal to
+time stamp the data. This is NOT RECOMMENDED for production use, but is
+handy for testing purposes. </p>
+<p>IRIGE time code does not contain the year. The adsend program can
+determine the year using one of two methods. In method 1, adsend reads
+the current year from its configuration file and puts it into the
+TYPE_TRACEBUF message headers. At midnight (GMT), on New Year's Eve,
+the year must be manually changed in the configuration file, and the
+A/D system must be restarted. In method 2, adsend reads the year from
+the PC clock. In order to insure that adsend and the PC clock are in
+sync, the PC clock time should be updated from the IRIGE time code.
+This is an option in the adsend configuration file. </p>
+<p>To insure accurate time stamping at all times, adsend allows for the
+use of multiple IRIGE channels. If lock is lost on one IRIGE channel,
+the next on the list will be attempted. </p>
+<p>CHANNEL ROTATION and the GUIDE CHANNELS
+</p>
+<p>Under certain conditions, the A/D system may experience
+"channel-rotation", a condition in which the digitized signals appear
+on the wrong channels. To detect channel rotation, adsend can monitor
+one "guide channel" from each MUX. The guide channels are connected to
+a triangle wave generator. If a guide channel does not contain a
+triangle wave, we assume that a channel rotation has occurred on a MUX,
+and we reset the entire DAQ system. The reset process takes about one
+second, producing a gap in the data stream. To avoid continual
+resetting, the system is not reset unless all guide channels have been
+in sync for a period of 30 seconds. Guide channels, if used, consist of
+2 hz triangle waves, with amplitude -1V to +1V.???? I thought the
+amplitude could be variable.
+</p>
+<p>The algorithm for detecting the guide channel can be tuned in the
+adsend configuration file. There are two threshold values. If the mean
+value of
+first-differences of the guide channels falls below a threshold value,
+adsend will do a restart. This will occur if a guide channel goes dead.
+If the standard deviation of
+first-differences of the guide channels exceeds a threshold value,
+adsend will also do a restart. This will occur if a guide channel is
+noisy. </p>
+<p>During a restart, the resetting of the DAQ takes only about a
+second, but it takes about 20-30 seconds to re-sync on the IRGIE
+signal. Therefore, a gap of up to 30 seconds should be expected if
+there is a restart.
+</p>
+<p>On startup or after a restart, if the guide channels do not lock in
+after ErrNoLockTime seconds (set in configuration file), adsend will
+send a message to statmgr.
+</p>
+<p>RINGING THE COMPUTER BELL
+</p>
+<p>Adsend
+can now be set to ring the computer bell if time code is not in sync or
+the guide channels are not locked in. This feature can be enabled or
+disabled using the EnableBell configuration file parameter. </p>
+<p>SAMPLING TRIGGERING
+</p>
+<p>A/D sampling may be internally triggered using a clock on the DAQ
+card, or an external trigger may be used. To insure the sampling rate
+is precise, it's best to use "external triggering" from a precision
+clock. We tested the system using an externally generated trigger,
+consisting of a 100 hz square wave, with amplitude 0-5V.
+</p>
+<p>If the external trigger disappears for a user-specified amount of
+time, adsend will switch to internal triggering. If this occurs, an
+error message is logged and sent to the statmgr.
+</p>
+<p>GROUND
+</p>
+<p>The system uses non-referenced, single-ended inputs (NRSE). The
+input signal's ground reference is connected to the DAQ AISENSE pin,
+which is also connected to the DAQ AIGND pin. </p>
+<p>CROSS FEED
+</p>
+<p>The National Instruments AMUX-64T boards sometimes have a problem
+with cross feed between channels. Additional hardware is needed to
+reduce cross feed, such hardware is available from VLF Design and is
+being designed at USGS, Menlo Park.
+</p>
+<p>INTEGRATING USING THE DELL OPTIPLEX SERIES COMPUTERS
+</p>
+<p>When using the Dell Optiplex series to digitize, care must be used
+as to
+which pci slot is used for the National Instruments PCI-MIO E-series
+card.
+You MUST use either slot PCI1 or PCI2 (the two slots closest to the
+mother board on the expansion riser). These are connected directly to
+the 100MHz bus. Higher slots connect via a bridge which causes a
+"bottleneck"
+and may result in unpredictable errors usually culminating in
+catastrophic
+failure and a physical memory dump (i.e. the infamous "blue screen
+crash").
+For 64 channels or more, this error will be immediately obvious; for 16
+channels
+the error may occur at some later time (perhaps only after quitting
+earthworm and logging out). As of 3/11/1999 this was an undocumented
+feature (neither in supplied nor online docs), but Dell Tech Support
+was
+aware of it.
+</p>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/adsend_cmd.html">Adsend Commands</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+</address>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+From withers@gandalf.ceri.memphis.edu Fri Sep 11 09:09:38 1998
+Date: Fri, 11 Sep 1998 06:20:08 -0500 (CDT)
+From: "Mitchell M. Withers" <withers@gandalf.ceri.memphis.edu>
+To: "James C. Pechmann" <pechmann@seis.utah.edu>
+Cc: earthw-list@nmt.edu
+Subject: Re: Suggested Picker Parameter Changes
+
+
+Thanks Jim.  That really helps.  I went to even greater extremes and sacrificed
+a lag in the pick times for a smoother sta/lta and set c3 and c4 to
+0.02 and 0.002 respectively (the MS embayment is very noisy) for 1 second and
+10 second windows.  I used the philosophy that these are auto-locations anyway
+so what's a second of static origin time offset amongst friends.  If other
+things don't go wrong, we're still able to get auto-locs to within a few
+to ten kilometers of the reviewed location.
+
+In New Mexico we found 0.25 second short windows and 2 second long windows to be
+reasonable on a non-earthworm system.  For global data 3 seconds/24 seconds might
+be more appropriate.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+

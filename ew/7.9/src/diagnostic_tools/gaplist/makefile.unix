@@ -1,0 +1,25 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+OBJ = gaplist.o config.o $L/libew.a $L/swap.o $L/trheadconv.o
+
+
+gaplist: $(OBJ)
+	$(CC) $(CFLAGS) -o $B/gaplist $(OBJ) $(SPECIFIC_FLAGS)
+
+lint:
+	lint gaplist.c config.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/gaplist*

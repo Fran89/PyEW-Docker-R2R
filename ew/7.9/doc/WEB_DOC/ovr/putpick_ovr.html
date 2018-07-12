@@ -1,0 +1,30 @@
+<title>Earthworm Modules: putpick overview</title>
+<body bgcolor="#FFFFFF">
+<center>
+  <h1>Earthworm Modules:<br>
+    Putpick Overview</h1>
+  <i>(last revised 1 June, 2006)</i>
+</center>
+<p>Program to read a file containing a series of pick/coda msgs and write them
+  to shared memory. The file can contain a mix of <tt>TYPE_PICK2K, TYPE_PICK_SCNL,
+  TYPE_CODA2K, TYPE_CODA_SCNL</tt>, and also comments. Only valid <tt>TYPE_PICK</tt>
+  and <tt>TYPE_CODA</tt> msgs will be written to shared memory; all other lines
+  will be ignored. </p>
+<p>Putpick is useful for replaying picks into binder - binder's logfile (or a
+  portion of it) can be used as the input file to putpick, or the picks can be
+  placed in a seperate file. </p>
+<p>If pause = y, the relative timing of writing msgs to ring is based on delta-t
+  in the timestamps in the picks. </p>
+<p>If pause = n, the msgs are written to the ring as fast as they are read from
+  the file. </p>
+<pickfile> <RING_NAME> <pause: y/n>
+  <br>
+<code>Usage: putpick &lt;pickfile&gt; &lt;RING_NAME&gt; &lt;pause: y/n&gt;</code>
+<p>&nbsp;
+<center>
+    <b><a href="../modules.html">Module Index</a></b>
+  </center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a></address>

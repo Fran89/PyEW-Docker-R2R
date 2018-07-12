@@ -1,0 +1,106 @@
+.TH "page_english_version" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+page_english_version \- .TH "page_english_version" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+page_english_version \-  Matteo Quintiliani
+.PP
+ \fI Istituto Nazionale di Geofisica e Vulcanologia
+.br
+ Centro Nazionale Terremoti \fP
+.PP
+ e-mail: quintiliani@ingv.it 
+.PP
+\fBTodo\fP
+.RS 4
+.IP "\(bu" 2
+Extend english version
+.PP
+.RE
+.PP
+.SH "Introduction"
+.PP
+This is the documentation for the \fIAPIs\fP that implement the \fCNanometrics Protocols\fP. They have been developed for interacting with \fCNaqsServer\fP and \fCDataServer\fP.
+.PP
+The Nanometrics \fCNaqsServer\fP provides online access to time-series, serial data, triggers, and state-of-health data via TCP subscription.
+.PP
+The Nanometrics \fCDataServer\fP provides local and remote access to nanometrics, serial, and state-of-health data via TCP/IP.
+.PP
+The library offers APIs to: 
+.PD 0
+
+.IP "\(bu" 2
+interact with \fCNaqsServer\fP that uses version 1.4 of the \fIPrivate Data Stream Protocol\fP 
+.IP "\(bu" 2
+interact with \fCDataServer\fP that uses version 1.0 of the \fINanometrics Data Access Protocol\fP 
+.IP "\(bu" 2
+manage Nanometrics data formats 
+.IP "\(bu" 2
+request, receive and interpret online and offline data
+.PP
+moreover, you can use them to develop software to: 
+.PD 0
+
+.IP "\(bu" 2
+analyze data in realtime (waveforms, triggers, ...) 
+.IP "\(bu" 2
+retrieve and convert on the fly data into the mini-SEED records (optional) 
+.IP "\(bu" 2
+feed SeedLink server (optional) 
+.IP "\(bu" 2
+feed Earthworm system (optional)
+.PP
+.SH "Dependencies"
+.PP
+An optional library is needed to allow \fClibnmxp\fP to save mini-SEED records:
+.PP
+.PD 0
+.IP "\(bu" 2
+\fClibmseed:\fP http://www.iris.edu/manuals/
+.br
+ The Mini-SEED library. A C library framework for manipulating and managing SEED data records.
+.br
+ Author: Chad Trabant, \fIIRIS DMC\fP
+.br
+
+.PP
+.SH "Installation"
+.PP
+\fCnmxp\fP library has been developed using \fIGNU Build Tools\fP (\fCautomake\fP, \fCautoconf\fP and \fCconfigure\fP script) taking in account the POSIX Cross-Platform aspects. So you should be able to compile and install it everywhere you can launch the following commands:
+.PP
+\fC./configure\fP
+.PP
+\fCmake\fP
+.PP
+\fCmake install\fP
+.PP
+Please, refer to the file \fBREADME\fP and \fBINSTALL\fP for more details.
+.SH "Tools"
+.PP
+Inside the distribution is available a tool which is a client that interact with \fCNaqsServer\fP and \fCDataServer\fP.
+.PP
+\fCnmxptool:\fP 
+.PD 0
+
+.IP "\(bu" 2
+implements the \fINanometrics Private Data Stream Protocol 1.4\fP and permits to retrieve data in near-realtime.
+.br
+ 
+.IP "\(bu" 2
+implements the \fINanometrics Data Access Protocol 1.0\fP and permits to retrieve backward data.
+.br
+ Please, refer to the \fBREADME\fP file or help \fCnmxptool --help\fP.
+.PP
+.SS "Examples"
+etc...
+.SH "License"
+.PP
+http://www.gnu.org/licenses/gpl.html
+.SH "About"
+.PP
+Matteo Quintiliani - \fIIstituto Nazionale di Geofisica e Vulcanologia\fP - Italy
+.br
+ Mail bug reports and suggestions to <quintiliani@ingv.it> 

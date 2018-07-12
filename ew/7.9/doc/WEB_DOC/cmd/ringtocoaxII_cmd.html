@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: RingtocoaxII commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1>RingtocoaxII Configuration File Commands</h1>
+<i>(last revised 26 May 2006)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuraton file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." --><span
+ style="font-weight: bold;">NB: </span><span
+ style="color: rgb(255, 0, 0);">This was updated with the
+ringtocoaxII.d file, but the commands were not updated. Note the new
+INPUT QUEUE commands and the Min/MaxPacketsPerBurst commands in red
+font below in the .d file example.</span></p>
+<p>On startup, ringtocoaxII reads the configuration file named on the
+command
+line. Commands in this file set up all parameters used in reading
+Earthworm messages from shared memory and broadcasting them onto
+ethernet as UDP packets.
+In the control file, lines may begin with a valid ringtocoaxII command
+(listed below) or with one of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).
+<p><a name="example"></a></p>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre>#<br>#This is RingtocoaxII's parameter file<br>#<br># This program gets earthworm messages from a transport ring and broadcasts<br># them to ethernet.<br>#<br>#       *** WARNING ***<br>#       This module does connection-less broadcasts.<br>#       In normal usage, it broadcasts onto an isolated, dedicated class b<br>#       subnet. There must be no routing to or from that subnet.<br>#       The broadcast is restricted to that subnet as stated below.<br>#       Note that the companion module, coaxtoring, has strange<br>#       system-specific addressing requirements<br><br># General Info<br>MyModuleId        MOD_RINGTOCOAX   # Module id for this instance of ringtocoax<br>RingName          WAVE_RING        # Shared memory ring for input/output<br>HeartBeatInterval 30               # Seconds between heartbeats<br>LogSwitch         1                # If 0, turn off disk log file<br>                                   # If 1, log to disk file and stderr/stdout<br>                                   # If 2, log only disk file<br>Debug             1                # If 1, print Adaptive PacketsPerBurst info<br>                                   # If 2, also print message logos on screen<br>                                   # If 0, don't print debug info.<br>                                   # NOTE: Logging logos / Adaptive info to disk can <br>                                   # slow down RingtocoaxII's performance.  Debug<br>                                   # should only be used for troubleshooting.<br>                                   # OPTIONAL, defaults to 0.<br># Message Settings<br>MsgMaxBytes       4096             # Size of biggest message to be sent<br>CopyStatus        0                # If 0, don't pass heartbeats, errors, or restarts.  <br>                                   # If 1, pass them.<br>MaxLogo           256              # Maximum number of logos we can handle<br>                                   # Set to a number &gt;= 0<br># List each logo that you want to broadcast in a BroadcastLogo command.<br># If the BroadcastLogo is omitted, all messages in RingName will be shipped.<br>#               installation   module_id     message_type <br>#               ------------   ---------     ------------<br>BroadcastLogo   INST_WILDCARD  MOD_WILDCARD  TYPE_TRACEBUF<br><br># Network Settings<br>OutAddress        192.168.14.255   # IP address of net to broadcast to.<br>                                   # Set the node number to 255<br>                                   # eg. OutAddress    192.168.4.255<br>OutPortNumber     10001            # The well-known port number to broadcast on.<br>                                   # Note: Under Solaris, if the port number is at or below <br>                                   #       1024, ringtocoax must run as root.<br><span
+ style="color: rgb(255, 0, 0);"># Queue Settings</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">InputQueueLen       1000           # The Desired Size of the Input Queue in Messages,</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # Note: Actual size is InputQueueLen-1.</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">QueueOptimumPercent 10             # Optimum queue level in percent.  Used to determine </span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # percent excedence.  OPTIONAL, defaults to 10</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">ExcedenceConstant   1              # Constant to multiply the percent excedence by to control</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # how much the desired excedence rate can change.</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # OPTIONAL, defaults to 1.</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">STAInterval         1.5            # Interval in seconds over which the short term average</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # of the queue height is computed. </span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # OPTIONAL, defaults to 1.5.</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">QueueReportInt    20             # Seconds between queue size reports</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                   # OPTIONAL, defaults to 300 seconds.</span><br># Data Export Rate Settings<br><span
+ style="color: rgb(255, 0, 0);">MaxPacketsPerBurst  200            # Maximum allowed Number of packets per burst the reciver </span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                             # can send</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">MinPacketsPerBurst  10             # Minmum allowed Number of packets per burst the reciver</span><br
+ style="color: rgb(255, 0, 0);"><span style="color: rgb(255, 0, 0);">                                             # can send. OPTIONAL, defaults to 1.</span><br>SqrtCount           2000           # Number of square roots between packets within a burst.<br>BurstInterval       10             # Sleep this many msec between bursts<br>ThroughputReportInt 20             # Seconds between throughput reports<br>                                   # OPTIONAL, defaults to 300 seconds.<br><br><br><br><br></pre>
+<p><a name="example"> </a><a name="function">
+</a></p>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by ringtocoax, grouped by the
+function they influence. All of the commands are required; they must be
+specified in the control file in order for ringtocoax to operate.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --></a></p>
+<pre><a name="function">         Earthworm system setup:<br>		</a><a
+ href="#HeartBeatInterval">HeartBeatInterval</a> 	required<br> 		<a
+ href="#MyModName">MyModName</a>	   	required<br>		<a href="#RingName">RingName</a>	   	required<br><br>	Network Information:<br>		<a
+ href="#OutAddress">OutAddress</a>	   	required<br>		<a
+ href="#OutPortNumber">OutPortNumber</a>	   	required<br><br>	Message Handling:<br>		<a
+ href="#CopyStatus">CopyStatus</a>		required<br>		<a href="#MaxLogo">MaxLogo</a>			required<br>		<a
+ href="#MsgMaxBytes">MsgMaxBytes</a>	   	required<br>		<a
+ href="#BurstInterval">BurstInterval</a>		required<br>		<a
+ href="#BurstCount">BurstCount</a>		required<br>		<a href="#SqrtCount">SqrtCount</a>		required<br>		<a
+ href="#BroadcastLogo">BroadcastLogo</a><br><br>	Output Control:<br>		<a
+ href="#ScrnMsg">ScrnMsg</a>	   		required<br>		<a href="#LogSwitch">LogSwitch</a>		required<br><br></pre>
+<a name="alphabet">
+</a>
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. Default values and example commands are
+listed after each command description.
+</a></p>
+<pre><a name="alphabet"><b><br>command <font color="red">arg1</font>				processed by		function<br></b></a></pre>
+<hr>
+<!-- ADD HERE: all commands; below is a sample command blank: --><a
+ name="BroadcastLogo"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="BroadcastLogo"><b>BroadcastLogo <font color="red">instid  modid  msgtype</font>	ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="BroadcastLogo"><!-- command description goes here -->
+Specifies one message logo (<font color="red">instid</font>, <font
+ color="red">modid</font>, and <font color="red">msgtype</font>) to
+read from
+the shared memory region (named in the "RingName" command) and to
+broadcast onto
+ethernet. The <font color="red">instid</font> must be a valid string
+in earthworm.h; <font color="red">modid</font> and <font color="red">msgtype</font>
+must be valid strings in earthworm.d.
+List one logo per "BroadcastLogo" command, and use as many commands as
+needed.
+If <font color="red">msgtype</font> is TYPE_HEARTBEAT or TYPE_ERROR,
+be sure that
+the </a><a href="#CopyStatus">CopyStatus</a> value is non-zero.
+If no "BroadcastLogo" command is given, ringtocoax defaults to
+broadcasting all messages in the designated shared memory region.
+  <pre><!-- Default and example go here   --><br>Example:  BroadcastLogo INST_MENLO MOD_WILDCARD TYPE_TRACEBUF<br>  </pre>
+</blockquote>
+<hr>
+<a name="BurstCount"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="BurstCount"><b>BurstCount <font color="red">BurstCount</font>			ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="BurstCount"><!-- command description goes here -->
+Defines the number of UDP packets, <font color="red">BurstCount</font>,
+in a broadcast "burst". Three commands, <font color="blue">"BurstCount"</font>,
+  </a><a href="#SqrtCount">"SqrtCount"</a>, and <a
+ href="#BurstInterval">"BurstInterval"</a>, control the temporal
+spacing of UDP packets broadcast by ringtocoax. Ringtocoax broadcasts
+messages in groups
+of <font color="red">BurstCount</font> packets; between the packets
+within a "burst",
+ringtocoax loops thru <font color="red">SqrtCount</font> square root
+calculations to waste a little time. After broadcasting a "burst" of
+packets, ringtocoax
+sleeps for <font color="red">BurstInterval</font> milliseconds, then
+it starts sending the next burst. The goal of spacing packets a tiny
+bit in time is to give the receiving program a better chance of
+catching every packet.
+  <p>UDP packets are variable in length up to a maximum of 1472 bytes
+(6 bytes of header, 1466 bytes of data). If an Earthworm message has a
+length
+less than or equal to 1466 bytes, it will be broadcast in a single UDP
+packet.
+If an Earthworm message is longer
+than 1466 bytes, it will be fragmented by ringtocoax, broadcast in
+multiple UDP packets, and reassembled by the receiving program
+(coaxtoring). Ringtocoax will never pack more than one Earthworm
+message in a single UDP packet. </p>
+  <p>It is very important that the overall rate of broadcast is as at
+least as fast
+as the rate of local information production. For example, if your
+system produces 256 TYPE_TRACEBUF messages per second (464 bytes each =
+1 UDP packet each), then the <font color="red">BurstCount</font>, <font
+ color="red">SqrtCount</font>, and <font color="red">BurstInterval</font>
+commands should
+be configured such that ringtocoax will broadcast at least 256 UDP
+packets per second. System clock resolution must be considered when
+configuring the three commands, especially <font color="red">BurstInterval</font>.
+As of April 1999, the time resolution of each sleep on Windows NT is
+about 16 msec (one clock
+tick). On Solaris, the resolution is about 10 msec. </p>
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  BurstCount 3<br>  </pre>
+</blockquote>
+<hr>
+<a name="BurstInterval"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="BurstInterval"><b>BurstInterval <font color="red">BurstInterval</font>			ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="BurstInterval"><!-- command description goes here -->
+Defines the minimum interval, in milliseconds, between "bursts" of UDP
+broadcasts. See the </a><a href="#BurstCount">BurstCount</a> command
+for a detailed description of ringtocoax's broadcasting scheme. <font
+ color="red">BurstInterval</font> must be a number greater than
+or equal to zero. Remember to consider the system clock resolution when
+configuring <font color="red">BurstInterval</font>. As of April 1999,
+the clock-tick resolution is about 16 msec on Windows NT, and
+about 10 msec on Solaris.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  BurstInterval 10<br>  </pre>
+</blockquote>
+<hr>
+<a name="CopyStatus"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="CopyStatus"><b>CopyStatus <font color="red">CopyStatus</font>				ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="CopyStatus"><!-- command description goes here -->
+Sets the <font color="red">CopyStatus</font> switch to control whether
+ringtocoax broadcasts
+TYPE_ERROR and TYPE_HEARTBEAT messages. If no "BroadcastLogo" command
+is present,
+then ringtocoax will default to reading all messages in the shared
+memory region specified by the "RingName" command. If <font color="red">CopyStatus</font>
+is non-zero, all of these messages will be broadcast onto ethernet. If <font
+ color="red">CopyStatus</font> is 0, TYPE_HEARTBEAT and TYPE_ERROR will
+not be broadcast, but all other messages will. </a>
+  <pre><!-- Default and example go here   --><br><a name="CopyStatus">Default:  none<br>Example:  CopyStatus 0<br></a></pre>
+</blockquote>
+<hr>
+<a name="HeartBeatInterval"><!-- command name as anchor inside quotes --></a>
+<pre><a name="HeartBeatInterval"><b>HeartBeatInterval <font color="red">nsec</font> 			ringtocoax_config	Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="HeartBeatInterval"><!-- command description goes here -->
+Defines the number of seconds <font color="red">nsec</font> between
+TYPE_HEARTBEAT messages
+issued by ringtocoax. </a>
+  <pre><!-- Default and example go here   --><br><a
+ name="HeartBeatInterval">Default:  none				<br>Example:  HeartBeatInterval 15<br></a></pre>
+</blockquote>
+<hr>
+<a name="LogSwitch"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="LogSwitch"><b>LogSwitch <font color="red">switch</font>			ringtocoax_config	output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="LogSwitch"><!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk. If <font
+ color="red">switch</font>
+is 0, no log file will be written. If <font color="red">switch</font>
+is 1, ringtocoax will write a daily log file(s) called
+ringtocoaxxx.log_ccyymmdd where xx is ringtocoax's module id (set with
+"MyModName" command) and ccyymmdd is the current UTC date (ex:
+19990123) on the system clock. The file(s) will be written in the
+EW_LOG directory (environment variable). </a>
+  <pre><!-- Default and example go here   --><br><a name="LogSwitch">Default:  none</a></pre>
+</blockquote>
+<hr>
+<a name="MaxLogo"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxLogo"><b>MaxLogo <font color="red">nlogo</font>				ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxLogo"><!-- command description goes here -->
+Sets the maximum number, <font color="red">nlogo</font>, of different
+message logos that ringtocoax can process. Ringtocoax assigns a
+sequence number (unsigned char) to each message based on its logo
+before it broadcasts
+the message. Space is allocated to store the last sequence number used
+for up to <font color="red">nlogo</font> different logos. If the
+tracking arrays are full and ringtocoax gets a never-seen-before
+message logo from shared memory, ringtocoax will not broadcast that
+message, but it will issue
+a TYPE_ERROR message explaining the problem. </a>
+  <pre><!-- Default and example go here   --><br><a name="MaxLogo">Default:  none<br>Example:  MaxLogo 256<br></a></pre>
+</blockquote>
+<hr>
+<a name="MsgMaxBytes"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MsgMaxBytes"><b>MsgMaxBytes <font color="red">nbytes</font>			ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MsgMaxBytes"><!-- command description goes here -->
+Sets the size, in bytes, of the buffer that ringtocoax uses for storing
+Earthworm messages read from shared memory. <font color="red">nbytes</font>
+should be the size of the largest message you expect ringtocoax to
+receive. If ringtocoax receives a message larger than <font color="red">nbytes</font>,
+it will drop the entire message and issue a TYPE_ERROR message
+containing the string "too big for Buffer" and the logo of the dropped
+message. </a>
+  <pre><!-- Default and example go here   --><br><a name="MsgMaxBytes">Default:  none<br>Example:  MsgMaxBytes 51740<br></a></pre>
+</blockquote>
+<hr>
+<a name="MyModName"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MyModName"><b>MyModName <font color="red">mod_id</font>			ringtocoax_config	Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MyModName"><!-- command description goes here -->
+Sets the module id for labeling all outgoing heartbeat and error
+messages. <font color="red">mod_id</font> is a character string (valid
+strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique single-byte number. All messages that ringtocoax receives from
+shared memory are tagged with their original logos when they are
+broadcast onto ethernet. </a>
+  <pre><!-- Default and example go here   --><br><a name="MyModName">Default:  none				<br>Example:  MyModName MOD_RINGTOCOAX<br></a></pre>
+</blockquote>
+<hr>
+<a name="OutAddress"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="OutAddress"><b>OutAddress <font color="red">a.b.c.d</font>			ringtocoax_config	network info</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="OutAddress"><!-- command description goes here -->
+Tells ringtocoax the TCP/IP address of the ethernet line onto which
+it should broadcast Earthworm messages. <font color="red">a.b.c.d</font>
+is a character string in tcp/ip's standard dotted-decimal notation that
+ringtocoax uses along with the port number from the "OutPortNumber"
+command to set up a socket to which it will broadcast UDP Datagram
+packets. By convention, all Earthworm broadcasts have the node ("d"
+part of
+address) set to 255 (for example a.b.c.255). </a>
+  <pre><!-- Default and example go here   --><br><a name="OutAddress">Default:  none			<br>Example:  OutAddress 192.168.4.255<br></a></pre>
+</blockquote>
+<hr>
+<a name="OutPortNumber"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="OutPortNumber"><b>OutPortNumber <font color="red">port</font>			ringtocoax_config	network info</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="OutPortNumber"><!-- command description goes here -->
+Defines the well-known port number <font color="red">port</font> to be
+used by ringtocoax for broadcasting. <font color="red">port</font> is
+an integer that ringtocoax uses along with the address from the
+"OutAddress" command to set up a socket to which it will broadcast UDP
+Datagram packets. <br>
+  <font color="red">NOTE:</font> The port number must be greater than
+1024.
+Smaller port numbers require root permission. </a>
+  <pre><!-- Default and example go here   --><br><a name="OutPortNumber">Default:  none<br>Example:  OutPortNumber 2025<br></a></pre>
+</blockquote>
+<hr>
+<a name="RingName"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="RingName"><b>RingName <font color="red">ring</font>				ringtocoax_config	Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="RingName"><!-- command description goes here -->
+Tells ringtocoax which shared memory region to use for input/output. <font
+ color="red">ring</font> is a character string (valid strings
+are listed in earthworm.d) that relates (in earthworm.d) to a unique
+number for the key to the
+shared memory region. All messages that ringtocoax reads from shared
+memory are tagged with their original logos when they are broadcast
+onto ethernet. </a>
+  <pre><!-- Default and example go here   --><br><a name="RingName">Default:  none				<br>Example:  RingName WAVE_RING<br></a></pre>
+</blockquote>
+<hr>
+<a name="ScrnMsg"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ScrnMsg"><b>ScrnMsg <font color="red">switch</font>				ringtocoax_config	output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="ScrnMsg"><!-- command description goes here -->
+Sets a switch for writing messages to the screen. If <font color="red">switch</font>
+is
+1, a line is printed to the screen detailing the logo and the sequence
+number of each Earthworm message broadcast to ethernet.
+If <font color="red">switch</font> is 0, no messages are written to
+the screen. </a>
+  <pre><!-- Default and example go here   --><br><a name="ScrnMsg">Default:  none<br>Example:  ScrnMsg 0<br></a></pre>
+</blockquote>
+<hr>
+<a name="SqrtCount"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="SqrtCount"><b>SqrtCount <font color="red">SqrtCount</font>			ringtocoax_config	msg handling</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="SqrtCount"><!-- command description goes here -->
+Defines the number of square root calculations ringtocoax performs
+between
+broadcasting each UDP packet of a "burst." See the </a><a
+ href="#BurstCount">BurstCount</a> command for a detailed description
+of ringtocoax's broadcasting scheme. <font color="red">SqrtCount</font>
+must be an integer greater than or
+equal to zero.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  SqrtCount 2000<br>  </pre>
+</blockquote>
+<hr>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/ringtocoaxII_ovr.html">RingtocoaxII Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+
+</body>
+</html>

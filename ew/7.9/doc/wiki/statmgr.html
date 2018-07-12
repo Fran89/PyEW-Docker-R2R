@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      statmgr – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/statmgr?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="statmgr.html" title="View statmgr">statmgr</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/statmgr?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/statmgr?action=diff&amp;version=21" title="Version 21 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A36%3A56-07%3A00&amp;precision=second" title="2012-05-02T09:36:56-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:36:56</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="statmgr.html#EarthwormModule:statmgr">Earthworm Module: statmgr</a>
+    <ol>
+      <li>
+        <a href="statmgr.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="statmgr.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="statmgr.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="statmgr.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="statmgr.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="statmgr.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="statmgr.html#DESCRIPTORFILEDETAILS">DESCRIPTOR FILE DETAILS</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="statmgr.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:statmgr"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: statmgr</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Statmgr is tool to monitor the health of all the Earthworm modules. It reports on the health by email, and it may automatically issue a restart request for a dead module, if the module's .desc file configures statmgr to do so.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Statmgr works by monitoring error messages which are produced by other Earthworm modules, and determines whether to report and how to report an error. Errors are reported by sending email or generating TYPE_PAGE messages. User-provided software can then pick up the TYPE_PAGE message and hand it to paging software to transmits these messages via modem to a pager service. Statmgr also monitors heartbeats of client modules, and if heartbeats are not received, an email and/or pager message is produced.
+</p>
+<p>
+Statmgr has a restart feature which allows the system to recover if any module hangs by restarting only the hung module. Any module can request to be restarted if it's heartbeat stops. Otherwise, no restart attempt will be made. If statmgr detects that heartbeats from the module have stopped, statmgr will send a message of type TYPE_RESTART to the startstop program. Startstop will then kill the module process and restart the module.
+</p>
+<p>
+Statmgr monitors for TYPE_STOP messages. If it sees one, it will not attempt to restart the stopped module, assuming it's been intentionally stopped with the "stopmodule" commandline utility, or the "stopmodule" command in startstop. It also monitors for TYPE_RESTART messages. If it sees a restart of a stopped module, it'll assume that it's been started again, and will resume monitoring of it.
+</p>
+<p>
+By default, Statmgr only monitors for heartbeat messages the RingName specified in the statmgr.d config file. Typically modules only send heartbeat messages to the ring they're active on. Thus if one wants to have statmgr monitor modules which aren't on the ring that RingName specifies, one needs to do one of two things. The first option is to set CheckAllRings to 1 in statmgr.d. Statmgr will make a status request to startstop when it starts up and monitor all the rings that startstop knows about. This works fine on many systems, but some systems with large amounts of information moving through a single ring may overload statmgr's ability to keep up. The second option is to set up a 'copystatus' module to copy the status from every ring with an active module, the the ring specified by RingName which statmgr is monitoring. It clutters up your status screen a bit, but does the job.
+</p>
+<p>
+For each module monitored by statmgr, a descriptor file must exist and be specified in the statmgr configuration file. The earthworm convention has been to use the suffix '.desc' to indicate a descriptor file. In the descriptor file, the user may specify the following:
+</p>
+<ul><li>How often the statmgr should check for the modules heartbeat and if email and/or pagers messages should be sent in case of missing heartbeats.
+</li><li>Who should pager messages (pagegroup command overrides same command in statmgr configuration file).
+</li><li>For each error reported by a module, should email and/or pagers messages be sent and how often should the messages be sent.
+</li></ul><h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, statmgr reads the configuration file named on the command line. Commands in this file set up all parameters used in monitoring the health of an Earthworm system. In the control file, lines may begin with a valid statmgr command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki">
+#                    Status Manager Configuration File
+#                             (statmgr.d)
+#
+#   This file controls the notifications of earthworm error conditions.
+#   The status manager can send pager messages to a pageit system, and
+#   it can also send email messages to a list of recipients.
+#   Earthquake notifications are not handled by the status manager.
+#   In this file, comment lines are preceded by #.
+#
+MyModuleId  MOD_STATMGR
+
+#   "RingName" specifies the name of the transport ring to check for
+#   heartbeat and error messages.  Ring names are listed in file
+#   earthworm.h.  Example -&gt;  RingName HYPO_RING
+#
+RingName    HYPO_RING
+
+#   If CheckAllRings is set to 1 then ALL rings startstop currently
+#   knows about will be checked for status messages. The above
+#   single RingName, however, still needs to be a valid ring name.
+#   If you use CheckAllRings, you don't want to use any
+#   copystatus modules. Note statmgr may not be able to keep up
+#   on a system with a very busy ring, and you may need to
+#   set CheckAllRings to 0 and go back to the old way of using copystatus
+CheckAllRings	0
+
+#   "GetStatusFrom" lists the installations &amp; modules whose heartbeats
+#   and error messages statmgr should grab from transport ring:
+#
+#              Installation     Module           Message Types
+GetStatusFrom   INST_MENLO    MOD_WILDCARD   # heartbeats &amp; errors
+
+#   "LogFile" sets the switch for writing a log file to disk.
+#             Set to 1 to write a file to disk.
+#             Set to 0 for no log file.
+#             Set to 2 for module log file but no logging to stderr/stdout
+#
+LogFile   1
+
+#   "heartBeatPageit" is the time in seconds between heartbeats
+#   sent to the pageit system.  The pageit system will report an error
+#   if heartbeats are not received from the status manager at regular
+#   intervals.
+#
+heartbeatPageit  60
+
+#   "pagegroup" is the pager group name.
+#   The pageit program maps this name to a list of pager recipients.
+#   This line is required. Individual modules can override this group
+#   by including the "pagegroup" command in their descriptor file.
+#
+pagegroup  larva_test
+
+#   Between 1 and 10 names of computers to use as a mail server.
+#	   They will be tried in the order listed
+#   This system must be alive for mail to be sent out.
+#   This parameter is used by Windows NT only.
+#
+#   Syntax
+#     MailServer  
+#     MailServer  
+#             ...
+#     MailServer  
+#
+MailServer  andreas
+
+#   Any number (or none) of email recipients may be specified below.
+#   These lines are optional.
+#
+#   Syntax
+#     mail  emailAddress1
+#     mail  emailAddress2
+#             ...
+#     mail  emailAddressN
+#
+mail   
+
+#
+
+#
+# Mail program to use, e.g /usr/ucb/Mail (not required)
+# If given, it must be a full pathname to a mail program
+MailProgram /usr/ucb/Mail
+
+#
+# Subject line for the email messages. (not required)
+#
+Subject "This is an earthworm status message"
+
+#
+# Message Prefix - useful for paging systems, etc.
+#    this parameter is optional
+#
+MsgPrefix "(("
+
+#
+# Message Suffix - useful for paging systems, etc.
+#    this parameter is optional
+#
+MsgSuffix "))"
+
+#   Now list the descriptor files which control error reporting
+#   for earthworm modules.  One descriptor file is needed
+#   for each earthworm module.  If a module is not listed here,
+#   no errors will be reported for the module.  The file name of a
+#   module may be commented out, if it is temporarily not to be used.
+#   To comment out a line, insert # at the beginning of the line.
+#
+Descriptor  statmgr.desc
+# Descriptor  adsend_a.desc        # Data source (adsend) on lardass
+# Descriptor  adsend_b.desc        # Data source (adsend) on honker
+# Descriptor  picker_a.desc        # Picker programs on redhot
+# Descriptor  picker_b.desc        # Picker programs on redhot
+# Descriptor  coaxtoring.desc
+# Descriptor  diskmgr.desc
+# Descriptor  binder.desc
+# Descriptor  eqproc.desc
+# Descriptor  startstop.desc
+# Descriptor  pagerfeeder.desc
+# Descriptor  pick_client.desc
+# Descriptor  pick_server.desc
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by statmgr, grouped by the function they influence. Most of the commands are required.
+</p>
+<pre class="wiki">        Earthworm system setup:
+                GetStatusFrom	   	required
+ 		MyModuleId	   	required
+		RingName	   	required
+
+	Monitor system:
+		heartbeatPageit 	required
+		Descriptor		required
+		mail
+		pagegroup		required
+
+	Output Control:
+		LogFile		   	required
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>Descriptor [descfile here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Monitor system
+</p>
+<p>
+Registers patients with the statmgr. descfile is the name of a file (up to 29 characters long) that describes a module that statmgr will monitor. One "Descriptor" command must give the name of statmgr's own descriptor file (ie, the statmgr is a patient of itself). Up to MAXDESC (currently defined as 15 in statmgr.h) "Descriptor" commands may be issued. All descriptor files should live in directory specified by the EW_PARAMS environment variable. Each descriptor file contains the patient module's name and ID, its heartbeat interval, and all its possible error codes and what they mean. It also contains information on how and how often the statmgr should notify system operators when errors do occur (see section 3 for more details on the descriptor files).
+</p>
+<pre class="wiki">Default:  none
+Examples: Descriptor  statmgr.desc
+	  Descriptor  "statmgr.desc"
+</pre><p>
+<strong>GetStatusFrom inst [mod_id here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Controls the heartbeat and error messages input to statmgr. statmgr will only process TYPE_HEARTBEAT and TYPE_ERROR messages that come from module mod_id at installation inst. inst and mod_id are character strings (valid strings are listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module. Up to 2 "GetStatusFrom" command may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force statmgr to process all heartbeat and error messages, regardless of their place of origin.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   GetStatusFrom  INST_WILDCARD  MOD_WILDCARD
+</pre><p>
+<strong>heartbeatPageit [nsec here]</strong><br />
+Processed by:statmgr_config[[BR]]
+Function: Monitor system
+Defines the number of seconds nsec between heartbeat messages issued by statmgr to the Pageit computer. This heartbeat serves as the heartbeat for the entire Earthworm system being monitored by statmgr. A statmgr heartbeat is actually a TYPE_PAGE message that contains a character string (example: "alive: sysname#"). statmgr places this TYPE_PAGE message into shared memory where the pagerfeeder module can find it and send it to the Pageit system via the serial port. If the Pageit computer doesn't receive a heartbeat within a specified time interval, it will issue an "obituary" page for the Earthworm system.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   heartbeatPageit 60
+</pre><p>
+<strong>LogFile [switch here]</strong><br />
+Processes by: statmgr_config<br />
+Function: output
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, statmgr will write a daily log file(s) called statmgrxx.log_yymmdd where xx is statmgr's module id (set with "MyModuleId" command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+</pre><p>
+<strong>mail [recipient here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Monitor system
+</p>
+<p>
+Registers one recipient email address with the statmgr. As configured by descriptor files, statmgr will send every recipient an email message about patient-module errors and state of health (dead/alive) changes. Up to MAXRECIP (currently defined as 10 in statmgr.h) "mail" commands may be issued, but none are required. Each recipient address can be up to 59 characters long.
+</p>
+<pre class="wiki">Default:  none
+Example:  mail  jdoe@yourmachine.edu
+</pre><p>
+<strong>MyModuleId [mod_id here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   MyModuleId MOD_STATMGR
+</pre><p>
+ 
+<strong>pagegroup [group here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Monitor system
+</p>
+<p>
+Registers a pager group (string up to 79 characters long) with the statmgr. statmgr will address all of its TYPE_PAGE messages to group unless the module's descriptor file included its own pagegroup command. When the paging system computer receives the message, it maps group to a list of pager recipients and sends a page to each one. Only one "pagegroup" command is allowed and it is required.
+</p>
+<pre class="wiki">Default:  none
+Example:  pagegroup  ew_operators
+</pre><p>
+<strong>RingName [ring here]</strong><br />
+Processed by: statmgr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells statmgr which shared memory region to use for input/output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   RingName HYPO_RING
+</pre><h3 id="DESCRIPTORFILEDETAILS">DESCRIPTOR FILE DETAILS</h3>
+<p>
+Every module is registered with the statmgr by means of a "Descriptor" command in statmgr's configuration file. This command gives the name of the module's "descriptor file" which contains details about the module's name and ID, its heartbeat rate, its error codes, and when/how to notify operators of any problems. Statmgr processes each descriptor file in the function statmgr_getdf().
+All errors received by the statmgr are written to its daily log file. Each descriptor file specifies when error messages are to be reported via email and pager. The default pager group name and a list of email recipients are listed in file statmgr's configuration file. A different pagegroup can be listed in each module's descriptor file to override the default.
+</p>
+<p>
+Here are the lines that make up a descriptor file:
+</p>
+<ul><li>Comment lines are preceded by #.
+</li><li>The following lines describe the patient module:
+</li></ul><p>
+<strong>instId [inst here]</strong>
+</p>
+<p>
+inst is the installation at which the patient-module is running. inst is a character string (valid strings are listed in earthworm.h) that relates (in earthworm.h) to a unique single-byte number. This line is required; inst and modId allow statmgr to match an error message with its proper descriptor file instructions.
+</p>
+<p>
+<strong>modId [modId here]</strong>
+</p>
+<p>
+modid is the module id of the patient module. modid is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number. modid must match that used in the patient module's own configuration file. This line is required; inst and modId allow statmgr to match an error message with its proper descriptor file instructions.
+</p>
+<p>
+<strong>modName [modName here]</strong>
+</p>
+<p>
+Give the name of the patient module. name is text string (up to 39 characters) which statmgr includes in each logged and reported error message from this patient. This line is required.
+</p>
+<p>
+<strong>system [sysname here]</strong>
+</p>
+<p>
+This is an optional parameter. sysname is a string (up to 29 characters) giving the name of the computer on which the patient module is running. statmgr includes this text string in each logged and reported error message from this patient. If the "system" line is ommitted, statmgr assumes the module is running on the local computer and uses the environment variable, SYS_NAME, in its place.
+</p>
+<p>
+<strong>pagegroup [group here]</strong>
+</p>
+<p>
+This is an optional parameter. group is a string (up to 79 characters) to which statmgr will address all TYPE_PAGE messages regarding this specific module. If the "pagegroup" line is ommitted here, statmgr uses the pagegroup listed in its own configuration file.
+</p>
+<ul><li>Next is a required line that describes the patient module's heartbeat:
+</li></ul><p>
+<strong>tsec: [tsec here] page: [npage here] mail: [nmail here]</strong>
+</p>
+<p>
+If the statmgr does not receive a heartbeat message every tsec seconds from this patient module, an error will be reported (LOCAL_time modName/sysname module dead). If statmgr receives a heartbeat from a module that it has reported "dead," it will send out an "alive" message (LOCAL_time modName/sysname module alive). tsec is generally set to 2*(heartbeat-interval) of the patient module. npage is the maximum number of pager messages that will be reported and nmail is the maximum number of email messages that will be reported. Each "dead" and "alive" message counts as a separate message. If the page or mail limit is exceeded, no further errors will be reported until the status manager is restarted.
+</p>
+<ul><li>And finally follows the list of possible errors that the patient module may produce. Each error is described by two lines:
+</strong></li></ul><p>
+<strong>err: [code here] nerr: [nerr here] tsec: [tsec here] page: [page here] mail: [nmail here] <br />
+text: [description here]<strong>
+</strong></p>
+<p>
+code is the error code generated by the patient module. Error codes can be any unsigned integer, not necessarily sequential.
+</p>
+<p>
+nerr and tsec specify the maximum allowable error rate. If the error rate exceeds nerr errors per tsec seconds, an email or pager message may be reported. To report all errors, set nerr to 1 and tsec to 0.
+</p>
+<p>
+npage is the maximum number of pager messages that will be reported and nmail is maximum number of email messages that will be reported. If the page or mail limit is exceeded, no further errors will be reported until the statmgr is restarted.
+</p>
+<p>
+description is the default text string (up to 79 characters) that statmgr will report for this error code. Enclose the string in double-quotes if it contains embedded blanks. Each module may include a (hopefully more informative) text string in its error message; if so, that string overrides the default, description.
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/statmgr?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

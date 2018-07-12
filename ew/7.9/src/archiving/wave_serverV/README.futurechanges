@@ -1,0 +1,48 @@
+######################
+Wave server protocol
+######################
+
+The wave_serverV protocol is a mess.  It should be
+cleaned up so that both ascii and binary headers are the
+same and thus can be parsed with the same routines.
+
+the header should include matched sets of params.
+
+One way would be to have params separated by a newline,
+and have a double newline(\n\n) mark the end of the header:
+reqid XX\n
+pin XX \n
+site XX\n
+chan XX\n
+net XX\n
+\n
+
+If it was done this way, the kom() routines could be used
+to parse the header.
+
+Then the binary trace could be binary, and the ascii trace
+could be a string terminated with a newline(\n), which is
+essentialy the same that it is now, except that the 
+end of the header is not marked in any way in the header reply.
+
+This approach would allow the protocol to be modified in 
+the future while still being backwards compatable with  
+previous clients/servers, something that cannot be said about
+the current wave_server protocol.
+
+DavidK 2001/10/01
+
+
+Possibly also add the following commands from 01/04/01 DK  (2003/02/04)
+Add x messsages to wave_server protocol 
+<"ERROR: BAD REQUEST"> \n  /* wave_serverV did not understand the request */ 
+
+<"ERROR: UNKNOWN"> \n  /* wave_serverV experience an internal 
+                                                      error while attempting to handle req */ 
+
+<request id> <pin#> <s><c><n> FN \n /* the given SCN or pin# was not found in list of tanks */ 
+
+/* Issue an internal status message for this one */ 
+<request id> <pin#> <s><c><n> FC \n /* tank for given SCN or pin# is corrupt, cannot fulfill request */ 
+  
+

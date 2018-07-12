@@ -1,0 +1,71 @@
+# FILE: makefile.nt                 Copyright (c), Symmetric Research, 2010
+#
+#           Nmake file for srusb2ew  - Windows 2K/XP version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+# Insist that Earthworm environment is set
+
+!if "$(EW_HOME)" == ""
+!message Please run ew_nt.cmd to set the Earthworm environment before continuing.
+!error EW_HOME not defined
+!endif
+
+
+
+
+# The following lines set the location of the SR USBxCH library 
+# functions needed to compile srusb2ew.  Un-comment the first line
+# below when compiling from the earthworm directory tree and the
+# second when compiling from the SR directory tree.
+
+SR_HOME=$(EW_HOME)\$(EW_VERSION)\src\data_sources\srusb2ew
+#SR_HOME=\SR
+
+USBXCH=$(SR_HOME)\USBXCH
+
+USBXCHINC  = $(USBXCH)\Include
+USBXCHLIB  = $(USBXCH)\Lib\SrUsbXch.c
+HELPERLIB  = $(USBXCH)\Lib\SrHelper.c
+
+VSDEF = /D_CRT_SECURE_NO_DEPRECATE
+PDEF  = $(VSDEF) /DSROS_WIN2K
+LDEF  = 
+
+APP = srusb2ew
+O = $(APP).obj SrUsbXch.obj SrHelper.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+EW_LIBS = $L\libew.lib
+
+EW_FLAGS = /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags)
+EW_LFLAGS = /NODEFAULTLIB /INCREMENTAL:NO /NOLOGO
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(LDEF) $(conlibsmt) $(EW_LIBS) $O \
+   -out:$B\$(APP).exe
+
+$(APP).obj: $(APP).c
+   $(CC) $(GLOBALFLAGS) /c $(EW_FLAGS) $(PDEF) /I$(USBXCHINC) $(APP).c
+
+SrUsbXch.obj: $(USBXCHLIB)
+   $(CC) $(GLOBALFLAGS) /c $(EW_FLAGS) $(PDEF) /I$(USBXCHINC) $(USBXCHLIB)
+
+SrHelper.obj: $(HELPERLIB)
+   $(CC) $(GLOBALFLAGS) /c $(EW_FLAGS) $(PDEF) /I$(USBXCHINC) $(HELPERLIB)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) $(EW_FLAGS) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)*

@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: SaraAdSend commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<CENTER><H1>SaraAdSend Configuration File for Earthworm 7.2</H1> 
+<H2>For the *******</H2>
+<I><P>Created Nov 16, 2007 by Larry Cochrane (Webtronics) </P></I></CENTER>
+<P align="left">Below is a typical SaraAdSend.d configuration file. This file should
+be located in the \earthworm\run\params directory. The ModuleId must be added to 
+the earthworm.d file also located in this directory.</P>
+<PRE>
+#
+#                    CONFIGURATION FILE FOR SARAADSEND
+#                    -----------------------------
+ModuleId         MOD_SARAADSEND_A       # Module id of this instance of SaraAdSend
+OutRing          WAVE_RING              # Transport ring to write waveforms to
+CommPort         1                      # Comm port number
+PortSpeed        38400                  # Comm port baud rate, can be set to 9600, 19200, 38400 or 57600
+#
+#                        CHANNEL CONFIGURATION
+Nchan            3                      # Specify number of channels to record, can 1 to 8
+ChanRate         100                    # Sampling rate in samples per second, can be 5, 10, 20, 50, 100 or 200
+#
+#                         TIMING INFORMATION
+HeartbeatInt     15                     # Heartbeat interval in seconds
+TimeoutNoSend    30                     # Time in seconds before program will reset if no data from ADC board
+TimeoutNoSynch   60                     # Not used
+UpdateSysClock   0                      # 1 = PC time updated with AD board time
+HighToLowPPS     0                      # 1 = PPS signal direction is High to Low
+TimeOffset       0                      # Time Reference offset in milliseconds
+#
+# Time Reference Types:
+# 0 = Use PC Time, 1 = Garmin GPS 16 or 18, 2 = Motorola ONCORE NMEA, 
+# 3 = Motorola ONCORE Binary, 4 = WWV (must have WWV option on the ADC board )
+#
+TimeRefType      0                      # One of the types above
+TimeFilePath     c:\earthworm\          # where to place the time.dat file
+#
+#			  
+#                          OTHER INFORMATION
+LogMessages      1                      # 1 = Log messages from DLL &amp; ADC to log file
+NoPPSLedStatus   0                      # 1 = Disable 1PPS LED blinking
+AdcDataSize      2                      # ADC trace buffer data size in bytes. Can be 2 or 4 bytes
+#
+#
+#               SCNL (Station/Component/Network/Location) FOR EACH ADC CHANNEL
+# Chan lines must follow the Channel Configuration lines in this file. There should
+# be Nchan (see above) SCNL lines.
+# 
+#     Chan  Station/Comp/Network/Location
+#   -------   --------------
+Chan    0       STA BHZ PN NC
+Chan    1       STA BHN PN NC
+Chan    2       STA BHE PN NC
+#-----------------------------
+#
+</PRE>
+<CENTER><A HREF="../ovr/SaraAdSend_ovr.html">SaraAdSend Overview</A></CENTER>
+</BODY>
+</HTML>

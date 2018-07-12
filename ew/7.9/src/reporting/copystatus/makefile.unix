@@ -1,0 +1,29 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lpthread
+SOLARIS_FLAGS=-lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = copystatus.o $L/libew.a $L/errexit.o
+
+copystatus: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/copystatus $(OBJS) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint copystatus.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/copystatus*

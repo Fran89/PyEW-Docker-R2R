@@ -1,0 +1,296 @@
+Release Notes:  Earthworm Version 3.2
+Barbara Bogaert - July 15, 1998
+
+
+NEW CONVENTIONS:
+****************
+
+Originally, the entire earthworm.d was installation-specific.  However,
+we have dicoverd that networks sharing data need to use the same naming
+convention for certain message_types.
+
+To facilitate this process, the Earthworm Development Group has defined
+a group of reserved message_types as follows:
+
+   0- 99 are reserved by "Earthworm Central" to label types of messages
+         which may be exchanged between installations. These string/value
+         mappings must be global to all Earthworm systems.
+
+ 100-255 are controlled by each Earthworm installation. These values 
+         should be used to label messages which remain internal to 
+         an Earthworm system or installation. The character strings 
+         themselves should not be changed because the strings
+         are often hard-coded into the modules. However, the 
+         string/value mappings can be locally altered.     
+
+An example of the 'earthworm.d' file can be found in the
+v3.2/environment directory.
+
+
+NEW MODULES:
+***********
+evanstrig:  This module is actually an adaptation of lptrig. Evanstrig runs
+John Evans' long-period trigger algorithm on single-channel TYPE_TRACEBUF 
+messages and produces single-channel triggers.  These triggers can then be 
+associated into "events" by the module trg_assoc.
+NOTE: evanstrig will only work on 100 hz data!
+LDD 5/11/98
+
+carlstatrig/carlsubtrig: The Carl Johnson coincidence trigger. Carlstatrig
+reads tracedata, calculates station averages and writes station trigger
+messages to a transport ring. Carlsubtrig reads station trigger messages from
+one or more carlstatrig modules, performs subnet coincidence logic, and writes
+a TRIGLIST message. Carlsubtrig can be configured to allow for station latency
+due to telemetry delays.
+PNL 6/3/98
+
+Compress_UA and Decompress_UA:
+
+The compress_UA and decompress_UA modules implement the gencompress
+algorithm  which is used with permission from Boulder Real Time
+Technologies, Inc., copyright 1997.
+ 
+Compress_UA inputs selected trace data messages (TYPE_TRACEBUF),
+compresses the samples via the BRTT algorithm, leaves the header intact,
+and outputs the resulting message as TYPE_TRACE_COMP_UA. Trace
+messages are selected via SCN names listed in the .d file. Wildcards are
+allowed. See the example configuration file in the source
+directory.
+
+Decompress_UA is the matching decompressor. Its output is identical to
+the input to the comperssor.
+
+In order to run compress_UA and decompress_UA, you must add
+TYPE_TRACE_COMP_UA message to 'earthworm.d'.
+LV  6/98
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+adsend: Added a configuration file parameter: IrigeIsLocalTime
+Set this parameter to 0 if IRIGE code represents GMT time.
+Set this parameter to 1 if IRIGE code represents local time.
+If IrigeIsLocalTime = 1, adsend converts decoded IRIGE time from local
+time to GMT time.  The environmental variable TZ must be set correctly.
+This is usually accomplished by the script ew_nt.cmd, or TZ may be set
+in the Windows NT Control Panels under "System", "Environment".
+I added this feature for HVO, since they set their clocks to local
+time (HST10).  WMK 6/4/98
+
+adsend: Added a pin number column to the mux channel list in the configuration
+file.  adsend copies these pin numbers to the pinno field in the tracebuf
+headers. WMK 6/10/98 
+ 
+startstop_solaris: Added signal handler so it shuts down gracefully on
+SIGTERM. Added KillDelay configuration command to specify delay before
+killing modules on shutdown. Added "nice( -nice( 0 ) )" as requested by
+Dave Chavez. Added ability to specify configuration file on the command
+line. Added checks for too-long strings in configuration file. Added
+optional Agent configuration command to specify the user and group
+under which modules will run. The "Agent user" is not allowed to be
+root, for security. If you need to run a module with root privileges
+you have two choices: make that module's bin file setuid root, or "su"
+to root before you run startstop. This is intended to prevent a rogue
+user from running an illicit command with root privileges. PNL, 5/22/98
+IMPORTANT: This change affects the port numbers that can be used by
+ringtocoax and coaxtoring. See below under "CHANGES TO CONFIGURATION
+FILES and DESCRIPTOR FILES".  PNL, 5/22/98
+
+pau, status and restart: Now the configuration file may optionally be specified on
+the command line. This is necessary so that these programs can use the same
+configuration file that startstop used. If the configuration file is not specified, a
+default one will be used. To make this default the same for these four
+programs, each of them reference "startstop_sol.h" (or ..._nt.h, etc) when
+they are compiled. In all cases, the configuration file MUST be in the EW_PARAMS
+directory. PNL, 5/22/98
+
+startstop_nt: Added ability to specify configuration file on the command line.
+Added KillDelay configuration command to specify delay before killing 
+modules on shutdown.  Added shutdown feature whereby any child process
+that doesn't self-terminate is killed by startstop.  Modified status message 
+to include the name of the configuration file startstop used. 
+LDD 5/27/98 
+ 
+gaplist: Program no longer uses pin numbers.  A list of scn's to watch for
+gaps is entered into the configuration file.  Program will now work with sampling
+rates other than 100 per second.   WMK 4/28/98
+
+Added an option to suppress heartbeats if HeartbeatInt = 0.
+Added parameter TablePrintInterval.  Previously, the table was printed to
+the screen at the heartbeat interval.  WMK 5/1/98
+
+Transport layer:
+Changed tport_getmsg() to tport_copyfrom(). If messages are dropped,
+tport_copyfrom() distinguishes between the situation where the sequence
+numbers are bad, and the situation where the transport ring queue is lapped.
+WMK 5/4/98
+
+getter:  Modified to write a time-stamp line before each pick or coda line.
+This allows the file to be played back into an Earthworm system by putter
+with the same temporal spacing with which the data were "created."
+LDD 4/23/98
+
+lptrig: Changed the format of a TYPE_LPTRIG message from fixed-format to 
+space-delimited format.  LDD 5/8/98
+
+trg_assoc: Changed to decode a space-delimited TYPE_LPTRIG message as input.
+LDD 5/8/98
+
+pick_ew: Added i9 to the pick_ew station list, so that it will be available
+for picker tuning.  Added the line "return 0;" to the bottom of function
+GetEwh().  Removed MaxBytesPerMsg from the pick_ew configuration file.
+pick_ew now sets its trace buffer size based on the constant MAX_TRACEBUF_SIZ
+in file tracebuf.h.   WMK 5/7/98
+
+pick_ew: Added a "Pick Flag" and a "Pin Numb" column to the pick_ew station
+list.  If "Pick Flag" is set to 0, the channel won't be picked.  "Pin Numb"
+is not used by the picker algorithm.  WMK 6/11/98
+
+solaris/pipe.c & winnt/pipe.c:  
+Found and fixed an ancient bug in pipe_get().  This bug caused the
+message-type to be mis-read, ultimately causing the failure of the entire
+sausage.  I added a line to null-terminate the character string "typestr" 
+before it's handed to atoi().  LDD 5/18/98
+
+rcv: Rearranged rcv's source directory to make it more straight-forward to 
+incorporate a new version of Ketchum's code into our Earthworm version.
+Changed the makefiles accordingly.  See the README file in vX.X/src/rcv
+for details.  LDD 4/30/98
+
+ringtocoax: I pulled out the wait_timer code.  Now, the program sleeps
+a few milliseconds between each burst of packets. Since the minimum sleep time
+is typically 10 msec, if there are more than 100 channels, the program will
+need to send a burst of two or more packets (for one second messages).
+WMK 4/17/98
+
+statmgr: Removed time-stamping from logit() calls which were logging error
+messages.  The messages themselves include a time-stamp.  LDD 4/28/98
+
+solaris/transport.c:  I fixed a bug in the semaphore operations in tport_putmsg 
+and tport_copyto.  This bug manifests itself most readily with multi-threaded 
+code running on a multi-processor machine; the symptom is a corrupted transport
+ring (where 2 threads write to the ring at the same time).  This causes all 
+modules attached to the ring to die with an error message like: 
+   "ERROR: tport_getmsg; keyget not at FIRST_BYTE, Region xxxx"
+This bug was originally noticed and solved by Doug Neuhauser (UC Berkeley).  
+See details in vX/programmer_doc/transport.doc.   
+LDD 4/24/98
+
+wave_server:  Removed call to function gethostbyaddr().  gethostbyaddr()
+requires that the system running wave_server be listd on a domain name
+server.  WMK 4/28/98
+
+wave_serverV: Added a line of code to flush the transport ring before reading
+tracebuf messages.  This should help prevent the message queue from
+overflowing at program startup.  WMK 5/6/98
+
+ws_clientII: Increased wsREPLEN to the maximum possible menu a wave_server
+could send. Fixed bug in wsWaitAscii where it would fill its reply buffer but
+not report an overflow. PNL 5/17/98
+
+coaxtoring: Created a version of receiver.c, just for Windows NT.
+makefile.sol links to receiver.c, and makefile.nt links to receiver_nt.c.
+The NT version is winsock specific.  In the previous version of coaxtoring,
+the UDP socket was bound to INADDR_ANY.  Now, the socket is bound to
+inAddress, a parameter in the configuration file.  inAddress must be set
+differently for Windows NT and Solaris.  For Solaris, inAddress should be
+of the form xxx.xxx.xxx.255.  For Windows NT, inAddress should be the
+complete IP iaddress of the port to listen to, eg 192.168.4.128.  This is
+documented in the sample version of coaxtoring.d, in src/coaxtoring.
+coaxtoring now uses a modified version of sema_ew.c.
+WMK 5/28/98
+
+coaxtoring: Now, the program mallocs the structures containing info about
+the message buffers.  This removes the limitation that mMsgBuf could be no
+larger than 16, or some other fixed constant.  Coaxtoring now logs its
+configuration file parameters to the log file.  Also, the data buffers are now
+declared volatile.  According to the Windows NT documentation, programs
+will run slower when using volatile memory, since the compiler does less
+optimization.   WMK 6/10/98
+
+coaxtoring: Coaxtoring now reports an error to the log file, if it detects
+dropped messages.  WMK 6/11/98
+
+coaxtoring: Now takes a configuration file parameter "BufferReportInt".
+Every BufferReportInt seconds, coaxtoring logs the maximum number of
+message buffers used during the previous BufferReportInt seconds.
+WMK 6/23/98
+
+sema_ew.c: The Solaris and NT versions were modified.  The OS2 version wasn't
+modified.  The NT version uses "Semaphores" instead of "Event Semaphores".
+"Semaphores" keep track of how many times they have been posted.  The mutex
+semaphore functions in sema_ew.c are unchanged.
+
+startstop_solaris: Added a call to setpgid() so that startstop will
+always be the process group leader. This is needed for StopEarthworm(),
+a startstop function, which sends a TERM signal to all processes in its
+process group. Requested by Kent Lindquist, UAF.  PNL 6/12/98
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+**************************************************** 
+
+adsend: Added a configuration file parameter: IrigeIsLocalTime
+Set this parameter to 0 if IRIGE code represents GMT time.
+Set this parameter to 1 if IRIGE code represents local time.
+
+pick_ew: Added a "Pick Flag" and a "Pin Numb" column to the pick_ew station
+list.  If "Pick Flag" is set to 0, the channel won't be picked.  "Pin Numb"
+is not used by the picker algorithm.  Added a new i9 column.  WMK 6/11/98
+
+startstop_solaris: added the optional "Agent" command: Agent <user> <group>,
+for each "Process" line. This allows you to specify the user and group names
+under which the module will run. The user "root" is not permitted here, for
+security reasons. If you try to specify the user as "root", or if you leave
+out the Agent command, the module will run with the same userID as the person
+who ran startstop. If you need to run a module with "root" privileges, you
+have two choices: make the module's bin file setuid root, or "su" to (or login
+as) root before you run startstop.
+
+startstop_nt:
+startstop_solaris: two more changes: added the KillDelay command to specify
+the number of seconds to wait before killing a module on shutdown. Also, the
+configuration file may optionally be specified on the command line. In all cases, the
+configuration file MUST be in the EW_PARAMS directory.
+ 
+ringtocoax: Since earthworm modules now generally will not run with "root"
+privileges, the OutPortNumber now must be greater than 1024. Port numbers
+below 1024 are reserved and require "root" privileges for their use.
+
+coaxtoring: Since earthworm modules now generally will not run with "root"
+privileges, the PortNumber now must be greater than 1024. Port numbers below
+1024 are reserved and require "root" privileges for their use.
+
+coaxtoring: In the configuration file, inAddress must be set differently for
+Windows NT and Solaris.  For Solaris, inAddress should be of the form
+xxx.xxx.xxx.255.  For Windows NT, inAddress should be the complete IP
+iaddress of the port to listen to, eg 192.168.4.128.  This is documented
+in the sample version of coaxtoring, in /src/coaxtoring.  WMK 5/28/98
+
+coaxtoring: There is a new configuration file parameter "BufferReportInt".
+Every BufferReportInt seconds, coaxtoring logs the maximum number of
+message buffers used during the previous BufferReportInt seconds.
+WMK 6/23/98
+
+pau, restart and status: The command file may optionally be specified on the
+command line. This is because these three programs need to read the same
+configuration file that was given to startstop. In all cases, the configuration file MUST be
+in the EW_PARAMS directory.
+
+ew_sol_sparc.cmd and ew_sol_intel.cmd: I inserted the line:
+limit descriptors 256
+This allows 256 files per process to be opened at the same time.
+WMK 5/28/98
+
+adsend: Added a pin number column to the mux channel list in the configuration
+file.  adsend copies these pin numbers to the pinno field in the tracebuf
+headers.   WMK 6/10/98
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+

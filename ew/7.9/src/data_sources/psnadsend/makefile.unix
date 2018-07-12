@@ -1,0 +1,32 @@
+# makefile for the psnadsend module
+
+CFLAGS = $(GLOBALFLAGS)
+CPPFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+ 
+O = PsnAdSend.o PsnAdUtils.o filter.o getconfig.o 
+J = $L/logit.o $L/getutil.o $L/time_ew.o $L/kom.o $L/transport.o $L/sleep_ew.o
+H = PsnAdSend.h
+
+all: lib psnadsend
+
+PsnAdSend.o : $(H)
+PsnAdUtils.o : $(H)
+filter.o : $(H)
+getconfig.o : $(H)
+
+lib: 
+	cd PsnAdBoard; make -f makefile.unix; cd ..
+	
+psnadsend: $(O)
+	$(CXX) $(GLOBALFLAGS) $(CXXFLAGS) -o $B/psnadsend $(O) $(J) -L. -L./PsnAdBoard -lutil -lpsn_ew -lm -lpthread -lstdc++
+
+clean: FORCE
+	rm -f a.out core *.o *.obj *.a *% *~
+	cd PsnAdBoard; make -f makefile.unix clean
+
+clean_bin: FORCE
+	rm -f $B/psnadsend*
+FORCE:

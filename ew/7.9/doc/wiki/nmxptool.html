@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      nmxptool – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/nmxptool?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="nmxptool.html" title="View nmxptool">nmxptool</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/nmxptool?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/nmxptool?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-04-08T16%3A52%3A55-07%3A00&amp;precision=second" title="2012-04-08T16:52:55-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 04/08/12 16:52:55</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="nmxptool.html#EarthwormModule:nmxptool">Earthworm Module: nmxptool</a>
+    <ol>
+      <li>
+        <a href="nmxptool.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="nmxptool.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="nmxptool.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="nmxptool.html#FunctionalCommandListing">Functional Command Listing</a>
+          </li>
+          <li>
+            <a href="nmxptool.html#AlphabeticCommandListingDescription">Alphabetic Command Listing &amp; Description</a>
+          </li>
+          <li>
+            <a href="nmxptool.html#AdvancedDescription">Advanced Description</a>
+          </li>
+          <li>
+            <a href="nmxptool.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="nmxptool.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:nmxptool"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: nmxptool</h1>
+<p>
+<strong>Contributed by: Matteo Quintiliani. nmxptool is open-source and actively supported by the Istituto Nazionale di Geofisica e Vulcanologia.</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+nmxptool is an IMPROVED interface through which waveform data collected by the Nanometrics data acquisition software, NaqsServer, can be fed into an Earthworm system in near-real-time. (New in V7.2, contributed by INGV)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+The Nanometrics servers NaqsServer and DataServer can provide on-line access to seismic data and state-of-health information accepting TCP/IP connections and forwarding the requested data to each client program. NaqsServer collates and stores in near-real-time incoming data in ringbuffers whereas DataServer provides data of the past stored in NaqsServer ringbuffers. In order to implement the Nanometrics subscription protocols, the author developed a software consisting of a library called libnmxp and a tool called nmxptool. The library exposes a set of documented APIs which allow to communicate with the Nanometrics servers. The tool, based on libnmxp, allows to retrieve or monitor real-time data and data of the past.
+</p>
+<p>
+<strong>nmxptool</strong> can be used in three different ways:
+</p>
+<ul><li>stand-alone to monitor data or save retrieved data in mini-seed records
+</li><li>launched as an <strong><em>Earthworm</em></strong> module to redirect data into the EW-rings
+</li><li>like a <strong><em>Seed-Link</em></strong> plug-in to feed the SL-server
+</li></ul><p>
+The main contribute, as regards other similar software, is the capability to manage Raw Stream connections by buffering and sorting all received packets, included the retransmitted ones, guaranteeing a good compromise between data continuity and low latency. Besides, nmxptool allows to retrieve Data-On-Demand with minimum delay after request. Software is open-source and released under GNU Library General Public License. It has been written in C language using the GNU Build Tools (automake, autoconf and configure script) and taking in account the cross-platform compilation aspects, in fact, it can run on almost all the Unix-like operating systems, Mac OS X, Windows and either 32-bit or 64-bit architectures.
+</p>
+<p>
+Why a new software client for Nanometrics Server?
+</p>
+<p>
+When we connect to a NaqsServer by a Short-term data stream connection we get a gap for each retransmitted packet. Unfortunately, previous available software were not able to reorder retransmitted packets. nmxptool is capable to manage a buffer of packets and order them chronologically when is needed, that is when a retransmission occurs. The management of this buffer reduce number of gaps in spite of the increment of latency. However, some tests showed that almost all packets are retrivied maximum within 60 seconds.
+</p>
+<p>
+Main parameter to set for Raw Stream is the max tolerable latency you can accept, a sort of short-term-completion but managed by the client and not by the server.
+</p>
+<p>
+Moreover, nmxptool is capable of:
+</p>
+<ul><li>allowing data continuity when disconnections to NaqsServer occur
+</li><li>retrieving "Data On Demand" with minimum delay
+</li></ul><p>
+The maximum size of the TRACEBUF messages created by nmxptool is limited to the maximum number of samples that can fit into a Nanometrics compressed packet (17 * N, where N is any odd integer from 1 to 59, that is 17 * 59 = 1003 samples = 4012 bytes), plus the size of the TRACEBUF header (64 bytes). So 4076 bytes is a good estimate of the maximum size of TRACEBUF messages created by nmxptool.
+</p>
+<p>
+nmxptool supports the creation of either TRACEBUF or TRACEBUF2 messages depending on which version of Earthworm the module was built for. By default the module will create TRACEBUF2 messages if the system supports them and TRACEBUF messages otherwise. Additionally there is an optional command !ForceTraceBuf1 that will force the use of TRACEBUF messages on systems that support TRACEBUF2.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, nmxptool reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm Nanometrics client module nmxptool (Nanometrics). In the control file, lines may begin with a valid nmxptool command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (commands are case sensative).  Blank lines are also permitted in the control file.
+</p>
+<h3 id="FunctionalCommandListing">Functional Command Listing</h3>
+<p>
+Below are the commands recognized by nmxptool, grouped by the function they influence. Most of the commands are required; they may be specified in any order in the control file. 
+</p>
+<pre class="wiki">        Earthworm system setup:
+
+MyModuleId              required
+
+RingName                required
+
+HeartBeatInterval       required
+
+Verbosity		optional
+
+
+
+Nanometrics server and connection parameters:
+
+NmxpHost                required
+
+NmxpPortPDS		optional
+
+NmxpPortDAP		optional
+
+UserDAP			optional
+
+PassDAP			optional
+
+ForceTraceBuf1		optional
+
+MaxTolerableLatency	optional
+
+ShortTermCompletion	optional
+
+MaxDataToRetrieve	optional
+
+TimeoutRecv		optional
+
+mschan			optional
+
+DefaultNetworkCode	optional
+
+ChannelFile		required	Xor Channel
+
+Channel			required	Xor ChannelFile
+
+
+
+
+Output control:
+
+LogFile			required
+</pre><h3 id="AlphabeticCommandListingDescription">Alphabetic Command Listing &amp; Description</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>Channel [streamkey]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies one stream of data to be requested from the NmxpHost. The streamkey is not in SCNL format. It is composed of a network, station and channel code separated by period. network is optional and it is used only for output. Station code can be "*" that stands for all stations. Within channel code can appear character "?" that stands for any characters. Location value is always set to "--". DO NOT USE WITH ChannelFile!
+</p>
+<pre class="wiki">Default:  none
+Example:  Channel  ES.BOB.HH?
+	  Channel  MN.TIR.HH?
+	  Channel  SALO.HH?
+	  Channel  *.HHZ
+
+N.B. Network code will be assigned from the first pattern that includes station and channel.
+     Unless HH channels of BOB and TIR, all other stations will have default network code from DefaultNetworkCode.
+</pre><p>
+<strong>ChannelFile [channel_state_file]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies one or more streams of data to be requested from the NmxpHost. The streamkey is the same for the Channel. Allow data continuity when short disconnections to NaqsServer occur requesting data buffered by NaqsServer (read Advanced Description for setting DataBufferLength) and, optionally, retrieving data from DataServer within seconds defined by MaxDataToRetrieve. This file is created by the user, nmxptool will update date and time of last sample received for each channel into the file "channel_state_file.nmxpstate". DO NOT USE WITH Channel!
+</p>
+<pre class="wiki">Default:  none
+Example:  ChannelFile  /home/ew/list_channels_naqs1.txt
+
+Example of file created by the user:
+ES.BOB.HH?
+MN.TIR.HH?
+SALO.HH?
+*.HH?
+
+N.B. Network code will be assigned from the first pattern that includes station and channel.
+     Unless HH channels of BOB and TIR, all other stations will have default network code from DefaultNetworkCode.
+
+Example of file updated by nmxptool:
+1228603650 ES.BOB.HHE 2008.063,07:48:15.5799 2008.063,07:50:12.9000
+1228603649 ES.BOB.HHN 2008.063,07:48:16.0000 2008.063,07:50:13.6400
+1228603648 ES.BOB.HHZ 2008.063,07:48:16.0000 2008.063,07:50:12.4900
+1225851138 MN.TIR.HHE 2008.063,07:48:07.2200 2008.063,07:50:07.7999
+1225851137 MN.TIR.HHN 2008.063,07:48:16.0000 2008.063,07:50:07.9000
+1225851136 MN.TIR.HHZ 2008.063,07:48:05.7999 2008.063,07:50:08.2000
+1253900546 IV.SALO.HHE 2008.063,07:48:00.3199 2008.063,07:50:15.4800
+1253900545 IV.SALO.HHN 2008.063,07:48:16.0000 2008.063,07:50:15.7500
+1253900544 IV.SALO.HHZ 2008.063,07:48:16.0000 2008.063,07:50:16.3299
+1244987650 IV.AMUR.HHE 2008.063,07:48:09.0599 2008.063,07:50:13.3599
+1244987649 IV.AMUR.HHN 2008.063,07:48:10.9600 2008.063,07:50:11.8000
+1244987648 IV.AMUR.HHZ 2008.063,07:48:02.4600 2008.063,07:50:12.2799
+1237188866 IV.ARCI.HHE 2008.063,07:48:10.0099 2008.063,07:50:13.0100
+1237188865 IV.ARCI.HHN 2008.063,07:48:10.3399 2008.063,07:50:12.6200
+1237188864 IV.ARCI.HHZ 2008.063,07:48:16.0000 2008.063,07:50:11.6700
+...
+</pre><p>
+<strong>DefaultNetworkCode [network_code]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies default network code for channels where is omitted.
+</p>
+<pre class="wiki">Default:  none
+Example:  DefaultNetworkCode  IV
+</pre><p>
+<strong>!ForceTraceBuf1 [switch]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the on-off switch to force the creation of TRACEBUF messages on systems that support TRACEBUF2 messages. By default, the module will create TRACEBUF2 messages on systems that support them otherwise it will create the older TRACEBUF messages. This switch has no effect on systems that do no support TRACEBUF2 messages. This switch could be useful in environments where a transition is occuring between TRACEBUF and TRACEBUF2 messages, otherwise most people will never use this.
+</p>
+<pre class="wiki">Default:  0 (disabled)
+Example:  ForceTraceBuf1 1
+</pre><p>
+<strong>HeartBeatInterval [interval]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+           
+Defines the interval in seconds at which the module will issue TYPE_HEARTBEAT messages.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartBeatInterval 30
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, nmxptool will write a daily log file(s) called nmxptool.log_yymmdd where xx is nmxptool's module id (set with MyModuleId command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).  If switch is 2 the log file is written but output to stdout and stderr is suppressed.
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile   1
+</pre><p>
+<strong>MaxDataToRetrieve [seconds]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Max amount of data of the past to retrieve from the DataServer when program restarts. 0 to disable connection to DataServer. If this parameter is zero and ChannelFile is used, only data buffered by NaqsServer will be retrieved. Rather than using MaxDataToRetrieve, it is preferable, inside the section Datastream of the file Naqs.ini, setting DataBufferLength to a high value (read Advanced Description). MaxDataToRetrieve allows to retrieve much more data of the past when the program restarts but it considerably slows down the execution. It is extremely harmful when you have many channels, in this case you might consider to subdivide the channels into different nmxptool instances. Range is [0..86400].
+</p>
+<pre class="wiki">Default:  0
+Example:  MaxDataToRetrieve  3600
+</pre><p>
+<strong>MaxTolerableLatency [seconds]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the max tolerable latency for raw stream connection. For enabling NaqsServer to send out retransmission requests for missed packets set RetxRequest (read Advanced Description). If RetxRequest is not enabled then MaxTolerableLatency is ineffective. Range is [60..600]. NOT use with parameter ShortTermCompletion.
+</p>
+<pre class="wiki">Default:  600
+Example:  MaxTolerableLatency  200
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_NMXPTOOL
+</pre><p>
+<strong>mschan [mSECs/nC]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+mSECs are milliseconds to wait before the next request, nC is the number of channels to request at a time. Delaying and requesting few channels at a time make data buffering on NaqsServer side more efficient. Determined empiric values are default 280/9. 0/0 for disabling. Condition: TotalNumberOfChannels * (mSECs/nC) &lt; 15 sec.
+</p>
+<pre class="wiki">Default:  280/9
+Example:  mschan      350/12
+</pre><p>
+<strong>NmxpHost [address]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specify the address of the Nanometrics server. This can be either on IP address (four period-separated numbers) or the domain name of the server.
+</p>
+<pre class="wiki">Default:  none
+Example:  NmxpHost      naqs1a.int.ingv.it
+</pre><p>
+<strong>NmxpPortDAP [port]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the IP port number for the DataServer (NmxpHost). This is commonly 28002.
+</p>
+<pre class="wiki">Default:  28002
+Example:  NmxpPortDAP  28002
+</pre><p>
+<strong>NmxpPortPDS [port]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the IP port number for the NaqsServer (NmxpHost). This is commonly 28000.
+</p>
+<pre class="wiki">Default:  28000
+Example:  NmxpPortPDS  28000
+</pre><p>
+<strong>PassDAP [password]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the password for the DataServer (NmxpHost). Leave commented if password in DataServer.ini is set to "none".
+</p>
+<pre class="wiki">Default:  none
+Example:  PassDAP  mypass
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Indicates which shared memory region to use for waveform output.  ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingName WAVE_RING
+</pre><p>
+<strong>ShortTermCompletion [seconds]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the Short-Term-Completion for Buffered stream connection. Ranges:<br />
+0                    decompressed packets are received in chronological order without waiting for missing packets.<br />
+[1..300]         decompressed packets are received in chronological order but waiting for missing packets at most SECs seconds.<br />
+NOT use with parameter MaxTolerableLatency.
+</p>
+<pre class="wiki">No default
+Example:  ShortTermCompletion  120
+</pre><p>
+<strong>TimeoutRecv [seconds]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies time-out for flushing buffered packets for each channel. Useful for Data On Demand (i.e. channel HN? or HL?). It sets mschan to 0/0. Range is [10..300].
+</p>
+<pre class="wiki">Default:  0  (No Time-out)
+Example:  TimeoutRecv  15
+</pre><p>
+<strong>UserDAP [username]</strong><br />
+Processed by: ReadConfig<br />
+Function: nmxptool parameters
+</p>
+<p>
+Specifies the username for the DataServer (NmxpHost). Leave commented if username in DataServer.ini is set to "none".
+</p>
+<pre class="wiki">Default:  none
+Example:  UserDAP  mtheo
+</pre><p>
+<strong>Verbosity [level]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Specifies the level of logging verbosity. Verbosity is a bitmap:<br />
+1 Channel State, 2 Channel, 4 Raw Stream, 8 CRC32, 16 Connection flow, 32 Packet Management, 64 Extra, 128 Date, 256 Gap, 512 DOD, 1023 All messages.
+</p>
+<pre class="wiki">Default:  0
+Example:  Verbosity 80		# 16 Connection flow + 64 Extra
+</pre><h3 id="AdvancedDescription">Advanced Description</h3>
+<p>
+<strong>Data continuity when short disconnections to NaqsServer occur</strong>
+</p>
+<p>
+Inside the section Datastream of the file Naqs.ini set DataBufferLength to a high value.
+</p>
+<pre class="wiki">    [ Datastream ] 
+    Port = 28000              // TCP port for control/data connections to Naqs 
+    Password = none           // access password (not used in version 1.3) 
+    MaxConnections = 10       // maximum number of simultaneous connections 
+    SocketType = Direct       // connection type (Direct or Callback) 
+    DataBufferLength = 100    // Buffer length for data channels (# packets)
+</pre><p>
+<strong>Packet retransmission</strong>
+</p>
+<p>
+Inside the section NetworkInterface of the file Naqs.ini enable RetxRequest. If RetxRequest is not enabled then MaxTolerableLatency is ineffective.
+</p>
+<pre class="wiki">    [ NetworkInterface ] 
+    Port = 32000           // UDP port for incoming NMX data (usually 32000) 
+    SendDelay = 250        // milliseconds to delay after each send 
+    RetxRequest = Enabled
+    MulticastGroup = 224.1.1.1 
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+#                     Configuration File for nmxptool
+#
+MyModuleId           MOD_NMXPTOOL
+RingName             WAVE_RING           # Transport ring to write data to.
+
+HeartBeatInterval    10                  # Heartbeat interval, in seconds.
+LogFile              1                   # 1 -&gt; Keep log, 0 -&gt; no log file
+                                         # 2 -&gt; write to module log but not stderr/stdout
+
+#ForceTraceBuf1      0                   # On systems that support TRACEBUF2
+                                         # messages this flag will force the module
+                                         # to create TRACEBUF messages instead.
+                                         # Most people will never need this.
+
+Verbosity            16                  # Set level of verbosity. Verbosity is a bitmap:
+                                         # 1 Channel State, 2 Channel, 4 Raw Stream,
+                                         # 8 CRC32, 16 Connection flow,
+                                         # 32 Packet Management, 64 Extra, 128 Date,
+                                         # 256 Gap, 512 DOD, 1023 All messages.
+                                         # It is equivalent to the option -v.
+
+NmxpHost             naqs1a.int.ingv.it  # NaqsServer/DataServer hostname or IP address.
+                                         # It is equivalent to the option -H.
+
+NmxpPortPDS          28000               # Port number of NaqsServer (Default 28000)
+                                         # It is equivalent to the option -P.
+
+NmxpPortDAP          28002               # Port number of DataServer(Default 28002)
+                                         # It is equivalent to the option -D.
+#UserDAP              mtheo              # DataServer user name. Commented if 'none'.
+                                         # It is equivalent to the option -u.
+#PassDAP              mypass             # DataServer password. Commented if 'none'.
+                                         # It is equivalent to the option -p.
+
+#ShortTermCompletion  60                  # ShortTermCompletion, NOT use 'MaxTolerableLatency'.
+                                         #  0 decompressed packets are received in chronological
+                                         #    order without waiting for missing packets.
+                                         # [1..300] decompressed packets are received in
+                                         #    chronological order but waiting for missing packets
+                                         #    at most SECs seconds.
+
+MaxTolerableLatency  60                  # Raw Stream, NOT use 'ShortTermCompletion'.
+                                         # Max tolerable latency for each channel.
+                                         # (Default 600 sec.) [60..600].
+                                         # Enable NaqsServer to send out retransmission requests
+                                         # for missed packets. Inside the section NetworkInterface
+                                         # of the file Naqs.ini set RetxRequest to Enabled.
+                                         # If RetxRequest is not enabled then MaxTolerableLatency is ineffective.
+                                         # In general, DO NOT use with parameter TimeoutRecv.
+                                         # It is equivalent to the option -M.
+
+#TimeoutRecv          30                 # Time-out in seconds for flushing queued data of each channel.
+                                         # It sets mschan to 0/0 ((Default 0. No time-out) [10..300].
+                                         # Useful for retrieving Data On Demand with minimum delay.
+                                         # 'tsec' in nmxptool.desc should be greater than 'TimeoutRecv'.
+                                         # It is equivalent to the option -T.
+
+DefaultNetworkCode   IV                  # Default network code where in 'ChannelFile' or 'Channel' is not declared.
+                                         # It is equivalent to the option -N.
+
+                                         # N.B. nmxptool channel definition IS NOT equal to SCNL
+                                         # It is NSC, that is NET.STA.CHAN
+                                         # NET  is optional and used only for output.
+                                         # STA  can be '*', stands for all stations.
+                                         # CHAN can contain '?', stands for any character.
+                                         # Localtion value is always equal to "--".
+                                         # Related to the parameters 'ChannelFile' and 'Channel'.
+                                         # Network code will be assigned from the first
+                                         # pattern that includes station and channel.
+                                         # Example: N1.AAA.HH?,N2.*.HH?,MMM.BH?
+                                         # Second pattern includes the first. Unless AAA, all
+                                         # stations with HH channels will have network to N2.
+                                         # Station MMM will have default network defined by 'DefaultNetworkCode'.
+
+#MaxDataToRetrieve    3600               # Max amount of data of the past to retrieve from the
+                                         # DataServer when program restarts (default 0) [0..86400].
+                                         # 0 to disable connection to DataServer.
+                                         # It is equivalent to the option -A. Related to 'ChannelFile'.
+                                         # If 'MaxDataToRetrieve' is zero and 'ChannelFile' is used,
+                                         # only data buffered by NaqsServer will be retrieved.
+                                         # Rather than using 'MaxDataToRetrieve', it is preferable,
+                                         # inside the section Datastream of the file Naqs.ini,
+                                         # setting DataBufferLength to a high value.
+                                         # 'MaxDataToRetrieve' allows to retrieve much more data of the past
+                                         # when the program restarts but it considerably slows down the execution.
+                                         # It is extremely harmful when you have many channels,
+                                         # in this case you might consider to subdivide the
+                                         # channels into different nmxptool instances.
+
+#mschan        280/9                     # mSECs/nC
+                                         # mSECs are milliseconds to wait before the next request,
+                                         # nC is the number of channels to request at a time.
+                                         # Delaying and requesting few channels at a time make
+                                         # data buffering on NaqsServer side more efficient.
+                                         # Determined empiric values are default 280/9.
+                                         # Condition: TotalNumberOfChannels * (mSECs/nC) &lt; 15 sec. 
+                                         # Related to -F and -b. 0/0 for disabling.
+
+ChannelFile   /home/ew/nmxptool.list.txt # List of channel patterns, as in 'Channel'. One for each line.
+                                         # This file will not be modified by nmxptool.
+                                         # Load/Save time of last sample of each channel in a file
+                                         # with the same name, same directory, appending suffix ".nmxpstate"
+                                         # It enables request of recent packets in order to allow data
+                                         # continuity when short disconnections occur or between program restarts.
+                                         # Related to 'MaxDataToRetrieve', 
+                                         # It is equivalent to the option -F. Related to 'MaxDataToRetrieve'.
+
+    # DO NOT USE parameters 'Channel' and 'ChannelFile' together.
+    # 'ChannelFile' is preferable. At restart you can retrieve data of the past
+    # from the NaqsServer and optionally from the DataServer, see 'MaxDataToRetrieve'.
+
+# Example of nmxptool channel definition
+# Channel              ES.BOB.HH?
+# Channel              MN.TIR.HH?
+# Channel              MDI.HH?
+# Channel              DOI.HH?
+# Channel              SALO.HH?
+# Channel              MONC.HH?
+# Channel              *.BHZ               # Channel selection
+
+# Please, for other details about parameters, refer to the command line "nmxptool -h"
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/nmxptool?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

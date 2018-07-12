@@ -1,0 +1,2 @@
+
+#define STARTSTOP_VERSION "v7.9 2016-10-21"

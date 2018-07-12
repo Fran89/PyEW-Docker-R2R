@@ -1,0 +1,75 @@
+
+From bogaert@gldmutt.cr.usgs.gov Thu Jan 14 13:02:02 1999
+Date: Thu, 14 Jan 1999 11:41:25 -0800
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm Release V3.9
+
+
+Earthworm Version 3.9 has been released.  You can download the release from our
+new ftp site (address below).  In this release, we have included distributions
+with executables and release notes only.  These distributions are in files:
+v3.9_exe_sol_sparc.tar.Z , v3.9_exe_sol_sparc.tar.gz, and  v3.9_nt_exe.zip.  
+
+NEW EARTHWORM FTP SITE:        
+ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/current_release
+
+IMPORTANT NOTES ABOUT VERSION V3.9
+*****************************************************
+Background:
+Last fall the Earthworm development group began the task of upgrading
+Earthworm for Year 2000 compliance.  The first step was to create new
+message types for all messages which were using two character years.
+This is the most significant change in V3.9.  
+
+********************** VERY IMPORTANT NOTICE **********************
+
+Because some of the message formats have changed in version 3.9 you may
+encouter compatibility problems when exchanging data with other
+Earthworms running older versions (pre v3.9) or using Earthworm v3.9
+output with non-Earthworm programs.
+
+Sites using DOS digitizers will have problems using V3.9 and should contact
+Barbara Bogaert for assistance.
+
+********************** VERY IMPORTANT NOTICE **********************
+
+
+A list of non-Y2K compliant Earthworm message types and the corresponding
+Y2K-compliant message types (4-digit years) used in Earthworm v3.9 can be found
+in the Release notes included in the V3.9 release. 
+
+V3.9 NEW MODULES:
+***************************
+decimate: filter and decimate routines supplied by Dave Harris
+  to process wave data (TYPE_TRACEBUF) coming from the InRing defined
+  in decimate.d into data of type TYPE_DECIMATED which is put to
+  the OutRing.  
+
+evansassoc: Y2K-compliant and much enhanced version of trg_assoc (renamed 
+  to more clearly indicate its relationship to evanstrig). 
+  Partner module to evanstrig, evansassoc associates the single-station
+  long period triggers into events.  Evansassoc builds proper TYPE_TRIGLIST2K
+  messages (with eventid and author strings) and puts them on a transport
+  ring
+
+hyp2000: Y2K-compliant version of hypoinverse.  This is the interactive
+  version. 
+
+hyp2000_mgr: Y2K-compliant version of hypoinverse.  This version works in
+  the Earthworm eqproc "sausage".  
+
+scream2ew: converts packets from Guralp SCREAM! Server to trace_buf earthworm
+messages and puts them into an earthworm ring. Written by Kent  Lindquist
+(UofA) and Murray McGowan (Guralp), with minor modifications by Mitch Withers
+and Lucky Vidmar.
+
+ If you questions or comments, please contact me at bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert                         U.S. Geological Survey
+bogaert@gldage.cr.usgs.gov              Box 25046, Stop 967
+office:  303-273-8491                   Denver Federal Center
+FAX:     303-273-8600                   Denver, CO 80225
+

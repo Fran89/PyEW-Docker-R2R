@@ -1,0 +1,52 @@
+From withers@ceri.memphis.edu Wed Sep 20 09:25:02 2000
+Date: Tue, 19 Sep 2000 07:05:08 -0500 (CDT)
+From: Mitchell M. Withers <withers@ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: new module
+
+
+We're developing a new module that's not a module and seek suggestions
+from the community on specifications.  While tempting to have it do
+what I want, when I want, without knowing what I want when, this isn't
+very realistic.
+
+Earthworm version 5.1 will include a quick review mechanism that allows
+repicking and relocating if a database is available.  It is not yet
+intended to replace existing review mechanism but rather is designed
+for responding to significant events.  The new module will be www
+based and provides the means to do what needs doin after you review
+the event.  Potential functionality might include:
+
+create and pretty report suitable for distributing to media, ema, etc
+via fax, email and web.
+
+Search a list of people to notify and provide parameters to produce a
+appropriate list of people to notify for this particular event (e.g. don't want
+to notify North Dakota about an event in Florida).
+
+Ding a cube system
+
+Update qdds
+
+Update finger
+
+Tell Waverly and make sure NEIC and local magnitudes aren't completely different.
+
+I wonder if we can get it to automagically deploy an aftershock array.
+
+password protect it
+
+make it hard to break by a groggy operator at 2AM, think microsoft and ask me
+to verify things.  let me go back and undo things.
+
+Please email your ideas directly to me or the earthw-list.
+
+thanks,
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+
+

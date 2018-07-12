@@ -1,0 +1,781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      eqassemble – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/eqassemble?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="eqassemble.html" title="View eqassemble">eqassemble</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/eqassemble?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/eqassemble?action=diff&amp;version=10" title="Version 10 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-29T10%3A46%3A55-07%3A00&amp;precision=second" title="2012-05-29T10:46:55-07:00 in Timeline">16 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/29/12 10:46:55</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="eqassemble.html#EarthwormModule:eqassemble">Earthworm Module: eqassemble</a>
+    <ol>
+      <li>
+        <a href="eqassemble.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="eqassemble.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="eqassemble.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="eqassemble.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="eqassemble.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="eqassemble.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="eqassemble.html#DESCRIPTIONOFEQASSEMBLESLOGFILE">DESCRIPTION OF EQASSEMBLE'S LOG FILE</a>
+          </li>
+          <li>
+            <a href="eqassemble.html#THEMEGA-MODULEWHICHBEGINSWITHEQASSEMBLE">THE "MEGA-MODULE" WHICH BEGINS WITH EQASSEMBLE</a>
+            <ol>
+              <li>
+                <a href="eqassemble.html#Inter-linkIntra-mega-moduleCommunication">Inter-link (Intra-mega-module) Communication</a>
+              </li>
+              <li>
+                <a href="eqassemble.html#Heartbeats">Heartbeats</a>
+              </li>
+              <li>
+                <a href="eqassemble.html#ErrorMessages">Error Messages</a>
+              </li>
+              <li>
+                <a href="eqassemble.html#FinalOutputfromMega-module">Final Output from Mega-module</a>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="eqassemble.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:eqassemble"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: eqassemble</h1>
+<p>
+<strong>Contributed by: CISN</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Initiates event processing multiple times (CISN contrib) v7.2 addition
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Eqassemble is the first process in the earthquake-processing mega-module (sometimes referred to as "the sausage") that produces earthquake locations for the Earthworm system. Only eqassemble, the first link in the mega-module, is listed in startstop's configuration file to be started by startstop. Eqassemble then starts the next process, specified in its "PipeTo" command, and communicates with it via a one-directional pipe. Each newly created sub-module starts the next link in the same way. From startstop's point of view, the whole mega-module inherits the name of the first link (eqassemble) and that's the only name it displays. From statmgr's point of view, all processes within the mega-module share one module id, one heartbeat, and one descriptor file. However, each sub-module has its own configuration file and its own log file.
+</p>
+<p>
+Eqassemble is the result of merging three other Earthworm programs: eqprelim, eqrapid (used only at Caltech), and eqproc. This merger was needed for the CISN project. It results in a single module that can release event messages meeting any of three different rule sets that are derived from the original programs' rules. By merging the three programs into one, we also gain by having to run only a single sausage instead of three.
+</p>
+<p>
+After starting up the next link in "the sausage," eqassemble's main job is to gather information from picker(s) and binder, to decide when en event is ready for release, to assemble all the information related to that event, and to pass it on to the next event-processing sub-module.
+</p>
+<p>
+Eqassemble collects messages from the picker(s) (TYPE_PICK_SCNL and TYPE_CODA_SCNL) and from binder (TYPE_QUAKE2K and TYPE_LINK). A TYPE_PICK_SCNL message contains an observed P-wave (or S-wave) arrival-time and amplitude for a given seismic channel along with the installation id, module id, and pick sequence number; the picker releases the pick message within ~3 seconds of a P-wave detection. A TYPE_CODA_SCNL message contains coda duration and amplitude information along with the installation id, module id, and sequence number of the pick it relates to; the picker releases the coda message up to 144 seconds after its corresponding pick message. A TYPE_QUAKE2K message contains an event id number, origin time and hypocenter; binder issues a new quake message each time it associates a new pick with [or deletes pick(s) from] a given event id. A TYPE_LINK message contains an event id, an installation id, a picker module id, a pick sequence number and a phase identifier; binder issues a new link message for every pick it associates with (or deletes from) an active event.
+</p>
+<p>
+Eqassemble maintains two circular buffers:
+</p>
+<ol><li>Pick list
+</li></ol><blockquote>
+<p>
+Contains the most recent MAXPCK (=1000) picks and their coda and link information (related by installation id, module id and pick sequence number) and the system-time that the pick was entered.
+</p>
+</blockquote>
+<ol start="2"><li>Quake list
+</li></ol><blockquote>
+<p>
+Contains the most recent location and status of the last MAXHYP (=100) event ids and the system-time that the location was entered.
+</p>
+</blockquote>
+<p>
+Eqassemble applies up to three configurable rule sets to decide when to release event messages. These rule sets are:
+</p>
+<p>
+preliminary rule:
+</p>
+<blockquote>
+<p>
+N (=25) P phases associated with the event. At Menlo Park, this is used to publish a preliminary location (with no magnitude) for an event of potential interest to the public. This event message is assigned version 0.
+</p>
+</blockquote>
+<p>
+rapid rule:
+</p>
+<blockquote>
+<p>
+release the event message N (=90) seconds after either origin time or detection time, provided there are at least M (=5) P phases associated with the event. This message is used in CISN to initiate Ml calculations. The waiting time is to allow sufficient waveforms to be available to compute local magnitude as rapidly as feasible. This event message is assigned version 1.
+</p>
+</blockquote>
+<p>
+final rule:
+</p>
+<blockquote>
+<p>
+release the event message N (=60) seconds after binder has stopped updating the solution, provided there are M (=4) associated P phases. In addition, eqassemble can optionally wait for the TYPE_CODA_SCNL messages for this event. If eqassemble is configured to wait for codas, it will wait until coda messages are received for all associated picks; but not more that 150 seconds. The 150 second wait duration is not configurable, since it is based on the 144 second coda time of pick_ew. This event message is assigned version 2.
+</p>
+</blockquote>
+<blockquote>
+<p>
+If eqassemble is configured not to wait for codas, then the event message produced by eqassemble will contain no coda durations. This option is intended for networks which do not want to produce duration magnitudes with the Earthworm sausage.
+</p>
+</blockquote>
+<p>
+Occasionally, binder will decide to cancel event on which it has been working, It indicates this by reducing the number of associated picks to zero. If eqassemble sees this happen after it has released any version of the event message, it will issue a TYPE_CANCELEVENT message.
+</p>
+<p>
+Occasionally, eqassemble will receive more TYPE_QUAKE2K and TYPE_LINK message for a given event id after it has finalized that event. Eqassemble will note these messages in its log file, but it will never send another TYPE_EVENT2K message thru the mega-module for that event id.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, eqassemble reads the configuration file named on the command-line. Commands in this file set up all parameters used in making earthquake notifications. In the control file, lines may begin with a valid eqassemble command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">    #  marks the line as a comment (example: # This is a comment).
+
+    @  allows control files to be nested; one control file can be
+       accessed from another with the command "@" followed by
+       a string representing the path name of the next control file
+       (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"> # This is Eqassemble's Parameter File
+
+# Basic Earthworm setup:
+#-----------------------
+ MyModuleId   MOD_EQASSEMBLE    # Module id for this instance of eqassemble
+ RingName     PICK_RING     # Ring to get input from
+ HeartbeatInt 30            # seconds between heartbeats to statmgr
+ LogFile      1             # 0 = turn off disk log file;
+                            # 1 = turn on disk log
+                            # 2 = write disk log but not to stderr/stdout
+
+# List the message logos to grab from transport ring
+#               Installation       Module          Message Types
+#-----------------------------------------------------------------
+ GetPicksFrom   INST_WILDCARD    MOD_WILDCARD    # pick2k &amp; coda2k
+ GetAssocFrom   INST_MENLO       MOD_BINDER      # quake2k &amp; link2k
+
+# Send output to the following command (uncomment one):
+#------------------------------------------------------
+ PipeTo "exec eqbuf eqbuf.d"     # buffer events for downstream modules
+#PipeTo "log_everything"	 # end chain here for debugging
+
+# Load station list
+#------------------
+ maxsite     3500
+ site_file   calsta.hinv
+
+# Load crustal model
+# Refer to file containing "lay" commands, or list them here
+#-----------------------------------------------------------
+@ncal_model.d# Load the central California crustal model
+
+
+# Set pick/quake FIFO lengths (must be &gt;= binder's fifo lengths)
+#---------------------------------------------------------------
+ pick_fifo_length  1000  # optional: default = 1000
+ quake_fifo_length  100  # optional: default = 100
+
+# Control how/when events are reported
+#-------------------------------------
+ ReportS      0     # 0 = do not send S-phases to next process
+                    # non-zero = do send S-phases to next process
+ HypCheckInterval  5.0	# interval (sec) at which to check all hypocenters
+                    #   to see if it's time to report an event
+
+
+# Rules for reporting events
+#---------------------------
+# At least one of these rules must be given; there are no defaults
+# Syntax:
+#	PrelimRule numPhases
+#		Event2K message released with version 0 when event has
+#		 P phases associated.
+#	RapidRule numPhases seconds SinceOrigin
+#     or
+#	RapidRule numPhases seconds SinceDetection
+#		Event2K message released with version 1  since
+#		origin or detection time provided  P phases
+#		associated.
+#	FinalRule numPhases seconds [WaitForCodas]
+#		Event2K message released with version 2 when solution has
+#		been stable for , has  P phases associated,
+#		and optionally after codas have arrived.
+# Codas are reported only with the FinalRule and only if the
+# WaitForCodas flag is included in the FinalRule command
+#
+PrelimRule    25
+RapidRule     5 30 SinceDetection
+FinalRule     4 60 WaitForCodas
+
+# If we are going to wait for codas, and some picks are imported from
+# other Earthworm Installations, eqassemble can optionally wait for codas
+# from those other installations with one or more of:
+# CodaFromInst InstId
+# You do not need to list your own Inst ID.
+# CodaFromInst is ignored if the FinalRule does not wait for codas.
+CodaFromInst INST_MENLO
+
+# DataSrc: single character to indicate the source of phase data
+DataSrc    W
+
+# MaxPhasesPerEq: restrict the number of phases to be reported for
+# the RapidRule and FinalRule to this value. Cannot be set greater than
+# the Earthworm limit of 250, which is also the default for this parameter
+MaxPhasesPerEq 250
+
+# Control debugging info to log
+#------------------------------
+ WaifTolerance   4.0  # tolerance (sec) for noting waif picks for
+		      #   in log file. (optional: default = 4.0)
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by eqassemble, grouped by the function they influence. Some of the commands are marked "required"; they describe the Earthworm system setup and the network model. These commands must be specified in the control file in order for eqassemble to operate.
+</p>
+<pre class="wiki">	Earthworm system setup:
+                GetAssocFrom    required
+  		GetPicksFrom	required
+ 		MyModuleId	required
+                PipeTo          required
+		RingName	required
+		pick_fifo_length
+		quake_fifo_length
+
+        Seismic network/model definition:
+                lay             required
+                psratio
+                site            \  site list required; specify with
+                site_file       /  either "site" or "site_file"
+                maxsite
+
+        Event Notification:
+                PrelimRule
+                RapidRule
+                FinalRule
+                CodaFromInst
+                HypCheckInterval
+                ReportS          required
+                DataSrc
+		MaxPhasesPerEq
+
+        Output Control:
+                LogFile          required
+                WaifTolerance
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and the values used by Calnet are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>CodaFromInst [inst_id]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+Identify from which installations (by inst_id) eqassemble should wait for coda messages for the FinalRule, other than the local inst_id. This optional command is only useful if the FinalRule is turned on and configured to WaitForCodas. If you are importing TYPE_PICK_SCNL and TYPE_CODA_SCNL messages from other Earthworm installations, then you may want eqassemble to wait for those codas. But if another Earthworm installation was sending only TYPE_PICK_SCNL messages, then you would not want eqassemble to wait for those TYPE_CODA_SCNL messages. You can list as many CodaFromInst as needed. But you do not need to list your own inst_id.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   CodaFromInst  INST_UCB
+</pre><p>
+<strong>DataSrc [name]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+Identify the source of the phase data with a single-character name. This code will be inserted into the hypoinverse input message by eqcoda and will be passed through hypoinverse to show up in the hypoinverse archive message as the Data Source Code (column 109 in the phase lines.)
+</p>
+<pre class="wiki">Default:  " "
+Calnet:   DataSrc  W
+</pre><p>
+<strong>FinalRule [Np Msec WaitForCodas]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+The final TYPE_EVENT2K message will be released after binder has not changed the solution (no TYPE_QUAKE2K messages) in Msec seconds, provided there are at least Np P phases associated with the event. If the optional string WaitForCodas is included in the FinalRule command, eqassemble will wait up to 150 seconds after a phase arrival until the corresponding coda message is received. Normally the extra wait for codas applies only to TYPE_CODA_SCNL messages from the local inst_id. Use the CodaFromInst command to tell eqassemble to wait for codas from other Earthworm installations.
+</p>
+<p>
+The final TYPE_EVENT2K message is assigned version number 2. This version number will show up in the hypoinverse archive message produced by hyp2000_mgr, usually the last program in the "sausage".
+</p>
+<p>
+The FinalRule command is optional. If it is absent, the final ruleset will not be applied and no version 2 event messages will be released from eqassemble. However, you must have at least one of PrelimRule, RapidRule, FinalRule, or eqassemble won't have anything to do.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   FinalRule	4 60 WaitForCodas
+</pre><p>
+<strong>GetAssocFrom [inst mod_id]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Controls the association messages input to eqassemble. Eqassemble will only process quakes and links that come from module mod_id at installation inst. inst and mod_id are character strings (valid strings are listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module. Only 2 "Get*From" commands may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force eqassemble to process all quakes &amp; links, regardless of their place of origin.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   GetAssocFrom  INST_MENLO  MOD_BINDER
+</pre><p>
+<strong>GetPicksFrom [inst mod_id]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Controls the pick and coda message input to eqassemble. Eqassemble will only process picks and codas that come from module mod_id at installation inst. inst and mod_id are character strings (valid strings are listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module. Only 2 "Get*From" commands may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force eqassemble to process all picks &amp; codas, regardless of their place of origin.
+</p>
+<p>
+Note: both binder and eqassemble should be set to listen to the same pick source(s)!
+</p>
+<pre class="wiki">Default:  none
+Calnet:   GetPicksFrom  INST_WILDCARD  MOD_WILDCARD
+</pre><p>
+<strong>HypCheckInterval [M]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+Check the list of currently active events every M seconds to see if they are ready for release under the rapid or final rules.
+</p>
+<pre class="wiki">Default:  10 (seconds)
+Calnet:   HypCheckInterval   5
+</pre><p>
+<strong>lay [depth velocity]</strong><br />
+Processed by: t_com<br />
+Function: model
+</p>
+<p>
+Defines the layered velocity structure to be used for calculating travel times. depth is the distance (km) to the top of the layer, and velocity is the seismic P-wave velocity (km/sec) within that layer. No default velocity structure is defined; therefore, the user must always supply one in the control file. Up to 20 layers can be specified, and they should be listed in order of increasing depth.
+</p>
+<p>
+Note: binder and eqassemble calculate travel times independently. Be sure that both programs are using the same velocity model!
+</p>
+<pre class="wiki">Default:  none                          Calnet:  lay   0.0  4.0
+                                                 lay   3.5  5.9
+                                                 lay  15.0  6.85
+                                                 lay  25.0  7.85
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: eqas_config<br />
+Function: output
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, eqassemble will write a daily log file(s) called eqassemblexx.log_yyyymmdd where xx is eqassemble's module id (set with "MyModuleId" command) and yyyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+</pre><p>
+<strong>maxsite [N]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+Restrict the number of phases to be reported for the RapidRule and FinalRule to nsite. Cannot be set greater than the Earthworm limit of 250, which is also the default for this parameter.
+</p>
+<pre class="wiki">Default:  MaxPhasePerEq 250
+Calnet:   MaxPhasePerEq 250
+</pre><p>
+<strong>maxsite [nsite]</strong><br />
+Processed by: site_com<br />
+Fucntion: model
+</p>
+<p>
+Allocates memory to store nsite station locations in the site table.
+</p>
+<pre class="wiki">Default:  maxsite 1000                  
+Calnet:  maxsite 1000
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labelling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none				
+Calnet:  MyModuleId MOD_EQASSEMBLE
+</pre><p>
+<strong>pick_fifo_length [N]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Specify the size of the pick FIFO buffer as N picks. This value should be at least as large as binder's pick_fifo_length.
+</p>
+<pre class="wiki">Default:  1000
+Calnet:   pick_fifo_length 4000
+</pre><p>
+<strong>PipeTo [cmdstring]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the command to which eqassemble will pipe a "binder-finalized" event for the next step in earthquake processing. Blank spaces are allowed in cmdstring as long as the entire command is enclosed in double-quotes.
+</p>
+<p>
+Note that on unix-like systems, you can precede the command with "exec". This will cause the shell which invokes the command to be replaced by the command instead of remaining as the command's parent process. Using this trick in the PipeTo command in each of the sausage sub-programs will save you from keeping several shell instances for no useful purpose.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   PipeTo "exec eqbuf eqbuf.d"
+</pre><p>
+<strong>PrelimRule [N]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+The preliminary TYPE_EVENT2K message will be released when N P phases are associated with the event, provided that no higher version TYPE_EVENT2K has already been released for the event. The preliminary event message is assigned version 0.
+</p>
+<p>
+The PrelimRule command is optional. If it is absent, the preliminary ruleset will not be applied and no version 0 event messages will be released from eqassemble. However, you must have at least one of PrelimRule, RapidRule, FinalRule, or eqassemble won't have anything to do.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   PrelimRule	25
+</pre><p>
+<strong>psratio [value]</strong><br />
+Processed by: t_com<br />
+Function: model
+</p>
+<p>
+Sets the value of the P/S seismic velocity ratio.
+</p>
+<pre class="wiki">Default:  psratio  1.72                 
+Calnet:  psratio  1.72
+</pre><p>
+<strong>quake_fifo_length [N]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Specify the size of the quake FIFO buffer as N events. This value should be at least as large as binder's quake_fifo_length.
+</p>
+<pre class="wiki">Default:  100
+Calnet:   quake_fifo_length  100
+</pre><p>
+<strong>RapidRule [Np Msec SinceX]</strong><br />
+Processed by: eqas_config<br />
+Function: Event Notification
+</p>
+<p>
+The "rapid" TYPE_EVENT2K message will be released at a fixed time after either event origin time, or event detection time (when eqassemble receives the first TYPE_QUAKE2K message for the event), provided at least Np P phases are associated with the event. The time delay is specified as Msec seconds. The starting time of the delay is given in the SinceX string, which can be either SinceOrigin or SinceDetection. This TYPE_EVENT2K will be assigned version 1. It will not be released by eqassemble is a higher version message has already be released for the event.
+</p>
+<p>
+This ruleset is intended to be used to initiate a magnitude calculation as soon as possible after an event, before the binder solution has stablized.
+</p>
+<p>
+The PrelimRule command is optional. If it is absent, the preliminary ruleset will not be applied and no version 0 event messages will be released from eqassemble. However, you must have at least one of PrelimRule, RapidRule, FinalRule, or eqassemble won't have anything to do.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   RapidRule	5 30 SinceOrigin
+</pre><p>
+<strong>ReportS [switch]</strong><br />
+Processed by: eqas_config<br />
+Function: notification
+</p>
+<p>
+Sets the switch for reporting picks that binder has associated as S-phases. If switch is 0, S-phases are not sent along to the next process; if switch is non-zero, S-phases are included in the event message (hypocenter plus associated picks) that is sent to the next process.
+</p>
+<pre class="wiki">Default:  none				
+Calnet:  ReportS  0
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: eqas_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells eqassemble which shared memory region to use for input. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none				
+Calnet:  RingName PICK_RING
+</pre><p>
+<strong>site [name latitude longitude]</strong><br />
+Processed by: site_com<br />
+Function: model
+</p>
+<p>
+Enters a station location into the station site table, where name is the station code used by the picker, and latitude and longitude are expressed in decimal degrees (positive to the north and east). Use either multiple "site" commands or one "site_file" command to load the station list into eqassemble.
+</p>
+<p>
+<strong>site_file [filename]</strong><br />
+Processed by: site_com<br />
+Function: model
+</p>
+<p>
+Enters site codes and station locations into the site table by reading a HYPOINVERSE format station file called filename. In this file, stations are described by a 5-letter site name, a 2-letter network code and a 3-letter component code. The picker must also be using this station-naming convention. The format of the file is described under <a class="wiki" href="hypo_file_format.html">NEW HYPOINVERSE STATION FILE FOR FULL 10-LETTER STATION NAMES</a> in calsta2.doc by Fred Klein. Use either one "site_file" command or multiple "site" commands to load the station list into eqassemble.
+</p>
+<p>
+<strong>WaifTolerance [N]</strong><br />
+Processed by: eqas_config<br />
+Fucntion: OutPut Control
+</p>
+<p>
+When eqassemble is preparing to release a final (version 2) TYPE_EVENT2K message, it logs information about phases associated with the event, and about phases not associated with this event but which have "small" travel time residuals relative to this event. This command gives the largest absolute value residual as N seconds. See Description of eqassemble's log file for more details about eqassemble's log files.
+</p>
+<pre class="wiki">Default:  none
+Calnet:   WaifTolerance  4.0
+</pre><h3 id="DESCRIPTIONOFEQASSEMBLESLOGFILE">DESCRIPTION OF EQASSEMBLE'S LOG FILE</h3>
+<pre class="wiki">Eqassemble writes a number of different lines of information to its log file
+when an event is first detected, as binder evolves its location, and when
+eqassemble releases the various versions of TYPE_EVENT2K message or the
+TYPE_CANCELEVENT messages. This section describes the log file entries.
+
+Every time eqassemble grabs a TYPE_QUAKE2K message from the shared memory
+ring, it writes a line to its log file.  It's sort of giving you a time-stamped
+summary of binder's output.  Here are some example lines and what they contain:
+
+ 146 56.00:70131066  146 41.07  38.3540 -122.7992 18.00 0.00  0.0  0.0   0  5
+ 146 56.00:70131066  146 39.49  38.2606 -122.7295 25.50 0.18 19.7 54.7 282  5
+ 146 56.00:70131066  146 39.48  38.2603 -122.7294 25.50 0.27 19.8 54.0 282  6
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+
+field  columns   Description
+       (approx)
+1,2      1-10    System time (hrmn sec) at which this TYPE_QUAKE2K message
+                 was received.
+ 3      12-19    Binder's event id.
+4,5     21-30    hrmn sec of event origin time
+ 6      32-39    latitude
+ 7      41-49    longitude
+ 8      50-55    depth
+ 9      56-60    rms
+10      61-65    dmin: distance to nearest station
+11      66-70    ravg: average epicentral distance of all associated stations
+12      72-74    maximum azimuthal gap
+13      75-77    total # picks associated with this event.
+
+You'll notice that the first line has zero's for rms, dmin, ravg, and gap.
+This is binder's initial stack location for the event.
+The subsequent locations for the event come from binder's simple L1 locator.
+
+------------------------------------------------------------------------------
+
+The log entries for an event meeting the rapid rule set produces log entries
+similar to these:
+
+ 147 51.00:70131066 #### Rapid report: 200702120146_66
+70131066 2007Feb12  146 48.02  38.8037 -122.7957  0.65 0.10  0.5 21.6  73 13
+GCR   EHZ NC  02 2007Feb12  146 49.64 P D0   7.7   0.00
+GBG   EHZ NC  -- 2007Feb12  146 50.14 P D1  10.1   0.01
+GSG   EHZ NC  02 2007Feb12  146 50.19 P U0  10.4  -0.00
+GAX   EHZ NC  -- 2007Feb12  146 50.37 P D2  10.9   0.08
+GPM   EHZ NC  02 2007Feb12  146 50.97 P U0  14.2  -0.00
+GRT   EHZ NC  -- 2007Feb12  146 51.33 P D2  18.6  -0.58
+GMK   EHZ NC  -- 2007Feb12  146 52.39 P ?2  18.4   0.53
+NHS   EHZ NC  -- 2007Feb12  146 52.75 P D3  23.0  -0.05
+GSS   EHZ NC  -- 2007Feb12  146 52.76 P U2  22.5   0.06
+NMT   EHZ NC  -- 2007Feb12  146 54.03 P D2  30.9  -0.13
+NSH   EHZ NC  -- 2007Feb12  146 54.94 P U2  35.7  -0.00
+NEA   EHZ NC  -- 2007Feb12  146 59.15 P ?2  56.4   0.81
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+The first line tells you that a rapid message is being released
+Field    Description
+ 1,2     system time (hrmn sec) when the event met the "rapid" ruleset
+  3      binder's event id,
+  5      a string that contains the event origin time (yyyymmddhhmm_xx)
+         where xx is the last 2 digits of the event id.
+
+The second line is a summary line with:
+Field    Description
+  1      the event id from binder
+ 2,3,4   origin time,
+  5      latitude,
+  6      longitude,
+  7      depth,
+  8      rms,
+  9      dmin,
+ 10      ravg,
+ 11      gap,
+ 12      # associated phases.
+
+The remaining lines describe the phases associated with the event:
+    columns  Description
+       1-10  station (site,net,component),
+      12-21  arrival time,
+      31-32  phase that binder called it,
+         33  polarity,
+         34  pick quality (0-4),
+      35-40  epicentral distance, and
+      41-47  traveltime residual (sec).
+      49-?   optional comment (only in final event report)
+
+------------------------------------------------------------------------------
+
+When eqassemble decides that binder is finished with an event, you'll see
+a set of lines that look something like this:
+
+ 148 16.00:70131066 #### Final report: 200702120146_66
+70131066 2007Feb12  146 48.02  38.8037 -122.7957  0.65 0.10  0.5 21.6  73 13
+GCR   EHZ NC  02 2007Feb12  146 49.64 P D0   7.7   0.00
+GBG   EHZ NC  -- 2007Feb12  146 50.14 P D1  10.1   0.01
+GSG   EHZ NC  02 2007Feb12  146 50.19 P U0  10.4  -0.00
+GAX   EHZ NC  -- 2007Feb12  146 50.37 P D2  10.9   0.08
+GPM   EHZ NC  02 2007Feb12  146 50.97 P U0  14.2  -0.00
+GRT   EHZ NC  -- 2007Feb12  146 51.33 P D2  18.6  -0.58
+GMK   EHZ NC  -- 2007Feb12  146 52.39 P ?2  18.4   0.53
+NHS   EHZ NC  -- 2007Feb12  146 52.75 P D3  23.0  -0.05
+GSS   EHZ NC  -- 2007Feb12  146 52.76 P U2  22.5   0.06
+NMT   EHZ NC  -- 2007Feb12  146 54.03 P D2  30.9  -0.13
+NSH   EHZ NC  -- 2007Feb12  146 54.94 P U2  35.7  -0.00
+NEA   EHZ NC  -- 2007Feb12  146 59.15 P ?2  56.4   0.81
+KPK   EHZ WR  -- 2007Feb12  146 59.15 P ?2 158.3   0.54 WAIF
+ANT   SHZ NN  -- 2007Feb12  146 59.15 Pn?2 388.7  -0.98 WAIF
+ANT   SHZ NN  -- 2007Feb12  146 59.15 Pg?2 388.7  -3.04 WAIF
+MGN   SHZ NN  -- 2007Feb12  146 59.15 Pn?2 380.6   3.86 WAIF
+MGN   SHZ NN  -- 2007Feb12  146 59.15 Pg?2 380.6   1.87 WAIF
+ADH   SHZ NN  -- 2007Feb12  146 59.15 PgD2 374.3   3.89 WAIF
+TER   EHZ CI  -- 2007Feb12  146 59.15 PnU1 491.7  -2.77 WAIF
+123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+
+The format is the same as for the preliminary and rapid event reports, except
+that the phase lines may have entries in the comment field here.
+These are the lines that have either "#xxxx" (an event id) or "WAIF" written
+after the residual in the optional comment field.  These are phases that
+eqassemble thought could possibly have been associated with this event, but
+that weren't.  If the comment is "#xxxx" then that phase is actually
+associated with a different event (whose id is xxxx).  If the comment is
+"WAIF" then the phase is not associated at all.
+</pre><h3 id="THEMEGA-MODULEWHICHBEGINSWITHEQASSEMBLE">THE "MEGA-MODULE" WHICH BEGINS WITH EQASSEMBLE</h3>
+<p>
+The eqassemble "mega-module" is a chain of processes that produces final earthquake locations for the Earthworm system. Only eqassemble, the first link in the mega-module, is listed in startstop's configuration file to be started by startstop. Eqassemble then starts the next process, specified in its "PipeTo" command, and communicates with it via a pipe. Each newly created process starts the next link in the same way. From startstop's point of view, the whole mega-module inherits the name of the first link (eqassemble) and that's the only name it displays. From statmgr's point of view, all processes within the mega-module share one module id, one heartbeat, and one descriptor file. However, each process has its own configuration file and its own log file.
+</p>
+<p>
+Note that Earthworm logo of heartbeat and error messages from all the "mega-module" processes is set by hyp2000_mgr, not by eqassemble or any other sausage process.
+</p>
+<p>
+As of 11 February 2007, the eqassemble mega-module consists of the following "links":
+</p>
+<pre class="wiki">  SUB-MODULE    INPUT FROM   		  	OUTPUT TO
+  ----------	----------		  	---------
+  eqassemble 	shared memory (PICK_RING)	pipe to eqbuf
+  eqbuf   	stdin (pipe from eqassemble)   	pipe to eqcoda
+  eqcoda	stdin (pipe from eqbuf)    	pipe to eqverify
+  eqverify	stdin (pipe from eqcoda)   	pipe to hyp2000_mgr
+  hyp2000_mgr	stdin (pipe from eqverify)	shared memory (HYPO_RING)
+</pre><h4 id="Inter-linkIntra-mega-moduleCommunication">Inter-link (Intra-mega-module) Communication</h4>
+<p>
+All messages are passed between the processes of the mega-module via pipes. The pipe communications are encapsulated in a set of routines containing the peculiarities of the operating system. Messages, with types defined in earthworm.d, are sent from one link to the next, in one direction only! If a process doesn't need to do anything with a given message type, it just pipes it along to the next link. The current pipe routines (in pipe.c) are:
+</p>
+<pre class="wiki">  pipe_init   	starts up the next "link", replacing its stdin with
+		a pipe from the "parent" program.
+  pipe_put	writes a message of a given type to the pipe.
+  pipe_get	gets the next message from the pipe.
+  pipe_close    closes the pipe.
+</pre><h4 id="Heartbeats">Heartbeats</h4>
+<p>
+The mega-module has one module-id and one heartbeat. The heartbeat initiates at the first link (eqassemble), is piped through all the links, and is deposited into shared memory by the last link (in this case, hyp2000_mgr). If any of the links dies, no heartbeat will be seen by statmgr and it will complain appropriately.
+</p>
+<h4 id="ErrorMessages">Error Messages</h4>
+<p>
+Since the whole mega-module has only one module-id, the sub-modules need to share the complete set of error numbers within a common descriptor file. Each link is assigned a block of error numbers to use for its complaints. Each link passes along any error messages it reads from the pipe. The last link puts all error messages into shared memory where they are available to statmgr. Statmgr reads one descriptor file for the mega-module.
+</p>
+<h4 id="FinalOutputfromMega-module">Final Output from Mega-module</h4>
+<p>
+The last link in the mega-module, hyp2000_mgr, deposits heartbeats, error messages, and event messages (that look like hypoinverse archive files) onto shared memory where any other Earthworm module can find them.
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/eqassemble?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

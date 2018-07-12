@@ -1,0 +1,333 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Liss2ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><H1>Earthworm Modules: <BR>Liss2ew Configuration File </H1>
+<I>(last revised 4 March, 2000)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF="#function">Functional command listing</A><BR>
+2.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+3.  <A HREF="#sample_config">Sample Configuration File</A><BR>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, liss2ew reads the configuration file named on the command
+line. Commands in this file set all the parameters used for configuring
+the Earthworm LISS client module. (LISS is the
+<A HREF="http://www.liss.org">Live Internet Seismic Server</A>.)
+In the control file, lines may begin with a
+valid liss2ew command (listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). Blank lines are also permitted in the
+control file.
+<P>
+<A NAME="function">
+<H2>1.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by liss2ew, grouped by the function
+they influence.  Most of the commands are required; they may be specified
+in any order in the control file.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>   Earthworm system setup:
+                <A HREF="#MyModuleId">MyModuleId</A>            required
+                <A HREF="#OutRing">OutRing</A>                 required
+                <A HREF="#HeartBeatInterval">HeartBeatInterval</A>      required
+                <A HREF="#Debug">Debug</A>
+
+        LISS server and input parameters:
+                <A HREF="#LISSaddr">LISSaddr</A>                required
+                <A HREF="#LISSport">LISSport</A>                required
+                <A HREF="#lenSEED">lenSEED</A>                 optional
+                <A HREF="#SocketTimeout">SocketTimeout</A>           optional
+
+        Data output parameters:
+                <A HREF="#TraceLength">TraceLength</A>             required
+                <A HREF="#MaxSCNs">MaxSCNs</A>                 required
+                <A HREF="#AcceptSCNL">AcceptSCNL</A>              required
+</PRE>
+
+<A NAME="alphabet">
+<H2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>                                 processed by             in function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+<A NAME="AcceptSCNL">  <!-- command name as anchor inside quotes -->
+<PRE><B>AcceptSCNL <font color=red>station component net location pinno</font>     ReadConfig              Data selection
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies one stream of data to be read from the LISS and output as trace data.
+The <font color=red>station, component,</font> and <font color=red>network</font>
+are used to set the earthworm SCN of this data stream. These three parameters
+must be given explicitly (no wildcards). Many LISS channels are also identified
+by a <font color=red>location</font> code. If you are getting data from the
+ASL LISS, see their <A HREF="http://aslwww.cr.usgs.gov/Seismic_Data/liss_stns_chns.html">table</A>
+of available data streams. If you don't know the location code, you can try
+running <A HREF="dumpseed_man.html">dumpseed</A> to see what is being served.
+The location code may be <font color=red>*</font>, the
+wildcard. If you use the wildcard and more than one location code is available
+for this SCN, liss2ew will report errors such as samplerate changing as it
+reads first one location code and then the other. To enter the empty location
+code (seen on some ASL channels, use the empty string <font color=red>""</font>.
+ <P>
+You must give one AcceptSCNL command for each SCN that you want to receive from the LISS.
+However, you should not specify more than one AcceptSCNL for the same SCN and different
+location codes. The rest of earthworm does not know about location codes, so the two
+data streams would get mixed together with bad results.
+ <P>
+The pin number <font color=red>pinno</font> is used for internal earthworm use.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  AcceptSCNL ANMO BHZ IU 00   1234
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Debug">  <!-- command name as anchor inside quotes -->
+<PRE><B>Debug                                            ReadConfig              Earthworm setup
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Turns on debug logging for liss2ew.
+<PRE><!-- Default and example go here   -->
+Default:  no debug logging
+Example:  Debug
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartBeatInterval">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartBeatInterval <font color=red>nsec</font>                         ReadConfig              Earthworm Setup
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds, <font color=red>nsec</font> between TYPE_HEARTBEAT
+messages issued by liss2ew.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartBeatInterval 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="lenSEED">  <!-- command name as anchor inside quotes -->
+<PRE><B>lenSEED <font color=red>bytes</font>                           ReadConfig              LISS parameters
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of <font color=red>bytes</font> in the miniSEED records
+to be read from the LISS. For the ASL LISS, this is 512 bytes.
+<PRE><!-- Default and example go here   -->
+Default:  512
+Example:  lenSEED 4096
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LISSaddr">  <!-- command name as anchor inside quotes -->
+<PRE><B>LISSaddr <font color=red>address</font>                         ReadConfig              LISS parameters
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specify the <font color=red>address</font> of the LISS. This can be either on
+IP address (four period-separated numbers) or the domain name of the server.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  LISSaddr      anmo.iu.liss.org
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LISSport">  <!-- command name as anchor inside quotes -->
+<PRE><B>LISSport <font color=red>port</font>                            ReadConfig              LISS parameters
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the IP <font color=red>port</font> number for the LISS. Normally
+this is 4000.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  LISSport  4000
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>                           ReadConfig              Earthworm Setup
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk. If <font color=red>switch</font> is 0,
+no log file will be written. If <font color=red>switch</font> is non-zero, liss2ew will write
+daily log file(s) called nnnnnxx.log_yyyymmdd where nnnnn is the name of the configuration file
+(with the suffix `.d' removed), xx is liss2ew's module id (set with <A HREF="#MyModuleId">MyModuleId</A>
+command) and yyyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s)
+will be written in the EW_LOG directory (environment variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  LogFile   1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MaxSCNs">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxSCNs <font color=red>n</font>                                ReadConfig              Data Selection
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the number of <A HREF="#AcceptSCNL">AcceptSCNL</A> commands to be found
+in this configuration file.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MaxSCNs   3
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>                        ReadConfig              Earthworm setup
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages.
+<font color=red>mod_id</font> is a character string (valid strings are listed in earthworm.d) that relates
+to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_L2E_ANMO
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="OutRing">  <!-- command name as anchor inside quotes -->
+<PRE><B>OutRing <font color=red>ring</font>                             ReadConfig              Earthworm setup
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells liss2ew which shared memory region to use for output. <font color=red>ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique number for the key to the shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  OutRing WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SocketTimeout">  <!-- command name as anchor inside quotes -->
+<PRE><B>SocketTimeout <font color=red>seconds</font>                  ReadConfig              LISS parameters
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of <font color=red>seconds</font> to wait for response
+from the LISS. This time interval must not be large than the
+<A HREF="#HeartBeatInterval">HeartBeatInterval</A>. Unlike in certain other Earthworm
+modules, you cannot turn off the timeout by using a value of -1.
+<PRE><!-- Default and example go here   -->
+Default:  same as HeartBeatInterval
+Example:  SocketTimeout   20
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="TraceLength">  <!-- command name as anchor inside quotes -->
+<PRE><B>TraceLength <font color=red>samples</font>                         ReadConfig              Data parameters
+</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specify the number of <font color=red>samples</font> to put in each TRACE_BUF message.
+Liss2ew always trace data in `long integer' (four byte) format. The total length of
+the output TRACE_BUF messages will be 64 + 4 * <font color=red>samples</font>. Values
+are restricted to the range of 10 - 1000.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  TraceLength  100
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="sample_config">
+<H2><BR>3. Sample Configuration File </H2>
+<pre>
+#
+#                     Configuration File for liss2ew
+#
+MyModId          MOD_LISS2EW
+OutRing          WAVE_RING       # Transport ring to write output to,
+HeartBeatInterval     30         # Heartbeat interval, in seconds,
+LogFile               1          # 1 -> Keep log, 0 -> no log file
+#Debug                           # Write out debug messages (optional)
+
+
+LISSaddr   anmo.iu.liss.org      # IP address of the LISS (server)
+                                 # If you have DNS configured, you may also
+                                 # give the domain name of the LISS.
+LISSport    4000                 # Port number for LISS; often this is 4000
+
+lenSEED      512                 # The size of SEED records to read from LISS
+                                 # OPTIONAL; defaults to 512 bytes.
+
+SocketTimeout  30                # Socket timeout in seconds; not more than
+                                 # HeartBeatInterval
+
+TraceLength    100               # Number of trace data samples to put in one
+                                 # TRACE_BUF packet. Range is 10 - 1000
+
+MaxSCNs        3                 # Number of SCNs to accept; must be at least
+                                 # the number of AcceptSCNL commands.
+# List each sta/comp/net/location that you expect from LISS in an
+# "AcceptSCNL" command. Location code (LC) is a 2-digit code to further
+# identify a seismological data path. LC (and ONLY LC) may be given as `*' to
+# specify a wildcard. If the LISS has more than one LC for a give SCN,
+# using the wildcard will generate errors in log.
+# Do NOT specify the same SCN with two different LC values, as this will
+# cause great confusion within earthworm!!!!
+# If liss2ew sees an SCNL which is not listed here, it will be ignored.
+# On each line after the SCNL, list a pinnumber to use for this SCNL.
+
+#          site comp net LC pinno
+#          ---- ---- --- -- -----
+AcceptSCNL  ANMO BHZ  IU 00 1234
+AcceptSCNL  ANMO BH1  IU 00 1235
+AcceptSCNL  ANMO BH2  IU 00 1236
+</pre>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/liss2ew_ovr.html">Liss2ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,262 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: NLL_mgr commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><H1>NLL_mgr Configuration File Commands</H1>
+<I>(last revised 25 November 2010)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#cmdline>NLL_mgr command line arguments</A><BR>
+3.  <A HREF=#function>Functional command listing</A><BR>
+4.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+#               nll_mgr's Configuration File
+#
+MyModuleId MOD_EQPRELIM_NLL   # module id to label outgoing messages with.
+                              # Note: nll_mgr is part of a mega-module which is
+                              # ultimately started by the program eqproc.  All
+                              # child processes of this mega-module need to use the
+                              # same module id (thus use eqproc's module id).
+RingName   HYPO_RING          # The transport ring to write output to,
+LogFile    2                  # 0=no log; 1=errors; 2=errors and hypocenters
+SourceCode W                  # character to label summary cards with to
+                              # identify them as coming from Earthworm
+NllCtrlFile /ew/nll/earthworm.in
+                              # NLL control file name with full path (see www.alomax.net/nlloc -> Control File)
+                              # This files must exist.
+                              # (The NLL LOCFILES statement will be overwritten by nll_mgr)
+NllStaFile  /ew/nll/sta_list.in
+                              # NLL file containing station coordinates in NLL GTSRCE format
+                              # This file must exist.
+                              # Use an existing, empty file if station GTSRCE statements
+                              # are inside NllCtrlFile
+NllTimePath /ew/nll/taup/ak135/ak135
+                              # NLL travel-time grid files path/root (see NLL LOCFILES statement)
+                              # These files must exist.
+NllTimeSwap 1                 # iSwapBytesOnInput value from NLL LOCFILES statement
+                              # (0 = NO, 1 = YES) flag to indicate if hi and low
+                              # bytes of input time grid files should be swapped. Allows reading of travel time
+                              # grids generated with a different binary, floating point byte order than on the
+                              # computer running EW.
+NllOutPath  /ew/nll/out/nll_mgr0
+                              # NLL output file path without NLL "root name"
+                              # This directory must exist.
+                              # IMPORTANT! - this path should be different from
+                              # the path used by any other
+                              # instances of modules containing nll_mgr.
+                              # NLL output to this path will only be overwritten
+                              # by output from subsequent events with same output name
+                              # (i.e. same first phase time).
+</PRE>
+<P>
+<A NAME="cmdline">
+<H2>2.  NLL_MGR COMMAND LINE ARGUMENTS</H2>
+An example command line to start nll_mgr may look like this:
+<PRE>	nll_mgr nll_mgr.d
+	argv[0]  argv[1]
+</PRE>
+<UL>
+<LI>argv[0] is the name of the executable.
+<P>
+<LI>argv[1] is the name of nll_mgr's own configuration file which it reads on
+startup.  In this file, lines may begin with a valid nll_mgr command,
+described later in this document, or with one of 2 special characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+
+</PRE>
+</UL>
+
+<A NAME="function">
+<H2>3.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by nll_mgr, grouped by the function they
+influence.  All of the commands are required; they must be specified in the
+configuration file in order for nll_mgr to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>	Earthworm system setup:
+ 		<A HREF=#MyModuleId>MyModuleId</A>	required
+		<A HREF=#RingName>RingName</A>	required
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>		required
+
+	Miscellaneous:
+		<A HREF=#SourceCode>SourceCode</A>	required
+
+	NonLinLoc specific:
+		<A HREF=#NllCtrlFile>NllCtrlFile</A>	required
+		<A HREF=#NllStaFile>NllStaFile</A>	required
+		<A HREF=#NllTimePath>NllTimePath</A>	required
+		<A HREF=#NllTimeSwap>NllTimeSwap</A>	required
+		<A HREF=#NllOutPath>NllOutPath</A>	required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>4.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				nll_mgr_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is non-zero, nll_mgr
+will write daily log file(s) called nll_mgrxx.log_yymmdd where xx is
+nll_mgr's module id (set with "MyModuleId" command) and yymmdd is the
+current UTC date (ex: 960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).  The level
+of output written to the file is controlled by the value of <font color=red>switch</font>:
+<PRE>    <font color=red>switch</font> = 0  no log file is written
+             1  write errors to log file
+             2  write errors and hypocenters to log file
+</PRE>
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			nll_mgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.<BR>
+<B>NOTE:</B> nll_mgr is part of a mega-module which is ultimately started
+by the program eqproc.  All sub-modules of this megamodule should be
+given the same module id.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NllCtrlFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>NllCtrlFile <font color=red>filename</font>			nll_mgr_config		NonLinLoc</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+NLL control file name with full path.    The specified file must exist. This control statements in this file will be used by NLL when called from EW, except for certain control statements (including LOCFILES) which are automatically set or use parameters from the other nll_mgr configuration file NonLinLoc commands.  See www.alomax.net/nlloc -> Control File for a complete description of NLL control file format and statements.
+<PRE><!-- Default and example go here   -->
+Default:  none				Example:  NllCtrlFile /ew/nll/earthworm.in
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NllOutPath">  <!-- command name as anchor inside quotes -->
+<PRE><B>NllOutPath <font color=red>label</font>			nll_mgr_config		NonLinLoc</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+NLL output file path without NLL "root name" (see NLL LOCFILES statement).  This directory must exist.  IMPORTANT! - this path should be different from the path used by any other instances of modules containing nll_mgr.  NLL output to this path will only be overwritten by output from subsequent events with same output name  (i.e. same first phase time).
+<PRE><!-- Default and example go here   -->
+Default:  none				Example:  NllOutPath /ew/nll/out/nll_mgr0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NllStaFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>NllStaFile <font color=red>filename</font>			nll_mgr_config		NonLinLoc</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+NLL file containing station coordinates in NLL GTSRCE format.  This file must exist.  Use an existing, empty file if all station GTSRCE statements are in the file specified by NllCtrlFile.  NLL will only use stations whose coordinates are specified by a GRSRCE statement (usually NLL GLOBAL mode location) or for which individaul station travel-time grid files exist on the NllTimePath (usually NLL non-GLOBAL mode location).
+<PRE><!-- Default and example go here   -->
+Default:  none				Example:  NllStaFile /ew/nll/sta_list.in
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NllTimePath">  <!-- command name as anchor inside quotes -->
+<PRE><B>NllTimePath <font color=red>label</font>			nll_mgr_config		NonLinLoc</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+NLL travel-time grid files path/root (see NLL LOCFILES statement).  These files must exist.  For NLL GLOBAL mode location there will normally be travel-time grid files for each phase type, for NLL non-GLOBAL mode location, there will normally be a travel-time grid file for each station, either P phase only or P and S phase.
+<PRE><!-- Default and example go here   -->
+Default:  none				Example:  NllTimePath /ew/nll/taup/ak135/ak135
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NllTimeSwap">  <!-- command name as anchor inside quotes -->
+<PRE><B>NllTimeSwap <font color=red>label</font>			nll_mgr_config		NonLinLoc</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+iSwapBytesOnInput value from NLL LOCFILES statement.  (0 = NO, 1 = YES) flag to indicate if hi and low bytes of input time grid files should be swapped. Allows reading of travel time grids generated with a different binary, floating point byte order than on the computer running EW.
+<PRE><!-- Default and example go here   -->
+Default:  none				Example:  NllTimeSwap 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				nll_mgr_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells nll_mgr which shared memory region to use for output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SourceCode">  <!-- command name as anchor inside quotes -->
+<PRE><B>SourceCode <font color=red>label</font>			nll_mgr_config		miscellaneous</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Reads in a single character <font color=red>label</font> to write in column 80 of the
+hypo71-format summary messages output by nll_mgr.  This <font color=red>label</font>
+identifies the source of the hypocenter as the Earthworm system.
+These summary messages are placed on the output shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  SourceCode W
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/nll_mgr_overview.html">NLL_mgr Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,44 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+
+###############################
+#Set APP to your program name.
+###############################
+APP = pickwasher
+FULL_APP_NAME = $(APP)$(EXE)
+
+###############################
+#Set APP_OBJECTS to your object 
+# files
+#Set APP_OTHER to any other bind
+# options or libraries that you
+# need specially for your app.
+###############################
+APP_OBJECTS = $(APP).$(OBJ) 
+				
+
+APP_OTHER = 
+
+###############################
+#Set ALL_CLIENT_LIBS to all non DB
+# objects needed by your app.
+###############################
+
+
+ALL_CLIENT_LIBS = $(EWLIB)$(DIRSEP)mem_circ_queue.$(OBJ) \
+	$(EWLIB)$(DIRSEP)kom.$(OBJ) \
+	$(EWLIB)$(DIRSEP)logit.$(OBJ) \
+	$(EWLIB)$(DIRSEP)transport.$(OBJ) \
+	$(EWLIB)$(DIRSEP)sleep_ew.$(OBJ) \
+	$(EWLIB)$(DIRSEP)sema_ew.$(OBJ) \
+	$(EWLIB)$(DIRSEP)getutil.$(OBJ) \
+	$(EWLIB)$(DIRSEP)global_pick_rw.$(OBJ) \
+	$(EWLIB)$(DIRSEP)threads_ew.$(OBJ) \
+	$(EWLIB)$(DIRSEP)chron3.$(OBJ) \
+	$(EWLIB)$(DIRSEP)time_ew.$(OBJ) \
+	$(EWLIB)$(DIRSEP)global_msg.$(OBJ) \
+	$(EWLIB)$(DIRSEP)earthworm_defs.$(OBJ)
+

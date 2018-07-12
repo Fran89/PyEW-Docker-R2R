@@ -1,0 +1,31 @@
+LINUX_MODULES=diskrw.o
+SPECIFIC_MODULES = $($(PLATFORM)_MODULES)
+
+CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_
+
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+# loc_wcatwc and pick_wcatwc need these
+EBLIBS= complex.o filters.o get_pick.o report.o ReadStationData.o geotools.o mags.o taulib.o mjstime.o diskrw.o
+# loc_wcatwc needs these
+EBLIBS_LOC=get_hypo.o locquake.o logquake.o dummy.o littoral.o fereg.o display.o $(SPECIFIC_MODULES)
+
+E=libebpick.a
+H=libebloc.a
+
+all: $E $H
+
+$E: $(EBLIBS)
+	ar r $E $(EBLIBS)
+	cp $E $L
+
+$H: $(EBLIBS_LOC)
+	ar r $H $(EBLIBS_LOC)
+	cp $H $L
+
+
+# Clean-up rules
+clean:
+	rm -f $E $(EBLIBS) $H $(EBLIBS_LOC)
+	rm -f $L/$E $L/$H
+

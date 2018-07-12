@@ -1,0 +1,658 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Installation_and_Configuration – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Installation_and_Configuration?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Installation_and_Configuration.html" title="View Installation_and_Configuration">Installation_and_Configuration</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Installation_and_Configuration?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Installation_and_Configuration?action=diff&amp;version=24" title="Version 24 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2011-11-16T15%3A43%3A04-08%3A00&amp;precision=second" title="2011-11-16T15:43:04-08:00 in Timeline">22 months</a> ago</span>
+            <span class="trac-print">Last modified on 11/16/11 15:43:04</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="Installation_and_Configuration.html#EarthwormInstallationandConfigurationOverview">Earthworm Installation and Configuration Overview</a>
+    <ol>
+      <li>
+        <a href="Installation_and_Configuration.html#a1.DeterminetheDesiredFunctions">1. Determine the Desired Functions</a>
+        <ol>
+          <li>
+            <a href="Installation_and_Configuration.html#AnalogDataAcquisition">Analog Data Acquisition</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#DigitalAcquisition">Digital Acquisition</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#AutoLocation">Auto Location</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#AutoNotification">Auto Notification</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#STALTAEvents">STA/LTA Events</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#EventArchive">Event Archive</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#ErrorProcessing">Error Processing</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#ManualEvents">Manual Events</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#On-lineTraceDataStorage">On-line Trace Data Storage</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#DistributedSystems">Distributed Systems</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#Multi-MachineConfigurations">Multi-Machine Configurations</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#DataExchange">Data Exchange</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#Long-PeriodEvents">Long-Period Events</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a2.EstimatetheHardwareRequirements">2. Estimate the Hardware Requirements</a>
+        <ol>
+          <li>
+            <a href="Installation_and_Configuration.html#DataAcquisition">Data Acquisition</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#NumericProcessing">Numeric Processing</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#On-lineTraceStorage">On-line Trace Storage</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#EventStorageandProcessing">Event Storage and Processing</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a3.ProduceaTestEvent">3. Produce a Test Event</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a4.ProduceaNetworkStationList">4. Produce a Network Station List</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a5.CreatetheEarthwormSoftwareDiagrams">5. Create the Earthworm Software Diagrams</a>
+        <ol>
+          <li>
+            <a href="Installation_and_Configuration.html#EarthwormNamingScheme">Earthworm Naming Scheme</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a6.LoadtheEarthwormSoftware">6. Load the Earthworm Software</a>
+        <ol>
+          <li>
+            <a href="Installation_and_Configuration.html#EarthwormDirectoryStructure">Earthworm Directory Structure</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#LoadingtheSoftware">Loading the Software</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a7.CreatetherunDirectories">7. Create the /run Directories</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a8.ConfiguretheEarthwormEnvironmentFiles">8. Configure the Earthworm Environment Files</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a9.ModuleConfiguration">9. Module Configuration</a>
+        <ol>
+          <li>
+            <a href="Installation_and_Configuration.html#startstop">startstop</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#statmgr">statmgr</a>
+          </li>
+          <li>
+            <a href="Installation_and_Configuration.html#OtherModules">Other Modules</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a10.InitialStartup">10. Initial Startup</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a11.DebuggingToolsandHints">11. Debugging Tools and Hints</a>
+      </li>
+      <li>
+        <a href="Installation_and_Configuration.html#a12.CommonConfigurationErrors">12. Common Configuration Errors</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormInstallationandConfigurationOverview"><a class="wiki" href="Earthworm.html">Earthworm</a> Installation and Configuration Overview</h1>
+<p>
+The following notes are intended to be a general guide to installing an Automatic Earthworm system. Note that, the Earthworm project consists of the Automatic and Interactive portions of Earthworm. As described in <a class="wiki" href="Overview.html">Overview</a>, the Automatic portion consists of the "real-time", rapid-response modules, and the Interactive portion consists of the DBMS (Data Base Management System) and web-page codes. These notes deal with the installation of the Automatic portion of Earthworm.
+</p>
+<p>
+These notes are based on the experiences gained from numerous installations, and represent an idealized, average situation. In practice, of course, each installation presents unique challenges which require specific solutions. It is hoped, however, that these notes may be of use in preventing common problems and expediting the process.
+</p>
+<p>
+Installation tasks can be divided into those requiring primarily computer engineering skills, and those requiring seismological expertise. Engineering tasks include interfacing to communication links, integration of computer hardware, establishing network connections, and most of the software configuration.
+</p>
+<p>
+Seismological tasks include determining the desired processing functions, establishing agreed-upon data exchanges, and configuration of the core processing modules. The lists of such modules is growing, but currently consists of the P-phase picker (<a class="wiki" href="pick_ew.html">pick_ew</a>), the event associator (<a class="wiki" href="binder_ew.html">binder_ew</a>), the STA/LTA trigger (<a class="wiki" href="carlstatrig.html">carlstatrig</a> and <a class="wiki" href="carlsubtrig.html">carlsubtrig</a>), and <a class="missing wiki">hypoinverse?</a>. In particular, configuring the <a class="missing wiki">hypoinverse?</a> magnitude calculation parameters has proven to be a significant seismological task. 
+  
+ 
+</p>
+<h2 id="a1.DeterminetheDesiredFunctions">1. Determine the Desired Functions</h2>
+<p>
+Earthworm currently offers the following general features:
+</p>
+<h3 id="AnalogDataAcquisition">Analog Data Acquisition</h3>
+<p>
+(e.g., <a class="wiki" href="adsend.html">adsend</a>)
+</p>
+<p>
+12 or 16 bit A/D conversion, up to 256 channels per Windows 2000 machine, any number of such machines per system.
+</p>
+<h3 id="DigitalAcquisition">Digital Acquisition</h3>
+<p>
+(e.g., <a class="wiki" href="slink2ew.html">slink2ew</a>)
+</p>
+<p>
+Currently, most commercial data loggers (e.g., Q330, Reftek 130) are supported. All data streams, whether analog or digital, can be processed in the same manner.
+</p>
+<h3 id="AutoLocation">Auto Location</h3>
+<p>
+(e.g., <a class="wiki" href="eqproc.html">eqproc</a>)
+</p>
+<p>
+Automatic P-picking, event association, and hypo-inverse solutions.
+</p>
+<h3 id="AutoNotification">Auto Notification</h3>
+<p>
+(XXX)
+</p>
+<p>
+Selective event notification via e-mail or pager system.
+</p>
+<h3 id="STALTAEvents">STA/LTA Events</h3>
+<p>
+(<a class="wiki" href="carlstatrig.html">carlstatrig</a> and <a class="wiki" href="carlsubtrig.html">carlsubtrig</a>):
+</p>
+<p>
+Traditional STA/LTA coincidence event generation.
+</p>
+<h3 id="EventArchive">Event Archive</h3>
+<p>
+(e.g., <a class="wiki" href="ew2mseed.html">ew2mseed</a>)
+</p>
+<p>
+Events can be archived in various existing formats, including PC-SUDS, SAC, MiniSEED, AH, and UW2. Other archive formats will be integrated as required.
+</p>
+<h3 id="ErrorProcessing">Error Processing</h3>
+<p>
+(<a class="wiki" href="statmgr.html">statmgr</a> and <a class="wiki" href="copystatus.html">copystatus</a>)
+</p>
+<p>
+Email and pager notification of system malfunctions.
+</p>
+<h3 id="ManualEvents">Manual Events</h3>
+<p>
+(XXX)
+</p>
+<p>
+Events can be declared manually within the time interval available in the on-line trace data storage.
+</p>
+<h3 id="On-lineTraceDataStorage">On-line Trace Data Storage</h3>
+<p>
+(<a class="missing wiki">waveserverV?</a>, see also <a class="wiki" href="Winston.html">Winston</a>)
+</p>
+<p>
+All acquired trace data can be made available via an IP server for a configurable time period, ranging from hours to weeks.
+</p>
+<h3 id="DistributedSystems">Distributed Systems</h3>
+<p>
+(XXX)
+</p>
+<p>
+Any number of Earthworm systems can be linked via IP communication links. The extend of such linkages is configurable. Possible configurations include a 'master' central site and any number of remote nodes operating as one integrated system, as well as limited, negotiated linkages between two sovereign central systems.
+</p>
+<h3 id="Multi-MachineConfigurations">Multi-Machine Configurations</h3>
+<p>
+(XXX)
+</p>
+<p>
+Any number of networked Linux, Windows or Solaris computers can be combined to run one Earthworm system.
+</p>
+<h3 id="DataExchange">Data Exchange</h3>
+<p>
+(e.g., <a class="wiki" href="export_generic.html">export_generic</a>, <a class="wiki" href="import_generic.html">import_generic</a>)
+</p>
+<p>
+Any type of internal data can be exchanged in real time with other Earthworm systems. This exchange mechanism has proved to be quite reliable, and has performed well in numerous applications. It requires a communications link capable of physically interfacing to a computer's ethernet port and capable of carrying IP messages. It functions over the public internet as well as private dedicated links.
+</p>
+<h3 id="Long-PeriodEvents">Long-Period Events</h3>
+<p>
+(XXX)
+</p>
+<p>
+A volcanic long-period event detector, developed by John Evans at Menlo Park. 
+  
+ 
+</p>
+<h2 id="a2.EstimatetheHardwareRequirements">2. Estimate the Hardware Requirements</h2>
+<p>
+Earthworm has been developed under the mandate of speed and reliability. It therefore tends to use fast, low-level operating system services rather than high-level end-user packages. A positive side effect of this is that Earthworm is fairly economical in terms of hardware requirements. In general, a contemporary Pentium- or Ultra- class machine is adequate for most regional network loads. Specifically, the hardware requirements can be divided into four categories:
+</p>
+<h3 id="DataAcquisition">Data Acquisition</h3>
+<p>
+This can be via the ethernet network port, system bus, or serial ports. In practice, we have not observed problems in the first two cases. We have observed problems with serial port acquisition, especially when running on the same machine as the bus-based A/D acquisition. The symptoms are intermittent data loss from the serial ports, and warning messages from the A/D subsystem.
+</p>
+<h3 id="NumericProcessing">Numeric Processing</h3>
+<p>
+This is not generally a problem when the current, common processing features are enabled. A contemporary machine (PentiumII or Sparc Ultra) has been demonstrated to be capable of supporting the numeric and I/O requirements of processing a large events on over 500 channels in rear-real time. However, modules are currently being worked on which may require considerable numeric resources.
+</p>
+<h3 id="On-lineTraceStorage">On-line Trace Storage</h3>
+<p>
+This is provided by the <a class="missing wiki">waveserverV?</a> module, which maintains a circular, on-line history of trace data . Each channel is maintained in a separate file, and the user is free to specify the location and size of each such file. In operation, trace data is written to these files as it is acquired, and multiple concurrent client programs can request data via network connections. Therefore, the critical hardware resources are disk storage capacity, disk access time, and network bandwidth. Disk storage requirements can be estimated by multiplying the number of channels to be served, the sampling rate, the number of bytes per sample, the time interval to be available, and an overhead factor of perhaps ten percent. Disk access time depends on the anticipated usage. A write is generated as each trace packet is acquired, and a burst of reads is generated with each client request. In practice, a contemporary 10,000 RPM SCSI disk supporting 64 channels seems conservative; twice that load is successfully functioning at some sites.
+</p>
+<p>
+Network bandwidth requirements are critical on the input side, as the trace input streams are real-time. The server-side responses, or course, are not. In situations where this is a concern, a second, dedicated ethernet subnet is usually established to carry real-time trace data, and the participating machines are equipped with two (or more) network adapters.
+</p>
+<h3 id="EventStorageandProcessing">Event Storage and Processing</h3>
+<p>
+As mentioned above, Earthworm can produce directories of event files from various triggers in various formats. Adequate disk space has to be provided to hold such events until they are moved to off-line media. Considerations there include the expected worst-case seismicity levels, time of storage, and off-line media capacity and life-time.
+</p>
+<ul><li>Determine the hardware required (or available) at each node and the central site.
+</li></ul><p>
+Given the desired features, as discussed above, and the above considerations, it is then possible to determine the hardware required at each node.
+</p>
+<ul><li>Identify available communication link between central and remote nodes. The relevant parameters include nominal bandwidth, likelyhood of degraded performance, and interruptions. This may affect the features to be activated at the various nodes: how autonomous should they be, how much data should they be able to store. 
+</li></ul><p>
+  
+ 
+</p>
+<h2 id="a3.ProduceaTestEvent">3. Produce a Test Event</h2>
+<p>
+This is an optional step which has proven to be extremely useful in rapidly producing a reliable configuration in low-seismicity areas. It will not be needed until testing, but the effort should be initiated early to produce a timely result. The procedure is to find a suitable past event recorded on digital media, and to convert this to an Earthworm 'player' file. Earthworm includes a 'player' module (<a class="missing wiki">waveserverV?</a>) which can be used to repeatedly inject the trace data of the event to test the operation of the system.
+</p>
+<p>
+This usually requires help from members of the Earthworm development team, and may require some effort, although some conversion software from other formats exists (such as PC-SUDS, CUSP, SAC, MiniSEED,...). 
+  
+ 
+</p>
+<h2 id="a4.ProduceaNetworkStationList">4. Produce a Network Station List</h2>
+<ul><li>Request an FDSN network code by submitting the form at <a class="ext-link" href="http://www.fdsn.org/forms/netcode_request.htm"><span class="icon">​</span>http://www.fdsn.org/forms/netcode_request.htm</a>. This two-letter code is used throughout the system as part of the trace data naming convention. It is also essential if any data exchange with other networks is contemplated.
+</li></ul><ul><li>Request an Earthworm "Installation Id" from Mitch Withers, <a class="ext-link" href="http://www.ceri.memphis.edu/index.shtml"><span class="icon">​</span>CERI</a> (Center for Earthquake Research and Information, University of Memphis, USA). Mitch will update the distribution to include your new Installation Id, and issue an updated <a class="wiki" href="earthworm_global.html">earthworm_global</a> to all involved installations.
+</li></ul><ul><li>Earthworm uses the IRIS SCNL (Station, Component, Network, Location) channel naming convention. See the IRIS web site for details. An installation is free to define its own naming convention, but this may present problems if linkages to other institutions are desired.
+</li></ul><ul><li>Define all station names and locations, and produce a station list in <a class="missing wiki">hypoinverse?</a> format. If some parameters are not known, use unique temporary names and values which can later be search-and-replaced with real values. 
+</li></ul><p>
+  
+ 
+</p>
+<h2 id="a5.CreatetheEarthwormSoftwareDiagrams">5. Create the Earthworm Software Diagrams</h2>
+<p>
+For each node, draw a diagram showing modules, message rings, and message paths. Examples are given at <a class="wiki" href="Example_Configurations.html">Example Configurations</a>. The diagram should include:
+</p>
+<ul><li>Final naming structure:
+</li></ul><p>
+It is encouraged that each module in an installation be given a unique module name (MOD_ID) and that the name include an identifier indicating which node this module runs in. This is not required, but in practice avoids confusion during initial configuration, and especially for later modifications. It has been found that finalizing the names (as discussed below) at this time can avoid a prolonged debugging period later.
+</p>
+<ul><li>Identify port numbers for each node:
+</li></ul><p>
+Various modules which send and receive data involve IP addresses and port numbers. To avoid later conflicts, the diagram should include the final values of these parameters.
+</p>
+<ul><li>Note that each node must include a <a class="wiki" href="startstop.html">startstop</a> and <a class="wiki" href="statmgr.html">statmgr</a> module to permit startup and re-starts of modules. 
+</li></ul><p>
+  
+ 
+</p>
+<h3 id="EarthwormNamingScheme">Earthworm Naming Scheme</h3>
+<p>
+There are four types of names within the Earthworm system: "Installation Id", "Module Id", "Message Type", and "Ring Name". Each type of name is represented as an ASCII string at the human interface level, but is resolved to a numeric value when the system is running. The motivation for the naming scheme is that
+</p>
+<ul><li>Earthworm is a message-passing system,
+</li></ul><ul><li>An Earthworm system consists of many modules which listen to and produce messages, and
+</li></ul><ul><li>Many Earthworm systems can exchange messages.
+</li></ul><p>
+To implement this, each message, as it is generated, is given a 'shipping label' which contains the numeric values of "Installation Id", "Module Id", "Message Type". The "Installation Id" is the name of the installation at which this Earthworm is running. The "Module Id" is the name of the module which generated this message, and "Message Type" is the name of the type of message this is (e.g., trace data, pick, location, heartbeat, etc)
+</p>
+<p>
+Since any message may be shipped to any installation, this combination has to be unique amongst all Earthworm installations. This is assured by keeping the "Installation Id" unique. These are assigned by Mitch Withers at <a class="ext-link" href="http://www.ceri.memphis.edu/index.shtml"><span class="icon">​</span>CERI</a> (Center for Earthquake Research and Information, University of Memphis, USA).
+</p>
+<p>
+A module specifies which messages it is interested in listening to by specifying the 'shipping label'. Therefore, to be general, the "Module Id" must be unique within an installation. (Note that a module may specify a list of desired 'shipping labels', as well as specify wild-card values for selected portions of a label.)
+</p>
+<p>
+In order to facilitate meaningful data exchange, there have to be "Message Type" values which are common to all installations. That is, if two installations decide to exchange pick data, both systems must have the same value for "Message Type" pick. Any installation can, of course, define additional private "Message Type" for its own internal purposes.
+</p>
+<p>
+"Ring Names" are used by each module to specify which message ring the module is to 'listen to', and which ring it is to broadcast messages into. These names must be unique to each node. A set of traditional names have evolved, (e.g., WAVE_RING, PICK_RING, HYPO_RING, etc) and it is recommend to adhere to those, as it greatly reduces the amount of editing required.
+</p>
+<p>
+The names appear in the configuration files of each module in the form of ASCII strings. The tables which define the numeric values of those strings are stored in two files: <a class="missing wiki">earthworm?</a>.d and <a class="wiki" href="earthworm_global.html">earthworm_global</a>.d. "earthworm_global.d" contains the definitions which are common to all Earthworm sites: the "Installation Id" and "Message Type" values which are exchanged between installations. Changes to this file are coordinated through Mitch Withers at <a class="ext-link" href="http://www.ceri.memphis.edu/index.shtml"><span class="icon">​</span>CERI</a> (Center for Earthquake Research and Information, University of Memphis, USA). "earthworm.d" contains definitions for local "Message Type", "Module Id", and "Ring Name".
+</p>
+<p>
+In the Earthworm release these two files are included in the subdirectory "environment". They have to be moved from there to the local /run/params directory.
+</p>
+<p>
+ 
+</p>
+<h2 id="a6.LoadtheEarthwormSoftware">6. Load the Earthworm Software</h2>
+<h3 id="EarthwormDirectoryStructure">Earthworm Directory Structure</h3>
+<p>
+The run-time directory structure traditionally includes the following sub-tree:
+.../earthworm
+</p>
+<blockquote>
+<p>
+/run
+</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+/params
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+/log
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>
+/vx.xx  
+</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+/bin
+</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>
+/environment
+</p>
+</blockquote>
+</blockquote>
+<p>
+where
+/earthworm is the root of the Earthworm software;
+</p>
+<p>
+/run is the directory which specifies and contains all data specific to an Earthworm configuration. Many such 'run' directories can be stored under /Earthworm, each specifying a distinct construction. Note that only one such construction can be running at a time.
+</p>
+<p>
+/params contains the files specifying the configuration and environment for this Earthworm construction.
+</p>
+<p>
+/log contains all log files generated by this construction.
+</p>
+<p>
+/vx.xx represents some Earthworm version, as obtained from the distribution.
+</p>
+<p>
+/bin contains all executables for this version, as obtained from the distribution, or by local compilation.
+</p>
+<p>
+/environment contains files of global definitions a discussed in next section. Some of these must be moved to the /params directory. 
+  
+ 
+</p>
+<h3 id="LoadingtheSoftware">Loading the Software</h3>
+<ul><li>Create the root directory for Earthworm (e.g. c:\earthworm). Bring the current Earthworm release from <a class="wiki" href="Downloads.html">Downloads</a> into this directory, and unpack it there.
+</li></ul><ul><li>Note that the executable binaries are in separate directories of the ftp site. The appropriate version of the executables should be placed in the \bin directory (e.g. c:\earthworm\v#.#\bin).
+</li></ul><ul><li>Note that the "src" (\earthworm\v#.#\src) directory of the release contains a subdirectory for each module. Each such directory contains the source and make files, as well as example error processing configuration files (*.desc) and parameter files (*.d). 
+</li></ul><p>
+  
+ 
+</p>
+<h2 id="a7.CreatetherunDirectories">7. Create the /run Directories</h2>
+<p>
+It is recommended that each node have the same directory structure. This is not required, but has been found useful in simplifying maintenance and updates.
+</p>
+<ul><li>Under the \earthworm root directory, create a 'run' directory for each node. (i.e., c:\earthworm\run_central, c:\earthworm\run_remote1, c:\earthworm\run_remote2 etc)
+</li></ul><ul><li>Under each such run directory create a \log and a \params directory. The \log directory will contain all log files witten by modules in this node. The \params directory will contain all configuration files (.d and .desc) neccessary to run this node.
+</li></ul><ul><li>Copy three files from the release the each of the \parms directories. These are <a class="wiki" href="earthworm_global.html">earthworm_global</a>.d, <a class="missing wiki">earthworm?</a>.d, and "ew_nt.cmd" (or "ew_sol_sparc.cmd", or "ew_sol_intel.cmd", depending on the platform). These files are located in the Earthworm release in the \environment directory. 
+</li></ul><p>
+  
+ 
+</p>
+<h2 id="a8.ConfiguretheEarthwormEnvironmentFiles">8. Configure the Earthworm Environment Files</h2>
+<ul><li>The <a class="wiki" href="earthworm_global.html">earthworm_global</a>.d file should contain your Installation Id. Contact Mitch Withers at <a class="ext-link" href="http://www.ceri.memphis.edu/index.shtml"><span class="icon">​</span>CERI</a> (Center for Earthquake Research and Information, University of Memphis, USA), who acts as control for this file. Local editing of this file is possible, but will prevent the installation form exchanging data with other sites.
+</li></ul><ul><li>Edit <a class="missing wiki">earthworm?</a>.d: Using your Earthworm software diagram, enter a definition for each each mesasage Ring Name and Module ID at each node. At this point, do not alter the Message Types found there, but use the default entries.
+</li></ul><ul><li>Create a .cmd file for each node. This file contains the environment variables used by the Earthworm system. As mentioned above, these files are platform specific, and currently three versions exist: for Windows 2000 and NT: "ew_nt.cmd", for Solaris on Sparc: "ew_sol_sparc.cmd", and for Solaris on Intel: "ew_sol_intel.cmd". (OS/2 has sadly been dropped). Thus, for example, one would create files such as "ew_sol_sparc_central.cmd", "ew_nt_remote1.cmd", and "ew_nt_remote2.cmd".
+</li></ul><p>
+In each file, edit the definitions for EW_INSTALLATION, EW_HOME, EW_VERSION, EW_PARAMS and EW_LOG. The remainder of the file requires no change:
+</p>
+<p>
+EW_INSTALLATION is the installation id of this institution, as listed in <a class="wiki" href="earthworm_global.html">earthworm_global</a>.d.
+</p>
+<p>
+EW_HOME is the Earthworm root directory ("/earthworm").
+</p>
+<p>
+EW_VERSION is the version of the Earthworm release to be used (e.g., v7.5). This permits several versions to be stored concurrently. Changing this definition will cause various versions to be run.
+</p>
+<p>
+EW_PARAMS specifies the path to the dirctory from will paramete files will be read (e.g., /earthworm/run_central/params). This will be different for each node.
+</p>
+<p>
+EW_LOG similarly determines where log files will be written. 
+  
+ 
+</p>
+<h2 id="a9.ModuleConfiguration">9. Module Configuration</h2>
+<p>
+For each module within a node you will need to create a parameter (.d) and an error processing file (.desc). Samples of these files are in the source directory for each module (e.g. c:\earthworm\v#.#\src).
+</p>
+<p>
+To configure a module, first create the invocation paragraph for the module in <a class="wiki" href="startstop_nt.html">startstop_nt</a>.d, <a class="wiki" href="startstop_sol.html">startstop_sol</a>.d, or<a class="wiki" href="startstop_unix.html">startstop_unix</a>.d (see below). Then copy the sample .d and .desc files from that module's source directory. Change the names to match the name of the Module Id. Edit the files to suit the configuration. At a minimum this involves changing the name of the Module Id (this is where the executable learns its Module Id), Installation Id (in the .desc file) and possibly the ring names. Change any other parameters to suit the configuration.
+</p>
+<p>
+<a class="wiki" href="startstop.html">startstop</a> and <a class="wiki" href="statmgr.html">statmgr</a> are required to run in all nodes an an Earthworm system. Since the <a class="wiki" href="startstop.html">startstop</a> and <a class="wiki" href="statmgr.html">statmgr</a> module's parameter and error processing files contain settings that control and effect the overall node it is advised to first configure these modules. <a class="wiki" href="startstop.html">startstop</a> is the module which starts first, and brings up the system by creating the specified rings and starting each module. <a class="wiki" href="statmgr.html">statmgr</a> is responsible for processing error messages created by other modules, monitoring their heartbeats, and issuing restart requests when a module's heartbeat ceases (see below).
+</p>
+<h3 id="startstop"><a class="wiki" href="startstop.html">startstop</a></h3>
+<p>
+This module is system-specific. Therefore, there are system-specific configuration files (<a class="wiki" href="startstop_nt.html">startstop_nt</a>.d, <a class="wiki" href="startstop_sol.html">startstop_sol</a>.d and <a class="wiki" href="startstop_unix.html">startstop_unix</a>.d) It's configuration file contains the substance of the Earthworm configuration diagram. It first lists the rings required for this construction, and then lists a paragraph for each module to be started. This paragraph lists the name of the module's executable, the configuration file it is to read when starting, the priority it is to run at, and (in the Windows 2000 case) whether the module is to have its own window.
+</p>
+<h3 id="statmgr"><a class="wiki" href="statmgr.html">statmgr</a></h3>
+<p>
+This module's configuration file (<a class="wiki" href="statmgr.html">statmgr</a>.d) lists the error processing files (.desc) of all modules which it is to keep track of. Here are listed the procedures to be followed for the various error types which a client module may issue (email, page, etc), as well as the token "restartMe". If this token appears in a module's .desc file, statmgr will initiate the restart procedure for that module if it's heartbeat should not appear within the stated time period. This procedure involves issuing a 'kill' to the offending module's process id, and <a class="wiki" href="startstop.html">startstop</a> will then restart the module in a manner identical to that used at startup.
+</p>
+<p>
+Note that statmgr, like all modules, has one input. That is, it attaches and listens to one message ring. In order for it to receive error and heartbeat messages from all modules in a node, there are helper modules which 'conduct' such messages from one ring to another. These are the module <a class="wiki" href="copystatus.html">copystatus</a>. They are extremely simple, and have no associated .d or .desc files. They are listed in "startstop_xx.d" (e.g., <a class="wiki" href="startstop_unix.html">startstop_unix</a>) as other modules, but their command line arguments, instead of being the name of the configuration file, name the input and output rings to which they are to attach. 
+  
+ 
+</p>
+<h3 id="OtherModules">Other Modules</h3>
+<p>
+The Earthworm release currently includes over 100 modules. However, several key modules are discussed below:
+</p>
+<ul><li>Import / Export
+</li></ul><p>
+These modules perform long-distance message exchange between Earthworm systems. The Import (e.g., <a class="wiki" href="import_generic.html">import_generic</a>) module is supplied with the IP address and port of the Export it is to accept connections from. When it senses a connect request, it connects, and places all incoming messages on it's specified output message ring. The 'shipping label' of the message is that of the incoming message. It exchanges predetermined heartbeat texts with it's Import at specified rates. If the incoming heartbeat text does not match the specification in its configuration file, it closes the connection. If the heartbeat from its Import does not arrive on time, it re-initialized the connection.
+</p>
+<p>
+The Export (e.g., <a class="wiki" href="export_generic.html">export_generic</a>)module is given the address of the network port through which they are to communicate - the assumption is that the host machine may have several ports - and the port number to use. Its is given the heartbeat text which it is to send to its Imports, the rate to send them, as well as the text and expected rate of the incoming heartbeats. If the incoming heartbeat does not arrive on time, the connection is closed and re-initialized. It has buffering capability to prevent loss of messages during this process. The Export module comes in two varieties:
+</p>
+<p>
+<a class="wiki" href="export_generic.html">export_generic</a> accepts a list of shipping labels which it is to ship. <a class="wiki" href="export_scnl.html">export_scnl</a> ('scnl' as in Station Component Network Location), specializes in shipping only trace messages, and accepts a list of SCNL names to ship. This permits selective sending of only specified data channels.
+</p>
+<ul><li><a class="wiki" href="ringtocoax.html">ringtocoax</a> / <a class="wiki" href="coaxtoring.html">coaxtoring</a>
+</li></ul><p>
+These modules effect short-distance replication of messages on a ring. "ringtocoax" (the name dates back to thin-net times), will broadcast all messages in its specified input ring onto a network adapter. The messages are broadcast in the IP sense, in that no recipient is specified. This allows any number of unknown systems to be listening, without affecting the sending system.
+</p>
+<ul><li>Adsend: e.g., <a class="wiki" href="adsend.html">adsend</a>
+</li></ul><ul><li>Picker: e.g., <a class="wiki" href="pick_ew.html">pick_ew</a>
+</li></ul><ul><li>Assoc: <a class="wiki" href="binder_ew.html">binder_ew</a>
+</li></ul><ul><li>Carl Trig: <a class="wiki" href="carlstatrig.html">carlstatrig</a> and <a class="wiki" href="carlsubtrig.html">carlsubtrig</a>
+</li></ul><ul><li><a class="missing wiki">HypoInverse?</a>: <a class="wiki" href="eqproc.html">eqproc</a>, ...
+</li></ul><ul><li>See <a class="wiki" href="Earthworm.html">Earthworm</a> for a comprehensive list of available modules. 
+</li></ul><p>
+  
+ 
+</p>
+<h2 id="a10.InitialStartup">10. Initial Startup</h2>
+<p>
+After all modules are configured, the system can be started.
+</p>
+<ul><li>For mulit-node configurations, it is recommended that at least one remote node be physically close to the central node for initial debugging.
+</li></ul><ul><li>Establish and test all communication links.
+</li></ul><ul><li>Start each node. This is initially best done manually: create a command window, and manually change the directory to the /run_xx/params of this node. Execute the applicable environment file (ew_nt.cmd, ew_sol_sparc.cmd, etc.). Enter the command '<a class="wiki" href="startstop.html">startstop</a>'.
+</li></ul><ul><li>The window should display a list of modules and their status, as produced by "startstop" pressing 'enter' will re-display this list. The window will also display any error messages from modules which are sharing this window (see below).
+</li></ul><h2 id="a11.DebuggingToolsandHints">11. Debugging Tools and Hints</h2>
+<p>
+In the startstop configuration file (<a class="wiki" href="startstop_nt.html">startstop_nt</a>.d), each module which is to be run has a "NewConsole" / "NoNewConsole" specification. This determines whether the module's standard output is written to its own command window or into the window used to start the system. For initial testing, it is recommended to set all these to "NoNewConsole". In routine operation, individual windows are convenient for checking on system status. During initial debugging, however, modules tend to exit due to gross configuration errors (typical are invalid "Module Id" and "Ring Name" values). Under Windows 2000 this causes the window of the deceased module to vanish, carrying with it the module's error messages. The "NoNewConsole" setting permits the user to analyze terminal error messages.
+</p>
+<p>
+As mentioned above, Earthworm includes a logging scheme in which each module can produce a log file in the /run/log directory. When a module has identity information to create a log file, it will do so, creating a new log file at midnight. These log files are the primary method for analyzing system malfunctions after initial setup. Note that under Windows 2000,a log file which is in use cannot be edited. One solution is to copy the current log file to a scratch file, and then look at that scratch file with an editor.
+</p>
+<p>
+Another possible problem during initial configuration is that a configuration file error may cause <a class="wiki" href="startstop.html">startstop</a> to exit. Since <a class="wiki" href="startstop.html">startstop</a> is responsible for terminating any modules which may be running, this can leave modules running, which will cause chaos when the system is re-started again. To clean up such 'wild' modules, either terminate them via the Win2000 Task Manager, or simply reboot the machine.
+</p>
+<p>
+It is often useful to have direct confirmation of what (if any) messages are appearing in a given message ring. <a class="wiki" href="sniffring.html">sniffring</a> is a useful debugging program which will show a summary of all messages being broadcast into a specified ring. To run this program, open a command window, execute the currently used "ew_nt.cmd" file (see section 9), and then enter the command "sniffring RING_NAME", where RING_NAME is the name of the ring you wish to examine. The program will display the lengths, shipping labels, and summaries of various messages.
+</p>
+<p>
+Often, there are many messages in a ring, and one wishes to know if trace data from a specified channel is flowing through that ring. The program <a class="wiki" href="sniffwave.html">sniffwave</a> is similar to <a class="wiki" href="sniffring.html">sniffring</a> above, but in addition takes as command line arguments the "Station", "Component", "Network" and "Location" name of the channel to be displayed.
+</p>
+<p>
+After starting an Earthworm system with <a class="wiki" href="startstop.html">startstop</a>, a short list of the modules in operation, and their status is displayed. This list can be re-displayed by pressing return in the window in which "startstop" was invoked. The same display can be produced by entering the command <a class="missing wiki">status?</a> in a window in which "ew_nt.cmd" has been executed. 
+  
+ 
+</p>
+<h2 id="a12.CommonConfigurationErrors">12. Common Configuration Errors</h2>
+<ul><li>Module ID:
+</li></ul><p>
+A module will terminate because it was given a "Module Id" which is not defined in <a class="missing wiki">earthworm?</a>.d.
+</p>
+<ul><li>Port Numbers:
+</li></ul><p>
+Strange behavior can occur if several modules are using the same port number. The simplest solution is to assign unique port numbers within an installation.
+</p>
+<ul><li>Ring Name:
+</li></ul><p>
+A problem of a module not functioning is that it has been configured to listen to the wrong ring, or that the module which is to be supplying the input messages is putting them on some other ring.
+</p>
+<ul><li>Heartbeat rates:
+</li></ul><p>
+Modules can produce heartbeat messages which <a class="wiki" href="statmgr.html">statmgr</a> can use to determine when a module has died. The rate at which heartbeats are produced (specified in a module's ".d" file) should be reasonably higher than the rate at which <a class="wiki" href="statmgr.html">statmgr</a> expects to see them (as specified in the module's ".desc" file). Setting them the same, or very close can cause a module to be spuriously declared dead (and optionally restarted).
+</p>
+<p>
+Heartbeats are also used by the "Import" and "Export" modules to assure that long-distance links are functional. Note that these heartbeats are sent over the long-distance link, and are distinct from the internal heartbeats mentioned above. Heartbeats are sent in both directions. The parameter file contains the rate at which they are generated, and the rate at which they are expected. The sending rate should be considerably larger than the expected rate, to allow for transmission delays. In practice, sending rates of 60 seconds, and expected rates of 300 seconds have been successful over long-haul, low-quality IP links.
+</p>
+<p>
+"Import" and "Export", like other modules, produce internal heartbeats. These should be configured to be slower than the heartbeats being exchanged over the long-haul link. Otherwise, <a class="wiki" href="statmgr.html">statmgr</a> may decide that the module has died, and perform needless numerous restarts.
+</p>
+<p>
+ 
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Installation_and_Configuration?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

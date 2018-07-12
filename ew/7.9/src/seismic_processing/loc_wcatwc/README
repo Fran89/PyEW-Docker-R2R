@@ -1,0 +1,22 @@
+July 11, 2012
+
+This is work by ISTI porting Paul Whitmore et al's ATWC EarlyBird locator
+module loc_wcatwc to UNIX. This is a work in progress.
+
+I started with the version released in the twc bundle from ATWC named:
+
+EB_PublicRelease_V554_2011.09.28-N01.exe
+
+No modifications to the code were made other than #ifdef _WINNT around
+sections of code that were too Windows specific, related to GUI and
+windows compilation linkages.
+
+ISTI tested this on Mac OS X and it worked with a mostly stock set
+of configuration files found in the EB public release bundle.
+
+Caveat Emptor: Any use of this is at your own risk/peril and ISTI
+is not responsible for how you use it. 
+
+Acknowledgements: The authors of the original code are awesome guys 
+and we are happy they are keeping things open source. Lets keep
+Earthworm and Open Source moving forward.

@@ -1,0 +1,479 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: RCV_ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>RCV_ew Configuration</H1>
+<I>(last revised 16 April 1998)</I></CENTER>
+
+Rcv_ew receives triggered or continuous trace data from one or more USNSN
+stations (collected in Golden, Colorado), reformats the data into standard
+Earthworm TYPE_TRACEBUF format and places it in an Earthworm transport ring.
+For each channel, the trace data output by rcv_ew will be chronological.
+There will be no overlap between successive data messages, but there may be
+gaps. The messages will likely be of variable length, with a maximum length
+set by the user.
+<P>
+
+Rcv_ew is a composite Earthworm module. It is made up of two USNSN programs
+(RCV and STATION, written and maintained by Dave Ketchum) that call a set of
+user functions (written by Lynn Dietz) which contain all the Earthworm-specific
+code.  RCV handles the communication with the USNSN in Golden, receiving
+USNSN packets via a TCP/IP socket or a satellite. RCV spawns the STATION
+process at the end of a pipe and passes data packets to it. STATION processes
+the data packets and handles all the Earthworm communications by calls to the
+user functions. RCV and STATION are configured with command-line switches.
+The Earthworm user functions are configured with an Earthworm-style
+configuration file.  In the following sections, we describe the configuration
+options for the components of rcv_ew:
+<P>
+
+Page Index:<BR>
+<UL>
+<LI>1.  <A HREF=#rcv>RCV command-line switches</A></LI>
+<LI>2.  <A HREF=#sta>STATION command-line switches</A></LI>
+<LI>3.  <A HREF=#ew> Earthworm Configuration File </A></LI>
+  <UL>
+  <LI>3.1 <A HREF=#function> Functional command listing</A></LI>
+  <LI>3.2 <A HREF=#alphabet> Alphabetic command listing & description</A></LI>
+  </UL>
+<LI>4.  <A HREF=#seed>SEED channel name file</A></LI>
+<LI>5.  <A HREF=#cmd>Sample command-lines for starting rcv_ew</A></LI>
+<LI>6.  <A HREF=#rcv_ew.d>Sample Earthworm Configuration File</A></LI>
+
+</UL>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+
+<HR>
+<A NAME="rcv">
+<H2>1.  RCV COMMAND-LINE SWITCHES</H2>
+<P>
+The RCV command line is the only command line listed for this module in
+startstop's configuration file.  This command line must contain all of the
+switches for both RCV and STATION, as well as the name of the Earthworm
+configuration file.  RCV spawns STATION, passing it the complete list of
+command switches that it started with. STATION then calls the user_proc_cmd
+function and passes it the configuration file name.  Each process ignores
+the other's switches when it configures itself.  Here we list only the
+command line switches used by RCV:
+<PRE>
+  -tcp          Use TCP/IP socket to NSN3.CR.USGS.GOV to get data.
+                Use of the -tcp switch excludes use of the -i switch.
+
+  -i pathname   Use the pathname as the device to obtain serial data from
+                (-i /dev/ttya).  Use of the -i switch excludes use of
+                the -tcp switch.
+
+  -o path       Open file "path" for writing log output to. The size of this
+                file is unbounded. If -o is omitted, all log output will be
+                written to stdout.
+
+  -!            Turn on debugging print statements (usually used only in testing).
+
+  -$            Turn on force rollback flag (usually used only in testing).
+
+</PRE>
+
+<HR>
+<A NAME="sta">
+<H2>2.  STATION COMMAND-LINE SWITCHES</H2>
+<P>
+The RCV command line is the only command line listed for this module in
+startstop's configuration file.  This command line must contain all of the
+switches for both RCV and STATION, as well as the name of the Earthworm
+configuration file.  RCV spawns STATION, passing it the
+complete list of command switches that it started with.  Then STATION calls
+the user_proc_cmd() function and passes it the configuration file name.
+Each process ignores the other's switches when it configures itself.  Here
+we list only the command line switches used by STATION:
+<PRE>
+  -# Nch        Send multiple channels to one STATION, Nch is max # channels.
+                STATION will use the last channel slot for any new channel
+                that comes in after all of the channel slots are full. Since
+                unexpected channels sometimes slip thru from Golden, it is
+                recommended that Nch be greater than the number of channels
+                you have arranged to receive.
+                Under Earthworm, this argument is required.
+
+  -partial      Call user_proc with incremental updates on "partial" update
+                packets. The default behavior is to wait for a complete
+                USNSN packet to come in before submitting it to user_proc.
+                This allows NSN LH* channels to be processed every two
+                minutes or so instead of about once per 20-40 minutes.
+                Under Earthworm, the -partial argument must be omitted.
+
+  -s            Open a log file for each STATION process. The name of the
+                log file is based on the station name being processed by each
+                instance of STATION. If -# is used, the log file will be named
+                "station.log". The file(s) will be written in the directory
+                from which RCV/STATION was started (under Earthworm, this will
+                be the EW_PARAMS directory). If the -s switch omitted, no log
+                file will be created; all log output will be written to stdout.
+                NOTE: the log file size is unbounded; it tends to get very
+                      large very quickly.
+                      We recommend running without -s argument.
+
+  -e config     Names the Earthworm configuration file "config" to be read
+                in the user_proc_cmd() function.  This switch is valid only
+                in the Earthworm impletmentation of rcv_ew.
+                Under Earthworm, this argument is required.
+
+  -dbg          Turns on debugging (not usually used by users).
+
+</PRE>
+
+<HR>
+<A NAME="ew">
+<H2>3. EARTHWORM CONFIGURATION FILE</H2>
+<P>
+
+<A NAME="function">
+<H2>3.1  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+The Earthworm configuration file name is given in the "-e" command line
+switch of STATION.  The -e switch is actually processed in the user_proc_cmd()
+function, and the configuration file itself is read by rcv_ew_config().
+The source code for both of these functions resides in the file user_proc_ew.c.
+Below are the commands recognized by rcv_ew_config, grouped by the function
+they influence. <P>
+
+In the config file, lines may begin with a valid rcv_ew command (listed below)
+or with one of 2 special characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<A HREF=#command></A>
+<PRE>	Earthworm system setup:
+		<A HREF=#HeartBeatInt>HeartBeatInt</A> 	 	required
+ 		<A HREF=#MyModuleId>MyModuleId</A>	   	required
+		<A HREF=#RingName>RingName</A>	   	required
+
+	Waveform Input/Output:
+		<A HREF=#AcceptSCN>AcceptSCN</A>		required
+		<A HREF=#PacketLatency>PacketLatency</A>		required
+		<A HREF=#MaxSamplePerMsg>MaxSamplePerMsg</A>		required
+		<A HREF=#MaxSilence>MaxSilence</A>		required
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>		   	required
+                <A HREF=#Debug>Debug</A>
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.2  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all Earthworm configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and examples commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="AcceptSCN">  <!-- command name as anchor inside quotes -->
+<PRE><B>AcceptSCN <font color=red>site</font> <font color=red>comp</font> <font color=red>net</font> <font color=red>pinno</font>		rcv_ew_config		Waveform input</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Describes one of the channels of waveform data that rcv_ew expects
+to receive from the USNSN.  <font color=red>site</font> is the channel's SEED site code
+(up to 6 chars), <font color=red>comp</font> is the SEED component code (up to 8 chars),
+and <font color=red>net</font> is the channel's network code (up to 8 chars).  <font color=red>pinno</font> is
+a number (0-32767) which will be included in the "pinno" field of the
+Earthworm-formatted waveform message header.  This number will be
+meaningful only to the local installation (other installations may apply
+a different <font color=red>pinno</font> to the same data stream).  You must list an
+"AcceptSCN" command for each channel that you expect to get from the USNSN.
+Rcv_ew will ignore data from any channel that is not listed in an
+"AcceptSCN" command, issuing an error message that it is doing so.
+The total number of "AcceptSCN" commands that can be listed is limited
+to "Nch" as set in STATION's "-# Nch" command-line switch.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  AcceptSCN HWUT BHZ US 999
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Debug">  <!-- command name as anchor inside quotes -->
+<PRE><B>Debug 					rcv_ew_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This optional command turns on debugging statements, printed both to
+the screen and to the log file.  To turn off debugging statements,
+omit this command (or comment it out).
+<PRE><!-- Default and example go here   -->
+Default:  no debugging statements
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="HeartBeatInt">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartBeatInt <font color=red>nsec</font> 			rcv_ew_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the minimum number of seconds <font color=red>nsec</font> between TYPE_HEARTBEAT
+messages issued by rcv_ew.  The heartbeat function (user_heart_beat)
+is entered whenever data or keepalive messages are received from Golden.
+A heartbeat will be issued only if at least <font color=red>nsec</font> seconds have elapsed
+since the last heartbeat.  Since data arrives at irregular intervals,
+the actual heartbeat interval will be irregular.  At a minimum, Golden
+sends a keepalive once every minute.  To guarantee that rcv_ew issues a
+heartbeat for every keepalive received, set <font color=red>nsec</font> to something less
+than 60 seconds (even so, an interval between heartbeats from a properly
+operating rcv_ew could be as long as <font color=red>nsec</font>+60-1 seconds).
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartBeatInt 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				rcv_ew_config		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing an Earthworm log file to disk.
+If <font color=red>switch</font> is 0, no log file will be written.  If <font color=red>switch</font> is 1,
+rcv_ew will write a daily log file(s) called rcv_ewxx.log_yymmdd
+where xx is rcv_ew's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable). <BR>
+NOTE: this log file contains information from only the Earthworm
+portion of rcv_ew.  It is separate from the log files written  by the USNSN code, RCV and STATION (see -o and -s command-line switches).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="MaxSamplePerMsg">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxSamplePerMsg <font color=red>nsamp</font>			rcv_ew_config		Waveform output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the maximum number of samples, <font color=red>nsamp</font>, to pack into each outgoing
+TYPE_TRACEBUF message.  Each sample is stored as a 4-byte integer, in
+local byte order.  The byte-order is recorded in the "datatype" field
+of the tracebuf header.  An <font color=red>nsamp</font> of 1008 will yield the largest
+allowed TYPE_TRACEBUF message (64 byte header + 4032 bytes of data).
+Some TYPE_TRACEBUF messages output by rcv_ew will contain fewer than
+<font color=red>nsamp</font> data samples.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MaxSamplePerMsg 500
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="MaxSilence">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxSilence <font color=red>nmin</font>				rcv_ew_config		Waveform I/O</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a time limit for reporting silent stations (long data gaps).
+If rcv_ew does not receive any data for a given channel for <font color=red>nmin</font>
+minutes, it will issue an error message saying "No data from S C N in
+xx minutes."  Rcv_ew will continue to issue an error every additional
+<font color=red>nmin</font> minutes that no data comes in.  When rcv_ew starts receiving
+data for that channel again, it will issue an "un-error" message saying
+"Once again receiving data from S C N."  If <font color=red>nmin</font> is zero, rcv_ew will
+not issue any messages about long data gaps.
+<PRE><!-- Default and example go here   -->
+Example:  MaxSilence 240
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			rcv_ew_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_RCV_EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="PacketLatency">  <!-- command name as anchor inside quotes -->
+<PRE><B>PacketLatency <font color=red>npkt</font>			rcv_ew_config		Waveform I/O</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the number of USNSN packets to buffer for each channel before
+releasing one.  This buffering gives rcv_ew a chance to resequence
+packets after a rollback (when packets are re-sent due to detected
+communication problems), allowing corrected data instead of possibly
+corrupted data to be released.  <font color=red>npkt</font> must be between 0 and 8,
+inclusive. Rcv_ew will not output any data for a given channel until
+after <font color=red>npkt</font> packets have been received.  Once the buffer is full,
+rcv_ew will release the oldest packet on receipt of a new, in-sequence
+packet. If rcv_ew gets an out-of-sequence packet with an earlier-than-
+expected timestamp (a rollback packet), it looks through that channel's
+buffer for a packet with an identical sequence number. If such a packet
+is found, rcv_ew overwrites it with the newly received packet.
+Otherwise, rcv_ew issues a "Rollback cannot be used" error, and
+discards the new packet.  If rcv_ew gets an out-of-sequence packet with
+a later-than-expected timestamp, it issues a "Gap prior to seq=x" error,
+and buffers the new packet for later release. When rcv_ew gets a packet
+marked "end-of-trace-segment" (triggered data), it releases all packets
+in the buffer for that channel (who knows how long it will be until the
+next trigger occurs?).  If <font color=red>npkt</font> is set to zero, no packets will be
+buffered; they will be released as soon as they are received and any
+rollbacks will be ignored.
+<PRE><!-- Default and example go here   -->
+Example:  PacketLatency 2
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				rcv_ew_config		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells rcv_ew which shared memory region to use for output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Example:  RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="seed">
+<H2>4.  SEED CHANNEL NAME FILE</H2>
+<P>
+RCV and STATION (as well as other USNSN and IRIS codes) use get_name() to
+get SEED names for channels. This function requires that a file named
+<font color=green>nsnstation2.dat</font> reside in the directory in which the program was started.  A sample of this file is included in rcv_ew's source
+directory .../vX.X/src/rcv.
+The best way to get the most up-to-date station list from Golden is to use
+the autodrm.  Send a mail message to
+<font color=green>autodrm@gldfs.cr.usgs.gov</font> with the body:
+<BLOCKQUOTE>
+BEGIN<BR>
+CLIST<BR>
+STOP<BR>
+</BLOCKQUOTE>
+The returned mail can then be saved as a text file and named
+<font color=green>nsnstation2.dat</font>. For rcv_ew to run correctly, a copy
+of nsnstation2.dat must be
+placed in the EW_PARAMS directory.
+<P>
+
+<HR>
+<A NAME="cmd">
+<H2>5.  SAMPLE COMMAND-LINES FOR STARTING RCV_EW</H2>
+<P>
+Below are three example command lines that you could include in the
+startstop configuration file to run rcv_ew as an Earthworm module. A
+sample Earthworm configuration file (<A HREF=#rcv_ew.d>rcv_ew.d</A>) is
+shown below.
+<P>
+A. This command contains the minimum set of required command-line switches
+to start up rcv_ew.  It will also yield the minimum disk-file output, with
+most messages being written to stdout:
+<PRE>
+	"rcv -tcp -# 8 -e rcv_ew.d"
+
+</PRE>
+B. This command gives rcv its own log file in the log directory:
+<PRE>
+  	"rcv -tcp -o ../log/rcv.log -# 19 -e rcv_ew.d"
+
+</PRE>
+C. This command will yield huge log files, with debugging turned on for
+rcv and station (and possibly the Earthworm rcv_ew too):
+<PRE>
+	"rcv -tcp -o ../log/rcv.log -! -# 12 -s -dbg -e rcv_ew.d"
+
+</PRE>
+
+<HR>
+<A NAME="rcv_ew.d">
+<H2>6. SAMPLE EARTHWORM CONFIGURATION FILE</H2>
+<PRE>
+# rcv_ew.d
+#
+# RCV under Earthworm is started by startstop, and given the command line
+#     found in startstop.d.  That's where RCV get's its customary command
+#     line arguments.
+# The file here is read by the "user_proc" routines, which determine RCV's
+#     identity to Earthworm.
+
+ MyModuleId       MOD_RCV_EW   # module id for this program,
+ RingName         WAVE_RING    # transport ring to use for input/output,
+ HeartBeatInt     30           # Heartbeat interval in seconds,
+ LogFile          1            # If 0, don't write logfile at all,
+ MaxSamplePerMsg  240          # #samples in largest message we'll ever create
+ PacketLatency    2            # #packets to buffer before releasing
+                               #    (to handle rollbacks)
+
+# Debug    # uncomment to write debug messages
+
+# Monitor the time since the last packet received for each site/comp/net.
+#  if MaxSilence  > 0, rcv_ew will issue a message to statmgr when it has not
+#                      seen a packet for MaxSilence minutes.  If it has issued
+#                      such a message, it will also issue another message when it
+#                      starts receiving data for the SCN again.
+#  if MaxSilence <= 0, rcv_ew will not monitor the time since last packet.
+#
+ MaxSilence  600    # number of minutes to wait before complaining that
+                    # no new data is being received for a given SCN
+
+# List each site/comp/net that you expect from Golden in a "AcceptSCN" command.
+#     If rcv_ew sees an SCN which is not listed here, it will be ignored.
+#     On each line after the SCN, list a pinnumber to use for this SCN.
+
+#          site comp net pinno
+AcceptSCN  LPAZ BHZ  GT  6019
+AcceptSCN  LPAZ BHN  GT  6020
+AcceptSCN  LPAZ BHE  GT  6021
+AcceptSCN  LPAZ LHZ  GT  6022
+AcceptSCN  LPAZ LHN  GT  6023
+AcceptSCN  LPAZ LHE  GT  6024
+</PRE>
+
+<HR>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/rcv_ew_ovr.html">Rcv_ew Overview</A>
+</CENTER>
+
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+Updated <B>16 April 1998</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

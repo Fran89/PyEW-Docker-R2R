@@ -1,0 +1,75 @@
+From chris@seismo.usbr.gov Mon Jun 12 16:09:39 2000
+Date: Fri, 9 Jun 2000 19:58:50 -0600
+From: Chris Wood <chris@seismo.usbr.gov>
+To: earthw-list@nmt.edu
+Subject: Re:  EW Community Center, POSIX compliance comments
+
+I certainly support Mitch Withers' comment that splinter groups are
+inefficient, and that the earthworm community should volunteer to get needed
+jobs done without relying on an overtasked Earthworm Central (EC).  And I agree
+that EC simply has too much on their plate to always be responsive to the
+entire earthworm community.
+
+Perhaps a better way is needed to facilitate the community's efforts to help
+themselves.  There seem to be many capable volunteers writing code, carrying
+out community tasks, and contributing useful additions to earthworm.  But it
+also seems that some of that work goes unexamined, unrecognized, and unused.
+ Mitch Withers' request for a CSS/SEGY formatter, and Kent Lindquist's response
+that he wrote one in 1995 and submitted it to EC (with updates), seems to
+confirm this (or at least confirms the need to use the list more often).
+
+Given the over-extension of EC, we waste scarce resources if the needed work of
+capable community volunteers is "lost" before it can be incorporated into the
+distribution.  Perhaps it's just a problem managing resources.  If the
+community is to substantially contribute to the development of the code, and if
+a single group is to maintain the distribution, then there needs to be an
+effective mechanism to get the community's enhancements into the distribution
+in a timely way.  Steve Malone's idea for a Community Center manager at EC who
+would be responsible for fostering community development of the code is worth
+pursuing.  Perhaps the EAB could also look at establishing processes and
+standards for handling the community's contributions.
+
+The POSIX version of earthworm is not meant to be an exercise in splinter
+groups.  Just the opposite.  It is to allow earthworm to run on additional UNIX
+platforms without requiring a separate code base, and without requiring USGS to
+support anything beyond the NT and Solaris platforms.  The idea is to replace
+the proprietary Solaris API with the industry-standard (and Solaris-supported)
+POSIX API.  Developing (or advocating) standards-based code for open source is
+usually a "good thing" - and not necessarily the sole domain of disaffected
+splinter groups.  The same can be said about the need to address computer
+security issues.
+
+The POSIX effort was also not done in a vacuum.  It began after meetings with
+EC and their managers last year.  Since we were the ones needing earthworm on a
+non-Solaris platform (SGI) we did the work (in keeping with the self-help
+principle).  Providing NEIC and others with our data was a significant
+motivation for us to run earthworm.  In return, we asked the EC to incorporate
+the changes so we would not have to maintain a splinter version of the code.
+ EC's help was needed to validate the code, and to provide access to their
+production environment to ensure that the POSIX version under Solaris
+functioned properly.  Again, we expected to do much of that work.
+
+The (alpha) version of the POSIX code was released in April, even though not
+fully implemented on Solaris (and certainly not ready for production).  This
+was done to share progress with other developers (and to get feedback,
+suggestions, or patches from those who wanted to dive in).  Also, it appeared
+that there would be some delay before EC would be able to work with us, and I
+didn't want to go much further until they could.
+
+The state of the POSIX code today is pretty much where it was in April:  it
+runs on SGI, but compiler flags, etc. aren't yet set up for POSIX under
+Solaris. Security issues have also not been thoroughly examined, but the code
+appears to be vulnerable to certain spoofing, DoS, and other attacks.  This
+applies to both the distribution and POSIX versions.  Several people have
+worked on porting to Linux.  With the release of version 5, I'm hopeful that EC
+may have some breathing room to work with us and others on a POSIX compliant
+earthworm, and that this effort can be completed fairly quickly.
+
+
+
+-- 
+
+ Chris Wood	Geophysicist
+		USBR Seismotectonics & Geophysics Group, Denver CO
+		Internet:  chris@seismo.usbr.gov
+		Voice:  (303) 445-3187

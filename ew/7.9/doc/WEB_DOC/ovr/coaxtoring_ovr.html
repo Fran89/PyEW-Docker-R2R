@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0048)http://www.cnss.org/EWAB/ovr/coaxtoring_ovr.html -->
+<HTML><HEAD><TITLE>Earthworm Modules: coaxtoring overview</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2919.6307" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff>
+<CENTER>
+<H1>Earthworm Modules:<BR>Coaxtoring Overview</H1><I>(last revised 3 February,
+1998)</I></CENTER>
+<P>This program copies Earthworm messages from Ethernet to local shared memory
+(known as a "transport ring"). Incoming messages may be of any installation id,
+message type, and module id, but they must have the same port number, specified
+in the configuration file. The program has three threads. The first thread
+(MsgIn) collects packets and assembles them into messages. The second thread
+writes messages to the transport shared memory ring buffer. The third thread
+generates heartbeat messages. Messages are transferred without translation of
+any kind.
+<P>
+<CENTER>
+    <A href="../modules.html">Module Index</A> | <A
+href="../cmd/coaxtoring_cmd.html">Coaxtoring Commands</A>
+  </CENTER><!-- USGS-required stuff at the end -->
+<HR>
+
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY></HTML>

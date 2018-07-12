@@ -1,0 +1,2230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Localmag Commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ link="#0000ee" vlink="#551a8b">
+<h1 align="center">Earthworm Modules: <br>
+Localmag Configuration File </h1>
+<p style="margin-bottom: 0in;" align="center"><i>(last revised April 19, 2012)</i></p>
+<p>Page Index: </p>
+<ol>
+  <li><a href="#function">Functional command listing</a> </li>
+  <li><a href="#alphabet">Alphabetic command listing &amp; description</a>
+  </li>
+  <li><a href="#sample_config">Sample Configuration File</a> </li>
+  <li><a href="#references">References</a> </li>
+</ol>
+<p>On startup, localmag examines its command-line arguments; the name
+of the configuration file is always the last of these arguments.
+Localmag will look for the configuration file in the current directory,
+or in the directory named by the EW_PARAMS environment variable (if
+set.) If the configuration file is located elsewhere, you must provide
+the needed path information on the command-line. </p>
+<p>Since localmag may run as a standalone program (as well as being an
+Earthworm module), several of its parameters may be set from the
+command-line. Command-line options will <b>override</b> any settings
+from the configuration file. Only a few configuration-file commands
+have command-line equivalents; these are indicated in the tables below.
+In the control file, lines may begin with a valid localmag command
+(listed below) or with one of 2 special characters: </p>
+<pre style="margin-left: 0.39in; margin-right: 0.39in;">#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).</pre>
+<p>Command names must be typed in the control file exactly as shown in
+this document (upper/lower case matters!). Blank lines are also
+permitted in the control file. </p>
+<h2><a name="function"></a>1. FUNCTIONAL COMMAND LISTING</h2>
+<div align="center">
+<table style="width: 80%;" cols="3">
+  <tbody>
+    <tr>
+      <th colspan="2" align="left"> Earthworm system setup:</th>
+      <th align="left">command-line option</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#MyModId">MyModId</a> </td>
+      <td>may be Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#RingInName">RingInName</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#RingOutName">RingOutName</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#getEventsFrom">getEventsFrom</a> </td>
+      <td>may be Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#HeartBeatInterval">HeartBeatInterval</a>
+      </td>
+      <td>may be Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#LogFile">LogFile</a> </td>
+      <td>Optional</td>
+      <td>-l</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Memory allocation commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxSta">maxSta</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxTrace">maxTrace</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Event and Trace commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#eventSource">eventSource</a> </td>
+      <td>Optional</td>
+      <td>-e</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#traceSource">traceSource</a> </td>
+      <td>Optional</td>
+      <td>-t</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#readAmpDirect">readAmpDirect</a> </td>
+      <td>Optional</td>
+      <td>-a</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#traceTimes">traceTimes</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#extraDelay">extraDelay</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Add">Add</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Del">Del</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#ChannelNumberMap">ChannelNumberMap</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxDist">maxDist</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#saveTrace">saveTrace</a> </td>
+      <td>Optional</td>
+      <td>-s</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#outputFormat">outputFormat</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#useMedian">useMedian</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#eventXML">eventXML</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a href="#saveXMLdir">saveXMLdir</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a href="#saveSCNL">saveSCNL</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#MlmsgOutDir">MlmsgOutDir</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#LookAtVersion">LookAtVersion</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#SkipStationsNotInArc">SkipStationsNotInArc</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; text-align: center;"><a
+ href="#MinWeightPercent">MinWeightPercent</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Amplitude Controls</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#searchTimes">searchTimes</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#searchStartPhase">searchStartPhase</a>
+      </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#slideLength">slideLength</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#z2pThresh">z2pThresh</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#meanCompMags">meanCompMags</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: top;"><a
+ href="#minStationsMl">minStationsMl</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: top;"><a
+ href="#require2Horizontals">require2Horizontals</a><br>
+      </td>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center; vertical-align: top;"><a
+ href="#allowVerticals">allowVerticals</a><br>
+      </td>
+      <td style="vertical-align: top;">Optional<br>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Auxiliary Data Sources</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#logA0">logA0</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#respSource">respSource</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#staLoc">staLoc</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#velocity">velocity model</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#SgSpeed">SgSpeed</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#SCNLpar">SCNLpar</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Miscellaneous Commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Debug">Debug</a></td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#EWDBaccess">EWDBaccess</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#MLQpar1">MLQpar1</a></td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#SACsource">Sacsource</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#WoodAndersonCoefs">WoodAndersonCoefs</a>
+      </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#wsTimeout">wsTimeout</a> </td>
+      <td>Optional</td>
+    </tr>
+  </tbody>
+</table>
+<p> </p>
+<h2><a name="alphabet"></a>2. ALPHABETIC COMMAND LISTING &amp;
+DESCRIPTION</h2>
+<p>In the following section, all configuration file commands are listed
+in alphabetical order. Listed along with the command (bold-type) are
+its arguments (in red.) A detailed description of the command and is
+also given. Default values and example commands are listed after each
+command description. </p>
+<table cols="2">
+  <tbody>
+    <tr>
+      <td>command <font color="#ff0000">arg1</font></td>
+      <td> function</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="Add"></a>Add <font color="#ff0000">STA COMP NET LOC</font>
+      </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Add the trace(s) with station name <font color="#ff0000">STA</font>,
+component name <font color="#ff0000">COMP</font>,  network name <font
+ color="#ff0000">NET</font> and location code <font color="#ff0000">LOC</font>to the selection
+list. Any of STA, COMP, NET, and LOC may be the wildcard character `*'. COMP may be given as the first
+two letters of the component name, to select all direction desgnators
+(North and East) are accepted for that component. Vertical `Z'
+components are never selected by localmag. Zero, one or many Add
+commands may be listed in the configuration file. If no Add commands
+are
+given, all SCNLs from the <a href="#traceSource">trace source</a> will
+be selected. The <a href="#Del">Del</a> command may be used to narrow
+the selection implied by wildcard values in an Add command or by the
+absence of any Add commands.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: all traces are selected from a trace source<br>Example: Add * BH *<br>         Add SEA EH UW</pre>
+      <hr></td>
+    </tr>
+
+    <tr>
+      <td style="vertical-align: top;"><a name="allowVerticals"></a>allowVerticals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+ style="color: rgb(255, 0, 0);">Flag</span><br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Controls<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="1" style="vertical-align: top;">
+      <div style="margin-left: 40px;">allowVerticals is an optional configuration parameter. If the Flag is set to any
+non-zero integer, then Z components (vertical channels) are used in the ML computation.
+If an separte attenuation relationship is provided for them (see <a href="#logA0">logA0 command</a>), then it will be used
+otherwise the attenuation of the horizontals will be used. Verticals are NOT ALLOWED by default (if this command is missing).
+<br>
+      </div>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 0, this command is optional<br>Example: allowVerticals 1<br></pre>
+      <hr style="width: 100%; height: 2px;"></td>
+    </tr>
+    <tr>
+      <td><a name="Debug"></a>Debug <font color="#ff0000">D</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set the debug level to <b>D</b>. There are many different debug
+options; one or more of them may be activated using the Debug command.
+More than one Debug command may be used, or the different values (from
+the table) may be added together into one Debug command. Except as
+noted, the debug information is printed to STDERR and the log file
+(depending on the setting of <a href="#LogFile"> LogFile</a>.) Select
+from these debug options:
+        <dl>
+          <dt><font color="#ff0000">1</font>: </dt>
+          <dd>trace and search times and P and S arrival estimates
+(relative to event origin time) </dd>
+          <dt><font color="#ff0000">2</font>: </dt>
+          <dd>SCNL selection tests </dd>
+          <dt><font color="#ff0000">4</font>: </dt>
+          <dd>distance and LogA0 values </dd>
+          <dt><font color="#ff0000">8</font>: </dt>
+          <dd>SAC file selection (only if traceSource is SAC) </dd>
+          <dt><font color="#ff0000">16</font>: </dt>
+          <dd>ws_client debugging </dd>
+          <dt><font color="#ff0000">32</font>: </dt>
+          <dd>poles. zeros and gain values </dd>
+          <dt><font color="#ff0000">64</font>: </dt>
+          <dd>trial frequency response functions to STDOUT. Produces
+about 1500 lines for each SCNL, which should be saved to a file. </dd>
+          <dt><font color="#ff0000">128</font>: </dt>
+          <dd>full frequency response function to STDOUT. Produces
+several thousand lines for each SCNL, which should be saved to a file. </dd>
+          <dt><font color="#ff0000">256</font>: </dt>
+          <dd>Input and output trace data including in padded arear to
+STDOUT. Produces several thousand lines for each SCNL, which should be
+saved to a file. </dd>
+        </dl>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 0; no debug output<br>Example: Debug 7 # turns on options 1, 2 and 4</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="ChannelNumberMap"></a>ChannelNumberMap <font color="#ff0000">ENZ</font>
+      </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Convert channels with Number orientations to letter orientations using the mapping string <font color="#ff0000">ENZ</font> provided.
+The Map string maps 1 to the first letter, 2 to the second
+letter, and 3 to the last letter of the three char string provided. For example, a map of ENZ
+that means channels named EH1 would be seen as a East
+component horizontal and channel EH2 would be seen as a north component horizontal.
+Note that localmag does not recognize numbers, so this conversion is needed, otherwise the channel is rejected.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: Not used, numbered channels are ignored.</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="Del"></a>Del <font color="#ff0000">STA COMP NET LOC</font>
+      </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Delete the trace(s) with station name <font color="#ff0000">STA</font>,
+component name <font color="#ff0000">COMP</font>, network name <font
+ color="#ff0000">NET<span style="color: rgb(0, 0, 0);">, and location
+code</span> LOC</font> from the selection list. Any of STA, COMP
+and NET may be the wildcard character `*'. COMP may be given as the
+first two letters of the component name, to select all direction
+desgnators (North and East) are accepted for that component. Zero, one
+or many Del commands may be listed in the configuration file.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: all traces are selected from a trace source<br>Example: Del SEA BH UW 01</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="eventSource"></a>eventSource <font color="#ff0000">SOURCE
+[params]</font> </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag where to find information about the event it is to
+process. The event information that localmag needs is: origin time,
+origin latitude, longitude and depth. If any of these values are
+missing, localmag will not process the event. EventSource may be
+specified on the command line (especially when run as a stand-alone
+program) instead of in the configuration file. The choices available
+for SOURCE are:
+        <dl>
+          <dt><font color="#ff0000">ARCH</font>: </dt>
+          <dd>Command line: <b>-eh</b> Read event information from a
+hyp2000 archive message. This message is read from standard input
+except
+when localmag is running as an earthwrom module (see <a href="#MyModId">MyModId</a>).
+In that case, the archive message is read from the transport ring. </dd>
+          <dt><font color="#ff0000">SAC</font>: </dt>
+          <dd>Command line: <b>-es</b> Read event information from the
+headers of one or more SAC files. If this option is used, then <a
+ href="#traceSource"> traceSource</a> must be <b>SAC</b> and <a
+ href="#SACsource">SACsource</a> must be given. See also the
+command-line option for <a href="#traceSource">traceSource</a> for
+naming the SAC directory on the command line. </dd>
+          <dt><font color="#ff0000">EWDB eventID</font>: </dt>
+          <dd>Command line: <b>-ee eventID</b> Obtain event
+information
+from an Earthworm database. Not currently implemented. </dd>
+        </dl>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: ARCH (read hyp2000 archive messages)<br>Examples for the command-line: -es 00010101095</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="eventXML"></a>eventXML <span
+ style="color: rgb(255, 0, 0);">n</span></td>
+      <td style="vertical-align: top;">Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">
+      <div style="margin-left: 40px;">Optional setting to force writing
+of the SHAKEMAP EVENT XML format file to the SAC output directory. MUST
+BE USED with saveTrace option and SAC output at the time of this
+writing. Defaults to being off. Set <span
+ style="color: rgb(255, 0, 0);">n</span> to 1 to activate this feature.<br>
+      <hr style="width: 100%; height: 2px;"><br>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="EWDBaccess"></a>EWDBaccess <font color="#ff0000">USER
+PASSWORD SERVICE</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the three parameters needed to access and Earthworm database.
+Not currently implemented.
+      </ul>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="extraDelay"></a>extraDelay <font color="#ff0000">seconds</font></td>
+      <td> Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+When running as an Earthworm module (see <a href="#RingInName">RingInName</a>)
+localmag will wait before processing a new event until traces have had
+time to propagate to the <a href="#maxDist">maxDist</a> plus <font
+ color="#ff0000">extraDelay</font> seconds (which may be positive or
+negative.) The calculation of the maximum wait time is done at startup,
+assuming an event on the surface and a station at maxDist. When a new
+event message is received, localmag compares the origin time to the
+current (system) time. Localmag then sleeps until origin time is older
+than system time by the computed wait time. This will ensure that the
+waves localmag is aboutto request will have time to arrive at the
+station and thence at the wave_server.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  0 seconds extra delay<br>Example:  extraDelay 10.0</pre>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td><a name="getEventsFrom"></a>getEventsFrom <font
+ color="#ff0000">INST MOD</font></td>
+      <td> Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Get event messages (TYPE_HYP2000ARC) from installation <font
+ color="#ff0000">INST</font> and module <font color="#ff0000">MOD</font>.
+These installation and module IDs are found in earthworm.d and
+earthworm_global.d. Only one <b>getEventsFrom</b> command may be used;
+use the wildcard installation or module IDs if dewsired. This command
+is
+required if localmag is running as an earthworm module; see <a
+ href="#MyModId">MyModId</a>.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  getEventsFrom INST_WILDCARD MOD_EQPROC</pre>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td><a name="HeartBeatInterval"></a>HeartBeatInterval <font
+ color="#ff0000">H</font></td>
+      <td> Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Send TYPE_HEARTBEAT messages every <font color="#ff0000">H</font>
+seconds to the transport ring. This command is required if localmag is
+running as an earthworm module; see <a href="#MyModId">MyModId</a>.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  HeartbeatInterval 30</pre>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td><a name="logA0"></a>logA0 <font color="#ff0000">FILE</font></td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the file containing the table of attenuation factors ( -log(A0)
+) used in the local magnitude calculation. This file mist start with
+two commands:
+        <dl>
+          <dt><font color="#ff0000">Dist type</font>: </dt>
+          <dd> Identify which distance is to used to access this table.
+Choices are:
+            <dl>
+              <dt><font color="#ff0000">epi</font>: </dt>
+              <dd> station - epicenter distance </dd>
+              <dt><font color="#ff0000">hypo</font>: </dt>
+              <dd>station - hypocenter distance (uses event depth but
+not station depth.) </dd>
+            </dl>
+          </dd>
+          <dt><font color="#ff0000">nDist N</font>: </dt>
+          <dd>The number of table entries that follow is at most N. </dd>
+        </dl>
+Following these two commands are up to N lines of distance and -logA0
+values. The distance numbers must be integer values, in kilometers. The
+-logA0 values are positive decimal values. Entries MUST be in order of
+increasing distance. When this table is used to find the -logA0 value,
+the entry with distance nearest to the desired distance will be used.
+
+As of June 30, 2011, the attenuation relationship allows for vertical
+components to have a separate attenuation curve as an option with
+the allowVerticals configuration parameter. This is to allow those
+networks (like LCSN) who have computed attenuation on verticals to
+compute ML on vertical (Z) channels. The EasternUS.tab is provided
+with the release of localmag now as an example of 2 attenuation curves
+specified.
+
+If the desired distance exceeds the largest distance in this table, then
+the -logA0 value for the last table entry will be returned. The file <b>Richter.tab</b>
+provided with the localmag program contains the table established by <a
+ href="#richter_gutten">Richter &amp; Guttenberg</a> for Southern
+California. Note that localmag will try to read the logA0 file from the
+current directory. Specify the appropriate path information if the file
+is located elsewhere.
+        <p> <a href="#boore">David Boore</a> reminds us: </p>
+        <blockquote>The proper procedure is first to determine the
+attenuation for the region, and second to constrain the curves at 100
+km
+according to the formal definition of Ml.</blockquote>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  logA0 Richter.tab<br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="LogFile"></a>LogFile: <code>-l<font color="#ff0000">S</font></code></td>
+      <td>Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Sets the value of the logging switch to <font color="#ff0000">S</font>.
+Possible values of S are:
+        <dl>
+          <dt><font color="#ff0000">0</font>: </dt>
+          <dd>Do not create a log file. Some logging data will be
+printed to the screen (stdout or stderr.) </dd>
+          <dt><font color="#ff0000">1</font>: </dt>
+          <dd>Create a log file in the directory named by the EW_LOG
+environment variable. The log file name will based on the config-file
+name and the current data. A new file will be created for each day (but
+only if there are logging entries to be made.) Some logging data will
+be
+printed to the screen (stdout or stderr,) as with option `0' above. </dd>
+          <dt><font color="#ff0000">2</font>: </dt>
+          <dd>Create a log file as for option `1', but do not write
+anything to the screen (stdout or stderr.) </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 1<br>Example (on the command-line):  -l0 (lower-case ell zero; turns off creation of<br>        log file)</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="LookAtVersion"></a>LookAtVersion <font color="#ff0000">Event-version</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+<p>
+Optional parameter to use with <i>eqassemble</i> which declares the version
+of an event such as <i>Prelim</i>, <i>Rapid</i> and <i>Final</i>. Possible values for the
+parameter LookAtVersion are: <i>All</i>, <i>Prelim</i>, <i>Rapid</i> and <i>Final</i>.
+</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default is <i>All</i></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="maxDist"></a>maxDist <font color="#ff0000">D</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Sets the maximum station - epicenter distance to <font color="#ff0000">D</font>
+kilometers. Traces outside this distance from the epicenter will not
+have their traces processed by localmag.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, this command is required.<br>Example: maxDist 600</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="maxSta"></a>maxSta <font color="#ff0000">N</font></td>
+      <td>Memory Allocation</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+At startup, localmag will allocate space for <font color="#ff0000">N</font>
+individual stations (unique station/network names.) Each station may
+have any number of different components (BHE/BHN/HHE/HHN.) If localmag
+tries to read more than <b>N</b> stations, the excess ones will be
+skipped with a logged warning message. The order that stations are read
+into localmag is determined by the <a href="#traceSource">trace source</a>
+and thus may be arbitrary.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, this command is required.<br>Example: maxSta 100</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="maxTrace"></a>maxTrace <font color="#ff0000">M</font></td>
+      <td>Memory Allocation</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Allocate memory for <font color="#ff0000">M</font> data samples to
+process for one trace. This is the product of the trace length in
+seconds and the highest expected sample rate. For example, 10 minutes
+of data at 100 samples per second gives 60000 samples. The time
+duration of traces used by localmag is determined by the <a
+ href="#traceTimes">traceTimes</a> command and the estimated P and S
+phase arrival times.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, this command is required<br>Example: maxTrace 60000<br><br><br><br></pre>
+      <hr style="width: 100%; height: 2px;"> </td>
+    </tr>
+    <tr>
+      <td><a name="meanCompMags"></a>meanCompMags</td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+If present, this command causes localmag to compute a stations local
+magnitude by taking the mean of the local magnitudes for each of its
+horizontal components, Otherwise, localmag will take the average of the
+component amplitudes and use that to find the local magnitude for the
+station.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: flag is absent<br>Example: meanCompMags<br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="minStationsMl"></a>minStationsMl&nbsp;&nbsp;<span
+ style="color: rgb(255, 0, 0);">N</span><br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Controls<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="1" style="vertical-align: top;">
+      <div style="margin-left: 40px;">If present, this parameter allows
+the minimum number <span style="color: rgb(255, 0, 0);">N</span> of
+stations needed for an Ml to be declared. Any number less than N will
+cause the magnitude to be written to the logs, but not published. This
+defaults to 1 if not set.<br>
+      </div>
+      <br>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: flag is absent, N is set to 1<br>Example: minStationsMl 4</pre>
+      <hr style="width: 100%; height: 2px;"><br /></td>
+    </tr>
+    <tr>
+      <td><a name="MinWeightPercent"></a>MinWeightPercent <span style="color: rgb(255, 0, 0);">WPercent</span></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+<p>
+Optional parameter. Take in account only stations for which the weight of a phase is greater than 
+<pre>MAX(weights in ARC) * (MinWeightPercent / 100.0)</pre>
+This option can be used only with <a href="#SkipStationsNotInArc">SkipStationsNotInArc</a>.
+</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Range:    0 .. 99<br>Default:  0 </pre><i> (Default all phases will be taken)</i>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="MlmsgOutDir"></a>MlmsgOutDir <span
+ style="color: rgb(255, 0, 0);">directory</span></td>
+      <td style="vertical-align: top;">Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">
+      <div style="margin-left: 40px;">Optional setting to save
+all LM messages in distinct files within a specified <span style="color: rgb(255, 0, 0);">directory</span>.
+The format file is:
+<pre>        &lt;Event-Id&gt;_&lt;Origin-Version&gt;_event.lm </pre>
+      </div>
+      <br /><hr style="width: 100%; height: 2px;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="MLQpar1"></a>MLQpar1 <span
+ style="color: rgb(255, 0, 0);">real number</span></td>
+      <td style="vertical-align: top;">Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">
+      <div style="margin-left: 40px;">
+It is the first (and unique at the moment) parameter used for estimating the quality of magnitude.
+It is a real number greater than zero proportional to the density of the stations.  If you do not
+declare MLQpar1 then the magnitude quality will be always equal to -1.
+Otherwise:
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">
+      quality = Number of channels / ( Magnitude * MLQpar1)
+      </pre>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Range:    greater than 0<br>Example:  for the Italian seismic network MLQpar1 could be 10.<br>Default:  Not used </pre><i> (Default the magnitude quality is equal to -1)</i>
+      </div>
+      <br /><hr style="width: 100%; height: 2px;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td><a name="MyModId"></a>MyModId&nbsp; <font color="#ff0000">mod_id</font></td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Sets the module id for labeling all outgoing localmag, heartbeat, and
+error messages. <font color="#ff0000">mod_id</font> is a character
+string (valid strings are listed in earthworm.d) that relates to a
+unique single-byte number. In general, a different module ID is needed
+for each instance of localmag.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none<br>Example: MyModId MOD_LOCALMAG</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="outputFormat"></a>outputFormat <font color="#ff0000">FORMAT</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Determines how localmag will report its results. In any event, localmag
+will log its results as set by the <a href="#logSwitch">log switch</a>.
+Choices for <b>FORMAT</b> are:
+        <dl>
+          <dt><font color="#ff0000">LM</font>: </dt>
+          <dd>Write the output to an Earthworm TYPE_MAGNITUDE message
+which is sent to transport to the transport ring. This option is
+avaliable only if local mag is running as an Earthworm module (see <a
+ href="#RingInName">RingInName</a>), in which case <b>LM</b> is the
+default <b>FORMAT</b>. </dd>
+          <dt><font color="#ff0000">File filename</font>: </dt>
+          <dd>Write the output in TYPE_MAGNITUDE format to the file
+specified by <b>filename</b>. This option is avaliable only if
+localmag
+is running in stand-alone mode (see <a href="#RingInName">RingInName</a>).</dd>
+          <dt><font color="#ff0000">EWDB</font>: </dt>
+          <dd>Send the localmag results to an Earthworm Database. Not
+currently implemented. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: LM if using earthworm transport; no report except logs otherwise<br>Example: LM<br>Example: File /tmp/localmag_output</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="readAmpDirect"></a> readAmpDirect </td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" rowspan="1" colspan="2">
+      <div style="margin-left: 40px;">Get the WA amplitude directly
+from the source format (SAC or UW format), instead of synthesizing the
+trace into a Wood-Anderson response and getting the peak from that. The
+default is to get this from the trace by converting to a W-A
+time-series.<br>
+      <hr style="width: 100%; height: 2px;"><br>
+      </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="vertical-align: top;"><a name="require2Horizontals"></a>require2Horizontals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+ style="color: rgb(255, 0, 0);">Flag</span><br>
+      </td>
+      <td style="vertical-align: top;">Amplitude Controls<br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" rowspan="1" style="vertical-align: top;">
+      <div style="margin-left: 40px;">If the Flag is set to any
+non-zero integer, then any station contributing to an Ml must have both
+horizontal components with valid amplitudes otherwise the station is
+not
+included in the Ml. This option defaults to off (or 0). In the future
+this may be used for other options....<br>
+      </div>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 0, this command is optional<br>Example: require2Horizontals 1<br></pre>
+      <hr style="width: 100%; height: 2px;"></td>
+    </tr>
+
+    <tr>
+      <td><a name="respSource"></a>respSource <font color="#ff0000">SOURCE
+[params]</font> </td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag where to find instrument response data. This command is
+required unless <a href="#readAmpDirect">readAmpDirect</a> option is
+present or the <a href="#traceSource">trace source</a> provides
+Wood-Anderson traces. Choices for <b>SOURCE</b> are:
+        <dl>
+          <dt><a name="SACresp"></a><font color="#ff0000">SAC
+pz-filename-format</font> </dt>
+          <dd>find response files in the SAC directory given with <a
+ href="#SACsource">SACsource</a>. <b>pz-filename-format</b> is a
+string
+similar to the printf format: %S, %C, %N, %L are replaced by station,
+component, network , location names, respectively, all in upper case. Similarly
+%s, %c, %n, %l work for lower-case station, component, network, and location. The
+digraph %% stands for %; all other characters are taken literally.
+            <p>The response file format is similar to that used by SAC
+POLEZERO files with some extra requirements. The options in the file
+are
+keyword driven and the numbers are in free format. You may specify a
+multiplicative scaling constant by putting a line in the file
+containing the keyword "CONSTANT" followed by a floating point number.
+The default for this constant is 1.0 if you omit this line. You specify
+the number of poles by putting a line in the file with the keyword
+"POLES" following by an integer number. The next lines in the file
+until
+another keyword is read become the poles for this instrument. Each such
+line contains two floating point numbers specifying the real and
+imaginary parts of one of the poles. If you have fewer lines specifying
+poles than you stated on the "POLES" line, the remaining poles are
+assumed to lie at the origin. You specify the zeros in the same way
+with a "ZEROS" keyword line following by lines specifying the zeros
+that do not lie at the origin. You may specify up to as many poles and
+zeros as you need. </p>
+            <p>The poles, zeros and gain constant of the response file <b>MUST</b>
+be for an input of displacement in nanometers. See the <a
+ href="http://seismo.ethz.ch/autodrm/autodrm_doc.html">documentation</a>
+provided by the NEIC AutoDRM for more details. The poles and zeros
+specify the Laplace transform of the analogue instrument response.
+Currently localmag has no provision for handling digital FIR or IIR
+filter responses. For example, the following is the specification for
+the NSN broadband seismometer OCWA.BHE.US: </p>
+            <pre><blockquote><br>CONSTANT    0.50280E+11<br>ZEROS       3<br>        0.00000E+00    0.00000E+00<br>        0.00000E+00    0.00000E+00<br>        0.00000E+00    0.00000E+00<br>POLES       6<br>       -0.31420E-01    0.00000E+00<br>       -0.19790E+00    0.00000E+00<br>       -0.20110E+03    0.00000E+00<br>       -0.69740E+03    0.00000E+00<br>       -0.75400E+03    0.00000E+00<br>       -0.10560E+04    0.00000E+00<br></blockquote></pre>
+          </dd>
+          <dt><font color="#ff0000">FILE dirname pz-filename-format</font>
+          </dt>
+          <dd>Similar to the SAC option above, except that the response
+files will be found in the directory <b>dirname</b>. The same
+requirements apply to the response files. </dd>
+          <dt><font color="#ff0000">EWDB</font> </dt>
+          <dd>Query an Earthworm Database for reponse information. Not
+currently implemented. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, you must specify <b>respSource</b> if localmag is to synthesize<br>  Wood-Anderson traces.<br>Example: File /earthworm/responses %S_%C_%N.pz</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="RingInName"></a>RingInName <font color="#ff0000">ring</font>
+      </td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag which shared memory region to use reading hyp2000 arc
+messages. <font color="#ff0000">ring</font> is a character string
+(valid strings are listed in earthworm.d) that relates (in earthworm.d)
+to a unique number for the key to the shared memory region. If this
+command is present in the configuration file, localmag will run as an
+Earthworm module, processing as many events as it learns about. If <b>RingInName</b>
+is absent from the config-file, localmag will run as a standalone
+program, processing a single event for each invocation.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  RingInName HYPO_RING</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="RingOutName"></a>RingOutName <font color="#ff0000">ring</font>
+      </td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag which shared memory region to use for sending magnitude,
+heartbeat and error messages. <font color="#ff0000">ring</font>
+is a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the shared
+memory region. If <a href="#RingInName">RingInName</a> is used, then <b>
+RingOutName</b> must also be given. This ring can be the same as or
+different from the <b>RingInName</b> ring.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  RingOutName MAG_RING</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="SACsource"></a>SACsource <font color="#ff0000">DIR
+FORMAT</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag to read SAC files from the <b>DIR</b> directory. These
+files could be SAC data files used by any of <a href="#eventSource">eventSource</a>,<a
+ href="#traceSource">traceSource</a>, or <a href="#staLoc">staLoc</a>.
+Or they could be SAC pole-zero-gain files read by <a href="#respSource">respSource</a>.
+When localmag is going to read SAC data files, it will scan the
+directory <b>DIR</b> for file names that match the format string <b>FORMAT</b>.
+        <p>The <b>FORMAT</b> string may include special format
+characters, which are introduced by `%'. The special characters are any
+of "sScCnN%". The letters s or S indicate a station name which must
+start with an alphabetic character, contain alphabetic characters or
+numbers, be up to 6 characters long; for s has no upper-case letters;
+for S has no lower-case. Similarly, c or C search for a component name,
+up to 8 characters, and n or N search for a network name, up to 8
+characters long. These odd name lengths are base on Earthworm tracebuf
+packets. The symbol % must match itself, as do all characters not
+preceeded by %. The pattern matching of file names againts <b>FORMAT</b>
+is fairly crude. For example, the FORMAT string %S.%C would match the
+file name LKWY1.BHE. But the FORMAT string %S1.%C would not match: LKW1
+would match the %S, leaving nothing to match the `1' in the format
+string. If the SAC directory contained a SAC datafile named LKW1.BHE
+and
+a response file named LKW1,BHE.resp, the FORMAT string %S.%C would
+correctly match the datafile name and skip the response file.</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example: SACsource /earthworm/data/98042703361 %S.%C.%N<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="saveTrace"></a>saveTrace ST [params] <font
+ color="#ff0000">DIR FORMAT</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag whether and how to save synthetic Wood-Anderson traces.
+If the <b>saveTrace</b> command is absent, no traces will be saved.
+Choices for <b>ST</b> include:
+        <dl>
+          <dt><font color="#ff0000">SAC baseDir dirFormat
+filename-format</font> </dt>
+          <dd>Save Wood-Anderson traces in SAC-format files. The full
+pathname for each SAC file will be made up of base directory, formatted
+directory, and formatted filename; all concatenated together with
+appropriate path separators.
+            <dl>
+              <dt><font color="#ff0000">baseDir</font> </dt>
+              <dd>Specifies a fixed directory name. This can be an
+absolute directory path or a path relative to the current directory. It
+can contain one or more parts with pathname separators. This all
+components of this path (except possibly the last) must exist before
+localmag is started. </dd>
+              <dt><font color="#ff0000">dirFormat</font> </dt>
+              <dd>Gives a formattted subdirectory name; the format
+string is that used for the Unix <b>date</b> command applied to the
+event origin time, with the addition of `%i' to indicate the event ID
+and `%v' to indicate the version of the event ID.
+Be careful with this; some formats produce output not compatible with
+directory names. The directory name derived from <b>dirFormat</b> must
+not contain any path separators. Suitable format strings include:
+                <dl>
+                  <dt><font color="#ff0000">%C</font> </dt>
+                  <dd>Century number (the year divided by 100 and
+truncated to an integer as a decimal number [1,99]); single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%d</font> </dt>
+                  <dd>Day of month [1,31]; single digits are preceded
+by 0. </dd>
+                  <dt><font color="#ff0000">%h</font> </dt>
+                  <dd>Locale's abbreviated month name. </dd>
+                  <dt><font color="#ff0000">%H</font> </dt>
+                  <dd>Hour (24-hour clock) [0,23]; single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%i</font> </dt>
+                  <dd>The Earthworm event ID. Currently this event ID
+can only be read from a hyp2000 archive message. </dd>
+                  <dt><font color="#ff0000">%j</font> </dt>
+                  <dd>Day number of year [1,366]; single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%m</font> </dt>
+                  <dd>Month number [1,12]; single digits are preceded
+by 0. </dd>
+                  <dt><font color="#ff0000">%M</font> </dt>
+                  <dd>Minute [00,59]; leading zero is permitted but not
+required. </dd>
+                  <dt><font color="#ff0000">%R</font> </dt>
+                  <dd>Time as %H:%M </dd>
+                  <dt><font color="#ff0000">%S</font> </dt>
+                  <dd>Seconds [00,61] </dd>
+                  <dt><font color="#ff0000">%T</font> </dt>
+                  <dd>Time as %H:%M:%S </dd>
+                  <dt><font color="#ff0000">%u</font> </dt>
+                  <dd>Weekday as a decimal number [1,7], with 1
+representing Sunday. </dd>
+                  <dt><font color="#ff0000">%U</font> </dt>
+                  <dd>Week number of year as a decimal number [00,53],
+with Sunday as the first day of week 1. </dd>
+                  <dt><font color="#ff0000">%v</font> </dt>
+                  <dd>The version of the Earthworm event ID. Currently this version of the event ID
+can only be read from a hyp2000 archive message. </dd>
+                  <dt><font color="#ff0000">%V</font> </dt>
+                  <dd>Week number of the year as a decimal number
+[01,53], with Monday as the first day of the week. If the week
+containing 1 January has four or more days in the new year, then it is
+considered week 1; otherwise, it is week 53 of the previous year, and
+the next week is week 1. </dd>
+                  <dt><font color="#ff0000">%w</font> </dt>
+                  <dd>Weekday as a decimal number [0,6], with 0
+representing Sunday. </dd>
+                  <dt><font color="#ff0000">%W</font> </dt>
+                  <dd>Week number of year as a decimal number [00,53],
+with Monday as the first day of week 1. </dd>
+                  <dt><font color="#ff0000">%y</font> </dt>
+                  <dd>Year within century [00,99]. </dd>
+                  <dt><font color="#ff0000">%Y</font> </dt>
+                  <dd>Year, including the century (for example 1993), </dd>
+                </dl>
+              </dd>
+              <dt><font color="#ff0000">filename-format </font> </dt>
+              <dd>Gives the formatted file name using % to introduce
+one of the format specifiers "sScCnN%" `s' is the station name in lower
+case; `S' is upper case. Likewise for component and network names; `%'
+stands for itself. All other characters are taken literally. This works
+in the same way as the format string for <a href="#SACresp">SAC
+response</a>
+files. </dd>
+            </dl>
+Localmag adds the following special fields to SAC file headers. If a
+zero-to-peak amplitude pick was made for the trace, the amplitude value
+will be placed in USER0, and the time of the pick will be placed in T0.
+If a pair of peak-to-peak amplitude picks were made for a trace, then
+the minimum amplitude will be placed in USER1; the maximum amplitude
+will be placed in USER2; the time of the negative peak will be placed
+in
+T1; and the time of the maximum peak will be placed in T2. Comments to
+this effect will be placed in the respective string fields for each of
+these data values. See the <a href="#slideLength">slideLength</a>
+command for details about amplitude picking. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  command is absent (no Wood-Anderson traces are saved)<br>Example: SAC /earthworm/SAC/W-A %Y%j%i %S.%C.%N<br>Example: SAC /earthworm/SAC/W-A %i_%v  %S.%C.%N<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="saveSCNL"></a>saveSCNL <span
+ style="color: rgb(255, 0, 0);">num</span></td>
+      <td style="vertical-align: top;">Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">
+      <div style="margin-left: 40px;">Optional setting to have TYPE_MAGNITUDE channel mag 
+lines use SCNL (including Location code) instead of SCN which is the default (historically). Set to a postive value
+to force SCNL use.
+      </div>
+      <br /><hr style="width: 100%; height: 2px;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="saveXMLdir"></a>saveXMLdir <span
+ style="color: rgb(255, 0, 0);">directory</span></td>
+      <td style="vertical-align: top;">Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">
+      <div style="margin-left: 40px;">Optional setting to force writing
+of the SHAKEMAP EVENT XML format file to the specified output directory.
+Using this option ignores the eventXML option which is for backward compatibility at INGV
+where this feature was added. The format file is:
+<pre>        &lt;Event-Id&gt;_&lt;Origin-Version&gt;_event.xml </pre>
+      </div>
+      <br /><hr style="width: 100%; height: 2px;"><br />
+      </td>
+    </tr>
+    <tr>
+      <td><a name="SCNLpar"></a>SCNLpar <font color="#ff0000">STA COMP
+NET LOC special-parameters</font></td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set certain parameters (described below) for specific traces identified
+by their SCN: <b>STA</b>, <b>COMP</b>, <b>NET</b>, and <b>LOC</b>
+(station/component/network name.) No wildcards are permitted here; each
+SCNL must be given explicitly, but only if special values are needed
+for
+that SCNL. Often, the default values will be adequate for most SCNLs.
+If
+there are only a few of these commands, they may be listed in the
+configuration file. But if a large number of them are needed, it may be
+more convenient to place them in a separate file. Then that file will
+get included with the configuration file by the syntax:
+        <blockquote>@scnl_param_file</blockquote>
+Note that the format of this files is identical to the one used by the
+gmew module. Each SCNLpar command must include the STA, COMP, NET, LOC
+names
+followed by the following seven decimal values. Use spaces between all
+eleven items in each SCNLpar line. All values must be present; no
+default values are used for an SCNL if it has an SCNLpar line. The
+seven
+decimal values are:
+        <dl>
+          <dt><font color="#ff0000">magnitude correction</font> </dt>
+          <dd>The value to be added to the component local magnitude to
+account for site effects. Normally this value should be the same for
+each component at a given site. </dd>
+          <dt><font color="#ff0000">taper low-freq off</font> </dt>
+          <dd>The frequency at the low end of the passband below which
+the cosine taper has zero value. This taper is applied to the frequency
+response function before it is convolved with the trace. Frequency
+units
+are Hz. </dd>
+          <dt><font color="#ff0000">taper low-freq on</font> </dt>
+          <dd>The frequency at the low end of the passband above which
+the cosine taper has a value of 1. The low-end taper can be eliminated
+by setting the off and on values to the same value. The default low-end
+taper is turned off, passing all low frequencies. </dd>
+          <dt><font color="#ff0000">taper high-freq on</font> </dt>
+          <dd>The frequency at the high end of the passband below which
+the cosine taper has a value of 1. </dd>
+          <dt><font color="#ff0000">taper high-freq off</font> </dt>
+          <dd>The frequency at the high end of the passband above which
+the cosine taper has a value of 0. The high-end taper can be eliminated
+by setting the off and on values to the same value. The default
+high-end
+taper has an off value equal to the trace Nyquist frequency (one half
+the sample rate.) The default on frequency is 90% of the Nyquist
+frequency. </dd>
+          <dt><font color="#ff0000">clipping limit</font> </dt>
+          <dd>The value, in digital counts, beyond which in absolute
+value the unprocessed trace should be considered clipped. If the trace
+is declared clipped by locamag, it will synthesized into a
+Wood-Anderson
+trace, but it will not have amplitude picks or magnitude calculations
+performed. The default clipping limit is 7.55e+06 counts, 90% of 2^23,
+the limit of a 24-bit digitizer. </dd>
+          <dt><font color="#ff0000">taper time interval</font> </dt>
+          <dd>This value is not used by localmag; it is only used by
+the gmew module. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: as described above<br>Example: SCNLpar SEA EHE UW -- 0.2   0.1 0.1 20 25   2.9e4 1.0<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="searchStartPhase"></a>searchStartPhase <font
+ color="#ff0000">phase</font></td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify which phase arrival time to use in computing the search start
+time (see <a href="#searchTimes">searchTimes</a>). Choices are <font
+ color="#ff0000">P</font> for the first arriving P phase from the
+layered <a href="#velocity">velocity model</a>, or <font
+ color="#ff0000">S</font> for the first arriving S phase from the
+layered model.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: searchStartPhase S<br>Example: searchStartPhase P<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="searchTimes"></a>searchTimes <font color="#ff0000">A
+B</font></td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the start and end times of the interval in which localmag will
+search for peak amplitudes in the Wood-Anderson traces. Together with
+the P- or S-phase arrival times estimated from the <a href="#velocity">velocity
+model</a>, and the Sg arrival time these two parameters set the start
+and end times of this search window. The search times are computed as
+follows:
+        <dl>
+          <dt>start time: </dt>
+          <dd>= T - <font color="#ff0000">A</font> </dd>
+          <dt>end time: </dt>
+          <dd>= (distance/<b>SgSpeed</b>) + <font color="#ff0000">B</font>
+          </dd>
+        </dl>
+where T is arrival time of the <a href="#searchStartPhase">searchStartPhase</a>
+and <b>distance</b> is the distance from hypocenter to station.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: searchTimes 1.0 45.0 # Search window runs from 1 second<br>        before searchStartPhase to 45 seconds after the estimated Sg arrival<br>Example: searchTimes 1.0 45.0<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="SgSpeed"></a>SgSpeed</td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the speed of the Sg phase. Research by Jim Peschmann at UUSS
+has shown that the majority of peak amplitudes in the Wood-Anderson
+traces occur near to or after the Sg phase arrival. This fixed phase
+speed is a better predictor of the peak time than the phases computed
+from the layered velocity model.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, required command<br>Example: SgSpeed 3.39<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="slideLength"></a>slideLength <font color="#ff0000">N</font></td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Localmag can perform two different searches for the "peak" magnitude of
+a given Wood-Anderson trace. First, (provided the trace has no gaps and
+is not clipped), a search is made for the largest absolute value within
+the <a href="#searchTimes">search window</a>. This will be the largest
+zero-to-peak value, since the Wood-Anderson trace always has zero mean
+in the program.
+        <p>The second search is a "sliding window" search, in which the
+largest swing, positive-to-negative or negative-to-positive, is
+measured
+within a sliding window of <b>N</b> seconds duration. The window
+slides
+along the full length of the search window. The result is the largest
+peak-to-peak value for the trace. Since the local magnitude formula is
+based on a zero-to-peak value, one half of the peak-to-peak value is
+used for the magnitude calculation. The intent of this sliding window
+search is to reduce the chances of picking a one-sided glitch that
+could happen with the zero-to-peak search. </p>
+        <p>To turn off the sliding-window search, set <b>N</b> to any
+negative value. If peak-to-peak values are not available to localmag
+(becuase the sliding-window search is disabled or because the values
+can't be read from the data source) localmag will use the zero-to-peak
+value if it is available. Turning off this feature will improve
+localmag's performance, since the sliding window search is quite
+CPU-intensive.</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  0.8 seconds, the free period of the Wood-Anderson instrument<br>Example: slideLength 1.0<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="SkipStationsNotInArc"></a>SkipStationsNotInArc</td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+<p>
+Optional parameter. Not compute magnitude for the stations which have not a phase within the HYPO ARC message.
+</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  not set</pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="staLoc"></a>staLoc <font color="#ff0000">LOC
+[params]</font></td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells localmag where to find station location information. Station
+locations are used to find the station-epicenter distance, which is
+then used in the local magnitude calculation, as well as in the
+estimate of P and S phase arrivals. The choices for <b>LOC</b> are:
+        <dl>
+          <dt><font color="#ff0000">File loc-file</font>: </dt>
+          <dd>Get station locations from a hyp2000-format station
+location file named <b>loc-file</b>. This file must be in text format,
+not the binary-format file sometimes used by hyp2000. If the file is
+not
+located in the current directory, partial or full path information must
+be included in <b>loc-file</b>. </dd>
+          <dt><font color="#ff0000">EWDB</font> </dt>
+          <dd>Query the Earthworm database for station locations. Not
+currently implemented. </dd>
+          <dt><font color="#ff0000">SAC</font> </dt>
+          <dd>Get station locations from the header of SAC files. This
+can be either station lat and lon, or station-epicenter distance in the
+SAC header. This option can only be used if the <a href="#traceSource">trace
+source</a> is SAC. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none; this command is required<br>Example: staLoc File /earthworm/run/params/hypoinverse/stas/uw_sta.hinv<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="traceSource"></a>tracesource <font color="#ff0000">SOURCE
+[params]</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Directs localmag to obtain trace data from <b>SOURCE</b>. In
+the event that localmag is reading amplitudes directly (see <a
+ href="#readAmpDirect">readAmpDirect</a>), this command directs
+localmag to the appropriate <b>SOURCE</b>. Choices are:
+        <dl>
+          <dt><font color="#ff0000">waveServer server-list</font> </dt>
+          <dd>Obtain trace data from the wave servers in <b>server-list</b>,
+a space delimited list of one or more <b>server:port</b> pairs. The <b>server</b>
+can be an IP address or a hostname for the wave server. The <b>port</b>
+is the port number used by that wave server. </dd>
+          <dt><font color="#ff0000">waveServer File server-file</font> </dt>
+          <dd>Command line: <b>-tv</b>Obtain trace data from the wave
+servers listed in the file named <b>server-file</b>. This file
+consists
+of lines listing <b>server</b> and <b>port</b>, one server to each
+line. The two entries on a line may be separated by space or colon.
+            <p>Localmag will connect to one server at a time. For each
+connection, it will obtain the server's current menu, match SCNLs on
+the
+menu against the selection list from <a href="#Add">Add</a> and <a
+ href="#Del">Del</a> commands, obtain and process the trace data
+segment
+for each of the selected SCNLs. The time interval for each trace is
+established by the <a href="" #tracetimes="">traceTimes</a> command.
+After all the selected SCNLs for one wave server have been processed,
+the connection to that server will be closed and the next server will
+be accessed. </p>
+          </dd>
+          <dt><font color="#ff0000">SACFile</font> </dt>
+          <dd>Command line: <b>-ts SACdir filename-format</b>Obtain
+raw trace data (as opposed to Wood-Anderson traces) from SAC files. The
+files are found in directory SACdir, will filenames matching
+filename-format. See <a href="#SACsource">SACsource</a> for details on
+filename matching.. </dd>
+          <dt><font color="#ff0000">SACWAFile</font> </dt>
+          <dd>Command line: <b>-tsW SACdir filename-format</b>Obtain
+Wood-Anderson traces from SAC files. The files are found in directory
+SACdir, will filenames matching filename-format. </dd>
+          <dt><font color="#ff0000">EWDB</font> </dt>
+          <dd>Obtain raw trace data from an Earthworm Database. Not
+Currently implemented. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  waveServer with list of servers read from the file $EW_PARAMS/servers<br>Example: traceSource SACFile<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="traceTimes"></a>traceTimes <font color="#ff0000">START
+END</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the start and end times of trace data to be used from any trace
+source.
+        <dl>
+          <dt><font color="#ff0000">START</font>: </dt>
+          <dd>is the number of seconds before the first P arrival from
+the layered <a href="#velocity">velocity model</a> to start
+the trace. </dd>
+          <dt><font color="#ff0000">END</font>: </dt>
+          <dd>is the number of seconds after the Sg arrival computed
+from hypocenter to station distance and <a href="#SgSpeed">SgSpeed</a>
+to end the trace. </dd>
+        </dl>
+      </ul>
+Once localmag computes the start and end times for the trace using the
+traceTimes values, it adds on additional time to the trace window. This
+extra time is used to apply a cosine taper to the data in the time
+domain. The length of each of these tapers will be 5 percent of the
+total trace length. The tapered portion of the trace is never including
+in the peak search window nor in the pre-event noise check window. This
+taper is applied to prevent `wrap-around' spikes from appearing in the
+pre-event noise check window.
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: traceTimes 5.0 60.0<br>Example: traceTimes 10.0 40.0<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="useMedian"></a>useMedian<br>
+      </td>
+      <td style="vertical-align: top;">Event and Trace Commands<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" rowspan="1" colspan="2">
+      <div style="margin-left: 40px;">By default the localmag program
+puts the average Ml into the TYPE_MAGNITUDE message. If this command is
+issued, then the median value of the median is inserted into the
+magnitude and the algorithm member of the MAG_INFO struct is set to
+"MED"<br>
+      </div>
+      <br>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: useMedian (off by default)<br>Example: useMedian</pre>
+      <hr style="width: 100%; height: 2px;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="velocity"></a>velocity model</td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Read in the one-dimensional velocity model to be used to estimate P and
+S phase arrival times. This is done using the syntax:
+        <blockquote>@velocity_file</blockquote>
+Typically this will be the same file as used for binder_ew. Localmag
+will always look for this file in the current directory, so appropriate
+path information must be included if the file is located elsewhere. The
+commands that are most useful in this file are <a
+ href="binder_ew_cmd.html#lay">lay</a> and <a
+ href="binder_ew_cmd.html#psratio">psratio</a>. Also see the Velocity
+Model section in the <a href="../ovr/binder_setup.html">Notes on
+Configuring BINDER_EW</a>.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example: @/earthworm/run/params/uw_velovity.d<br><br><br></pre>
+      <hr style="width: 100%; height: 2px;"> </td>
+    </tr>
+    <tr>
+      <td><a name="WoodAndersonCoefs"></a>WoodAndersonCoefs <font
+ color="#ff0000">period damp gain</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Optional command to specify the coefficients used for the Wood-Anderson
+instrument response. The standard parameters for the transfer function
+are: period: 0.8 seconds; damping 0.8 critical; gain: 2800. However,
+testing by <a href="#UnC">Uhrhammer &amp; Collins</a> indicate better
+values are: period 0.8 seconds; damping 0.7 critical; gain 2080
+(twenty-eighty). Be sure you know what you are doing before you change
+these values!
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: as described above<br>Example: WoodAndersonCoefs 0.8 0.7 2080<br><br><br></pre>
+      </ul>
+      <hr style="width: 100%; height: 2px;">
+      <ul>
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="wsTimeout"></a>wsTimeout <font color="#ff0000">M</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set the timeout for wave server connections to <b>M</b> milliseconds.
+If no response is heard from the wave server after this time, localmag
+will assume this wave server is dead and proceed to the next one.
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 5000 milliseconds<br>Example: wsTimeout 10000<br><br><br></pre>
+      </ul>
+      <hr style="width: 100%; height: 2px;">
+      <ul>
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="z2pThresh"></a>z2pThresh <font color="#ff0000">T</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+In addition to searching the <a href="#searchTimes">search window</a>
+for peak amplitudes (the `event' zero-to-peak), localmag checks the
+part
+of trace prior to estimated P arrival for peak amplitude (the
+`pre-event' peak.) If the `event' peak is not greater than <b>T</b>
+times the `pre-event' peak, there is not sufficient event signal above
+the pre-event noise, and localmag does not use the event peak amplitude
+for that trace. Localmag will also skip the expensive <a
+ href="#slideLength">sliding window</a> search for peak-to-peak
+amplitude for small event peak amplitudes.
+      </ul>
+      <pre
+ style="font-family: times new roman,times,serif; margin-left: 40px;"
+ wrap="">The traceTimes command in the config file specifies how many seconds before P and after S is to be analyzed by localmag. Starting from that time duration, additional time is allotted at each end to allow for a 5% time domain taper and still have the above specified ttime duration untouched by the taper. The pre-event noise level is determined from the synthetic Wood-Anderson data from the end of the starting taper to the time that is 10 percent of the start traceTimes value before the estimated P arrival.</pre>
+      <ul>
+        <p> </p>
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 3.0<br>Example: z2pThresh 1.5<br><br><br></pre>
+      </ul>
+      <hr style="width: 100%; height: 2px;">
+      <ul>
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h2><a name="sample_config"></a><br>
+3. Sample Configuration File </h2>
+<div style="text-align: left;"># Configuration file for the localmag
+program<br>
+# Some of these parameters can be overridden on the command-line;<br>
+# some of them only make sense on the command-line.<br>
+#<br>
+# As of 20 December, 2000, there is NO SUPPORT for Earthworm Database
+(EWDB)<br>
+#<br>
+# Required Commands: <br>
+# The following five commands are always required by localmag.<br>
+# Other commands below may be required when certain options are given.<br>
+#<br>
+# maxSta number<br>
+# The number of stations to be used by localmag must be specified with<br>
+# the maxSta command. This is the number of unique SNs to be used.<br>
+# A total of 6 * maxSta channel structures will be allocated.<br>
+# The maxSta command must come before any "Pri" commands.<br>
+<br>
+maxSta 100<br>
+<br>
+# maxDist km<br>
+# The maximum epicenter - station distance in kilometers. <br>
+# Stations lying outside this radius will not be used by localmag.<br>
+#<br>
+maxDist 600<br>
+<br>
+<br>
+# maxTrace nsamples<br>
+# The maximum number of trace data samples to process from one SCNL.<br>
+# This is the product of the trace length in seconds and the highest <br>
+# expected sample rate. For example, 10 minutes of data at 100 samples
+per<br>
+# second gives 60000 samples.<br>
+<br>
+maxTrace 60000<br>
+<br>
+<br>
+# logA0 filename<br>
+# The file containing the table of -logA0 values versus distance.<br>
+# This file mist start with two commands:<br>
+# Dist <type>: which distance is to used to access this table.</type><br>
+<type># choices are: epi - station - epicenter distance</type><br>
+<type># hypo - station - hypocenter distance (use event depth</type><br>
+<type># but not station depth.)</type><br>
+<type># nDist number: the number of table entries that follow.</type><br>
+<type># Following these two commands are `nDist' lines of distance and
+-logA0 </type><br>
+<type># values. The distance numbers must be integer values, in
+kilometers.</type><br>
+<type># The -logA0 values are positive decimal values.</type><br>
+<type># Entries MUST be in order of increasing distance.</type><br>
+<type># When this table is used to find the -logA0 value, the entry
+with distance</type><br>
+<type># nearest to the desired distance will be used. If the desired
+distance</type><br>
+<type># exceeds the largest distance in this table, then the -logA0
+value for</type><br>
+<type># the last table entry will be returned.</type><br>
+<type></type><br>
+<type>logA0 Richter.tab</type><br>
+<type></type><br>
+<type></type><br>
+<type># staLoc: station location source</type><br>
+<type># Choices: File <loc-file> - get station locations from a
+hyp2000-format</loc-file></type><br>
+<type><loc-file># file named loc-file</loc-file></type><br>
+<type><loc-file># EWDB - query the EW database for station locations;
+access info</loc-file></type><br>
+<type><loc-file># given below.</loc-file></type><br>
+<type><loc-file># SAC - get station locations from the header of SAC
+files.</loc-file></type><br>
+<type><loc-file># Can be either station lat and lon, or
+station-epicenter</loc-file></type><br>
+<type><loc-file># distance in the SAC header.</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file>staLoc File
+/data0/earthworm/run/params/hypoinverse/stas/uw_sta.hinv</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file># Regional Velocity model: must be specified as
+"@vel_model_file". Typically</loc-file></type><br>
+<type><loc-file># this will be the same file as used for binder_ew.</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file>@uw_velocity.d</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file># Speed of Sg wave; provides a good estimate of the
+Wood-Anderson peak arrival</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file>SgSpeed 3.39</loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file></loc-file></type><br>
+<type><loc-file># Optional Commands</loc-file></type><br>
+<type><loc-file>#</loc-file></type><br>
+<type><loc-file># eventSource: Tells localmag how and where to learn
+about a new event</loc-file></type><br>
+<type><loc-file># choices are: ARCH - hyp2000 archive message</loc-file></type><br>
+<type><loc-file># SAC - SAC file header; </loc-file></type><br>
+<type><loc-file># EWDB <eventid> - query EW database for eventID;
+usually</eventid></loc-file></type><br>
+<type><loc-file><eventid># given as command-line option.</eventid></loc-file></type><br>
+<type><loc-file><eventid># default: ARCH</eventid></loc-file></type><br>
+<type><loc-file><eventid># eventSource ARCH</eventid></loc-file></type><br>
+<type><loc-file><eventid></eventid></loc-file></type><br>
+<type><loc-file><eventid></eventid></loc-file></type><br>
+<type><loc-file><eventid># traceSource: Where localmag will obtain
+trace data</eventid></loc-file></type><br>
+<type><loc-file><eventid># choices are: waveServer <server-list> - raw
+traces from wave_servers; </server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list># server-list is either a space
+separated list</server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list># of ip-address:port or </server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list># "File <server-file>"</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># SACFile - raw
+traces from SAC files</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># SACWAFile -
+synthetic Wood-Anderson traces from SAC files</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># EWDB - raw traces
+from EW database; access info given below</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># default:
+waveServer with list of servers read from $EW_PARAMS/servers</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># traceSource
+waveServer File servers</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># Add STA COMP NET</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># Del STA COMP NET</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># SCNL selection is
+done by a selection list and a rejection list.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># The station
+selection command `Add' specifies the names of </server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># STA (station),
+COMP (component), and NET (network). </server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># The wildcard `*'
+may be used for any or all of STA, COMP, NET.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># COMP may be given
+as the first two letters of the component name,</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># to select all
+direction desgnators are accepted for that component.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># If no Add commands
+are given, all SCNLs will be selected.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># The Del command is
+used to put SCNLs on the rejection list:</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># for example: "Add
+* EL UW" followed by "Del LAB EL UW" to include</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># all ELE and ELN
+components from UW except LAB.ELE.UW and LAB.ELN.UW.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># Localmag will
+NEVER use vertical components.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># List as many Add
+and Del commands as desired, one to a line</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file>Add * BH *</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file>Add * HH *</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file>Add * SL *</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file>Add * EL *</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file>Del LAB * UW</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># respSource: Tells
+localmag where to get response information; </server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># may be ommitted if
+traceSource points to Wood-Anderson </server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># Choices: EWDB -
+query the EW databse for pole-zero-gain responses.</server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file># SAC <pz-filename-format>
+- find response files in the </pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+SAC directory given with SACsource.</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+filename-format is a string similar to printf</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+format: %S, %C, %N are replaced by station, </pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+component and network names, respectively,</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+all in upper case. Similarly %s, %c, %n work</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+for lower-case station, component and network.</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+The digraph %% stands for %; all other </pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+characters are taken literally.</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+The response file format is that used by SAC.</pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format>#
+File <dirname> <pz-filename-format> - find response files in</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+directory dirname with file names given by</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+pz-filename-format, as above. dirname can be </pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+a full directory name, or relative to $EW_PARAMS.</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+default: none; you must specify one of the above choices.</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>respSource
+File responses %S_%C_%N.pz</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+readAmpDirect: flag to tell localmag to read Wood-Anderson amplitudes</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+directly from a `trace' source instead of from Wood-Anderson traces. </pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+If this flag is used, then traceSource must be one that includes </pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+amplitude data, such as SAC files, EW database.</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+default: flag is not present, so localmag reads amplitudes from</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+Wood-Anderson traces that it either synthesizes or reads from
+traceSource.</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+extraDelay seconds</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+number of seconds to wait after the total trace length has arrived at</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+most distant station before processing event; used only when localmag is</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+running as an Earthworm module.</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+default: extraDelay 0.0 # no extra delay added to estimated propagation
+time</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>extraDelay
+0.0</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+traceTimes start end</pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+The start and end times for traces is set here. </pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format>#
+<start> is the number of seconds before estimated P arrival to start</start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start>#
+the trace.</start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start>#
+<end> is the number of seconds after estimated Sg arrival to end the
+trace.</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+default: traceTimes 5.0 60.0 # starts trace 5 seconds before estimated P</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+arrival and ends trace 60 seconds after estimated S arrival.</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>traceTimes
+5.0 60.0</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+searchStartPhase phase</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+The phase to use for computing the start of the peak serach window</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+Choices: P - the first-arriving P phase from the layered velocity model</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+S - the first-arriving S phase from the layered velocity model</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+default: searchStartPhase S</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>searchStartPhase
+S</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+searchTimes A B</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+The time window for searching for peak amplitudes is set here.</end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end>#
+<a> number of seconds before the searchStartPhase to start the</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+search window.</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+is the number of seconds of seconds after the constant-speed Sg</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+arrival to end the search window</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+default: searchTimes 1.0 45.0 # Search window runs from 1 second</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+before searchStartPhase arrival to 45 seconds after Sg arrival</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>searchTimes
+1.0 45.0</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+slideLength n</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+Set the width of of the sliding search window to n seconds.</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+default: slideLength 0.8 # sliding search window is 0.8 seconds wide</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>slideLength
+0.8</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+z2pThresh is the threshold by which the zero-to-peak maximum in the</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+search window must exceed the zero-to-peak maximum from the</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+pre-event portion of the trace. This test tries to ensure that the</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+zero-to-peak and peak-to-peak values are seismic and not just noise.</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+default: z2pThresh 3.0</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>z2pThresh
+3.0</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+meanCompMags: If present, this command causes localmag to compute a </a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+stations local magnitude by taking the mean of the local magnitudes</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+for each of its horizontal components, Otherwise, localmag will take</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+the average of the component amplitudes and use that to find the</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+local magnitude for the station.</a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a>#
+WoodAndersonCoefs <period> <damp> <gain>: optional command to
+specify the</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+coefficients used for the Wood-Anderson instrument response. The
+standard</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+parameters for the transfer function are: </gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+period: 0.8 seconds; damping 0.8 critical; gain: 2800</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+However, testing by Uhrhammer &amp; Collins (BSSA 1990, V80 p702-716)
+and</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+others indicate better values are:</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+period 0.8 seconds; damping 0.7 critical; gain 2080 (twenty-eighty)</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+default: WoodAndersonCoefs 0.8 0.8 2800</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+saveTrace: whether and how to save synthetic Wood-Anderson traces</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+If saveTrace command is absent, no traces will be saved.</gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain>#
+Choices: SAC <basedir> <dirformat> <filename-format> - </filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+save W-A traces in SAC-format files. </filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+baseDir specifies a fixed directory name.</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+dirFormat gives a formattted subdirectory name; the</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+format string is that used for the "date" command applied</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+to the event origin time, with the addition of `%i' </filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+to indicate the event ID and optionally `%v' for the</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+the origin version. Be careful with this; some</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+formats produce output not compatible with file names.</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+filename-format gives the formatted file name using</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+% to introduce one of the format specifiers "sScCnN%"</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+`s' is the station name in lower case; `S' is upper case</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+Likewise for component and network names; `%' stands for</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+itself. All other characters are taken literally.</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+default: None (no Wood-Anderson traces are saved.)</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<br>
+# eventXML 1&nbsp;&nbsp;&nbsp; - turns on writing SHAKEMAP XML files to
+the SAC directory<br>
+#&nbsp;&nbsp;&nbsp; that is specified by the saveTrace command above.
+This feature contributed by INGV.<br>
+#&nbsp; default is that this feature is off (0).<br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+outputFormat: how localmag reports its results; results are always
+logged</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+Choices: LM - TYPE_MAGNITUDE message to earthworm transport</filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format>#
+File <filename> - write TYPE_MAGNITUDE message to the</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+file specified by filename. Standalone mode only.</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+EWDB - send results to Earthworm database.</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+default: LM if using earthworm transport; no report otherwise</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+EWDBaccess user password service </filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+How to access the Earthworm Database, if needed. </filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+Give the user name, password, and srvice needed for connection.</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+default: none</filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename>#
+SACsource <sac-directory> <filename-format>: where to find SAC files
+for</filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format>#
+reading.</filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format>#
+<sac-directory> is a fixed directory name</sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory>#
+<filename-format> is the format for SAC</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+file names.</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+This command or its equivalent on the command</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+line is required if traceSource or respSource</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+is SAC files.</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>SACsource
+/data0/earthworm/working/src/localmag/Test/98042703361 %S.%C</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+wsTimeout: wave_server timeout in milliseconds</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+default: 5000 milliseconds</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+wsTimeout 10000</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+Earthworm Transport commands. Use these commands to make localmag</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+run as an earthworm module to run continuously.</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+Otherwise localmag runs as a standalone program and handles a</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+single event per invocation.</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#</filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format>#
+RingInName <ring>: specify the name of the earthworm transport ring
+from</ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring>#
+which to read TYPE_HYP2000ARC messages for event notification.</ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring>#
+RingInName HYPO_RING</ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring>#
+RingOutName <ring>: specify the name of the earthworm transport ring to</ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring>#
+which Magnitude, Heartbeat and Error messages are sent. This may be</ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring>#
+the same as RingInName if desired.</ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring>#
+RingOutName HYPO_RING</ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring>#
+MyModId <module-id>: specify the module ID for localmag</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+MyModId MOD_LOCALMAG</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+HeartBeatInterval int: How often localmag should beat its heart.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+Currently, localmag will not issue heartbeats while it is busy doing</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+calculations for an event. Thus a heartbeat could be late by as much as
+the</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+time it takes to do a full localmag event calculation. Be sure that</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+statmgr will wait that long for the heartbeat.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+HeartBeatInterval 30</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+getEventsFrom INST_ID MOD_ID</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+Specify the installation ID and module ID names from which to get</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+hypoinverse archive messages to read event data. These names may be</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+selected from earthworm.d and earthworm_global.d Only required when</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+localmag is running as an Earthworm module. No default values.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+Use as many of these commands as necessary.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>getEventsFrom
+INST_WILDCARD MOD_WILDCARD</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>LogFile
+1 </module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+1 -&gt; Keep log, 0 -&gt; no log file</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>
+</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+2 -&gt; log to module log but not to stderr/stdout</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>
+</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+default: LogFile 1</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+Debug N</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+There are several different debug features, listed below. </module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+You can give one Debug command for each feature you want to turn on, </module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+or you can add together the values of desired features and give </module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+one Debug command.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+value feature</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+1 trace and search times and P and S arrival estimates</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+2 SCNL selection tests</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+4 distance and LogA0 values</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+8 SAC file selection (only if traceSource is SAC)</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+16 ws_client debugging</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+32 poles. zeros and gain values</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+64 trial frequency response functions to STDOUT</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+128 full frequency response function to STDOUT</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+256 input and output trace date including in padded area</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+SCNL Parameters: normally this command will be given as
+"@SCNL_param_file"</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id>#
+to cause the separate file "SCNL_param_file" to be processed.</module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type><br>
+<type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type></div>
+<pre><type><loc-file><eventid><server-list><server-file><pz-filename-format><dirname><pz-filename-format><start><end><a><period><damp><gain><basedir><dirformat><filename-format><filename><sac-directory><filename-format><sac-directory><filename-format><ring><ring><module-id><br></module-id></ring></ring></filename-format></sac-directory></filename-format></sac-directory></filename></filename-format></dirformat></basedir></gain></damp></period></a></end></start></pz-filename-format></dirname></pz-filename-format></server-file></server-list></eventid></loc-file></type></pre>
+<hr>
+<h2><a style="font-weight: normal;" name="references"></a><b><br>
+4. References </b></h2>
+<ul>
+  <b> <li><a name="UnC">Uhrhammer &amp; Collins (BSSA 1990, V80
+pp702-716) </a></li>
+  <li><a name="richter_gutten">Richter &amp; Guttenberg (BSSA 1942, V32
+pp163-191) </a></li>
+  <li><a name="boore">Boore (Tectonophysics 1989, V166, pp1-14) </a></li>
+  </b>
+</ul>
+<hr>
+<p style="margin-bottom: 0in;" align="center"><b><a
+ href="../modules.html">Module Index</a> | <a
+ href="../ovr/localmag_ovr.html">localmag Overview</a> </b></p>
+<p
+ style="border-style: none none double; border-color: -moz-use-text-color -moz-use-text-color rgb(128, 128, 128); border-width: medium medium 1.1pt; padding: 0in;">
+<b><font style="font-size: 6pt;" size="1"><!-- USGS-required stuff at the end --></font></b></p>
+Contact: <b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b></div>
+</body>
+</html>

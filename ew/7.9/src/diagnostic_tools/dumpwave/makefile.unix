@@ -1,0 +1,33 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+LINUX_FLAGS=
+SOLARIS_FLAGS=-lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LIBS = $L/swap.o $L/libew.a $(LINK_LIBS)
+
+
+dumpwave: dumpwave.o
+	$(CC) -o $B/dumpwave $(CFLAGS) dumpwave.o $(LIBS) $(SPECIFIC_FLAGS)
+
+.KEEP_STATE:
+
+
+lint:
+	lint dumpwave.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/dumpwave* 

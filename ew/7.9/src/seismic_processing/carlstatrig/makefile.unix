@@ -1,0 +1,66 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS=${GLOBALFLAGS} -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+CTOBJS = addtrace.o \
+	 carlstatrig.o \
+         cmprscn.o \
+	 findsta.o \
+	 flushbuf.o \
+	 initpars.o \
+	 initsta.o \
+	 prodstatrg.o \
+	 protrace.o \
+	 readcnfg.o \
+	 readewh.o \
+	 readstas.o \
+	 resetsta.o \
+	 statrpt.o \
+	 updtsta.o \
+	 $L/swap.o \
+	 $L/libew.a
+
+LINTS = addtrace.ln \
+	 carlstatrig.ln \
+         cmprscn.ln \
+	 findsta.ln \
+	 flushbuf.ln \
+	 initpars.ln \
+	 initsta.ln \
+	 prodstatrg.ln \
+	 protrace.ln \
+	 readcnfg.ln \
+	 readewh.ln \
+	 readstas.ln \
+	 resetsta.ln \
+	 statrpt.ln \
+	 updtsta.ln
+
+carlstatrig: $(CTOBJS)
+	$(CC) $(CFLAGS) -g -o $(B)/carlstatrig $(CTOBJS) $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/carlstatrig*
+
+
+.c.ln:
+	lint -Nlevel=4 -Ncheck=%all -errchk=%all $(CFLAGS) $(CPPFLAGS) -c $(OUTPUT_OPTION) $<
+
+lint: $(LINTS)
+	lint -Nlevel=4 -Ncheck=%all -errchk=%all *.ln

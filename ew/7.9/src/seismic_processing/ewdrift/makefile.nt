@@ -1,0 +1,48 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    Revision history:
+#     $Log: makefile.nt,v $
+#
+#
+
+#
+#                    Nmake File For ewdrift  - Windows NT version
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+!include <ntwin32.mak>
+
+APP = ewdrift
+
+OBJS = ewdrift.obj \
+       ewdrift_filt.obj \
+       $L\swap.obj \
+       $L\mem_circ_queue.obj \
+       $L\libew_mt.lib \
+       $L\trheadconv.obj \
+       $L\xfrm.obj
+
+compflags = /c /W3 /MT /nologo
+
+linkflags = /nologo
+
+libs = libcmt.lib
+
+$B\$(APP).exe: $(OBJS)
+   link $(linkflags) $(libs) $(OBJS) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(CLAGS) $(cflags) -DMOD_STR="\"$(APP)\"" $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)*

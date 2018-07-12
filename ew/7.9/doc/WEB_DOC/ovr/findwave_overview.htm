@@ -1,0 +1,63 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; SunOS 5.7 sun4u) [Netscape]">
+   <title>Earthworm Modules: dumpwave overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+    Findwave Overview</h1>
+</center>
+
+<center>
+  <i>(last revised 30 May 2006)</i>
+</center>
+
+<p>Findwave is a command line diagnostic program. It attaches to a transport ring
+  and discovers all TRACE_BUF messages on that ring. It then computes some statistics
+  for each SCN, and writes this to a file. This file is rewritten every five seconds,
+  listing the statistics at that time. Findwave also writes the number of distinct
+  SCN's found to stdout. </p>
+<p>Findwave attempts to be helpful for configuring WaveServers:</p>
+<p>First, it lists the largest packet length (Msg Len Max) found for each SCN
+  - this is suitable for the "Record size" field in wave_serverV.d. Second, it
+  estimates the required tank size for 24 hours of trace data storage. This is
+  computed for each SCN as follows: Find the average time contained in all TRACE_BUF
+  messages seen for this SCN; assume that each message will live in a record of
+  "Max Msg Len" bytes, and compute the number of such records required to store
+  24 hours of trace data.</p>
+<p>Usage: FINDWAVE &lt;ring name&gt; &lt;index size&gt; &lt;days&gt; &lt;file
+  name&gt; &lt;output type&gt;<br>
+  output type = w for waveserver output, which produces a waveserver<br>
+  helper file with days = days to save per tank, and index size = the<br>
+  waveserver index size.<br>
+  output type = d for SCN debug output, still provide days and index size.</p>
+<p>For example: </p>
+<p><code>findwave WAVE_RING testfile.txt </code></p>
+<p><code>This would result in the file containing: </code></p>
+<p><code><font size="2">S&#9;C&#9;N&#9;Msg Len&#9;&#9;Rate&#9;Nmsg&#9;Mb/day</font></code></p>
+<p> <code><font size="2">&#9; &#9; &#9;Max&#9;Min<br>
+  </font></code><code><font size="2">8028&#9;HNE&#9;NP&#9;464&#9;464&#9; 100.0&#9;
+  186&#9; 40.1<br>
+  </font></code><code><font size="2">8028&#9;HNN&#9;NP&#9;464&#9;464&#9; 100.0&#9;
+  187&#9; 40.1<br>
+  </font></code><code><font size="2">8028&#9;HNZ&#9;NP&#9;464&#9;464&#9; 100.0&#9;
+  187&#9; 40.1<br>
+  </font></code><code><font size="2">PMR&#9;BHE&#9;AT&#9;2288&#9;1904&#9; 20.0&#9;
+  14&#9; 8.6<br>
+  </font></code><code><font size="2">PMR&#9;BHN&#9;AT&#9;2228&#9;1936&#9; 20.0&#9;
+  14&#9; 8.0</font></code></p>
+<center>
+<p><a href="../modules.html">Module Index</a></center>
+<hr>
+<address> </address>
+
+<br>
+Questions? Issues? S<a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">ubscribe
+to the Earthworm Google Groups List. </a>
+</body>
+</html>

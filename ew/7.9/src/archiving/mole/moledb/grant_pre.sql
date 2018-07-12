@@ -1,0 +1,6 @@
+-- Create an user with same name of the __DATABASENAME__ which is the owner of the database
+CREATE DATABASE IF NOT EXISTS __DATABASENAME__;
+GRANT ALL PRIVILEGES ON __DATABASENAME__.* TO '__DATABASENAME__'@'localhost'  IDENTIFIED BY '__DBOWNERPASS__' WITH GRANT OPTION;
+GRANT SUPER ON *.* TO '__DATABASENAME__'@'localhost' ;
+GRANT SELECT ON *.* TO '__DATABASENAME__'@'localhost' ;
+FLUSH PRIVILEGES;

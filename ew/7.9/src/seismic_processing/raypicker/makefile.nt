@@ -1,0 +1,49 @@
+#
+
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+
+#
+
+##################################################################
+!IF "$(EW_DEBUG)" == "1"
+!ELSE
+NODEBUG=1
+!ENDIF
+
+!include <ntwin32.mak>
+
+EWLIB=$(EW_HOME)\$(EW_VERSION)\lib
+B=$(EW_HOME)\$(EW_VERSION)\bin
+DELETE_FILES = -erase
+
+DIRSEP=\\
+
+
+#!include $(HYDRA_BUILDENV)/make_resp_defs.nt
+!include makefile.ind
+#!include $(HYDRA_BUILDENV)/make_apps_base.nt
+
+OBJ = obj
+#cc = $(CC) $(GLOBALFLAGS) 
+#link = link.exe
+
+$B\$(APP).exe: $(APP_OBJECTS)
+   $(link) $(conlflags) /RELEASE $(conlibsmt) $(APP_OBJECTS) \
+    $(ALL_CLIENT_LIBS) \
+    -out:$B\$(APP).exe
+
+# from Hydra
+#   $(link) $(linkflags) $(libs) $(APP_OBJECTS) \
+#    $(ALL_CLIENT_LIBS) \
+#    -out:$B\$(APP).exe
+
+.c.$(OBJ):
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+clean :
+	$(DELETE_FILES) *.$(OBJ)
+
+clean_bin:
+	$(DELETE_FILES) $(B)\$(APP).*

@@ -1,0 +1,123 @@
+
+From kent@giseis.alaska.edu Mon Jan 11 11:12:14 1999
+Date: Mon, 11 Jan 1999 09:42:24 -0900
+From: "Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: earthw-list@nmt.edu, alex@gldmutt.cr.usgs.gov
+Cc: kent@giseis.alaska.edu
+Subject: Re: Earthworm Continuous Archive SIG
+
+
+
+> From owner-earthw-list@nmt.edu Mon Jan 11 07:30 AKS 1999
+> From: Alex Bittenbinder <alex@gldmutt.cr.usgs.gov>
+> Subject: Earthworm Continuous Archive SIG
+> Mime-Version: 1.0
+> 
+> Hi:
+> 
+> 	My apologies if you have already received this message. It was
+> initially sent to a partial list of  potential participants.
+
+There were a few messages worth of discussion amongst this smaller
+group.  The following message was my contribution to that discussion, for
+those of you who are interested. 
+
+Kent
+
+
+> From kent@giseis.alaska.edu Fri Jan  8 10:39 AKS 1999
+> Date: Fri, 8 Jan 1999 10:38:50 -0900
+> Subject: critique of continuous data-archiving proposals
+> Cc: kent@giseis.alaska.edu, roger@giseis.alaska.edu, ken@seismo.unr.edu,
+>         flvernon@ucsd.edu
+> 
+> Hello, 
+> 
+> > From alex@gldmutt.cr.usgs.gov Thu Jan  7 10:28 AKS 1999
+> 
+> >	The idea is to produce an earthworm module to perform
+> >	continuous archiving of all incoming trace data. 
+> 
+> We should keep in mind that two complete, proven solutions already
+> exist to archive continuous waveform data from Earthworm. Both of these
+> represent extensive development efforts. It is conceivable that neither
+> of these solutions meet the needs of the networks concerned; however it
+> would be quite unfortunate if this third reimplementation of continuous
+> data archiving that Alex proposes be conducted without clear awareness
+> and careful consideration of the solutions already in existence. In
+> fact, given the earth2ah module just announced by Mitch Withers, plus
+> the earth2sac module from Pete Lombard, this proposed reimplementation
+> of continuous data archiving would perhaps be the fourth.
+> 
+> There already is an Earthworm archive module, written by the University
+> of Alaska in 1996 and presented at the CNSS meeting in Memphis. We have
+> used this in Alaska since early 1997 to create AH-format archives of
+> continuous data, augmented by tables to allow optional CSS3.0 Database
+> access. This module is also capable of SAC-format and raw-data output.
+> 
+> There is also a second, completed, field-proven archiving solution
+> provided through the Antelope orb2db program, which writes the
+> continuous waveform data to a commercial database. The data files
+> themselves can be stored in many common formats with this program. The
+> Antelope orb2db software is currently what we use to archive data from
+> our Earthworm digitizer and other data sources here in Fairbanks [the
+> earthworm archiver module described above has been relegated to our
+> backup system, due to the superiority of the Antelope software]. We
+> save the underlying data files in seed format, giving the Steim
+> compression that Dave Oppenheimer just mentioned. Our data flow amounts
+> to approximately 4 GB per day, showing the capability of this system
+> for heavy loads. We use just a single instance of orb2db to handle this
+> dataflow.
+> 
+> Alex paraphrases suggestions that data be archived in 'naked' format,
+> i.e. that the trace packets are saved exactly as they came in.  I
+> understand the appeal of keeping data in the input format. However,
+> with many gigabytes per day, one must consider that this will be an
+> administrative challenge to retrieve data segments of interest. At some
+> stage, the data packets will have to be pieced back together if they
+> are to be of use to seismologists.  This requires months of careful
+> thought and programming to implement. Both of the existing archivers I
+> described do all the secretarial tasks up front-- sorting packets into
+> time order, filling or blanking out gaps, concatenating packets into
+> segments, etc. We sacrifice knowledge of the exact time-order that
+> packets came in, and other technical details, for convenience in
+> retrieving arbitrary half-hour chunks of data from year-old teleseisms
+> and (heaven forbid) missed regional events. Will Kohler's leeriness
+> about a "roomful of archive tapes that are written in an
+> obsolete format" is a real scare for us. We have years of tapes
+> of packets from our old Masscomp system. The scripts that dig out
+> and reassemble these packets to form a particular data segment take
+> hours to run, very inefficient for the retrieval of interesting waveforms.
+> If you do decide to archive raw tracebuf packets, this is still quite a 
+> ways away from a complete, seismologically useful implementation. 
+> 
+> 
+> Our experiences from writing our archiver in 1996 left us with several 
+> clear lessons. First, we decided that the job is big enough that it 
+> deserves a separate module, rather than an expansion of the wave-server's
+> capabilities. This is of course a judgement call. Second, turning a stream 
+> of incoming tracebuf messages into seismologically useful continuous
+> data segments takes a great deal of careful thought and programming, 
+> including many synchronization issues if those data are to be available
+> in near-real-time. It took us at least half a year to get all these
+> things right [...reflecting on Dave Oppenheimer's desire to have something
+> implemented by February...]. 
+> 
+> Finally, there are lots of discussions of tape drives, CDROMS, etc.--
+> we have done well by considering this a distinct issue, i.e. first we
+> construct databases, then we get them onto some kind of storage medium.
+> Of course the two tasks are connected, but both are big enough that 
+> it helps to separate them. Currently we end up with all of our continuous
+> data written in SEED volumes to 8 mm tape, plus we have databased 
+> subsets of some of our continuous data on writable CDROM.
+> 
+> Let me make clear that my interest in archiving implementations is 
+> solely to support the Alaskan network, not to push any other networks towards
+> one solution over another. However, due to the very extensive amount
+> of work we have put into the job over the past few years, I think
+> it would be unfortunate for yet another archiver to be implemented 
+> without benefitting from some constructive feedback out of previous 
+> efforts. 
+> 
+> Kent
+> 

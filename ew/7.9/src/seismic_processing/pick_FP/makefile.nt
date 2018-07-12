@@ -1,0 +1,36 @@
+#
+#                    Nmake File For pick_FP - Windows NT version
+#
+APP = pick_FP
+O = $(APP).obj call_FilterPicker.obj restart.obj config.obj stalist.obj compare.obj \
+            index.obj report.obj initvar.obj 
+
+PO = picker/FilterPicker5.obj picker/FilterPicker5_Memory.obj picker/PickData.obj
+P = FilterPicker5.obj FilterPicker5_Memory.obj PickData.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+!include <ntwin32.mak>
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib
+
+
+$B\$(APP).exe: $O $(PO)
+   link $(linkflags) $(libs) $O $P \
+    $L\libew.lib $L\swap.obj $L\trheadconv.obj -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~ 
+
+clean_bin:
+	-del $B\pick_FP*

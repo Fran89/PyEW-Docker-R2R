@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = ew2ssam.c
+OBJS = ew2ssam.o
+
+EW2RSAM = $(OBJS) $L/libew_mt.a \
+           $L/swap.o $L/mem_circ_queue.o
+
+ew2ssam: $(EW2RSAM)
+	$(CC) $(CFLAGS) -o $B/ew2ssam $(EW2RSAM) $(SPECIFIC_FLAGS) 
+
+
+lint:
+	lint ew2ssam.c $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ew2ssam*

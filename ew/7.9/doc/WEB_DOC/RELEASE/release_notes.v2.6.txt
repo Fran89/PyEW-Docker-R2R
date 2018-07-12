@@ -1,0 +1,104 @@
+Release Notes:  Earthworm Version V2.6
+10/10/96
+
+
+NEW OPERATING SYSTEMS:
+***********************
+
+Version 2.6 runs on OS2 Warp 3.0 and Solaris.  We have abandoned OS2
+v2 because it is no longer available from IBM.
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+
+Import_generic:
+Does not close socket upon loss of framing on incoming messages. As per request by Ray Buland. alex, 7/23/96
+
+Export_generic:
+Performs circular buffering instead of fifo. Buffer is not flushed on re-try attempt. As per Ray Buland. Alex 7/23/96
+
+Hypoinverse:
+
+There are two versions of hypoinverse, one for Solaris and one for
+OS2.  They live in ~src/hypo_sol and ~src/hypo_os2 respectively.  The
+make_ew_solaris and make_ew_os2.cmd insure that the right version is
+compiled.
+
+Binder:
+Binder's new pick-assessment feature;  9/96 LDD
+
+A new feature was added to binder to detect and reject outliers from a 
+group of picks which supposedly belong to a single earthquake.  Such outliers 
+have been notorious for pulling some of binder's event locations far from 
+the true locations, thus allowing the event to be corrupted by the association 
+of junk phases.  This pick-assessment is based on the resampling technique 
+of Bill Ellsworth, which in turn is based on Rex Allen's phase associator.
+
+Pick-assessment is a multiple pass process.  First, any glitches are removed
+from the group of picks.  Then the first resampling pass is performed on the
+earliest (up to 25) remaining P-phase picks which meet the testing criteria.
+In a resampling pass, many possible hypocenters are calculated from different
+combinations of four picks at a time using the exact, four-station hypocenter 
+solution method of Ingelada.  Traveltime residuals are calculated for each pick 
+with respect to every possible hypocenter.  The first resampling pass is used 
+to winnow the data to arrivals with median traveltime residuals below a cutoff 
+value.  A second pass resamples the winnowed data to determine a trial hypocenter 
+to be passed to binder's L1 locator.  If any picks are rejected as glitches or 
+outliers, they are freed to restack or reassociate.  
+    
+       
+The binder configuration file commands that control the pick-assessment 
+feature are:
+
+  assess_pk        Define when the pick-assessment feature will be invoked.
+  define_glitch    Define a glitch as N picks within X seconds. 
+  log_accepted     Log info about good picks in addition to rejected picks.
+  maxtrial         Maximum number of four-pick hypocenters to calculate.
+  maxwt	           Maximum pick-quality to use in pick-assessment.
+  residual_cut     Cutoff value for absolute median traveltime residual.
+  v_halfspace      Halfspace P-wave velocity used in Ingelada locator.  
+
+A more detailed description of each command can be found in the file
+.../earthworm/v2.6/user_doc/binder.commands
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+
+export_generic.d:
+New parameter RingSize specifies number of elements in circular buffer.
+
+binder.d
+New parameters to control the pick-assessment.
+
+tankplayer.d
+New parameter, StartUpDelay,  which defines the number of seconds to
+wait on startup before beginning the playback of the first waveform
+file.
+
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+
+Will has moved us from os/2 v2 to os/2 v3. v2 is no longer available,
+and v3 offers better stability; v2 seems to have some GUI bugs. Never
+mind that NT may come: we play the ball where it lies.  Will had
+to create new makefiles, as yes, they're different from OS2 v2. The files in
+earthworm/working/bin, named to_os2v2.cmd and to_os2v3.cmd copy the
+corresponding versions of the makefiles into the standard name
+"makefile.os2" found in each module's source directory.
+
+
+MODULES IN PROGRESS:
+********************
+
+A picker module based on the Rex Allen algorithm.  It's new features are:
+	* process the new waveform format for single channel data
+	* allow each channel to have it own picking parameters.
+
+
+Enhancement to import/export to handle binary messages.
+
+
+

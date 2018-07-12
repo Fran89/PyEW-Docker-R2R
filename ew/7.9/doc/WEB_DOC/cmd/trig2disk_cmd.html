@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: trig2disk commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+trig2disk Configuration File Commands</h1>
+<i>(last revised March 24, 2008)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On
+startup, trig2disk reads the configuration file named on the command
+line. Commands in this file set all the parameters used for reading
+triglist2k
+messages and writing sac, ah, suds, gse, seisan, or tankplayer format.
+In the control file, lines may begin with a valid trig2disk command
+(listed below) or with one of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @memphis.scnl).</pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).
+<p><a name="example"></a><a name="example"></a></p>
+<h2>1. EXAMPLE CONFIGURATION FILE</h2>
+<p>
+</p>
+<pre>#<br># Configuration file for trig2disk:<br># I listen to trigger messages (TYPE_TRIGLIST), and stuff the implied pieces<br># of trace data into an Oracle server. I do this by going to any number<br># of WaveServerV's, as listed in this configuration file.<br>#<br>MyModuleId                 MOD_TRIG2DISK<br>RingName                   HYPO_RING<br>HeartBeatInt               30<br>LogFile                    1   # 0 means don't create a disc log file. 1=&gt; do.<br>                               # 2 means log to disk file but not stderr/stdout<br>#<br># What message logos to listen to. Can be more than one.<br># The type is hard coded to TYPE_TRIGLIST<br>#<br>GetEventsFrom	           INST_MENLO  MOD_WILDCARD<br><br>#<br># list of ip addresses and ports of the WaveServers we're to use<br>#<br>WaveServer                 111.222.33.444     16022<br><br>&nbsp;<br><br># Optional NEW COMMAND in EW v7.3 Postproc allows running of a program or script that will process new files<br># no arguments are sent to the script...It should know where to run and what to do with new files:<br>#<br>#Postproc  myscript  # the myscript or program should be in the params directory or an absolute path must be provided.<br><br><br>#<br># If a WaveServer doesn't talk to us in this <br># many seconds, we'll abort that request<br>#<br>TimeoutSeconds             30  <br><br>#<br># Max number of traces we'll ever see in one event<br>#<br>MaxTraces                  500	<br><br>#<br># kilobytes of the largest trace snippet we'll ever have to deal with<br>#<br>TraceBufferLen             1000  	<br><br>#<br># Debug switch:  Debug will be logged if uncommented <br>#<br>Debug<br><br>#<br># SCNL list of stations to write for each trigger message,  these get<br># written in addition to SCNLs in the trigger message.<br>#<br>#@memphis.scnl<br><br>#<br># Minimum number of seconds to save for extra channels that we<br># are saving (i.e., those channels not in the TYPE_TRIGLIST message)<br>#<br>MinDuration                 30<br><br>#<br># number of sample periods after which we declare a gap<br>#<br>GapThresh 100<br><br># Optional queue commands<br># Number of trigger messages to hold in queue; default is 10<br>#QueueSize 10<br><br># Optional queue dumpfile name, for saving state of queue<br>QueueFile trig2disk.que<br><br># Optional delay time: trig2disk will wait this many seconds from the<br># time it receives a trigger message until it starts to process the message<br>DelayTime 5<br><br><br>#<br># Select format of output data and the directory where it is written<br># Only one of the following pairs should be uncommented.<br>#<br>#<br># SUDS<br>#<br>#DataFormat                  suds<br>#OutDir                      "/home/earthworm/SUDS"<br>#<br># SAC<br>#<br>DataFormat                   sac<br>OutDir                       "c:\earthworm\SAC"<br>#<br># AH<br>#<br>#DataFormat                  ah<br>#OutDir                     "/home/earthworm/AH"<br>#<br># SEISAN<br>#<br>#DataFormat                  seisan<br>#OutDir                     "/home/earthworm/seisan"<br>#<br># GSE<br>#<br>#DataFormat                  gse_int<br>#OutDir                     "/home/earthworm/gse"<br>#<br># Tankplayer<br>#<br>#DataFormat                 tank<br>#OutDir                     "./tanks/"<br>#<br># Mini-SEED<br># Mini-SEED output format is currently only available on Solaris<br>#<br>#DataFormat                 mseed<br>#OutDir                     "/earthworm/data/mseed"<br>#<br># PSN4<br>#<br># NOTE PSN4 output format is only avialable for WINDOWS!<br>#  a <a
+ href="station.lst">station.lst</a> file must also exist in the EW_PARAMS directory too (see example in docs)<br>#<br>#DataFormat                 psn4<br>#OutDir                     "c:\earthworm\psn4"<br>#<br># Specify on what platform the output files will be used:<br># intel or sparc - with this information, files will be written out<br># in the correct byte order.<br>#<br>OutputFormat                sparc<br></pre>
+<p>
+<a name="function"></a></p>
+<h2>2. FUNCTIONAL COMMAND LISTING</h2>
+<p>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->Below
+are the commands recognized by trig2disk, grouped by the function
+they influence. All of the required commands must be specified
+in the control file in order for trig2disk to operate.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --></p>
+<pre>   Earthworm system setup:<br>                <a href="#Debug">Debug</a>	optional<br>                <a
+ href="#GetEventsFrom">GetEventsFrom</a>	required<br>                <a
+ href="#HeartBeatInt">HeartBeatInt</a>          required<br>                <a
+ href="#MyModuleId">MyModuleId</a>              required<br>                <a
+ href="#RingName">RingName</a>          required<br><br>        Waveform Control:<br>                <a
+ href="#DelayTime">DelayTime</a>	optional<br>                <a
+ href="#GapThresh">GapThresh</a>	required<br>                <a
+ href="#MaxTraces">MaxTraces</a>	required<br>                <a
+ href="#MinDuration">MinDuration</a>	required<br>                <a
+ href="#QueueSize">QueueSize</a>	optional<br>                <a
+ href="#TimeoutSeconds">TimeoutSeconds</a>	required<br>                <a
+ href="#TraceBufferLen">TraceBufferLen</a>	required<br>                <a
+ href="#TrigStation">TrigStation</a>	optional<br>                <a
+ href="#WaveServer">WaveServer</a>	required<br><br>        Output Control:<br>                <a
+ href="#DataFormat">DataFormat</a>	required<br>                <a
+ href="#LogFile">LogFile</a>                    required<br>                <a
+ href="#OutDir">OutDir</a>	required<br>                <a
+ href="#OutputFormat">OutputFormat</a>	required<br>                <a
+ href="#QueueFile">QueueFile</a>	optional<br>		<a href="#postproc">Postproc</a>        optional<br></pre>
+<a name="alphabet"></a>
+<h2>3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h2>
+<p>
+In the following section, all configuration file commands are listed
+in alphabetical order. Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command
+influences.
+A detailed description of the command and is also given. Default values
+and the values used by Memphis are listed after each command
+description.
+</p>
+<pre><b>
+command <font color="red">arg1</font>     processed by              function<br></b></pre>
+<hr>
+<a name="DataFormat"></a>
+<pre><b>DataFormat <font color="red">string</font>       putaway        Waveform control</b>
+<blockquote>
+Sets the format of the output waveform files.  Valid strings defining
+format to use are:<br>
+ah<br>
+sac<br>
+suds<br>
+tank<br>
+gse_int<br>
+seisan<br> <br>mseed - solaris only<br><br>psn4  - windows only<br>
+wfdisc - linux only<br>
+Only one data format can be used for a given instance of trig2disk.
+The ah format is xdr.  The sac format
+is not xdr.  The suds format is the PC Suds standard. The tank format is
+suitable for playing through the earthworm tankplayer utility. The
+gse_int format is GSE 2.0. The seisan format is suitable for use by Seisan.
+The putaway routines used were contributed by various authors and
+it is assumed that the user is familiar with the details of individual formats
+and they are not explained here.
+<pre>Default:  none<br>Example   DataFormat sac<br><p></p>
+</pre>
+</blockquote>
+<hr>
+<a name="Debug"></a>
+<pre><b>Debug <font color="red">flag</font></b>
+<blockquote>
+Uncomment to turn on debugging information.
+</blockquote>
+
+<hr>
+<a name="DelayTime"></a>
+<pre><b>DelayTime <font color="red">nsec</font>         SnippetMaker     Waveform control</b>
+<blockquote>
+Sets the time (in seconds) to wait after dequeueing a type_triglist2k message
+and before attempting to process the message.  Some scnl's may have
+longer time length data packets or other latencies making it possible to
+generate a trigger message before all data are available in a waveserver.
+DelayTime allows a mechanism to account for this latency.  Large delay times
+in a busy queue could cause missed messages.
+<pre>Default:  0<br>Example   DelayTime 5<br></pre>
+</blockquote>
+
+<hr>
+<a name="GapThresh"></a>
+<pre><b>GapThresh <font color="red">nsamp</font>        PA_next     Waveform control</b>
+</pre>
+<blockquote>
+Sets the gap threshold to <font color="red">G</font> sample intervals. Trace data<br>packets are timestamped with a start time and a stop time, the times of the<br>first and last samples in that packet, respectively. Thus, the expected gap<br>between end time of one packet and the start time of the next packet is one<br>sample interval. Some data sources, such as older digitizers, produce data<br>with slightly larger or smaller intervals between them. The gap threshold is<br>intended to provide a means of detecting missing packets, without falsely<br>declaring a missing packet because of sloppy timestamps. The preferred value<br>for this gap threshold is 1.5. Set larger values only if you have a sloppy<br>data source. It is not clear how wave_serverV should handle intervals of much<br>more than one sample interval between packets if these are not caused by<br>missing packets.<br><pre>Default:  none<br>Example   GapThresh  1.5<br></pre>
+</blockquote>
+
+<hr>
+<a name="GetEventsFrom"></a>
+<pre><b>GetEventsFrom <font color="red">logo</font>        trig2disk_config     Earthworm setup</b>
+</pre>
+<blockquote>
+Controls the TYPE_TRIGLIST2K messages input to trig2disk. Trig2disk will
+only process TYPE_TRIGLIST2K messages that come from module
+<font color="red">mod_id</font> at installation <font color="red">inst</font>.<br><font
+ color="red">inst</font> and <font color="red">mod_id</font> are<br>character strings (valid strings are listed in earthworm_global.d and<br>earthworm.d) which are related to single-byte numbers that uniquely identify<br>each installation and module (please do not modify earthworm_global.d).<br>Multiple "GetEventsFrom" commands may be issued; wildcards<br>(INST_WILDCARD and MOD_WILDCARD) will force trig2disk to process all<br>trigger messages, regardless of their place of origin.<br><pre><!-- Default and example go here   -->
+Default:  none
+Example   GetEventsFrom  INST_WILDCARD  MOD_WILDCARD
+          GetEventsFrom  INST_MEMPHIS   MOD_CARLSUBTRIG
+</pre>
+</blockquote>
+
+<hr>
+<a name="HeartBeatInt"></a>  <!-- command name as anchor inside quotes -->
+<pre><b>HeartBeatInt <font color="red">nsec</font>                        trig2disk_config       Earthworm setup</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Defines the number of seconds <font
+ color="red">nsec</font> between TYPE_HEARTBEAT<br> messages<br>issued by trig2disk.<br><pre><!-- Default and example go here   -->
+Default:  none
+Example: HeartBeatInt 15
+</pre>
+</blockquote>
+
+<hr>
+<a name="LogFile"></a>
+<pre><b>Logfile <font color="red">switch</font>     trig2disk_config  Earthworm setup</b>
+</pre>
+<blockquote>
+Sets the on-off switch for writing a log file to disk.  If
+<font color="red">switch</font> is 0, no log file will be written.  If<br><font
+ color="red">switch</font> is 1, trig2disk will log to stderr/stdout<br>and to a daily log file(s) called paramfile_ccyymmdd.log<br>where paramfile is the config file (so-called .d) of a particular instance<br>of trig2disk<br>and ccyymmdd is the current UTC date (ex: 20060123) on the system clock.<br>The file(s) will be written in the EW_LOG directory (environment<br>variable).<br>If <font
+ color="red">switch</font> is 2, only the log file is used<br>and not stderr/stdout.<br><pre>Default:  none <br>Example: LogFile 1<br></pre>
+</blockquote>
+
+<hr>
+<a name="MaxTraces"></a>
+<pre><b>MaxTraces <font color="red">int</font>     trig2disk_config  Waveform control</b>
+</pre>
+<blockquote>
+This is the maximum number of traces in a given triglist2k message that we'll
+ever have to deal with (e.g. individual scnl's).  If the total number of traces
+from any incoming triglist2k message exceed this value, only MaxTraces number
+of traces will be saved.  Excessively large values for this parameter may
+cause trig2disk to use an excessively large amount of memory as sufficient
+memory will be allocated to buffer this many traces.
+<pre>Default:  none<br>Example: MaxTraces 1024<br></pre>
+</blockquote>
+
+<hr>
+<a name="MinDuration"></a>
+<pre><b>MinDuration <font color="red">int</font>   trig2disk_config Waveform control</b>
+</pre>
+<blockquote>
+The value of the MinDuration parameter defines the minimum number of seconds
+to save for each additional scnl trace configured using the TrigStation
+parameter.  For added scnl's not in the triglist2k message, start-time
+will be the earliest value of all scnl's in the triglist message, and
+duration will be the longest value of all scnl's in the triglist message.
+If the resulting duration is less than MinDuration seconds, then
+MinDuration seconds will be saved.
+<pre>Default:<br>Example: MinDuration 30<br></pre>
+</blockquote>
+
+<hr>
+<a name="MyModuleId"></a>
+<pre><b>MyModuleId <font color="red">mod_id</font>      trig2disk_config      Earthworm setup</b>
+</pre>
+<blockquote>
+Sets the module id for labeling all outgoing messages.
+<font color="red">mod_id</font> is<br>a character string (valid strings are listed in earthworm.d) that<br>relates (in earthworm.d) to a unique single-byte number.<br><pre><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_TRIG2DISK
+</pre>
+</blockquote>
+
+<hr>
+<a name="OutDir"></a>
+<pre><b>OutDir <font color="red">path</font>      trig2disk_config      Output control</b>
+</pre>
+<blockquote>
+Trig2disk will create a separate subdirectory for each event within the
+directory configured by OutDir.  Specific naming conventions for subdirectories
+and files are output format dependent but generally based on trigger time in
+the triglist2k message.
+<pre>Default:  none<br>Example:  OutDir /export/home/ew/sac<br></pre>
+</blockquote>
+
+<hr>
+<a name="OutputFormat"></a>
+<pre><b>OutputFormat <font color="red">string</font>      trig2disk_config      Output control</b>
+</pre>
+<blockquote>
+Sets the byte order of binary waveform files that trig2disk will write.
+Either intel or sparc are acceptable strings.  This parameter should
+be configured for the platform on which the output datafiles are going
+to be read.
+<pre>Default: none<br>Example: OutputFormat sparc<br></pre>
+</blockquote><pre><pre><hr><br><a name="OutputFormat"></a><br><pre><b>Postproc <font
+ color="red">string</font>      trig2disk_config      Output control</b>
+</pre><br><blockquote><br>Runs the script/program associated with string with no arguments AFTER a trigger is converted to disk files.<br>Must be an absolute path to the script/program to be run. Otherwise, the script must	<br>be located in the params (EW_PARAMS) directory. THe program or script must be marked as executable.<br><pre>Default: none<br>Example: Postproc /home/ew/myscript_that_does_something_with_triggers<br></pre><br></blockquote></pre></pre>
+
+<hr>
+<a name="QueueFile"></a>
+<pre><b>QueueFile <font color="red">file</font>       trig2disk_config Output Control</b>
+</pre>
+<blockquote>
+Optional parameter to save waveserver queue status.  This allows trig2disk
+to save its message queue if a fatal error or stop or restart message
+is received.  On next start, trig2disk will load the queue from this file
+and start message processing from there.
+<pre>Default: none<br>Example: QueueFile trig2disk.que<br></pre>
+</blockquote>
+
+<hr>
+<a name="QueueSize"></a>
+<pre><b>QueueSize <font color="red">int</font>    Trig2disk_config     Output Control</b>
+</pre>
+<blockquote>
+Controls the number of triglist2k messages to hold in the queue.  No more
+than this many messages will be dumped to the file configured in QueueFile
+parameter and subsequently processed on restart.
+<pre>Default: 10<br>Example: QueueSize 10<br></pre>
+</blockquote>
+
+<hr>
+<a name="RingName"></a>
+<pre><b>RingName <font color="red">ring</font>       trig2disk_config     Earthworm setup</b>
+</pre>
+<blockquote>
+Tells trig2disk which shared memory region to use for input/output.
+<font color="red">ring</font> is a character string (valid strings are listed in e<br>arthworm.d)<br>that relates (in earthworm.d) to a unique number for the key to the<br>shared memory region.<br><pre>Default:  none<br>Example: RingName HYPO_RING<br></pre>
+</blockquote>
+
+<hr>
+<a name="TimeoutSeconds"></a>
+<pre><b>TimeoutSeconds <font color="red">int</font>   trig2disk_config   Waveform control</b>
+</pre>
+<blockquote>
+If a wave_server doesn't respond to any interaction within TimeoutSeconds
+number of seconds, bail and move on to the next waveserver in the list.
+<pre>Default: none<br>Example: TimeoutSeconds 30<br></pre>
+</blockquote>
+
+<hr>
+<a name="TraceBufferLen"></a>
+<pre><b>TraceBufferLen <font color="red">int</font>   trig2disk_config  Waveform control</b>
+</pre>
+<blockquote>
+This parameter sets the number of kilobytes trig2disk will ever have to
+deal with for a given trace.  Make sure it is large enough for expected
+sample rates and durations (a single floating point sample is generally
+4 bytes on most platforms).
+<pre>Default: none<br>Example: TraceBufferLen    1000<br></pre>
+</blockquote>
+
+<hr>
+<a name="TrigStation"></a>
+<pre><b>TrigStation <font color="red">scnl</font> trig2disk_config Output control</b>
+</pre>
+<blockquote>
+Optional SCNL list of channels to write for each trigger message.  These get
+get written in addition to those in the trigger message.  Trace start
+will be set to the earliest of any scnl in the trigger message and
+duration will be the longest of any scnl in the trigger message (but
+always at least MinDuration seconds long).
+<pre>Default: none<br>Example: TrigStation SWET HHZ ET --<br></pre>
+</blockquote>
+
+<hr>
+<a name="WaveServer"></a>
+<pre><b>WaveServer <font color="red">ip port</font> trig2disk_config Waveform Control</b>
+</pre>
+<blockquote>
+List of waveserver ip address and port from which to gather traces.  Can
+have multiple waveservers configured.
+<pre>Default: none<br>Example: WaveServer   111.222.33.444     16022<br></pre>
+</blockquote>
+
+<hr>
+
+<center> <br><a href="../modules.html">Module Index</a> | <a
+ href="../ovr/trig2disk_ovr.html">Trig2disk Overview</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+Contact: <b><address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+</address>
+</pre></pre></pre>
+</body>
+</html>

@@ -1,0 +1,26 @@
+From pechmann@seis.utah.edu Fri Jun  9 11:20:10 2000
+Date: Fri, 9 Jun 2000 11:09:15 -0600 (MDT)
+From: James C. Pechmann <pechmann@seis.utah.edu>
+To: earthw-list@nmt.edu
+Cc: ali@seis.utah.edu, pechmann@seis.utah.edu
+Subject: Comments on POSIX compliant earthworm version
+
+     As requested by Steve Malone, here are our comments on Chris
+Wood's POSIX compliant version of earthworm.
+
+     We applaud Chris Wood and the USBR for their work in putting
+together a POSIX compliant version of earthworm and fixing some bugs
+that they discovered in the process.  We don't have any immediate need
+for this new version of earthworm at the University of Utah, because
+we use Solaris as our main operating system.  Nevertheless, we encourage
+the earthworm team to consider adopting the POSIX compliant version of
+earthworm as the basis for future releases.  The reduced platform
+dependence of the POSIX compliant earthworm code would increase the
+number of potential earthworm users and allow all users the flexibility
+to choose different operating systems in the future.  And certainly,
+any bug fixes are valuable contributions which should be incorporated
+into future official versions of earthworm--whether or not the
+earthworm team decides to make these versions POSIX compliant.
+
+--Jim Pechmann and Ali Moeinvaziri
+  University of Utah

@@ -1,0 +1,23 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+#FC=g77   -g -Bstatic
+#FFLAGS=  -g -W -Wall -O
+
+#
+Hi=	main.o hypo1m2.o hypo2.o hypo3.o hypo4.o single.o  \
+	ytrv.o input1.o timz3.o geo_sp.o
+hypo:	$(Hi)
+	$(FC) $(FFLAGS)  $(Hi) -o $B/Hypo71PC
+
+clean:
+	rm -f *.o
+clean_bin:
+	rm $B/Hypo71PC

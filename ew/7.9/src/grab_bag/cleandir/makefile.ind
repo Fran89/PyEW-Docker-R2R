@@ -1,0 +1,41 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+
+###############################
+#Set APP to your program name.
+###############################
+APP = cleandir
+FULL_APP_NAME = $(HYDRA_BIN)\$(APP)$(EXE)
+
+###############################
+#Set APP_OBJECTS to your object 
+# files
+#Set APP_OTHER to any other bind
+# options or libraries that you
+# need specially for your app.
+###############################
+APP_OBJECTS = $(APP).$(OBJ) 
+				
+
+APP_OTHER = libcmt.lib ws2_32.lib
+
+###############################
+#Set ALL_CLIENT_LIBS to all non DB
+# objects needed by your app.
+###############################
+
+
+EW_LIBS = 	$(EW_LIB)\service_ew.$(OBJ) \
+                $(EW_LIB)\logit.$(OBJ) \
+                $(EW_LIB)\time_ew.$(OBJ) \
+                $(EW_LIB)\sleep_ew.$(OBJ)
+
+
+APPS_LIBS = 	.\reportError.$(OBJ)  
+	
+ALL_CLIENT_LIBS = $(EW_LIBS) $(APPS_LIBS) $(WATCHDOG_LIBS)
+
+

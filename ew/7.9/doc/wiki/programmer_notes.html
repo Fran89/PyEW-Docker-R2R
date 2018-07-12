@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      programmer_notes – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/programmer_notes?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="programmer_notes.html" title="View programmer_notes">programmer_notes</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/programmer_notes?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/programmer_notes?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-17T12%3A48%3A49-08%3A00&amp;precision=second" title="2012-01-17T12:48:49-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/17/12 12:48:49</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">Earthworm Location Code Policy                           2004/03/05:LDD
+------------------------------
+
+These rules are based on the SEED and CISN conventions referenced below, 
+with a nod to current practices and software logic simplification.
+
+1. We will follow the SEED convention of allowed characters
+   (A-Z, 0-9, space).  In apparent contradiction to the previous 
+   statement, we will use the character '-' to represent 'space' 
+   in all Earthworm I/O. Just remember to think 'space' when you
+   see '-'. Lower case alphanumerics are not permitted.
+
+2. The location code will always contain 2 characters, either
+   two alpha-numeric characters or two spaces ('--'). The use 
+   of a single space (or '-') adjacent to an alpha-numeric is not 
+   permitted. 
+
+3. The default location code in SEED is "  " (space-space).
+   We'll call this the "blank" location code.  While there are no rules 
+   on how EW software should represent a blank location code for its own  
+   internal manipulations, all software must obey the following rules  
+   for all of its Input/Output, including its log files:
+   a. For all ASCII I/O, both column-oriented and whitespace-delimited,
+      a blank location code will be written as "--".  We recognize that 
+      "  " could be interpreted properly by software in column-oriented
+      ASCII, but we feel that it is easier for humans reading the data
+      to have a single convention for all ASCII information.
+      When parsing any ASCII input, software will interpret "-" or "--" 
+      as the blank location code.
+   b. In binary I/O, currently only the Earthworm tracedata messages,
+      the blank location code will also be represented by "--".
+   c. In the Earthworm DBMS, the blank location code will be represented
+      as the string "--".
+
+4. When Earthworm data is converted to SEED format, all blank location
+   codes will be converted from "--" to "  " (space-space).
+
+5. Software should *never* assume that the location code has any
+   meaning. It should be used exclusively as a tie-breaker when
+   multiple channels of data have the same SCN.  This will allow
+   allow each network to use their own convention for assigning 
+   the location code and to process data from another network whose
+   convention is different.
+
+
+Current Practices
+-----------------
+In the EW database, blank location codes are stored as NULLs. Queries
+for a blank location code must have extra logic to check the DBMS for a 
+blank string or a NULL field.  When we switch to storing blank location 
+codes as "--" everywhere, no extra logic would be required for 
+string-matching.
+
+In the NCEDC database, blank location codes are stored as "space-space".
+
+In SEED, fields are blank padded, so a blank or NULL location code is 
+always stored as "space-space".  IRIS DMC software maps a "-" in a 
+data request to a "space" in the location code.  Therefore, if data 
+were stored with a "-" in the location code, there would be no way to 
+request it explicitly.  Therefore, when Earthworm data is converted to
+SEED format, we must revert to "space-space".
+
+
+References
+----------
+SEED convention:
+http://www.iris.edu/news/newsletter/vol1no1/page1.htm
+
+CISN convention:
+http://www.cisn.org/standards/reports.2003-11-05/wg_loc.03.11.20.final.doc
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/programmer_notes?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

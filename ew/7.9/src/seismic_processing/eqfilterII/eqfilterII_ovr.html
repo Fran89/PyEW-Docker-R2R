@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: eqfilterII overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> EqfilterII Overview</H1>
+<I>(last revised 24 October, 2004)</I></CENTER>
+
+<P>
+This is the Earthworm hypocenter garbage rejector.  EqfilterII is an expansion
+of eqfilter and fully backward compatible to config files designed for eqfilter.
+EqfilterII gets message types  LOC_GLOBAL, HYP2000ARC, and/or RAYLOC
+from the InRing does some sanity checks then puts any that pass
+all configured tests onto the OutRing.  InRing and OutRing can not be the
+same.  Multiple message types may be configured for a single instance of eqfilterII.
+All tests are optional.  Some tests are specific to a particular
+message type and will be ignored if a differing message type is processed.
+If a test is not configured then it is not performed. If a test is configured then it
+must pass.  Most parameters in the various message types may be tested. Tests are
+tied to inst_id (wild cards okay).  Additionally, authoritative regions may be configured.
+Minimum number of coda picks greater than zero for multiple magnitudes
+may also be configured.
+</p>
+
+<p>INST_WILDCARD is allowed.  If wildcard is the only installation configured
+for a given test then arc messages from all installations will be tested
+with those parameters.  If only a specific installation is configured for
+a given test, then only messages from that installation will be tested
+and all others will fail.  If a specific installation is configured
+for a given test and wildcard is also configured for that test, then
+messages from the specific will use those parameters, and all other
+non-specified installations will use the wildcard params.
+
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../cmd/eqfilterII_cmd.html">eqfilterII Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://folkworm.ceri.memphis.edu/ew-doc/ovr/eqfilterII_ovr.html]</B><BR>
+Contact: <B>mwithers@memphis.edu</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

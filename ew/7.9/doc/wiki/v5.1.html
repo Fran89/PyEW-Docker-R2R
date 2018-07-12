@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v5.1 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v5.1?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v5.1.html" title="View v5.1">v5.1</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v5.1?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v5.1?action=diff&amp;version=10" title="Version 10 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-19T16%3A59%3A55-08%3A00&amp;precision=second" title="2012-01-19T16:59:55-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/19/12 16:59:55</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="v5.1.html#ReleaseNotes:EarthwormVersionv5.1">Release Notes: Earthworm Version "v5.1"</a>
+    <ol>
+      <li>
+        <a href="v5.1.html#NEWMODULES">NEW MODULES</a>
+      </li>
+      <li>
+        <a href="v5.1.html#MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</a>
+        <ol>
+          <li>
+            <a href="v5.1.html#TransportChanges">Transport Changes</a>
+          </li>
+          <li>
+            <a href="v5.1.html#ModuleChanges">Module Changes</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="v5.1.html#DBMSRELATEDMODULES">DBMS RELATED MODULES</a>
+      </li>
+      <li>
+        <a href="v5.1.html#CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILES">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES</a>
+      </li>
+      <li>
+        <a href="v5.1.html#DBMSWEBRELATEDCONFIGURATIONFILES">DBMS/WEB RELATED CONFIGURATION FILES</a>
+      </li>
+      <li>
+        <a href="v5.1.html#KNOWNBUGSorDEFICIENCIES">KNOWN BUGS or DEFICIENCIES</a>
+      </li>
+      <li>
+        <a href="v5.1.html#NUMBEROFRINGSLIMITEDONSOLARIS">NUMBER OF RINGS LIMITED ON SOLARIS</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="ReleaseNotes:EarthwormVersionv5.1">Release Notes: Earthworm Version "v5.1"</h1>
+<h2 id="NEWMODULES">NEW MODULES</h2>
+<p>
+<strong>k2ew:</strong> Communicates with the K2 data logger from Kinemetrics. Uses TCP or COM port for communication on WindowsNT, TCP or TTY (serial) comms on Unix. See src/data/sources/k2ew/Doc for documentation.
+</p>
+<p>
+<strong>ringdup:</strong> Program to read messages (with user given logos) from one ring and deposit them in another. This is mainly copied from export. This is actually two programs: ringdup_generic and ringdup_scn.
+</p>
+<p>
+<strong>naqs2ew:</strong> Interfaces with the Nanometrics digital data acquisition program, NaqsServer, requests continuous waveform data from a list of SCNs and outputs Earthworm tracebuf packets into an Earthworm transport ring.
+</p>
+<p>
+<strong>Event Review Using the Earthworm Database:</strong> The Event Review provides Earthworm with a remote, rapid event review capability. Its intended use is permit a duty seismologist to rapidly respond to a significant event. It was NOT designed to serve as a routine analysis facility.
+</p>
+<p>
+Its features include:
+</p>
+<ul><li>Requires only browser access to the Internet.
+</li></ul><ul><li>Interacts with events via the Earthworm DBMS.
+</li></ul><ul><li>Viewing and editing of automatic event parameters.
+</li></ul><ul><li>Graphic re-picking.
+</li></ul><ul><li>Event relocation and re-insertion into DBMS.
+</li></ul><ul><li>Supports both low- and high-bandwidth connections.
+</li></ul><ul><li>Supports interlocks for concurrent reviewers.
+</li></ul><p>
+ 
+</p>
+<h2 id="MODIFICATIONSBUGFIXESTOEXISTINGMODULES">MODIFICATIONS/BUG FIXES TO EXISTING MODULES</h2>
+<p>
+<strong>Libsrc Changes:</strong>
+</p>
+<p>
+<strong>libsrc/winnt/sendmail.c:</strong> Changed the email message sender from root to root@&lt;MailHost&gt;.
+</p>
+<p>
+<strong>libsrc/util/sacputaway.c:</strong> Changed the low level calls to creat/write to fopen/fwrite in order to write sac files. Previous method would sometimes write sac files (under NT only) with fewer samples than advertised in the header.
+</p>
+<p>
+<strong>libsrc/util/logit.c:</strong> In logit_init(), moved the mutex creation to before the test of the log/nolog switch value so that the mutex is always created. Previously, if switch=0, the mutex was not created and subsequent calls to logit (on NT) caused "error releasing specific mutex" messages to appear.
+</p>
+<p>
+Added support for checking/preventing overflows of the logit buffer. Used vsnprintf() (_vsnprintf on NT) to fill a buffer without overflowing it. logit() will now write an error message to the logfile (or to stderr if disk logging is disabled) if a message that is longer than the buffer is attempted to be logged. This required an addition to platform.h.
+</p>
+<p>
+<strong>include/platform.h</strong>
+</p>
+<p>
+Added a define for vsnprintf() in the NT section. Removed comments from #define lines to prevent them from causing headaches when the #defines are substituted in code. Before, code that looked like
+</p>
+<p>
+/* return((thr_ret)0); */
+</p>
+<p>
+would actually be
+</p>
+<p>
+/* return((thr_ret /* This is what a thread returns */)0); */
+</p>
+<p>
+and the compiler would seem to issue a syntax error for no reason.
+</p>
+<p>
+<strong>libsrc/winnt/transport.c</strong>
+</p>
+<p>
+<strong>libsrc/solaris/transport.c:</strong> Fixed tport_putmsg and tport_copyto so that they always release the semaphore before returning or exiting.
+</p>
+<p>
+<strong>libsrc/util/swap.c:</strong> I modified the swap.c functions so that they now work correctly, even with non-byte-alligned data. Warning: In some cases, waveserver may return non-byte-alligned tracebuf messages. This can happen if the tracebuf messages contain odd numbers of 2-byte samples. Caltech has started exporting this kind of data to Menlo Park.
+</p>
+<p>
+<strong>libsrc/util/socket_ew_common:</strong> Fixed incorrect formats in logit calls after select() errors (several places). The error would cause segmentation violations and core dumps.
+</p>
+<p>
+<strong>libsrc/util/logit:</strong> added value `2' to the logflag argument of logit_init(). This value will turn off logging to standard error and standard output. The config file command is typically LogSwitch to access this feature.
+</p>
+<p>
+<strong>libsrc/util/getutil.c:</strong> removed extra `%s' from fprintf statement, identified by Chris Wood.
+</p>
+<p>
+<strong>libsrc/util/putaway.c:</strong> corrected <tt>=' to </tt>==' in two if statements in PA_close(), identified by Chris Woods.
+</p>
+<p>
+<strong>libsrc/util/socket_ew_common.c:</strong> bug fix in recvfrom_ew(). The argument passed to recvfrom was being modified so that it wouldn't work correctly later on. This function does not appear to be used in earthworm at this time. Identified by Chris Wood.
+</p>
+<p>
+<strong>libsrc/solaris/time_ew.c:</strong> Fixed bug where the error return from nanosleep() was not always handled properly. Identified by Chris Wood.
+</p>
+<p>
+<strong>/libsrc/util/site.c:</strong> Changed how the hypoinverse site file is parsed in site_read. Under NT, the 'E' east-west longitude designator was being interpreted as the scientific notation exponent for the decimal minutes portion of the longitude. This ultimately caused allEast longitudes to be interpreted as West longitudes, making it impossible to run binder_ew, eqproc and any other module dependant on site.c in the Eastern Hemisphere.
+</p>
+<p>
+<strong>ws_clientII libsrc routines:</strong> wsSearchSCN claimed to return the first menu with a matching SCN; it actually returned the last menu that matched. This has been fixed. Also, if the menup argument to wsSearchSCN is non-NULL, the search will start with the next menu after *menup; otherwise the search will start with menu_queue-&gt;head. Finally, wsGetTraceAscii now takes advantage of this change to wsSearchSCN: if the server returns with a flag (request in gap or outside of tank), another server in the menu queue will be tried. This feature probably should be added to wsGetTraceAscii. Even better, the wave_server should be able to return a complete index list so that traces can be pieced together from several servers if the servers are missing different portions of the trace.
+</p>
+<h3 id="TransportChanges">Transport Changes</h3>
+<p>
+<strong>tport_putmsg</strong> assigns and tracks the sequence numbers for each logo. tport_putmsg has a limit to the number of different logos for which it can keep track of sequences numbers (NTRACK_PUT). This has been increased from 20 to 200. The number of logos for which tport_getmsg and toport_copyfrom can track sequence numbers has been increased from 50 to 500.
+</p>
+<h3 id="ModuleChanges">Module Changes</h3>
+<p>
+<strong>gaplist:</strong> Added MyModuleId command to allow module id to be configured. Added logging and "unerror" msg to statmgr when data is received from a previously dead channel.
+</p>
+<p>
+<strong>heli_standalone:</strong> Fixed bug that prevented plotting traces of 200 SPS data at the maximum update interval (same as MAXMINUTES which is 5)
+</p>
+<p>
+<strong>waveman2disk:</strong> Fixed an interactive user prompt so that the user is now prompted for YYYYMMDDHHMMSS. Minutes were missing before. Fixed missing null string terminator, removed unused variables. Identified by Chris Wood.
+</p>
+<p>
+<strong>startstop_solaris/startstop.c:</strong> Added tests for null strings in parsing the config file (before handing strings to strlen). Now it won't crash when a &lt;Process&gt; command contains unbalanced quotes, but will instead complain of a bad &lt;Process&gt; command.
+</p>
+<p>
+<strong>sniffwave:</strong> Fixed so that it prints 4-byte data properly.
+</p>
+<p>
+<strong>wave_viewer:</strong> v1.22. Fixed problems where wave_viewer displayed data spikes when it received fill values back from wave_serverV. Fixe a problem where wave_viewer would miss-parse the wave_server reply because wave_server is writing a 0x00 character after a block of fill values. Fixed problem where wave_viewer would constantly ask for data from wave_server channels that had no data, thus bogging down the client machine and the wave_server. Introduced a bug where data points returned by wave_server that are equal to 1234567890 will be plotted by wave_viewer as 1234567889.
+</p>
+<p>
+<strong>carlsubtrig:</strong> fixed bugs in readcfg.c and readsubs.c where blank lines in config files were not handled properly.
+</p>
+<p>
+<strong>wave_serverV:</strong> Added signal handler to allow graceful shutdowns without shutting down all of earthworm. In WindowsNT, wave_serverV can be shut down by pressing control-C in the console window of wave_serverV. Doing <tt>restart &lt;pid&gt;' will NOT work: startstop_nt does not use signals for terminating processes. In Solaris, you can use </tt>kill &lt;pid&gt;' or `restart &lt;pid&gt;' to terminate wave_serverV gracefully. Also numerous bug fixes; see the file README.changes in the wave_serverV directory.
+</p>
+<p>
+Fixed some bugs identified by Chris Wood: "NotDone" is now initialized before use in index_util.c; fixed possible buffer overruns in server_thread.c. Fixed return value tests for several functions, initialized "isConfigured" flag at end of config-file loop.
+</p>
+<p>
+Fixed a bug in server_thread.c that aborted a menu list when an empty tank was encountered. This bug was introduced after v5.0.
+</p>
+<p>
+<strong>read_index:</strong> added a -g flag to list the tank gaps knwon to an index file. This provides a quick way to see the data gaps over the history of a tank file. Suggested by Steve Malone at UofW.
+</p>
+<p>
+<strong>getmenu:</strong> fixed bug where index of outer loop (over list of servers) was also used in several inner loops. This bug had no real effect because currently getmenu has no way of putting more than one server in its list; the out loop could only be traversed one time anyway.
+</p>
+<p>
+<strong>statmgr:</strong> Added check for return status from SendMail(); logs errors now. Added flush of transport ring on startup, so you don't get a bunch of old messages when you restart statmgr. Added the module's ID name (from the earthworm.d file) to messages reporting module death. This will help identify which module has died when you have many instances of one module running, such as k2ew.
+</p>
+<p>
+<strong>evansassoc:</strong> moved a misplaced `return(0)' in Assoc() in doit.c Identified by Chris Wood.
+</p>
+<p>
+<strong>evanstrig:</strong> Supplied several missing arguments to sprintf() call. Identified by Chris Wood.
+</p>
+<p>
+<strong>eqfilter:</strong> Bug fixes: several functions declared int that should have been void. Two calls to `return(-1)' in Processor thread replaced with logit calls explaining the problem and calls to KillSelfThread(). Identified by Chris Wood.
+</p>
+<p>
+<strong>eqalarm:</strong> Bug fix: fixed `auto' declaration of string that was being returned by a function. Identified by Chris Wood.
+</p>
+<p>
+<strong>export:</strong> Bug fix: incorrect return value expected from accept_ew on error; it worked OK on Solaris but not on NT. Identified by Chris Wood.
+</p>
+<p>
+<strong>sniffring:</strong> Modified argument list so that there is no more tracebuf file option -- this can be done more ellegantly with the sniffwave command. Added the possibility to sniff for message with particular logos, including wildcards. The user can specify INST_, MOD_, and TYPE_ strings desired, or omit those and only specify the ring to sniff. Therefore, "sniffring RING_NAME" is equivalent to
+</p>
+<p>
+"sniffring RING_NAME INST_WILDCARD MOD_WILDCARD TYPE_WILDCARD".
+</p>
+<p>
+<strong>q2ew:</strong> fixed bug in options.c where the return value of getopt() was char; should be int. Identified by Chris Wood.
+</p>
+<p>
+<strong>pick_ew:</strong> Modified pick_ra.c to calculate coda lengths correctly for non-100hz data. Strictly speaking, the program now works with data for which the sampling rate is a whole number, eg 57.0 samples/sec is ok, 57.3 samples/sec is not ok.
+</p>
+<p>
+<strong>eqcoda:</strong> Modified to use per-channel parameters instead of global params. Per-channel params are read from the pick_ew station file. Eqcoda uses only the SCN, CodaTerm, and ClipCount fields. ClipCount is a new field to the file, specifies the maximum zero-to-peak amplitude in counts for each channel. This field was added specifically for eqcoda to calculate clipping levels. If it is omitted, a default of 2048 is used (this is the maximum counts for a standard Eworm analog channel on a 12-bit digitizer). Pick_ew ignores this field. New configfile command "StaFile filename". If this command is ommitted, eqcoda uses all the global defaults that it used to.
+</p>
+<p>
+<strong>startstop_nt:</strong> Added display option for child process console windows. Previous options were "NewConsole" and "NoNewConsole". New option is "MinimizedConsole". Change should have no impact on current earthworm users.
+</p>
+<p>
+<strong>hyp2000:</strong> Grabbed the latest source code from Fred Klein on 9/11/00. Contains a new command "DUG" which allows one to control which component codes will use gain corrections in the duration magnitude calculation. Also includes fixes to some obscure bugs, probably never seen in normal Earthworm use of hyp2000.
+</p>
+<h2 id="DBMSRELATEDMODULES">DBMS RELATED MODULES</h2>
+<p>
+<strong>stalist_hinv2ora:</strong> fixed a bug which caused elevations over 1000 meters to be inserted incorrectly.
+</p>
+<p>
+<strong>usnsn_loc2ora:</strong> Added functionality to process an NSN deletion message. Such events are now permanently deleted from the DB.
+</p>
+<p>
+<strong>archive:</strong> Added another command line option NOSAVE to allow quick deletion of trace from the DB without saving it. Also, made it so that diagnostic error is printed to the stderr as well as the log file when the Debug flag is set.
+</p>
+<h2 id="CHANGESTOCONFIGURATIONFILESandDESCRIPTORFILES">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES</h2>
+<p>
+<strong>Module Name Length: The limit for module name length has been increased from 20 to 32 characters.</strong>
+</p>
+<p>
+<strong>gaplist.d:</strong> New optional command "MyModuleId".
+</p>
+<p>
+<strong>gaplist.desc:</strong> New "error" defined; sent to statmgr when data is received from a previously dead channel. These 2 lines were added to .desc file:
+</p>
+<p>
+err: 1 nerr: 1 tsec: 0 page: 0 mail: 3
+</p>
+<p>
+text: "Channel alive."
+</p>
+<p>
+<strong>wave_serverV.d:</strong> No new parameters, but several of the comments have been corrected to reflect the actual default values in the code. PNL 6/28/00
+</p>
+<p>
+<strong>statmgr.d:</strong> added comment that the mail program should be a full pathanme if it is specified in the .d file.
+</p>
+<p>
+<strong>eqcoda.d:</strong> New optional command "StaFile filename" to read in per-channel parameters.
+</p>
+<p>
+<strong>pick_ew station file:</strong> New column ClipCount (used by eqcoda, not pick_ew) specifies the maximum zero-to-peak amplitude in counts for each channel.
+</p>
+<p>
+<strong>All config files:</strong> now logging to standard error and standard output may be turned off by setting the LogSwitch (or similar name) to 2.
+</p>
+<h2 id="DBMSWEBRELATEDCONFIGURATIONFILES">DBMS/WEB RELATED CONFIGURATION FILES</h2>
+<p>
+<strong>getlist:</strong> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located.
+</p>
+<p>
+<strong>eqparam2html:</strong> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located.
+</p>
+<p>
+<strong>ora2rsec_gif:</strong> Added WebHost option -- should be set to the name of the machine which holds up the web pages and where the web administrator webmaster is located.
+</p>
+<h2 id="KNOWNBUGSorDEFICIENCIES">KNOWN BUGS or DEFICIENCIES</h2>
+<p>
+<strong>Window NT:</strong> In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock tick). On Solaris, the resolution is about 10 msec. This is a problem for ringtocoax, since packet delays need to be set to a few milliseconds.
+</p>
+<p>
+<strong>Adsend:</strong> Automatic restarts of adsend (using the "restartMe" line in the descriptor file) can cause an NT system to hang. Therefore, you should never use the autorestart feature with adsend, but you should bring down the entire Earthworm system if adsend needs to be restarted. Comments added to adsend.desc.
+</p>
+<p>
+<strong>statmgr:</strong> A space is needed between "tsec:" and the value. If it isn't there, things fail.
+</p>
+<p>
+<strong>threads functions:</strong> The KillThread function on WindowsNT and Solaris terminate the thread without ensuring that no mutexes are held. If a threadholds a mutex when it dies, no other thread can get that mutex.
+</p>
+<p>
+<strong>carlsubtrig:</strong> The system time must be set to GMT and ew_nt.cmd must have TZ=GMT in order for carlsubtrig to work.
+</p>
+<p>
+<strong>arc2trig:</strong> on NT, exits with horrible crash when system is stopped.
+</p>
+<p>
+<strong>ew2seisvole:</strong> on NT, exits with horrible crash when system is stopped.
+</p>
+<p>
+<strong>Wave_viewer</strong> will display fictitious 2 to 3 sample gaps when scrolling the display. This does not happen all of the time and is only visible when there are less than 200 samples on the display (2 seconds of data for 100hz data.)
+</p>
+<p>
+<strong>libsrc/util/putaway.c:</strong> there is no include file for the putaway routines, thus any errors in arguments passed to putaway routines are not checked by the compiler.
+</p>
+<p>
+<strong>Wave_serverV:</strong> If a tank file is closed by the main thread while a server thread is accessing it, the next I/O error that the server thread saw would send it to the "abort" section of _writeTraceDataAscii or _writeTraceDataRaw. Here a call to fseek() would fail and lead to an endless loop of failed fseek calls.
+</p>
+<p>
+<strong>Startstop_solaris:</strong> There MAY be a problem with the signal that startstop sends to modules during the shutdown sequence. The shutdown sequence is started (after typing "quit" to startstop or running "pau") by startstop placing a terminate message on all transport rings. Modules should see this message and start their own shutdown. After a configurable delay, startstop checks to see that all modules have exitted. Any that are still running are sent a signal to terminate them. Currently that signal is SIG_TERM. But since wave_serverV has a handler for SIG_TERM, wave_serverV sees that as essentially the same as a terminate message. 
+So if wave_serverV is having problems completing its shutdown, SIG_TERM won't do anything. The result is that startstop may give up and exit, leaving wave_serverV running. If that happens, the operator will have to terminate wave_serverV by doing "kill -9 &lt;wave_serverV-pid&gt;". 
+That may leave shared memory and semaphores stranded in the kernel: run the command "ipcs -a" to see. 
+If necessary, the stranded shared memory and semaphores may be cleaned up with the ipcrc command; must be run as root; see the man page. This problem only exists on Solaris/Unix, not on WindowsNT.
+</p>
+<h2 id="NUMBEROFRINGSLIMITEDONSOLARIS">NUMBER OF RINGS LIMITED ON SOLARIS</h2>
+<p>
+Under Solaris 2.6 (and probably other versions as well), the maximum number of shared memory segments is six. This means that on an out-of-the-box machine you can only configure six rings. If you try to configure more than that, you will see a cryptic message from tport_create about too many open files. The fix to this problem is to add the following lines to the /etc/system file, and then reboot the system.
+</p>
+<p>
+set shmsys:shminfo_shmmax = 4294967295
+</p>
+<p>
+set shmsys:shminfo_shmmin = 1
+</p>
+<p>
+set shmsys:shminfo_shmmni = 100
+</p>
+<p>
+set shmsys:shminfo_shmseg = 20
+</p>
+<p>
+set semsys:seminfo_semmns = 200
+</p>
+<p>
+set semsys:seminfo_semmni = 70
+</p>
+<p>
+This allows for 20 rings.
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v5.1?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

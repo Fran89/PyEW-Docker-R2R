@@ -1,0 +1,31 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1250">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; SunOS 5.6 sun4u) [Netscape]">
+</head>
+<body>
+
+<center><b><font size=+1>How to Configure Multiple Ethernet Adapters under
+NT</font></b>
+<br>(Lucky Vidmar, January 2002)</center>
+
+<p><br>
+<p>The presenting problem is that Windows NT appears to automatically decide
+which adapter to use for all network traffic. This seems to be governed
+by some sort of load-maximizing algorithm. To make sure that this does
+not happen to you, it is important to set up your ethernet adapters with
+care:
+<p>For any adapter connected to the internet:
+<br>&nbsp;- specify IP address
+<br>&nbsp;- specify subnet mask
+<br>&nbsp;- specify the default gateway
+<p>For all other adapters that do not go out to the internet, but are instead
+<br>used as "private" networks,
+<br>&nbsp;- specify IP address
+<br>&nbsp;- specify subnet mask
+<br>&nbsp;- LEAVE DEFAULT GATEWAY FIELD BLANK
+<p>Also, make sure that the "IP&nbsp;Forwarding"&nbsp;option is turned
+off.
+</body>
+</html>

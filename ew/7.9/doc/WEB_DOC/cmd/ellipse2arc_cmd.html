@@ -1,0 +1,49 @@
+
+
+<HTML>
+
+<HEAD>
+
+<TITLE>Earthworm Modules: Ellipse2arc commands</TITLE>
+
+</HEAD>
+
+
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+
+0000">
+
+
+
+<CENTER><H1><BR> Ellipse2arc Configuration File </H1>
+
+<I>(last revised May 13, 2000)</I></CENTER>
+
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+
+<pre>
+#
+# ellipse2arc -- convert message of TYPE_H71SUM2K into TYPE_HYP2000ARC
+#
+
+#  Basic Earthworm setup:
+#
+MyModuleId      MOD_ELLIPSE2ARC    # module id for this instance of template
+InRing      SOLN_RING          # shared memory ring for input
+OutRing         HYPO_RING          # shared memory ring for output
+HeartBeatInterval  30              # seconds between heartbeats
+LogFile            1               # 0 to completely turn off disk log file
+
+# List the message logos to grab from transport ring
+#              Installation       Module          Message Types
+GetMsgsFrom    INST_ATWC    MOD_WILDCARD         # has to be TYPE_H71SUM2K
+
+#
+# OPTIONAL: Debug level
+#
+Debug    2
+</PRE>
+<hr><address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>

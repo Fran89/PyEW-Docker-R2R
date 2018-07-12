@@ -1,0 +1,386 @@
+#!/bin/sh
+
+# This script installs the PARGPS kernel mode device driver.  It must
+# be run from the directory containing the pargpskd.o driver object
+# file.  The companion rmdriver script uninstalls the driver.
+
+
+# Display message showing how to use indriver
+
+UsageMsg ()
+{
+ echo "                                                                       "
+ echo "ERROR Command Line Usage: indriver GpsModel ParGpsDriverName [com#] [DevMajor]  "
+ echo "                                                                       "
+ echo "This utility installs the PARGPS device driver.  ParGpsDriverName must "
+ echo "be a name of the form SrParGps# where # is a small integer like 0, 1   "
+ echo "etc.  It can also be blank.                                            "
+ echo "                                                                       "
+ echo "GpsModel = GARMIN, TRIMBLE, ONCORE, or PCTIME                          "
+ echo "                                                                       "
+ echo "com# can be com1 for ttyS0, or com2 for ttyS1.  This indicates which   "
+ echo "  serial port will be used and ensures the correct permissions are     "
+ echo "  set on that port.  If this argument is not given, no permissions     "
+ echo "  will be changed.                                                     "
+ echo "                                                                       "
+ echo "DevMajor is a device number.  Default 121.  0 for dynamic selection.   "
+ echo "                                                                       "
+ echo "INDRIVER EXAMPLES: $ indriver GARMIN SrParGps0 com2                    "
+ echo "                   $ indriver TRIMBLE SrParGps1 com1 122               "
+ echo "                                                                       "
+
+ exit 1
+}
+
+
+# Display message indicating successfull installation and giving
+# suggestions about what to do next
+
+SuccessMsg ()
+{
+  echo "                                                                    "
+  echo "SUCCESS: $ParGpsDriver installed using major number $Major.           "
+  echo "                                                                    "
+  echo "You will need the exact driver name to access the PARxCH.  If you     "
+  echo "forget it, run showdriver of /sbin/lsmod | grep ^Sr to display it     "
+  echo "again.  The name of the installed PARxCH device driver is:            "
+  echo "                                                                      "
+  echo "                                                                      "
+  echo "                  $ParGpsDriver                                       "
+  echo "                                                                      "
+  echo "Next, you may want to                                                 "
+  echo "   1) source setmodel to set the default PARGPS model for applications"
+  echo "   2) run diagser to verify the PARGPS is sending serial NMEA strings "
+  echo "   3) run diag to verify the PARGPS is working correctly with PARxCH  "
+  echo "   4) see the readme.txt file for tips on how to make the driver      "
+  echo "      load automatically whenever the machine reboots                 "
+  echo "                                                                      "
+
+  # Remind them again if this was not done automatically
+
+  if [ "$ParGpsTty" == "None" ] ; then
+    echo "NOTE: If regular users plan to use the PARGPS, please be sure the   "
+    echo "desired COM port /dev/ttyS? has 'other' read permission set.        "
+    echo "                                                                    "
+  fi
+}
+
+
+# Display a message indicating installation failed
+
+FailMsg ()
+{
+  echo "FAILURE: PARGPS driver NOT installed, run rmdriver to clean up  "
+  echo "                                                                "
+  echo "See /var/log/messages and the troubleshooting section of        "
+  echo "readme.txt for hints about what went wrong and ideas on what to "
+  echo "do next.                                                        "
+  echo "                                                                "
+}
+
+# Extract com port info from the next optional argument
+
+ExtractCom ()
+{
+    if [ "com1" = "$NextArg" -o "COM1" = "$NextArg" ] ; then
+        ParGpsTty="ttyS0"
+    fi
+    if [ "com2" = "$NextArg" -o "COM2" = "$NextArg" ] ; then
+        ParGpsTty="ttyS1"
+    fi
+    if [ "com3" = "$NextArg" -o "COM3" = "$NextArg" ] ; then
+        ParGpsTty="ttyS2"
+    fi
+    if [ "com4" = "$NextArg" -o "COM4" = "$NextArg" ] ; then
+        ParGpsTty="ttyS3"
+    fi
+}
+
+
+# Extract major number info from the next optional argument
+
+ExtractMajor ()
+{
+    ParGpsMajor=$NextArg
+}
+
+
+# Check the vermagic version strings to make sure they match
+# otherwise the installation will fail.
+
+CheckVersionStrings () 
+{
+
+  # Extract version data from the modinfo output
+  # We assume the current kernel version is represented by the parport driver
+
+  VerStd=`modinfo parport | awk '/^vermagic/ { print $2 }'`
+  VerSr=`modinfo ./$ParGpsDriver.ko | awk '/^vermagic/ { print $2 }'`
+
+
+  # Display an error message if the two version strings are not equal
+
+  if [ $VerStd != $VerSr ] ; then
+    echo "                                                                    "
+    echo "FAILURE: Version mismatch                                           "
+    echo "         Kernel   uses $VerStd                                      "
+    echo "         $ParGpsDriver uses $VerSr                                    "
+    echo "                                                                    "
+    echo "The PARGPS driver has been compiled for a different version of      "
+    echo "the Linux kernel than the one you are running.  This will prevent   "
+    echo "the PARGPS driver from installing.                                  "
+    echo "                                                                    "
+    echo "You now have two choices:                                           "
+    echo "   1) Recompile the PARGPS driver (recommended)                     "
+    echo "   2) Force load the PARGPS driver                                  "
+    echo "                                                                    "
+    echo "The best option is to recompile the PARGPS driver so it does match  "
+    echo "the current kernel.  The other option is to copy the PARGPS driver  "
+    echo "to the canonical modules directory and force load it using modprobe."
+    echo "                                                                    "
+    echo "Please see the troubleshooting section in readme.txt for more       "
+    echo "details about both options.                                         "
+    echo "                                                                    "
+    exit 1
+  fi
+}
+
+
+# Set COM port permissions so regular users (ie non-root) can use the GPS
+
+SetComPermissions ()
+{
+  # No COM port specified, so give an informational message
+  if [ "$ParGpsTty" == "None" ] ; then
+    echo " "
+    echo "ATTENTION: No COM port selected.  Use"
+    echo "  chmod o+r /dev/ttyS#"
+    echo "to add other read permission to serial port #, where # is 0 to 3"
+
+  # Set user read permissions for the specified COM port
+  else
+    echo "Setting user read permissions for " $ParGpsTty
+    chmod o+r /dev/$ParGpsTty
+  fi
+}
+
+
+
+# Create the setmodel and clrmodel files.  Users can source these files to
+# set and clear the environment variable which controls the default XchModel
+
+MakeSetModel ()
+{
+
+# Update the base files so they are appropriate for the current driver
+
+sed s/SrParGps./$ParGpsDriver/g setmodelbase >setmodel
+sed s/SrParGps./$ParGpsDriver/g clrmodelbase >clrmodel
+
+
+# Make sure they are readable
+
+  chmod 666 setmodel
+  chmod 666 clrmodel
+
+
+# Save driver installation parameters in a file
+
+  DriverDataFile=$ParGpsDriver"_Data"
+
+  echo "Driver" $ParGpsDriver  "is installed with:"  > $DriverDataFile
+  echo "  GpsModel   = " $GpsModel                  >> $DriverDataFile
+  echo "  MajorNum   = " $ParGpsMajor               >> $DriverDataFile
+  echo "                                        "   >> $DriverDataFile
+   
+}
+
+
+
+
+#################### Main Indriver Code #################### 
+
+# Banner message
+
+echo "PARGPS driver installation script : Rev {12/05/07}"
+
+
+# Set up lists of allowed driver and GpsModel names
+
+DriverNameList="SrParGps0 SrParGps1 SrParGps2 SrParGps"
+ModelNameList="GARMIN TRIMBLE ONCORE PCTIME"
+
+
+# Check for proper number of command line arguments
+
+if [ $# -lt 2  -o  $# -gt 4 ] ; then
+    UsageMsg
+fi 
+
+
+
+# Process first command line argument for Gps model
+
+GpsModel=""
+for ModelName in $ModelNameList
+do
+    if [ "$ModelName" = "$1" ] ; then
+        GpsModel=$1
+        break
+    fi
+done
+
+if [ "$GpsModel" = "" ] ; then
+    echo " "
+    echo ERROR: Invalid GpsModel $1.  Please use $ModelNameList.
+    UsageMsg
+fi
+
+
+
+# Process second command line argument for driver name
+
+ParGpsDriver=""
+for DriverName in $DriverNameList
+do
+    if [ "$DriverName" = "$2" ] ; then
+        ParGpsDriver=$2
+        break
+    fi
+done
+
+if [ "$ParGpsDriver" = "" ] ; then
+    echo " "
+    echo ERROR: Invalid ParGpsDriverName $2.  Please use $DriverNameList.
+    UsageMsg
+fi
+
+
+
+# Set defaults for optional arguments
+
+ParGpsTty="None"
+ParGpsMajor=121
+
+
+# If both are given, extract both
+
+if [ $# -eq 4 ] ; then
+
+    # Get com port info
+    NextArg=$3
+    ExtractCom
+
+    # Get major number
+    NextArg=$4
+    ExtractMajor
+fi
+
+
+# If only one is given, try com first, major second
+
+if [ $# -eq 3 ] ; then
+
+    # Try getting the com port info
+    NextArg=$3
+    ExtractCom
+
+    # If that failed, the argument must be a major number
+    if [ "$ParGpsTty" == "None" ] ; then
+        ExtractMajor
+    fi
+
+fi
+
+
+
+# Display info about any drivers already installed
+
+./showdriver
+
+
+# Run some error checks
+# Comment this out if using modprobe with force-vermagic below
+
+CheckVersionStrings   # Does the PARGPS version match the current kernel ?
+
+
+
+# Check to see if driver already exists
+
+Major=`cat /proc/devices | awk "\\$2==\"$ParGpsDriver\" {print \\$1}"`
+
+if [ "$Major" != "" ] ; then
+    echo PARGPS device already exists at $Major.  Please run rmdriver first.
+    exit 1
+fi
+
+
+# Remove stale driver node if it exists
+
+if [ -e /dev/$ParGpsDriver ] ; then
+    rm -f /dev/$ParGpsDriver
+fi
+
+
+
+# Install the module, passing on arguments
+#
+# If not using default device node of 121, enter new device number on the
+# command line.  This will fill $ParGpsMajor with the desired major number.
+# Specifying 0 allows the major number to be selected dynamically.
+#
+# If the PARGPS driver version does not match the kernel version,
+# you should really recompile the driver.  If instead you want to force 
+# load the driver, you must copy it to your modules directory, run
+# depmod, comment out the CheckVersionStrings line above and replace
+# the insmod line below (no blank lines allowed) with the following
+# modprobe line:
+#
+#if ! /sbin/modprobe --force-vermagic $ParGpsDriver \
+
+if ! /sbin/insmod ./$ParGpsDriver.ko \
+              pargps_name=$ParGpsDriver pargps_major=$ParGpsMajor ; then
+        echo PARGPS device $ParGpsDriver failed insmod install
+	FailMsg
+        exit 1
+fi
+
+
+# Get actual major number (col 1) from /proc/devices (col 2 is device name)
+
+Major=`cat /proc/devices | awk "\\$2==\"$ParGpsDriver\" {print \\$1}"`
+
+
+
+# Make new character node in /dev and set correct group and permissions
+# Since distributions do it differently, look for wheel or use staff for group
+
+mknod /dev/$ParGpsDriver c $Major 0
+
+if grep -q '^staff:' /etc/group; then
+    group="staff"
+else
+    group="wheel"
+fi
+mode=666
+
+chgrp $group /dev/$ParGpsDriver
+chmod $mode  /dev/$ParGpsDriver
+
+
+
+# Set COM port permissions
+
+SetComPermissions
+
+
+# Make setmodel file to be sourced or included in ~/.bashrc
+
+MakeSetModel
+
+
+# Indicate successful install and
+# suggest running setmodel to indicate the default PARGPS
+
+SuccessMsg

@@ -1,0 +1,77 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5333 2013-01-31 17:53:14Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.5  2006/11/21 23:04:43  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.4  2006/11/21 22:05:21  stefan
+#     cl to $(CC) $(GLOBALFLAGS)  and include <ntwin32.mak>
+#
+#     Revision 1.3  2006/10/06 15:49:06  stefan
+#     cflags ntwin32.mak
+#
+#     Revision 1.2  2003/05/06 20:54:51  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 17:27:23  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#                    Nmake File For Fir  - Windows NT version
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+!include <ntwin32.mak>
+
+APP = fir
+
+OBJS = fir.obj \
+       bandcom.obj \
+       configure.obj \
+       filt1scn.obj \
+       firfilt.obj \
+       firthrd.obj \
+       hqr.obj \
+       initpars.obj \
+       initsta.obj \
+       matchscn.obj \
+       readcnfg.obj \
+       readewh.obj \
+       remeznp.obj \
+       resetsta.obj \
+       setfilt.obj \
+       statrpt.obj \
+       zeroes.obj \
+       $L\swap.obj \
+       $L\mem_circ_queue.obj \
+       $L\libew_mt.lib 
+
+compflags = /c /W3 /MT /nologo
+
+linkflags = /nologo
+
+libs = libcmt.lib
+
+$B\$(APP).exe: $(OBJS)
+   link $(linkflags) $(libs) $(OBJS) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(CFLAGS) $(cflags) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\fir*

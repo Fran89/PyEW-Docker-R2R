@@ -1,0 +1,215 @@
+.TH selectfile 4 "16 September 1997"
+.IX selectfile
+.SH NAME
+selectfile - selection criteria for seismic data
+.SH DESCRIPTION
+Select files permit a user to define exact matching descriptions
+that will be used by various programs to pick which data records
+(or other seismic information) will be targetted from a data stream.
+.LP
+Select files have many parts.  The basic part of a select file is
+called a 
+.IR chain .  
+Most select files only have one 
+.IR chain .  
+A single 
+.I chain 
+contains descriptions of what 
+network/station/location/channel/date-time
+groupings that are to be considered interesting for selection.
+.LP
+Multiple 
+.I chains 
+can combined together to make multiple requests
+in one select file.  
+.LP
+Individual 
+.I chains 
+can be tagged.  These tags permit the user
+to label individual requests.  These tags can then be presented
+back to the user (by software that supports this feature) along with 
+actual data, permitting the user to make very complex requests
+and build post-processing programs that understand  and exploit 
+the nature of the original requests.
+.SH SYNTAX
+Selectfiles are comprised of any number of selection
+specifications that appear one to a line.  
+.SS "STATION={+ or -}{network code}/{station code}"
+.LP
+The station selector adds (+) or removes (-) stations from the list of
+stations to be considered for selection.  
+.I "Network and station codes may include wildcards."
+If the +/- codes are omitted, they will default to add (+).
+Multiple network/station lines can be present to specify
+a complex set of stations.  
+.LP
+This creates two sets of stations (possibily with wildcards): the
+.I "add-set"
+and the 
+.IR "subtract-set" .
+Data selected will be the set
+specified by the
+.I union
+of the all network/stations in the 
+.IR "add-set" ,
+with the 
+.I union
+of all of the network/stations in the
+.I "subtract-set"
+subtracted.  This resultant set is called the 
+.IR "station-set" .
+.SS "CHANNEL={+ or -}{location code}/{channel code}"
+.LP
+This channel selector adds (+) or removes (-) stations from the list
+of stations to be considered for selection.
+.I "Location and channel codes may include wildcards."
+If the +/- codes are omitted, they will default to add (+).
+.LP
+This creates two sets of channels (possibily with wildcards): the
+.I "add-set"
+and the 
+.IR "subtract-set" .
+Data selected will be the set
+specified by the
+.I union
+of the all location/channels in the 
+.IR "add-set" ,
+with the 
+.I union
+of all of the location/channels in the
+.I "subtract-set"
+subtracted.  This resultant set is called the 
+.IR "channel-set" .
+.SS "DATE={start-date}/{end-date}"
+.LP
+This selector adds date ranges into the selection sets.
+DCC date formats are of the following form:
+.IR MMMM,JJJ,HH:MM:SS.MMM ,
+where MMMM is the year (with century), JJJ is the Day-of-the-Year (Jan 1 = 1),
+HH is the hour (0-23), MM is minutes (0-59), SS is seconds (0-59), and
+MMM is the fractional milliseconds (0-999).  The date can be truncated
+at any punctuation mark after the date.
+.LP
+The 
+.I union
+of all of the dates selectors specified result in the 
+.IR "date-set" .  
+If no dates are selected, the
+.I "date-set" 
+set defaults to all.
+.SS "TAG=tag1,tag2,tag3..."
+The tag selector adds labels to a chain.  This information can be
+returned with the resultant data when it is selected.  It is
+possible that multiple chains will select the same record, in this
+case, multiple tags might be returned (NOT IMPLEMENTED YET).
+.SS chains
+Individual
+.I chains
+are separated by a single forward slash (/) character which
+appears in the left column by itself.  This separator can
+be omitted if there is only one chain present.  The end of file is
+specified with a double forward slash (//).
+.SH "SET THEORY"
+The records which are determined to be
+.I interesting
+by the selection algorithm for each
+.I chain
+are the set
+.I intersection
+of the
+.IR "station-set" ,
+the
+.IR "channel-set" ,
+and the
+.IR "date-set" .
+The data returned by the entire request for the select file
+is the 
+.I union
+of all sets returned by each
+.IR chain .
+.SH EXAMPLES
+Select all long period data from all IRIS/USGS stations (except ANMO) for 1994:
+.LP
+.RS
+.B "STATION=+IU/*"
+.br
+.B "STATION=-IU/ANMO"
+.br
+.B "CHANNEL=+*/L*"
+.br
+.B "DATE=1994,1/1995,1"
+.br
+.B "TAG=MAIN"
+.br
+.B "//"
+.RE
+.LP
+All of the data from ANMO (no TAGs):
+.LP
+.RS
+.br
+.B "STATION=+IU/ANMO"
+.br
+.B "CHANNEL=+*/*"
+.br
+.B "//"
+.RE
+.LP
+A complex multi-chain query involving multiple events and windows.
+.LP
+.RS
+.br
+.B "STATION=+IU/ANMO"
+.br
+.B "CHANNEL=+*/LH*"
+.br
+.B "DATE=1997,200,20:00/1997,201,12:00"
+.br
+.B "TAG=EVENT1_ANMO_LH"
+.br
+.B "/"
+.br
+.B "STATION=+IU/ANMO"
+.br
+.B "CHANNEL=+*/B*"
+.br
+.B "DATE=1997,201,05:00/1997,201,06:00"
+.br
+.B "TAG=EVENT1_ANMO_BH"
+.br
+.B "/"
+.br
+.B "STATION=+IU/KIP"
+.br
+.B "CHANNEL=+*/LH*"
+.br
+.B "DATE=1997,200,20:00/1997,201,12:00"
+.br
+.B "TAG=EVENT1_KIP_LH"
+.br
+.B "/"
+.br
+.B "STATION=+IU/KIP"
+.br
+.B "CHANNEL=+*/B*"
+.br
+.B "DATE=1997,201,05:30/1997,201,06:30"
+.br
+.B "TAG=EVENT1_KIP_BH"
+.br
+.B "//"
+.RE
+.SH HISTORY
+.IR selectfile
+evolved from an earlier format on the VAX DCC.  It was
+augmented to add support for network codes and locations
+when it was brought to the SUN.  The TAG facility was
+developed to support the creation of event SEED volumes.
+.SH "SEE ALSO"
+.B dumpseed(1) 
+.SH AUTHOR
+Public Domain Software by Scott Halbert - Allied Signal Technical
+Services Corporation under contract to the Albuquerque Seismological
+Laboratory - United States Geological Survey - Department of Interior,
+United States, North American Continent, Earth/Sol 3, Sagitarius Arm of
+Milky Way Galaxy.

@@ -1,0 +1,207 @@
+###################
+###################
+Wave Viewer User Doc
+
+
+wave_viewer_user_doc.txt
+
+A brief user doc for wave_viewer
+
+
+###################
+Buttons  
+
+FileOpen (yellow folder):
+Brings up a dialog box to open a trigger file.  Opening a trigger file will
+cause Wave Viewer to parse the trigger file, and create a tree of quakes
+and triggers.  This tree can be accessed by choosing "Function->Trigger"
+from the Menu Bar.
+
+Print (printer):
+Brings up a print dialog box.  Wave Viewer does not support printing.
+
+Help (Question Mark '?'):
+Brings up the "About Wave Viewer" dialog box.
+
+Previous Trigger (minus '-'):
+Goes to the previous trigger in the trigger list.  See FileOpen.
+
+Next Trigger (plus '+'):
+Goes to the next trigger in the trigger list.  See FileOpen.
+
+Decrease Display Time (<->):
+Cuts the time shown on the display in half.  So if there were 20 seconds of
+time on the display, then after clicking this button, there would be 10.
+The start time of the display remains the same.
+
+Increase Display Time (>-<):
+Doubles the time shown on the display.  So if there were 20 seconds of
+time on the display, then after clicking this button, there would be 40.
+The start time of the display remains the same.
+
+Decrease Display Scale ("Decrease Display Time rotated 90 degrees"):
+Cuts the scale for each trace on the display in half.  So if the scale
+for the first trace on the screen was +/- 80 counts, before the button
+was pressed then it would be +/- 40 counts afterwards.  This button 
+affects every channel on the display.
+
+Increase Display Scale ("Increase Display Time rotated 90 degrees"):
+Doubles the scale for each trace on the display.  So if the scale
+for the first trace on the screen was +/- 80 counts, before the button
+was pressed then it would be +/- 160 counts afterwards.
+
+Go To Oldest Data (|<-):
+Updates the menu and moves the display so that the start time of the
+display is the oldest data currently available in the wave_server
+tank of the first channel on the screen.  Moves display to the oldest
+data in the wave_server tanks.  (*Note*, the first channel on the
+screen is used for reference.   So if the oldest data in the first 
+channel is at time 10, the second at time 11, and the third at time 9,
+then the display will be moved to time 10.
+
+Go To Newest Data (->|):
+Updates the menu and moves the display so that the end time of the
+display is the newest data currently available in the wave_server
+tank of the first channel on the screen.  Moves display to the newest
+data in the wave_server tanks.  (*Note*, the first channel on the
+screen is used for reference.   So if the newest data in the first 
+channel is at time 10, the second at time 11, and the third at time 9,
+then the display will be moved to time 10.
+
+Auto-Scroll (->):
+Automatically scroll the display continuously, in sink with real time.
+When Wave Viewer is in auto-scroll mode it continues to scroll.  It scrolls
+1 second for each second of clock time that passes.
+
+Add A Trace (1 line to 2 lines)
+Increases the number of channels on the display by 1.
+
+Drop A Trace (2 lines to 1 line)
+Decreases the number of channels on the display by 1.
+
+Bias (BIAS):
+The bias button causes the calibration for the band(channel) to be redone.  
+This involves three different sets of behavior depending upon how 
+much data wave_viewer has recorded for the given channel: 
+  1) If wave_viewer has less than 30 samples of data
+	The bias is recalculated, and the scale is reset to 8 * stddev of the data points.
+  2) If wave_viewer has less than 60 seconds of data
+	The bias is recalculated, and the scale is reset to 2 * stddev of the data points.
+  3) If wave_viewer has atleast   60 seconds of data
+	Only the bias is recalculated.
+*Note* If the Scale has been set in the config file, then wave_viewer will
+never automatically adjust the scale, no matter how much data is available.
+
+
+###################
+Block Colors
+
+There is an area in the header of each trace channel  (the area
+vertically between the '+' and '-') that the wave_viewer will fill
+with a certain color indicating that that trace is blocked because of
+a particular problem.  The colors/problems are given below:
+
+RED:     !!!!Inidicates serious error with the tank!!!!!
+BLUE:    Indicates that data was requested to the right of the tank
+         (this color is seen frequently when the viewer is pushed too
+          close to the tank edge)
+GREEN:   Indicates that no data was available for the channel,
+         or an error occurred while retrieving data.
+PURPLE:  Unknown error state!
+
+The only color that should be seen during normal operation (other
+than clear, is BLUE.  Any other color probably indicates an error
+with the tank within the wave_server.)
+
+
+###################
+Status Bar
+
+The Wave Viewer status bar is broken up into 6 segments:
+1)  Status Segment
+	The status segment, contains the current status of the program.
+	In auto-scroll mode, the program is frequently attempting to 
+	retrieve data from a wave_server.  At this time, the current
+	data request to the wave_server is posted in this segment.
+	If a wave_viewer is very busy in auto-scroll mode, then the
+	only thing you may see in this segment is requests.  When 
+	wave_viewer has retrieved all desired data, it will display
+	a status of "done" in this segment.  It will also list serious
+	errors here.
+
+2)  Station Info Segment
+	When the user places the mouse over the "header area" of a given
+	channel, the information for that channel will be displayed in
+	this segment.  The SCN are displayed, along with the Scale and
+	the Bias.  The SampleRate is not displayed here, but is displayed
+	in the channel "header area" if there is ample room.  The format is
+	"<STA> <CHAN> <NET> +/- <SCALE> B:<BIAS>"
+
+3)  Queue Info Segment
+	This segment displays how many data requests are currently in the
+	request queue.  The format is
+	"Queue: <QUEUE DEPTH>"
+
+4)  Data Received Segment
+	This segment displays the amount of data received over the socket from
+	the wave_server.  Each time wave_viewer receives a new packet from the
+	server, it writes the size of the packet to this segment.  When wave_server
+	has received a completed message from the wave_server, then it prints
+	the size of the completed message, along with a prefix denoting the type
+	of message.  A completed message is comprised of one or more packets.
+        Receive buffer notation
+	*XXXX  indicates that a complete SCN reply was received from the server
+	+XXXX  indicates that a complete menu reply was received from the server
+	-XXXX  indicates that a complete NOT UNDERSTOOD reply was received from the server.
+	Examples:
+	  	"56"	Wave Viewer received a packet of 56 bytes from the server
+		"*388"  Wave Viewer received a completed message (a Reply to a 
+				request for data from a channel) of 388 bytes.
+		"+1608" Wave Viewer received a completed message (a Reply to a 
+				request for a menu) of 1608 bytes.
+		"-388"  Wave Viewer received a completed message (unknown 
+				message type) of 388 bytes.
+
+
+5)  Time Segment
+	When the user moves the mouse over an area of trace on the screen, this segment 
+	displays the time for the location of the mouse pointer.
+	format:	YYYY MMMDD HHMM SS.DD
+
+6)  Trigger Segment
+	When the user is viewing an Earthworm trigger message, this segment shows the 
+	time of the current trigger.
+
+###################
+Colored Bars 
+
+Amongst the waveform data, two sets of colored bars can appear: RED or BLUE.
+
+RED
+If a Trigger file was loaded into wave_viewer, then a RED bar can appear amongst 
+the waveforms indicating the trigger time listed in the file.
+
+BLUE
+Thin BLUE bars within the waveforms mark the starttime and endtime 
+of the data for a wave server channel, as specified in a wave server MENU.
+Wave_viewer requests a wave_server menu only at select times:
+    Startup
+    Goto Time X  (MENU->Function->Time)
+    Goto End Of Tank (   ->|   button)
+    Goto Start Of Tank (  |<-  button)
+
+
+If you start up wave_viewer and scroll to the right(forward in time),
+you will see the "blue lines" for the channels.  If you are acquiring data
+into your wave server, then after a while, the data will continue past
+the blue markers, because the tank boundaries are moving forward
+in time, while the marker is only updated when the menu is refreshed,
+as described above.
+
+
+
+
+###################
+    THE END
+###################
+###################

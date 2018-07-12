@@ -1,0 +1,7 @@
+
+ewmseedarchiver:
+
+Read MSEED messages from an Earthworm transport ring and write the 
+miniSEED records to the file system in flexible file layout.
+
+See the ewmseedarchiver.d file for further description of options.

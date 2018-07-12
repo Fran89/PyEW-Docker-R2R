@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Earthworm Modules: RayLoc_ew Configuration File</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ link="#0000ee" vlink="#551a8b" alink="#ff0000">
+<center>
+<h1>Earthworm Modules: <br>
+RayLoc_ew Configuration File </h1>
+<i>(last revised 13 July, 2004)<br>
+<br>
+</i>
+<div style="text-align: left;">On startup, rayloc_ew reads the
+configuration file named on the command
+line.&nbsp;
+In the control file, lines may begin with a valid rayloc_ew commands
+(listed below).<br>
+<br>
+<span style="font-weight: bold;">#</span> marks the line as a comment
+(example: # This is a comment).<br>
+<br>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!). Blank lines are also permitted in
+the control file.<br>
+<span style="font-family: monospace;"><br>
+</span>
+<h2><a name="function">1. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by liss2ew, grouped by the function
+they influence. Most of the commands are required; they may be
+specified in any order in the control file.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --><br>
+</p>
+Earthworm system setup<br>
+<pre>&nbsp;               <a href="#MyModId">MyModId</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   required<br>                <a
+ href="#HeartBeatInt">HeartbeatInt</a>&nbsp;&nbsp;&nbsp;&nbsp; required<br>                <a
+ href="#InRing">InRing</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; required <br>                <a
+ href="#OutRing">OutRing</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; required<br>                <a
+ href="#Debug">Debug</a>            optional<br><br></pre>
+Rayloc processing parameters:<br>
+<pre><br>                <a href="#StaFile">StaFile</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; required<br>                <a
+ href="#WorkDir">WorkDir</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; required<br><br>                <a
+ href="#hold_params">hold_params</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0 <br>                <a
+ href="#fix_depth">fix_depth</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 1&nbsp;&nbsp; <br>                <a
+ href="#use_PKP">use_PKP</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 1&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#use_depth_ph">use_depth_ph</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 1&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#use_S_ph">use_S_ph</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 1&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#pick_weight_interval">pick_weight_interval</a>&nbsp; optional; default if absent = 0&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#Rmin">Rmin</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Rmax">Rmax</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br><br>                <a
+ href="#Dx">D1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#Dminx">Dmin1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp;&nbsp; <br>                <a
+ href="#Dmaxx">Dmax1</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  optional; default if absent = 180&nbsp; <br><br>                <a
+ href="#Dx">D2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Dminx">Dmin2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp; <br>                <a
+ href="#Dmaxx">Dmax2</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   optional; default if absent = 180&nbsp;&nbsp; <br><br>                <a
+ href="#Dx">D3</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Dminx">Dmin3</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0 <br>                <a
+ href="#Dmaxx">Dmax3</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   optional; default if absent = 180&nbsp;&nbsp; <br><br>                <a
+ href="#Dx">D4</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Dminx">Dmin4</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Dmaxx">Dmax4</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   optional; default if absent = 180&nbsp; <br><br>                <a
+ href="#Dx">D5</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp;&nbsp; <br>                <a
+ href="#Dminx">Dmin5</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; optional; default if absent = 0&nbsp; <br>                <a
+ href="#Dmaxx">Dmax5</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   optional; default if absent = 180&nbsp; <br><br></pre>
+<h2><a name="alphabet">2. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. Default values
+and example commands are listed after each command description.
+</a></p>
+<pre><a name="alphabet"><b><br>command <font color="red">arg1</font>                                 processed by             in function<br></b></a></pre>
+<hr><!-- ADD HERE: all commands; below is a sample command blank: -->
+<a name="Dx"><!-- command name as anchor inside quotes --> </a>
+<pre><b>D1,D2,D3,D4,D5  <span style="color: rgb(255, 102, 102);"> 0 or 1 </span>   rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><br><!-- command args ... -->           <br></pre>
+<blockquote> Pick weight distance interval flag(s) (there are five
+parameters 1=5) (TRUE = 1/FALSE = 0) (def = 0).
+These work in conjuction with the Dmin and Dmax parameters.  They
+provide 5 optional distance intervals over which arrivals are essentially
+zero weighted.
+  <pre><br>Default:  0<br>Example:  D1 0<br>          D2 1<br>          D4 1<br></pre>
+</blockquote>
+<hr>
+<a name="Debug"><!-- command name as anchor inside quotes --> </a>
+<pre><b>Debug                                           rayloc_ew_GetConfig              Earthworm setup <br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Turns on debug
+logging for rayloc_ew.
+  <pre><!-- Default and example go here   --><br>Default:  no debug logging<br>Example:  Debug<br></pre>
+</blockquote>
+<hr>
+<a name="Dminx"><!-- command name as anchor inside quotes --> </a>
+<pre><b>Dmin1, Dmin2, Dmin3, Dmin4 Dmin5 <span
+ style="color: rgb(255, 102, 102);">degrees</span>                        rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Lower bound of
+distance interval(s) in which weights are zero (default 0). Note that
+in order to use this parameter, a corresponding Dx should be turned ON.<br>
+  <pre><!-- Default and example go here   --><br>Default:  0<br>Example:  Dmin1 0<br>          Dmin2 10<br>          Dmin5 20<br></pre>
+</blockquote>
+<hr>
+<a name="Dmaxx"><!-- command name as anchor inside quotes --> </a>
+<pre><b>Dmax1, Dmax2, Dmax3, Dmax4, Dmax5    <span
+ style="color: rgb(255, 102, 102);">degrees </span>                        rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here -->Upper bound of
+distance interval(s) in which weights are zero (default
+180). Note that in order to use this parameter, a corresponding Dx
+should
+be turned ON.<br>
+  <br>
+  <pre><!-- Default and example go here   --><br>Default:  0<br>Example:  Dmax1 180<br>          Dmin2 170<br>          Dmin5 160</pre>
+</blockquote>
+<hr>
+<a name="fix_depth"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">fix_depth</span><b>       <span
+ style="color: rgb(255, 102, 102);">0 or 1 </span>                        rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Use fixed depth in
+inversion: TRUE (1) or FALSE(0).
+  <pre><!-- Default and example go here   --><br>Default:  1<br>Example:  fix_depth 1<br></pre>
+</blockquote>
+<hr>
+<a name="HeartBeatInt"><!-- command name as anchor inside quotes --> </a>
+<pre><b>HeartBeatInt <font color="red">nsec</font>                         rayloc_ew_GetConfig             Earthworm Setup<br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Defines the number
+of seconds, <font color="red">nsec</font> between TYPE_HEARTBEAT
+messages issued by rayloc_ew.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  HeartBeatInterval 30<br></pre>
+</blockquote>
+<hr>
+<a name="hold_params"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold; color: rgb(255, 102, 102);">hold_params</span><b
+ style="color: rgb(255, 102, 102);">   0 or 1 </b><b>                        rayloc_ew_GetConfig             </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote>Hold latitude, longitude, depth, and origin time flag
+(default = FALSE (0).
+  <pre><!-- Default and example go here   --></pre>
+  <pre>Default:  0<br>Example:  hold_params 1<br></pre>
+</blockquote>
+<hr><a name="InRing"><!-- command name as anchor inside quotes --> </a>
+<pre><b>InRing <font color="red">ring</font>                            rayloc_ew_GetConfig              Earthworm setup<br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Tells rayloc_ew
+which shared memory region to use for input. <font color="red">ring</font>
+is a character
+string (valid strings are listed in earthworm.d) that relates (in
+earthworm.d) to a
+unique number for the key to the shared memory region.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  InRing HYPO_RING</pre>
+</blockquote>
+<hr>
+<a name="MyModId"><!-- command name as anchor inside quotes --> </a>
+<pre><b>MyModId <font color="red">mod_id</font>                        rayloc_ew_GetConfig              Earthworm setup<br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Sets the module id
+for labeling all outgoing trigger, heartbeat, and error messages. <font
+ color="red">mod_id</font> is a character string (valid strings are
+listed in earthworm.d) that relates to a unique single-byte number.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  MyModuleId MOD_RAYLOC_EW</pre>
+</blockquote>
+<hr>
+<a name="OutRing"><!-- command name as anchor inside quotes --> </a>
+<pre><b>OutRing <font color="red">ring</font>                             rayloc_ew_GetConfig              Earthworm setup<br></b><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> Tells rayloc_ew
+which shared memory region to use for output. <font color="red">ring</font>
+is a character
+string (valid strings are listed in earthworm.d) that relates (in
+earthworm.d) to a
+unique number for the key to the shared memory region.
+  <pre><!-- Default and example go here   --><br>Default:  none<br>Example:  OutRing PICK_RING<br></pre>
+</blockquote>
+<pre><br><br></pre>
+<hr><a name="pick_weight_interval"><!-- command name as anchor inside quotes -->
+</a>
+<pre><span style="font-weight: bold;">pick_weight_interval</span><b><span
+ style="font-weight: bold;"> </span><span
+ style="color: rgb(255, 102, 102);">0 or 1</span>                  rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote>Pick weight residual interval flag (TRUE/FALSE) (default =
+FALSE)
+  <pre><!-- Default and example go here   --><br>Default:  0<br>Example:  <span
+ style="font-weight: bold;">pick_weight_interval   </span>1<br></pre>
+</blockquote>
+<hr><a name="Rmin"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">Rmin</span><b> <font color="red">seconds</font>                  rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... --></pre>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp; Lower bound of residual interval
+in which weights can be non-zero (default = 0). To activate this
+parameter pick_weight_interval must be 1.&nbsp; <br>
+<blockquote>
+  <pre>Default:  0<br>Example:  Rmin 0.1<br></pre>
+</blockquote>
+<hr><a name="Rmax"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">Rmax</span><b> <font color="red">seconds</font>                  rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here -->Upper bound of
+residual interval in which weights can be non-zero (default = 0). To
+activate this parameter pick_weight_interval must be 1.<br>
+  <br>
+  <pre>Default:  0<br>Example:  Rmax 1<br></pre>
+</blockquote>
+<hr><a name="StaFile"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">StaFile</span><b><span
+ style="color: rgb(255, 102, 102);"> filename</span>                  rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here -->
+  <pre><!-- Default and example go here   --></pre>
+File with stations information in GLASS format. Here is an example of
+few lines<br>
+  <pre>AAE&nbsp;&nbsp;&nbsp; 9.0291N&nbsp; 38.7655E 2442 IU Addis Ababa, Ethiopia<br>AAK&nbsp;&nbsp; 42.6390N&nbsp; 74.4940E 1645 II Ala-Archa, Kyrgyzstan<br>AAM&nbsp;&nbsp; 42.2997N&nbsp; 83.6561W&nbsp; 249 US Ann Arbor, Michigan, USA<br>ABKT&nbsp; 37.9303N&nbsp; 58.1188E&nbsp; 678 II Alibek (Geyokcha), Turkmenistan<br>ABL&nbsp;&nbsp; 34.8508N 119.2208W 1981 NC Mount Abel, California, USA</pre>
+The sample file is provided with the rayloc_ew distribution. This file
+used to match the station names from TYPE_LOC_GLOBAL <br>
+with their 3D coordinates (which is not a part of the TYPE_LOC_GLOBAL
+message).<br>
+  <pre><br>Default:  none<br>Example:  StaFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "/home/ilya/rayloc_work/glass_station_list.txt"</pre>
+</blockquote>
+<hr><a name="use_PKP"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">use_PKP</span><b><span
+ style="font-weight: bold;"> </span><span
+ style="color: rgb(255, 102, 102);">0 or 1 </span>                 rayloc_ew_GetConfig              </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote>Use or not PKP phases.<br>
+  <pre><!-- Default and example go here   --><br>Default:  1<br>Example:  use_PKP<span
+ style="font-weight: bold;"> </span>0<br></pre>
+</blockquote>
+<hr><a name="use_depth_ph"><!-- command name as anchor inside quotes -->
+</a>
+<pre><span style="font-weight: bold;">use_depth_ph</span><b><span
+ style="font-weight: bold;"> </span><span
+ style="color: rgb(255, 102, 102);">0 or 1</span>                 rayloc_ew_GetConfig             </b><span
+ style="font-weight: bold;"> processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote>Use or not depth phases.<br>
+  <pre><!-- Default and example go here   --><br></pre>
+  <br>
+  <pre><!-- Default and example go here   --><br>Default:  1<br>Example:  use_depth_ph<b> </b>0<br></pre>
+</blockquote>
+<br>
+<hr><a name="use_S_ph"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">use_S_ph</span><b><span
+ style="font-weight: bold;"> </span><span
+ style="color: rgb(255, 102, 102);">0 or 1 </span>                 rayloc_ew_GetConfig             </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<pre><!-- Default and example go here   --></pre>
+Use or not S phases.<br>
+<pre><br><br><!-- Default and example go here   --><br>Default:  1<br>Example:  use_S_ph<b> 0</b><br></pre>
+<hr>
+<a name="WorkDir"><!-- command name as anchor inside quotes --> </a>
+<pre><span style="font-weight: bold;">WorkDir</span><b><span
+ style="font-weight: bold;"> <span style="color: rgb(255, 102, 102);">dirname</span></span>                  rayloc_ew_GetConfig             </b><span
+ style="font-weight: bold;">processing parameters</span><!-- command args ... -->           <br></pre>
+<blockquote><!-- command description goes here --> This is the location
+of the work directory for rayloc_ew. rayloc_ew stores temp files in
+there. <br>
+Three model files should be placed in this directory before processing:<br>
+1) tau.table<br>
+2) ak135.hed<br>
+3) ak135.tbl<br>
+  <pre><!-- Default and example go here   --></pre>
+Those files are prebuilt and shipped with rayloc_ew distribution.<br>
+  <pre><br>Default:  none<br>Example:  WorkDir        "/export/home/isti/model"<br></pre>
+  <br>
+</blockquote>
+<hr><br>
+<h2><a name="sample_config"><br>
+3. Sample Configuration File</a></h2>
+<br>
+<pre>
+#
+#
+#                     rayloc_ew Configuration File
+#
+MyModId        MOD_RAYLOC_EW   # This instance of rayloc_ew
+StaFile        "/gaia/home/mwithers/Projects/EWSupport/Working/run_smeagol/model/glass_station_list.txt"   # File containing station name/pin# info
+WorkDir        "/gaia/home/mwithers/Projects/EWSupport/Working/run_smeagol/model"         # Directory where model and tmp files are stored
+InRing           RAY_RING     # Transport ring to find TYPE_LOC_GLOBAL messages,
+OutRing          RAY_RING     # Transport ring to write TYPE_RAYLOC messages
+HeartbeatInt            30     # Heartbeat interval, in seconds,
+Debug                    1     # If 1, print debugging message
+#
+#
+# Parameters/flags used to control processing of rayloc
+# Default values are provided in comments and used if any
+# of the parameters in to configuration is undefined
+#
+hold_params           0    # Hold latitude, longitude, depth, and origin time flag (def = 0)
+fix_depth             1    # Fix depth (def = 1)
+use_PKP               1    # Use PKP phases (def = 1)
+use_depth_ph          1    # Use depth phases (def 1)
+use_S_ph              1    # Use S phases (def = 1)
+pick_weight_interval  0    # Pick weight residual interval flag (T/F) (def = 1)
+Rmin                  0    # Lower bound of residual interval in which weights can be non-zero (def = 0)
+Rmax                  0    # Upper bound of residual interval in which weights can be non-zero (def = 0)
+#
+D1                    0    # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin1                  0    # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax1                180    # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D2                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin2                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax2               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D3                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin3                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax3               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D4                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin4                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax4               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+D5                    0   # Pick weight distance interval flag(s) (T/F) (def = 0)
+Dmin5                 0   # Lower bound of distance interval(s) in which weights are zero (def = 0)
+Dmax5               180   # Upper bound of distance interval(s) in which weights are zero (def = 180)
+#
+</pre>
+    <CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/rayloc_ew_ovr.html">rayloc_ew Overview</A>
+</CENTER>
+
+    <hr>
+    <address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</div></center></BODY>
+</HTML>
+

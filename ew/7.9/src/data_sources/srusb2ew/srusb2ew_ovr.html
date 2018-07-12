@@ -1,0 +1,170 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Earthworm Modules: srusb2ew overview</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+Srusb2ew Overview</h1></center>
+
+<center><i>(last revised 05 March, 2010)</i></center>
+
+<p>
+
+<b>Introduction</b><br><br>
+
+srusb2ew allows the Symmetric Research USBxCH family of low cost 24
+bit data acquisition systems to send data to an Earthworm system
+running either Windows (WinXP/Win7) or Linux.  USBxCH models with 4
+and 8 channels are supported.  Very accurate timestamping of the
+acquired data results when an optional GPS antenna is used with the
+USBxCH A/D.  Timestamping using the PC system time set by NTP is also
+available.
+
+<br><br>
+
+srusb2ew reads configuration information like sampling rate and USBxCH
+model from an Earthworm style .d configuration file and then opens
+drivers and initializes hardware for the USBxCH and optional GPS
+antenna.  Then it starts the A/D and goes into an infinite loop
+acquiring data, converting it to Earthworm tracebuf2 format and
+writing it out to the specified Earthworm ring.  On each pass through
+the loop, it also sends a heartbeat message to the Earthworm ring.
+
+<br><br>
+
+In order to run srusb2ew, you need a working Earthworm system, a
+USBxCH A/D board, and the USBxCH device driver and library software
+that comes with the board and is also available free from the
+Symmetric Research website
+
+<a href="http://www.symres.com/index.htm"
+title="Symmetric Research manufactures high precision A/D's">www.symres.com</a>.
+
+For accurate timing information, a GPS antenna is also recommended.
+
+
+<br><br><b>Setup</b><br><br>
+
+Follow any instructions given in the official documentation to get
+Earthworm up and running.
+
+<br><br>
+
+The first step in adding USBxCH data is to install the USBxCH
+software.  This can be done by unpacking the usbw2k.zip or usblnx.tar
+file and running the included install script to copy the SR software
+to the \SR\USBXCH directory.  Linux users should substitute
+/usr/local/SR/USBXCH for references to the \SR\USBXCH directory.
+
+<br><br>
+
+You will also need to install the USBxCH device driver.  Under
+Windows, this is done automatically via the Add New Hardware wizard
+and Plug 'n' Play.  Under Linux, use the indriver utility the Driver
+subdirectory.  See the readme file in the \SR\USBXCH\Driver or
+/usr/local/SR/USBXCH/Driver directory for more information.
+
+<br><br>
+
+Then hook up the A/D hardware.  Make sure it is working correctly by
+running the diagnostic program in the \SR\USBXCH\Utilities\Diag
+directory.  The acquisition programs in the \SR\USBXCH\Scope and
+\SR\USBXCH\DVM directories can also help in checking out a new
+system.
+
+<br><br>
+
+To add an (optional but recommended) GPS antenna purchased from
+Symmetric Research, plug the 2.1mm power connector into the second
+2.1mm jack on the back of the USBxCH and plug the DB25 connector on to
+the 25-pin Dshell digital input connector on the front right side of
+the USBxCH.  Make sure it is working correctly by running the
+NmeaTime program in the \SR\USBXCH\Utilities\NmeaTime directory which
+shows the received NMEA strings with the GPS information.  When
+satellite lock is achieved, the red led will begin blinking and the
+$GPRMC string will show the letter A in the second field instead of
+the letter V.
+
+<br><br>
+
+Once Earthworm and the USBxCH are working on their own, it's time
+to get them working together.  Edit the srusb2ew.d configuration
+file settings so they are appropriate for your system.
+
+<br><br>
+
+At this time, you will probably also want to edit some additional
+Earthworm module configuration files to handle the USBxCH data that
+will be coming.  This might include adding tanks for the USBxCH data
+in wave_serverV.d if the data is to be saved on the same computer or
+setting the USBxCH channels in export_scn.d if the data is to be
+exported to another computer.
+
+<br><br>
+
+In the beginning, it is probably best to use two separate command
+prompt windows.  In the first, run startstop to start Earthworm.  In
+the second, type "srusb2ew srusb2ew.d" without the quotes
+to start the USBxCH acquiring and sending data.
+
+<br><br>
+
+You can check the log files and run diagnostic programs like sniffring
+and sniffwave to help diagnose any problems.  If something isn't going
+right, it is easy to stop srusb2ew, modify its configuration file, and
+restart it without having to stop the rest of Earthworm.  Once you've
+got your parameters set right, then go ahead and have startstop
+control srusb2ew too.
+
+
+<br><br><b>Compiling</b><br><br>
+
+srusb2ew is written in C and is compiled and linked using the standard
+Earthworm makefiles such as makefile.nt.  In order to successfully
+compile, access to the USBxCH system software is required.  This
+software, including source, is included with every USBxCH purchase.
+It is also available for free download from the Symmetric Research
+website
+
+<a href="http://www.symres.com/index.htm"
+title="Symmetric Research manufactures high precision A/D's">www.symres.com</a>.
+
+<br><br>
+
+All Symmetric Research software, including the USBxCH system software
+and srusb2ew, has been designed so a single set of source code can
+service different operating systems.  This is accomplished primarily
+through the use of conditional compilation which selects OS specific
+code at compile time based on which SROS_xxx setting is defined.
+Valid options include SROS_WIN2K (for both Windows 2000 and XP) and
+SROS_LINUX.  Solaris is not available.
+
+
+<br><br><b>More Info</b><br><br>
+
+General questions about Earthworm are probably best answered by
+the official Earthworm User's discussion group.  But, if you have
+specific questions about srusb2ew and its configuration
+parameters, please let us know at
+<a href="mailto:info@symres.com">info@symres.com</a>.
+
+</p>
+
+<center>
+<a href="../modules.html">Module Index</a> |
+<a href="../cmd/srusb2ew_cmd.html">Srusb2ew Commands</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+The URL of this page is  <b>[http://folkworm.ceri.memphis.edu/ew-doc/ovr/srusb2ew_ovr.html]</b><br>
+Contact: <a href="mailto:info@symres.com"><b>info@symres.com</b></a>
+</address>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: hyp71_mgr overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> Hyp71_mgr Overview</H1>
+<I>(last revised July 12, 2011)</I></CENTER>
+
+<P>
+Hyp71_mgr is an Earthworm program which calls an enhanced version of HYPO71PC, modified by Alexandre Nercessian, at IPGP.  Hyp71_mgr gets "arc messages", containing associated picks, via a pipe from another program.
+According to the set up, Hyp71_mgr can call several instances of hyp71PC with the translated contents of the "arc message", with different trial depth (very usefull for regions with deep earthquakes).  Hyp71PC locates the event.  Hyp71_mgr then reads the results and choose the best one for a final call to hyp71Pc for final location.  Hyp71_mgre reads the result and then call localmag (if set) to try to obtain a local magnitude for that event. Hyp71_mgr then creates a new "arc message" with the location results from hyp71PC and the magnitude retrieved from localmag and sends that arc message to an Earthworm transport ring.
+<P>
+Hyp71_mgr is written in C, but Hyp71PC is written in Fortran77, including modifications to take into account the altitudes of the stations, as well as the possibility to have earthquakes above stations (which is the case on volcanoes, or if you use sea bottom seismometers).
+<P>
+Be sure and look at the command web page for details about how Location codes are now used.
+<P>
+Original Hypo71 Documentation is available in draft form at the http site:
+http://jclahr.com/science/software/hypo71/ as a PDF document along with other documents.
+<P>
+
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/hyp71_mgr_cmd.html">Hyp71_mgr Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

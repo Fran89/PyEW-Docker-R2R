@@ -1,0 +1,44 @@
+#
+# Nmake File For archman - Windows NT version
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = archman 
+O = $(APP).obj strptime_win.obj
+
+# disabled, since we're not trying to combine with a debug library now
+#linkflags=  /NODEFAULTLIB:LIBCMT
+
+LIBSEW = $L\socket_ew.obj \
+    $L\socket_ew_common.obj \
+    $L\libew_mt.lib $L/swap.obj
+
+LIBBGS = lib\bgs.lib
+
+#cdebug = /Zi
+#ldebug = /debug
+
+
+$B\$(APP).exe: $O
+   @echo "Making Earthworm archiving modules"
+   @nt_make_subdirs lib
+   $(link) $(linkflags) $(conlflags) $(ldebug) $(conlibsmt) $O $(LIBSEW) $(LIBBGS) -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) -D_INTEL /nologo /I.\lib $(cflags) $(cdebug)  -D_MT $(tflags) -D_NTSDK -D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -wd4996 $<
+
+# added -D_NTSDK to enable definition of getpid() as _getpid() LDD.
+
+# Clean-up directives
+clean:
+	@nt_clean lib
+	del a.out core *.o *.obj *% *~
+
+clean_bin:
+	del $B\archman*

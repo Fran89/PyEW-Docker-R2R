@@ -1,0 +1,394 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Ringtocoax commands</TITLE>
+</HEAD>
+
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+
+0000">
+<CENTER><H1>Ringtocoax Configuration File Commands</H1>
+<I>(last revised 21 April 1999)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuraton file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, ringtocoax reads the configuration file named on the command
+line.  Commands in this file set up all parameters used in reading Earthworm messages from shared memory and broadcasting them onto ethernet as UDP packets.
+In the control file, lines may begin with a valid ringtocoax command
+(listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<pre>
+#
+# This is ringtocoax's parameter file
+#
+# This program gets earthworm messages from a transport ring and broadcasts
+# them to ethernet.
+#
+#	*** WARNING ***
+#	This module does connection-less broadcasts.
+# 	In normal usage, it broadcasts onto an isolated, dedicated class b
+#	subnet. There must be no routing to or from that subnet.
+#	The broadcast is restricted to that subnet as stated below.
+#	Note that the companion module, coaxtoring, has strange
+#	system-specific addressing requirements
+
+MyModName         MOD_RINGTOCOAX  # Module id for this instance of ringtocoax
+RingName          WAVE_RING       # Shared memory ring for input/output
+LogSwitch         1               # 0 to completely turn off disk log file
+HeartBeatInterval 15              # Seconds between heartbeats
+MsgMaxBytes       4096            # Size of biggest message to be sent
+OutAddress        192.168.4.255   # IP address of net to broadcast to.
+                                  # Set the node number to 255
+                                  # eg. OutAddress    192.168.4.255
+OutPortNumber     2025            # Note: Under Solaris, if the port number
+				  # is at or below 1024,
+                                  # ringtocoax must run as root.
+MaxLogo           256             # Maximum number of logos we can handle
+                                  # Set to a number >= 0
+ScrnMsg           1               # If 1, print message logos on screen
+                                  #    0, don't print logos.
+CopyStatus        1               # If 1, broadcast heartbeat and errors msgs.
+                                  #    0, don't broadcast them.
+BurstInterval     10              # Sleep this many msec between bursts
+BurstCount        4               # Number of UDP packets per burst
+SqrtCount         2000            # Number of square roots between packets within a burst.
+
+# List each logo that you want to broadcast in a BroadcastLogo command.
+# If the BroadcastLogo command is omitted, all messages in RingName will
+# be shipped.
+#               installation   module_id     message_type
+#               ------------   ---------     ------------
+BroadcastLogo   INST_WILDCARD  MOD_WILDCARD  TYPE_TRACEBUF
+
+
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by ringtocoax, grouped by the function
+they influence.  All of the commands are required; they must be specified
+in the control file in order for ringtocoax to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+
+<PRE>         Earthworm system setup:
+		<A HREF=#HeartBeatInterval>HeartBeatInterval</A> 	required
+ 		<A HREF=#MyModName>MyModName</A>	   	required
+		<A HREF=#RingName>RingName</A>	   	required
+
+	Network Information:
+		<A HREF=#OutAddress>OutAddress</A>	   	required
+		<A HREF=#OutPortNumber>OutPortNumber</A>	   	required
+
+	Message Handling:
+		<A HREF=#CopyStatus>CopyStatus</A>		required
+		<A HREF=#MaxLogo>MaxLogo</A>			required
+		<A HREF=#MsgMaxBytes>MsgMaxBytes</A>	   	required
+		<A HREF=#BurstInterval>BurstInterval</A>		required
+		<A HREF=#BurstCount>BurstCount</A>		required
+		<A HREF=#SqrtCount>SqrtCount</A>		required
+		<A HREF=#BroadcastLogo>BroadcastLogo</A>
+
+	Output Control:
+		<A HREF=#ScrnMsg>ScrnMsg</A>	   		required
+		<A HREF=#LogSwitch>LogSwitch</A>		required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="BroadcastLogo">  <!-- command name as anchor inside quotes -->
+<PRE><B>BroadcastLogo <font color=red>instid  modid  msgtype</font>	ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies one message logo (<font color=red>instid</font>, <font color=red>modid</font>, and <font color=red>msgtype</font>) to read from
+the shared memory region (named in the "RingName" command) and to broadcast onto
+ethernet. The <font color=red>instid</font> must be a valid string in earthworm.h; <font color=red>modid</font> and <font color=red>msgtype</font>
+must be valid strings in earthworm.d.
+List one logo per "BroadcastLogo" command, and use as many commands as needed.
+If  <font color=red>msgtype</font> is TYPE_HEARTBEAT or TYPE_ERROR, be sure that
+the <A HREF=#CopyStatus>CopyStatus</A> value is non-zero.
+If no "BroadcastLogo" command is given, ringtocoax defaults to
+broadcasting all messages in the designated shared memory region.
+<PRE><!-- Default and example go here   -->
+Example:  BroadcastLogo INST_MENLO MOD_WILDCARD TYPE_TRACEBUF
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="BurstCount">  <!-- command name as anchor inside quotes -->
+<PRE><B>BurstCount <font color=red>BurstCount</font>			ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of UDP packets, <font color=red>BurstCount</font>, in a broadcast "burst".   Three commands, <font color=blue>"BurstCount"</font>, <A HREF=#SqrtCount>"SqrtCount"</A>, and <A HREF=#BurstInterval>"BurstInterval"</A>, control the temporal
+spacing of UDP packets broadcast by ringtocoax.  Ringtocoax broadcasts messages in groups
+of <font color=red>BurstCount</font> packets; between the packets within a "burst",
+ringtocoax loops thru <font color=red>SqrtCount</font> square root calculations to waste a little time.  After broadcasting a "burst" of packets, ringtocoax
+sleeps for <font color=red>BurstInterval</font> milliseconds, then it starts sending
+the next burst. The goal of spacing packets a
+tiny bit in time is to give the receiving program a better chance of catching every
+packet.
+<P>
+UDP packets are variable in length up to a maximum of 1472 bytes (6 bytes of header, 1466 bytes of data).  If an Earthworm message has a length
+less than or equal to 1466 bytes, it will be broadcast in a single UDP packet.
+If an Earthworm message is longer
+than 1466 bytes, it will be fragmented by ringtocoax, broadcast in multiple UDP packets, and reassembled by the receiving program (coaxtoring).
+Ringtocoax will never pack more than one Earthworm message in a single UDP packet.
+<P>
+It is very important that the overall rate of broadcast is as at least as fast
+as the rate of local information production. For example, if your system produces 256 TYPE_TRACEBUF messages per second (464 bytes each = 1 UDP packet each), then the <font color=red>BurstCount</font>, <font color=red>SqrtCount</font>, and <font color=red>BurstInterval</font> commands should
+be configured such that ringtocoax will broadcast at least 256 UDP packets per second.
+System clock resolution must be considered when configuring the three commands,
+especially <font color=red>BurstInterval</font>.
+As of April 1999, the time resolution of each sleep on Windows NT is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  BurstCount 3
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="BurstInterval">  <!-- command name as anchor inside quotes -->
+<PRE><B>BurstInterval <font color=red>BurstInterval</font>			ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the minimum interval, in milliseconds, between "bursts" of UDP broadcasts.
+See the <A HREF=#BurstCount>BurstCount</A> command for a detailed description of ringtocoax's broadcasting scheme.
+<font color=red>BurstInterval</font> must be a number greater than or equal to zero.
+Remember to consider the system clock resolution when configuring <font color=red>BurstInterval</font>.
+As of April 1999, the clock-tick resolution is about 16 msec on Windows NT, and
+about 10 msec on Solaris.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  BurstInterval 10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="CopyStatus">  <!-- command name as anchor inside quotes -->
+<PRE><B>CopyStatus <font color=red>CopyStatus</font>				ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the <font color=red>CopyStatus</font> switch to control whether ringtocoax broadcasts
+TYPE_ERROR and TYPE_HEARTBEAT messages.  If no "BroadcastLogo" command is present,
+then ringtocoax will default to reading all messages in the shared memory region specified by the "RingName" command.  If <font color=red>CopyStatus</font> is non-zero, all of these messages will
+be broadcast onto ethernet.  If <font color=red>CopyStatus</font> is 0, TYPE_HEARTBEAT and
+TYPE_ERROR will not be broadcast, but all other messages will.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  CopyStatus 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartBeatInterval">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartBeatInterval <font color=red>nsec</font> 			ringtocoax_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds <font color=red>nsec</font> between TYPE_HEARTBEAT messages
+issued by ringtocoax.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartBeatInterval 15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogSwitch">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogSwitch <font color=red>switch</font>			ringtocoax_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, ringtocoax
+will write a daily log file(s) called ringtocoaxxx.log_ccyymmdd
+where xx is ringtocoax's module id (set with "MyModName" command)
+and ccyymmdd is the current UTC date (ex: 19990123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:  none</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MaxLogo">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxLogo <font color=red>nlogo</font>				ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the maximum number, <font color=red>nlogo</font>, of different message logos that
+ringtocoax can process.  Ringtocoax assigns a sequence number
+(unsigned char) to each message based on its logo before it broadcasts
+the message.  Space is allocated to store the last sequence number
+used for up to <font color=red>nlogo</font> different logos.  If the tracking arrays are
+full and ringtocoax gets a never-seen-before message logo from shared
+memory, ringtocoax will not broadcast that message, but it will issue
+a TYPE_ERROR message explaining the problem.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MaxLogo 256
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MsgMaxBytes">  <!-- command name as anchor inside quotes -->
+<PRE><B>MsgMaxBytes <font color=red>nbytes</font>			ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the size, in bytes, of the buffer that ringtocoax uses for
+storing Earthworm messages read from shared memory.  <font color=red>nbytes</font> should
+be the size of the largest message you expect ringtocoax to receive.
+If ringtocoax receives a message larger than <font color=red>nbytes</font>, it will drop
+the entire message and issue a TYPE_ERROR message containing the
+string "too big for Buffer" and the logo of the dropped message.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MsgMaxBytes 51740
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModName">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModName <font color=red>mod_id</font>			ringtocoax_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing heartbeat and error
+messages.  <font color=red>mod_id</font> is a character string (valid strings are listed
+in earthworm.d) that relates (in earthworm.d) to a unique single-byte
+number.  All messages that ringtocoax receives from shared memory are
+tagged with their original logos when they are broadcast onto ethernet.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModName MOD_RINGTOCOAX
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="OutAddress">  <!-- command name as anchor inside quotes -->
+<PRE><B>OutAddress <font color=red>a.b.c.d</font>			ringtocoax_config	network info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells ringtocoax the TCP/IP address of the ethernet line onto which
+it should broadcast Earthworm messages. <font color=red>a.b.c.d</font> is a character
+string in tcp/ip's standard dotted-decimal notation that ringtocoax
+uses along with the port number from the "OutPortNumber" command to
+set up a socket to which it will broadcast UDP Datagram packets.
+By convention, all Earthworm broadcasts have the node ("d" part of
+address) set to 255 (for example a.b.c.255).
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  OutAddress 192.168.4.255
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="OutPortNumber">  <!-- command name as anchor inside quotes -->
+<PRE><B>OutPortNumber <font color=red>port</font>			ringtocoax_config	network info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the well-known port number <font color=red>port</font> to be used by ringtocoax for
+broadcasting.  <font color=red>port</font> is an integer that ringtocoax uses along with
+the address from the "OutAddress" command to set up a socket to which
+it will broadcast UDP Datagram packets.
+<BR>
+<font color=red>NOTE:</font> The port number must be greater than 1024.
+Smaller port numbers require root permission.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  OutPortNumber 2025
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				ringtocoax_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells ringtocoax which shared memory region to use for input/output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.  All messages that ringtocoax reads from shared
+memory are tagged with their original logos when they are broadcast
+onto ethernet.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="ScrnMsg">  <!-- command name as anchor inside quotes -->
+<PRE><B>ScrnMsg <font color=red>switch</font>				ringtocoax_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a switch for writing messages to the screen.  If <font color=red>switch</font> is
+1, a line is printed to the screen detailing the logo and the
+sequence number of each Earthworm message broadcast to ethernet.
+If <font color=red>switch</font> is 0, no messages are written to the screen.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  ScrnMsg 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SqrtCount">  <!-- command name as anchor inside quotes -->
+<PRE><B>SqrtCount <font color=red>SqrtCount</font>			ringtocoax_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of square root calculations ringtocoax performs between
+broadcasting each UDP packet of a "burst."  See the <A HREF=#BurstCount>BurstCount</A> command for a detailed description of ringtocoax's broadcasting scheme.
+<font color=red>SqrtCount</font> must be an integer greater than or equal to zero.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  SqrtCount 2000
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/ringtocoax_ovr.html">Ringtocoax Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

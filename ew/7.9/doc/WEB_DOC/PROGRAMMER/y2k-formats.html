@@ -1,0 +1,406 @@
+<HTML><HEAD><TITLE>Earthworm Year2000 Compliant Message Formats</TITLE>
+
+<BODY aLink=#ff0000 bgColor=#fac0a2 link=#0000ee text=#000000 vLink=#551a8b>
+
+<H1 align=center></A>
+<B><FONT color=#ff0000><FONT size=+4>Earthworm Year2000 Compliant Message Formats<BR>
+</FONT></FONT></B></H1>
+
+<HR width="100%">
+
+<H5 align=right><TT>Updated February 7, 2001</TT></H5>
+<H5 align=right><TT>Lynn Dietz and Barbara Bogaert</TT></H5>
+
+<P>
+The following table lists 
+Y2K-compliant message types (4-digit years) that are used in 
+Earthworm v4.0 and higher. 
+<PRE>
+      Y2K-compliant 
+      (v4.0 and higher)
+      -----------------  
+1.    TYPE_PICK2K
+2.    TYPE_CODA2K
+3.    TYPE_QUAKE2K
+4.    TYPE_EVENT2K
+5.    TYPE_H71SUM2K
+6.    TYPE_HYP2000ARC (barely filled in)
+      TYPE_HYP2000ARC (completely filled in)
+7.    TYPE_TRIGLIST2K
+
+*TYPE_CODA did not include any date information, but since we're changing
+formats, we added station code to the coda message to make it 
+simpler to export codas along with their picks via export_scn.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1.  TYPE_PICK2K
+
+This message type is created by pick_ew and read by binder, eqproc, eqprelim,
+export_scn.   The new TYPE_PICK2K message
+is a fixed 72 characters long (including a newline, but excluding a 
+null-terminator).
+
+Y2K-compliant TYPE_PICK2K:
+
+ 10  4  3 2133 CMN  NCVHZ U1  19950831183134.90     953    1113     968\n
+
+0123456789 123456789 123456789 123456789 123456789 123456789 123456789 12345
+
+ 1st        variable
+ col.  len  type           description
+-----  ---  -------------  ----------------------------------------------
+  0     3   unsigned char  Message type (1-255)
+  3     3   unsigned char  Module id that produced this message (1-255)
+  6     3   unsigned char  Installation of origin for this message (1-255)
+  9     1                  unused
+ 10     4   short          Sequence # assigned by picker (0-9999),
+                           allows you to match a pick with its coda info.
+ 14     1                  unused
+ 15     5   char[]         Site code (left justified)
+ 20     2   char[]         Network code (left justified)
+ 22     3   char[]         Component code (left justified)
+ 25     1                  unused 
+ 26     1   char           Polarity of first break
+ 27     1   char           Quality of pick assigned by picker (0-4) 
+                           with 0 being best.
+ 28     2                  unused (space for phase, P, Pg, S...?)
+ 30    17   char[]         Arrival time in the form of:
+                              ccyymmddhhmmss.ff 
+ 47     8   long           Amplitude of 1st peak after arrival time
+ 55     8   long             "       "  2nd peak  "     "        "
+ 63     8   long             "       "  3rd peak  "     "        "
+ 71     1   char           newline character
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.  TYPE_CODA2K
+
+This message type is created by pick_ew and read by eqproc, eqprelim.
+TYPE_CODA2 did not include any date information and thus is Y2K-compliant as 
+it was. However, since we're changing formats, we added station code
+to the coda message to make it simpler to export codas along with their 
+picks via export_scn.  The TYPE_CODA2K message is a fixed format, 
+79 characters long (including a newline character, but excluding a 
+null-terminator).
+
+
+TYPE_CODA2K message:
+
+ 11  4  3 2165 CMN  NCVHZ      23     201     276     289       0       0   7 \n
+
+0123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789
+
+ 1st        variable
+ col.  len  type           description
+-----  ---  -------------  ----------------------------------------------
+  0     3   unsigned char  Message type (1-255)
+  3     3   unsigned char  Module id that produced this message (1-255)
+  6     3   unsigned char  Installation of origin for this message (1-255)
+  9     1                  unused
+ 10     4   short          Sequence # assigned by picker (0-9999),
+                           allows you to match a pick with its coda info.
+ 14     1                  unused
+ 15     5   char[]         Site code (left justified)
+ 20     2   char[]         Network code (left justified)
+ 22     3   char[]         Component code (left justified)
+ 25     8   long           Coda window 1 average absolute amplitude
+ 33     8   long             "    "    2    "       "         "   
+ 41     8   long             "    "    3    "       "         "   
+ 49     8   long             "    "    4    "       "         "   
+ 57     8   long             "    "    5    "       "         "   
+ 65     8   long             "    "    6    "       "         "   
+ 73     4   short          Coda duration (seconds)
+ 77     1   char           Coda weight (quality)
+ 78     1   char           newline character
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+3. TYPE_QUAKE2K
+
+This message type is created by binder_ew, and read by eqproc, eqprelim. 
+It's a space-delimited format.  The  TYPE_QUAKE2K message is space-delimited and
+variable length.
+
+Y2K-compliant TYPE_QUAKE2K:
+
+  3 10 51056672 19960516112157.06  37.6249 -118.8623   9.52  0.08   2.0   9.7 130 10\n
+
+0123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123
+
+       max  variable
+field  len  type           description
+-----  ---  -------------  -----------------------------------------------
+  1     3   unsigned char  Installation of origin for this message (1-255)
+  2     3   unsigned char  Module id that produced this message (1-255)
+  3         long           Event id assigned by binder_ew
+  4    17   char[]         Event origin time in the form of:
+                             ccyymmddhhmmss.ff 
+  5     8   float          Latitude (decimal degrees)
+  6     9   float          Longitude (decimal degrees)
+  7         float          Depth (km)
+  8         float          RMS traveltime residual
+  9         float          Distance of nearest station (km)
+ 10         float          Average epicentral distance of associated 
+                           arrivals (otherwise known as ravg)
+ 11         int            Maximum azimuthal gap
+ 12         int            Number of associated phases;
+                           followed by a newline character
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+4. TYPE_EVENT2K
+
+This message type is created by eqproc, eqprelim and read by eqcoda. 
+This message is internal to the "sausage" mega-module; it is piped between
+eqproc or eqprelim and eqcoda and never ends up on a public transport ring.
+
+The TYPE_EVENT2K message is a fixed-format message, 
+the hypocenter line is 96 characters long and 
+each phase line is 111 characters long.
+
+Y2K-compliant TYPE_EVENT2K, hypocenter & phase line:
+
+19950828 1212 13.57 37 34.47 118 50.12   6.42        12  80  2.0 0.25                   53821 1\n
+CMN  NCVHZ U1P 19950831183134.90     953    1113     968      23     201     276     289       0       0   7 W\n
+0123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 12
+
+Hypocenter line format:
+  see section 5.  TYPE_H71SUM2K.
+
+Phase line format:
+
+ 1st        variable
+ col.  len  type           description
+-----  ---  -------------  ----------------------------------------------
+  0     5   char[]         Site code (left justified)
+  5     2   char[]         Network code (left justified)
+  7     3   char[]         Component code (left justified)
+ 10     1                  unused
+ 11     1   char           Polarity of arrival (U, D, ' ')
+ 12     1   char           Quality of pick assigned by picker (0-4)
+ 13     2   char[]         Phase assigned to arrival by binder
+                             (P, Pn, Pg, S, Sn, Sg)
+ 15    17   char[]         Arrival time in the form of:
+                             ccyymmddhhmmss.ff
+ 32     8   long           Amplitude of 1st peak after arrival time
+ 40     8   long               "     "  2nd  "     "     "      "
+ 48     8   long               "     "  3rd  "     "     "      "
+ 56     8   long           Coda window 1 average absolute amplitude
+ 64     8   long             "    "    2    "       "         " 
+ 72     8   long             "    "    3    "       "         " 
+ 80     8   long             "    "    4    "       "         " 
+ 88     8   long             "    "    5    "       "         " 
+ 96     8   long             "    "    6    "       "         " 
+104     4   int            Coda duration (seconds)
+108     1   char           Coda weight
+109     1   char           Data source of pick (W=earthworm)
+110     2   char           newline character 
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+5. TYPE_H71SUM2K
+
+This message type is created by hypo_mgr, and is read by eqalarm_ew, cubic_msg,
+and menlo_report. 
+
+The TYPE_H71SUM2K message is fixed-format, 96 characters.
+
+Y2K-compliant TYPE_H71SUM2K:
+
+19960508 2005 44.83 38 47.53 122 45.28   2.56 D 0.86 30  43  4.  0.07  0.2  0.5 AW   51056678 1\n
+0123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 12345
+
+ 1st        variable
+ col.  len  type           description
+-----  ---  -------------  ----------------------------------------------
+  0     4   int   %4d      Origin time: year
+  4     2   int   %2d      Origin time: month (1-12)
+  6     2   int   %2d      Origin time: day of month (1-31)
+  8     1                  unused
+  9     2   int   %2d      Origin time: hour of day (0-23)
+ 11     2   int   %2d      Origin time: minute (0-59)
+ 13     6   float %6.2f    Origin time: seconds 
+ 19     3   int	  %3d      Latitude: degrees
+ 22     1   char  %c       S for south, blank otherwise
+ 23     5   float %5.2f    Latitude: decimal minutes
+ 28     4   int	  %4d      Longitude: degrees
+ 32     1   char  %c       E for east, blank otherwise
+ 33     5   float %5.2f    Longitude: decimal minutes
+ 38     7   float %7.2f    Depth (km).
+ 45     1                  unused
+ 46     1   char  %c       Magnitude type code
+                             D=duration, Z=low-gain duration
+ 47     5   float %5.2f    Magnitude
+ 52     3   int	  %3d      Number of P & S times with weights greater than 0.1.
+ 55     4   int   %4d      Maximum azimuthal gap.
+ 59     5   float %5.1f    Distance to nearest station (km).
+ 64     5   float %5.2f    RMS travel time residual.
+ 69     5   float %5.1f    Horizontal error (km).
+ 74     5   float %5.1f    Vertical error (km).
+ 79     1   char  %c       Remark: Q if Quarry blast.
+ 80     1   char  %c       Remark: Quality flag A-D.
+ 81     1   char  %c       Remark: Data source code. 
+ 82     1                  unused
+ 83    10   long  %10ld    Event identification number
+ 93     1                  unused
+ 94     1   char  %c       Version number of information:
+                             0=Preliminary EW; 1=Final EW with MD;
+		             2=ML added, etc. 0-9, then A-Z.
+ 95     1   char  %c       newline character
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+6.  TYPE_HYP2000ARC (barely filled in)
+    TYPE_HYP2000ARC (completely filled in)
+
+The TYPE_HYP2000ARC messages is output by eqcoda,  
+read and output by eqverify, hyp2000_mgr (hyp2000), and read by menlo_report, 
+rsec*, arc2trig, earlybird.
+
+A TYPE_HYP2000ARC message is a fixed-format message and is built of 6 
+different types of lines in the following sequence:
+
+  hypocenter         (1. Summary Header Format)
+  hypocenter shadow  (2. Summary Shadow Format)
+  phase 1            (3. Station Archive Format Year 2000)
+  phase shadow 1     (4. Station Shadow Format, RTP portion)
+  ...
+  phase N 
+  phase shadow N
+  terminator line    (5. Event Terminator Format)
+  terminator shadow  (6. Event Terminator Shadow)
+
+For Hyp2000, the "Summary Header Format" and "Station Archive Format" in the
+archive message have changed.  All other lines in the TYPE_HYP2000ARC message 
+have the same format as the original TYPE_HINVARC message.  A complete 
+description of the new Hyp2000 formats can be found in Fred Klein's Hypoinverse Manual.
+
+Sample Y2K-compliant TYPE_HYP2000ARC message (as output by eqcoda):
+
+199912312359492936 2810120 2596  851    27 78 19  15                                                                                         10154                1 \n
+$1                                                                                            \n
+PWM  NC  VHZ  PD0199912312359 5341                                                0      77                 W  \n
+$   6 5.49 1.80 7.91 3.30 0.10 PSN0   77 PHP3 1853 39 340 47 245 55 230 63  86 71  70 77  48           \n
+PHB  NC  VHZ  PU0199912312359 5672                                                0     103                 W  \n
+$   6 5.37 1.80 6.76 2.53 0.12 PSN0  103 PHP2 1098 63 203 71  75 79  90 87  99 95  54103  46           \n
+PKE  NC  VHZ  PU0199912312359 5903                                                0      69                 W  \n
+$   6 5.34 1.80 5.97 2.24 0.11 PSN0   69 PHP0  644 31 430 39 221 47 212 55 120 63  88 69  37           \n
+PHP  NC  VHZ  PU0199912312359 5941                                                0      61                 W  \n
+$   6 5.01 1.80 5.92 2.38 0.08 PSN0   61 PHP0  384 23 294 31 235 39 139 47  95 55  60 61  41           \n
+PPC  NC  VHZ  PU0199912312359 5981                                                0      41                 W  \n
+$   6 4.71 1.80 4.54 1.68 0.09 PSN0   41 PHP0  356 15 305 19 306 23 180 31 109 39  79 41  49           \n
+PMM  NC  VHZ  PU2200001010000 0000                                                0      47                 W  \n
+$   6 4.81 1.80 5.44 2.26 0.06 PSN0   47 PHP0   67 15 382 19 364 23 231 31 114 39  71 47  46           \n
+PHF  NC  VHZ  P 2200001010000 0103                                                0      45                 W  \n
+$   6 4.78 1.80 4.79 1.83 0.08 PSN0   45 PHP2 1093 15 427 19 190 23 202 31 125 39  74 45  47           \n
+PHO  NC  VHZ  PU0200001010000 0134                                                0      59                 W  \n
+$   6 5.05 1.80 6.17 2.51 0.05 PSN0   59 PHP1  632 23 564 31 232 39 154 47 108 55  63 59  47           \n
+PPG  NC  VHZ  PU0200001010000 0312                                                0      77                 W  \n
+$   6 5.31 1.80 5.84 2.16 0.10 PSN0   77 PHP0  382 39 251 47 144 55 149 63  89 71  80 77  38           \n
+POP  NC  VHZ  PD0200001010000 0377                                                0      25                 W  \n
+$   5 4.25 1.80 4.83 2.25 0.05 PSN0   25 PHP0  377 11  82 13 209 15 157 19  89 23  75 25  47           \n
+                                                                   10154\n
+$                                                                  10154\n
+
+
+Sample Y2K-compliant TYPE_HYP2000ARC message (as output by hyp2000):
+
+199204290117039536 2577120 2407  475  0 18 98 17  16 5975 128175 6  58343COA  38    0  57 124 21   0 218  0  8COA WW D 24X   0  0L  0  0     10123D343 218Z  0   0  \n
+$1                                                                                0343   0   0\n
+PWM  NC VVHZ  PD0199204290117  877  -8136    0   0   0      0 0  0  61   0 169 8400  0   77 88325  0 932   0WD \n
+$   6 5.49 1.80 7.91 3.30 0.10 PSN0   77 PHP3 1853 39 340 47 245 55 230 63  86 71  70 77  48           \n
+PHB  NC VVHZ  PU4199204290117 1208 -31  0    0   0   0      0 0  0  56   0 348 6300  0  103125355  0   0   0WD \n
+$   6 5.37 1.80 6.76 2.53 0.12 PSN0  103 PHP2 1098 63 203 71  75 79  90 87  99 95  54103  46           \n
+PKE  NC VVHZ  PU0199204290117 1439  11136    0   0   0      0 0  0  -1   0 486 5200  0   69147348  0 175   0WD \n
+$   6 5.34 1.80 5.97 2.24 0.11 PSN0   69 PHP0  644 31 430 39 221 47 212 55 120 63  88 69  37           \n
+PHP  NC VVHZ  PU0199204290117 1477  -4136    0   0   0      0 0  0 -22   0 531 4900  0   61201348  0 217   0WD \n
+$   6 5.01 1.80 5.92 2.38 0.08 PSN0   61 PHP0  384 23 294 31 235 39 139 47  95 55  60 61  41           \n
+PMM  NC VVHZ  PU2199204290117 1536  20 27    0   0   0      0 0  0  11   0 532 4900  0   47190339  0   7   0WD \n
+$   6 4.81 1.80 5.44 2.26 0.06 PSN0   47 PHP0   67 15 382 19 364 23 231 31 114 39  71 47  46           \n
+PPC  NC VVHZ  PU0199204290117 1517   3136    0   0   0      0 0  0 -36   0 560 4900  0   41199325  0 204   0WD \n
+$   6 4.71 1.80 4.54 1.68 0.09 PSN0   41 PHP0  356 15 305 19 306 23 180 31 109 39  79 41  49           \n
+PHF  NC VVHZ  P 2199204290117 1639  23 27    0   0   0      0 0  0 -10   0 608 4800  0   45181350  0   6   0WD \n
+$   6 4.78 1.80 4.79 1.83 0.08 PSN0   45 PHP2 1093 15 427 19 190 23 202 31 125 39  74 45  47           \n
+PHO  NC VVHZ  PU0199204290117 1670  24136    0   0   0      0 0  0 -13   0 628 4800  0   59187324  0 185   0WD \n
+$   6 5.05 1.80 6.17 2.51 0.05 PSN0   59 PHP1  632 23 564 31 232 39 154 47 108 55  63 59  47           \n
+PPG  NC VVHZ  PU0199204290117 1848  -4136    0   0   0      0 0  0   7   0 745 4800  0   77147343  0 160   0WD \n
+$   6 5.31 1.80 5.84 2.16 0.10 PSN0   77 PHP0  382 39 251 47 144 55 149 63  89 71  80 77  38           \n
+POP  NC VVHZ  PD0199204290117 1913  -5136    0   0   0      0 0  0 -19   0 803 4800  0   25162281  0 155   0WD \n
+$   5 4.25 1.80 4.83 2.25 0.05 PSN0   25 PHP0  377 11  82 13 209 15 157 19  89 23  75 25  47           \n
+                                                                   10123\n
+$                                                                  10123\n
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+7.  TYPE_TRIGLIST2K
+
+This message type is created by trg_assoc, carlsubtrig, arc2trig, and is 
+read  by surf.exe (WaveViewer), trig2disk, ora_trace_save, and maybe some 
+others. TYPE_TRIGLIST2K is a space-delimited message, where the time fields 
+have a fixed format.  It is composed of an event header line, 3 silly 
+comment lines, and any number of individual station trigger lines. 
+Here's an example:
+
+Y2K-compliant TYPE_TRIGLIST2K:
+
+EVENT DETECTED   19960508 20:05:44.83 UTC EVENT ID: 51056678 AUTHOR: 017024003:024045003\n
+\n
+Sta/Cmp/Net   Date   Time                       start save       duration in sec.\n
+-----------   ------ ---------------    ------------------------------------------\n
+ GCR VHZ NC P 19960508 20:05:45.58 UTC    save: 19960508 20:05:40.58       17\n
+ GDX VHZ NC P 19960508 20:05:45.56 UTC    save: 19960508 20:05:40.56       17\n
+ GBG VHZ NC P 19960508 20:05:46.45 UTC    save: 19960508 20:05:41.45       17\n
+ GPM VHZ NC P 19960508 20:05:48.34 UTC    save: 19960508 20:05:43.34       17\n
+
+Event head line format:
+
+       max  variable
+field  len  type           description
+-----  ---  -------------  -----------------------------------------------
+ 1,2   15   char[]         Keywords:  "EVENT DETECTED"
+ 3      8   char[]         Date of event in the form of:  yyyymmdd
+ 4     11   char[]         Time of event in the form of:  hh:mm:ss.ff   
+ 5      3   char[]         Time zone label
+ 6,7    9   char[]         Keywords:  "EVENT ID:"
+ 8          long           Event id, assigned by author of the event
+ 9      7   char[]         Keyword:   "AUTHOR:"
+ 10         char[]         String describing author of the event;
+                           may be a series authors, seperated by colons.
+                           An author might be a user's login name or
+                           a 9-digit ascii logo:
+                             tttmmmiii, where ttt = message type
+                                              mmm = module id
+                                              iii = installation id
+
+Format of Silly Comment lines 1-3: 
+
+The comment lines can be printed with the following strings:
+"\n"
+" Sta/Cmp/Net   Date   Time                       start save       duration in sec.\n"
+" -----------   ------ ---------------    ------------------------------------------\n"
+
+Station Trigger Line Format:
+
+       max  variable
+field  len  type           description
+-----  ---  -------------  -----------------------------------------------
+ 1      5   char[]         Station site code
+ 2      3   char[]         Station component code
+ 3      2   char[]         Station network code
+ 4      1   char           Description of the type of trigger
+ 5      8   char[]         Date of trigger in the form of:  yyyymmdd
+ 6     11   char[]         Time of trigger in the form of:  hh:mm:ss.ff   
+ 7      3   char[]         Time zone label
+ 8      5   char[]         Keyword:  "save:"  
+                             Denotes that the on-time and duration of
+                             an "interesting seismogram" will follow.
+ 9      8   char[]         On-date of "interesting seismogram" in the
+                             form:  yyyymmdd
+ 10    11   char[]         On-time of "interesting seismogram" in the
+                             form:  hh:mm:ss.ff   
+ 11         int            Duration (seconds) of "interesting seismogram"
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+The End
+</PRE>

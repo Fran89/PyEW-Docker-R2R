@@ -1,0 +1,47 @@
+
+# list of objects for code that came from GEOLIB library
+GEOLIB_OBJS = alloc.o chk_clk.o cmp_clk.o copy_file.o date_dy.o \
+		dy_date.o dy_in_mn.o is_leap.o network.o \
+		string.o subst_var.o chk_num.o diff_clk.o \
+		add_clk.o
+
+# list of objects for code that came from SDAS library
+#SDAS_OBJS = read_sdas_data.o data_utils.o
+SDAS_OBJS = 
+
+# list of objects created especially for Earthworm
+EW_OBJS = utils.o utils_sol.o 
+
+LINUX_CFLAGS=-D_INTEL -D_LINUX
+SOLARIS_CFLAGS=-D_SPARC -D_SOLARIS
+SPECIFIC_CFLAGS=$($(PLATFORM)_CFLAGS)
+
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} $(SPECIFIC_CFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+#CFLAGS += -xCC
+CFLAGS += -I../zlib
+
+OBJ = archman.o \
+	utils.o \
+	utils_sol.o \
+	$(L)/libew_mt.a $(L)/socket_ew.o \
+	$(L)/socket_ew_common.o \
+	$(L)/swap.o
+
+# main dependencies
+OBJS = $(GEOLIB_OBJS) $(SDAS_OBJS) $(EW_OBJS)
+
+libbgs.a: $(OBJS)
+	ar rv $@ $?
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o libbgs.a
+#	rm -f a.out core *.o *% *~
+
+clean_bin:
+	rm -f $B/archman*

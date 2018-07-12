@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Overcoming User32</TITLE>
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Courier New" SIZE=6><P>Overcoming User32.dll Initialization Failure Errors </P>
+</B></FONT><FONT FACE="Courier New" SIZE=1><P>Last reviewed: September 23, 1997</FONT><FONT FACE="Courier New"> </P>
+</FONT><B><FONT FACE="Courier New" SIZE=2><P>Article ID: Q142676</B> </FONT><FONT FACE="Courier New">&#9;</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>The information in this article applies to: </P><DIR>
+<DIR>
+
+<P>Microsoft Windows NT Workstation version 4.0</P>
+<P>Microsoft Windows NT Server version 4.0 </P></DIR>
+</DIR>
+
+</FONT><B><FONT FACE="Courier New" SIZE=5><P>SYMPTOMS </P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>When you try to start a service a pop-up dialog box appears with the following message:</P>
+<P>&nbsp;</P>
+<P>&lt;ServiceName&gt; - DLL initialization failure Initialization of the dynamic link library c:\windows\system32\user32.dll failed. The process is&#9;terminating abnormally.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Courier New" SIZE=5><P>CAUSE </P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>The system has run out of memory to create a new desktop heap for the service being started.</P>
+</FONT><B><FONT FACE="Courier New" SIZE=5><P>RESOLUTION </P>
+</B></FONT><FONT FACE="Courier New" SIZE=2><P>Fixing this problem requires editing of the Registry and restarting the computer concerned. </P>
+<P>WARNING: Using Registry Editor incorrectly can cause serious, system-wide problems that may require you to reinstall Windows NT to correct them. Microsoft cannot guarantee that any problems resulting from the use of Registry Editor can be solved. Use this tool at your own risk. </P>
+<P>&#9;1. Run the Registry Editor(Regedt32.exe). </P>
+<P>&#9;2. Under the HKEY_LOCAL_MACHINE subtree, go to the following subkey: &#9;&#9;&#9;</P>
+<P>&#9;&#9;\System\CurrentControlSet\Control\SessionManager\ </P>
+<P>&#9;&#9; SubSystems\Windows </P>
+<P>The default data for this value will look something like the following (all on one line): </P>
+</FONT><FONT FACE="Courier New"><DL>
+<DD>%SystemRoot%\system32\csrss.exe ObjectDirectory=\WindowsSharedSection=1024,3072 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=winsrv:ConServerDllInitialization,2 ProfileControl=Off MaxRequestThreads=16 </DD>
+</DL>
+</FONT><FONT FACE="Courier New" SIZE=2><P>You will need to make the following change to this value: </P>
+<P>Scan along the line until you reach the part that defines the SharedSection values and add ",512" after the second number. This value should now look something like the following:</P><DIR>
+<DIR>
+
+<P>%SystemRoot%\system32\csrss.exe ObjectDirectory=\WindowsSharedSection=1024,3072,512 Windows=On SubSystemType=WindowsServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=winsrv:ConServerDllInitialization,2 ProfileControl=Off MaxRequestThreads=16 </P></DIR>
+</DIR>
+
+<P>After making this change, close Regedt32 and restart the server. </P>
+<P>This change will limit the size of desktop heaps created by noninteractive services to 512 KB, which should be ample for most services. </P></FONT></BODY>
+</HTML>

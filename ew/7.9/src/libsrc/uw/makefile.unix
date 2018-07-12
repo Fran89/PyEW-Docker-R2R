@@ -1,0 +1,39 @@
+
+CFLAGS = -c -D_REENTRANT $(GLOBALFLAGS) -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = uwdfif.c \
+        llnl_fil.c \
+        piki.c \
+        codautils.c \
+        hilbert_fft.c \
+        time2samp.c
+
+SOLARIS_SOURCES = $(SRCS) 
+LINUX_SOURCES = $(SRCS)
+SPECIFIC_SRCS = $($(PLATFORM)_SOURCES)
+
+OBJS = $(SPECIFIC_SRCS:%.c=%.o)
+
+all: $(OBJS) libuw.a
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+	cp $@ $L
+
+libuw.a:
+	ar rvs libuw.a $(OBJS)
+	cp $@ $L
+	
+
+clean: 
+	/bin/rm -f a.out core *.o *.obj *% *~ libuw.a
+
+realclean: clean
+	sh -c 'for o in $(OBJS) ;\
+	do /bin/rm -f $L/$$o;\
+	done'
+

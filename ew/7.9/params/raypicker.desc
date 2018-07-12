@@ -1,0 +1,50 @@
+
+#
+#            Descriptor File for the export_generic module
+#
+#    This file specifies when error messages are to be reported via
+#    email and pager.  All errors are logged in statmgr's daily log
+#    files.  The name of this file must be entered in statmgr's
+#    configuration file with a <Descriptor> command.
+#    (example:  Descriptor "export_generic.desc" )
+#    The pager group name and a list of email recipients are listed
+#    in statmgr's configuration file.
+#
+#    Comment lines in this file are preceded by #.
+#
+#    Parameters:
+#
+#    <modName> is a text string included in each reported error message.
+#
+#    <modId> is the module id number as specified in the file
+#    earthworm.h.
+#
+#    <instId> is the installation id number as specified in the file
+#    earthworm.h.
+#
+#
+modName  raypicker
+modId    MOD_RAYPICKER  
+instId   ${EW_INST_ID}
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 120  page: 0  mail: 100 
+#
+# Uncomment the "restartMe" line to enable automatic restart of this
+# process by statmgr/startstop.  statmgr will issue a TYPE_RESTART message
+# for this process_id if it declares the patient dead. 
+#
+restartMe
+#
+#    A list of possible errors follows.
+#
+#   Raypicker communicates directly with the Hydra Error system, thus
+#   no statmgr2 errors are defined.

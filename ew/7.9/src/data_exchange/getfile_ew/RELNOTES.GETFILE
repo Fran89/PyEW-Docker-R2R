@@ -1,0 +1,6 @@
+
+                    getfile Release Notes
+
+4/18/01  Any number of trusted clients can now be entered in
+         the configuration file.  The previous limit was 100.
+

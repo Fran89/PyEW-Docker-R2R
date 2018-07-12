@@ -1,0 +1,17 @@
+      case SCAN_BIAS:
+         if (Count > 0)
+         {
+            Count--;
+            Sum += samp;
+         }
+         else
+         {
+            Bias = (long)(Sum / COUNT);
+            //printf("BIAS : %d\n", Bias);
+            Count = nscan;
+            /*State = SCAN_FREQ;*/  /* skip SCAN_FREQ step; bad assumptions! */
+            State = SCAN_SYNC;    
+         }
+         break;
+ 
+

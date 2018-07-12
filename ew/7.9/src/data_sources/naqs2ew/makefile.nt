@@ -1,0 +1,83 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5319 2013-01-30 19:15:54Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.7  2010/04/13 06:08:56  paulf
+#     cleaned up clean_bin
+#
+#     Revision 1.6  2006/11/21 23:03:38  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.5  2003/05/06 20:52:15  lucky
+#     *** empty log message ***
+#
+#     Revision 1.4  2003/02/14 19:43:39  dietz
+#     Added naqsserTG (serial Tide Gauge data)
+#
+#     Revision 1.3  2002/11/04 18:43:24  dietz
+#     *** empty log message ***
+#
+#     Revision 1.2  2002/03/15 23:10:09  dietz
+#     *** empty log message ***
+#
+#     Revision 1.1  2001/06/20 22:34:52  dietz
+#     Initial revision
+#
+#
+
+#                    Nmake File For naqs2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+O = nmxsrv_socket.obj nmx_api.obj nmxp_packet.obj crc32.obj\
+      $L/socket_ew.obj $L/swap.obj $L/libew.lib \
+      $L/socket_ew_common.obj 
+
+all:
+	emake naqs2ew
+	emake naqssoh
+	emake naqsserTG
+	emake getmenu-nmx
+
+naqs2ew: naqs2ew.obj naqschassis.obj channels.obj $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) naqs2ew.obj naqschassis.obj channels.obj $O \
+           -out:$B\naqs2ew.exe
+
+naqssoh: naqssoh.obj naqschassis.obj sohchannels.obj $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) naqssoh.obj naqschassis.obj sohchannels.obj $O \
+           -out:$B\naqssoh.exe
+
+naqsserTG: naqsserTG.obj naqschassis.obj serchannels.obj $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) naqsserTG.obj naqschassis.obj serchannels.obj $O \
+           -out:$B\naqsserTG.exe
+
+getmenu-nmx: getmenu-nmx.obj $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) getmenu-nmx.obj $O \
+           -out:$B\getmenu-nmx.exe
+
+dsclient: dschassis.obj $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) dschassis.obj $O \
+           -out:$B\dsclient.exe
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_NTSDK $<
+
+# added -D_NTSDK to enable definition of getpid() as _getpid() LDD.
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\naqs2ew* $B\*nmx* $B\naqss*

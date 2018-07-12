@@ -1,0 +1,235 @@
+<HTML>
+<HEAD>
+<TITLE> SUGGESTED PICKER PARAMETER CHANGES</TITLE>
+</HEAD>
+<BODY BGCOLOR=white>
+<H1><STRONG><CENTER> SUGGESTED PICKER PARAMETER CHANGES</STRONG></H1><P>
+<H3>James C. Pechmann</H3>
+<H3>University of Utah, Dept. of Geology and Geophysics</H3>
+<H3>July 7, 1998</H3>
+<H3>Updated August 29, 1998</H3>
+</CENTER>
+
+<p><h2>
+<a href=#2006Update>FURTHER SUGGESTIONS: OCTOBER 2, 2006.</a></h2>
+
+<p><h2>
+Original 1998 Suggestions.</h2>
+
+<PRE>
+
+     This document describes some suggested changes to the standard
+parameter settings used in the Earthworm version of Rex Allen's
+P-Picker algorithm.  These changes have improved the picker's
+performance at two Earthworm installations where they have been
+implemented as of this writing:  the University of Utah Seismograph
+Stations (UUSS) and the University of Washington.  I consider these
+recommended parameter changes to be provisional because I am still
+working on optimizing the parameters and because I have not yet done
+a systematic comparison between the picker performance with and
+without these parameter changes.  Nevertheless, I have been encouraged
+to make these provisional recommendations available to other Earthworm
+users who may wish to implement them.
+
+     The standard parameter settings were originally developed by Rex
+Allen at the U.S. Geological Survey office in Menlo Park, California.
+These parameters have been in use for many years in Rex Allen P-Picker
+installations operating on data from the Northern California Seismic
+Network (NCSN), the Southern California Seismic Network (SCSN), and
+elsewhere.  While the performance of the picker with these parameters
+has apparently been satisfactory for some networks, such as the NCSN
+and SCSN, that has not been the case for other networks including the
+UUSS network.  The problem appears to be that the P-Picker algorithm
+with the standard parameters does not do a very good job of picking
+relatively low-amplitude, emergent first arrivals.  Consequently, for
+networks with average station spacings significantly larger than those
+of the California networks, the picker is unable to pick enough
+arrival times from most of the smaller seismic events to enable them
+to be located.
+
+     I believe that the picker performance can be significantly
+improved by changing just four of the program's parameters--five for
+broadband stations--as detailed below.  These recommended changes are
+based primarily on detailed analyses of the reasons for the picker's
+failure to pick arrival times on several seismic records with small
+but clear P-wave first arrivals.  I will first give a summary of the
+recommended changes to the picker parameters and then give a brief
+explanation about what these changes do and why I think they are
+needed.  The reasons for the first three changes are fairly obvious
+once it is understood what the program does.  The last two recommended
+changes are not as straightforward, and are subject to revision
+pending further work.
+
+
+SUMMARY OF SUGGESTED CHANGES:
+
+     The 2-letter parameter names given below are those used in the
+original Earthworm version of the code.  The longer names are those
+used in the 1997 and later versions of the code written by Will Kohler
+of the USGS.
+
+(1)  Change i8 = MinPeakSize from 60 to 20 counts
+
+(2)  Change i9 = MinCodaLen from 3 to 0 seconds
+
+(3)  FOR BROADBAND STATIONS ONLY
+     Change c1 = RawDataFilt from 0.985 to 0.939 
+
+(4)  Change c3 = StaFilt from 0.6 to 0.4
+
+(5)  Change c4 = LtaFilt from 0.03 to 0.015
+
+
+EXPLANATION OF SUGGESTED CHANGES:
+
+(1)  Change i8 = MinPeakSize from 60 to 20 counts
+
+    In one of the quality checks performed by the picker, the absolute
+values of the amplitudes of the first three extrema (peaks or troughs)
+are compared to a threshold value.  This value was formerly called i8
+but is called MinPeakSize in more recent versions of the code.  At
+least one of these extrema must be greater than or equal to i8 for the
+pick to be considered valid.
+
+    For UUSS data, and probably data from other networks as well, the
+standard threshold amplitude of i8 = 60 counts used for the NCSN is
+unnecessarily high.  I chose to reset this parameter to 20, which is
+roughly twice the zero-to-peak noise level for quiet UUSS stations.
+
+
+(2)  Change i9 = MinCodaLen from 3 to 0 seconds
+
+     It is very important to change this parameter to a value less
+than 2 sec, even though for some versions of Earthworm this change
+will require recompiling some code.  Here's why.
+
+     The signal duration is defined as the difference between the
+P-wave arrival time and the time when the average absolute value of a
+200-sample-long window drops below a threshold value.  Except for
+"noisy" stations, this threshold is c7 = CodaTerm.  The USGS uses a
+value of c7 = 49.14 counts for both historical and practical reasons.
+
+     For some P-wave arrivals with good signal-to-noise ratio on the
+UUSS network, the average absolute value over the first 200 samples
+after the pick is less than 49.14 counts.  Arrival time picks for such
+arrivals will be rejected after 2 sec if the sampling rate is 100 Hz
+and the minimum signal duration, i9, is set to 3 sec (the standard
+NCSN value).  Setting i9 = MinCodaLen = 0 sec solves this problem.
+
+     This problem could also be solved by lowering the threshold
+value, c7 = CodaTerm, perhaps to some value representative of the
+background noise levels.  This solution is less desireable because it
+would lower the maximum magnitude that could be determined from the
+signal duration measurements which, in the interests of timeliness,
+are currently limited to 144 sec.
+
+     The parameter i9 = MinCodaLen was unfortunately hardcoded to a
+value of 3 sec in the picker software supplied with Earthworm versions
+2.8 (May 1997) through 3.1 (April 1998).  If you are running one of
+these versions of Earthworm, then to set i9 = MinCodaLen = 0 sec you
+need to make the following change in the subroutine pick_ra.c and then
+recompile:
+
+                     Change the line
+
+const int MinCodaLen = 3;      /* Must be an odd number */
+
+                            to
+
+const int MinCodaLen = 0;      /* Must be an odd number */
+
+
+(3)  FOR BROADBAND STATIONS ONLY
+     Change c1 = RawDataFilt from 0.985 to 0.939 
+
+     The first thing that the picker algorithm does is to apply a
+recursive highpass filter to the data to remove the DC offset.  If
+c1 = 0.985 (the standard NCSN value) and if the sampling rate is
+100 Hz, then the corner frequency of the filter is 0.24 Hz.  
+
+     On broadband records, which for this purpose I define as records
+from seismometers with free periods greater than one second, small
+amplitude P-wave arrivals are often obscured by microseisms.  The
+microseisms can be filtered out more effectively by setting
+c1 = 0.939, which sets the corner frequency of the highpass filter to
+1.0 Hz.  This change ought to improve the performance of the picker on
+broadband records.  I haven't actually verified that it does improve
+the picking, but I have verified that the change in c1 changes the
+filtering as predicted.  For stations with short-period (1 Hz)
+seismometers, the standard NCSN value of c1= 0.985 works just fine and
+should probably be left alone.
+
+
+(4)  Change c3 = StaFilt from 0.6 to 0.4
+(5)  Change c4 = LtaFilt from 0.03 to 0.015
+
+     The need for these changes is less obvious than for the other two,
+but nonethless they are very important.  c3 and c4 control the time
+constants for the short-term and long-term averages, respectively, of 
+the characteristic function used in the identification of P-wave
+first arrivals (see Allen, 1978, BSSA 68, 1521-1532).  The changes
+above roughly double the time constants for these two averages, whose
+ratio serves as the primary detector of P-wave arrivals in the picker
+program.  Suppose we define NSTA and NLTA as the number of samples it
+takes for the weight in the (recursively calculated) weighted
+short-term and long-term averages, respectively, to drop below 10%.
+Then the above changes increase NSTA from 3 to 5 samples and NLTA from
+75 to 152 samples.
+
+     The motivation for these changes is that the dominant period of the
+background noise is 0.05 sec in the primary UUSS data source:  analog
+telemetry data digitized at 100 Hz.  It seemed likely that the picker
+performance would improve if the short-term average was computed over
+a longer time window to better average out this noise.  But how much
+longer?  If the short-term average is too long, then the picks will be
+late relative to the onset of the arrival.  The value for c3 = 0.4
+(NSTA = 5 samples) was based on the observation that the shortest 
+zero-to-peak times for first arrivals recorded on the UUSS analog
+telemetry network are ~ 0.04 sec.
+
+     I increased the time constant for the long term average
+proportionately to that of the short-term average on the assumption
+that the ratio of these time constants had previously been optimized.
+Experiments using different values of c4 while holding c3 fixed at
+0.4 seemed to support this assumption.  However, I intend to do a
+grid search on a set of test events to find the optimum values of
+c3 and c4.  The optimum values for c3 and c4 depend on some complex
+tradeoffs, the description of which is beyond the scope of this short
+document.
+
+</PRE>
+
+<p>
+<h2>
+<a name="2006Update">FURTHER SUGGESTIONS: OCTOBER 2, 2006.</h2>
+<pre>
+
+c6 = DeadSta .  For 24-bit digital telemetry stations, we set this
+parameter to 1000000 instead of 1200--essentially turning off the dead
+station check.  That's because this check is primarily useful for analog
+telemetry stations, for which telemetry dropouts can cause large amplitude
+noise.  We do not tend to have this problem with the digital telemetry
+stations we record.  Therefore, we set c6 = DeadSta to a higher value for
+digital telemetry stations in order to help keep this check from causing
+the rejection of arrival time picks in the codas of prior seismic events.
+
+c7 = CodaTerm .  We use gain-dependent values so that the coda termination
+values all correspond to approximately the same ground velocity values.
+
+c1 = RawDatafilt .  In my 1998 report on suggested picker parameter changes,
+I recommended that for broadband stations this parameter be set to a value
+that sets the corner frequency of the highpass filter to 1.0 Hz.  One point
+that I did not make very clear in this report is that the correct value of
+c1 for a given highpass filter corner frequency depends on the sampling
+rate.  If we define the corner frequency of the filter, fc, as the frequency
+at which the amplitude response is 1/sqrt(2) times it's maximum value, then
+it can be shown that
+
+fc = (1 / (pi T) arcsin [ (1 - c1) / sqrt(2(1 + c1**2)) ]
+ 
+c1 = [sin(2 pi fc T) -1] / [(2 ( sin(pi fc T) )**2) -1]
+ 
+where T = the sampling interval and pi = 3.14159.  For example, if fc = 1.0
+Hz, then c1 = 0.939 for T = 0.01 sec and c1 = 0.854 for T = 0.025 sec.
+
+</pre>

@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Global_Processing_Message_Format – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Global_Processing_Message_Format?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Global_Processing_Message_Format.html" title="View Global_Processing_Message_Format">Global_Processing_Message_Format</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Global_Processing_Message_Format?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Global_Processing_Message_Format?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-19T16%3A19%3A47-08%3A00&amp;precision=second" title="2012-01-19T16:19:47-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/19/12 16:19:47</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">
+Earthworm Global Processing
+Message Formats
+
+July 24, 2002
+
+Alex Bittenbiter and Dale Hanych
+
+GENERAL:
+
+This document describes messages pertaining to global processing:
+
+1.    TYPE_AMP_GLOBAL
+2.    TYPE_PICK_GLOBAL
+3.    TYPE_LOC_GLOBAL
+
+
+All fields will be blank-separated.
+
+All fields will have at least one printing (non-whitespace) character
+
+
+
+TYPE_PICK_GLOBAL
+=================
+
+&lt;author&gt; &lt;sequence_number&gt; &lt;version&gt; &lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; &lt;pick_time&gt; &lt;phase_name&gt;
+
+Inalterable Header:
+------------------
+
+&lt;author&gt; -- The standard author string
+
+&lt;sequence_number&gt; -- integer, represented as an ascii string
+                     The sequence number should be practically unique,
+                     such that it will not wrap or be duplicated during a reasonable period of time --
+                     i.e. expected lifetime of the developers involved. 
+
+&lt;version&gt; -- a number indicating the format version.
+
+Version 1 content:
+-----------------
+
+&lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; -- standard station-channel-network-location as ascii strings
+
+&lt;phase_name&gt; -- character string
+
+&lt;pick_time&gt; -- yyyymmddhhmmss.sss
+
+
+
+TYPE_AMP_GLOBAL
+===============
+
+&lt;author&gt; &lt;sequence_number&gt; &lt;version&gt; &lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; &lt;pick_time&gt; &lt;magnitude_type&gt; &lt;amplitude&gt; &lt;associated_period&gt;
+
+Inalterable Header:
+------------------
+
+&lt;author&gt; -- The standard author string
+
+&lt;sequence number&gt; -- integer, represented as an ascii string
+                     The sequence number should be practically unique,
+                     such that it will not wrap or be duplicated during a reasonable period of time --
+                     i.e. expected lifetime of the developers involved. 
+
+&lt;version&gt; -- a number indicating the format version.
+
+Version 1 content:
+-----------------
+
+&lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; -- standard station-channel-network-location as ascii strings
+
+&lt;pick_time&gt; -- yyyymmddhhmmss.sss
+
+&lt;magnitude_type&gt; -- ascii numeric code: 1 = mb, 2 = ml, 3 = mblg, 4 = ms; more as needed
+
+&lt;amplitude&gt; -- a/d counts, floating point ascii
+
+&lt;associated_period&gt; -- seconds,  floating point ascii
+
+
+
+TYPE_LOC_GLOBAL:
+===============
+
+This message shall consist of one or more 'lines'. 
+Each line will start with a 'line name' string followed by an ascii space. 
+Each line terminates with a ascii newline character ['\n']
+Each line will consist of blank-separated fields.
+Additional fields can be added to the end of each line as the message evolves.
+The message terminates with an additional \n  [message ends in two \n]
+The first line of the message must be a SUM line.  There shall be only one SUM line per message.
+Following the SUM line, data lines can appear in any order.
+The SUM line will be versioned 
+For version 1, data line types are PHS and MAG, other line types will be created as needed.
+
+
+SUM &lt;author&gt; &lt;version&gt; &lt;id&gt; &lt;origin_time&gt; &lt;lat&gt; &lt;lon&gt; &lt;z&gt; &lt;gap&gt; &lt;dmin&gt; &lt;rms&gt; &lt;pick_count&gt; &lt;nphs&gt; &lt;nmag&gt;
+
+PHS &lt;author&gt; &lt;sequence_number&gt; &lt;version&gt; &lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; &lt;pick_time&gt; &lt;phase_name&gt;
+
+MAG &lt;author&gt; &lt;sequence_number&gt; &lt;version&gt; &lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; &lt;pick_time&gt; &lt;mag_type&gt; &lt;amp&gt; &lt;period&gt;
+
+
+Where:
+
+&lt;version&gt; -- a number indicating the message version
+             (pertains to SUM line and possibly content)
+
+&lt;id&gt; -- event id
+
+&lt;origin_time&gt;, &lt;pick_time&gt; -- ascii strings in format YYYYMMDDhhmmss.sss
+
+&lt;pick_count&gt; -- number of picks used to calculate origin (e.g., by glass)
+
+&lt;nph&gt; -- number of PHS lines included
+
+&lt;nmag&gt; -- number of AMP lines included
+
+&lt;mag_type&gt; -- ascii numeric code: 1 = mb, 2 = ml, 3 = mblg, 4 = ms; more as needed
+
+&lt;station&gt; &lt;chan&gt; &lt;net&gt; &lt;loc&gt; -- standard SCN-L
+
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Global_Processing_Message_Format?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

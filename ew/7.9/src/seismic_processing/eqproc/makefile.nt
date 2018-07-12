@@ -1,0 +1,66 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5320 2013-01-30 20:04:07Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.4  2006/11/21 23:04:37  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.3  2004/05/17 20:25:49  dietz
+#     Modified to use TYPE_PICK_SCNL and TYPE_CODA_SCNL as input and
+#     to produce TYPE_EVENT_SCNL as output.
+#
+#     Revision 1.2  2003/05/06 20:52:55  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 17:12:03  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#                    Nmake File For eqproc and log_everything
+#                               Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all:
+   emake $B\eqproc.exe
+   emake $B\log_everything.exe
+
+eqproc:
+   emake $B\eqproc.exe
+
+log_everything:
+   emake $B\log_everything.exe
+
+$B\eqproc.exe: eqproc.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) eqproc.obj $L\site.obj \
+    $L\tlay.obj \
+    $L\mnbrak.obj $L\brent.obj $L\pipe.obj \
+    $L\rdpickcoda.obj $L\libew.lib -out:$B\eqproc.exe
+
+$B\log_everything.exe: log_everything.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) log_everything.obj $L\pipe.obj \
+      $L\libew.lib -out:$B\log_everything.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\eqproc* $B\log_everything*

@@ -1,0 +1,46 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: coda_dur overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR>
+    Coda Dur Overview</H1>
+<I>(last revised 25 October, 2012)</I></CENTER>
+
+<P>
+                        
+                                                                      
+         This program reads picks and coda avg absolute values (aav)   
+         and then determines the coda duration for each pick.          
+         The program was decoupled from pick_ew so that picks and     
+         coda can potentially be produced from differently-processed  
+         waveform streams of a given SCNL.                            
+                                           <p>                           
+         Coda_dur only processes SCNLs listed in the pick_ew station  
+         list with pick_flag=1, and it uses these parameters:         
+ 
+<pre>                                                                     
+         Old name   New name                                          
+         --------   --------                                          
+            c7      CodaTerm                                          
+            c8      AltCoda                                           
+            c9      PreEvent      
+
+                                    
+                                       </pre>
+<p>For more discussion of codas, see: <a href="pick_ew.scale-factors.txt">pick_ew.scale-factors.txt</a>
+<pre>&nbsp;                               
+</pre>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index |</A>
+<A HREF="../cmd/coda_dur_cmd.html"> Coda_dur Commands</A>
+</CENTER>
+
+
+<HR>
+<ADDRESS>
+ <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

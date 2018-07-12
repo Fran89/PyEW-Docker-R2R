@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+  <meta http-equiv="content-type" content="text/html;
+      charset=windows-1252"><title>Earthworm Program: geojson2ew overview</title>
+  <meta charset="utf-8"></head><body bgcolor="#ffffff">
+    <center>
+      <h1>Earthworm Program: <br>
+        geojson2ew Overview</h1>
+      <i>(last revised May 18, 2016)</i></center>
+    <p><b> geojson2ew</b> is a geoJSON to Earthworm module. The module was
+      written for the California Institute of Technology to get geoJSON
+      data from a RabbitMQ server but, any
+      
+      AMQP 0-9-1 server should work.<br>
+    </p>
+    <p> The <a href="https://github.com/alanxz/rabbitmq-c" target="_blank">RabbitMQ C AMQP client</a> and the <a href="https://github.com/akheron/jansson" target="_blank">Jansson JSON library</a> must be
+      installed on the same host as the Earthworm system in order for
+      this program to work. Earthworm v7.8, RabbitMQ C AMQP client
+      v0.8.0 and Jansson JSON library version 2.7 were used for this
+      writing.</p>
+    <p>Note that Earthworm requires 32-bit libraries, so if your system
+      is not 32-bit then extra setup is required. If using a
+      64-bit Linux system, build the libraries on a 32-bit system,
+      copy the files to the 64-bit machine, modify the makefiles to
+      include -m32 (for CFLAGS, LDFLAGS and AM_CFLAGS) and then run
+      "make clean", "make" and "sudo make install".</p>
+    <p>This release was compiled and tested on an system running Ubuntu
+    14.04.1 LTS and gcc version 4.8.2.</p>
+<br>
+    <center><b>
+      <a href="../modules.html">Module Index</a> | <a href="../cmd/geojson2ew_cmd.html">geojson2ew Commands</a>
+     </b></center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<br>
+<b>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body></html>

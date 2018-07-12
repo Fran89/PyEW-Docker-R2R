@@ -1,0 +1,44 @@
+#
+#   
+#   
+#
+#    $Id: makefile.nt,v 1.1 2016 
+#
+#
+#
+#
+#
+#
+#
+#
+#                    Nmake File For pick_eew - Windows NT version
+#
+APP = pick_eew
+O = $(APP).obj pick_ra.obj restart.obj config.obj stalist.obj compare.obj \
+            index.obj sample.obj report.obj initvar.obj scan.obj sign.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib
+
+$B\$(APP).exe: $O
+   link $(linkflags) $(libs) $O $L\kom.obj $L\getutil.obj \
+    $L\time_ew.obj $L\chron3.obj $L\logit.obj $L\transport.obj \
+    $L\sleep_ew.obj $L\swap.obj -out:$B\$(APP).exe
+
+.c.obj:
+   cl /nologo $(compflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\pick_eew*

@@ -1,0 +1,574 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: ewhtmlemail commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+ewhtmlemail Configuration File Commands</h1>
+<i>(last revised May 12, 2015)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+4. <a href="#stylefile">Style file format</a><br>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, ewhtmlemail reads the configuration file named on the command
+line. Commands in this file set up all parameters. In the control file,
+lines may begin with a valid ewhtmlemail command (listed below) or with one
+of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @pick_ew.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).<br>
+ewhtml also uses a specific configuration file, <b>ewhtmlemail.css</b>, which is added to the alert emails as a style sheet. This
+file is read whenever a new html email is generated.
+<p><a name="example">
+</a></p>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre>
+<a name="example">
+#
+#                    ewhtmlemail's configuration file
+#
+MyModuleId       MOD_EWHTMLEMAIL        # This instance of ewhtmlemail
+InRing           HYPO_RING              # Transport ring to find hyp2000arc msg
+HeartbeatInt     30                     # Heartbeat interval in seconds
+LogFile          1                      # If 0. don't write logfile; if 1. do
+Debug            0                      # If 1, print debugging msgs
+DebugEmail       0                      # If 1, echo the email command used
+GetLogo  INST_WILDCARD  MOD_WILDCARD    # Limit the sources of hyp2000arc msgs
+MaxMessageSize   16384                  # hyp2000arc messages can be very large
+site_file        cvarg.hinv             # hypoinverse format to locate stations
+HTMLFile         ~/ewhtmlemail/em       # html file folder and format
+EmailProgram     /usr/sbin/sendmail     # sendmail or blat.exe
+UseBlat                                 # Specifies use of blat.exe
+EmailRecipient   recipient1@email.com   # List of email recipients, maximum 20
+EmailRecipient   recipient2@email.com
+EmailRecipient   recipient3@email.com
+EmailRecipientWithMinMag test4@mail.com 2.0             # only send if magnitude is >= 2.0
+EmailRecipientWithMinMagAndDist test5@mail.com 2.0 3.0  # only if mag is >= 2.0 and dist from event <=3km
+StyleFile        ~/<a href="#stylefile">ewhtmlemail.css</a>      # Location of the style file
+MAX_SAMPLES      100000                 # Maximum sample count to request
+WSTimeout        5                      # Waveserver timeout in seconds
+WaveServer 192.168.0.1:16022            # List of waveservers, maximum 10
+WaveServer 192.168.0.2:16022            # format aaa.bbb.ccc.ddd:portno
+TimeMargin 10.0            # time margin (in seconds) for downloading from waveservers (default 10)
+MaxDuration 60.0           # maximum duration (in seconds) of trace (default 144)
+TraceWidth 1200            # sets width of traces (default 600)
+TraceHeight 200            # sets height of traces (Default 60)
+UseML                      # optional flag to turn on TYPE_MAGNITUDE (localmag) use
+UseMW                      # optional feature to turn on TYPE_MAGNITUDE and detect MW magnitude messages
+MagWaitSeconds   200       # optional delay before releasing an email that may have an ML or MW
+DataCenter       "My data Center" 	# optional DataCenter value used in the table header
+MinQuality       C			# only show C or better quality events
+StaticMapType    satellite              # map type for the google static map
+SubjectPrefix "Preliminary Location"    # optional subject prefix for emails (defaults to EWalert)
+UseUTC                     # optional flag to use UTC in the emails (localtime zone of PC is default)
+ShortHeader                # optional flag to compress the header table and leave less whitespace
+ShowDetail                 # optional flag to show more event information (errh, errz, gap, rms, etc)
+DontShowMd                 # optional flag to remove Md from the report
+DontUseMd                  # optional flag to not use Md for email decisions for any EmailRecipientWithMinMag
+UseRegionName              # optional flag to use flynn-enghdal region names in table at top of email
+CenterPoint 45.0 -121.0    # optional lat and lon for EmailRecipientWithMinMagAndDist
+SPfilter                   # optional flag to enable shortperiod filtering
+GMTmap                     # optional flag to produce GMT data
+Mercator                   # Mercator projection for GMT map (default)
+Albers                     # Albers projection for GMT map
+StationNames               # show station names in the GMT map
+Cities /home/earthworm/run/params/cities.txt             # cities to be printed in the GMT map
+MapLegend /home/earthworm/run/params/ewhtmlemail.legend  # map legend to be drawn in the GMT map
+KML ${EW_DATA_DIR}/web/kml web/kml_preamble.txt          # dir for kml file and kml preamblefile
+BlatOptions "-server localhost:1099 -profile gmailsmtp"  # optional blat settings (i.e., stunnel, gmail smtp)
+</a>
+</pre>
+<a name="function">
+</a>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by ewhtmlemail, grouped by the function
+they influence. Not all of the commands are required and they may be
+specified in any order.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: -->
+</a></p>
+<pre>
+<a name="function">	Earthworm system setup:</a>
++		<a href="#MyModuleId">MyModuleId</a>		Module id for pick_ew (mandatory)
++		<a href="#InRing">InRing</a>		Shared memory region for input (mandatory)
++		<a href="#HeartBeatInt">HeartBeatInt</a> 	Interval between heartbeats (mandatory)
++		<a href="#GetLogo">GetLogo</a> 	Control message sources (mandatory)
++		<a href="#MaxMessageSize">MaxMessageSize</a> 	Maximum size of incoming HYP2000ARC messages (mandatory)
+
+<a name="function">	Processing:</a>
++		<a href="#site_file">site_file</a> 	Hypoinverse stations file (mandatory)
++		<a href="#HTMLFile">HTMLFile</a> 	Output folder and prefix for html file (mandatory)
++		<a href="#EmailProgram">EmailProgram</a> 	Location of the sendmail program (optional)
++		<a href="#UseBlat">UseBlat</a> 	Specifies use of blat.exe (optional)
++		<a href="#EmailRecipient">EmailRecipient</a> 	List of email recipients (optional)
++		<a href="#StyleFile">StyleFile</a> 	Location of the style sheet file (optional)
++		<a href="#WaveServer">WaveServer</a> 	Waveserver address (optional)
++		<a href="#MAX_SAMPLES">MAX_SAMPLES</a> 	Maximum number of samples to request (optional)
++		<a href="#WSTimeout">WSTimeout</a> 	Waveserver timeout (optional)
++		<a href="#UseML">UseML</a> 		Flag to turn on TYPE_MAGNITUDE (localmag) use (optional)
++		<a href="#UseMW">UseMW</a> 		Flag to turn on TYPE_MAGNITUDE (MW) use (optional)
++		<a href="#MagWaitSeconds">MagWaitSeconds</a> 	Delay before releasing an email (optional)
+
+<a name="function">	Output Control:</a>
++		<a href="#LogFile">LogFile</a>		Log flag (mandatory)
++		<a href="#Debug">Debug</a>		Debugging flag (optional)
++		<a href="#DebugEmail">DebugEmail</a>	Debugging flag (optional)
++		<a href="#DataCenter">DataCenter</a>	DataCenter value used in table header (optional)
++		<a href="#MinQuality">MinQuality</a>	MinQuality email sending filter (optional)
++		<a href="#ShortHeader">ShortHeader</a>	Compress header table and leave less whitespace (optional)
++		<a href="#StaticMapType">StaticMapType</a>	Map type for the google static map (optional)
+</pre>
+
+
+
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given.
+</a></p>
+<pre><a name="alphabet"><b>
+command <font color="red">arg1</font>				processed by		function<br></b></a></pre>
+<hr>
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<a name="DataCenter"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="DataCenter"><b>DataCenter <font color="red">CHAR</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="DataCenter"><!-- command description goes here -->
+Optional DataCenter value used in table headers. Value should be
+enclosed in quotes.
+</a>
+</blockquote>
+
+<hr>
+<a name="Debug"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Debug"><b>Debug <font color="red">flag</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here -->
+Sets a flag to control the volume of debugging information
+output by ewhtmlemail. If <font color="red">flag</font> is zero, no debug
+info is written. If <font color="red">flag</font> is non-zero, debug
+information is written to the logfile and screen.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	0
+Sample:		Debug 0
+</pre>
+</blockquote>
+
+<hr>
+<a name="DebugEmail"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="DebugEmail"><b>DebugEmail <font color="red">flag</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="DebugEmail"><!-- command description goes here -->
+Sets a flag to control whether the email command used is
+logged by ewhtmlemail. If <font color="red">flag</font> is zero, the command
+is not logged. If <font color="red">flag</font> is non-zero, the command
+is written to the logfile and screen.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	0
+Sample:		DebugEmail 0
+</pre>
+</blockquote>
+
+<hr>
+<a name="EmailProgram"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="EmailProgram"><b>EmailProgram <font color="red">path_to_email</font></font>		process_message		processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="EmailProgram"><!-- command description goes here -->
+Sets the path to the email program as <font
+ color="red">path_to_email</font>. Note that this path
+ must include the name of the program. Usually set to "/usr/sbin/sendmail" or "blat.exe".
+ If EmailProgram is not specified (commented out), ewhtmlemail will only
+ save html files with the events to the folder defined by HTMLFile.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		EmailProgram /usr/sbin/sendmail
+</pre>
+</blockquote>
+
+<HR>
+<A NAME="EmailRecipient"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>EmailRecipient <font color=red>recipient</font>		process_message		Processing</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Registers one <font color=red>recipient</font> email address with the ewhtmlemail.
+ewhtmlemail will send every <font color=red>recipient</font>
+an email message on the detected events.  Up to 20 "EmailRecipient" commands may be
+issued, but none are required. Each <font color=red>recipient</font> address can be up to 60 characters long.
+<PRE><!-- Default and example go here   -->
+Default:	none
+Sample:		EmailRecipient  jdoe@yourmachine.edu
+</PRE>
+</BLOCKQUOTE>
+
+<hr>
+<a name="GetLogo"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="GetLogo"><b>GetLogo <font color="red">instID	modID</font>			config			earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="GetLogo"><!-- command description goes here -->
+Gets event messages (TYPE_HYP2000ARC) originating from the installation
+and module IDs given by <font color="red">instID</font> and <font color="red">modID</font>,
+respectively. Each ID is a character string. Valid strings
+are listed in earthworm.d.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		GetLogo  INST_CIVISA  MOD_EQPROC
+</pre>
+</blockquote>
+
+<hr>
+<a name="HeartBeatInt"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HeartBeatInt"><b>HeartBeatInt <font color="red">nsec</font>			config			earthworm setup</b><br></a></pre>
+<blockquote><a name="HeartBeatInt"><!-- command description goes here -->
+Defines the number of seconds, <font color="red">nsec</font>, between
+TYPE_HEARTBEAT messages issued by ewhtmlemail.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		HeartBeatInt 30
+</pre>
+</blockquote>
+
+<hr>
+<a name="HTMLFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HTMLFile"><b>HTMLFile <font color="red">filename</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="HTMLFile"><!-- command description goes here -->
+Base name for the html files generated by ewhtmlemail.
+The actual filenames will be given by "<font color="red">filename</font>_EventID.html".
+The term EventID is the event number assigned by binder.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		HTMLFile  home/earthworm/events/ew
+</pre>
+</blockquote>
+
+<hr>
+<a name="InRing"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="InRing"><b>InRing <font color="red">ring</font>				config			earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="InRing"><!-- command description goes here -->
+Tells ewhtmlemail which shared memory region to find input events.
+ <font color="red">ring</font> is a character string (valid strings
+are listed in earthworm.d) that relates (in earthworm.d) to a unique
+number for the key to the
+shared memory region. ewhtmlemail will read only TYPE_HYP2000ARC messages.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		InRing HYPO_RING
+</pre>
+</blockquote>
+
+<hr>
+<A NAME="LogFile"></a>  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				config			output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, statmgr
+will write a daily log file(s) called statmgrxx.log_yymmdd
+where xx is statmgr's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:	none
+Sample:		LogFile 0
+</PRE>
+</BLOCKQUOTE>
+
+<hr>
+<a name="MagWaitSeconds"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MagWaitSeconds"><b>MagWaitSeconds <font color="red">seconds</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MagWaitSeconds"><!-- command description goes here -->
+If UseML and/or UseMW is specified then this command sets the length of time to delay before
+releasing an email that may (or may not) have an ML or MW magnitude. The time is in seconds.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	5
+Sample:		MagWaitSeconds  200
+</pre>
+</blockquote>
+
+<hr>
+<a name="MaxMessageSize"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxMessageSize"><b>MaxMessageSize <font color="red">size</font>			process_message		earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxMessageSize"><!-- command description goes here -->
+Specifies the maximum <font color="red">size</font> in bytes of the TYPE_HYP2000ARC messages to retrieve
+from the inRing. Note that HYP2000ARC messages may be very large.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		MaxMessageSize  16384
+</pre>
+</blockquote>
+
+<hr>
+<a name="MAX_SAMPLES"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MAX_SAMPLES"><b>MAX_SAMPLES <font color="red">nsamp</font>			process_message		earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxMessageSize"><!-- command description goes here -->
+Specifies the maximum number of samples, <font color="red">nsamp</font>, to retrieve from a WaveServer for any given station.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	60000
+Sample:		MAX_SAMPLES  60000
+</pre>
+</blockquote>
+
+<hr>
+<a name="MinQuality"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MinQuality"><b>MinQuality <font color="red">CHAR</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MinQuality"><!-- command description goes here -->
+Sets a minimum quality level for sending emails. CHAR can be A,B,C, or D.
+KML or HTML files will still be created but not sent.
+</a>
+</blockquote>
+
+<hr>
+<a name="MyModuleId"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MyModuleId"><b>MyModuleId <font color="red">mod_id</font>			config			earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MyModuleId"><!-- command description goes here -->
+Sets the module id. <font
+ color="red">mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number. If more than
+one ewhtmlemail is running at the same time, they must be given different
+module ids!
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		MyModuleId  MOD_EWHTMLEMAIL
+</pre>
+</blockquote>
+
+<hr>
+<a name="ShortHeader"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="ShortHeader"><b>ShortHeader <font color="red">CHAR</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="ShortHeader"><!-- command description goes here -->
+Optional flag to compress the header table and leave less whitespace.
+</a>
+</blockquote>
+
+<hr>
+<a name="site_file"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="site_file"><b>site_file <font color="red">filename</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="site_file"><!-- command description goes here -->
+Enters site codes and station locations into the site table by reading a
+HYPOINVERSE format station file called filename. In this file, stations
+are described by a 5-letter site name, a 2-letter network code and a 3-letter
+component code. The picker and binder must also be using this station-naming convention.
+The format of the file is described under <a href = "http://folkworm.ceri.memphis.edu/ew-doc/USER_GUIDE/hypoinv_sta.html">"HYPOINVERSE STATION FILE FOR FULL 12-LETTER (S-N-C-L) CHANNEL NAMES"</a>.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		site_file  cvarg.hinv
+</pre>
+</blockquote>
+
+<hr>
+<a name="StaticMapType"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="StaticMapType"><b>StaticMapType <font color="red">CHAR</font>				config			output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="StaticMapType"><!-- command description goes here -->
+Optional map type for the google static map. Can be: terrain, satellite, roadmap
+or hybrid (satellite+roads).
+</a>
+<pre><!-- Default and example go here   -->
+Default:	hybrid
+Sample:		StaticMapType  satellite
+</pre>
+</blockquote>
+
+<hr>
+<a name="StyleFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="StyleFile"><b>StyleFile <font color="red">filename</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="StyleFile"><!-- command description goes here -->
+Name of the optional cascading style sheet file to be embedded in the output html files.
+See information on the structure below.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		StyleFile  ewhtmlemail.css
+</pre>
+</blockquote>
+
+<hr>
+<a name="UseBlat"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="UseBlat"><b>UseBlat 				process_message			Processing</b><!-- command args ... -->		</a></pre>
+<blockquote><a name="UseBlat"><!-- command description goes here -->
+Specifies that the EmailProgram is blat type, which takes the syntax
+"blat.exe file -to recipient". Make sure EmailProgram has the absolute path to
+blat.exe if it is not in your path, but set the EmailProgram entry regardless.
+</a>
+<!-- Default and example go here   -->
+</blockquote>
+
+<hr>
+<a name="UseML"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="UseML"><b>UseML 				process_message			Processing</b><!-- command args ... -->		</a></pre>
+<blockquote><a name="UseML"><!-- command description goes here -->
+If specified then ewhtmlemail will detect and use 'ML' magnitude messages generated by the localmag module.
+</a>
+<!-- Default and example go here   -->
+</blockquote>
+
+<hr>
+<a name="UseMW"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="UseMW"><b>UseMW 				process_message			Processing</b><!-- command args ... -->		</a></pre>
+<blockquote><a name="UseMW"><!-- command description goes here -->
+If specified then ewhtmlemail will detect and use 'MW' magnitude messages.
+</a>
+<!-- Default and example go here   -->
+</blockquote>
+
+<hr>
+<a name="WaveServer"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="WaveServer"><b>WaveServer <font color="red">ip:port</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="WaveServer"><!-- command description goes here -->
+IP address and port for a waveserver. A Maximum of 10 waveservers may be specified.
+ewhtmlemail will try to contact each waveserver in the specified order to retrieve
+waveforms for the reporting stations.
+</a>
+<pre><!-- Default and example go here   -->
+Default:	none
+Sample:		WaveServer  192.168.0.1:16022
+</pre>
+</blockquote>
+
+<hr>
+<a name="WSTimeout"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="WSTimeout"><b>WSTimeout <font color="red">nsec</font>			process_message			Processing</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="WSTimeout"><!-- command description goes here -->
+WaveServer timeout in seconds
+</a>
+<pre><!-- Default and example go here   -->
+Default:	5
+Sample:		WSTimeout 5
+</pre>
+</blockquote>
+
+
+
+<hr>
+<a name="stylefile"></a>
+<h2><a name="stylefile">4. STYLE FILE FORMAT</a></h2>
+<p>
+Ewhtmlemail allows minimal configuration of the graphical aspects of the generated html
+files by embedding a cascaded style sheet. As such, standard css rules apply when customizing
+this file. Not all elements of the generated html are accessible. Particularly, the
+characteristics of the google map and google charts are currently hardcoded in ewhtmlemail.
+Nonetheless, the following Classes and IDs are available:
+</p>
+<pre>
+<b>DataTable</b>
+ID of the table containing the origin details
+
+<b>alt</b>
+Class of every second row of the data table.
+
+<b>MapClass</b>
+Class of the image containing the google map.
+
+<b>WaveTable</b>
+ID of the table containing the waveforms.
+
+<b>WaveTableTextRowClass</b>
+Class of the rows within the WaveTable that have a text line with the station name.
+
+<b>WaveTableTraceRowClass</b>
+Class of the rows within the WaveTable that have a waveform. This waveform is represented as an image extracted from google charts API.
+</pre>
+<br><hr><br>
+The following presents an example css file.
+<br>
+<pre>
+/*
+Style Sheet for ewhtmlemail
+
+Currently, the main html ids to consider for the alert email are:
+DataTable -> The initial table with the basic event info
+WaveTable -> The table with all the traces
+
+This file is embedded in the automatically generated html email as is.
+Make sure that you know what you are doing before changing it.
+*/
+
+#DataTable {
+   font-family: Sans-serif;
+   font-size: 12;
+   border-collapse: collapse;
+}
+
+#DataTable th {
+   background-color: #000060;
+   color: #DDDDFF;
+}
+
+#DataTable tr td {
+   background-color: white;
+   color: #000060;
+}
+
+#DataTable tr.alt td {
+   background-color: #DDDDFF;
+   color: #000060;
+}
+
+#WaveTable {
+   font-family: Sans-serif;
+   font-size: 10;
+   border: 1px solid black;
+   border-collapse: collapse;
+}
+
+#WaveTable th {
+   background-color: #000060;
+   color: white;
+}
+
+#WaveTable tr.WaveTableTextRowClass td {
+   background-color: #DDDDFF;
+   color: #000060;
+}
+
+#WaveTable tr.WaveTableTraceRowClass td {
+   height: 80px;
+   vertical-align: top;
+}
+
+
+.TraceClass {
+   max-height: 60px;
+   height: auto;
+   height: 60px;
+   max-width: 600px;
+   width: auto;
+   width: 600px;
+}
+</pre>
+
+<br>
+<center><a name="reference"> </a><a href="../modules.html">Module Index</a>
+| <a href="../ovr/ewhtmlemail_ovr.html">ewhtmlemail Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<br>
+<hr>
+<br>
+<address><b> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></b></address>
+<br>
+</body>
+</html>

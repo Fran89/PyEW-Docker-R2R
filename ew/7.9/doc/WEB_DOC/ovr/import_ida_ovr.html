@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: import_ida overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Import_ida Overview</H1>
+<I>(last revised 17 March, 1998)</I></CENTER>
+
+<P>
+Import_ida acquires data from one or more Project IDA data servers,
+reformats them into TracePackets and loads them into an Earthworm
+transport ring.  The communication with the data server(s) is done
+using the idatap-1.2.1 toolkit available from the University of
+California, San Diego via
+<pre>
+           ftp://idahub.ucsd.edu:/pub/pickup/idatap-1.2.1.tar.Z
+</pre>
+<P>
+In the import_ida.d parameter file the user specifies a list of servers
+with which to connect, and the list of stations and channels to acquire
+from each server.  The program forks separate processes to
+independently manage all communication with the various servers.  These
+processes communicate through a pipe to distinct threads in the
+parent.  As data packets are acquired, each child process passes them
+back to its parent thread, which loads the packets into a message queue
+that feeds the transport ring via the main thread.  In addition, any
+child log messages are formatted into special packets that are also
+passed back to the main thread and logged using the standard Earthworm
+facilities.
+<P>
+Network timeouts are dealt with transparently to the application by
+the idatap library, which will retry and reconnect as necessary until
+successfull or until a more serious error occurs, at which point import_ida
+assumes the responsibility for reestablishing the connection.  The
+import_ida.d parameter file includes an option for specifying the policy
+to follow when reconnecting after a loss of communication.  One may
+chose to request the next packet in sequence (to minimize gaps in
+the acquired data set) or to request the most recently available data
+(to minimize delays).
+<P>
+Import_ida module was written by David Chavez.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/import_ida_cmd.html">Import_ida Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

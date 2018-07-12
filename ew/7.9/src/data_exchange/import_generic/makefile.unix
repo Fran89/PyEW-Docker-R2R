@@ -1,0 +1,36 @@
+#
+
+LINUX_FLAGS=-lpthread
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+EWBIN = $L/libew_mt.a $L/socket_ew.o $L/socket_ew_common.o
+          
+all:
+	make -f makefile.unix import_ack
+
+import_generic: import_generic.o $(EWBIN)
+	$(CC) $(CFLAGS) -o $B/import_generic import_generic.o $(EWBIN) $(MT_FLAG) $(SPECIFIC_FLAGS)
+
+import_ack: import_ack.o $(EWBIN)
+	$(CC) $(CFLAGS) -o $B/import_ack import_ack.o $(EWBIN) $(MT_FLAG) $(SPECIFIC_FLAGS)
+	rm -f $B/import_generic
+	ln $B/import_ack $B/import_generic
+
+
+
+lint:
+	lint import_generic.c import_ack.c  $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/import_generic* $B/import_ack*

@@ -1,0 +1,30 @@
+From bogaert@gldmutt.cr.usgs.gov Mon Feb  7 11:25:28 2000
+Date: Mon, 07 Feb 2000 11:30:59 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Earthworm V4.1 Patch A
+
+V4.1 Patch A has been released.  If you want to run the Earthworm module,
+"trig2disk", you will need to load this patch.  
+
+You can download the patch from our ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v4.1A
+In this directory is a README describing the procedure for installing Patch A.
+
+Wave_serverV Note:
+
+The configuration file for v4.1 of Wave_serverV had an incorrect comment
+for parameter, 'ClientTimeout'.  A revised wave_serverV.d can be found in
+the above ftp directory.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+

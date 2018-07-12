@@ -1,0 +1,20 @@
+
+This is a very nice Java GUI provided by Ruben S. Luís of
+Centro de Vulcanologia e Avaliação de Riscos Geológicos
+Universidade dos Açores 
+that provides the ability to visualize the settings in
+your pick_ew file against trace data on which picks are made.
+
+This can run on any platform that supports Java Version 1.6
+or higher.
+
+To run it, simply type:
+
+java -jar pick_ew_analysis.jar 
+
+on the command line and connect to a pick_ew stations file
+and to a wave_serverV where data maybe found. The GUI.
+
+Use this URL to find out more or get an updated version:
+
+http://www.cvarg.azores.gov.pt/Cvarg/Info/produtos/PickEWAnalysis_software.htm

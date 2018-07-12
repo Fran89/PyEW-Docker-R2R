@@ -1,0 +1,43 @@
+
+#                    Nmake File For slink2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+LS = libslink
+LS_INCS = /I$(LS)
+LS_LIBS = $(LS)\libslink.lib
+
+EW_LIBS = $L\getutil.obj $L\socket_ew.obj $L\socket_ew_common.obj \
+    $L\libew_mt.lib $L\swap.obj \
+    $L\mem_circ_queue.obj $L\libmseed.lib
+
+all: LibSlink slink2ew
+
+slink2ew: LibSlink slink2ew.obj $(EW_LIBS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) slink2ew.obj $(EW_LIBS)\
+   $(LS_LIBS) -out:$B\slink2ew.exe
+
+# added -D_NTSDK to enable definition of getpid() as _getpid() LDD.
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(LS_INCS) -D_NTSDK -D_CRT_SECURE_NO_DEPRECATE $<
+
+LibSlink: FORCE
+    cd libslink
+    nmake -f Makefile.win all
+    cd ..
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+	cd libslink
+	nmake -f Makefile.win clean
+
+clean_bin:
+        -del $B\slink2ew*
+
+FORCE:

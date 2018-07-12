@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Program: pidpau overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER>
+  <H1>Earthworm Modules:<BR>
+    Stopmodule Overview</H1>
+  <I>(last revised March 1, 2007)</I>
+</CENTER>
+
+<P> The <strong>stopmodule</strong> command line utility requests that Earthworm
+  terminates the particular module associated with the PID (Process ID) you give
+  stopmodule as a parameter. (Use 'status' to find the PID for your module if you don't know it.)
+
+<P>The stopmodule attaches to earthworm's first shared memory ring (first listed in starstop*d) and sends a TYPE_STOP
+message with a payload of the PID. This is intended to signal that processid
+  to terminate gracefully.
+
+<P>Startstop sees the TYPE_STOP message and will 1) request the module shut itself down gracefully; that failing
+  it will 2) hard kill the module. Startstop will mark this module as &quot;Stop&quot; after it has confirmed the
+  process is dead.
+
+<p>Statmgr sees a TYPE_STOP message and sets a it's internal restart status for that module to STOPPED.
+Until statmgr sees a TYPE_RESTART message for a stopped module, it
+should not request a restart of the module.
+
+  <p>If startstop is quit, and restarted (Earthworm shut down completely and then started), and you didn't manually remove the module you stopped
+  from the startstop*d, the previously stopped module WILL start
+  up in the new session.
+
+<P>Warning: On Solaris there's a shell command called &quot;stop&quot;. If you
+  accidentally type &quot;stop &lt;pid&gt;&quot; instead of &quot;stopmodule &lt;pid&gt;&quot;,
+  Solaris won't be able to stop or restart the module in question. The solution:
+  in a unix command prompt, &quot;kill &lt;pid&gt;&quot;, then &quot;restart &lt;pid&gt;&quot;,
+  then finally &quot;stopmodule &lt;newpid&gt;&quot;
+<P>
+  <CENTER>
+    <b><A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/stopmodule_cmd.html">Stopmodule
+    Commands</A> </b>
+  </CENTER>
+<B>
+<HR>
+<ADDRESS> <BR>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </ADDRESS>
+</b>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+##################################################################
+
+!include <ntwin32.mak>
+
+EWLIB=$(EW_HOME)\$(EW_VERSION)\lib
+B=$(EW_HOME)\$(EW_VERSION)\bin
+
+DIRSEP=\\
+
+!include makefile.ind
+
+OBJ = obj
+
+$B\$(APP).exe: $(APP_OBJECTS)
+   $(link) $(conlflags) /RELEASE $(conlibsmt) $(APP_OBJECTS) \
+    $(ALL_CLIENT_LIBS) \
+    -out:$B\$(APP).exe
+
+.c.$(OBJ):
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up rules
+clean:
+   -del a.out core *.o *.pdb *.obj *% *~
+
+clean_bin:
+   -del $B\$(APP)*

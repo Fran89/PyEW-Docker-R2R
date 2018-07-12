@@ -1,0 +1,27 @@
+
+From withers@gandalf.ceri.memphis.edu Tue Sep 22 15:08:51 1998
+Date: Tue, 22 Sep 1998 16:01:08 -0500 (CDT)
+From: "Mitchell M. Withers" <withers@gandalf.ceri.memphis.edu>
+To: earthw-list@nmt.edu
+Subject: trig2disk
+
+
+CERI has recently completed a beta version of a new earthworm module
+called trig2disk.  It listens for type_triglist message (e.g those
+produced by arc2trig and by carltrig), grabs appropriate data segments
+from wave_serverV, and writes the waveforms to disk in either sac
+or ah_xdr format.  Version 3.3 of carltrig, parse_trig, and arc2trig
+are required (i.e. needs the author field in the event line).  It
+has been tested under sparc/solaris and intel/NT.  It is available
+from the developement machine at golden in working/src/trig2disk.
+I can also supply it from Memphis, but please email me for it
+so I can help with the v3.3 modifications.  Questions concerning
+the NT port should be directed to Alex, since I've had my fill of
+NT and he's in love with it.
+
+Mitch 
+
+Center for Earthquake Research and Information (CERI)
+University of Memphis                Ph: 901-678-4940
+Memphis, TN 38152                   Fax: 901-678-4734
+

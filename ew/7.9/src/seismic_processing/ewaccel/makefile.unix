@@ -1,0 +1,34 @@
+#
+# Makefile for ewaccel  -- Unix version
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lposix4 -lthread  -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+LIBDIR = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I. -g
+
+SRCS = ewaccel.c butterworth_c.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(LIBDIR)/libew_mt.a \
+          $(LIBDIR)/ws_clientII.o \
+          $(LIBDIR)/socket_ew_common.o $(LIBDIR)/socket_ew.o $(LIBDIR)/swap.o \
+    	  $(LIBDIR)/mem_circ_queue.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ewaccel
+
+ewaccel: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ewaccel $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ewaccel $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ewaccel
+
+clean_bin:
+	rm -f $(BINDIR)/ewaccel

@@ -1,0 +1,85 @@
+
+	    Design Requirements for the Station Trigger Filter
+
+1. The purpose of the trigger filter is to reduce the number of "duplicate" 
+   triggers from a given "station". For the trigger filter, all channels 
+   which have matching station code and network code are considered to be 
+   the from the same "station". The rules for what are considered "duplicate" 
+   triggers are given below.
+
+2. For each "station", the trigger filter will maintain a history list of 
+   triggers that have been allowed through the filter. The size of these 
+   lists will be limited to a configurable number (count) of triggers.
+ 
+   LDD: The "TriggerHistory" command specifies the number (count)
+   of triggers that will be maintained in the list for each "station".  
+   Only triggers which pass the filter rules are added to the list. Once 
+   the list is full, old triggers are removed in a simple first-in, first 
+   overwritten manner.
+
+3. The trigger filter can optionally be configured to pass triggers from 
+   only certain component codes.
+  
+   LDD: Set with "AllowComponent" command. If no "AllowComponent" command 
+   is used, ALL components will be allowed to pass. If one or more 
+   "AllowComponent" commands are used, the trigger filter will only pass 
+   triggers from the listed components.
+
+4. Each individual station trigger from carlstatrig produces a "trigger-on"
+   message and a "trigger-off" message. The following rules may be used to 
+   determine if a "trigger-on" is allowed through the filter. 
+
+   A new trigger-on is considered to "match" a trigger in the history  
+   list if the two trigger-on times are within "time tolerance" of each 
+   other. That is, a new trigger-on within "time tolerance" before or  
+   after a listed trigger is considered a duplicate of the listed trigger
+   and is rejected.
+   
+   LDD: Set with "TimeTolerance" command.
+ 
+   a. The first trigger message (either "trigger-on" or "trigger-off")
+      seen for a given station is always passed by the filter. 
+  
+   b. A trigger-on that is more than "time tolerance" newer than the 
+      most recent listed trigger is always passed by the filter.
+
+   c. "Allow older": A trigger-on that is not a duplicate of any listed
+      trigger and is more than "time tolerance" older than the youngest 
+      listed trigger is optionally passed by the filter.
+
+      LDD: Two commands to control this feature.
+      "OlderTrigAllowed" has 3 possible values:
+        0=pass no non-duplicate triggers older than the youngest passed
+          trigger for this station.
+        1=pass older triggers, but set a limit on how old they can be.
+        2=pass all non-duplicate triggers older than the youngest trigger
+          for this station. 
+      "OlderTrigLimit" is used only if OlderTrigAllowed=1. If a 
+       non-duplicate trigger is older than they youngest-passed trigger by 
+       more than OlderTrigLimit seconds, the trigger will be rejected.  
+
+       This feature is a carry-over from the original pkfilter code. 
+       It was included in pkfilter because I noticed that for CI data, 
+       some channels at a station can arrive many minutes later than 
+       another channel at the same station.  I assume that this is due to
+       recovery on a bad telemetry link.  
+
+       If we want to keep the trigger history relatively short and still
+       let older triggers thru, we need to set a time limit on the oldest 
+       triggers we'll accept. Otherwise we could still end up with lots of 
+       duplicates in the system. 
+
+       This feature not be very useful because carlsubtrig, as currently 
+       written (2005/11/22), needs to operate "in the present." It compares
+       the timestamp in the trigger message to the system clock and 
+       effectively ignore any triggers that are "too old."  If carlsubtrig
+       were re-written to be able to handle old data, then the "OldTrigAllowed"
+       feature may become useful.
+
+5. "Trigger-off" messages are filtered by the trigger filter in this manner: 
+   a. If a "trigger-off" message is the first message seen from a station, 
+      it will be passed thru with no other checks.
+   b. If a "trigger-off" message is from a station which is already in 
+      the trigger filter's list, it will only be passed if it is the
+      first "trigger-off" message which exactly matches a "trigger-on" 
+      message which has already passed thru the filter.

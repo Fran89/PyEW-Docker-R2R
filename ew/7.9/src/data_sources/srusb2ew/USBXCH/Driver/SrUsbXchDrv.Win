@@ -1,0 +1,3174 @@
+/* FILE: SrUsbXchDrv.c
+ * COPYRIGHT: (c), Symmetric Research, 2009-2010
+ *
+ * This file contains the kernel mode device driver for the SR USBxCH
+ * family of 24 bit A/D boards.
+ *
+ */
+
+#include <ntddk.h>
+#include <wdf.h>
+#include <usbdi.h>
+#include <wdfusb.h>
+
+#include "SrUsbXchDrv.h"
+
+
+// We would like to access and display the Device Descriptor sometimes.
+// But we need a few defines and structures to do this.  Ideally we
+// would get these from official include files.  But unfortunately, it
+// is apparently not available in a consistent user accessable area.
+// So, we temporarily duplicate the required info here.
+
+
+// For Windows, the USB defines appear to be in usb100.h which is only
+// available in the DDK and not in VC++.  
+//
+// usbdi.h   includes usbioctl which includes usb100
+// usblib.h
+
+// If the offical usb100.h file has already been included, don't repeat
+
+#ifndef   __USB100_H__
+
+#define USB_DEVICE_DESCRIPTOR_TYPE                0x01
+#define USB_CONFIGURATION_DESCRIPTOR_TYPE         0x02
+#define USB_STRING_DESCRIPTOR_TYPE                0x03
+#define USB_INTERFACE_DESCRIPTOR_TYPE             0x04
+#define USB_ENDPOINT_DESCRIPTOR_TYPE              0x05
+
+#include <PSHPACK1.H> // required for close packing of USB structures
+
+struct _USB_DEVICE_DESCRIPTOR {
+	unsigned char bLength;
+	unsigned char bDescriptorType;
+	unsigned short bcdUSB;
+	unsigned char bDeviceClass;
+	unsigned char bDeviceSubClass;
+	unsigned char bDeviceProtocol;
+	unsigned char bMaxPacketSize0;
+	unsigned short idVendor;
+	unsigned short idProduct;
+	unsigned short bcdDevice;
+	unsigned char iManufacturer;
+	unsigned char iProduct;
+	unsigned char iSerialNumber;
+	unsigned char bNumConfigurations;
+};
+
+struct _USB_CONFIGURATION_DESCRIPTOR {
+	unsigned char bLength;
+	unsigned char bDescriptorType;
+	unsigned short wTotalLength;
+	unsigned char bNumInterfaces;
+	unsigned char bConfigurationValue;
+	unsigned char iConfiguration;
+	unsigned char bmAttributes;
+	unsigned char MaxPower;
+};
+
+struct _USB_INTERFACE_DESCRIPTOR {
+	unsigned char bLength;
+	unsigned char bDescriptorType;
+	unsigned char bInterfaceNumber;
+	unsigned char bAlternateSetting;
+	unsigned char bNumEndpoints;
+	unsigned char bInterfaceClass;
+	unsigned char bInterfaceSubClass;
+	unsigned char bInterfaceProtocol;
+	unsigned char iInterface;
+};
+
+struct _USB_ENDPOINT_DESCRIPTOR {
+	unsigned char   bLength;
+	unsigned char   bDescriptorType;
+	unsigned char   bEndpointAddress;
+	unsigned char   bmAttributes;
+	unsigned short  wMaxPacketSize;
+	unsigned char   bInterval;
+};
+
+#include <POPPACK.H> // Undoes PSHPACK1.H
+
+#endif //  __USB100_H__
+
+#define USB_DT_ENDPOINT_SIZE sizeof(struct _USB_ENDPOINT_DESCRIPTOR) 
+
+typedef struct _USB_DEVICE_DESCRIPTOR         USB_DEVICE_DESCRIPTOR;
+typedef struct _USB_CONFIGURATION_DESCRIPTOR  USB_CONFIGURATION_DESCRIPTOR;
+typedef struct _USB_INTERFACE_DESCRIPTOR      USB_INTERFACE_DESCRIPTOR;
+typedef struct _USB_ENDPOINT_DESCRIPTOR       USB_ENDPOINT_DESCRIPTOR;
+
+
+
+
+
+#define TracePrint(_msg_)  DbgPrint _msg_;
+
+
+#define MAX_USB_PIPES   6
+#define PIPE_CMD_OUT    PIPE_EP1_OUT
+#define PIPE_CMD_IN     PIPE_EP1_IN
+#define PIPE_DATA_IN    PIPE_EP6_IN
+
+// Device Context (DevInfo or Device Information)
+// The declare macro specifies the name of the function to retrieve this info.
+
+typedef struct DeviceInformation {
+         WDFUSBDEVICE          UsbDevice;
+         WDFUSBINTERFACE       UsbInterface;
+         WDFUSBPIPE            UsbPipeArray[MAX_USB_PIPES];
+         ULONG                 UsbPipeMaxTransferArray[MAX_USB_PIPES];
+         BYTE                  PipeCount;
+         USB_DEVICE_DESCRIPTOR UsbDeviceDesc;
+         BOOLEAN               IsSurpriseRemoved;
+        } DEVINFO;
+
+WDF_DECLARE_CONTEXT_TYPE_WITH_NAME( DEVINFO, SrUsbXchGetDeviceContext )
+
+
+
+// Prototypes
+
+NTSTATUS DriverEntry( DRIVER_OBJECT *DriverObject, UNICODE_STRING *RegistryPath );
+VOID     SrUsbXchEvtDriverUnload( WDFDRIVER Driver );
+NTSTATUS SrUsbXchEvtDeviceAdd( WDFDRIVER Driver, PWDFDEVICE_INIT DeviceInit );
+NTSTATUS SrUsbXchEvtDevicePrepareHardware( WDFDEVICE Device,
+                                           WDFCMRESLIST ResourceList,
+                                           WDFCMRESLIST ResourceListTranslated );
+NTSTATUS SrUsbXchEvtDeviceReleaseHardware( WDFDEVICE Device,
+                                           WDFCMRESLIST ResourcesTranslated );
+NTSTATUS SrUsbXchEvtDeviceD0Entry( WDFDEVICE Device,
+                                   WDF_POWER_DEVICE_STATE PreviousState );
+NTSTATUS SrUsbXchEvtDeviceD0Exit( WDFDEVICE Device,
+                                  WDF_POWER_DEVICE_STATE TargetState );
+VOID SrUsbXchEvtDeviceSurpriseRemoval( WDFDEVICE Device );
+void SrUsbXchEvtIoWrite( WDFQUEUE Queue, WDFREQUEST Request, size_t Length );
+void SrUsbXchEvtRequestWriteCompletionRoutine( WDFREQUEST  Request,
+                                               WDFIOTARGET Target,
+                                               WDF_REQUEST_COMPLETION_PARAMS *CompletionParams,
+                                               WDFCONTEXT  Context
+                                               );
+void SrUsbXchEvtIoRead( WDFQUEUE Queue, WDFREQUEST Request, size_t Length );
+void SrUsbXchEvtRequestReadCompletionRoutine( WDFREQUEST  Request,
+                                              WDFIOTARGET Target,
+                                              WDF_REQUEST_COMPLETION_PARAMS *CompletionParams,
+                                              WDFCONTEXT  Context
+                                               );
+void SrUsbXchEvtIoDeviceControl( WDFQUEUE Queue,
+                                 WDFREQUEST Request,
+                                 size_t OutputBufferLength,
+                                 size_t InputBufferLength,
+                                 ULONG  IoControlCode
+                               );
+NTSTATUS SrUsbXchIoctlGetDeviceDescriptor( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                         );
+NTSTATUS SrUsbXchIoctlGetConfigSize( WDFREQUEST Request,
+                                     DEVINFO   *DevInfo,
+                                     size_t     InputBufferLength,
+                                     size_t     OutputBufferLength,
+                                     size_t    *BytesTransferred
+                                   );
+NTSTATUS SrUsbXchIoctlGetConfigDescriptor( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                         );
+NTSTATUS SrUsbXchIoctlSendStandardRequest( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                          );
+NTSTATUS SrUsbXchIoctlSendVendorRequest( WDFREQUEST Request,
+                                         DEVINFO   *DevInfo,
+                                         size_t     InputBufferLength,
+                                         size_t     OutputBufferLength,
+                                         size_t    *BytesTransferred
+                                        );
+NTSTATUS SrUsbXchIoctlBulkWriteCmd( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                );
+NTSTATUS SrUsbXchIoctlBulkReadCmd( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                );
+NTSTATUS SrUsbXchIoctlBulkWrite( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                );
+NTSTATUS SrUsbXchIoctlBulkRead( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                );
+NTSTATUS SrUsbXchIoctlResetPipe( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                 );
+NTSTATUS SrUsbXchIoctlAbortPipe( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                 );
+NTSTATUS SrUsbXchIoctlResetPort( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                 );
+NTSTATUS SrUsbXchIoctlCyclePort( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                 );
+void SrUsbXchPrintDeviceDesc( USB_DEVICE_DESCRIPTOR *Desc );
+void SrUsbXchPrintConfigDesc( USB_CONFIGURATION_DESCRIPTOR *Desc );
+void SrUsbXchDumpConfigDesc( USB_CONFIGURATION_DESCRIPTOR *Desc );
+const char *SrUsbXchPrintDescType( int Type );
+
+
+//------------------------------------------------------------------------------
+// ROUTINE: DriverEntry
+// PURPOSE: Called by OS when driver is first loaded to initialize the driver.
+// OTHER:   IRQL = PASSIVE, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS DriverEntry( DRIVER_OBJECT *DriverObject, UNICODE_STRING *RegistryPath ) {
+
+        NTSTATUS          Status;
+        WDF_DRIVER_CONFIG DriverConfig;
+
+        TracePrint(("\nSrUsbXch Driver : Rev 1.0 : Date 2009/09/25 : Copyright (c), Symmetric Research, 2009\n" ));
+        TracePrint(("\nSymmetric Research UsbXch Driver -- Compiled %s %s\n",__DATE__, __TIME__ ));
+        TracePrint(("SrUsbXch DriverEntry enter\n"));
+
+
+        // Initialize driver configuration giving callback for adding a device
+
+        WDF_DRIVER_CONFIG_INIT( &DriverConfig, SrUsbXchEvtDeviceAdd );
+        DriverConfig.EvtDriverUnload = SrUsbXchEvtDriverUnload; // and unloading
+
+
+        // Create framework driver object
+
+        Status = WdfDriverCreate( DriverObject,
+                                  RegistryPath,
+                                  WDF_NO_OBJECT_ATTRIBUTES,
+                                  &DriverConfig,
+                                  WDF_NO_HANDLE
+                                );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch DriverEntry failed WdfDriverCreate 0x%X\n", Status ));
+                }
+        TracePrint(("SrUsbXch DriverEntry created driver object\n"));
+
+
+        TracePrint(("SrUsbXch DriverEntry exit 0x%X\n", Status));
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDriverUnload
+// PURPOSE: Called by OS when driver is unloaded.  Should undo any allocated
+//          in DriverEntry.
+// OTHER:   IRQL = PASSIVE, Context = ??
+//------------------------------------------------------------------------------
+VOID SrUsbXchEvtDriverUnload( WDFDRIVER Driver ) {
+
+        TracePrint(("SrUsbXchEvtDriverUnload enter\n"));
+
+        UNREFERENCED_PARAMETER( Driver );
+
+        TracePrint(("SrUsbXchEvtDriverUnload exit\n"));
+        return;
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDeviceAdd
+// PURPOSE: Called by OS when PNP manager is ready to loaded and initialize
+//          the devices controlled by this driver.
+// OTHER:   IRQL = PASSIVE, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchEvtDeviceAdd( WDFDRIVER Driver, PWDFDEVICE_INIT DeviceInit ) {
+
+        NTSTATUS                     Status;
+        WDFDEVICE                    Device;
+        WDF_OBJECT_ATTRIBUTES        Attributes;
+        WDF_PNPPOWER_EVENT_CALLBACKS PnpPowerCallbacks;
+        WDF_IO_QUEUE_CONFIG          IoQueueConfig;
+        WDFQUEUE                     Queue;
+        DEVINFO                     *DevInfo;
+
+//FIX - Max driver name increment
+        DECLARE_CONST_UNICODE_STRING( DosDeviceName, L"\\DosDevices\\SrUsbXch0" );
+
+        TracePrint(("SrUsbXchEvtDeviceAdd enter\n"));
+
+        UNREFERENCED_PARAMETER( Driver );
+
+
+        // Set up PnP and Power callbacks
+
+        WDF_PNPPOWER_EVENT_CALLBACKS_INIT( &PnpPowerCallbacks );
+        PnpPowerCallbacks.EvtDevicePrepareHardware = SrUsbXchEvtDevicePrepareHardware;
+        PnpPowerCallbacks.EvtDeviceReleaseHardware = SrUsbXchEvtDeviceReleaseHardware;
+        PnpPowerCallbacks.EvtDeviceD0Entry         = SrUsbXchEvtDeviceD0Entry;
+        PnpPowerCallbacks.EvtDeviceD0Exit          = SrUsbXchEvtDeviceD0Exit;
+        PnpPowerCallbacks.EvtDeviceSurpriseRemoval = SrUsbXchEvtDeviceSurpriseRemoval;
+
+
+        WdfDeviceInitSetPnpPowerEventCallbacks( DeviceInit, &PnpPowerCallbacks );
+
+        TracePrint(("SrUsbXchEvtDeviceAdd set up pnp + power callbacks\n"));
+
+
+        // Initialize device attributes giving structure definition for device context
+
+        WDF_OBJECT_ATTRIBUTES_INIT_CONTEXT_TYPE( &Attributes, DEVINFO );
+
+
+//FIX - Just testing this out
+
+        // Insist there can be only one copy of this device
+
+        WdfDeviceInitSetExclusive( DeviceInit, TRUE ); // IsExclusive = TRUE
+
+
+
+
+        // Create frameworks device object
+
+        Status = WdfDeviceCreate( &DeviceInit,
+                                  &Attributes,
+                                  &Device
+                                );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfDeviceCreate 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDeviceAdd created device object\n"));
+
+
+        // Get a pointer to the allocated DevInfo area
+
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+
+
+        // Set surprise removal flag
+
+        DevInfo->IsSurpriseRemoved = FALSE;
+
+
+
+        // Create interface and symbolic link
+
+        Status = WdfDeviceCreateDeviceInterface( Device,
+                                                (LPGUID) &GUID_SRUSBXCH_INTERFACE,
+                                                 NULL ); // Reference String
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfDeviceCreateDeviceInterface 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDeviceAdd created device interface\n"));
+
+
+        Status = WdfDeviceCreateSymbolicLink( Device, &DosDeviceName );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfDeviceCreateSymbolicLink 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDeviceAdd created symbolic link\n"));
+
+
+        // Create default framework queue object for receiving IoCtl requests
+
+        WDF_IO_QUEUE_CONFIG_INIT_DEFAULT_QUEUE( &IoQueueConfig,
+                                                WdfIoQueueDispatchSequential );
+
+        IoQueueConfig.EvtIoDeviceControl = SrUsbXchEvtIoDeviceControl;
+
+        Status = WdfIoQueueCreate( Device,
+                                   &IoQueueConfig,
+                                   WDF_NO_OBJECT_ATTRIBUTES,
+                                   WDF_NO_HANDLE );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfIoQueueCreate 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDeviceAdd created sequential ioctl queue\n"));
+
+
+
+        // Create a separate sequential queue and configure it
+        // to receive read requests.  We also need to register a EvtIoStop
+        // handler so that we can acknowledge requests that are pending
+        // at the target driver.
+//FIX        (also write)
+
+        WDF_IO_QUEUE_CONFIG_INIT( &IoQueueConfig,
+                                  WdfIoQueueDispatchSequential );
+
+        IoQueueConfig.EvtIoRead  = SrUsbXchEvtIoRead;
+        IoQueueConfig.EvtIoWrite = SrUsbXchEvtIoWrite;
+//FIX        IoQueueConfig.EvtIoStop  = SrUsbXchEvtIoStop;
+
+        Status = WdfIoQueueCreate( Device,
+                                   &IoQueueConfig,
+                                   WDF_NO_OBJECT_ATTRIBUTES,
+                                   &Queue                        // queue handle
+                                 );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfIoQueueCreate #2 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDeviceAdd created sequential read/write queue\n"));
+
+        Status = WdfDeviceConfigureRequestDispatching( Device,
+                                                       Queue,
+                                                       WdfRequestTypeRead );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfDeviceConfigureRequestDispatching Read 0x%X\n", Status ));
+                return( Status );
+                }
+
+        Status = WdfDeviceConfigureRequestDispatching( Device,
+                                                       Queue,
+                                                       WdfRequestTypeWrite );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXch EvtDeviceAdd failed WdfDeviceConfigureRequestDispatching Write 0x%X\n", Status ));
+                return( Status );
+                }
+
+
+        TracePrint(("SrUsbXchEvtDeviceAdd exit 0x%X\n", Status));
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDevicePrepareHardware
+// PURPOSE: Called by OS to prepare device for use.  Do things like configure USB.
+// OTHER:   IRQL = PASSIVE, Context = ??, HwAccess = Yes
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchEvtDevicePrepareHardware( WDFDEVICE Device,
+                                           WDFCMRESLIST ResourceList,
+                                           WDFCMRESLIST ResourceListTranslated ) {
+
+        NTSTATUS                 Status;
+        DEVINFO                 *DevInfo;
+        UCHAR                    AltIndex;
+        BYTE                     NumSettings, InterfaceIndex, AltSettingIndex;
+        BYTE                     ipipe, MaxPipe, EndptCount;
+        WDF_USB_PIPE_INFORMATION PipeInfo;
+        WDF_USB_PIPE_TYPE        PipeType;
+        BOOLEAN                  IsIn, IsOut;
+        WDF_USB_DEVICE_SELECT_CONFIG_PARAMS     UsbConfigParams;
+        WDF_USB_INTERFACE_SELECT_SETTING_PARAMS SelectSettingParams;
+
+
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware enter\n"));
+
+        UNREFERENCED_PARAMETER( ResourceList );
+        UNREFERENCED_PARAMETER( ResourceListTranslated );
+
+
+        // Get a pointer to the allocated DevInfo area
+
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+
+
+// FIX - is there a chance this might be called when the handle already exists
+// (due to pnp rebalancing like in OSR sample driver)
+
+        // Create framework USB device object
+
+        Status = WdfUsbTargetDeviceCreate( Device,
+                                           WDF_NO_OBJECT_ATTRIBUTES,
+                                           &DevInfo->UsbDevice );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtDevicePrepareHardware failed WdfUsbTargetDeviceCreate 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware created USB device target\n"));
+
+
+
+
+        // Select USB configuration 0 and interface 0
+
+        WDF_USB_DEVICE_SELECT_CONFIG_PARAMS_INIT_SINGLE_INTERFACE( &UsbConfigParams );
+
+        Status = WdfUsbTargetDeviceSelectConfig( DevInfo->UsbDevice,
+                                                 WDF_NO_OBJECT_ATTRIBUTES,
+                                                 &UsbConfigParams );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtDevicePrepareHardware failed WdfUsbTargetDeviceSelectConfig 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware selected USB interface\n"));
+
+        DevInfo->UsbInterface = UsbConfigParams.Types.SingleInterface.ConfiguredUsbInterface;
+
+
+
+        // Select alternate setting 1
+
+        NumSettings = WdfUsbInterfaceGetNumSettings( DevInfo->UsbInterface );
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware num of alternate settings for selected interface is %hu\n",NumSettings));
+
+        AltIndex = 1;
+
+        if ((BYTE)AltIndex > NumSettings) {
+                TracePrint(( "SrUsbXchEvtDevicePrepareHardware failed to select a valid alternate setting\n" ));
+                TracePrint(( "Number of alt settings is %hd, but setting %hu requested\n", NumSettings, AltIndex ));
+                return( STATUS_DEVICE_CONFIGURATION_ERROR );
+                }
+
+        WDF_USB_INTERFACE_SELECT_SETTING_PARAMS_INIT_SETTING( &SelectSettingParams, AltIndex );
+
+        Status = WdfUsbInterfaceSelectSetting( DevInfo->UsbInterface,
+                                               WDF_NO_OBJECT_ATTRIBUTES,
+                                               &SelectSettingParams
+                                             );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtDevicePrepareHardware failed WdfUsbInterfaceSelectSetting 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware selected alt setting #%hu\n", AltIndex));
+
+//DEBUG
+        InterfaceIndex = WdfUsbInterfaceGetInterfaceNumber( DevInfo->UsbInterface );
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware selected interface index is %hd\n",InterfaceIndex));
+
+        AltSettingIndex = WdfUsbInterfaceGetConfiguredSettingIndex( DevInfo->UsbInterface );
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware configured setting index is %hd\n",AltSettingIndex));
+
+        DevInfo->PipeCount = WdfUsbInterfaceGetNumConfiguredPipes( DevInfo->UsbInterface );
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware num configured pipes is %hd\n",DevInfo->PipeCount));
+
+        EndptCount = WdfUsbInterfaceGetNumEndpoints( DevInfo->UsbInterface, AltSettingIndex );
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware num selected endpoints is %hd\n",EndptCount));
+
+
+        // Set up framework objects for all our bulk pipes
+
+        WDF_USB_PIPE_INFORMATION_INIT( &PipeInfo );
+
+        MaxPipe = MAX_USB_PIPES;
+        if ( MaxPipe > DevInfo->PipeCount )
+                MaxPipe = DevInfo->PipeCount;
+
+        TracePrint(("Pipe #   type  in  out   maxpacket maxsfer\n" ));
+        for ( ipipe = 0 ; ipipe < MaxPipe ; ipipe++ ) {
+                DevInfo->UsbPipeArray[ipipe] = WdfUsbInterfaceGetConfiguredPipe(
+                                                        DevInfo->UsbInterface,
+                                                        ipipe,           // PipeIndex
+                                                        &PipeInfo        // PipeInfo
+                                                        );
+                PipeType = WdfUsbTargetPipeGetType(        DevInfo->UsbPipeArray[ipipe] );
+                IsIn     = WdfUsbTargetPipeIsInEndpoint(   DevInfo->UsbPipeArray[ipipe] );
+                IsOut    = WdfUsbTargetPipeIsOutEndpoint(  DevInfo->UsbPipeArray[ipipe] );
+
+                DevInfo->UsbPipeMaxTransferArray[ipipe] = PipeInfo.MaximumTransferSize;
+
+                if ( PipeInfo.MaximumTransferSize == 0xFFFFFFFF ) {
+                        if ( PipeType == WdfUsbPipeTypeControl )
+                                DevInfo->UsbPipeMaxTransferArray[ipipe] = 64 * 1000;
+                        else if ( PipeType == WdfUsbPipeTypeBulk )
+                                DevInfo->UsbPipeMaxTransferArray[ipipe] = 64 * 4000;
+                        else if ( PipeType == WdfUsbPipeTypeInterrupt )
+                                DevInfo->UsbPipeMaxTransferArray[ipipe] = 64 * 4000;
+                        }
+
+                TracePrint(("Pipe[%d]  %d     %d   %d       %lu       %lu\n",
+                            ipipe, PipeType, IsIn, IsOut, PipeInfo.MaximumPacketSize,
+                            DevInfo->UsbPipeMaxTransferArray[ipipe] ));
+                }
+
+
+
+
+
+
+
+        // Permit filling buffers that are NOT a multiple of max packet size
+
+        WdfUsbTargetPipeSetNoMaximumPacketSizeCheck( DevInfo->UsbPipeArray[PIPE_CMD_OUT] );
+        WdfUsbTargetPipeSetNoMaximumPacketSizeCheck( DevInfo->UsbPipeArray[PIPE_CMD_IN] );
+        WdfUsbTargetPipeSetNoMaximumPacketSizeCheck( DevInfo->UsbPipeArray[PIPE_DATA_IN] );
+
+
+
+        // Get and save device descriptor
+
+        WdfUsbTargetDeviceGetDeviceDescriptor( DevInfo->UsbDevice,
+                                              &DevInfo->UsbDeviceDesc );
+
+
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware get + save USB device descriptor\n"));
+
+
+        // Print device descriptor
+
+        SrUsbXchPrintDeviceDesc( &DevInfo->UsbDeviceDesc );
+
+
+        TracePrint(("SrUsbXchEvtDevicePrepareHardware exit 0x%X\n", Status));
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDeviceReleaseHardware
+// PURPOSE: Called by OS when Device is removed and no longer accessible.  Undo
+//          anything allocated in PrepareHardware.
+// OTHER:   IRQL = PASSIVE, Context = ??, HwAccess = No
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchEvtDeviceReleaseHardware( WDFDEVICE Device,
+                                           WDFCMRESLIST ResourcesTranslated ) {
+        NTSTATUS Status;
+
+        TracePrint(("SrUsbXchEvtDeviceReleaseHardware enter\n"));
+
+        UNREFERENCED_PARAMETER( Device );
+        UNREFERENCED_PARAMETER( ResourcesTranslated );
+
+        Status = STATUS_SUCCESS;
+
+        // FIX - Remove pipes ?
+        // FIX - Remove UsbDevice ?
+
+        TracePrint(("SrUsbXchEvtDeviceReleaseHardware exit 0x%X\n", Status));
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDeviceD0Entry
+// PURPOSE: Called by OS when Device is ready to enter D0 working state.
+// OTHER:   IRQL = PASSIVE, Context = ??, HwAccess = Yes
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchEvtDeviceD0Entry( WDFDEVICE Device,
+                                   WDF_POWER_DEVICE_STATE PreviousState ) {
+        NTSTATUS Status;
+
+        TracePrint(("SrUsbXchEvtDeviceD0Entry enter\n"));
+
+        UNREFERENCED_PARAMETER( Device );
+        UNREFERENCED_PARAMETER( PreviousState );
+
+
+//FIX - PreviousState will be PowerDeviceUnspecified on first startup
+//FIX - Maybe this function could help force a reset on wakeup from sleep WdfUsbTargetDeviceResetPortSynchronously
+
+        Status = STATUS_SUCCESS;
+
+        TracePrint(("SrUsbXchEvtDeviceD0Entry exit 0x%X\n", Status));
+        return( Status );
+}
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDeviceD0Exit
+// PURPOSE: Called by OS when Device is ready to leave D0 working state.  Undo
+//          anything allocated in D0Entry.
+// OTHER:   IRQL = PASSIVE, Context = ??, HwAccess = Yes, UNLESS SurpriseRemoval
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchEvtDeviceD0Exit( WDFDEVICE Device,
+                                  WDF_POWER_DEVICE_STATE TargetState ) {
+        NTSTATUS Status;
+        DEVINFO *DevInfo;
+
+        TracePrint(("SrUsbXchEvtDeviceD0Exit enter\n"));
+
+//        UNREFERENCED_PARAMETER( Device );
+        UNREFERENCED_PARAMETER( TargetState );
+
+
+//FIX - Can I save and restore the USB's FNADDR using standard command 0x05 when changing states?
+
+        // Get a pointer to the allocated DevInfo area
+
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+
+        // Check for access before touching hardware
+
+        if ( DevInfo->IsSurpriseRemoved == FALSE ) {
+                TracePrint(("SrUsbXchEvtDeviceD0Exit HW access allowed\n"));
+                }
+        else {
+                TracePrint(("SrUsbXchEvtDeviceD0Exit HW access FORBIDDEN\n"));
+                }
+
+
+//FIX - What is the proper way to avoid the USB hub BSOD when power removed during sleep?
+//FIX        Status = STATUS_SUCCESS;
+//FIX        Status = STATUS_INVALID_DEVICE_REQUEST;  // STATUS_UNSUCCESSFUL
+
+        Status = STATUS_INVALID_DEVICE_REQUEST;  // STATUS_UNSUCCESSFUL
+
+        TracePrint(("SrUsbXchEvtDeviceD0Exit exit 0x%X\n", Status));
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtDeviceSurpriseRemoval
+// PURPOSE: Called by OS when Device has been unexpectedly removed.  D0Exit and
+//          ReleaseHardware will be called next.
+// OTHER:   IRQL = PASSIVE, Context = ??, HwAccess = No
+//------------------------------------------------------------------------------
+VOID SrUsbXchEvtDeviceSurpriseRemoval( WDFDEVICE Device ) {
+
+        DEVINFO   *DevInfo;
+
+        TracePrint(("SrUsbXchEvtDeviceSurpriseRemoval enter\n"));
+
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+        if (!DevInfo) {
+                TracePrint(( "SrUsbXchEvtDeviceSurpriseRemoval invalid DEVINFO !\n" ));
+                return;
+                }
+
+        // Indicate we are experiencing surprise removal
+
+        DevInfo->IsSurpriseRemoved = TRUE;
+
+
+        TracePrint(("SrUsbXchEvtDeviceSurpriseRemoval exit\n"));
+
+        return;
+}
+
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtIoDeviceControl
+// PURPOSE: This function receives IOCTL requests from a sequential queue.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchEvtIoDeviceControl( WDFQUEUE Queue,
+                                 WDFREQUEST Request,
+                                 size_t OutputBufferLength,
+                                 size_t InputBufferLength,
+                                 ULONG  IoControlCode
+                               ) {
+
+        NTSTATUS   Status;
+        WDFDEVICE  Device;
+        DEVINFO   *DevInfo;
+        ULONG      Count;
+        size_t     BytesTransferred;
+
+
+        // Get device and its context
+
+        Device  = WdfIoQueueGetDevice( Queue );
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+
+        if (!DevInfo) {
+                TracePrint(("SrUsbXchEvtIoDeviceControl invalid DEVINFO !\n"));
+                WdfRequestCompleteWithInformation( Request,
+                                                   STATUS_INVALID_PARAMETER,
+                                                   0 );
+                return;
+                }
+
+
+        if ( DevInfo->IsSurpriseRemoved ) {
+                TracePrint(("SrUsbXchEvtIoDeviceControl device is GONE!\n"));
+                WdfRequestCompleteWithInformation( Request,
+                                                   STATUS_NETWORK_NAME_DELETED,
+                                                   0 );
+                return;
+                }
+
+
+
+        // Set default return values
+
+        BytesTransferred = 0;
+        Status           = STATUS_SUCCESS;
+
+
+        // Process Io request
+
+        switch( IoControlCode ) {
+
+                case IOCTL_USBXCH_GET_DEVICE_DESCRIPTOR:
+
+                        Status = SrUsbXchIoctlGetDeviceDescriptor( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_GET_CONFIG_DESCRIPTOR_SIZE:
+
+                        Status = SrUsbXchIoctlGetConfigSize( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_GET_CONFIG_DESCRIPTOR:
+
+                        Status = SrUsbXchIoctlGetConfigDescriptor( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_STANDARD_REQUEST:
+
+                        Status = SrUsbXchIoctlSendStandardRequest( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_VENDOR_REQUEST:
+
+                        Status = SrUsbXchIoctlSendVendorRequest( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_BULK_WRITE_CMD:
+
+                        Status = SrUsbXchIoctlBulkWriteCmd( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_BULK_READ_CMD:
+
+                        Status = SrUsbXchIoctlBulkReadCmd( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                case IOCTL_USBXCH_BULK_WRITE:
+
+                        Status = SrUsbXchIoctlBulkWrite( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+                case IOCTL_USBXCH_BULK_READ:
+
+                        Status = SrUsbXchIoctlBulkRead( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                case IOCTL_USBXCH_RESET_PIPE:
+
+                        Status = SrUsbXchIoctlResetPipe( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                case IOCTL_USBXCH_ABORT_PIPE:
+
+                        Status = SrUsbXchIoctlAbortPipe( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                case IOCTL_USBXCH_RESET_PORT:
+
+                        Status = SrUsbXchIoctlResetPort( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                case IOCTL_USBXCH_CYCLE_PORT:
+
+                        Status = SrUsbXchIoctlCyclePort( Request, DevInfo,
+                                 InputBufferLength, OutputBufferLength, &BytesTransferred );
+                        break;
+
+
+
+                default:
+                        Status = STATUS_INVALID_DEVICE_REQUEST;
+                        break;
+                }
+
+        TracePrint(("SrUsbXchEvtIoDeviceControl completing with Info Status 0x%lX, BytesXfer 0x%lX\n", Status, BytesTransferred ));
+
+        WdfRequestCompleteWithInformation( Request, Status, BytesTransferred );
+
+        return;
+}
+
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlGetDeviceDescriptor
+// PURPOSE: This function gets the device descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlGetDeviceDescriptor( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                         ) {
+
+        NTSTATUS  Status;
+        WDFMEMORY Memory;
+        size_t    RequiredSize;
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+
+        TracePrint(("IOCTL_USBXCH_GET_DEVICE_DESCRIPTOR called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+        // Check size of output buffer
+
+        RequiredSize = (size_t)sizeof(USB_DEVICE_DESCRIPTOR);
+
+        if ( OutputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor failed size check\n" ));
+                TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor output size is %d, size required is %d\n", OutputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+        TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor checked memory area size\n" ));
+
+
+
+        // Get destination memory area
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor retrieve output memory area\n" ));
+
+
+
+        // Fill it
+
+        Status = WdfMemoryCopyFromBuffer( Memory,
+                                          0, // start copy at beginning
+                                          &DevInfo->UsbDeviceDesc,
+                                          RequiredSize
+                                        );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor failed WdfMemoryCopyFromBuffer 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetDeviceDescriptor copied dev desc to memory area\n" ));
+
+        if (BytesTransferred)  *BytesTransferred = RequiredSize;
+
+
+
+        // Print device descriptor
+
+        SrUsbXchPrintDeviceDesc( &DevInfo->UsbDeviceDesc );
+
+
+        return( STATUS_SUCCESS );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlGetConfigSize
+// PURPOSE: This function gets the config descriptor total size.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlGetConfigSize( WDFREQUEST Request,
+                                     DEVINFO   *DevInfo,
+                                     size_t     InputBufferLength,
+                                     size_t     OutputBufferLength,
+                                     size_t    *BytesTransferred
+                                     ) {
+
+        NTSTATUS  Status;
+        WDFMEMORY Memory;
+        size_t    RequiredSize, TotalSize;
+        USHORT    ConfigLength;
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+
+        TracePrint(("IOCTL_USBXCH_GET_CONFIG_SIZE called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Check size of output memory
+
+        RequiredSize = sizeof( size_t );
+
+        if ( OutputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigSize failed output buffer size check\n" ));
+                TracePrint(( "SrUsbXchIoctlGetConfigSize output size is %d, size required is %d\n", OutputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+        TracePrint(( "SrUsbXchIoctlGetConfigSize checked memory area size\n" ));
+
+
+
+        // Get destination memory area
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigSize failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetConfigSize retrieve output memory area\n" ));
+
+
+
+        // Determine total required size
+        // (Since we passed NULL, the status should always come back too small.)
+
+        Status = WdfUsbTargetDeviceRetrieveConfigDescriptor(
+                        DevInfo->UsbDevice,
+                        NULL,
+                        &ConfigLength
+                        );
+        if ( Status != STATUS_BUFFER_TOO_SMALL ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigSize failed WdfUsbTargetDeviceRetrieveConfigDescriptor #1 0x%X\n", Status ));
+                return( Status );
+                }
+
+        TotalSize = (size_t)ConfigLength;
+        TracePrint(( "SrUsbXchIoctlGetConfigSize found total size of %u (config length %hu)\n", TotalSize, ConfigLength ));
+
+
+
+        // Copy config size to output buffer
+
+        Status = WdfMemoryCopyFromBuffer( Memory,
+                                          0, // start copy at beginning
+                                          &TotalSize,
+                                          RequiredSize
+                                        );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigSize failed WdfMemoryCopyToBuffer 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetConfigSize copied config size from memory area\n" ));
+
+        if (BytesTransferred)  *BytesTransferred = RequiredSize;
+
+
+        return( STATUS_SUCCESS );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlGetConfigDescriptor
+// PURPOSE: This function gets the total config descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlGetConfigDescriptor( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                          ) {
+
+        NTSTATUS                     Status;
+        WDFMEMORY                    Memory;
+        size_t                       RequiredSize, AvailableSize;
+        USHORT                       ConfigLength;
+        VOID                         *Buffer;
+        USB_CONFIGURATION_DESCRIPTOR *ConfigDesc;
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+
+        TracePrint(("IOCTL_USBXCH_GET_CONFIG_DESCRIPTOR called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Determine total required size
+
+        Status = WdfUsbTargetDeviceRetrieveConfigDescriptor(
+                        DevInfo->UsbDevice,
+                        NULL,
+                        &ConfigLength
+                        );
+        if ( Status != STATUS_BUFFER_TOO_SMALL ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigDescriptor failed WdfUsbTargetDeviceRetrieveConfigDescriptor #1 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetConfigDescriptor found config buffer length of %hu\n", ConfigLength ));
+
+        RequiredSize = (size_t)ConfigLength;
+
+
+
+        // Check output memory size
+
+        if ( OutputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigDescriptor failed output size check\n" ));
+                TracePrint(( "SrUsbXchIoctlGetConfigDescriptor output size is %d, size required is %d\n", OutputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+
+        // Get destination memory area and its buffer
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigDescriptor failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        Buffer = WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlGetConfigDescriptor retrieve output memory area\n" ));
+
+
+
+        // Read total config descriptor into memory area buffer
+
+        Status = WdfUsbTargetDeviceRetrieveConfigDescriptor(
+                        DevInfo->UsbDevice,
+                        Buffer,
+                        &ConfigLength
+                        );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlGetConfigDescriptor failed WdfUsbTargetDeviceRetrieveConfigDescriptor #2 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlGetConfigDescriptor filled config buffer of length %d\n", ConfigLength ));
+
+        if (BytesTransferred)  *BytesTransferred = RequiredSize;
+
+
+
+        // Print config descriptor
+
+        ConfigDesc = (USB_CONFIGURATION_DESCRIPTOR *)Buffer;
+
+        SrUsbXchPrintConfigDesc( ConfigDesc );
+
+
+        return( STATUS_SUCCESS );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlSendStandardRequest
+// PURPOSE: This function gets the total config descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlSendStandardRequest( WDFREQUEST Request,
+                                           DEVINFO   *DevInfo,
+                                           size_t     InputBufferLength,
+                                           size_t     OutputBufferLength,
+                                           size_t    *BytesTransferred
+                                          ) {
+
+        NTSTATUS                           Status;
+        WDFMEMORY                          Memory, DataMemory;
+        WDF_MEMORY_DESCRIPTOR              MemoryDesc;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        size_t                             RequiredSize, AvailableSize, DataSize;
+        BYTE                              *DataBuffer;
+        SR_STANDARD_REQUEST_DATA          *StandardRequest;
+        ULONG                              BytesMoved;
+        WDF_USB_CONTROL_SETUP_PACKET       ControlSetupPacket;
+
+
+        TracePrint(("IOCTL_USBXCH_STANDARD_REQUEST called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Check input memory size
+
+        RequiredSize = sizeof(SR_STANDARD_REQUEST_DATA );
+
+        if ( InputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest failed input size check\n" ));
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest input size is %d, size required is %d\n", InputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+        // Get input memory area and its buffer
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest retrieve input memory area\n" ));
+
+        StandardRequest = (SR_STANDARD_REQUEST_DATA*)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest got memory area buffer with size %u\n", AvailableSize ));
+
+
+        // Verify the contents
+
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Direction = 0x%X\n", StandardRequest->Direction ));
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Recipient = 0x%X\n", StandardRequest->Recipient, BmRequestToEndpoint ));
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Command   = 0x%X\n", StandardRequest->Request ));
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Value     = 0x%X\n", StandardRequest->Value ));
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Index     = %hu\n",  StandardRequest->Index ));
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest Length    = %lu\n",  StandardRequest->Length ));
+        TracePrint(( "                       BmRequestToEndpoint = 0x%X\n", BmRequestToEndpoint ));
+
+
+
+        // Check output memory size
+
+        RequiredSize = (size_t)StandardRequest->Length;
+
+        if ( OutputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest failed output size check\n" ));
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest output size is %d, size required is %d\n", OutputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+
+        // Get output memory area and its buffer
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &DataMemory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest retrieve data output memory area\n" ));
+
+        DataBuffer = (BYTE*)WdfMemoryGetBuffer( DataMemory, &DataSize );
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest got data output memory area buffer with size %u\n", DataSize ));
+
+
+
+        // Prepare USB control packet, output data, and send options
+
+        WDF_USB_CONTROL_SETUP_PACKET_INIT_GET_STATUS( &ControlSetupPacket,
+                                                      BmRequestToEndpoint,    // Recipient
+                                                      StandardRequest->Index
+                                                     );
+
+        WDF_MEMORY_DESCRIPTOR_INIT_HANDLE( &MemoryDesc, DataMemory, NULL );
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions, 0 );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                            );
+
+
+        // Now actually send this request on to the USB !!!
+
+        Status = WdfUsbTargetDeviceSendControlTransferSynchronously(
+                                                                DevInfo->UsbDevice,
+                                                                NULL, //Request,
+                                                                NULL, //&RequestSendOptions,
+                                                                &ControlSetupPacket,
+                                                                &MemoryDesc,
+                                                                &BytesMoved
+                                                                );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendStandardRequest failed WdfUsbTargetDeviceSendControlTransferSynchronously 0x%X (Bytes = %lu)\n", Status, BytesMoved ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendStandardRequest sent status request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)BytesMoved;
+
+        return( STATUS_SUCCESS );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlSendVendorRequest
+// PURPOSE: This function gets the total config descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlSendVendorRequest( WDFREQUEST Request,
+                                         DEVINFO   *DevInfo,
+                                         size_t     InputBufferLength,
+                                         size_t     OutputBufferLength,
+                                         size_t    *BytesTransferred
+                                        ) {
+
+        NTSTATUS                           Status;
+        WDFMEMORY                          Memory, DataMemory;
+        WDF_MEMORY_DESCRIPTOR              MemoryDesc;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        size_t                             RequiredSize, AvailableSize, DataSize;
+        BYTE                              *DataBuffer;
+        SR_VENDOR_REQUEST_DATA            *VendorRequest;
+        ULONG                              BytesMoved;
+        WDF_USB_CONTROL_SETUP_PACKET       ControlSetupPacket;
+
+
+        TracePrint(("IOCTL_USBXCH_VENDOR_REQUEST called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Check input memory size
+
+        RequiredSize = sizeof(SR_VENDOR_REQUEST_DATA );
+
+        if ( InputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest failed input size check\n" ));
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest input size is %d, size required is %d\n", InputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+        // Get input memory area and its buffer
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest retrieve input memory area\n" ));
+
+        VendorRequest = (SR_VENDOR_REQUEST_DATA*)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest got memory area buffer with size %u\n", AvailableSize ));
+
+
+        // Verify the contents
+
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest Type   = 0x%X\n", VendorRequest->Request ));
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest Value  = 0x%X\n", VendorRequest->Value ));
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest Index  = %hu\n",  VendorRequest->Index ));
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest Length = %lu\n",  VendorRequest->Length ));
+
+
+
+        // Check output memory size
+
+        RequiredSize = (size_t)VendorRequest->Length;
+
+        if ( OutputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest failed output size check\n" ));
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest output size is %d, size required is %d\n", OutputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+
+        // Get output memory area and its buffer
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &DataMemory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest retrieve data output memory area\n" ));
+
+        DataBuffer = (BYTE*)WdfMemoryGetBuffer( DataMemory, &DataSize );
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest got data output memory area buffer with size %u\n", DataSize ));
+
+
+
+        // Debugging print
+
+        if (VendorRequest->Length == 1 && DataSize > 0)
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest Run/Hold data value is = %u\n", DataBuffer[0]  ));
+
+
+
+        // Prepare USB control packet, output data, and send options
+
+        WDF_USB_CONTROL_SETUP_PACKET_INIT_VENDOR( &ControlSetupPacket,
+                                                  BmRequestHostToDevice,  // Direction
+                                                  BmRequestToDevice,      // Recipient
+                                                  VendorRequest->Request,
+                                                  VendorRequest->Value,
+                                                  VendorRequest->Index
+                                                );
+
+        WDF_MEMORY_DESCRIPTOR_INIT_HANDLE( &MemoryDesc, DataMemory, NULL );
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions, 0 );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                            );
+
+
+        // Now actually send this request on to the USB !!!
+
+        Status = WdfUsbTargetDeviceSendControlTransferSynchronously(
+                                                                DevInfo->UsbDevice,
+                                                                NULL, //Request,
+                                                                NULL, //&RequestSendOptions,
+                                                                &ControlSetupPacket,
+                                                                &MemoryDesc,
+                                                                &BytesMoved
+                                                                );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlSendVendorRequest failed WdfUsbTargetDeviceSendControlTransferSynchronously 0x%X (Bytes = %lu)\n", Status, BytesMoved ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlSendVendorRequest sent vendor control request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)BytesMoved;
+
+        return( STATUS_SUCCESS );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlBulkWriteCmd
+// PURPOSE: This function synchronously writes to the bulk command pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlBulkWriteCmd( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                           Status;
+        WDFMEMORY                          Memory;
+        size_t                             AvailableSize, CpBytesWritten, i;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        BYTE                              *Buffer;
+        BOOLEAN                            Ok;
+
+
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_BULK_WRITE_CMD called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Get input memory area and its size and put into a memory descriptor
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWriteCmd failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWriteCmd retrieve input memory area\n" ));
+
+        Buffer = (BYTE *)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkWriteCmd got memory area buffer with size %u\n", AvailableSize ));
+        for ( i = 0 ; i < AvailableSize ; i++ ) {
+                TracePrint(( "Buffer[%d] = 0x%X\n", i, Buffer[i] ));
+                }
+
+
+        // Set up synchronous send options
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions,
+                                       WDF_REQUEST_SEND_OPTION_SYNCHRONOUS |
+                                       WDF_REQUEST_SEND_OPTION_TIMEOUT
+                                     );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                             );
+
+        // Pre-allocate timer
+
+        Status = WdfRequestAllocateTimer( Request );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWriteCmd failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWriteCmd allocated request timer\n" ));
+
+
+        // Format write request for USB bulk pipe
+
+        Status = WdfUsbTargetPipeFormatRequestForWrite( DevInfo->UsbPipeArray[PIPE_CMD_OUT],
+                                                       Request,
+                                                       Memory,
+                                                       NULL
+                                                      );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWriteCmd failed WdfUsbTargetPipeFormatRequestForWrite 0x%X\n", Status ));
+                return( Status );
+                }
+                TracePrint(( "SrUsbXchIoctlBulkWriteCmd formatted write request\n" ));
+
+
+        // Synchronously send write request to USB bulk pipe
+
+        Ok = WdfRequestSend(
+                             Request,
+                             WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                             &RequestSendOptions
+                           );
+        Status = WdfRequestGetStatus( Request );
+        if ( !Ok ) {
+                TracePrint(( "SrUsbXchIoctlBulkWrite failed WdfRequestSend 0x%X\n", Status ));
+                return( STATUS_UNSUCCESSFUL );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWrite sent write request status = 0x%X\n", Status ));
+
+
+        // Get status from lower level driver
+
+        WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+        WdfRequestGetCompletionParams( Request, &CompletionParams );
+
+        Status              = CompletionParams.IoStatus.Status;
+        UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+        CpBytesWritten      = UsbCompletionParams->Parameters.PipeWrite.Length;
+        UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)CpBytesWritten;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlBulkReadCmd
+// PURPOSE: This function synchronously reads to the bulk command pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlBulkReadCmd( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                           Status;
+        WDFMEMORY                          Memory;
+        size_t                             AvailableSize, CpBytesRead;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        BOOLEAN                            Ok;
+
+
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_BULK_READ_CMD called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Get output memory area and its size and place in a memory descriptor
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkReadCmd failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd retrieve output memory area\n" ));
+
+        WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd got memory area buffer with size %u\n", AvailableSize ));
+
+
+
+        // Set up synchronous send options
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions,
+                                       WDF_REQUEST_SEND_OPTION_SYNCHRONOUS |
+                                       WDF_REQUEST_SEND_OPTION_TIMEOUT
+                                     );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                             );
+
+        // Pre-allocate timer
+
+        Status = WdfRequestAllocateTimer( Request );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkReadCmd failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd allocated request timer\n" ));
+
+
+        // Format read request for USB bulk pipe
+
+        Status = WdfUsbTargetPipeFormatRequestForRead( DevInfo->UsbPipeArray[PIPE_CMD_IN],
+                                                       Request,
+                                                       Memory,
+                                                       NULL
+                                                      );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkReadCmd failed WdfUsbTargetPipeFormatRequestForRead 0x%X\n", Status ));
+                return( Status );
+                }
+                TracePrint(( "SrUsbXchIoctlBulkReadCmd formatted read request\n" ));
+
+
+        // Synchronously send read request to USB bulk pipe
+
+        Ok = WdfRequestSend(
+                             Request,
+                             WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                             &RequestSendOptions
+                           );
+        Status = WdfRequestGetStatus( Request );
+        if ( !Ok ) {
+                TracePrint(( "SrUsbXchIoctlBulkReadCmd failed WdfRequestSend 0x%X\n", Status ));
+                return( STATUS_UNSUCCESSFUL );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd sent read request status = 0x%X\n", Status ));
+
+
+        // Get status from lower level driver
+
+        WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+        WdfRequestGetCompletionParams( Request, &CompletionParams );
+
+        Status              = CompletionParams.IoStatus.Status;
+        UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+        CpBytesRead         = UsbCompletionParams->Parameters.PipeRead.Length;
+        UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd CpBytesRead 0x%lX\n", CpBytesRead ));
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd Status 0x%lX, UsbdStatus 0x%lX\n", Status, UsbdStatus ));
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)CpBytesRead;
+
+        TracePrint(( "SrUsbXchIoctlBulkReadCmd BytesTransferred 0x%lX\n", *BytesTransferred ));
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlBulkWrite
+// PURPOSE: This function synchronously writes to the selected bulk pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlBulkWrite( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                           Status;
+        WDFMEMORY                          Memory;
+        size_t                             AvailableSize, CpBytesWritten, i;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        BYTE                              *Buffer;
+        int                                PipeIndex;
+        BOOLEAN                            Ok;
+
+
+        UNREFERENCED_PARAMETER( InputBufferLength );
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_BULK_WRITE called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+//FIX - We must get both pipe number and data ? from input area
+
+        // Get input memory area and its size and put into a memory descriptor
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWrite failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWrite retrieve input memory area\n" ));
+
+        Buffer = (BYTE *)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkWrite got memory area buffer with size %u\n", AvailableSize ));
+        for ( i = 0 ; i < AvailableSize ; i++ ) {
+                TracePrint(( "Buffer[%d] = 0x%X\n", i, Buffer[i] ));
+                }
+
+        PipeIndex = (int)Buffer[AvailableSize-1];
+        TracePrint(( "SrUsbXchIoctlBulkWrite got pipeindex %u\n", PipeIndex ));
+
+
+        // Set up synchronous send options
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions,
+                                       WDF_REQUEST_SEND_OPTION_SYNCHRONOUS |
+                                       WDF_REQUEST_SEND_OPTION_TIMEOUT
+                                     );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                             );
+
+        // Pre-allocate timer
+
+        Status = WdfRequestAllocateTimer( Request );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWrite failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWrite allocated request timer\n" ));
+
+
+        // Format write request for USB bulk pipe
+
+        Status = WdfUsbTargetPipeFormatRequestForWrite( DevInfo->UsbPipeArray[PipeIndex],
+                                                       Request,
+                                                       Memory,
+                                                       NULL
+                                                      );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkWrite failed WdfUsbTargetPipeFormatRequestForWrite 0x%X\n", Status ));
+                return( Status );
+                }
+                TracePrint(( "SrUsbXchIoctlBulkWrite formatted write request\n" ));
+
+
+        // Synchronously send write request to USB bulk pipe
+
+        Ok = WdfRequestSend(
+                             Request,
+                             WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                             &RequestSendOptions
+                           );
+        Status = WdfRequestGetStatus( Request );
+        if ( !Ok ) {
+                TracePrint(( "SrUsbXchIoctlBulkWrite failed WdfRequestSend 0x%X\n", Status ));
+                return( STATUS_UNSUCCESSFUL );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkWrite sent write request status = 0x%X\n", Status ));
+
+
+        // Get status from lower level driver
+
+        WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+        WdfRequestGetCompletionParams( Request, &CompletionParams );
+
+        Status              = CompletionParams.IoStatus.Status;
+        UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+        CpBytesWritten      = UsbCompletionParams->Parameters.PipeWrite.Length;
+        UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)CpBytesWritten;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlBulkRead
+// PURPOSE: This function synchronously reads to the bulk command pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlBulkRead( WDFREQUEST Request,
+                                DEVINFO   *DevInfo,
+                                size_t     InputBufferLength,
+                                size_t     OutputBufferLength,
+                                size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                           Status;
+        WDF_OBJECT_ATTRIBUTES              Attributes;
+        WDFMEMORY                          Memory;
+        WDFMEMORY_OFFSET                   MemoryOffset;
+        WDFREQUEST                         SubRequest;
+        WDF_REQUEST_REUSE_PARAMS           ReuseParams;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        ULONG                             *Buffer, PipeIndex;
+        size_t                             AvailableSize, RequiredSize, MaxSize;
+        size_t                             TotalBytesRead, TotalBytesRemain;
+        size_t                             CpBytesRead;
+        BOOLEAN                            Ok;
+
+
+
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_BULK_READ called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Get input memory area and its size
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkRead retrieve input memory area\n" ));
+
+        Buffer = (ULONG *)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkRead got memory area buffer with size %u\n", AvailableSize ));
+
+
+        // Validate incoming data
+
+        RequiredSize = sizeof( ULONG );
+
+        if ( InputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlBulkRead failed input size check\n" ));
+                TracePrint(( "SrUsbXchIoctlBulkRead input size is %d, size required is %d\n", InputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+        PipeIndex = Buffer[0];
+        TracePrint(( "PipeIndex = %lu\n", PipeIndex ));
+
+        if ( PipeIndex >= (ULONG)DevInfo->PipeCount ) {
+                TracePrint(( "SrUsbXchIoctlBulkRead failed pipe index check\n" ));
+                TracePrint(( "SrUsbXchIoctlBulkRead pipe index is %lu, max index is %d\n", PipeIndex, DevInfo->PipeCount-1 ));
+                return( STATUS_INVALID_PARAMETER );
+                }
+
+
+
+
+
+        // Get output memory area and its size and place in a memory descriptor
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlBulkRead retrieve output memory area\n" ));
+
+        WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkRead got memory area buffer with size %u\n", AvailableSize ));
+
+
+
+        // Set up synchronous send options
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions,
+                                       WDF_REQUEST_SEND_OPTION_SYNCHRONOUS |
+                                       WDF_REQUEST_SEND_OPTION_TIMEOUT
+                                     );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                             );
+
+        MaxSize = (size_t)DevInfo->UsbPipeMaxTransferArray[PipeIndex];
+
+
+        // Simple one shot case
+
+        if ( AvailableSize <= MaxSize ) {
+
+                TracePrint(( "SrUsbXchIoctlBulkRead simple case where desired size %u <= max size %u\n", AvailableSize, MaxSize ));
+
+                // Pre-allocate timer
+
+                Status = WdfRequestAllocateTimer( Request );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                        return( Status );
+                        }
+                TracePrint(( "SrUsbXchIoctlBulkRead allocated request timer\n" ));
+
+
+                // Format read request for USB bulk pipe
+
+                Status = WdfUsbTargetPipeFormatRequestForRead( DevInfo->UsbPipeArray[PipeIndex],
+                                                               Request,
+                                                               Memory,
+                                                               NULL
+                                                              );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchIoctlBulkRead failed WdfUsbTargetPipeFormatRequestForRead 0x%X\n", Status ));
+                        return( Status );
+                        }
+                        TracePrint(( "SrUsbXchIoctlBulkRead formatted read request\n" ));
+
+
+                // Synchronously send read request to USB bulk pipe
+
+                Ok = WdfRequestSend(
+                                     Request,
+                                     WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                                     &RequestSendOptions
+                                   );
+                Status = WdfRequestGetStatus( Request );
+                if ( !Ok ) {
+                        TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestSend 0x%X\n", Status ));
+                        return( STATUS_UNSUCCESSFUL );
+                        }
+                TracePrint(( "SrUsbXchIoctlBulkRead sent read request status = 0x%X\n", Status ));
+
+
+                // Get status from lower level driver
+
+                WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+                WdfRequestGetCompletionParams( Request, &CompletionParams );
+
+                Status              = CompletionParams.IoStatus.Status;
+                UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+                CpBytesRead         = UsbCompletionParams->Parameters.PipeRead.Length;
+                UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+                TracePrint(( "SrUsbXchIoctlBulkRead CpBytesRead 0x%lX\n", CpBytesRead ));
+
+
+                if ( BytesTransferred )  *BytesTransferred = CpBytesRead;
+
+                } // end if AvailableSize < MaxSize
+
+
+
+        // Complicated looping case
+
+        else { // AvailableSize > MaxSize
+
+                TracePrint(( "SrUsbXchIoctlBulkRead complex case where desired size %u > max size %u\n", AvailableSize, MaxSize ));
+
+                // Create subrequest that we will reuse
+
+                WDF_OBJECT_ATTRIBUTES_INIT( &Attributes );
+                // FIX - no parent specified - is this ok?
+                // Attributes.ParentObject = Device; ?? UsbTarget ??
+                Status = WdfRequestCreate( &Attributes,
+                                           NULL,        // No IoTarget specified
+                                           &SubRequest );
+
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestCreate 0x%X\n", Status ));
+                        return( Status );
+                        }
+                TracePrint(( "SrUsbXchIoctlBulkRead created sub request\n" ));
+
+
+                // Pre-allocate timer
+
+                Status = WdfRequestAllocateTimer( SubRequest );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                        return( Status );
+                        }
+                TracePrint(( "SrUsbXchIoctlBulkRead allocated request timer\n" ));
+
+
+
+                TotalBytesRead   = 0;
+                TotalBytesRemain = AvailableSize;
+
+                while ( TotalBytesRemain > 0 ) {
+
+                        TracePrint(( "SrUsbXchIoctlBulkRead TotalRead %u, TotalRemain %u\n", TotalBytesRead, TotalBytesRemain ));
+
+                        // Set up offset into memory area and initialize descriptor
+
+                        MemoryOffset.BufferOffset = TotalBytesRead;
+                        MemoryOffset.BufferLength = TotalBytesRemain;
+                        if ( MemoryOffset.BufferLength > MaxSize )
+                                MemoryOffset.BufferLength  = MaxSize;
+
+                        // Format read request for USB bulk pipe
+                        // Note: this increments reference count for SubRequest
+                        //       it must be decremented by reuse or deletion
+
+                        Status = WdfUsbTargetPipeFormatRequestForRead(
+                                        DevInfo->UsbPipeArray[PipeIndex],
+                                        SubRequest,
+                                        Memory,
+                                        &MemoryOffset );
+
+                        if ( !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfUsbTargetPipeFormatRequestForRead 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                return( Status );
+                                }
+                        TracePrint(( "SrUsbXchIoctlBulkRead formatted request\n" ));
+
+
+
+                        // Synchronously send read request to USB bulk pipe
+
+                        Ok = WdfRequestSend(
+                                             SubRequest,
+                                             WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                                             &RequestSendOptions
+                                           );
+                        Status = WdfRequestGetStatus( SubRequest );
+                        if ( !Ok || !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestSend 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                return( Status );
+                                }
+                        TracePrint(( "SrUsbXchIoctlBulkRead sent read request status = 0x%X\n", Status ));
+
+
+
+                        // Get status from lower level driver
+
+                        WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+                        WdfRequestGetCompletionParams( SubRequest, &CompletionParams );
+
+                        if ( CompletionParams.Type == WdfRequestTypeNoFormat ) {
+                                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestGetCompletionParams\n" ));
+                                WdfObjectDelete( SubRequest );
+                                return( STATUS_UNSUCCESSFUL );
+                                }
+
+                        Status              = CompletionParams.IoStatus.Status;
+                        UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+                        CpBytesRead         = UsbCompletionParams->Parameters.PipeRead.Length;
+                        UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+
+                        TracePrint(( "SrUsbXchIoctlBulkRead Completion Status 0x%lX, UsbdStatus 0x%lX\n",
+                             Status, UsbdStatus ));
+                        TracePrint(( "SrUsbXchIoctlBulkRead CpBytesRead 0x%lX\n", CpBytesRead ));
+
+                        // Prepare for next loop
+
+                        TotalBytesRead   += CpBytesRead;
+                        TotalBytesRemain -= CpBytesRead;
+
+                        WDF_REQUEST_REUSE_PARAMS_INIT( &ReuseParams,
+                                                        WDF_REQUEST_REUSE_NO_FLAGS,
+                                                        STATUS_SUCCESS
+                                                      );
+                        Status = WdfRequestReuse( SubRequest, &ReuseParams );
+                        if ( !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchIoctlBulkRead failed WdfRequestReuse 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                return( Status );
+                                }
+                        TracePrint(( "SrUsbXchIoctlBulkRead prepared sub request for reuse\n" ));
+
+                        // Error check
+
+                        if ( DevInfo->IsSurpriseRemoved == TRUE ) {
+                                Status = STATUS_NETWORK_NAME_DELETED;
+                                TracePrint(( "SrUsbXchIoctlBulkRead noticed surprise removal 0x%X\n", Status ));
+                                break;
+                                }
+
+                        // Check for early exit
+
+                        if ( CpBytesRead < MemoryOffset.BufferLength ) {
+                                Status = STATUS_SUCCESS;
+                                TracePrint(( "SrUsbXchIoctlBulkRead read 0x%lX which is less than 0x%lX requested\n", CpBytesRead, MemoryOffset.BufferLength ));
+                                break;
+                                }
+
+                        } // while TotalBytesRemain > 0
+
+
+                // Clean up SubRequest now that we are done reusing it
+
+                WdfObjectDelete( SubRequest );
+
+                if ( BytesTransferred )  *BytesTransferred = TotalBytesRead;
+
+                } // end else AvailableSize > MaxSize
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlResetPipe
+// PURPOSE: This function synchronously resets the specified pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlResetPipe( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                 Status;
+        WDFMEMORY                Memory;
+        size_t                   AvailableSize, RequiredSize;
+        WDF_REQUEST_SEND_OPTIONS RequestSendOptions;
+        WDFUSBPIPE               UsbPipe;
+        int                      *Buffer, PipeNum;
+        UCHAR                    PipeIndex;
+
+
+
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_RESET_PIPE called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Check input memory size
+
+        RequiredSize = sizeof( int );
+
+        if ( InputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlResetPipe failed input size check\n" ));
+                TracePrint(( "SrUsbXchIoctlResetPipe input size is %d, size required is %d\n", InputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+        // Get input memory area and its buffer
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlResetPipe failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlResetPipe retrieve input memory area\n" ));
+
+        Buffer    = (int*)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        PipeNum   = Buffer[0];
+        PipeIndex = (UCHAR)PipeNum;
+        TracePrint(( "SrUsbXchIoctlResetPipe got memory area buffer with size %u\n", AvailableSize ));
+        TracePrint(( "SrUsbXchIoctlResetPipe PipeIndex = %u\n", PipeIndex ));
+
+
+        // Validate and select pipe by number
+
+        if ( PipeIndex < 0 || PipeIndex >= (UCHAR)DevInfo->PipeCount ) {
+                TracePrint(( "SrUsbXchIoctlResetPipe failed pipe num check\n" ));
+                TracePrint(( "SrUsbXchIoctlResetPipe pipe index is %d, max index is %d\n", PipeIndex, DevInfo->PipeCount-1 ));
+                return( STATUS_INVALID_PARAMETER );
+                }
+
+        UsbPipe = WdfUsbInterfaceGetConfiguredPipe( DevInfo->UsbInterface,
+                                                    PipeIndex,
+                                                    NULL             // PipeInfo
+                                                   );
+        if ( !UsbPipe ) {
+                TracePrint(( "SrUsbXchIoctlResetPipe failed to get selected pipe\n" ));
+                return( STATUS_INVALID_PARAMETER );
+                }
+
+
+        // Synchronously send reset request to the specified pipe
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions, 0 );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                            );
+
+
+        Status = WdfUsbTargetPipeResetSynchronously( UsbPipe,
+                                                     Request,
+                                                     &RequestSendOptions
+                                                    );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchSrUsbXchIoctlResetPipe failed WdfUsbTargetPipeResetSynchronously 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlResetPipe sent pipe reset request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)AvailableSize;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlAbortPipe
+// PURPOSE: This function synchronously aborts the specified pipe
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlAbortPipe( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS                 Status;
+        WDFMEMORY                Memory;
+        size_t                   AvailableSize, RequiredSize;
+        WDF_REQUEST_SEND_OPTIONS RequestSendOptions;
+        WDFUSBPIPE               UsbPipe;
+        int                      *Buffer, PipeNum;
+        UCHAR                    PipeIndex;
+
+
+
+
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_ABORT_PIPE called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Check input memory size
+
+        RequiredSize = sizeof( int );
+
+        if ( InputBufferLength < RequiredSize ) {
+                TracePrint(( "SrUsbXchIoctlAbortPipe failed input size check\n" ));
+                TracePrint(( "SrUsbXchIoctlAbortPipe input size is %d, size required is %d\n", InputBufferLength, RequiredSize ));
+                return( STATUS_BUFFER_TOO_SMALL );
+                }
+
+
+        // Get input memory area and its buffer
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlAbortPipe failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlAbortPipe retrieve input memory area\n" ));
+
+        Buffer    = (int*)WdfMemoryGetBuffer( Memory, &AvailableSize );
+        PipeNum   = Buffer[0];
+        PipeIndex = (UCHAR)PipeNum;
+        TracePrint(( "SrUsbXchIoctlAbortPipe got memory area buffer with size %u\n", AvailableSize ));
+        TracePrint(( "SrUsbXchIoctlAbortPipe PipeIndex = %u\n", PipeIndex ));
+
+
+        // Validate and select pipe by number
+
+        if ( PipeIndex < 0 || PipeIndex >= (UCHAR)DevInfo->PipeCount ) {
+                TracePrint(( "SrUsbXchIoctlAbortPipe failed pipe num check\n" ));
+                TracePrint(( "SrUsbXchIoctlAbortPipe pipe index is %d, max index is %d\n", PipeIndex, DevInfo->PipeCount-1 ));
+                return( STATUS_INVALID_PARAMETER );
+                }
+
+        UsbPipe = WdfUsbInterfaceGetConfiguredPipe( DevInfo->UsbInterface,
+                                                    PipeIndex,
+                                                    NULL             // PipeInfo
+                                                   );
+        if ( !UsbPipe ) {
+                TracePrint(( "SrUsbXchIoctlAbortPipe failed to get selected pipe\n" ));
+                return( STATUS_INVALID_PARAMETER );
+                }
+
+
+        // Synchronously send abort request to the specified pipe
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions, 0 );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                            );
+
+
+        Status = WdfUsbTargetPipeAbortSynchronously( UsbPipe,
+                                                     Request,
+                                                     &RequestSendOptions
+                                                    );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlAbortPipe failed WdfUsbTargetPipeAbortSynchronously 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlAbortPipe sent pipe abort request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)AvailableSize;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlResetPort
+// PURPOSE: This function synchronously resets the port for this device
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlResetPort( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS Status;
+
+
+        UNREFERENCED_PARAMETER( Request );
+        UNREFERENCED_PARAMETER( InputBufferLength );
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_RESET_PORT called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Synchronously send reset port request to the specified device
+
+        Status = WdfUsbTargetDeviceResetPortSynchronously( DevInfo->UsbDevice );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchSrUsbXchIoctlResetPort failed WdfUsbTargetDeviceResetPortSynchronously 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlResetPort sent reset port request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)0;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchIoctlCyclePort
+// PURPOSE: This function synchronously cycles the port for this device
+// OTHER:   IRQL = PASSIVE ??, Context = User ??
+//------------------------------------------------------------------------------
+NTSTATUS SrUsbXchIoctlCyclePort( WDFREQUEST Request,
+                                 DEVINFO   *DevInfo,
+                                 size_t     InputBufferLength,
+                                 size_t     OutputBufferLength,
+                                 size_t    *BytesTransferred
+                                ) {
+
+        NTSTATUS Status;
+
+
+        UNREFERENCED_PARAMETER( Request );
+        UNREFERENCED_PARAMETER( InputBufferLength );
+        UNREFERENCED_PARAMETER( OutputBufferLength );
+
+
+        TracePrint(("IOCTL_USBXCH_CYCLE_PORT called\n" ));
+
+
+        // Error check
+
+        if (!DevInfo)
+                return( STATUS_INVALID_PARAMETER );
+
+
+
+        // Synchronously send cycle port request to the specified device
+
+        Status = WdfUsbTargetDeviceCyclePortSynchronously( DevInfo->UsbDevice );
+
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchIoctlCyclePort failed WdfUsbTargetDeviceCyclePortSynchronously 0x%X\n", Status ));
+                return( Status );
+                }
+        TracePrint(( "SrUsbXchIoctlCyclePort sent cycle port request\n" ));
+
+
+        if ( BytesTransferred )  *BytesTransferred = (size_t)0;
+
+        return( Status );
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtIoWrite
+// PURPOSE: This function performs bulk write requests from a sequential queue.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchEvtIoWrite( WDFQUEUE Queue, WDFREQUEST Request, size_t Length ) {
+
+        NTSTATUS   Status;
+        WDFUSBPIPE Pipe;
+        WDFDEVICE  Device;
+        WDFMEMORY  Memory;
+        DEVINFO   *DevInfo;
+        BOOLEAN    Ok;
+
+
+        UNREFERENCED_PARAMETER( Length );
+
+        TracePrint(("SrUsbXchEvtIoWrite entered\n" ));
+
+        // Get command write pipe
+
+        Device  = WdfIoQueueGetDevice( Queue );
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+        Pipe    = DevInfo->UsbPipeArray[PIPE_CMD_OUT];
+
+
+        // Get input memory area
+
+        Status = WdfRequestRetrieveInputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtIoWrite failed WdfRequestRetrieveInputMemory 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0 );
+                return;
+                }
+        TracePrint(( "SrUsbXchEvtIoWrite retrieve input memory area\n" ));
+
+
+        // Format request for USB write
+
+        Status = WdfUsbTargetPipeFormatRequestForWrite( Pipe,
+                                                        Request,
+                                                        Memory,
+                                                        NULL // offset
+                                                        );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtIoWrite failed WdfUsbTargetPipeFromatRequestForWrite 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0 );
+                return;
+                }
+        TracePrint(( "SrUsbXchEvtIoWrite formatted write request\n" ));
+
+
+        // Set up completion routine and asynchronously ? send off write request
+
+        WdfRequestSetCompletionRoutine( Request,
+                                        SrUsbXchEvtRequestWriteCompletionRoutine,
+                                        Pipe );
+
+        Ok = WdfRequestSend( Request,
+                             WdfUsbTargetPipeGetIoTarget( Pipe ),
+                             WDF_NO_SEND_OPTIONS
+                           );
+        if ( !Ok ) {
+                Status = WdfRequestGetStatus( Request );
+                TracePrint(( "SrUsbXchEvtIoWrite failed WdfRequestSend 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0 );
+                return;
+                }
+        else
+                return; // completion routine will call WdfRequestComplete...
+
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtRequestWriteCompletionRoutine
+// PURPOSE: This function completes bulk write requests.
+// OTHER:   IRQL = PASSIVE ??, Context = Arbitrary
+//------------------------------------------------------------------------------
+void SrUsbXchEvtRequestWriteCompletionRoutine( WDFREQUEST  Request,
+                                               WDFIOTARGET Target,
+                                               WDF_REQUEST_COMPLETION_PARAMS *CompletionParams,
+                                               WDFCONTEXT  Context
+                                               ) {
+
+        NTSTATUS                           Status;
+        size_t                             BytesWritten;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+
+        UNREFERENCED_PARAMETER( Target );
+        UNREFERENCED_PARAMETER( Context );
+
+        TracePrint(("SrUsbXchEvtRequestWriteCompletionRoutine entered\n" ));
+
+        Status              = CompletionParams->IoStatus.Status;
+        UsbCompletionParams = CompletionParams->Parameters.Usb.Completion;
+        BytesWritten        = UsbCompletionParams->Parameters.PipeWrite.Length;
+
+        if ( NT_SUCCESS( Status ) ) {
+                TracePrint(("SrUsbXchEvtRequestWriteCompletionRoutine wrote %I64d bytes\n", (INT64)BytesWritten ));
+                }
+        else {
+                TracePrint(("SrUsbXchEvtRequestWriteCompletionRoutine failed status 0x%X, UsbdStatus 0x%X\n", Status, UsbCompletionParams->UsbdStatus ));
+                }
+
+
+        WdfRequestCompleteWithInformation( Request, Status, BytesWritten );
+
+        return;
+}
+
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtIoRead
+// PURPOSE: This function performs bulk read requests from a sequential queue.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchEvtIoRead( WDFQUEUE Queue, WDFREQUEST Request, size_t Length ) {
+
+        NTSTATUS   Status;
+        WDF_OBJECT_ATTRIBUTES              Attributes;
+        WDFMEMORY                          Memory;
+        WDFMEMORY_OFFSET                   MemoryOffset;
+        WDFREQUEST                         SubRequest;
+        WDF_REQUEST_REUSE_PARAMS           ReuseParams;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        ULONG                             *Buffer, PipeIndex;
+        size_t                             AvailableSize, RequiredSize, MaxSize;
+        size_t                             TotalBytesRead, TotalBytesRemain;
+        size_t                             CpBytesRead;
+        BOOLEAN                            Ok;
+        WDFDEVICE                          Device;
+        DEVINFO                           *DevInfo;
+
+
+        TracePrint(("EVT IO READ SrUsbXchEvtIoRead - Enter\n" ));
+
+
+        // Error check
+
+//FIX - what to check here
+
+
+
+        // Get data read pipe
+
+        Device    = WdfIoQueueGetDevice( Queue );
+        DevInfo   = SrUsbXchGetDeviceContext( Device );
+        PipeIndex = PIPE_DATA_IN;
+
+
+
+
+        // Get output memory area and its size and place in a memory descriptor
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                return;
+                }
+        TracePrint(( "SrUsbXchEvtIoRead retrieve output memory area\n" ));
+
+        WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchEvtIoRead got memory area buffer with size %u\n", AvailableSize ));
+
+
+
+        // Set up synchronous send options
+
+        WDF_REQUEST_SEND_OPTIONS_INIT( &RequestSendOptions,
+                                       WDF_REQUEST_SEND_OPTION_SYNCHRONOUS |
+                                       WDF_REQUEST_SEND_OPTION_TIMEOUT
+                                     );
+
+        WDF_REQUEST_SEND_OPTIONS_SET_TIMEOUT( &RequestSendOptions,
+                                              WDF_REL_TIMEOUT_IN_SEC( 1 )
+                                             );
+
+        MaxSize = (size_t)DevInfo->UsbPipeMaxTransferArray[PipeIndex];
+
+
+        // Simple one shot case
+
+
+        if ( AvailableSize <= MaxSize ) {
+
+                TracePrint(( "SrUsbXchEvtIoRead simple case where desired size %u <= max size %u\n", AvailableSize, MaxSize ));
+
+                // Pre-allocate timer
+
+                Status = WdfRequestAllocateTimer( Request );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0L );
+                        return;
+                        }
+                TracePrint(( "SrUsbXchEvtIoRead allocated request timer\n" ));
+
+
+                // Format read request for USB bulk pipe
+
+                Status = WdfUsbTargetPipeFormatRequestForRead( DevInfo->UsbPipeArray[PipeIndex],
+                                                               Request,
+                                                               Memory,
+                                                               NULL
+                                                              );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfUsbTargetPipeFormatRequestForRead 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0L );
+                        return;
+                        }
+                        TracePrint(( "SrUsbXchEvtIoRead formatted read request\n" ));
+
+
+                // Synchronously send read request to USB bulk pipe
+
+                Ok = WdfRequestSend(
+                                     Request,
+                                     WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                                     &RequestSendOptions
+                                   );
+                Status = WdfRequestGetStatus( Request );
+                if ( !Ok ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestSend 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, STATUS_UNSUCCESSFUL, 0L );
+                        return;
+                        }
+                TracePrint(( "SrUsbXchEvtIoRead sent read request status = 0x%X\n", Status ));
+
+
+                // Get status from lower level driver
+
+                WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+                WdfRequestGetCompletionParams( Request, &CompletionParams );
+
+                Status              = CompletionParams.IoStatus.Status;
+                UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+                CpBytesRead         = UsbCompletionParams->Parameters.PipeRead.Length;
+                UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+                TracePrint(( "SrUsbXchEvtIoRead CpBytesRead 0x%lX, Status 0x%X\n", CpBytesRead, Status ));
+
+                TotalBytesRead = CpBytesRead;
+
+                } // end if AvailableSize < MaxSize
+
+
+
+        // Complicated looping case
+
+        else { // AvailableSize > MaxSize
+
+                TracePrint(( "SrUsbXchEvtIoRead complex case where desired size %u > max size %u\n", AvailableSize, MaxSize ));
+
+                // Create subrequest that we will reuse
+
+                WDF_OBJECT_ATTRIBUTES_INIT( &Attributes );
+                // FIX - no parent specified - is this ok?
+                // Attributes.ParentObject = Device; ?? UsbTarget ??
+                Status = WdfRequestCreate( &Attributes,
+                                           NULL,        // No IoTarget specified
+                                           &SubRequest );
+
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestCreate 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0L );
+                        return;
+                        }
+                TracePrint(( "SrUsbXchEvtIoRead created sub request\n" ));
+
+
+                // Pre-allocate timer
+
+                Status = WdfRequestAllocateTimer( SubRequest );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestAllocateTimer 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0L );
+                        return;
+                        }
+                TracePrint(( "SrUsbXchEvtIoRead allocated request timer\n" ));
+
+
+
+                TotalBytesRead   = 0;
+                TotalBytesRemain = AvailableSize;
+
+                while ( TotalBytesRemain > 0 ) {
+
+                        TracePrint(( "SrUsbXchEvtIoRead TotalRead %u, TotalRemain %u\n", TotalBytesRead, TotalBytesRemain ));
+
+                        // Set up offset into memory area and initialize descriptor
+
+                        MemoryOffset.BufferOffset = TotalBytesRead;
+                        MemoryOffset.BufferLength = TotalBytesRemain;
+                        if ( MemoryOffset.BufferLength > MaxSize )
+                                MemoryOffset.BufferLength  = MaxSize;
+
+                        // Format read request for USB bulk pipe
+                        // Note: this increments reference count for SubRequest
+                        //       it must be decremented by reuse or deletion
+
+                        Status = WdfUsbTargetPipeFormatRequestForRead(
+                                        DevInfo->UsbPipeArray[PipeIndex],
+                                        SubRequest,
+                                        Memory,
+                                        &MemoryOffset );
+
+                        if ( !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchEvtIoRead failed WdfUsbTargetPipeFormatRequestForRead 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                                return;
+                                }
+                        TracePrint(( "SrUsbXchEvtIoRead formatted request\n" ));
+
+
+
+                        // Synchronously send read request to USB bulk pipe
+
+                        Ok = WdfRequestSend(
+                                             SubRequest,
+                                             WdfUsbTargetDeviceGetIoTarget( DevInfo->UsbDevice ),
+                                             &RequestSendOptions
+                                           );
+                        Status = WdfRequestGetStatus( SubRequest );
+                        if ( !Ok || !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestSend 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                                return;
+                                }
+                        TracePrint(( "SrUsbXchEvtIoRead sent read request status = 0x%X\n", Status ));
+
+
+
+                        // Get status from lower level driver
+
+                        WDF_REQUEST_COMPLETION_PARAMS_INIT( &CompletionParams );
+                        WdfRequestGetCompletionParams( SubRequest, &CompletionParams );
+
+                        if ( CompletionParams.Type == WdfRequestTypeNoFormat ) {
+                                TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestGetCompletionParams\n" ));
+                                WdfObjectDelete( SubRequest );
+                                WdfRequestCompleteWithInformation( Request, STATUS_UNSUCCESSFUL, 0L );
+                                return;
+                                }
+
+                        Status              = CompletionParams.IoStatus.Status;
+                        UsbCompletionParams = CompletionParams.Parameters.Usb.Completion;
+                        CpBytesRead         = UsbCompletionParams->Parameters.PipeRead.Length;
+                        UsbdStatus          = UsbCompletionParams->UsbdStatus;
+
+
+                        TracePrint(( "SrUsbXchEvtIoRead Completion Status 0x%lX, UsbdStatus 0x%lX\n",
+                             Status, UsbdStatus ));
+                        TracePrint(( "SrUsbXchEvtIoRead CpBytesRead 0x%lX\n", CpBytesRead ));
+
+                        // Prepare for next loop
+
+                        TotalBytesRead   += CpBytesRead;
+                        TotalBytesRemain -= CpBytesRead;
+
+                        WDF_REQUEST_REUSE_PARAMS_INIT( &ReuseParams,
+                                                        WDF_REQUEST_REUSE_NO_FLAGS,
+                                                        STATUS_SUCCESS
+                                                      );
+                        Status = WdfRequestReuse( SubRequest, &ReuseParams );
+                        if ( !NT_SUCCESS( Status ) ) {
+                                TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestReuse 0x%X\n", Status ));
+                                WdfObjectDelete( SubRequest );
+                                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                                return;
+                                }
+                        TracePrint(( "SrUsbXchEvtIoRead prepared sub request for reuse\n" ));
+
+                        // Error check
+
+                        if ( DevInfo->IsSurpriseRemoved == TRUE ) {
+                                Status = STATUS_NETWORK_NAME_DELETED;
+                                TracePrint(( "SrUsbXchEvtIoRead noticed surprise removal 0x%X\n", Status ));
+                                break;
+                                }
+
+                        // Check for early exit
+
+                        if ( CpBytesRead < MemoryOffset.BufferLength ) {
+                                Status = STATUS_SUCCESS;
+                                TracePrint(( "SrUsbXchEvtIoRead read 0x%lX which is less than 0x%lX requested\n", CpBytesRead, MemoryOffset.BufferLength ));
+                                break;
+                                }
+
+                        } // while TotalBytesRemain > 0
+
+
+                // Clean up SubRequest now that we are done reusing it
+
+                WdfObjectDelete( SubRequest );
+
+                } // end else AvailableSize > MaxSize
+
+
+        TracePrint(("SrUsbXchEvtIoRead - Exit\n" ));
+
+        WdfRequestCompleteWithInformation( Request, Status, TotalBytesRead );
+
+        return;
+}
+
+
+#ifdef CONVERTING_IOREAD_TO_ASYNCH
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtIoRead
+// PURPOSE: This function performs bulk read requests from a sequential queue.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchEvtIoRead( WDFQUEUE Queue, WDFREQUEST Request, size_t Length ) {
+
+        NTSTATUS   Status;
+        WDFUSBPIPE Pipe;
+        WDFDEVICE  Device;
+        WDFMEMORY  Memory;
+        DEVINFO   *DevInfo;
+        BOOLEAN    Ok;
+        size_t     AvailableSize, MaxSize;
+
+        WDF_OBJECT_ATTRIBUTES              Attributes;
+        WDFMEMORY_OFFSET                   MemoryOffset;
+        WDFREQUEST                         SubRequest;
+        WDF_REQUEST_REUSE_PARAMS           ReuseParams;
+        WDF_REQUEST_SEND_OPTIONS           RequestSendOptions;
+        WDF_REQUEST_COMPLETION_PARAMS      CompletionParams;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+        USBD_STATUS                        UsbdStatus;
+        ULONG                             *Buffer, PipeIndex;
+        size_t                             AvailableSize, RequiredSize, MaxSize;
+        size_t                             TotalBytesRead, TotalBytesRemain;
+        size_t                             CpBytesRead;
+        BOOLEAN                            Ok;
+
+
+        UNREFERENCED_PARAMETER( Length );
+
+        TracePrint(("SrUsbXchEvtIoRead entered\n" ));
+
+        // Get data read pipe
+
+        Device  = WdfIoQueueGetDevice( Queue );
+        DevInfo = SrUsbXchGetDeviceContext( Device );
+        Pipe    = DevInfo->UsbPipeArray[PIPE_DATA_IN];
+
+
+
+        // Get output memory area and its size and place in a memory descriptor
+
+        Status = WdfRequestRetrieveOutputMemory( Request, &Memory );
+        if ( !NT_SUCCESS( Status ) ) {
+                TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestRetrieveOutputMemory 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                return;
+                }
+        TracePrint(( "SrUsbXchEvtIoRead retrieve output memory area\n" ));
+
+        WdfMemoryGetBuffer( Memory, &AvailableSize );
+        TracePrint(( "SrUsbXchIoctlBulkRead got memory area buffer with size %u\n", AvailableSize ));
+
+        MaxSize = (size_t)DevInfo->UsbPipeMaxTransferArray[PipeIndex];
+
+
+        // Simple one shot case
+
+        if ( AvailableSize <= MaxSize ) {
+
+                TracePrint(( "SrUsbXchEvtIoRead simple case where desired size %u <= max size %u\n", AvailableSize, MaxSize ));
+
+                // Format request for USB read
+
+                Status = WdfUsbTargetPipeFormatRequestForRead( Pipe,
+                                                               Request,
+                                                               Memory,
+                                                               NULL // offset
+                                                               );
+                if ( !NT_SUCCESS( Status ) ) {
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfUsbTargetPipeFromatRequestForRead 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0 );
+                        return;
+                        }
+                TracePrint(( "SrUsbXchEvtIoRead formatted read request\n" ));
+
+
+                // Set up completion routine and asynchronously send off read request
+
+                WdfRequestSetCompletionRoutine( Request,
+                                                SrUsbXchEvtRequestReadCompletionRoutine,
+                                                Pipe );
+
+                Ok = WdfRequestSend( Request,
+                                     WdfUsbTargetPipeGetIoTarget( Pipe ),
+                                     WDF_NO_SEND_OPTIONS
+                                   );
+                if ( !Ok ) {
+                        Status = WdfRequestGetStatus( Request );
+                        TracePrint(( "SrUsbXchEvtIoRead failed WdfRequestSend 0x%X\n", Status ));
+                        WdfRequestCompleteWithInformation( Request, Status, 0L );
+                        return;
+                        }
+                else
+                        return; // completion routine will call WdfRequestComplete...
+
+                } // end simple case
+
+
+
+        // Complicated looping case
+
+        else { // AvailableSize > MaxSize
+
+                TracePrint(( "SrUsbXchEvtIoRead complex case where desired size %u > max size %u\n", AvailableSize, MaxSize ));
+
+                Status = STATUS_INVALID_PARAMETER;
+                TracePrint(( "SrUsbXchEvtIoRead failed complex case 0x%X\n", Status ));
+                WdfRequestCompleteWithInformation( Request, Status, 0L );
+                return;
+                }
+}
+
+#endif // CONVERTING_IOREAD_TO_ASYNCH
+
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtRequestReadCompletionRoutine
+// PURPOSE: This function completes bulk read requests.
+// OTHER:   IRQL = PASSIVE ??, Context = Arbitrary
+//------------------------------------------------------------------------------
+void SrUsbXchEvtRequestReadCompletionRoutine( WDFREQUEST  Request,
+                                              WDFIOTARGET Target,
+                                              WDF_REQUEST_COMPLETION_PARAMS *CompletionParams,
+                                              WDFCONTEXT  Context
+                                               ) {
+
+        NTSTATUS                           Status;
+        size_t                             BytesRead;
+        WDF_USB_REQUEST_COMPLETION_PARAMS *UsbCompletionParams;
+
+        UNREFERENCED_PARAMETER( Target );
+        UNREFERENCED_PARAMETER( Context );
+
+        TracePrint(("SrUsbXchEvtRequestReadCompletionRoutine entered\n" ));
+
+        Status              = CompletionParams->IoStatus.Status;
+        UsbCompletionParams = CompletionParams->Parameters.Usb.Completion;
+        BytesRead           = UsbCompletionParams->Parameters.PipeRead.Length;
+
+        if ( NT_SUCCESS( Status ) ) {
+                TracePrint(("SrUsbXchEvtRequestReadCompletionRoutine read %I64d bytes\n", (INT64)BytesRead ));
+                }
+        else {
+                TracePrint(("SrUsbXchEvtRequestReadCompletionRoutine failed status 0x%X, UsbdStatus 0x%X\n", Status, UsbCompletionParams->UsbdStatus ));
+                }
+
+
+        WdfRequestCompleteWithInformation( Request, Status, BytesRead );
+
+        return;
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchEvtIoStop
+// PURPOSE: This function is invoked on all queued requests when the device is
+//          suspended or removed.  Must acknowledge, complete, or requeue the
+//          requests or the framework will wait before allowing the device
+//          suspend or remove to proceeed. When the underlying USB stack gets the
+//          request to suspend or remove, it will fail all the pending requests.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchEvtIoStop( WDFQUEUE Queue, WDFREQUEST Request, ULONG ActionFlags ) {
+
+        UNREFERENCED_PARAMETER( Queue );
+
+//FIX - copied from OSR driver, do we need this?
+
+        if ( ActionFlags == WdfRequestStopActionSuspend ) {
+                WdfRequestStopAcknowledge( Request, FALSE ); // Don't requeue
+                }
+        else if ( ActionFlags == WdfRequestStopActionPurge ) {
+                WdfRequestCancelSentRequest( Request );
+                }
+        return;
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchPrintDeviceDesc
+// PURPOSE: This function displays the device descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchPrintDeviceDesc( USB_DEVICE_DESCRIPTOR *Desc ) {
+
+    if (!Desc)
+        return;
+
+    TracePrint(( "Device Descriptor:\n"));
+    TracePrint(( "  Length            %u\n", Desc->bLength ));
+    TracePrint(( "  DescriptorType    %u (%s)\n", Desc->bDescriptorType, SrUsbXchPrintDescType(Desc->bDescriptorType) ));
+    TracePrint(( "  bcdUSB            0x%X (%d)\n", Desc->bcdUSB, Desc->bcdUSB ));
+    TracePrint(( "  DeviceClass       %u\n", Desc->bDeviceClass ));
+    TracePrint(( "  DeviceSubClass    %u\n", Desc->bDeviceSubClass ));
+    TracePrint(( "  DeviceProtocol    %u\n", Desc->bDeviceProtocol ));
+    TracePrint(( "  MaxPacketSize0    %u\n", Desc->bMaxPacketSize0 ));
+    TracePrint(( "  VendorId          0x%X (%d)\n", Desc->idVendor, Desc->idVendor ));
+    TracePrint(( "  ProductId         0x%X (%d)\n", Desc->idProduct, Desc->idProduct ));
+    TracePrint(( "  bcdDevice         0x%X (%d)\n", Desc->bcdDevice, Desc->bcdDevice ));
+    TracePrint(( "  Manufacturer      %u\n", Desc->iManufacturer ));
+    TracePrint(( "  Product           %u\n", Desc->iProduct ));
+    TracePrint(( "  SerialNumber      %u\n", Desc->iSerialNumber ));
+    TracePrint(( "  NumConfigurations %u\n", Desc->bNumConfigurations ));
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchPrintConfigDesc
+// PURPOSE: This function displays the configuration descriptor.
+// OTHER:   IRQL = PASSIVE ??, Context = ??
+//------------------------------------------------------------------------------
+void SrUsbXchPrintConfigDesc( USB_CONFIGURATION_DESCRIPTOR *Desc ) {
+
+    if (!Desc)
+        return;
+
+    TracePrint(( "Config Descriptor:\n"));
+    TracePrint(( "  bLength:             0x%X (%d)\n", Desc->bLength, Desc->bLength ));
+    TracePrint(( "  bDescriptorType:     0x%X (%d)\n", Desc->bDescriptorType, Desc->bDescriptorType ));
+    TracePrint(( "  wTotalLength:        0x%X (%d)\n", Desc->wTotalLength, Desc->wTotalLength ));
+    TracePrint(( "  bNumInterfaces:      %d\n",        Desc->bNumInterfaces ));
+    TracePrint(( "  bConfigurationValue: %d\n",        Desc->bConfigurationValue ));
+    TracePrint(( "  iConfiguration:      %d\n",        Desc->iConfiguration ));
+    TracePrint(( "  bmAttributes:        0x%X\n",      Desc->bmAttributes ));
+    TracePrint(( "  MaxPower:            0x%X (%d)\n", Desc->MaxPower, Desc->MaxPower ));
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchDumpConfigDesc
+// PURPOSE: This function prints out a hex dump of the entire configuration
+//          descriptor including all the interfaces and endpoints.
+//------------------------------------------------------------------------------
+void SrUsbXchDumpConfigDesc( USB_CONFIGURATION_DESCRIPTOR *Desc ) {
+
+        int i, j, ipos;
+        char *pc;
+        char buffer[256], next[10];
+
+        if (!Desc)  return;
+
+
+        TracePrint(("----------------------------------------\n"));
+
+        j  = 0;
+        pc = (char*)Desc;
+
+        buffer[0]='/0';
+        ipos     = 0;
+        next[0]  = '0';
+        next[1]  = '1';
+        next[2]  = '2';
+
+        for ( i = 0 ; i < Desc->wTotalLength ; i++ ) {
+//FIX                sprintf( next, "%02X ", (*pc&0x00FF) );
+                buffer[ipos+0] = next[0];
+                buffer[ipos+1] = next[1];
+                buffer[ipos+2] = next[2];
+                buffer[ipos+3] = '/0';
+                ipos += 3;
+                pc++;
+                j++;
+                if (j > 19) {
+                        TracePrint(("%s\n",buffer));
+                        j = 0;
+                        }
+                }
+
+        TracePrint(("\n----------------------------------------\n"));
+
+}
+
+//------------------------------------------------------------------------------
+// ROUTINE: SrUsbXchPrintDescType
+// PURPOSE: Takes the descriptor type constant passed in and returns a
+//          corresponding string for debugging purposes.
+// OTHER:   IRQL = Any, Context = Any
+//------------------------------------------------------------------------------
+const char *SrUsbXchPrintDescType( int Type ) {
+
+    switch (Type) {
+
+        case USB_DEVICE_DESCRIPTOR_TYPE:
+            return( "DEVICE" );
+
+        case USB_CONFIGURATION_DESCRIPTOR_TYPE:
+            return( "CONFIG" );
+
+        case USB_STRING_DESCRIPTOR_TYPE:
+            return( "STRING" );
+
+        case USB_INTERFACE_DESCRIPTOR_TYPE:
+            return( "INTERFACE" );
+
+        case USB_ENDPOINT_DESCRIPTOR_TYPE:
+            return( "ENDPOINT" );
+
+
+        default:
+            break;
+    }
+
+    return( "UNKNOWN" );
+}

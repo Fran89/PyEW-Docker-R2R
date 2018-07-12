@@ -1,0 +1,421 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Hyp71_mgr commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Hyp71_mgr Configuration File Commands</H1>
+<I>(last revised July 12, 2011)</I></CENTER>
+
+
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#cmdline>Hyp71_mgr command line arguments</A><BR>
+3.  <A HREF=#function>Functional command listing</A><BR>
+4.  <A HREF=#alphabet>Alphabetic command listing & description</A>
+<hr>
+For extended documentation on Hypo71PC, please refer to original documentation (which can be found <A HREF=#http://jclahr.com/science/software/hypo71>on this web page</A>).
+<HR>
+
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+#                    hyp71_mgr's Configuration File
+#
+MyModuleId MOD_EQPROC_TEST   # Label outgoing messages with this module id.
+                        # This program is part of a mega-module which is
+                        # started by eqproc or eqprelim.  All child
+                        # processes of eqproc/eqprelim should use the
+                        # same module id.
+
+RingName   HYPO_RING    # Write output to this transport ring
+
+LogFile    2            # 0=no log; 1=errors; 2=errors & hypocenters
+
+SourceCode T            # Label summary cards with this character to
+                        # identify them as coming from Earthworm
+
+#HYPO71PC path - REQUIRED
+#If the path is correctly set up, only the name of the binary is necessary
+#Otherwise, provides the full path to the executable
+HYPO71PC_bin "HYPO71PC"
+
+#Station list - REQUIRED
+site_file "hypo_sta.list"
+
+#Velocity model - REQUIRED (at least one layer)
+#Same syntax and usage as in binder
+#@binder_model.d
+lay   0.0     3.5
+lay   3.0     6.0
+lay   15.0    7.00
+lay   30.0    8.00
+
+#P/S velocity ratio - OPTIONNAl (default = 1.78)
+psratio 1.76		# Default 1.78
+
+#Hypo71PC Test parameters (MAX 15) - OPTIONNAL
+#See Hypo71 Manual for explanations
+Test 02  50
+Test 03  0.2
+Test 04  0.010
+Test 05  5
+Test 07  -0.87
+Test 08  2.00
+Test 09  0.0035
+Test 10  5
+Test 11  999.0
+
+#Hypo71PC "distance taper" parameter (control card) - OPTIONNAL
+Xnear	200		# Default 200km - distance at which weight begins to decrease
+Xfar	450		# Default 450km - distance at which weight is null
+
+#Hypo71PC trial focal depth (control card) - OPTIONNAL
+#List of trial depths (MAX 15) to search before the final run
+#Setting this will result in several runs, each time changing the trial depth
+#And a final run with trial depth and a-priori location been the depth and location
+#Corresponding to the lowest RMS and lowest sqrt(ERH*ERH+ERZ*ERZ) (ie most stable solution)
+#If only one value is set, only one run is performed
+TrialDepth 	50	# Default, only one run, 50km trial focal depth
+
+#Directory to archive HYPO71PC.INP input files and hypo71PC sreen output
+#May be usefull for debugging - OPTIONNAL
+#Directory must be created manually
+#ArchiveDirectory "hypo71_output"	# Default none, no archiving
+
+#Localmag file to compute local magnitude - OPTIONNAL
+#If not set, the magnitude is the duration magnitude computed by Hypo71PC based on coda duration
+#If set, localmag magnitude is computed using "standalone" mode of localmag, and the configured localmag.d.
+#If localmag doesn't find any local magnitude, duration magnitude is set on the output
+#Example localmag .d file is included
+#LocalmagFile "localmag.d"
+
+#Turning Debug messages on - OPTIONNAL
+#Debug 1
+
+#Test with this hypo2000arc file (turns TestMode on) - OPTIONNAL
+#TestMode runs the module reading an hypo2000_arc message in the file Hypo2000_Test_File and exits
+#There are no interactions with any RingBuffers, either on input or output
+#Everything else behaves normally
+#Hypo2000_Test_File "hypo2000_test_1"
+</PRE>
+<P>
+<A NAME="cmdline">
+<H2>2.  HYP71_MGR COMMAND LINE ARGUMENTS</H2>
+An example command line to start hyp71_mgr may look like this:
+<PRE>	hyp71_mgr hyp71_mgr.d < ncal.hyp
+	argv[0]  argv[1]    <  argv[2]
+</PRE>
+<UL>
+<LI>argv[0] is the name of the executable.
+<P>
+<LI>argv[1] is the name of hyp71_mgr's own configuration file which it reads on
+startup.  In this file, lines may begin with a valid hypo_mgr command,
+described later in this document, or with one of 2 special characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<LI>argv[2] is the name of a file containing an arc2000 type message.  hyp71_mgr parses
+this file and launch Hypo71, before parsing its results and outputing the earthquake location.
+</UL>
+
+<A NAME="function">
+<H2>3.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by hypo_mgr, grouped by the function they
+influence.  All of the commands are required; they must be specified in the
+configuration file in order for hypo_mgr to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>	Earthworm system setup:
+ 		<A HREF=#MyModuleId>MyModuleId</A>		required
+		<A HREF=#RingName>RingName</A>		required
+
+	Output Control:
+		<A HREF=#LogFile>LogFile</A>			required
+		<A HREF=#Debug>Debug</A>
+		<A HREF=#ArchiveDirectory>ArchiveDirectory</A>
+
+	Hypo71 Control:
+		<A HREF=#HYPO71PC_bin>HYPO71PC_bin</A>		required
+		<A HREF=#Test>Test</A>
+		<A HREF=#Xnear>Xnear</A>
+		<A HREF=#Xfar>Xfar</A>
+		<A HREF=#TrialDepth>TrialDepth</A>
+
+	Seismic network/model definition:
+		<A HREF=#lay>lay</A>			required
+		<A HREF=#psratio>psratio</A>
+		<A HREF=#site_file>site_file</A>		required
+
+	Miscellaneous:
+		<A HREF=#SourceCode>SourceCode</A>		required
+		<A HREF=#LocalmagFile>LocalmagFile</A>
+		<A HREF=#Hypo2000_Test_File>Hypo2000_Test_File</A>
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>4.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="ArchiveDirectory">  <!-- command name as anchor inside quotes -->
+<PRE><B>ArchiveDirectory <font color=red>path</font>				hyp71_mgr		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If set, the <font color=red>path</font> points to the directory where input and output Hypo71 files will be saved for every EQ processed.<BR>
+This may be usefull to tweak the parameters and check hyp71_mgr behaviour.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Debug">  <!-- command name as anchor inside quotes -->
+<PRE><B>Debug <font color=red>debug</font>				hyp71_mgr		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If <font color=red>debug</font> is set to one, then extra debug informations are printed by hyp71_mgr.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Hypo2000_Test_File">  <!-- command name as anchor inside quotes -->
+<PRE><B>Hypo2000_Test_File <font color=red>filename</font>				hyp71_mgr		miscellaneous</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If set, hyp71_mgr will read <font color=red>filename</font> as input message, process it and end.<BR>
+This is used only in debug mode when running hyp71_mgr in command line mode. The <font color=red>filename</font> should contain a valid arc2000 message.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HYPO71PC_bin">  <!-- command name as anchor inside quotes -->
+<PRE><B>HYPO71PC_bin <font color=red>binary</font>				hyp71_mgr		Hypo71</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+After parsing the arc2000 input messages, hyp71_mgr calls <font color=red>binary</font> to process the event.
+This should be the Hypo71PC binary name.
+If the path is correctly set up, only the name of the binary is necessary, otherwise, provide the full path to the executable.
+<PRE><!-- Default and example go here   -->
+Default:  Hypo71PC (included in the distribution)
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<a name="lay"></a>
+<pre><a name="lay"><b>lay <font color="red">depth velocity</font></b>			t_com			model</a></pre>
+<blockquote> <a name="lay">Defines the layered velocity structure to
+be used for
+calculating travel times. <font color="red">depth</font> is the
+distance (km) to the top of the layer, and <font color="red">velocity</font>
+is the seismic P-wave velocity (km/sec) within that layer. No default
+velocity structure is defined; therefore, the user must always supply
+one in the control file. Up to 20 layers can be specified, and they
+should be listed in order of increasing depth. </a>
+  <pre><a name="lay">Default:  none				OVSM  :  lay   0.0  3.5<br>						 lay   3.0  6.0<br>						 lay  15.0  7.0<br> 						 lay  30.0  8.0<br></a></pre>
+</blockquote>
+<HR>
+
+<A NAME="LocalmagFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LocalmagFile <font color=red>filename</font>				hyp71_mgr		miscellaneous</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the <font color=red>filename</font> of the localmag config file to be used.
+Setting this variables allows hyp71_mgr to call for localmag to compute local magnitude and include it in the arc2000 output message.
+If not set, no local magnitude is computed and only the duration magnitude is computed.
+<PRE><!-- Default and example go here   -->
+Default:  none				OVSM:	LocalmagFile	localmag.d
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				hyp71_mgr		output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is non-zero, hyp71_mgr
+will write daily log file(s) called hypo_mgrxx.log_yymmdd where xx is
+hyp71_mgr's module id (set with "MyModuleId" command) and yymmdd is the
+current UTC date (ex: 960123) on the system clock.  The file(s) will
+be written in the EW_LOG directory (environment variable).  The level
+of output written to the file is controlled by the value of <font color=red>switch</font>:
+<PRE>    <font color=red>switch</font> = 0  no log file is written
+             1  write errors to log file
+             2  write errors and hypocenters to log file
+</PRE>
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			hyp71_mgr		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.<BR>
+<B>NOTE:</B> hyp71_mgr is part of a mega-module which is ultimately started
+by the program eqproc.  All sub-modules of this megamodule should be
+given the same module id.
+<PRE><!-- Default and example go here   -->
+Default:  none				OVSM:  MyModuleId MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<a name="psratio"></a>
+<pre><a name="psratio"><b>psratio <font color="red">value</font></b>				t_com			model</a></pre>
+<blockquote> <a name="psratio">Sets the value of the P/S seismic
+velocity ratio. </a>
+  <pre><a name="psratio">Default:  psratio  1.78			OVSM:	 psratio  1.78<br></a></pre>
+</blockquote>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				hyp71_mgr		Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells hypo_mgr which shared memory region to use for output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				OVSM:  RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<a name="site_file"></a>
+<pre><a name="site_file"><b>site_file <font color="red">filename</font></b>			site_com		model</a></pre>
+<blockquote> <a name="site_file">Enters site codes and station
+locations (<B>up to 250</B>) into the
+site table by reading
+a HYPOINVERSE format station file called <font color="red">filename</font>.
+In this file,
+stations are described by a 5-letter site name, a 2-letter network
+code and a 3-letter component code. The picker must also be using this
+station-naming convention. The format of the file is described under </a><a
+ href="../USER_GUIDE/hypoinv_sta.html">"HYPOINVERSE STATION FILE FOR
+FULL 12-LETTER (S-N-C-L) CHANNEL NAMES"</a>. Use either one "site_file"
+command or
+multiple "site" commands to load the station list into binder_ew.
+</blockquote>
+<HR>
+
+<A NAME="SourceCode">  <!-- command name as anchor inside quotes -->
+<PRE><B>SourceCode <font color=red>label</font>			hyp71_mgr		miscellaneous</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Reads in a single character <font color=red>label</font> to write in column 80 of the
+hypo71-format summary messages output by hyp71_mgr.  This <font color=red>label</font>
+identifies the source of the hypocenter as the Earthworm system.
+These summary messages are placed on the output shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				OVSM:	SourceCode W
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Test">  <!-- command name as anchor inside quotes -->
+<PRE><B>Test <font color=red>number value</font>				hyp71_mgr		Hypo71</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Allows to override default Hypo71 parameters.<BR><BR>
+Two TEST values have been added by Alexandre Nercessian (IPGP - France) from original Hypo71PC :<BR>
+	- TEST(15) is the maximum altitude to expect earthquake in km (negative number);<BR>
+	- TEST(20) is the coefficient by which Hypo71PC multiply altitude readings to obtain then in meter.<BR><BR>
+RESET TEST(15)=-2	-> no earthquakes are expected above 2km above sea level.<BR>
+RESET TEST(20)=1	-> altitude readings are in meters.<BR>
+RESET TEST(20)=10	-> altitude readings are in 10'th of meters. This allow to have sea bottom station (altitude of -245 is a seismometer at 2450m below sea level).<BR><BR>
+<B>Test <font color=red>number value</font></B> is translated in <B>RESET TEST(<font color=red>number</font>)=<font color=red>value</font></B> in the Hypo71 input file.
+<PRE><!-- Default and example go here   -->
+Default:  none				OVSM:	Test 02  50<BR>						Test 03  0.2<BR>						Test 04  0.010<BR>						Test 05  5<BR>						Test 07  -0.87<BR>						Test 08  2.00<BR>						Test 09  0.0035<BR>						Test 10  5<BR>						Test 11  999.0<BR>
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="TrialDepth">  <!-- command name as anchor inside quotes -->
+<PRE><B>TrialDepth <font color=red>depth</font>				hyp71_mgr		Hypo71</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+List the different (if needed) trial depth for hyp71_mgr depth search iterations.<BR>
+For each <B>TrialDepth <font color=red>depth</font></B> entry, hyp71_mgr will call for Hypo71. Then it will compare the differents result and choose the one with lowest RMS and lowest ERH and ERZ. Finally, it will call Hypo71 with TrialDepth set to the best found.<BR>
+If only one value is passed, then only one Hypo71 call is made.
+<PRE><!-- Default and example go here   -->
+Default:  50				OVSM:	TrialDepth	50<BR>						TrialDepth	100<BR>						TrialDepth	150<BR>						TrialDepth	200<BR>
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Xfar">  <!-- command name as anchor inside quotes -->
+<PRE><B>Xfar <font color=red>distance</font>				hyp71_mgr		Hypo71</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the distance taper end.<BR>
+At <font color=red>distance</font> km from the epicenter, the station weigh is 0, meaning the phase reading doesn't count in the location process.
+<PRE><!-- Default and example go here   -->
+Default:  450				OVSM:	Xfar	450
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Xnear">  <!-- command name as anchor inside quotes -->
+<PRE><B>Xnear <font color=red>distance</font>				hyp71_mgr		Hypo71</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the distance taper begin.<BR>
+At <font color=red>distance</font> km from the epicenter, the station weigh is 1, meaning the phase reading are not altered.<BR>
+Until Xfar, a linear taper is applied on the phase weights.
+<PRE><!-- Default and example go here   -->
+Default:  200				OVSM:	Xnear	200
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/hyp71_mgr_ovr.html">Hyp71_mgr Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,113 @@
+
+CFLAGS = -c -D_REENTRANT $(GLOBALFLAGS) -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = \
+	ahputaway.c \
+	brent.c \
+	butterworth.c \
+	chron3.c \
+	complex_math.c \
+	convertInstResponse.c \
+	earthworm_defs.c \
+	ew_nevent_message.c \
+	ew_spectra_io.c \
+	fft_prep.c \
+	fft99.c \
+	fleng.c \
+	geo_to_km.c \
+	getutil.c \
+	global_amp_rw.c \
+	global_loc_rw.c \
+	global_msg.c \
+	global_pick_rw.c \
+	gma.c \
+	gseputaway.c \
+	ioc_filter.c \
+	k2evt2ew.c \
+	kom.c \
+	lockfile.c \
+	logit.c \
+	make_triglist.c\
+	mask_check.c\
+	mem_circ_queue.c\
+	mnbrak.c \
+        mseedputaway.c\
+	neic2scn.c \
+	parse_trig.c \
+	parse_usnsn.c \
+	priority_queue.c \
+	putaway.c \
+	rayloc_message_rw.c \
+	rdpickcoda.c \
+	read_arc.c \
+	residue.c \
+	rw_coda_aav.c \
+	rw_mag.c \
+	rw_strongmotion.c \
+	rw_strongmotionII.c \
+	sacputaway.c \
+	seiputaway.c \
+	seiutils.c \
+	site.c \
+	socket_ew_common.c \
+    sqlite3.c \
+	startstop_lib.c \
+	startstop_unix_generic.c \
+	sudsputaway.c \
+	swap.c \
+	tankputaway.c \
+	tlay.c \
+	transfer.c \
+	transferFunction.c \
+	trheadconv.c \
+	uwputaway.c \
+	watchdog_client.c \
+	wave_client.c \
+	wfdiscputaway.c \
+	ws_clientII.c \
+	ws_clientIIx.c \
+	ws_clientII_no_location.c \
+	ws2ts.c \
+	xfrm.c \
+	nordic.c
+
+SOLARIS_SOURCES = $(SRCS) \
+	glevt_2_ewevent.c
+LINUX_SOURCES = $(SRCS)
+SPECIFIC_SRCS = $($(PLATFORM)_SOURCES)
+
+OBJS = $(SPECIFIC_SRCS:%.c=%.o) logit_mt.o
+
+all: $(OBJS) gd_lib libmseed
+
+logit_mt.o: logit.c
+	$(CC) -o logit_mt.o $(CFLAGS) -D_LOGITMT logit.c
+	cp $@ $L
+
+.c.o:
+	$(CC) -g -c $(CFLAGS) $<
+	cp $@ $L
+
+gd_lib::
+	(cd gd_lib; make -f makefile.unix)
+
+libmseed::
+	(cd libmseed; make -f makefile.unix ; make -f makefile.unix install)
+
+lint:
+	lint $(SPECIFIC_SRCS) $(GLOBALFLAGS)
+
+clean: 
+	/bin/rm -f a.out core *.o *.obj *% *~
+	(cd gd_lib; make -f makefile.unix clean)
+	(rm -f ../../../lib/libmseed.a;cd libmseed; make -f makefile.unix clean)
+
+realclean: clean
+	sh -c 'for o in $(OBJS) ;\
+	do /bin/rm -f $L/$$o;\
+	done'
+

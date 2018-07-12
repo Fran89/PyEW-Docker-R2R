@@ -1,0 +1,81 @@
+
+From lombard@geophys.washington.edu Wed Jun  3 17:09:40 1998
+Date: Wed, 20 May 1998 15:11:10 -0700 (PDT)
+From: Peter Lombard <lombard@geophys.washington.edu>
+Subject: Re: pin number SIG
+
+Greetings, fellow earthworms!
+
+Here's an attempt to summarize and condense our discussion to date. It is
+quite possible I have missed some messages that were sent to Alex. Honk if you
+feel mis-quoted!
+
+There are (at least) two levels that this issue of pin numbers need to be
+addressed. One is the network operators level: what information do you need to
+keep track of seismic trace data to get back to ground motion? Another level
+is the programmer: what code changes do we need in order to handle trace data
+in earthworm (and other) modules? Clearly the programmers are supposed to
+provide whatever tools the network operators need to do their job. But we
+programming grunts plead for mercy: don't make us change too much stuff, 'cuz
+we probably will break it. (I suspect there is no clearly dividing line
+between network operators and programmers, but that's another matter.)
+
+The first big question seems to be: do we need pin numbers to identify trace
+data IN ADDITION to the current station-component-network (SCN) convention?
+Mitch Withers presents a clear situation where there are data paths from one
+seismometer to two processing centers, CERI and St Louis. Apparently these two
+sites use the same network code. Could you use additional characters in the
+component field to differentiate these data paths? (The TRACE_BUF header has
+room for 6 letters in the station name, 8 in the component and network
+fields.) 
+
+This would be consistent with the CSS database, where SCN plus date and time
+uniquely identify the source of the seismic data, including geographics
+location, spatial orientation, sensor and subsequent data processing. On the
+other hand IRIS SEED format considers `station' to specify a 1-km cube in
+which many instruments could be located. `Location code' is SEED's fourth
+identification component (after SCN) to narrow the location within the 1-km
+cube.
+
+If pin number is needed in addition to SCN, then we have a lot of earthworm
+code to change. Where pin numbers are currently used, they are an alternative
+to SCN. Since we have not considered the implcations of this yet, I will
+assume for the rest of this summary that the pin number field will not be
+added to SCN (becoming SCND?) Mitch and others: convince us if you can.
+
+The next question is, do we allow/require pin numbers to be used in place of
+SCN, sort of a `nickname'?
+
+Network operators can assign whatever meaning they want to these pin
+numbers. If you have a big digitizer terminal board, they may be real `pin'
+numbers. Remote digital instruments could have numbers assigned in addition to
+(or instead of, in the case of strong motion instruments) SCNs. Since
+earthworm currently doesn't know much about instrument reponse and ground
+motion, the details of how pin number and SCN relate to the complete datapath
+are handled locally.
+
+Pin numbers are nicer database keys than the strings that make up SCNs.
+However, these numbers don't have any intrinsic meaning if they aren't tied to
+some physical quantity. As the Datscope manual points out, if the pin numbers
+(`id fields') are ever modified inappropriately, it will be difficult or
+impossible to recover.
+
+I think there is concensus that pin numbers in this scheme are local to each
+network. When TRACE_BUF packets cross network boundaries, the pin numbers need
+to be changed to the new network's system (in a new `import_scn' module?)
+Also, there needs to be an agreed-upon NULL value when no pin number can be
+assigned. Candidate values that are convenient for DBMSs may be considered,
+but since we haven't settled on one database for earthworm, we won't quarantee
+to pick the right NULL value.
+
+Every wave_trace source module would need to be able to write pin numbers in
+the TRACE_BUF header. It would be convenient if we put pin nmbers back into
+pick_ew's station file as it was prior to v3.1. Pick_ew could ignore these pin
+numbers since it now has an efficient way to look up SCNs (but its
+station-file reader would need to be modified.)
+
+
+Ok, I've said enough. (too much?) Any thoughts?
+
+
+Pete Lombard

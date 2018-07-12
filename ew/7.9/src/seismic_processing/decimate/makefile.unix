@@ -1,0 +1,56 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -O ${GLOBALFLAGS}
+FFLAGS = 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = decimate.o \
+       configure.o \
+       decthrd.o \
+       do1stg.o \
+       filtdecim.o \
+       hqr.o \
+       initpars.o \
+       matchscn.o \
+       readcnfg.o \
+       readewh.o \
+       remeznp.o \
+       resetsta.o \
+       setdecstg.o \
+       setstafilt.o \
+       statrpt.o \
+       zeroes.o \
+       $L/swap.o \
+       $L/mem_circ_queue.o \
+       $L/libew_mt.a \
+       $L/trheadconv.o
+
+
+decimate: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/decimate $(OBJS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint decimate.c configure.c decthrd.c do1stg.c filtdecim.c \
+			hqr.c initpars.c matchscn.c readcnfg.c readewh.c remeznp.c \
+			resetsta.c setdecstg.c setstafilt.c statrpt.c zeroes.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/decimate*
+
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+

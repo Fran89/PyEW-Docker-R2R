@@ -1,0 +1,16 @@
+
+DELIMITER $$
+DROP FUNCTION IF EXISTS `fn_get_moledb_release_date`$$
+CREATE  DEFINER = CURRENT_USER  FUNCTION `fn_get_moledb_release_date`(
+) RETURNS VARCHAR(18) NOT DETERMINISTIC
+BEGIN
+
+  DECLARE RET    VARCHAR(18) DEFAULT '';
+
+  SELECT CAST(release_date AS CHAR) INTO RET FROM version;
+
+  RETURN RET;
+
+END$$
+DELIMITER ;
+

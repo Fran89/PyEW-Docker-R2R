@@ -1,0 +1,97 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.sol,v 1.12 2002/06/28 21:06:22 lucky Exp $
+#
+#    Revision history:
+#     $Log: makefile.sol,v $
+#     Revision 1.12  2002/06/28 21:06:22  lucky
+#     Lucky's pre-departure checkin. Most changes probably had to do with bug fixes
+#     in connection with the GIOC scaffold.
+#
+#     Revision 1.11  2001/05/16 17:11:29  lucky
+#     Fixed to work with the new naming scheme; also moved under the oracle
+#     source tree because this module uses converted routines which rely on the
+#     mondo database event structure (EW_Event).
+#
+#     Revision 1.10  2001/02/01 01:42:07  dietz
+#     *** empty log message ***
+#
+#     Revision 1.9  2000/12/18 19:15:50  lucky
+#     changed names from DBEvent to FullEvent
+#
+#     Revision 1.8  2000/08/29 18:27:14  lucky
+#     Added InitDBEvent
+#
+#     Revision 1.7  2000/08/16 17:43:23  lucky
+#     fixed the makefile to include all necessary stuff to manipulate the SAC files.
+#
+#     Revision 1.6  2000/08/15 19:00:53  lucky
+#     Included separate files to convert from DBEvent to Sac and Arc msgs
+#
+#     Revision 1.5  2000/08/08 18:00:30  lucky
+#     Added lint directive
+#
+#     Revision 1.4  2000/06/07 22:39:23  lucky
+#     Added read_arc and chron3 which are needed in DBEventSacArc.
+#
+#     Revision 1.3  2000/05/02 15:41:19  lucky
+#     Major rewrite - using DBEventSacArc for the routines to translate
+#     between Sac and DBstructs, and then from DBstructs to ARC messages.
+#     readsac stuff is no longer used.
+#
+#     Revision 1.2  2000/03/29 20:58:23  lucky
+#     added include directive to schema1
+#
+#     Revision 1.1  2000/02/14 19:13:13  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#
+#
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} -I.
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+APPS_LIB = $(APPS_DIR)/lib
+
+OBJ = sac2hypo.o \
+      $(L)/chron3.o \
+     arc_2_ewevent.o \
+     sac_2_ewevent.o \
+     init_ewevent.o \
+      $(L)/sacputaway.o \
+      $(L)/swap.o \
+      $(L)/geo_to_km.o \
+      $(L)/dirops_ew.o \
+      $(L)/logit_mt.o \
+      $(L)/getutil.o \
+      $(L)/kom.o \
+      $(L)/sleep_ew.o \
+      $(L)/time_ew.o \
+      $(L)/read_arc.o \
+      $(L)/socket_ew.o \
+      $(L)/socket_ew_common.o \
+      $(L)/sema_ew.o 
+
+
+
+sac2hypo: $(OBJ); \
+        cc $(GLOBALFLAGS) -o $(B)/sac2hypo $(OBJ) 
+
+lint:
+	lint sac2hypo.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/sac2hypo*
+

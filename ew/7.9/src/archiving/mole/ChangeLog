@@ -1,0 +1,1938 @@
+2013-08-22 08:41
+
+	* Mole:
+
+	   An open near real-time database-centric Earthworm subsystem.
+	   Matteo Quintiliani and Stefano Pintore
+	   Istituto Nazionale di Geofisica e Vulcanologia - Italy
+	   Mail bug reports and suggestions to <quintiliani@ingv.it> 
+
+2013-08-14 21:28  quintiliani
+
+	* [r5822] moleface/conf.ini, moleface/index.php: Minor change
+
+2013-08-14 14:46  quintiliani
+
+	* [r5801] ChangeLog, HISTORY, VERSION, moledb/data/mole/version.sql,
+	  moledb/tables/ew_sqkseq.sql, moledb/triggers/tr_ew_quake2k_a_i.sql,
+	  moleface/moleface_version.php,
+	  moleface/tables/ew_error/fields.ini[ADD],
+	  moleface/tables/ew_hypocenters_summary/fields.ini: Updated Mole
+	  release 1.2
+
+2013-08-13 13:18  quintiliani
+
+	* [r5791] ChangeLog, README, moleface/index.php,
+	  moleface/tables/ew_error[ADD],
+	  moleface/tables/ew_hypocenters_summary/fields.ini,
+	  moleface/tables/ew_pick_scnl[ADD],
+	  moleface/tables/ew_pick_scnl/fields.ini[ADD],
+	  moleface/tables/ew_quake2k[ADD],
+	  moleface/tables/ew_quake2k/fields.ini[ADD],
+	  moleface/tables/ew_scnl[ADD], moleface/tables/ew_scnl/fields.ini[ADD]:
+	  Upgraded to xataface 2.0.1
+
+2013-08-13 12:03  quintiliani
+
+	* [r5790] README: Added a comment about test moledb dumps
+
+2013-08-13 09:29  quintiliani
+
+	* [r5789] ChangeLog, HISTORY, README, VERSION,
+	  moledb/conf/db_scripts.conf, moledb/data/moleface[ADD],
+	  moledb/data/moleface/datafaceew_users.sql[ADD],
+	  moledb/tables/moleface[ADD],
+	  moledb/tables/moleface/datafaceew_users.sql[ADD], moleface/conf.ini,
+	  moleface/misc[DEL], moleface/moleface_version.php,
+	  moleface/tables/datafaceew_users[ADD],
+	  moleface/tables/datafaceew_users/fields.ini[ADD]: Updated Mole Release
+	  1.2
+
+2013-08-01 07:35  quintiliani
+
+	* [r5694] ChangeLog, HISTORY, VERSION, moledb/conf/db_scripts.conf,
+	  moledb/data/mole/version.sql,
+	  moledb/data/regions/ew_region_geom.sql[ADD],
+	  moledb/data/regions/ew_region_geom_dump_fast_insert.sql[ADD],
+	  moledb/data/regions/ew_region_geom_dump_fast_insert.txt[ADD],
+	  moledb/data/regions/ew_region_kind.sql[ADD],
+	  moledb/data/regions/regions.sql[DEL], moledb/fn/similarity[ADD],
+	  moledb/fn/similarity/fn_similarity_ew_arc_summary.sql[ADD],
+	  moledb/fn/similarity/fn_similarity_generic_hypocenters.sql[ADD],
+	  moledb/fn/similarity/query_similarity_mole.sql[ADD],
+	  moledb/init_mole.sh[DEL], moledb/tables/regions/ew_region_geom.sql,
+	  moleface/conf.ini, moleface/index.php, moleface/moleface_version.php,
+	  moleface/templates/Dataface_Logo.html, scripts/SVNAUTHORS[ADD],
+	  scripts/mole_svn2cl.sh[ADD]: Updated Mole Release 1.2-rc5
+
+2013-07-31 10:19  quintiliani
+
+	* [r5692]
+	  moleface/tables/ew_hypocenters_summary/ew_hypocenters_summary.php:
+	  Fixed minor bug: removed last blank lines because some PHP
+	  configuration can return the following message: 'PHP Warning: Cannot
+	  modify header information - headers already sent by ....'
+
+2013-07-30 12:04  quintiliani
+
+	* [r5691] ew2moledb/ew2moledb.c: just to compile without warning from
+	  thread function returning
+
+2013-07-30 10:19  quintiliani
+
+	* [r5690] moledb/grants/tpl_grants_group_cmplocations.sql,
+	  moledb/grants/tpl_grants_group_moleusers.sql,
+	  moledb/grants/tpl_grants_group_readers.sql,
+	  moledb/grants/tpl_grants_group_sismap.sql,
+	  moledb/grants/tpl_grants_group_sispick.sql, moledb/init_grants.sh:
+	  GRANT USAGE for current user added by script init_grants.sh and
+	  removed from template files
+
+2013-07-30 08:35  quintiliani
+
+	* [r5689] ew2moledb/ew2moledb.c: Renamed APIs *_SPECIFIC_SEMAPHORE with
+	  *_SPECIFIC_SEMAPHORE_EW
+
+2013-07-29 15:26  quintiliani
+
+	* [r5688] VERSION, ew2moledb/ew2moledb_version.h: Incremented ew2moledb
+	  version to 1.2.3
+
+2013-07-29 12:34  quintiliani
+
+	* [r5687] BUGS: Fixed ticket #254
+
+2013-07-29 10:32  quintiliani
+
+	* [r5685] ew2moledb/ew2moledb.c:
+	  Fixed ticket #254 (Specific Semaphores for Windows) and made uniform
+	  cross-platform development.
+	  
+	  Use SpecificSemaphore Uppercase APIs names in order to develop
+	  cross-platform application:
+	  - DECLARE_SPECIFIC_SEMAPHORE(semname)
+	  - CREATE_SPECIFIC_SEMAPHORE(semname, count)
+	  - POST_SPECIFIC_SEMAPHORE(semname)
+	  - WAIT_SPECIFIC_SEMAPHORE(semname)
+	  - DESTROY_SPECIFIC_SEMAPHORE(semname)
+
+2013-07-26 08:38  quintiliani
+
+	* [r5672] moleface/templates/Dataface_Logo.html: Reformatted moleface
+	  logo header
+
+2013-07-25 12:41  quintiliani
+
+	* [r5663] README: Updated Mole README file
+
+2013-07-25 11:54  quintiliani
+
+	* [r5662] README: Added comment in README about Dialect_MySQL.php
+
+2013-07-17 23:40  stefan
+
+	* [r5654] README: add comment about short_open_tag
+
+2013-07-16 13:18  quintiliani
+
+	* [r5648] README: Improved a little the Moleface Quick Installation
+	  within README file
+
+2013-07-16 12:57  quintiliani
+
+	* [r5647] README: Added Moleface Quick Installation within README file
+
+2013-07-16 12:44  quintiliani
+
+	* [r5646] moleface/conf.ini: General configuration for moleface
+
+2013-07-16 12:43  quintiliani
+
+	* [r5645] moleface/index.php: Minor change
+
+2013-07-10 17:17  paulf
+
+	* [r5627] ew2moledb/makefile.nt: got ew2moledb compiling on Windows
+
+2013-06-21 13:55  quintiliani
+
+	* [r5592] HISTORY, README, moledb/conf[ADD],
+	  moledb/conf/db_scripts.conf[ADD], moledb/conf/grants.conf[ADD],
+	  moledb/grant_pre.sql[ADD], moledb/grants/grant_post.sql[DEL],
+	  moledb/grants/grant_pre.sql[DEL], moledb/grants/sispick_sismap[DEL],
+	  moledb/grants/tpl_grants_group_cmplocations.sql[ADD],
+	  moledb/grants/tpl_grants_group_moleusers.sql[ADD],
+	  moledb/grants/tpl_grants_group_readers.sql[ADD],
+	  moledb/grants/tpl_grants_group_sismap.sql[ADD],
+	  moledb/grants/tpl_grants_group_sispick.sql[ADD],
+	  moledb/init_db.sh[ADD], moledb/init_grants.sh[ADD]: Update Mole
+	  release 1.2-rc4
+
+2013-06-10 15:06  quintiliani
+
+	* [r5557] moledb/fn/mole[ADD],
+	  moledb/fn/mole/fn_get_moledb_release_date.sql[ADD],
+	  moledb/fn/mole/fn_get_moledb_version.sql[ADD],
+	  moledb/fn/mole/fn_get_moledb_version_and_date.sql[ADD],
+	  moledb/init_mole.sh: added functions to query moledb version
+
+2013-06-10 14:31  quintiliani
+
+	* [r5556] HISTORY, VERSION[ADD], ew2moledb/ew2moledb_version.h,
+	  moledb/data/mole[ADD], moledb/data/mole/version.sql[ADD],
+	  moledb/sp/mole[ADD], moledb/sp/mole/sp_update_mole_version.sql[ADD],
+	  moledb/tables/mole[ADD], moledb/tables/mole/err_sp.sql[ADD],
+	  moledb/tables/mole/version.sql[ADD], moleface/conf.ini,
+	  moleface/moleface_version.php[ADD],
+	  moleface/tables/ew_hypocenters_summary/fields.ini,
+	  moleface/tables/ew_region_geom[ADD],
+	  moleface/tables/ew_region_geom/fields.ini[ADD],
+	  moleface/templates/Dataface_Fineprint.html, scripts[ADD],
+	  scripts/generate_version_files.sh[ADD]: Centralized versioning for
+	  moledb, ew2moledb and moleface
+	  and other minor changes
+
+2013-06-03 15:49  quintiliani
+
+	* [r5547] ew2moledb/ew2moledb_eb_hypotwc.c,
+	  moledb/sp/earlybird/sp_ins_eb_hypotwc.sql,
+	  moledb/tables/earlybird/eb_hypotwc.sql: Table eb_hypotwc contains all
+	  (and only) the fields from TYPE_HYPOTWC message.
+	  Coordinates dLat, dLon are converted from geocentric to geographic by
+	  the function GeoGraphic().
+
+2013-06-03 10:01  quintiliani
+
+	* [r5546] ew2moledb/ew2moledb.c, ew2moledb/ew2moledb_arc.c,
+	  ew2moledb/ew2moledb_eb_alarm.c, ew2moledb/ew2moledb_eb_hypotwc.c,
+	  ew2moledb/ew2moledb_eb_picktwc.c, ew2moledb/ew2moledb_error.c,
+	  ew2moledb/ew2moledb_heartbeat.c, ew2moledb/ew2moledb_magnitude.c,
+	  ew2moledb/ew2moledb_mysql.c, ew2moledb/ew2moledb_mysql.h,
+	  ew2moledb/ew2moledb_pickcoda.c, ew2moledb/ew2moledb_quakelink.c,
+	  ew2moledb/ew2moledb_strongmotionII.c, ew2moledb/ew2moledb_tracebuf.c:
+	  Fixed issue about snprintf string length
+
+2013-06-03 07:31  quintiliani
+
+	* [r5545] ew2moledb/ew2moledb_magnitude.c: Removed unuseful variables
+
+2013-06-03 07:30  quintiliani
+
+	* [r5544] ew2moledb/ew2moledb_eb_hypotwc.c,
+	  ew2moledb/ew2moledb_eb_picktwc.c,
+	  moledb/sp/earlybird/sp_ins_eb_hypotwc.sql,
+	  moledb/sp/earlybird/sp_ins_eb_picktwc.sql,
+	  moledb/tables/earlybird/eb_hypotwc.sql,
+	  moledb/tables/earlybird/eb_picktwc.sql: Substitute type of all
+	  variables containing epoches (seconds since 1970) from DOUBLE to
+	  DATETIME+INT(microseconds)
+
+2013-05-28 16:23  quintiliani
+
+	* [r5532] moledb/sp/sp_get_ew_super_hypocenter_out.sql[ADD],
+	  moledb/sp/sp_get_ew_super_pick_out.sql[ADD],
+	  moledb/tables/ew_super_hypocenter.sql[ADD],
+	  moledb/tables/ew_super_pick.sql[ADD]: Added tables
+	  ew_super_hypocenter, ew_super_pick and stored procedures
+	  sp_get_ew_super_hypocenter_out(), sp_get_ew_super_pick_out()
+
+2013-05-27 15:31  quintiliani
+
+	* [r5531] HISTORY, ew2moledb/ew2moledb.c, ew2moledb/ew2moledb.d,
+	  ew2moledb/ew2moledb_heartbeat.c[ADD],
+	  ew2moledb/ew2moledb_heartbeat.h[ADD], ew2moledb/makefile.unix,
+	  moledb/init_mole.sh, moledb/sp/sp_ins_ew_heartbeat.sql[ADD],
+	  moledb/tables/ew_heartbeat.sql[ADD]: Added TYPE_HEARTBEAT message
+
+2013-05-27 14:49  quintiliani
+
+	* [r5530] moledb/sp/earlybird[CPY],
+	  moledb/sp/earlybird/sp_ins_eb_alarm.sql[CPY],
+	  moledb/sp/earlybird/sp_ins_eb_hypotwc.sql[CPY],
+	  moledb/sp/earlybird/sp_ins_eb_picktwc.sql[CPY],
+	  moledb/sp/earlybirdlib[DEL], moledb/tables/earlybird[CPY],
+	  moledb/tables/earlybird/eb_alarm.sql[CPY],
+	  moledb/tables/earlybird/eb_hypotwc.sql[CPY],
+	  moledb/tables/earlybird/eb_picktwc.sql[CPY],
+	  moledb/tables/earlybirdlib[DEL]: Renamed subdirectories in earlybird
+
+2013-05-27 14:44  quintiliani
+
+	* [r5529] HISTORY, ew2moledb/ew2moledb.c, ew2moledb/ew2moledb.d,
+	  ew2moledb/ew2moledb_eb_alarm.c[ADD],
+	  ew2moledb/ew2moledb_eb_alarm.h[ADD], ew2moledb/ew2moledb_eb_hypotwc.c,
+	  ew2moledb/ew2moledb_eb_picktwc.c[ADD],
+	  ew2moledb/ew2moledb_eb_picktwc.h[ADD],
+	  ew2moledb/ew2moledb_version.h[ADD], ew2moledb/makefile.unix,
+	  moledb/sp/earlybirdlib/sp_ins_eb_alarm.sql[ADD],
+	  moledb/sp/earlybirdlib/sp_ins_eb_hypotwc.sql,
+	  moledb/sp/earlybirdlib/sp_ins_eb_picktwc.sql[ADD],
+	  moledb/tables/earlybirdlib/eb_alarm.sql[ADD],
+	  moledb/tables/earlybirdlib/eb_hypotwc.sql,
+	  moledb/tables/earlybirdlib/eb_picktwc.sql[ADD]: Added Earlybird
+	  messages TYPE_PICKTWC, TYPE_HYPOTWC and TYPE_ALARM (need some minor
+	  improvements)
+
+2013-05-24 15:27  quintiliani
+
+	* [r5526] ew2moledb/ew2moledb.c: Added reading of TYPE_HYPOTWC message
+
+2013-05-24 15:15  quintiliani
+
+	* [r5524] ew2moledb/ew2moledb_eb_hypotwc.c[ADD],
+	  ew2moledb/ew2moledb_eb_hypotwc.h[ADD], ew2moledb/makefile.unix: Added
+	  preliminary functions get_sqlstr_from_eb_hypotwc_msg() and
+	  get_sqlstr_from_eb_hypotwc_struct() in ew2moledb
+
+2013-05-24 14:57  quintiliani
+
+	* [r5521] moledb/sp/earlybirdlib/sp_ins_eb_hypotwc.sql[ADD]: Added
+	  preliminary stored procedure sp_ins_eb_hypotwc() in moledb
+
+2013-05-24 14:54  quintiliani
+
+	* [r5520] moledb/sp/earlybirdlib[ADD]: Start earlybirdlib stored
+	  procedures in mole
+
+2013-05-24 14:48  quintiliani
+
+	* [r5519] moledb/tables/earlybirdlib/eb_hypotwc.sql[ADD]: Added table
+	  eb_hypotwc in moledb
+
+2013-05-24 14:47  quintiliani
+
+	* [r5518] moledb/tables/earlybirdlib[ADD]: Start earlybirdlib tables in
+	  mole
+
+2013-05-22 12:17  quintiliani
+
+	* [r5511] moledb/fn/fn_get_client_hostname.sql[ADD],
+	  moledb/sp/sp_get_ew_instance_out.sql: Update field hostname in table
+	  ew_instance when it is NULL
+
+2013-05-16 08:25  quintiliani
+
+	* [r5471] ew2moledb/ew2moledb.c: Added print of version when run without
+	  any arguments
+
+2013-05-16 08:23  quintiliani
+
+	* [r5470] ew2moledb/ew2moledb.c: substituted printf with logit
+
+2013-05-16 07:52  quintiliani
+
+	* [r5469] ew2moledb/makefile.unix: Fixed flags for solaris compilation
+
+2013-05-15 08:58  quintiliani
+
+	* [r5458] ChangeLog, HISTORY, ew2moledb/ew2moledb.c,
+	  moledb/fn/fn_check_if_host_fill_db.sql[ADD], moledb/init_mole.sh,
+	  moledb/sp/sispick_sismap/sp_ew_event.sql,
+	  moledb/sp/sispick_sismap/sp_ew_event_instance.sql,
+	  moledb/sp/sispick_sismap/sp_ew_last_event_id.sql,
+	  moledb/sp/sp_sel_ew_event_phases.sql, moledb/tables/ew_arc_phase.sql,
+	  moledb/tables/ew_arc_summary.sql, moledb/tables/ew_error.sql,
+	  moledb/tables/ew_events_summary.sql[DEL],
+	  moledb/tables/ew_hypocenters_summary.sql[ADD],
+	  moledb/tables/ew_instance.sql, moledb/tables/ew_link.sql,
+	  moledb/tables/ew_magnitude_phase.sql,
+	  moledb/tables/ew_magnitude_summary.sql, moledb/tables/ew_module.sql,
+	  moledb/tables/ew_pick_scnl.sql, moledb/tables/ew_quake2k.sql,
+	  moledb/tables/ew_scnl.sql, moledb/tables/ew_spkseq.sql,
+	  moledb/tables/ew_sqkseq.sql, moledb/tables/ew_strongmotionII.sql,
+	  moledb/tables/ew_tracebuf.sql,
+	  moledb/triggers/tr_ew_arc_phase_a_i.sql,
+	  moledb/triggers/tr_ew_arc_summary_a_i.sql[ADD],
+	  moledb/triggers/tr_ew_arc_summary_a_u.sql[ADD],
+	  moledb/triggers/tr_ew_events_summary_from_arc_sum.sql[DEL],
+	  moledb/triggers/tr_ew_events_summary_from_mag_sum.sql[DEL],
+	  moledb/triggers/tr_ew_magnitude_phase_a_i.sql,
+	  moledb/triggers/tr_ew_magnitude_summary_a_i.sql[ADD],
+	  moledb/triggers/tr_ew_quake2k_a_i.sql[ADD],
+	  moledb/triggers/tr_ew_strongmotionII_a_i.sql,
+	  moledb/views/sispick_sismap/vw_cmplocations.sql, moleface/conf.ini,
+	  moleface/index.php, moleface/tables/ew_events_summary[DEL],
+	  moleface/tables/ew_hypocenters_summary[ADD],
+	  moleface/tables/ew_hypocenters_summary/ew_hypocenters_summary.php[ADD],
+	  moleface/tables/ew_hypocenters_summary/fields.ini[ADD],
+	  moleface/tables/ew_hypocenters_summary/relationships.ini[ADD]: *
+	  Release 1.2.0-rc2 (2013/05/15)
+	  - ew2moledb:
+	  * test MySQL connection at the beginning and exit in case of error
+	  * now can simultaneously read messages from multiple rings (based on
+	  multiple threads).
+	  * management of the local queue of messages is more efficient and
+	  reliable (based on semaphores).
+	  * fixed a damned bug causing loss of very few messages; fortunately,
+	  only on very very rare occasions.
+	  * some parameters in ew2moledb.d are changed. There is no complete
+	  backward compatibility with the previous configuration files.
+	  - moledb:
+	  * changed structure of SQL's scripts and added the new initialization
+	  script "init_mole.sh" in place of "moledb_master_script.sh".
+	  * changed the engine of mysql tables from MyISAM to InnoDB.
+	  * changed some field names of foreign keys.
+	  * renamed table ew_events_summary to ew_hypocenters_summary.
+
+2013-05-10 16:26  quintiliani
+
+	* [r5456] moleface/conf.ini, moleface/index.php,
+	  moleface/tables/ew_arc_summary/relationships.ini,
+	  moleface/tables/ew_events_summary/ew_events_summary.php,
+	  moleface/tables/ew_events_summary/fields.ini,
+	  moleface/tables/ew_events_summary/relationships.ini,
+	  moleface/tables/ew_instance/fields.ini,
+	  moleface/tables/ew_instance/relationships.ini,
+	  moleface/tables/ew_module/fields.ini,
+	  moleface/tables/v_ew_events/relationships.ini,
+	  moleface/tables/v_ew_params_pick_sta_last_revision/fields.ini,
+	  moleface/templates/Dataface_Fineprint.html[ADD],
+	  moleface/templates/Dataface_Logo.html: Updated Moleface for release
+	  1.2.0-rc1
+
+2013-04-29 08:12  quintiliani
+
+	* [r5441] BUGS, ChangeLog, HISTORY, INSTALL[ADD], README,
+	  ew2moledb/ew2moledb.c, ew2moledb/makefile.unix, moledb,
+	  moledb/calls[ADD],
+	  moledb/calls/moledb_populate_test_from_ew_params_pick_sta.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_hyporing_endeavour.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_hyporing_hew1.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_hyporing_hew2.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_pickring_endeavour.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_pickring_hew1.sql.gz[ADD],
+	  moledb/calls/moledb_populate_test_from_pickring_hew2.sql.gz[ADD],
+	  moledb/data[ADD], moledb/data/regions[ADD],
+	  moledb/data/regions/regions.sql[ADD], moledb/fn[ADD],
+	  moledb/fn/fn_delta.sql[ADD],
+	  moledb/fn/fn_get_str_from_dt_usec.sql[ADD],
+	  moledb/fn/fn_get_suffix_from_datetime.sql[ADD],
+	  moledb/fn/fn_get_tbname.sql[ADD], moledb/fn/regions[ADD],
+	  moledb/fn/regions/fn_find_region_name.sql[ADD],
+	  moledb/fn/regions/fn_pnpoly.sql[ADD], moledb/fn/sispick_sismap[ADD],
+	  moledb/fn/sispick_sismap/fn_isdate.sql[ADD], moledb/grants[ADD],
+	  moledb/grants/grant_post.sql[ADD], moledb/grants/grant_pre.sql[ADD],
+	  moledb/grants/sispick_sismap[ADD],
+	  moledb/grants/sispick_sismap/grants.sql[ADD],
+	  moledb/init_mole.sh[ADD], moledb/scripts[ADD],
+	  moledb/scripts/catch_calls_from_ew2moledb_log[ADD],
+	  moledb/scripts/catch_calls_from_ew2moledb_log/catch_calls_from_ew2moledb_log.sh[ADD],
+	  moledb/scripts/catch_calls_from_ew2moledb_log/ew_log[ADD],
+	  moledb/scripts/ew_params_pick_sta[ADD],
+	  moledb/scripts/ew_params_pick_sta/ew_params_pick_sta.sh[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_phases_for_chan.sql[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_for_chan.sh[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_for_chan.sql[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_vs_phases_calls.format[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_vs_phases_calls.sh[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_vs_phases_calls.sql[ADD],
+	  moledb/scripts/ew_params_picks_vs_phases/tot_start_end_time_picks_vs_phases_for_chan.sql[ADD],
+	  moledb/scripts/mole_empty[ADD],
+	  moledb/scripts/mole_empty/mole_empty.sh[ADD],
+	  moledb/scripts/moledb_alter_from_myisam_to_innodb[ADD],
+	  moledb/scripts/moledb_alter_from_myisam_to_innodb/moledb_alter.sh[ADD],
+	  moledb/scripts/moledb_alter_from_myisam_to_innodb/moledb_alter.sh.static.sql[ADD],
+	  moledb/scripts/moledb_substitute_myisam_with_innodb[ADD],
+	  moledb/scripts/moledb_substitute_myisam_with_innodb/moledb_substitute_myisam_with_innodb.sh[ADD],
+	  moledb/scripts/moledb_substitute_myisam_with_innodb/moledb_substitute_myisam_with_innodb.sh.static.sql[ADD],
+	  moledb/scripts/moledb_update_scnl_from_seisnet[ADD],
+	  moledb/scripts/moledb_update_scnl_from_seisnet/moledb_update_scnl_from_seisnet.sh[ADD],
+	  moledb/scripts/moledb_update_scnl_from_seisnet/seisnet_scnl.format[ADD],
+	  moledb/scripts/moledb_update_scnl_from_seisnet/seisnet_scnl.sql[ADD],
+	  moledb/scripts/regions[ADD],
+	  moledb/scripts/regions/regions.format[ADD],
+	  moledb/scripts/regions/regions.sh[ADD],
+	  moledb/scripts/regions/regions.sql[ADD],
+	  moledb/scripts/regions/regions_neic.format[ADD],
+	  moledb/scripts/regions/regions_neic.sql[ADD], moledb/sp[ADD],
+	  moledb/sp/ew_params_pick_sta[ADD],
+	  moledb/sp/ew_params_pick_sta/sp_ins_ew_params_pick_sta.sql[ADD],
+	  moledb/sp/ew_params_picks_vs_phases[ADD],
+	  moledb/sp/ew_params_picks_vs_phases/sp_ins_ew_params_picks_vs_phases.sql[ADD],
+	  moledb/sp/sispick_sismap[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_arcsummary.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_event.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_event_instance.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_event_list.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_eventphases_list.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_instance.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_last_event_id.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_magnitudepicks.sql[ADD],
+	  moledb/sp/sispick_sismap/sp_ew_show_hosts.sql[ADD],
+	  moledb/sp/sp_get_ew_instance_out.sql[ADD],
+	  moledb/sp/sp_get_ew_module_out.sql[ADD],
+	  moledb/sp/sp_get_ew_scnl_out.sql[ADD],
+	  moledb/sp/sp_get_ew_spkseq_out.sql[ADD],
+	  moledb/sp/sp_get_ew_sqkseq_out.sql[ADD],
+	  moledb/sp/sp_ins_ew_arc_phase.sql[ADD],
+	  moledb/sp/sp_ins_ew_arc_summary.sql[ADD],
+	  moledb/sp/sp_ins_ew_coda_scnl.sql[ADD],
+	  moledb/sp/sp_ins_ew_error.sql[ADD], moledb/sp/sp_ins_ew_link.sql[ADD],
+	  moledb/sp/sp_ins_ew_magnitude_phase.sql[ADD],
+	  moledb/sp/sp_ins_ew_magnitude_summary.sql[ADD],
+	  moledb/sp/sp_ins_ew_pick_scnl.sql[ADD],
+	  moledb/sp/sp_ins_ew_quake2k.sql[ADD],
+	  moledb/sp/sp_ins_ew_scnl.sql[ADD],
+	  moledb/sp/sp_ins_ew_strongmotionII.sql[ADD],
+	  moledb/sp/sp_ins_ew_tracebuf.sql[ADD],
+	  moledb/sp/sp_sel_ew_event_phases.sql[ADD], moledb/tables[ADD],
+	  moledb/tables/err_sp.sql[ADD], moledb/tables/ew_arc_phase.sql[ADD],
+	  moledb/tables/ew_arc_summary.sql[ADD],
+	  moledb/tables/ew_error.sql[ADD],
+	  moledb/tables/ew_events_summary.sql[ADD],
+	  moledb/tables/ew_instance.sql[ADD], moledb/tables/ew_link.sql[ADD],
+	  moledb/tables/ew_magnitude_phase.sql[ADD],
+	  moledb/tables/ew_magnitude_summary.sql[ADD],
+	  moledb/tables/ew_module.sql[ADD],
+	  moledb/tables/ew_params_pick_sta[ADD],
+	  moledb/tables/ew_params_pick_sta/ew_params_pick_sta.sql[ADD],
+	  moledb/tables/ew_params_picks_vs_phases[ADD],
+	  moledb/tables/ew_params_picks_vs_phases/ew_params_picks_vs_phases.sql[ADD],
+	  moledb/tables/ew_pick_scnl.sql[ADD],
+	  moledb/tables/ew_quake2k.sql[ADD], moledb/tables/ew_scnl.sql[ADD],
+	  moledb/tables/ew_spkseq.sql[ADD], moledb/tables/ew_sqkseq.sql[ADD],
+	  moledb/tables/ew_strongmotionII.sql[ADD],
+	  moledb/tables/ew_tracebuf.sql[ADD], moledb/tables/regions[ADD],
+	  moledb/tables/regions/ew_region_geom.sql[ADD],
+	  moledb/tables/regions/ew_region_kind.sql[ADD], moledb/triggers[ADD],
+	  moledb/triggers/tr_ew_arc_phase_a_i.sql[ADD],
+	  moledb/triggers/tr_ew_events_summary_from_arc_sum.sql[ADD],
+	  moledb/triggers/tr_ew_events_summary_from_mag_sum.sql[ADD],
+	  moledb/triggers/tr_ew_magnitude_phase_a_i.sql[ADD],
+	  moledb/triggers/tr_ew_strongmotionII_a_i.sql[ADD], moledb/views[ADD],
+	  moledb/views/ew_params_pick_sta[ADD],
+	  moledb/views/ew_params_pick_sta/v_ew_params_pick_id_last_revision.sql[ADD],
+	  moledb/views/ew_params_pick_sta/v_ew_params_pick_sta_last_revision.sql[ADD],
+	  moledb/views/ew_params_picks_vs_phases[ADD],
+	  moledb/views/ew_params_picks_vs_phases/v_ew_params_picks_vs_phases.sql[ADD],
+	  moledb/views/sispick_sismap[ADD],
+	  moledb/views/sispick_sismap/vw_cmplocations.sql[ADD],
+	  moledb/views/v_ew_error_message.sql[ADD],
+	  moledb/views/v_ew_picks.sql[ADD],
+	  moledb/views/v_ew_quake_evolution.sql[ADD]: Updated Mole elease
+	  1.2.0-rc1
+	  - ew2moledb:
+	  * test MySQL connection at the beginning and exit in case of error
+	  * now can simultaneously read messages from multiple rings (based on
+	  multiple threads).
+	  * management of the local queue of messages is more efficient and
+	  reliable (based on semaphores).
+	  * fixed a damned bug causing loss of very few messages; fortunately,
+	  only on very very rare occasions.
+	  * some parameters in ew2moledb.d are changed. There is no complete
+	  backward compatibility with the previous configuration files.
+	  - moledb:
+	  * changed structure of SQL's scripts and added the new initialization
+	  script "init_mole.sh" in place of "moledb_master_script.sh".
+	  * changed the engine of mysql tables from MyISAM to InnoDB.
+	  * changed some field names of foreign keys.
+
+2013-03-27 17:53  paulf
+
+	* [r5425] ew2moledb/makefile.unix: fixed linking for Linux on ew2moledb
+	  module
+
+2013-01-31 17:58  tim
+
+	* [r5336] ew2moledb/makefile.unix: Added sema_ew to libew_mt.a
+
+2013-01-30 19:15  tim
+
+	* [r5319] ew2moledb/makefile.nt: libew.lib makefile changes
+
+2013-01-28 22:11  tim
+
+	* [r5310] ew2moledb/makefile.unix: libew.a
+
+2013-01-25 19:32  tim
+
+	* [r5302] ew2moledb/makefile.sol[DEL], ew2moledb/makefile.ux[DEL],
+	  makefile.sol[DEL], makefile.ux[DEL]: Deleting no longer used
+	  makefiles(lnx, ux, sol)
+
+2013-01-25 19:19  tim
+
+	* [r5301] ew2moledb/makefile.unix[ADD], makefile.unix[ADD]: One makefile
+	  for solaris, linux and mac.
+
+2013-01-07 21:16  tim
+
+	* [r5281] ew2moledb/makefile.nt: Fixed $(cc) to $(CC). This included
+	  legacy NT makefiles which were not part of the initial changes
+
+2012-10-22 16:39  scott
+
+	* [r5067] ew2moledb/ew2moledb.c: Remaining files for ticket #222
+
+2012-10-02 08:49  quintiliani
+
+	* [r5043] ew2moledb/ew2moledb.c, ew2moledb/ew2moledb.d[ADD],
+	  ew2moledb/ew2moledb.desc[ADD], ew2moledb/ew2moledb_hyporing.d[DEL],
+	  ew2moledb/ew2moledb_hyporing.desc[DEL],
+	  ew2moledb/ew2moledb_pickring.d[DEL],
+	  ew2moledb/ew2moledb_pickring.desc[DEL],
+	  ew2moledb/ew2moledb_wavering.d[DEL],
+	  ew2moledb/ew2moledb_wavering.desc[DEL]: Main improvements:
+	  - ew2moledb can read messages from multiple rings simultaneously
+	  (based on multiple threads).
+	  - management of the local queue of messages is more efficient and
+	  reliable
+	  (based on semaphores).
+	  - fixed a damned bug causing loss of very few messages; fortunately,
+	  only on
+	  very very rare occasions.
+	  
+	  N.B. Some parameters in ew2moledb.d are changed. There is no complete
+	  backward
+	  compatibility with the previous configuration files.
+
+2012-10-02 08:22  quintiliani
+
+	* [r5042] ew2moledb/ew2moledb_error.c: work-around, replace ';' with ','
+	  in ew error message. TODO: Fix that when the separator ';' will be
+	  customizable
+
+2012-10-02 08:18  quintiliani
+
+	* [r5041] ew2moledb/ew2moledb_arc.c: Changed logit options
+
+2012-07-27 08:48  quintiliani
+
+	* [r4984] README, poster[DEL]: Mole poster available from
+	  http://hdl.handle.net/2122/8002
+
+2012-07-27 08:39  quintiliani
+
+	* [r4982] README: notes on ew2moledb compiling
+
+2012-07-25 09:58  quintiliani
+
+	* [r4980] makefile.nt[ADD]: Added main Mole makefile for Windows
+	  compilation
+
+2012-07-25 09:28  quintiliani
+
+	* [r4978] ew2moledb/makefile.nt,
+	  mysql-connector-c-build/lib/mysqlclient.lib[ADD]: now, ew2moledb can
+	  be easily compiled also on windows
+
+2012-07-24 21:55  stefan
+
+	* [r4975] ew2moledb/ew2moledb_error.h, ew2moledb/ew2moledb_mysql.h:
+	  added some ifdefs for Windows
+
+2012-07-22 09:58  quintiliani
+
+	* [r4969] ew2moledb/ew2moledb_tracebuf.c, ew2moledb/makefile.nt,
+	  ew2moledb/makefile.sol, ew2moledb/makefile.ux: Added call to
+	  WaveMsg2MakeLocal for trace buffer messages
+
+2012-07-22 09:13  quintiliani
+
+	* [r4968] moledb/moledb_create_triggers.sql: Function
+	  host_fill_db.fn_fill_seisev() can be exectued only after the check of
+	  seisev existence, then I split the condition 'AND' in two instructions
+	  IF
+
+2012-07-22 08:56  quintiliani
+
+	* [r4967] moledb/moledb_create_triggers.sql: Fixed minor bug
+
+2012-07-20 12:00  quintiliani
+
+	* [r4962] ew2moledb/makefile.nt: Supposed the windows library
+	  mysqlclient.lib is in ./mole/mysql-connector-c-build/lib
+
+2012-07-20 11:32  quintiliani
+
+	* [r4961] mysql-connector-c-build/lib[ADD]: Added directory lib under
+	  mysql-connector-c-build
+
+2012-07-20 11:01  quintiliani
+
+	* [r4960] makefile.sol, makefile.ux: Improvement to makefiles
+
+2012-07-20 10:58  quintiliani
+
+	* [r4959] makefile.ux: Improvement to makefile.ux
+
+2012-07-20 10:57  quintiliani
+
+	* [r4958] makefile.sol: Improvement to makefile.sol
+
+2012-07-20 10:48  quintiliani
+
+	* [r4957] makefile.sol, makefile.ux: Some fixes to makefiles for Unix
+	  and Solaris
+
+2012-07-20 10:38  quintiliani
+
+	* [r4956] README: Minor changes in README
+
+2012-07-20 10:33  quintiliani
+
+	* [r4955] README: Added other description to Mole README file
+
+2012-07-20 10:31  quintiliani
+
+	* [r4954] ew2moledb/makefile.sol, makefile.sol[ADD]: Added Mole
+	  makefiles for Solaris
+
+2012-07-20 10:29  quintiliani
+
+	* [r4953] ew2moledb/makefile.ux: Cleaned up ew2moledb makefile.ux
+
+2012-07-20 09:19  quintiliani
+
+	* [r4952] README, ew2moledb/makefile.ux, makefile.ux[ADD],
+	  mysql-connector-c-build[ADD]: Added Mole makefiles for unix
+	  architectures
+
+2012-07-18 12:57  quintiliani
+
+	* [r4920] ew2moledb/makefile.ux, poster[ADD],
+	  poster/Mole_Quintiliani_Pintore_Erice_2012.pdf[ADD]: Mole Poster
+	  prensented in Erice Workshop, May 2012
+
+2012-07-18 12:52  quintiliani
+
+	* [r4919] README: Added some other descriptions about installation
+
+2012-07-18 12:48  quintiliani
+
+	* [r4918] mysql-connector-c-6.0.2/CMakeLists.txt: Changes in order to
+	  compile mysql-connector-c-6.0.2 as 32-bit library
+
+2012-07-18 12:45  quintiliani
+
+	* [r4917] mysql-connector-c-6.0.2[ADD],
+	  mysql-connector-c-6.0.2/BUILD.unix[ADD],
+	  mysql-connector-c-6.0.2/BUILD.win[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeCCompiler.cmake[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeCXXCompiler.cmake[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeDetermineCompilerABI_C.bin[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeDetermineCompilerABI_CXX.bin[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeError.log[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeOutput.log[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeRuleHashes.txt[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CMakeSystem.cmake[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CheckTypeSize.bin[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdC[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdC/CMakeCCompilerId.c[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdC/a.out[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdCXX[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdCXX/CMakeCXXCompilerId.cpp[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/CompilerIdCXX/a.out[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/Makefile.cmake[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/Makefile2[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/TestEndianess.bin[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/cmake.check_cache[ADD],
+	  mysql-connector-c-6.0.2/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/CMakePlatformTests.txt[ADD],
+	  mysql-connector-c-6.0.2/COPYING[ADD],
+	  mysql-connector-c-6.0.2/CPackConfig.cmake[ADD],
+	  mysql-connector-c-6.0.2/CPackSourceConfig.cmake[ADD],
+	  mysql-connector-c-6.0.2/CTestTestfile.cmake[ADD],
+	  mysql-connector-c-6.0.2/ChangeLog[ADD],
+	  mysql-connector-c-6.0.2/EXCEPTIONS-CLIENT[ADD],
+	  mysql-connector-c-6.0.2/Makefile[ADD],
+	  mysql-connector-c-6.0.2/README[ADD],
+	  mysql-connector-c-6.0.2/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/dbug.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/Makefile[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/dbug.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/dbug_add_tags.pl[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/dbug_analyze.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/dbug_long.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/example1.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/example2.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/example3.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/factorial.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/main.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/monty.doc[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/my_main.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/remove_function_from_trace.pl[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/sanity.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/tests-t.pl[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/tests.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/dbug/user.r[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CHANGES[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeFiles/regex.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/COPYRIGHT[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/Makefile[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/README[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/WHATSNEW[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/cclass.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/cname.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/debug.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/debug.ih[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/engine.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/engine.ih[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/main.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/main.ih[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/my_regex.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regcomp.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regcomp.ih[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regerror.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regerror.ih[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regex.3[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regex.7[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regex2.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regexec.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regexp.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/regfree.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/reginit.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/split.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/tests[ADD],
+	  mysql-connector-c-6.0.2/extlib/regex/utils.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/AUTHORS[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeFiles/yassl.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/COPYING[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/ChangeLog[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/FLOSS-EXCEPTIONS[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/INSTALL[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/Makefile[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/NEWS[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/README[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/ca-cert.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/client-cert.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/client-cert.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/client-key.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/client-key.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/dh1024.dat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/dsa-cert.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/dsa512.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/dsa512.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/server-cert.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/server-key.pem[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/certs/taoCert.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/client[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/client/client.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/client/client.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoclient[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoclient/echoclient.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoclient/echoclient.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoclient/input[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoclient/quit[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoserver[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoserver/echoserver.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/echoserver/echoserver.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/server[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/server/server.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/examples/server/server.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/buffer.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/cert_wrapper.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/config.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/crypto_wrapper.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/factory.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/handshake.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/lock.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/log.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/crypto.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/des.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/des_old.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/engine.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/err.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/evp.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/generate_prefix_files.pl[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/hmac.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/lhash.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/md4.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/md5.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/objects.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/opensslv.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/pem.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/pkcs12.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/prefix_crypto.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/prefix_ssl.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/rand.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/rsa.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/sha.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/ssl.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/x509.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/openssl/x509v3.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/socket_wrapper.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/timer.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/yassl.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/yassl_error.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/yassl_imp.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/yassl_int.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/include/yassl_types.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/lib[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/lib/dummy[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/buffer.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/cert_wrapper.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/crypto_wrapper.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/dummy.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/handshake.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/lock.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/log.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/make.bat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/socket_wrapper.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/ssl.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/template_instnt.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/timer.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/yassl.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/yassl_error.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/yassl_imp.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/src/yassl_int.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeFiles/taocrypt.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/COPYING[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/INSTALL[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/Makefile[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/README[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/benchmark.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/benchmark.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/dh1024.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/dsa1024.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/make.bat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/benchmark/rsa1024.der[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/aes.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/algebra.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/arc4.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/asn.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/block.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/blowfish.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/coding.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/des.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/dh.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/dsa.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/error.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/file.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/hash.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/hmac.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/integer.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/kernelc.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/md2.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/md4.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/md5.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/misc.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/modarith.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/modes.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/pwdbased.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/random.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/ripemd.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/rsa.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/runtime.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/sha.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/twofish.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/type_traits.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/include/types.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/algorithm.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/helpers.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/list.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/memory.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/memory_array.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/pair.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/stdexcept.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/mySTL/vector.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/aes.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/aestables.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/algebra.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/arc4.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/asn.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/bftables.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/blowfish.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/coding.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/crypto.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/des.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/dh.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/dsa.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/file.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/hash.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/integer.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/make.bat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/md2.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/md4.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/md5.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/misc.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/random.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/ripemd.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/rsa.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/sha.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/template_instnt.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/tftables.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/src/twofish.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test.dsw[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test/make.bat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test/memory.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/taocrypt/test/test.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/input[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/make.bat[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/quit[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/test.hpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/testsuite.cpp[ADD],
+	  mysql-connector-c-6.0.2/extlib/yassl/testsuite/testsuite.dsp[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeFiles/zlib.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/ChangeLog[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/FAQ[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/INDEX[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/Makefile[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/README[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/README.MySQL[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/adler32.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/algorithm.txt[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/compress.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/crc32.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/crc32.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/deflate.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/deflate.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/gzio.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/infback.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inffast.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inffast.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inffixed.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inflate.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inflate.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inftrees.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/inftrees.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/trees.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/trees.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/uncompr.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/zconf.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/zlib.3[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/zlib.h[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/zutil.c[ADD],
+	  mysql-connector-c-6.0.2/extlib/zlib/zutil.h[ADD],
+	  mysql-connector-c-6.0.2/include[ADD],
+	  mysql-connector-c-6.0.2/include/atomic[ADD],
+	  mysql-connector-c-6.0.2/include/atomic/gcc_builtins.h[ADD],
+	  mysql-connector-c-6.0.2/include/atomic/generic-msvc.h[ADD],
+	  mysql-connector-c-6.0.2/include/atomic/nolock.h[ADD],
+	  mysql-connector-c-6.0.2/include/atomic/rwlock.h[ADD],
+	  mysql-connector-c-6.0.2/include/atomic/x86-gcc.h[ADD],
+	  mysql-connector-c-6.0.2/include/base64.h[ADD],
+	  mysql-connector-c-6.0.2/include/config-win.h[ADD],
+	  mysql-connector-c-6.0.2/include/decimal.h[ADD],
+	  mysql-connector-c-6.0.2/include/errmsg.h[ADD],
+	  mysql-connector-c-6.0.2/include/hash.h[ADD],
+	  mysql-connector-c-6.0.2/include/keycache.h[ADD],
+	  mysql-connector-c-6.0.2/include/lf.h[ADD],
+	  mysql-connector-c-6.0.2/include/m_ctype.h[ADD],
+	  mysql-connector-c-6.0.2/include/m_string.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_aes.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_alarm.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_alloc.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_atomic.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_attribute.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_base.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_bit.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_bitmap.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_charsets.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_config.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_config.h.in[ADD],
+	  mysql-connector-c-6.0.2/include/my_dbug.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_dir.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_getopt.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_global.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_libwrap.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_list.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_md5.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_net.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_no_pthread.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_nosys.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_pthread.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_stacktrace.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_sys.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_time.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_tree.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_trie.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_uctype.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_vle.h[ADD],
+	  mysql-connector-c-6.0.2/include/my_xml.h[ADD],
+	  mysql-connector-c-6.0.2/include/myisampack.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysql.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysql.h.pp[ADD],
+	  mysql-connector-c-6.0.2/include/mysql_com.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysql_time.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysql_version.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysql_version.h.in[ADD],
+	  mysql-connector-c-6.0.2/include/mysqld_error.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysys[ADD],
+	  mysql-connector-c-6.0.2/include/mysys/rijndael.h[ADD],
+	  mysql-connector-c-6.0.2/include/mysys_err.h[ADD],
+	  mysql-connector-c-6.0.2/include/queues.h[ADD],
+	  mysql-connector-c-6.0.2/include/service_versions.h[ADD],
+	  mysql-connector-c-6.0.2/include/sha1.h[ADD],
+	  mysql-connector-c-6.0.2/include/sha2.h[ADD],
+	  mysql-connector-c-6.0.2/include/sql_common.h[ADD],
+	  mysql-connector-c-6.0.2/include/sslopt-case.h[ADD],
+	  mysql-connector-c-6.0.2/include/sslopt-longopts.h[ADD],
+	  mysql-connector-c-6.0.2/include/sslopt-vars.h[ADD],
+	  mysql-connector-c-6.0.2/include/t_ctype.h[ADD],
+	  mysql-connector-c-6.0.2/include/thr_alarm.h[ADD],
+	  mysql-connector-c-6.0.2/include/thr_lock.h[ADD],
+	  mysql-connector-c-6.0.2/include/typelib.h[ADD],
+	  mysql-connector-c-6.0.2/include/violite.h[ADD],
+	  mysql-connector-c-6.0.2/include/waiting_threads.h[ADD],
+	  mysql-connector-c-6.0.2/include/wqueue.h[ADD],
+	  mysql-connector-c-6.0.2/libmysql[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/LIBMYSQL_SYMLINKS.dir[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/LIBMYSQL_SYMLINKS.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/LIBMYSQL_SYMLINKS.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/LIBMYSQL_SYMLINKS.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/LIBMYSQL_SYMLINKS.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/libmysql.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/mysqlclient.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/libmysql/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/libmysql/Makefile[ADD],
+	  mysql-connector-c-6.0.2/libmysql/client.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/client_settings.h[ADD],
+	  mysql-connector-c-6.0.2/libmysql/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/libmysql/conf_to_src.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/errmsg.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/get_password.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/libmysql.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/libmysql.def[ADD],
+	  mysql-connector-c-6.0.2/libmysql/libmysql.ver.in[ADD],
+	  mysql-connector-c-6.0.2/libmysql/my_time.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/net_serv.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/pack.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/password.c[ADD],
+	  mysql-connector-c-6.0.2/libmysql/probes.d[ADD],
+	  mysql-connector-c-6.0.2/libmysql/probes.h[ADD],
+	  mysql-connector-c-6.0.2/mysql_config[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/mysql_config.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/Makefile[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/mysql_config.c[ADD],
+	  mysql-connector-c-6.0.2/mysql_config/mysql_config.c.in[ADD],
+	  mysql-connector-c-6.0.2/mysys[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/mysys.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/mysys/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/mysys/Makefile[ADD],
+	  mysql-connector-c-6.0.2/mysys/array.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/base64.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/charset-def.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/charset.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/checksum.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/mysys/default.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/default_modify.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/errors.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/hash.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/lf_alloc-pin.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/lf_dynarray.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/lf_hash.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/list.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/make-conf.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/md5.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_arr_appstr.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_brkhant.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_cache.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_dirname.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_fn_ext.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_format.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_getdate.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_iocache.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_iocache2.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_keycache.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_keycaches.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_loadpath.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_pack.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_path.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_qsort.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_qsort2.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_radix.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_same.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_sort.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_soundex.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_strip.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_tempdir.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_tempfile.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_unixpath.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_util.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_wcomp.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mf_wfile.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mulalloc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_access.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_aes.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_alarm.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_alloc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_append.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_atomic.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_bit.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_bitmap.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_chmod.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_chsize.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_clock.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_compress.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_conio.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_copy.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_create.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_delete.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_div.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_dup.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_error.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_file.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_fopen.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_fstream.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_gethostbyname.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_gethwaddr.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_getncpus.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_getopt.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_getpagesize.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_getsystime.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_getwd.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_handler_errors.h[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_init.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_largepage.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_lib.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_libwrap.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_lock.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_lockmem.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_malloc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_memmem.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_messnc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_mkdir.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_mmap.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_net.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_netware.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_new.cc[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_once.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_open.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_port.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_pread.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_pthread.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_quick.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_read.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_realloc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_redel.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_rename.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_rnd.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_safehash.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_safehash.h[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_seek.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_sleep.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_static.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_static.h[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_symlink.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_symlink2.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_sync.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_thr_init.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_uuid.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_vle.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_wincond.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_windac.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_winerr.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_winfile.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_winthread.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/my_write.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/mysys_priv.h[ADD],
+	  mysql-connector-c-6.0.2/mysys/ptr_cmp.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/queues.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/rijndael.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/safemalloc.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/sha1.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/stacktrace.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/string.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/test_fn.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/test_xml.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/tests[ADD],
+	  mysql-connector-c-6.0.2/mysys/tests/test_charset.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/tests/test_dir.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/tests/test_thr_mutex.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/tests/testhash.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/thr_alarm.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/thr_lock.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/thr_mutex.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/thr_rwlock.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/tree.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/trie.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/typelib.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/waiting_threads.c[ADD],
+	  mysql-connector-c-6.0.2/mysys/wqueue.c[ADD],
+	  mysql-connector-c-6.0.2/strings[ADD],
+	  mysql-connector-c-6.0.2/strings/CHARSET_INFO.txt[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeFiles/strings.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/strings/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/strings/Makefile[ADD],
+	  mysql-connector-c-6.0.2/strings/README[ADD],
+	  mysql-connector-c-6.0.2/strings/bchange.c[ADD],
+	  mysql-connector-c-6.0.2/strings/bcmp.c[ADD],
+	  mysql-connector-c-6.0.2/strings/bfill.c[ADD],
+	  mysql-connector-c-6.0.2/strings/bmove.c[ADD],
+	  mysql-connector-c-6.0.2/strings/bmove512.c[ADD],
+	  mysql-connector-c-6.0.2/strings/bmove_upp-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/bmove_upp.c[ADD],
+	  mysql-connector-c-6.0.2/strings/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/strings/conf_to_src.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-big5.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-bin.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-cp932.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-czech.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-euc_kr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-eucjpms.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-extra.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-gb2312.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-gbk.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-latin1.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-mb.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-simple.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-sjis.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-tis620.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-uca.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-ucs2.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-ujis.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-utf8.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype-win1250ch.c[ADD],
+	  mysql-connector-c-6.0.2/strings/ctype.c[ADD],
+	  mysql-connector-c-6.0.2/strings/decimal.c[ADD],
+	  mysql-connector-c-6.0.2/strings/do_ctype.c[ADD],
+	  mysql-connector-c-6.0.2/strings/dtoa.c[ADD],
+	  mysql-connector-c-6.0.2/strings/dump_map.c[ADD],
+	  mysql-connector-c-6.0.2/strings/int2str.c[ADD],
+	  mysql-connector-c-6.0.2/strings/is_prefix.c[ADD],
+	  mysql-connector-c-6.0.2/strings/latin2.def[ADD],
+	  mysql-connector-c-6.0.2/strings/llstr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/longlong2str-x86.s[ADD],
+	  mysql-connector-c-6.0.2/strings/longlong2str.c[ADD],
+	  mysql-connector-c-6.0.2/strings/longlong2str_asm.c[ADD],
+	  mysql-connector-c-6.0.2/strings/my_strchr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/my_strtoll10-x86.s[ADD],
+	  mysql-connector-c-6.0.2/strings/my_strtoll10.c[ADD],
+	  mysql-connector-c-6.0.2/strings/my_vsnprintf.c[ADD],
+	  mysql-connector-c-6.0.2/strings/r_strinstr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/str2int.c[ADD],
+	  mysql-connector-c-6.0.2/strings/str_alloc.c[ADD],
+	  mysql-connector-c-6.0.2/strings/str_test.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strappend-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strappend.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strcend.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strcont.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strend-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strend.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strfill.c[ADD],
+	  mysql-connector-c-6.0.2/strings/string.doc[ADD],
+	  mysql-connector-c-6.0.2/strings/strings-not-used.h[ADD],
+	  mysql-connector-c-6.0.2/strings/strings-x86.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strinstr-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strinstr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strmake-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strmake.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strmov-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strmov.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strnlen.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strnmov-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strnmov.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strstr-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strstr.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strto.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strtol.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strtoll.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strtoul.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strtoull.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strxmov-sparc.s[ADD],
+	  mysql-connector-c-6.0.2/strings/strxmov.c[ADD],
+	  mysql-connector-c-6.0.2/strings/strxnmov.c[ADD],
+	  mysql-connector-c-6.0.2/strings/t_ctype.h[ADD],
+	  mysql-connector-c-6.0.2/strings/uca-dump.c[ADD],
+	  mysql-connector-c-6.0.2/strings/uctypedump.c[ADD],
+	  mysql-connector-c-6.0.2/strings/utr11-dump.c[ADD],
+	  mysql-connector-c-6.0.2/strings/xml.c[ADD],
+	  mysql-connector-c-6.0.2/support-files[ADD],
+	  mysql-connector-c-6.0.2/support-files/.cvsignore[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/Description.plist.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/Info.plist.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/MySQLCOM[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/ReadMe.txt[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/StartupItem.Description.plist[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/StartupItem.Info.plist[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/StartupItem.postinstall[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/StartupParameters.plist.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/mwar-wrapper[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/mwcc-wrapper[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/postflight.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/MacOSX/preflight.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/MySQL-shared-compat.spec.sh[ADD],
+	  mysql-connector-c-6.0.2/support-files/build-tags[ADD],
+	  mysql-connector-c-6.0.2/support-files/mysql.m4[ADD],
+	  mysql-connector-c-6.0.2/support-files/mysql.spec.sh[ADD],
+	  mysql-connector-c-6.0.2/tests[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/mysql_client_test.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/tests/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/tests/Makefile[ADD],
+	  mysql-connector-c-6.0.2/tests/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/tests/connect_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/deadlock_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/insert_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/list_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/myisam-big-rows.tst[ADD],
+	  mysql-connector-c-6.0.2/tests/mysql_client_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/select_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/showdb_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/ssl_test.c[ADD],
+	  mysql-connector-c-6.0.2/tests/thread_test.c[ADD],
+	  mysql-connector-c-6.0.2/unittest[ADD],
+	  mysql-connector-c-6.0.2/unittest/README.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/core-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/no_plan-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/simple-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/skip_all-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeFiles/todo-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/Makefile[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/core-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/no_plan-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/simple-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/skip-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/skip_all-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/examples/todo-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/basic-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/charset.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/connection.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/cursor.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/errors.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/fetch.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/logs.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/misc.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/ps_bugs.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/result.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/sp.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeFiles/view.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/CTestTestfile.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/Makefile[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/basic-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/charset.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/connection.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/cursor.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/errors.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/fetch.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/logs.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/misc.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/my_test.h[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/ps.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/ps_bugs.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/result.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/sp.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/libmysql/view.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/base64-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/bitmap-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/lf-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/my_atomic-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeFiles/waiting_threads-t.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/CTestTestfile.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/Makefile[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/base64-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/bitmap-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/lf-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/my_atomic-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/thr_template.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mysys/waiting_threads-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/mytap.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/Doxyfile[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/Makefile[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/t[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/t/basic-t.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/tap.c[ADD],
+	  mysql-connector-c-6.0.2/unittest/mytap/tap.h[ADD],
+	  mysql-connector-c-6.0.2/unittest/unit.pl[ADD],
+	  mysql-connector-c-6.0.2/vio[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/CMakeDirectoryInformation.cmake[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/progress.make[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/DependInfo.cmake[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/build.make[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/cmake_clean.cmake[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/cmake_clean_target.cmake[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/depend.make[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/flags.make[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/link.txt[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeFiles/vio.dir/progress.make[ADD],
+	  mysql-connector-c-6.0.2/vio/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/vio/Makefile[ADD],
+	  mysql-connector-c-6.0.2/vio/cmake_install.cmake[ADD],
+	  mysql-connector-c-6.0.2/vio/test-ssl.c[ADD],
+	  mysql-connector-c-6.0.2/vio/test-sslclient.c[ADD],
+	  mysql-connector-c-6.0.2/vio/test-sslserver.c[ADD],
+	  mysql-connector-c-6.0.2/vio/vio.c[ADD],
+	  mysql-connector-c-6.0.2/vio/vio_priv.h[ADD],
+	  mysql-connector-c-6.0.2/vio/viosocket.c[ADD],
+	  mysql-connector-c-6.0.2/vio/viossl.c[ADD],
+	  mysql-connector-c-6.0.2/vio/viosslfactories.c[ADD],
+	  mysql-connector-c-6.0.2/vio/viotest-ssl.c[ADD],
+	  mysql-connector-c-6.0.2/vio/viotest-sslconnect.cc[ADD],
+	  mysql-connector-c-6.0.2/vio/viotest.cc[ADD],
+	  mysql-connector-c-6.0.2/win[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/New.ico[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/Up.ico[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/bannrbmp.bmp[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/dlgbmp.bmp[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/exclamic.ico[ADD],
+	  mysql-connector-c-6.0.2/win/Bitmaps/info.ico[ADD],
+	  mysql-connector-c-6.0.2/win/CMakeLists.txt[ADD],
+	  mysql-connector-c-6.0.2/win/License.rtf[ADD],
+	  mysql-connector-c-6.0.2/win/README[ADD],
+	  mysql-connector-c-6.0.2/win/build-nmake-x64.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-nmake.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-vs71.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-vs8.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-vs8_x64.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-vs9.bat[ADD],
+	  mysql-connector-c-6.0.2/win/build-vs9_x64.bat[ADD],
+	  mysql-connector-c-6.0.2/win/configure.js[ADD],
+	  mysql-connector-c-6.0.2/win/create_def_file.js[ADD],
+	  mysql-connector-c-6.0.2/win/create_manifest.js[ADD],
+	  mysql-connector-c-6.0.2/win/mysql-connc-msi-registration.xml[ADD],
+	  mysql-connector-c-6.0.2/win/mysql-connc-msi-template.xml[ADD],
+	  mysql-connector-c-6.0.2/win/mysql-connc-msi-template.xml.in[ADD],
+	  mysql-connector-c-6.0.2/win/mysql-connc-msi-ui.xml[ADD],
+	  mysql-connector-c-6.0.2/win/mysql-connc-setup.js[ADD],
+	  mysql-connector-c-6.0.2/win/mysql_manifest.cmake[ADD],
+	  mysql-connector-c-6.0.2/win/registration[ADD],
+	  mysql-connector-c-6.0.2/win/registration/loginhdr.jpg[ADD],
+	  mysql-connector-c-6.0.2/win/registration/mysql_ca.dll[ADD],
+	  mysql-connector-c-6.0.2/win/registration/register.htm[ADD],
+	  mysql-connector-c-6.0.2/win/registration/svctag.xml[ADD],
+	  mysql-connector-c-6.0.2/win/registration/webpage.ico[ADD]: Added
+	  mysql-connector-c-6.0.2 downloaded from
+	  http://www.mysql.com/downloads/connector/c/
+
+2012-06-20 13:39  quintiliani
+
+	* [r4864] .[ADD], AUTHORS[ADD], BUGS[ADD], COPYING[ADD], ChangeLog[ADD],
+	  HISTORY[ADD], README[ADD], ew2moledb[ADD], ew2moledb/ew2moledb.c[ADD],
+	  ew2moledb/ew2moledb_arc.c[ADD], ew2moledb/ew2moledb_arc.h[ADD],
+	  ew2moledb/ew2moledb_error.c[ADD], ew2moledb/ew2moledb_error.h[ADD],
+	  ew2moledb/ew2moledb_hyporing.d[ADD],
+	  ew2moledb/ew2moledb_hyporing.desc[ADD],
+	  ew2moledb/ew2moledb_magnitude.c[ADD],
+	  ew2moledb/ew2moledb_magnitude.h[ADD],
+	  ew2moledb/ew2moledb_mysql.c[ADD], ew2moledb/ew2moledb_mysql.h[ADD],
+	  ew2moledb/ew2moledb_pickcoda.c[ADD],
+	  ew2moledb/ew2moledb_pickcoda.h[ADD],
+	  ew2moledb/ew2moledb_pickring.d[ADD],
+	  ew2moledb/ew2moledb_pickring.desc[ADD],
+	  ew2moledb/ew2moledb_quakelink.c[ADD],
+	  ew2moledb/ew2moledb_quakelink.h[ADD],
+	  ew2moledb/ew2moledb_sendmail.c[ADD],
+	  ew2moledb/ew2moledb_sendmail.h[ADD],
+	  ew2moledb/ew2moledb_strongmotionII.c[ADD],
+	  ew2moledb/ew2moledb_strongmotionII.h[ADD],
+	  ew2moledb/ew2moledb_tracebuf.c[ADD],
+	  ew2moledb/ew2moledb_tracebuf.h[ADD],
+	  ew2moledb/ew2moledb_wavering.d[ADD],
+	  ew2moledb/ew2moledb_wavering.desc[ADD], ew2moledb/makefile.nt[ADD],
+	  ew2moledb/makefile.sol[ADD], ew2moledb/makefile.ux[ADD], moledb[ADD],
+	  moledb/ew_mole_regions[ADD],
+	  moledb/ew_mole_regions/out_regions.sql[ADD],
+	  moledb/ew_mole_regions/regions.format[ADD],
+	  moledb/ew_mole_regions/regions.sh[ADD],
+	  moledb/ew_mole_regions/regions.sql[ADD],
+	  moledb/ew_mole_regions/regions_neic.format[ADD],
+	  moledb/ew_mole_regions/regions_neic.sql[ADD],
+	  moledb/ew_params_pick[ADD],
+	  moledb/ew_params_pick/ew_params_pick.sh[ADD],
+	  moledb/ew_params_pick/ew_params_pick_table.sql[ADD],
+	  moledb/ew_params_pick/pick_ew.call_sql_sp_insert_pick_ew.sh[ADD],
+	  moledb/ew_params_pick/pick_ew.sp_insert_pick_ew.sql[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_phases_for_chan.sql[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_for_chan.sh[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_for_chan.sql[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_vs_phases_calls.format[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_vs_phases_calls.sh[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_vs_phases_calls.sql[ADD],
+	  moledb/ew_params_pick/tot_start_end_time_picks_vs_phases_for_chan.sql[ADD],
+	  moledb/moledb_create_ew_mole_regions.sql[ADD],
+	  moledb/moledb_create_ew_params_pick_sta_sp.sql[ADD],
+	  moledb/moledb_create_ew_params_pick_sta_table.sql[ADD],
+	  moledb/moledb_create_ew_params_picks_vs_phases.sql[ADD],
+	  moledb/moledb_create_ew_params_picks_vs_phases_sp.sql[ADD],
+	  moledb/moledb_create_functions.sql[ADD],
+	  moledb/moledb_create_grants_sis.sql[ADD],
+	  moledb/moledb_create_procedures.sql[ADD],
+	  moledb/moledb_create_procedures_sis.sql[ADD],
+	  moledb/moledb_create_tables.sql[ADD],
+	  moledb/moledb_create_triggers.sql[ADD],
+	  moledb/moledb_create_views.sql[ADD],
+	  moledb/moledb_master_script.sh[ADD],
+	  moledb/moledb_populate_test_from_ew_params_pick_sta.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_hyporing_endeavour.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_hyporing_hew1.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_hyporing_hew2.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_pickring_endeavour.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_pickring_hew1.sql.gz[ADD],
+	  moledb/moledb_populate_test_from_pickring_hew2.sql.gz[ADD],
+	  moledb/moledb_update_scnl_from_seisnet.sh[ADD],
+	  moledb/seisnet_scnl.format[ADD], moledb/seisnet_scnl.sql[ADD],
+	  moleface[ADD], moleface/.htaccess[ADD], moleface/conf[ADD],
+	  moleface/conf.ini[ADD], moleface/conf/ApplicationDelegate.php[ADD],
+	  moleface/images[ADD],
+	  moleface/images/animated_gif_animals_0686.gif[ADD],
+	  moleface/images/ew_logo.gif[ADD], moleface/index.php[ADD],
+	  moleface/misc[ADD], moleface/misc/_auth.sql[ADD],
+	  moleface/tables[ADD], moleface/tables/ew_arc_summary[ADD],
+	  moleface/tables/ew_arc_summary/relationships.ini[ADD],
+	  moleface/tables/ew_events_summary[ADD],
+	  moleface/tables/ew_events_summary/ew_events_summary.php[ADD],
+	  moleface/tables/ew_events_summary/fields.ini[ADD],
+	  moleface/tables/ew_events_summary/relationships.ini[ADD],
+	  moleface/tables/ew_instance[ADD],
+	  moleface/tables/ew_instance/fields.ini[ADD],
+	  moleface/tables/ew_instance/relationships.ini[ADD],
+	  moleface/tables/ew_module[ADD],
+	  moleface/tables/ew_module/fields.ini[ADD],
+	  moleface/tables/v_ew_events[ADD],
+	  moleface/tables/v_ew_events/fields.ini[ADD],
+	  moleface/tables/v_ew_events/relationships.ini[ADD],
+	  moleface/tables/v_ew_events/v_ew_events.php[ADD],
+	  moleface/tables/v_ew_params_pick_sta_last_revision[ADD],
+	  moleface/tables/v_ew_params_pick_sta_last_revision/fields.ini[ADD],
+	  moleface/tables/v_ew_params_picks_vs_phases[ADD],
+	  moleface/tables/v_ew_params_picks_vs_phases/fields.ini[ADD],
+	  moleface/templates[ADD], moleface/templates/Dataface_Logo.html[ADD],
+	  moleface/templates/Dataface_View_Record.html[ADD],
+	  moleface/templates_c[ADD]: Mole 1.0.0 - First public release.
+

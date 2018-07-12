@@ -1,0 +1,38 @@
+From steve@geophys.washington.edu Fri Aug 11 18:25:11 2000
+Date: Fri, 11 Aug 2000 18:06:46 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: Mitch Withers <withers@ceri.memphis.edu>, earthw-list@nmt.edu
+Subject: todo list
+
+
+Kudos to Mitch Withers regarding the TODO list pages on the earthworm web
+(http://www.cnss.org/EWAB/TODO).  It now has enough stuff to show what is
+going on out there and a nice organization to it.   Right-arm!!
+
+And speaking of todo-ing, a few items I might suggest get included on that
+list:
+
+  ---- new software under development:
+
+gapsum | Steve Malone | Sep. 2000 | Generate summary tables of gaps in
+				    data within waveserver tanks. Maybe some
+				    graphics with it.
+
+
+  ---- Desired new functionality
+
+- waveviewer so it runs on a SUN under X-windows or better yet is a Java
+application so it can run on anything.
+
+- Reftek (with PPP interface) monitoring and control that runs on a SUN.
+
+- A graphical control/monitoring module.  (Antelope has a really nice
+graphical console that shows all sorts of status info and traces and allows
+some control functions)
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	        http://www.geophys.washington.edu
+

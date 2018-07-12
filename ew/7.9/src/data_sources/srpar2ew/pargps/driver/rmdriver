@@ -1,0 +1,84 @@
+#!/bin/sh
+
+# This script uninstalls the PARGPS kernel mode device driver.
+# Use the companion indriver script to install it.
+
+
+# Display message showing how to use rmdriver
+
+UsageMsg ()
+{
+    echo "                                                                  "
+    echo "ERROR: Command Line Usage: rmdriver ParGpsDriverName              "
+    echo "                                                                  "
+    echo "This utility removes the PARGPS driver.  ParGpsDriverName must be "
+    echo "a name of the form SrParGps# where # is a small integer like 0, 1 "
+    echo "etc.  To see what drivers are currently installed, run showdriver "
+    echo "or run /sbin/lsmod | grep Sr.                                     "
+    echo "                                                                  "
+    echo "All valid ParGpsDriverName are:                                   "
+    echo "                                                                  "
+    echo "                   SrParGps0                                      "
+    echo "                   SrParGps1                                      "
+    echo "                   SrParGps2                                      "
+    echo "                   SrParGps                                       "
+    echo "                                                                  "
+        
+    exit 1
+}
+
+
+#################### Main Rmdriver Code #################### 
+
+# Banner message
+
+echo "PARGPS driver removal script : Rev {01/08/07}"
+
+
+# Set up list of allowed driver names.  Also include old 378 style names
+# in case the new code was installed before the old drivers were removed.
+
+DriverNameList="SrParGps0 SrParGps1 SrParGps2 SrParGps"
+OldNameList="SrParGps378 SrParGps278"
+FullNameList=$DriverNameList" "$OldNameList
+
+
+
+
+# Check for proper number of command line arguments
+
+if [ $# -ne 1 ] ; then
+    echo " "
+    echo ERROR: Wrong number of command line arguments.
+    UsageMsg
+fi
+
+
+
+
+# Process command line argument for driver name
+
+PargpsDriver=""
+for DriverName in $FullNameList
+do
+    if [ "$DriverName" = "$1" ] ; then
+        PargpsDriver=$1
+        break
+    fi
+done
+
+if [ "$PargpsDriver" = "" ] ; then
+    echo " "
+    echo ERROR: Invalid driver name $1.  Please use $DriverNameList or $OldNameList.
+    UsageMsg
+fi
+
+
+# Remove the driver: both the module with rmmod and the old node from /dev
+
+/sbin/rmmod $PargpsDriver
+rm -f /dev/$PargpsDriver
+
+
+echo PARGPS driver $PargpsDriver has been removed.
+

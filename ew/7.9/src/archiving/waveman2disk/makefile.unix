@@ -1,0 +1,50 @@
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+OBJ = waveman2disk.o \
+      CatPsuedoTrig.o
+
+EWLIBS =  $L/putaway.o \
+      $L/ahputaway.o \
+      $L/sacputaway.o \
+      $L/geo_to_km.o \
+      $L/sudsputaway.o \
+      $L/tankputaway.o \
+      $L/gseputaway.o \
+      $L/seiputaway.o \
+      $L/seiutils.o \
+      $L/dirops_ew.o \
+      $L/wfdiscputaway.o \
+      $L/socket_ew.o \
+      $L/socket_ew_common.o \
+      $L/parse_trig.o \
+      $L/ws_clientII.o \
+      $L/swap.o \
+      $L/mseedputaway.o \
+      $L/uwputaway.o \
+      $L/libew.a \
+      $L/libuw.a \
+      $L/libmseed.a
+
+
+waveman2disk: $(OBJ); \
+	$(CC) $(CFLAGS) -o $(B)/waveman2disk $(OBJ) $(EWLIBS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint waveman2disk.c CatPsuedoTrig.c $(GLOBALFLAGS)
+	
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/waveman2disk

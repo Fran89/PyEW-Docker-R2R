@@ -1,0 +1,52 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+# INCLUDE THIS FILE FROM makefiles.XXX
+
+OBJS = \
+	Debug.$(OBJ) \
+	array.$(OBJ) \
+	Comfile.$(OBJ) \
+	utility.$(OBJ) \
+	message.$(OBJ) \
+	module.$(OBJ) \
+	str.$(OBJ) \
+	StrTab.$(OBJ) \
+	win.$(OBJ) \
+	qsortd.$(OBJ) \
+	reportTTErrorGlass.$(OBJ) \
+	ttt.$(OBJ) \
+	phase.$(OBJ) \
+	ttt_class.$(OBJ) \
+	tttlist_class.$(OBJ) \
+	AssociatePicks.$(OBJ) \
+	Rank.$(OBJ) \
+	Sphere.$(OBJ) \
+	WeightedCluster.$(OBJ) \
+	$(EW_LIB)\logit.$(OBJ) \
+	$(EW_LIB)\sema_ew.$(OBJ) \
+	$(EW_LIB)\time_ew.$(OBJ) 
+
+CPP_OTHER_FLAGS = $(CPP_LIB_FLAGS)
+C_OTHER_FLAGS = $(C_LIB_FLAGS)
+
+LINK_OTHER_FLAGS = 
+
+
+LIB = glass_lib.$(LIB_EXT)
+
+$(GLASS_LIB)\$(LIB): $(OBJS)
+    $(LINK) $(LIB_LINK_FLAGS) $(LINK_OTHER_FLAGS) $(OBJS)
+
+
+clean :	
+	$(DELETE_FILES) *.$(OBJ)
+	$(DELETE_FILES) $(GLASS_LIB)\$(LIB)
+
+
+
+
+

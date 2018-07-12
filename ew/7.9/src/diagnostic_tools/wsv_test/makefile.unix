@@ -1,0 +1,19 @@
+LINUX_FLAGS= #Not compiled on linux
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS=$(GLOBALFLAGS)
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = wsv_test.o $L/ws_clientII.o $L/libew.a $L/socket_ew.o $L/socket_ew_common.o 
+
+wsv_test: $(OBJS) 
+	$(CC) -o $B/wsv_test $(OBJS) $(SPECIFIC_FLAGS) $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/wsv_test*

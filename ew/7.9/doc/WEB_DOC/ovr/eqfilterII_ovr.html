@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: eqfilterII overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> EqfilterII Overview</H1>
+<I>(last revised 6 September, 2006)</I></CENTER>
+
+<P>
+This is verion II the Earthworm hypocenter garbage rejector.  EqfilterII
+was cloned from eqfilter.  It accepts any of three message types:
+TYPE_HYP2000ARC, TYPE_LOC_GLOBAL, and TYPE_RAYLOC (eqfilter only accepts
+TYPE_HYP2000ARC).  Whatever message type is read, is also the type
+written to eqfilterII's message ring.  EqfilterII gets its messages
+from the InRing does some sanity checks then puts any that pass
+all configured tests onto the OutRing.  InRing and OutRing can not be the
+same.  All tests are optional.  If a test is not configured then it is not
+performed. If a test is configured then it must pass.  Tests are tied
+to inst_id.  More or less all parameters in the hypo summary card may
+be tested for.  Additionally, authoritative regions may be configured.
+Minimum number of coda picks greater than zero for multiple magnitudes
+may also be configured.
+</p>
+
+<p>INST_WILDCARD is allowed.  If wildcard is the only installation configured
+for a given test then arc messages from all installations will be tested
+with those parameters.  If only a specific installation is configured for
+a given test, then only messages from that installation will be tested
+and all others will fail.  If a specific installation is configured
+for a given test and wildcard is also configured for that test, then
+messages from the specific will use those parameters, and all other
+non-specified installations will use the wildcard params.
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqfilterII_cmd.html">eqfilterII Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

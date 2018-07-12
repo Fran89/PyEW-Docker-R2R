@@ -1,0 +1,63 @@
+#Phase         NAME   TAUP_ALIAS
+#RayParam      MIN    MAX
+#DistRange     MIN    MAX
+#DistDelta     DELTA
+#DepthRange    MIN    MAX
+#DepthDelta    DELTA
+#TimeDelta     DELTA
+#ExcludeRange  DMIN DMAX ZMIN ZMAX
+
+
+#entry weights:
+# AssocStrength  - strength with which this phase binds to an Event
+# LocWeight      - weight with which this phase affects origin location
+# MagThresh      - minimum magnitude of quake which this phase can
+                   be associated with.
+				   (Some distant/special phases come in very well with
+				    larger quakes, but you don't want them wrongly assoc.
+					with a small quake)
+# ResWinWidth - width of residual window (3 sigma) for the phase.
+
+
+############################################
+# P Crustal Phases
+############################################
+
+Phase           Pg      P
+DistRange        0      9
+DistDelta     0.25
+DepthRange       0      34
+DepthDelta       2
+TimeDelta        5
+RayParam        17.12  19.173
+# time 0-180 sec
+# P phase that bottoms above the Conrad discontinuity(<20km)
+
+Phase           Pg      p
+DistRange        0      4.5
+DistDelta     0.25
+DepthRange       0      20
+DepthDelta       1
+TimeDelta        5
+# time 0-180 sec
+# Upward P phase(p) that starts above the Conrad discontinuity (<20km)
+
+Phase           Pb      P
+DistRange        0      9
+DistDelta     0.25
+DepthRange       0      34
+DepthDelta       2
+TimeDelta        5
+RayParam        13.81  17.1
+# P phase that bottoms between the Conrad discontinuity and the Moho (20 - 35km)
+
+Phase           Pb      p
+DistRange        0      4.5
+DistDelta     0.125
+DepthRange       20      35
+DepthDelta       1.5
+TimeDelta        2
+# time 0-180 sec
+# Upward P phase(p) that starts betwee the Conrad discontinuity and the Moho (20 - 35km)
+
+

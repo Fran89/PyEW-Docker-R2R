@@ -1,0 +1,36 @@
+From chris@seismo.usbr.gov Fri Apr 14 14:51:26 2000
+Date: Fri, 14 Apr 2000 15:38:06 -0600
+From: Chris Wood <chris@seismo.usbr.gov>
+To: earthw-list@nmt.edu
+Subject: POSIX port of earthworm v4.1B available for testing
+
+For those interested in such things, we ported the Solaris version
+of earthworm 4.1B to be POSIX-compliant.  The source is available at:
+	ftp://ftp.seismo.usbr.gov/pub/outgoing/v4.1_unix.tar.gz
+
+The code is alpha-level.  It has NOT been extensively tested, but
+most modules were tested with the standard test data set, or with some
+locally digitized data.  Test parameter files and data are available at:
+	ftp://ftp.seismo.usbr.gov/pub/outgoing/run_test_unix.tar.gz
+
+Most Unix vendors claim to be POSIX-compliant, so the code should
+run on those systems with few changes.  Of course, vendors sometimes
+exaggerate.  The code has currently been tested only on SGI machines.
+
+If anyone is interested in working on validating the code on Solaris
+or other POXIX platforms (Linux?), please contact me by email or phone.
+I don't have ready access to machines besides HP, SGI, and Linux, but
+am willing to work with others who do.
+
+Attached is an updated copy of an announcement handed out at the CNSS
+meeting that has some more details.
+
+ -Chris
+
+-- 
+
+ Chris Wood	Geophysicist
+		USBR Seismotectonics & Geophysics Group, Denver CO
+		Internet:  chris@seismo.usbr.gov
+		Voice:  (303) 445-3187
+

@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: status overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR>
+    Status Overview</H1>
+  <I>(last revised May 26, 2006)</I>
+</CENTER>
+
+<P> This program shows the earthworm status, the same as if status was requested
+  from startstop with a carriage return. This program is useful if there isn't
+  access to the startstop console, or startstop is running without the console.
+  The columns displayed vary slightly between platforms, here's an example from
+  Windows:
+<P><font face="Courier New, Courier, mono"><pre>
+
+                      EARTHWORM STATUS
+
+    Start time (UTC):           Thu May 25 12:59:34 2006
+    Current time (UTC):         Fri May 26 20:55:13 2006
+    Ring  1 name/key/size:      WAVE_RING / 1000 / 1024 kb
+    Ring  2 name/key/size:      HYPO_RING / 1015 / 1024 kb
+    Ring  3 name/key/size:      TRACEBUFGEN_RING / 1038 / 1024 kb
+    Startstop's Config File:    startstop_nt.d
+    Startstop's Priority Class: Normal
+    Startstop Version:          v7.0.1 2006-04-03
+
+          Process                 Process          Priority   Thread
+        Command Line                Id     Status   Class    Priority  Console
+ ------------------------         -------  ------  --------  --------  -------
+ statmgr statmgr.d                4792     Alive   Normal    Normal    New
+ copystatus WAVE_RING HYPO_RING   5548     Alive   Normal    Normal    NoNew
+ export_generic export_generic.d  584      Alive   Normal    Normal    New
+ scream2ew scream2ew.d            5576     Alive   Normal    Normal    New
+ export_generic2 export_generic2. 4984     Alive   Normal    Normal    New
+ export_generic export_generic3.d 5552     Alive   Normal    Normal    New
+ trig2disk trig2disk.d            4796     Alive   Normal    Normal    New
+</pre>
+</font>
+<P>
+<CENTER>
+    <A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/status_cmd.html">Status
+    Commands</A>
+  </CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS> <BR>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+# makefile for Ws2Ew
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+O = Ws2Ew.o Ws2EwUtils.o getconfig.o 
+J = $L/logit.o $L/getutil.o $L/time_ew.o $L/kom.o $L/transport.o $L/sleep_ew.o $L/socket_ew.o\
+ $L/socket_ew_common.o $L/threads_ew.o $L/mem_circ_queue.o $L/sema_ew.o
+
+all: lib ws2ew
+
+ws2ew: 	$(O)
+	$(CC) $(CFLAGS) -o $B/ws2ew $(O) $(J) -L. -L./mseed -lpsnms -lutil -lm -lpthread -lstdc++
+
+.c.o:
+	$(CC) $(CFLAGS) -I./mseed -c $<
+
+lib:
+	( cd mseed; make -f makefile.unix; cd ..; )
+
+clean: FORCE
+	( cd mseed; make -f makefile.unix clean; cd .. )
+	rm -f *.o
+
+clean_bin: FORCE
+	( cd mseed; make -f makefile.unix clean_bin; cd .. )
+	rm -f $B/ws2ew*
+
+FORCE:

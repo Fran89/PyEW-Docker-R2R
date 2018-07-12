@@ -1,0 +1,208 @@
+<HTML>
+<HEAD>
+   <TITLE>EARTHWORM Status 97/09</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+
+<H1 ALIGN=CENTER>
+<B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM Status Report<BR>
+</FONT></FONT></B></H1>
+<HR WIDTH="100%">
+
+<H5 ALIGN=RIGHT><TT>Sep 25, 1997</TT></H5>
+
+Alex and Barbara have just relocated to Golden. They're setting up their 
+offices, phones, and computers. They expect to spend considerable time in Menlo 
+Park and other regional network sites as required. Among their assignments are 
+to assist with the NOAA-USGS tsunami effort and to package and support 
+Earthworm for use by regional networks.
+<P>
+Recent work by the Earthworm team have been driven by the requirements of the 
+NOAA-USGS tsunami upgrade effort and by the SF Bay Area developments: 
+
+<H3>CURRENT DIRECTIONS:</H3>
+<B>1. Interface to interactive analysis codes:</B>
+We have been directed to expand Earthworm from its original "stand alone" 
+rapid notification function. We have thus been working on interface modules to 
+existing post-processing systems. We have completed an integration with the 
+existing system at the Alaska Tsunami Warning Center (ATWC), and are currently 
+working on an interface to SAC. The objective of the SAC integration is to 
+produce a fairly general interface, such that other formats can be easily 
+created. IceWorm, of course, has been successfully interfaced to DataScope for 
+some time.
+<P>
+<B>2. Data base:</B>
+Our involvement with data base management systems (DBMS) was driven by the 
+SF Bay Area rapid notification requirements: It is expected that several 
+institutions will contribute a variety of trace and parametric data seconds to 
+hours after an event, and that a variety of users will have to be served, 
+ranging from seismologists wishing to review and edit event parameters, 
+sophisticated clients requiring geographical data to drive damage prediction 
+models, as well as public and press inquiries.
+We have evaluated several DBMS's, and have chose Oracle. To date, we have 
+demonstrated a system which automatically inserts parametric and associated 
+trace data segments into a remote DBMS server machine within seconds of event 
+detection, and which retrieves trace data on request. Data base tables are 
+visible in real-time via a standard web browser. 
+Our current plan is to have the DBMS as an optional layer between Earthworm 
+and a post-processing system: We're working on a set of modules which insert 
+real-time Earthworm data into the DBMS, and programs which retrieve data from 
+the DBMS and create files in various formats. An alternate set of modules 
+(really a subset of the above), creates such files directly. 
+We have skirted the issue of schemas. We are currently using a temporary 
+trash schema to develop basic functions and make performance measurements. The 
+DBMS permits considerable flexibility in creating new schemas, modifying 
+existing ones, and presenting various external views of internal schemas. It 
+thus appears that we will be able to accommodate various schemas as they are 
+suggested to us.
+<P>
+<B>3. Operating Systems:</B>
+We are trying to follow Carl's edict of platform independence. In practice, 
+we 1)try to use as few operating system features as possible, 2) keep system-
+specific functions in a library of wrappers, and write a library of such 
+wrappers for each operating system. Thus, substituting the library at load time 
+will permit a complying module to migrate across operating systems. 3) There is 
+also a set of modules which are hopelessly system specific, either by their 
+nature, or because they contain sacred legacy code. The intent there is to 
+either produce system specific versions, or toward making them system 
+independent. 
+Our aim has been to stay viable on Sun and Intel platforms. Earthworm 
+currently runs on Solaris, OS/2, and NT. We anticipate abandoning OS/2 (with 
+great sadness) as it seems to unable be dying, most notably from a lack of 
+drivers for contemporary adapter cards. The NT port is completed and tested. 
+Our current thinking is to stay with Solaris (of course!) and NT. 
+<P>
+<B>4. Connectivity:</B>
+Earthworm currently offers several mechanisms for data exchange: 
+Two modules (Import/Export) permit real-time exchange of data between 
+distant systems. This includes any of the messages flowing within an Earthworm 
+system: trace data, phase picks, hypocentral summaries, trigger messages, etc. 
+The objectives are robustness, protection from overload, recovery from 
+disruptions, and security. Links can be established only after both parties 
+have agreed to the exchange, and have created matching configurations. 
+Currently, this mechanism is used to send picks from Menlo to the Pasadena CUSP 
+system and hypocenters and trace from Menlo to ATWC. 
+<P>
+WaveServer offers a mechanism for the exchange of trace data out of real 
+time. Offers internet-wide TCP service of trace data from within a few
+seconds of real-time to several days ago. See below.
+VDL (of USNSN) fame has been implemented as a module (Solaris only) of 
+Earthworm and has performed well. RCV, capable of moving triggered data from 
+USNSN to a local Earthworm is about to be implemented. Several RCV 
+implementations have been done (ATWC, Reno), but more work seems to be needed 
+to have a production-quality module.
+The proposed DBMS integration may provide yet another mechanism via DBMS 
+to DBMS replication.
+
+<H3>RECENT DEVELOPMENTS:</H3>
+
+<B>WaveServerIV:</B>
+This module has undergone several revisions, including significant 
+contributions by Kent Lindquist at UofA Fairbanks. This version includes much 
+effort aimed toward robustness and error handling. It has been in production at 
+Menlo Park for several months, and appears to be reliable. It listens to 
+specific channels of trace data within a local Earthworm, and maintains 
+circular disk files (up to 2Gb) for each channel. It allows variable telemetry
+block lengths, handles intermittent data without wasting memory, and offers 
+rapid restarts. 
+<P>
+It offers a multithreaded server, which supports a documented dialog. 
+Basically, the dialog permits a client to learn what the WaveServer knows 
+currently, and to ask the WaveServer for trace data in either raw or ASCII
+form. The raw mode returns the exact packets received, while the ASCII mode
+produces a `sanitized' time series suitable for immediate display. A suite of 
+client utility routines have been written (in C) to facilitate writing client 
+programs.
+<P>
+It can be configured to serve a maximum number of concurrent clients to 
+prevent overloading the client machine.
+<P>
+<B>WaveViewer:</B>
+This program was written by Carl Johnson to provide an electronic develocorder 
+for the Volcano program at Menlo Park. It operates as a client to WaveServer 
+(above), and can connect to any WaveViewer on the Internet. It offers general 
+trace browsing to within a few seconds of real-time, as well as event-by-event 
+viewing of triggers specified by a detector module. It is written in C++ and is 
+GUI- and graphics-oriented. It is thus not system independent (Carl!), but runs 
+on Windows95 and NT only.
+<P>
+<B>Trigger messages:</B>
+We have created a new message type (TYPE_TRIG). This evolved from our 
+efforts in support of the Mammoth Mt. volcanic monitoring at Menlo Park. This 
+message is ASCII, very readable, and gives an event id, an event start time, 
+and a list of participating station names, station trigger times, and start 
+time and duration of the `interesting' portion of data. 
+Currently, there are two sources of such messages: the John Evans 
+volcanic long-period event detector, and arc2trig (below), which is driven by a 
+hypo- inverse `arc' message. We are schedules to port the Carl Johnson STA/LTA 
+coincidence trigger into this scheme as well.
+<P>
+<B>arc2trig:</B>
+This module listens for hypo-arc messages from hypoinverse, and produces 
+trigger messages.
+<P>
+<B>dbreport:</B>
+Listens for hypo-arc messages and stuffs the parametric information into a 
+trial schema on a remote Oracle DBMS server machine.
+<P>
+<B>dbtrace_save:</B>
+Listens for trigger messages, and stuffs the specified trace data snippets and 
+associated information into a remote Oracle DBMS server machine. Trace data is 
+obtained from WaveServers in raw format. This module can be configured with a 
+list of known WaveServers (anywhere in the Internet), and will access any of 
+the WaveServers to obtain the trace data specified in the trigger message.
+<P>
+<B>dbtrace_get:</B>
+Given an event id (interactively for now), retrieves all associated trace data 
+snippets from the DBMS, and creates a directory containing flat files 
+containing the trace data. It is designed to have a replaceable back-end for 
+accommodating various formats.
+<P>
+<B>fftrace_save: </B>
+A combination of the two modules above, which does not use the DBMS, but goes 
+directly from earthworm messages and WaveServers to event files in various 
+formats.
+<P>
+<B>A/D NT:</B>
+We have ported the digitizer module to NT. The original module was DOS based, 
+required it's own machine, and produced multiplexed data. This version produces 
+the standard internal Earthworm demultiplexed format, can co-exist with other 
+modules in one NT box, and uses contemporary National Instruments hardware. A/D 
+triggering is either via an on-bard crystal clock or external pulses. Uses the 
+same multiplexers as the original DOS version.
+
+<H3>FUTURE DIRECTIONS:</H3>
+
+<B>Packaging Earthworm:</B>
+In response to the August 25th letter from the Earthworm Advisory Board, a 
+project is being launched to document and package Earthworm to provide an 
+overview, and to ease installation, operation, and modifications.
+<P>
+It has been suggested that we work on making it easier to 1) understand 
+what Earthworm is in general, 2) what is currently available, and 3) how to 
+install and configure. A meeting of interested people has been scheduled to 
+establish a working group. The intent is to work closely with CNSS by seeking 
+out suggestions, and announcing our progress via the CNSS list-server, and 
+other means as appropriate. 
+<P>
+<B>Support:</B>
+Develop a group of people at various institutions who can provide support at 
+various levels.
+<P>
+<B>Integration with Post-processing systems:</B>
+Complete current work leading to integration with interactive analysis and 
+archive packages. Initial targets are SAC and the UofW system.
+<P>
+<B>DBMS:</B>
+Continue on the Earthworm - DBMS - Postprocessing System integration. Keep the 
+DBMS as an optional layer, such that it can be inserted or removed with minimal 
+disruption. Work toward a Postprocessing to DBMS interface, allowing manually 
+generated parametric data to be inserted into the DBMS. Explore DBMS-based 
+products, such as GIS layers, web servers, etc.
+<HR>
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+</BODY>
+</HTML>

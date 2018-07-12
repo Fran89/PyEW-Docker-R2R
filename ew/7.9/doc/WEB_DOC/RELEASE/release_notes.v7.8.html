@@ -1,0 +1,245 @@
+<HTML>
+<HEAD>
+<TITLE> EW v7.8 released on June 24, 2015</TITLE>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER>
+  <H1>Earthworm Release Notes V7.8</H1>
+  <I>(June 24, 2015)</I>
+</CENTER>
+<p> <a href="#modules">New Modules</a><br>
+  <a href="#modifications">Modifications/ Bug Fixes to Existing Modules</a> <br>
+<p>
+<PRE>
+
+<b><a name=modules>NEW MODULES:</a></b>
+
+rtm2ew
+Binary only data_soruce module provided by Reftek for their new multiplexed low-latency RTP packets.
+June 21, 2015
+
+StarstopPipeConsole
+Provides a way to interact with the 'startstop' process using a console window.
+This is useful on Windows installations with 'startstop' service installed.
+October 28, 2014  Eric Thomas
+
+geojson2ew
+Receives GPS data from an AMQP server.
+November 20, 2014  Kevin Frechette
+
+
+<b><a name=modifications>MODIFICATIONS/BUG FIXES TO EXISTING MODULES:</a></b>
+
+nll_mgr update to make it full hyp2000arc message compatible (addition of location code and shadow lines)
+The full compatibility needs the Hyp2000arcCompatibilityMode keyword to be added in the .d file
+If the keyword is not present or commented, the old code is executed (no location code and no shadow lines)
+June 18, 2015 Jean-Marie Saurel
+
+hyp2000 and hyp2000_mgr upgraded to hypoinverse 1.41 from Fred Klein - revised datum calculation for average station elevations.
+See release notes from Fred here: ftp://ehzftp.wr.usgs.gov/klein/hyp1.41/
+June 11, 2015 Paul Friberg
+
+localmag
+Modified to send TYPE_NOMAGNITUDE message into transport ring when event processed but magnitude
+could not be computed; improved queue processing; updated version to "2.1.20 SNCL - 2015-05-26".
+May 26, 2015  Eric Thomas
+
+Hypo71PC
+Corrected Hypo71 source to allow correct behaviour with gfortran.
+This was broken since 7.7 when g77 was replaced by gfortran.
+May 15, 2015  Jean-Marie Saurel
+
+ewhtmlemail
+Modified to handle TYPE_NOMAGNITUDE message; updated version to "1.0.78 - 2015-05-12".
+May 13, 2015  Eric Thomas
+
+slink2ew
+Switched usage of gettimeofday() to more portable slp_dtime() for MaxRate logic (v2.7).
+May 1, 2015 Chad Trabant
+
+decimate
+Added check for configured 'DecimationRates' values less than 2; implemented Larry Baker's
+fix from Trac #417; added version code 1.8.0 2015-04-30 and logging of version.
+April 30, 2015  Eric Thomas
+
+carlsubtrig/carlstatrig
+Fixed checking for blank lines and carriage returns (windows) in the trigger station file reading codes.
+Before this fix, any blank lines on windows would cause the program to exit with a bogus message. Thanks to
+Steve Shuff for reporting this one!
+April 26, 2015 Paul Friberg
+
+mega-module (eqproc, eqbuf, eqcoda, eqverify, eqprelim, eqassemble, eqverify_assemble, geqproc)
+Improved via-pipe I/O and handling of stopped modules (especially under Windows); fixed 'eqbuf.c' bug
+that could cause program crash if 'eqproc.c' stopped.
+April 10, 2015  Eric Thomas
+
+export
+Modified to try to address Trac ticket #452 ("export_scnl doesn't exit"); updated version codes.
+March 27, 2015  Eric Thomas
+
+sniffwave
+Improved and fixed issues with parameter handling; added support for any combination of parameters;
+improved help text and other messages; updated version code to '2015-03-24 2.5.3'.
+March 24, 2015  Eric Thomas
+Fixed a flushing problem at startup. Program flushed ring, but really didn't. Two different transport calls
+were being used and this caused problems: tport_getmsg() to flush, and tport_copyfrom() to get messages.
+Paul Friberg May 27, 2014
+
+startstop_nt
+Fixed issue with text for "Startstop's Bin Dir" item shown on 'status' display.
+March 17, 2015  Eric Thomas
+
+heli_ewII
+Modified to retry initial connection to server(s), up to 10 times; updated version
+to '1.0.5 2015-03-17'.
+March 17, 2015  Eric Thomas
+
+ewexport2ringserver
+Modified to support Windows build (under Earthworm) while still allowing stand-alone
+Unix build (without Earthworm).
+March 12, 2015  Eric Thomas
+
+ew2ringserver
+Fixed up 'makefile.nt'; builds and runs now under Windows.
+March 10, 2015  Eric Thomas
+
+ew2rsam
+added in IncludeSCNL and ExcludeSCNL to be explicit for TBUF2s, version now 1.0.3
+also fixed a number of fprintf to stderr which should have been logit() calls.
+March 5, 2015 Paul Friberg
+
+startstop_service
+Added 'StartstopPipeConsole'.
+Fixed issue with lock-file being named ".lock" instead of "startstop_nt.d.lock" (Trac #429).
+Modified to enter information for "Startstop's Params Dir" and "Startstop's Bin Dir" items
+shown on 'status' display (Trac #76).
+March 5, 2015  Eric Thomas
+
+ewmseedarchiver
+Fixed issue where 'Archive' parameter could not have backslashes under Windows (Trac #493).
+March 4, 2015  Eric Thomas
+Fixed to handle windows writing.
+Stefan Lisowski and Chad Trabant  August 8, 2014
+
+ringdup / tbuf2mseed
+Applied fix from 'ew2ringserver' for "Byte swapping bug in ew2ringserver"; fixed memory
+leaks (trac #501); updated version of 'libmseed' library in use; improved error/debug
+logging; added 'FlushLatency' and 'Int32Encoding' configuration parameters.
+February 26, 2015  Eric Thomas
+
+pick_ew
+Made it so that if DeadSta parameter is set to 0.0 or less, then the check is completely ignored. 
+This was causing grief for some digitizers that had a high average count value (not close to zero).
+February 17, 2015 Paul Friberg
+
+trig2disk
+Added UW2 format for output for US Bureau of Reclamation (Chris Woods code) for Linux/Mac OS X only.
+January 20, 2015 Paul Friberg
+
+import_gen_pasv
+Added the capability to accept connections from a range of IP senders via
+a SenderNetMask optional setting. A perfect match is still the default if 
+this option is not listed.
+January 20, 2015 Paul Friberg
+
+ewhtmlemail
+Can now handle Mw and also not use or display Md magnitudes.
+August 13, 2014 Paul Friberg
+Not showing Md values subsequently fixed on Jan 22, 2015 - it broke when we put in No Coda detection versus 0.0 
+
+ewhtmlreport
+Added ML uncertainty to CSV file
+August 27, 2014 Paul Friberg
+
+trig2disk
+Modified the postproc command (to run a script after waveforms are written to disk) to handle Windoze
+Paul Friberg Sept 11, 2014
+
+src/util/nordic.c
+Fixed a string for date parsing that was too small. Caused blow up on Mac OS X Mavericks
+Paul Friberg Sept 5, 2014
+
+eqassemble
+Following a weird performance problem at Caltech, we moved the logic for reporting of earthquakes
+to the pipe inside the polling loop (heartbeats too). New version is 0.1.5 
+Paul Friberg July 10, 2014 (with discussion from Lynn Dietz)
+
+moleserv
+Cleaned up the witharrivals option so that pick_id's match properly, and SCNL in waveform linkage works.
+Paul Friberg June 4, 2014
+
+pick_ew
+Stopped rollover of pickid's at 999999 and fixed flushing at startup problem, new version v1.0.5
+Paul Friberg June 4, 2014
+
+scn2scnl/scnl2scn
+Mavericks Mac OS X bug fix found and fixed by Larry Baker of USGS
+ALso version numbers echoed on command line now, and updated - Paul Friberg
+Larry Baker May 12, 2014
+
+ewnotify 
+Fixed many memory checks. Improved robustness, no change in behavior or performance of module. AVO initiated this.
+Thanks to Larry Baker for suggestions and Tom Parker for testing.
+Paul Friberg Feb 24, 2014
+
+startstop (UNIX/Solaris)
+New version now allows use of @filename in the startstop_unix.d to redirect to other files for lookup info.
+NOT available in Windows version, yet.
+Paul Friberg Feb 26, 2014
+
+seisan_report
+This would segfault and crash when too many phases were converted. There was no 
+check on the MAX_NOR_PHASES when adding phases; there is now. I also increased
+the MAX_NOR_PHASES to 1000 and cleaned up a couple of compile time warnings.
+New Version: seisan_report 0.0.8 2014.01.11
+Paul Friberg Jan 11, 2014
+Modfied again on Feb 26, 2014 to compensate for incorrect IAML amplitudes in S files
+from localmag, put in a 100 * multiplier
+
+binder_ew
+Instead of unlinking phases, now mark them as dup, but do not use in location. 
+This only applies for stations where multiple channels could be picked for S or P.
+1.0.19 2013.09.24
+Paul Friberg September 24, 2013
+Modified again on Feb 26, 2014 to fix a problem with logging of stack_horizontals feature
+
+arc2trig
+Added ability to recognize S phases! and added a version number.
+Version 0.0.2 is the starting of this new incarnation.
+Paul Friberg Oct 7, 2013
+
+carlsubtrig
+Added in new historical playback mode option: PlaybackMode 1
+Paul Friberg Sept 23, 2013
+
+ewringserver
+Bug fix for non-native data types:
+Chad Trabant Sept 21, 2013
+
+ew_rsamalarm
+The logit initialization didn't took into account the MaxMsgSize value
+from the config file.
+It was hardcoded to 512, leading to error and reboots of the module.
+Jean-Marie Saurel Jan 10, 2014
+
+statmgr
+Check timeouts between .d and .desc, see trac #484
+Philip Crotwell July 25, 2014
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+****************************************************
+
+KNOWN BUGS:
+***********
+
+KNOWN DEFICIENCIES:
+*******************
+
+LIBRARY CHANGES:
+****************
+
+</PRE>
+</BODY>
+</HTML>

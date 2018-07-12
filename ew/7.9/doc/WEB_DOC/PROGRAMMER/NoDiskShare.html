@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Instructions to remove NT disk sharing:</TITLE>
+</HEAD>
+<BODY>
+
+<FONT FACE="Courier New" SIZE=2><P>Instructions to remove NT disk sharing:</P>
+
+<P>It's been noted that NT defaults to making its local disc drives shareable. This presents a serious security hole.  It's also been noted that simply marking the drive as "not shared" (by right-clicking on the drive name -&gt;Properties-&gt;Sharing-&gt;Not Shared) doesn't survive a reboot. To disable these shares completely, perform the following steps:</P>
+
+<P>1.&#9;Open windows explorer and right click the C: drive... select SHARING from the pop-up menu.  Select the NOT SHARED radio button.  Click OK to accept changes.  Repeat this step for all hard drives listed.</P>
+
+<P>2.&#9;Expand the C: drive to display its contents.  Right click the NT installation directory (normally winnt)... SHARING from the pop-up menu.  Select the NOT SHARED radio button.  Click OK to accept changes.  </P>
+
+<P>3.&#9;Run regedit.exe.  Expand HKEY_LOCAL_MACHINE + System + CurrentControlSet + Services + LanmanServer + Paramaters.  Select EDIT from the menu.  Select NEW then DWORD VALUE.  Type (without quotes) "AutoShareWks" if the system you are working on is NT Workstation, "AutoShareServer" if the system is an NT Server machine.  This will create a Dword value of 0 and stop the administrative shares from recreating themselves during the reboot process.</P>
+
+<P>  </P>
+<P>  </P></FONT></BODY>
+</HTML>

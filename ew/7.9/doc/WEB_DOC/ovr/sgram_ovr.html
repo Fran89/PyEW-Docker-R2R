@@ -1,0 +1,38 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P> Sgram  Overview</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<CENTER><H1>Earthworm Module: <BR> Sgram Overview</H1>
+<I>(last revised 18 October, 1999)</I></CENTER>
+<H3>Sgram - Spectrogram displays for the WWW</H3>
+<P>
+A few initial caveats: The present version is Solaris only. An NT version will be produced.
+<P>
+Sgram is designed to rapidly provide GIF images of spectrograms for display on the WWW.
+Sgram periodically retrieves current data for a selected list of stations and updates
+GIF images which are transferred to webserver(s).  The required waveforms are obtained
+via periodic requests to Earthworm waveserver(s).  Spectra are computed, converted to a color scale
+and plotted directly to GIF format image files.  As the required GIF files are constructed,
+they are copied via rcp to webserver(s) for viewing.  Perl Scripts are used on the webserver(s)
+to dress up the data displays.  Optionally, .html wrappers may be built and copied
+via rcp to the webserver(s) for viewing.
+<P>
+The optional structure for the webserver consists of an index.html page listing the
+stations and dates available for viewing.  The dates are each a hotlink to a
+station/date spectrogram GIF.
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/sgram_cmd.html">Sgram Commands File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+

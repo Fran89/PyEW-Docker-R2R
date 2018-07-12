@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Linux – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Linux?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Linux.html" title="View Linux">Linux</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Linux?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Linux?action=diff&amp;version=18" title="Version 18 by stefan">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2013-06-25T12%3A17%3A06-07%3A00&amp;precision=second" title="2013-06-25T12:17:06-07:00 in Timeline">3 months</a> ago</span>
+            <span class="trac-print">Last modified on 06/25/13 12:17:06</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="Linux.html#EarthwormInstallationProcedure:Linux">Earthworm Installation Procedure: Linux</a>
+    <ol>
+      <li>
+        <a href="Linux.html#StepstoCompileEarthwormon64-bitUbuntuv11.04">Steps to Compile Earthworm on 64-bit Ubuntu (v11.04)</a>
+        <ol>
+          <li>
+            <a href="Linux.html#Requiredsoftware">Required software</a>
+          </li>
+          <li>
+            <a href="Linux.html#Step-by-Stepprocessforcompilation">Step-by-Step process for compilation</a>
+          </li>
+          <li>
+            <a href="Linux.html#Step-by-StepProcessforfinalsetup">Step-by-Step Process for final set up</a>
+          </li>
+          <li>
+            <a href="Linux.html#Step-by-StepProcessforConfiguration">Step-by-Step Process for Configuration</a>
+            <ol>
+              <li>
+                <a href="Linux.html#Tocheckconfigurationworks">To check configuration works</a>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="Linux.html#LinuxStartupofEarthworm">Linux Startup of Earthworm</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormInstallationProcedure:Linux"><a class="wiki" href="Earthworm.html">Earthworm</a> Installation Procedure: Linux</h1>
+<h2 id="StepstoCompileEarthwormon64-bitUbuntuv11.04">Steps to Compile Earthworm on 64-bit Ubuntu (v11.04)</h2>
+<h3 id="Requiredsoftware">Required software</h3>
+<ul><li>GNU C++ Compiler 
+<pre class="wiki">  sudo apt-get install g++
+</pre></li><li>GNU C++ Compiler (multilib files)
+<pre class="wiki">  sudo apt-get install g++-multilib
+</pre></li><li>subversion
+<pre class="wiki">  sudo apt-get install subversion
+</pre></li><li>(to obtain multilib files for non-Ubuntu Linux OS see: <a class="ext-link" href="http://www.cyberciti.biz/faq/x86_64-linux-error-gnustub-32h-missing-error-and-solution/"><span class="icon">​</span>http://www.cyberciti.biz/faq/x86_64-linux-error-gnustub-32h-missing-error-and-solution/</a>)
+</li></ul><h3 id="Step-by-Stepprocessforcompilation">Step-by-Step process for compilation</h3>
+<ol><li>make a new directory called "ew"
+<pre class="wiki">cd /home/[...]
+</pre><pre class="wiki">mkdir ew
+</pre></li></ol><ol start="2"><li>Download EW package from: <a class="ext-link" href="http://folkworm.ceri.memphis.edu/ew-dist/"><span class="icon">​</span>http://folkworm.ceri.memphis.edu/ew-dist/</a>
+</li></ol><p>
+Click on "Source tar" 
+</p>
+<p>
+Download to /home/[...]/ew
+</p>
+<ol start="3"><li>Un tarball the source files (this will extract them):
+<pre class="wiki">cd /home/[...]/ew
+</pre><pre class="wiki">tar -xzvf v7.5-src.tar.gz
+</pre></li></ol><ol start="4"><li>Create the parameter directory /home/[...]/ew/run/params
+<pre class="wiki">cd /home/[...]/ew
+</pre><pre class="wiki">mkdir run
+</pre><pre class="wiki">cd run
+</pre><pre class="wiki">mkdir params
+</pre></li></ol><p>
+ 
+</p>
+<ol start="5"><li>Copy into /home/[...]/ew/run/params the file ew_linux.bash that you will find at /home/[...]/ew/earthworm_7.5/environment:
+<pre class="wiki">cd /home/[...]/ew/earthworm_7.5/environment
+</pre><pre class="wiki">cp ew_linux.bash /home/[...]/ew/run/params
+</pre></li></ol><ol start="6"><li>Set up your environment before you try to compile:
+<pre class="wiki">cd /home/[...]/ew/run/params
+</pre><pre class="wiki">vim ew_linux.bash
+</pre></li></ol><p>
+CHANGE TO:
+</p>
+<pre class="wiki">...
+
+export GLOBALFLAGS="-fno-stack-protector -m32 -Dlinux -D__i386 -D_LINUX -D_INTEL -D_USE_SCHED  -D_USE_PTHREADS -D_USE_TERMIOS -I${EW_HOME}/${EW_VERSION}/include"
+
+...
+
+export EW_HOME="${EW_INSTALL_HOME:-/home/[...]/ew}"
+export EW_VERSION="${EW_INSTALL_VERSION:-earthworm_7.5}"
+EW_RUN_DIR="${EW_RUN_DIR:-$EW_HOME/run}"
+</pre><p>
+do the same at:  
+</p>
+<pre class="wiki">vim /home/[...]/ew/earthworm_7.5/environment/ew_linux.bash
+</pre><ol start="7"><li>Edit your .bashrc file 
+<pre class="wiki">vim ~/.bashrc
+</pre></li></ol><p>
+add to the bottom of this file:
+</p>
+<pre class="wiki">source /home/[...]/earthworm_7.5/environment/ew_linux.bash
+</pre><ol start="8"><li>source it
+<pre class="wiki">cd /home/[...]/ew/run/params
+</pre><pre class="wiki">source ew_linux.bash
+</pre><pre class="wiki">source ~/.bashrc
+</pre></li></ol><ol start="9"><li>Compile
+<pre class="wiki">cd /home/[...]/ew/earthworm_7.5/src
+</pre><pre class="wiki">make unix 
+</pre></li></ol><h3 id="Step-by-StepProcessforfinalsetup">Step-by-Step Process for final set up</h3>
+<ol start="10"><li>Copy params from /home/[...]/ew/earthworm_7.5/params to /home/[...]/ew/run/params
+<pre class="wiki">cd /home/[...]/ew/earthworm_7.5/params
+</pre><pre class="wiki">cp * /home/[...]/ew/run/params
+</pre></li></ol><ol start="11"><li>Copy a few more .d param files from /home/[...]/ew/earthworm_7.5/environment to /home/[...]/ew/run/params
+<pre class="wiki">cp earthworm.d /home/[...]/ew/run/params
+</pre><pre class="wiki">cp earthworm_global.d /home/[...]/ew/run/params
+</pre><pre class="wiki">cp earthworm_commonvars.d /home/[...]/ew/run_prod/params
+</pre></li></ol><ol start="12"><li>Make log directory  
+<pre class="wiki">cd  /home/[...]/ew/run/
+</pre><pre class="wiki">mkdir log
+</pre></li></ol><h3 id="Step-by-StepProcessforConfiguration">Step-by-Step Process for Configuration</h3>
+<ol start="13"><li>Modify wave_serverV.d
+<pre class="wiki">vim /home/[...]/ew/run/params/wave_serverV.d
+</pre></li></ol><p>
+CHANGE TO:
+</p>
+<pre class="wiki">...
+
+ServerIPAdr   192.168.0.106 
+
+...
+
+TankStructFile  /home/[...]/ew/datafiles/p1000-1.str
+
+...
+
+Tank    GUID --- NC -- 528   INST_MENLO    MOD_WILDCARD       1         10000         /home/[...]/ew/tankfiles/p1001.tnk
+Tank    IRG1 T   NC -- 528   INST_MENLO    MOD_WILDCARD       1         10000         /home/[...]/ew/tankfiles/p1002.tnk
+Tank    IRG2 T   NC -- 528   INST_MENLO    MOD_WILDCARD       1         10000         /home/[...]/ew/tankfiles/p1003.tnk
+
+...
+
+TankStructFile2  /home/[...]/ew/datafiles/p1000-2.str
+...
+</pre><p>
+Not sure of your ip? Open a cmd window and type "ifconfig" and look for "inet address".
+".
+</p>
+<p>
+Does your ip change a lot? Use 0.0.0.0
+</p>
+<ol start="14"><li>Make a few more directories...
+<pre class="wiki">mkdir /home/[...]/ew/tankfiles
+</pre><pre class="wiki">mkdir /home/[...]/ew/datafiles
+</pre></li></ol><ol start="15"><li>Modify statmgr.d
+<pre class="wiki">vim /home/[...]/ew/run/params/statmgr.d 
+</pre></li></ol><p>
+CHANGE TO:
+</p>
+<pre class="wiki">...
+
+RingName    WAVE_RING
+
+...
+
+CheckAllRings   1
+
+...
+
+Descriptor statmgr.desc
+Descriptor startstop.desc
+Descriptor wave_serverV.desc
+Descriptor tankplayer.desc
+
+...
+</pre><ol start="16"><li>Modify tankplayer.d 
+<pre class="wiki">vim /home/[...]/ew/run/params/tankplayer.d
+</pre></li></ol><p>
+CHANGE TO:
+</p>
+<pre class="wiki">...
+
+InterMessageDelayMillisecs 1
+
+...
+
+WaveFile      /home/[...]/ew/tankfiles/file.tbuf
+
+...
+</pre><ol start="17"><li>Modify startstop_unix.d
+<pre class="wiki">vim /home/[...]/ew/run/params/startstop_unix.d 
+</pre></li></ol><p>
+CHANGE TO:
+</p>
+<pre class="wiki">...
+
+ nRing               1
+ Ring   WAVE_RING 1024
+# Ring   PICK_RING 1024
+# Ring   HYPO_RING 1024
+
+...
+
+#
+#
+ Process          "statmgr statmgr.d"
+ Class/Priority    TS 0
+#
+ Process          "wave_serverV wave_serverV.d"
+ Class/Priority    TS 0
+#
+ Process          "tankplayer tankplayer.d"
+ Class/Priority    TS 0
+#
+
+...
+
+</pre><p>
+Make sure to place a # sign in front of all other "Process and "Class/ Priority" lines.
+</p>
+<h4 id="Tocheckconfigurationworks">To check configuration works</h4>
+<ol start="18"><li>Open cmd window to run startstop
+</li></ol><p>
+Enter:
+</p>
+<pre class="wiki">startstop
+</pre><ol start="19"><li>To make sure waves are coming in:
+</li></ol><p>
+type any of the following into a command window:
+</p>
+<pre class="wiki">sniffring WAVE_RING
+</pre><pre class="wiki">sniffwave WAVE_RING wild wild wild wild
+</pre><pre class="wiki">getmenu [your ip]:16022
+</pre><h2 id="LinuxStartupofEarthworm">Linux Startup of Earthworm</h2>
+<p>
+Traditionally users start earthworm by setting the environment in a shell file, sourcing that, then running startstop. When you want to have Earthworm run automatically in a production system, the process is a bit more involved. First get EW running as a Unix user you want it to run as and make sure you are happy with the location of all files (logs and params) and the environment is configured properly and all works. Next, you need to add a script to the /etc/init.d to help start earthworm when the machine reboots. Here is an example earthworm script to put into init.d. Call it 'earthworm':
+</p>
+<pre class="wiki">#!/bin/sh
+#chkconfig: 35 95 20
+# description: This is the earthworm software start up script
+# processname: earthworm
+
+EW=/opt/earthworm
+export CLASSPATH=:/opt/earthworm/Winston1.1/lib/winston.jar
+export PYTHONPATH=:/usr/local/lib/python2.6:/var/python:/var/www:/var:/usr/share/python-support:/usr/local/lib/python2.6/site-packages:/opt/earthworm/ewfe/src
+
+case "$1" in
+        start)
+                if [ ! -f $EW/start_earthworm.sh ]
+                then
+                        echo "earthworm startup: cannot find start script start_earthworm.sh"  &gt; $EW/run_working/logs/start_earthworm.log 2&gt;&amp;1 &amp;
+                        exit
+                fi
+                su earthworm -c $EW/start_earthworm.sh &gt; $EW/run_working/logs/start_earthworm.log 2&gt;&amp;1 &amp;
+                ;;
+        stop)
+                su earthworm -c $EW/active_ew/bin/pau
+                ;;
+        restart)
+                $0 stop
+                $0 start
+                ;;
+        *)
+                echo "usage: start " # stop|start|restart"
+                ;;
+esac 
+</pre><p>
+In the /opt/earthworm directory of the above example, we create the shell script <strong>start_earthworm.sh</strong>, shown below:
+</p>
+<pre class="wiki">#!/bin/bash
+# Start up earthworm in background
+cd /opt/earthworm/active_ew
+source /opt/earthworm/run_working/params/ew_linux.bash
+startstop &gt;&amp; /opt/earthworm/run_working/logs/startstop &amp;
+</pre><p>
+Then use the Linux <strong>chkconfig</strong> program (see the manual page) to add it to runlevel 3 and 5. Ie: chkconfig --add earthworm
+</p>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Linux?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

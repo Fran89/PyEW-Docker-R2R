@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: geqproc overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> geqproc Overview</H1>
+<I>(last revised June 6, 2006)</I></CENTER>
+
+<p>
+geqproc was cloned from eqproc with a few imortant differences.
+First, geqproc listens for messages of type TYPE_LOC_GLOBAL
+(this is hard-wired).  Glass, for example, produces this message
+type.  It converts these messages to TYPE_HYP2000ARC and passes
+them on down the "sausage."  Second, the message gathering, assembly and
+"final" declaration are NOT done by geqproc since this functionality
+has been built into glass.  Rather, the TYPE_LOC_GLOBAL messages
+are simply queued and then passed on. If running binder_ew, eqproc
+should be used not geqproc.
+
+<P>
+geqproc is the first process in the earthquake-processing mega-module
+(sometimes referred to as "the sausage") that produces final earthquake
+locations for the Earthworm system. Only geqproc, the first link in the
+mega-module, is listed in startstop's configuration file to be
+started by startstop.  geqproc then starts the next process, specified in
+its "PipeTo" command, and communicates with it via a one-directional pipe.
+Each newly created sub-module starts the next link in the same way.  From
+startstop's point of view, the whole mega-module inherits the name of the
+first link (geqproc) and that's the only name it displays.  From statmgr's
+point of view, all processes within the mega-module share one module id,
+one heartbeat, and one descriptor file.  However, each sub-module has its
+own configuration file and its own log file.
+<P>
+
+<hr>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/geqproc_cmd.html">geqproc Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>

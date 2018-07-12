@@ -1,0 +1,32 @@
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lposix4 -lthread -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+LIBDIR = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I.
+
+SRCS = ew_rsamalarm.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(LIBDIR)/libew_mt.a \
+          $(LIBDIR)/ws_clientII.o \
+          $(LIBDIR)/socket_ew_common.o $(LIBDIR)/socket_ew.o $(LIBDIR)/swap.o  \
+          $(LIBDIR)/mem_circ_queue.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ew_rsamalarm
+
+ew_rsamalarm: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ew_rsamalarm $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ew_rsamalarm $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ew_rsamalarm
+
+clean_bin:
+	rm -f $(BINDIR)/ew_rsamalarm

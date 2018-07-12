@@ -1,0 +1,48 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread -ldl
+SOLARIS_FLAGS = -lm -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+MOD_NAME = ewintegrate
+
+CFLAGS = ${GLOBALFLAGS} -DMOD_STR='"${MOD_NAME}"'
+FFLAGS = 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = ewintegrate.o \
+       int_filt.o \
+       butterworth_c.o \
+       $L/swap.o \
+       $L/mem_circ_queue.o \
+       $L/trheadconv.o \
+       $L/xfrm.o \
+       $L/libew_mt.a
+
+
+ewintegrate: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/${MOD_NAME} $(OBJS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint ewintegrate.c int_filt.c butterworth_c.c \
+			$(GLOBALFLAGS)
+
+ewintegrate.o: ewintegrate.h
+int_filt.o: ewintegrate.h
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/${MOD_NAME}*
+
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+

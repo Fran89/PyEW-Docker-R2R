@@ -1,0 +1,17 @@
+#                    Make file for getfile_cl
+#
+CFLAGS = -g
+
+O = getfile_cl.o config.o socket_bsd.o chdir_sol.o rename_sol.o \
+    sleep_sol.o log.o tzset_sol.o
+
+all: getfile_cl
+
+getfile_cl: $O
+	$(CC) -o getfile_cl $O -lm -lc
+
+clean:
+	-/bin/rm -f getfile_cl *.o
+
+clean_bin:
+	-/bin/rm -f getfile_cl 

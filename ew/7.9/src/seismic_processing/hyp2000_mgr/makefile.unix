@@ -1,0 +1,220 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#                Make File For hyp2000_mgr
+
+# This program calls Fred Klein's hypoinv function.
+
+# -e flag allows source lines up to 132 characters long
+# modified for hyp2000 version 1.3 in June 2011 by Paul Friberg
+# for mac os x or linux, set FC to gfortran
+
+# VERY IMPORTANT for MAC users:
+# for MACOSX you need gfortran installed, -D_GFORTRAN in the GLOBALFLAGS,  and export FC=gfortran; export FFLAGS=-lg2c
+
+H     = ../hyp2000
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+#FFLAGS=-m32 -g
+
+LINUX_FLAGS = -lc -lpthread
+SOLARIS_FLAGS = -lc -lrt
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+#FC=g77 $(FORTRANFLAGS)
+
+F_OBJ = hypoinv.o hyp2000_ew_gnu.o hybda.o hycmd.o hysta.o hydel.o hyate.o hyfmc.o hycal.o \
+	hyxmc.o hycrh.o hycrt.o hystl.o hyopen.o hyinit.o hyphs.o hysou.o \
+	hytrl.o hyloc.o hysol.o hysvd.o hytra.o hytrh.o hytrt.o \
+	hymag.o hyrep.o hylst.o hysum.o hyinp.o hypro.o medwt.o utmcal.o \
+	hydelt.o hyedit.o hytime.o hybeg.o hypref.o hymagp.o linv.o linvol.o \
+	hyfile.o hylinv.o hylin.o hycre.o hytre.o trvcon.o allsubs.o hydatum.o
+
+# old version linkages 1.2
+#hyate.o hybda.o hybeg.o hycal.o \
+#        hycin.o hycmd.o hycout.o hycrh.o hycrt.o \
+#        hydel.o hydelt.o hyedit.o hyfile.o hyfmc.o hyinit.o \
+#        hyinp.o hyloc.o hylst.o hymag.o hymagp.o \
+#        hyopen.o hyphs.o hypoinv.o hypref.o hypro.o \
+#        hyrep.o hysol.o hysou.o hysta.o hystl.o \
+#        hysum.o hysvd.o hytime.o hytra.o hytrh.o \
+#        hytrl.o hytrt.o hyxmc.o init_event.o medwt.o \
+#        utmcal.o allsubs.o
+
+C_OBJ = hyp2000_mgr.o $L/pipe.o $L/read_arc.o $L/libew.a
+
+hyp2000_mgr: $(F_OBJ) $(C_OBJ)
+	$(FC) $(FFLAGS) $(C_OBJ) -I$(H) $(F_OBJ) -o $B/hyp2000_mgr $(SPECIFIC_FLAGS) $(FLFLAGS)
+#
+#  Rule for compiling the C source files
+#
+.c.o:
+	$(CC)  -c -g $(CFLAGS) $<
+
+hyp2000_ew_gnu.o: hyp2000_ew_gnu.f
+	$(FC) $(FFLAGS)  -c  hyp2000_ew_gnu.f
+
+allsubs.o:      $H/allsubs.f
+	$(FC) $(FFLAGS)  -c  $H/allsubs.f
+
+hydatum.o:      $H/hydatum.for
+	$(FC) $(FFLAGS)  -c  $H/hydatum.for
+
+hyate.o:      $H/hyate.for
+	$(FC) $(FFLAGS)  -c  $H/hyate.for
+
+hybda.o:      $H/hybda.for
+	$(FC) $(FFLAGS)  -c  $H/hybda.for
+
+hybeg.o:      $H/hybeg.f
+	$(FC) $(FFLAGS)  -c  $H/hybeg.f
+
+hycal.o:      $H/hycal.for
+	$(FC) $(FFLAGS)  -c  $H/hycal.for
+
+hycin.o:      $H/hycin.f
+	$(FC) $(FFLAGS)  -c  $H/hycin.f
+
+hycmd.o:      $H/hycmd.for
+	$(FC) $(FFLAGS)  -c  $H/hycmd.for
+
+hycout.o:     $H/hycout.f
+	$(FC) $(FFLAGS)  -c  $H/hycout.f
+
+hycrh.o:      $H/hycrh.for
+	$(FC) $(FFLAGS)  -c  $H/hycrh.for
+
+hycrt.o:      $H/hycrt.for
+	$(FC) $(FFLAGS)  -c  $H/hycrt.for
+
+hydel.o:      $H/hydel.for
+	$(FC) $(FFLAGS)  -c  $H/hydel.for
+
+hydelt.o:     $H/hydelt.f
+	$(FC) $(FFLAGS)  -c  $H/hydelt.f
+
+hyedit.o:     $H/hyedit.f
+	$(FC) $(FFLAGS)  -c  $H/hyedit.f
+
+hyfile.o:     $H/hyfile.for
+	$(FC) $(FFLAGS)  -c  $H/hyfile.for
+ 
+hyfmc.o:      $H/hyfmc.for
+	$(FC) $(FFLAGS)  -c  $H/hyfmc.for
+
+hyinit.o:     $H/hyinit.for
+	$(FC) $(FFLAGS)  -c  $H/hyinit.for
+
+hyinp.o:      $H/hyinp.for
+	$(FC) $(FFLAGS)  -c  $H/hyinp.for
+
+hyloc.o:      $H/hyloc.for
+	$(FC) $(FFLAGS)  -c  $H/hyloc.for
+
+hylst.o:      $H/hylst.for
+	$(FC) $(FFLAGS)  -c  $H/hylst.for
+
+hymag.o:      $H/hymag.for
+	$(FC) $(FFLAGS)  -c  $H/hymag.for
+
+hymagp.o:     $H/hymagp.for
+	$(FC) $(FFLAGS)  -c  $H/hymagp.for
+
+hyopen.o:     $H/hyopen.for
+	$(FC) $(FFLAGS)  -c  $H/hyopen.for
+
+hyphs.o:      $H/hyphs.for
+	$(FC) $(FFLAGS)  -c  $H/hyphs.for
+
+hypoinv.o:    ./hypoinv.for
+	$(FC) $(FFLAGS)  -c  ./hypoinv.for -I$H
+
+hypref.o:     $H/hypref.for
+	$(FC) $(FFLAGS)  -c  $H/hypref.for
+
+hypro.o:      $H/hypro.for
+	$(FC) $(FFLAGS)  -c  $H/hypro.for
+
+hyrep.o:      $H/hyrep.for
+	$(FC) $(FFLAGS)  -c  $H/hyrep.for
+
+hysol.o:      $H/hysol.for
+	$(FC) $(FFLAGS)  -c  $H/hysol.for
+
+hysou.o:      $H/hysou.for
+	$(FC) $(FFLAGS)  -c  $H/hysou.for
+
+hysta.o:      $H/hysta.for
+	$(FC) $(FFLAGS)  -c  $H/hysta.for
+
+hystl.o:      $H/hystl.for
+	$(FC) $(FFLAGS)  -c  $H/hystl.for
+
+hysum.o:      $H/hysum.for
+	$(FC) $(FFLAGS)  -c  $H/hysum.for
+
+hysvd.o:      $H/hysvd.f
+	$(FC) $(FFLAGS)  -c  $H/hysvd.f
+
+hytime.o:     $H/hytime.f
+	$(FC) $(FFLAGS)  -c  $H/hytime.f
+
+hytra.o:      $H/hytra.for
+	$(FC) $(FFLAGS)  -c  $H/hytra.for
+
+hytrh.o:      $H/hytrh.for
+	$(FC) $(FFLAGS)  -c  $H/hytrh.for
+
+hytrl.o:      $H/hytrl.for
+	$(FC) $(FFLAGS)  -c  $H/hytrl.for
+
+hytrt.o:      $H/hytrt.for
+	$(FC) $(FFLAGS)  -c  $H/hytrt.for
+
+hyxmc.o:      $H/hyxmc.for
+	$(FC) $(FFLAGS)  -c  $H/hyxmc.for
+
+init_event.o: $H/init_event.f
+	$(FC) $(FFLAGS)  -c  $H/init_event.f
+
+medwt.o:      $H/medwt.for
+	$(FC) $(FFLAGS)  -c  $H/medwt.for
+
+utmcal.o:     $H/utmcal.for
+	$(FC) $(FFLAGS)  -c  $H/utmcal.for
+
+hylin.o:     $H/hylin.for 
+	${FC} ${FFLAGS}  -c $H/hylin.for
+
+hylinv.o:     $H/hylinv.for 
+	${FC} ${FFLAGS}  -c $H/hylinv.for
+
+linv.o:       $H/linv.for
+	${FC} ${FFLAGS}  -c $H/linv.for
+
+linvol.o:     $H/linvol.for
+	${FC} ${FFLAGS}  -c $H/linvol.for
+
+hycre.o:     $H/hycre.for
+	${FC} ${FFLAGS}  -c $H/hycre.for
+
+hytre.o:     $H/hytre.for
+	${FC} ${FFLAGS}  -c $H/hytre.for
+
+trvcon.o:     $H/trvcon.for
+	${FC} ${FFLAGS}  -c $H/trvcon.for
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/hyp2000_mgr*
+

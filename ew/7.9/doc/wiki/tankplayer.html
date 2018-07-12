@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      tankplayer – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/tankplayer?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="tankplayer.html" title="View tankplayer">tankplayer</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/tankplayer?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/tankplayer?action=diff&amp;version=16" title="Version 16 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A08%3A57-07%3A00&amp;precision=second" title="2012-05-02T09:08:57-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:08:57</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="tankplayer.html#EarthwormModule:tankplayer">Earthworm Module: tankplayer</a>
+    <ol>
+      <li>
+        <a href="tankplayer.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="tankplayer.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="tankplayer.html#TuningOperatingEarthworms">Tuning Operating Earthworms</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#QualityAssurance">Quality Assurance</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#RealTimeDataFeed">Real Time Data Feed</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#HowTankplayerWorks">How Tankplayer Works</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#TankplayerTools">Tankplayer Tools</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#FiveNewTankplayertoolsforEWv7.2">Five New Tankplayer tools for EW v7.2</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="tankplayer.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="tankplayer.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="tankplayer.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="tankplayer.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:tankplayer"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: tankplayer</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Simulates an adsend module: reads a waveform file and puts waveform messages in shared memory in pseudo-real-time
+</p>
+<h2 id="Details">Details</h2>
+<p>
+"tankplayer" is part of the four-program set for recording and playing back the trace data for selected time intervals. See also <a class="wiki" href="trig2disk.html">trig2disk</a>, <a class="wiki" href="waveman2disk.html">waveman2disk</a>, and <a class="wiki" href="wave_serverV.html">wave_serverV</a>.
+</p>
+<p>
+Tankplayer has two common uses and one new use:
+</p>
+<h3 id="TuningOperatingEarthworms">Tuning Operating Earthworms</h3>
+<p>
+For example, an Earthworm system fails to locate a significant earthquake. The waveform data for the earthquake is requested from the wave_server and saved in tankplayer format. Using an experimental Earthworm, the event is played back with tankplayer, tuning the operational parameters until Earthworm performs satisfactorally. The operational parameters are then changed to those used in the test.
+</p>
+<h3 id="QualityAssurance">Quality Assurance</h3>
+<p>
+One is to perform quality assurance tests. For such tests, an experimental Earthworm system would be set up, and one or more tankplayers would be connected as the data source. Each tankplayer would be given a lengthy list of data files, and "tankplayer" would play (broadcast into the earthworm) the trace data from these files, one after another, generally overnight. The earthworm system under test would then process the incoming data. In the morning, we would come in and examine the rubble.
+</p>
+<p>
+Menlo Park has created a collection of over 50 historic trace data files, representing the trace data traffic during various 'moments of horror' at CalNet. These include the Loma Prieta mainshock, swarms during wind storms, concurrent events in different parts of the net, events during telemetry malfunctions, etc. These files were painfully created by reformatting CUSP data archive files. The format of these files is simple: it is a series of messages of TYPE_ADBUF, written with a binary write.
+</p>
+<h3 id="RealTimeDataFeed">Real Time Data Feed</h3>
+<p>
+Alternatively, as of Earthworm 7.3, the tankplayer module now accepts tank files moved into a loading directory for automatic playback. This is configured using the GetFromDir setting in the .d file. The files must be loaded in time order for this mode to work. This provides the Earthworm user with a new way to load waveforms into the rings...by creating a tank file generating program.
+</p>
+<h3 id="HowTankplayerWorks">How Tankplayer Works</h3>
+<p>
+On startup, tankplayer reads its configuration file. This specifies the message ring into which to inject the data, and the module name to use. Tankplayer is generally told to imitate a real data source, such as an A/D module, or a digital acquisition module. The parameter file also lists the data files to be played back. It also specifies a pause period. This was implemented to prevent the earthworm associator (binder) from becoming confused by rapid jumps in time between data files. This time period should be set to be larger than binder's association memory, to prevent it from trying to associate phase arrivals from different data files.
+</p>
+<p>
+In operation, tankplayer places the waveform messages from its input file(S) into shared memory in simulated real time, using the delta-t between time-stamps in successive message headers to determine its timing. When the end of file is reached, it waits "Pause" number of seconds, and goes on to the next file, as specified in the parameter file.
+</p>
+<p>
+Tankplayer is location code compliant and backward compatible. It accepts messages of either tracebuf or tracebuf2 as configured using the PlayMsgType parameter.
+</p>
+<h3 id="TankplayerTools">Tankplayer Tools</h3>
+<p>
+Separate from tankplayer are tools to help create tankfiles from sac format files. One can also archive tank files using <a class="wiki" href="waveman2disk.html">waveman2disk</a> and configuring appropriate output format. The two tools are sac2tb and remux_tbuf. The notes from Pete Lombard about these tools:
+</p>
+<p>
+This is sac2tb, a utility for turning SAC data files into tracebuf files. Usage: sac2tb [-n samples] sacfile &gt; tbuf-file
+Without the -n option, sac2tb defaults to 100 samples per packet.
+</p>
+<p>
+The intended use is that you run sac2tb on a bunch of SAC files for a given event or time period, "cat" all the files together, and then run remux_tbuf to make a tankplayer file. For example, in a directory of SAC files:
+</p>
+<pre class="wiki">  foreach m (*)
+  sac2tb $m &gt;&gt; tbuf
+  end
+
+  remux_tbuf tbuf test.tnk
+</pre><p>
+SAC doesn't have a provision for byte-swapping, so to my knowledge, SAC files are only in SPARC byte-order. At least that's the assumption here. If sac2tb is run on an intel machine, the SAC file will be swapped into intel byte-order and the resulting tracebuf messages will be marked accordingly.
+</p>
+<p>
+Pete Lombard, 19 May 2001
+</p>
+<h3 id="FiveNewTankplayertoolsforEWv7.2">Five New Tankplayer tools for EW v7.2</h3>
+<ul><li><strong>ms2tank</strong> - convert miniseed files into a tank player buffer. This version uses Chad Trabant's libmseed which is now a part of the stock earthworm distribution. The previous version, ms2tb, used the UCB qlib2 and was restricted to Solaris and Linux. This version works on Solaris, Windows, Linux, and Mac OS X.
+</li><li><strong>tanksniff</strong> - this module outputs a sniffwave like output when you pass it a tank. It allows you to look at the contents of your tanks without having to play them back in tankplayer. It takes one argument, a tank.
+</li><li><strong>tankcut</strong> - this module will extract out a specified time slice from a tank. It requires a starting time and duration for extraction. If you run the module without any arguments, it spits back the version number and the argument options/args:
+<pre class="wiki">$ tankcut
+Error, an input and output tank name must be provided
+tankcut version v0.0.1 2007-08-27
+usage: tankcut -s StartTime [-e EndTime|-d Duration] intank outtank
+		all times for -s and -e options must be in YYYYMMDDHHMMSS format
+        -s StartTime - when to start including tracebufs from intank
+	-e EndTime - when to end including tracebufs from intank
+        -d Duration - Duration in seconds from start time when to end including tracebufs from intank
+		Default Duration is 600 seconds from start time
+</pre></li><li><strong>ring2tank</strong> - have you ever wanted to suck the data out of your ring and play it back to simulate a few hours of running of your system....well now you can. This module does just what it says, it takes 2 arguments, the name of a RING to read from, and the name of a tankfile to write to. Be warned that this module has no real smarts and will just keep on filling a file till it grows infinitely. You must CAREFULLY run this module from the command line and kill it when you are done with your data gathering...or it may kill your system when the disk fills. On SOLARIS systems the disk size limit for a file is 2 gigabytes unless you compile the program with the LARGEFILE flag options. See tankcut above when you want to trim the tank generated from this module.
+</li><li><strong>dc2tank</strong> - Data Center to tank. This is a complex module that allows a user to gather some data from the IRIS DMC using the DHI2mseed.jar java program. It extracts the desired stations and builds a tank based on an event start time and duration. There is a <a class="wiki" href="README.dc2tank.html">README.dc2tank</a> provided with the code. This module requires that you have java installed on your system and in your path.
+</li></ul><p>
+Paul Friberg - December 27, 2007
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+Tankplayer reads file(s) containing waveform messages (of either TYPE_ADBUF, TYPE_TRACEBUF, or TYPE_TRACEBUF2) from a single data source. It places the waveform messages into shared memory in simulated real time, using the delta-t between time-stamps in successive message headers to determine its timing. On startup, tankplayer reads the configuration file named on the command line. Commands in this file set up all parameters used in playing back waveform messages from a file to a shared memory ring. In the control file, lines may begin with a valid tankplayer command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"># tankplayer config file for playing TYPE_TRACEBUF2 waveforms
+# tankplayer config file for playing waveform files
+
+RingName      WAVE_RING        # play waveforms into this ring
+MyModuleId    MOD_ADSEND_A     # as this module id
+PlayMsgType   TYPE_TRACEBUF2   # msg type to read from file
+LogFile       1                # 0=no log; 1=keep log file
+HeartBeatInt  30               # seconds between heartbeats
+Pause         10               # seconds to pause between wavefiles
+StartUpDelay  10               # seconds to wait before playing 1st file
+ScreenMsg     1                # (optional) if non-zero, informational messages will be
+                               #   written to the screen as data is played
+# SendLate      10.0           # (optional) if present, packets will be
+                               #   timestamped this many seconds before
+                               #   current time;
+                               # if absent, packets will have original time
+                               #   stamps
+                               #
+Debug         1                # for verbosity
+
+# List of files to play (up to 50 allowed):
+WaveFile      e:\QAnew\900819a.ew1.tbuf
+
+# or you could use a !GetFromDir in lieu of WaveFile entires: (new in 2008-09-09)
+#GetFromDir /home/paulf/memphis/params/live_tank # where to get tank files from (all must be the same format)
+#OpenWait 200    # wait time between tries in msecs
+#OpenTries 5     # number of retry times for copies in of files ot GetFrom Dir
+#CheckPeriod 1   # number of seconds to check the dir and then sleep
+#SaveDataFiles 1 # set to 0 to have tanks deleted
+
+# IgnoreTBVersionNumbers -
+# Prevents tankplayer from objecting to tracebuf2 packets that don't have
+# the correct version field.  Not recommended.
+#IgnoreTBVersionNumbers 0
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<p>
+Below are the commands recognized by tankplayer, grouped by the function they influence. All of the commands are required; they must be specified in the control file in order for tankplayer to operate.
+</p>
+<pre class="wiki">	Earthworm system setup:
+		HeartBeatInt 	 	required
+ 		MyModuleId	   	required
+		RingName	   	required
+
+	Waveform Playback:
+		Pause			required
+		PlayMsgType		required
+		StartUpDelay		required
+		SendLate		optional
+		WaveFile		required
+		IgnoreTBVersionNumbers	optional
+
+		GetFromDir		optional
+
+		InterMessageDelayMillisecs		optional
+
+		OpenWait		optional
+
+		OpenTries		optional
+
+		CheckPeriod		optional
+
+		SaveDataFiles		optional
+
+
+	Output Control:
+		LogFile		   	required
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and the values used by Calnet are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>CheckPeriod [n]</strong><br />
+Processed by: tankplayer_config<br />
+Function: Playback        <br />
+</p>
+<p>
+Defines the n seconds delay that the GetFromDir should be checked for new tank files. Note that this only effects checks when no tanks are being played back.
+</p>
+<pre class="wiki">Default:  1				
+</pre><p>
+<strong>GetFromDir [dir]</strong><br />
+Processed by: tankplayer_config<br />
+Function: Playback        <br />        <br />
+        
+Defines the directory  dir where to find tank files. This cannot be used in conjunction with WaveFile mode of running. If you set this parameter, then you may also set the OpenWait, OpenTries, CheckPeriod, and SaveDataFiles.
+</p>
+<pre class="wiki">Default:  none				
+</pre><p>
+<strong>InterMessageDelayMillisecs [n_msecs]</strong><br />
+Processed by: tankplayer_config        <br />
+Function: Playback        <br />        <br />
+        
+Defines the speed with which to release tracebufs  in units of milliseconds n_msecs This should be used with caution since it speeds up the playback and can overwhelm some modules if buffers are not sufficient sizes and CPU speed is not fast enough. Some experimentation is required to use this option for rapid playback.
+</p>
+<pre class="wiki">Default:  none				
+</pre><p>
+<strong>HeartBeatInt [nsec]</strong>        <br />
+Processed by: tankplayer_config                <br />
+Function: Earthworm setup        <br />        <br />
+                
+Defines the number of seconds nsec between TYPE_HEARTBEAT messages issued by tankplayer.
+</p>
+<pre class="wiki">Default:  none				
+Calnet:  HeartBeatInt 15
+</pre><p>
+<strong>IgnoreTBVersionNumbers [switch]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback        <br />        <br />
+</p>
+<p>
+Prevents tankplayer from objecting to tracebuf2 packets that don't have the correct version field. Not recommended.
+</p>
+<pre class="wiki">Default: 0	False
+</pre><p>
+<strong>LogFile [switch]</strong>        <br />
+Processed by: tankplayer_config                <br />
+Function: output        <br />        <br />
+        
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, tankplayer will write a daily log file(s) called tankplayerxx.log_yymmdd where xx is tankplayer's module id (set with "MyModuleId" command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+</pre><p>
+<strong>MyModuleId [mod_id]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Earthworm setup        <br />        <br />
+                
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number. Tankplayer also places this module id in the module id field of each waveform message header before it puts the message into shared memory.
+</p>
+<pre class="wiki">Default:  none				
+Example:  MyModuleId MOD_ADSEND_A
+</pre><p>
+<strong>OpenTries [n]</strong>        <br />
+Processed by: tankplayer_config                <br />
+Function: Playback        <br />        <br />
+                
+Defines the number  n of times to retry opening a tank file found in the GetFromDir directory. The purpose of this parameter is that sometimes if a copy is used to move the file, it will not be finished writing by the time the tankplayer module gets to it. For that reason, the OpenTries number of open attempts is made to open the file for updating (even though it is just being read from). This assures the file can be read exclusively by the tankplayer module. If the file is not readable after 5 tries it is not attempted. Between each try, the program waits OpenWait milliseconds.
+</p>
+<pre class="wiki">Default:  5
+</pre><p>
+                                
+<strong>OpenWait [n]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback                <br />        <br />        
+</p>
+<p>
+Defines the number  n  milliseconds to pause before retrying an open of a file in the GetFromDir directory.
+</p>
+<pre class="wiki">Default:  200				
+</pre><p>
+<strong>Pause [nsec]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback                <br />                <br />
+</p>
+<p>
+Defines the integer number of seconds nsec to pause after completing the playback of one waveform file before starting the playback of the next. Tankplayer will continue to issue its heartbeat while it is in pause-mode.
+</p>
+<pre class="wiki">Default:  none
+Example:  Pause 15
+</pre><p>
+<strong>PlayMsgType [type]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback                <br />        <br />
+        
+Tells tankplayer what type of message the waveform file(s) contain. type is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number. By the message-type, tankplayer knows the format of the waveform message; currently tankplayer only knows how to read and manipulate TYPE_ADBUF TYPE_TRACEBUF, and TYPE_TRACEBUF2 waveform messages.
+</p>
+<pre class="wiki">Default:  none
+Example:  PlayMsgType TYPE_TRACEBUF2
+</pre><p>
+<strong>RingName [ring]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Earthworm setup        <br />                <br />        
+</p>
+<p>
+Tells tankplayer which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none				Calnet:  RingName WAVE_RING
+</pre><p>
+<strong>SaveDataFiles [n]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback                <br />                <br />
+</p>
+<p>
+If  n  is set to 1, then the tankfiles found in the GetFromDir directory are saved to GetFromDir/save. If n is set to 0, the tank files are deleted..
+</p>
+<pre class="wiki">Default:  1	
+</pre><p>
+                        
+<strong>SendLate [xsec]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback        <br />        <br />
+                
+Defines the integer number of seconds xsec before current time to label the packets with. This is useful for carlsubtrig usage and tuning.
+</p>
+<pre class="wiki">Default:  none, this is an optional setting.
+Example:  SendLate 45
+</pre><p>
+<strong>StartUpDelay [xsec]</strong>        <br />
+Processed by: tankplayer_config        <br />
+Function: Playback        <br />        <br />
+                
+Defines the integer number of seconds xsec to wait on startup before beginning the playback of the first waveform file. Tankplayer will continue to issue its heartbeat while it is in startup-delay mode.
+</p>
+<pre class="wiki">Default:  none
+Example:  StartUpDelay 45
+</pre><p>
+<strong>WaveFile [path-file]</strong>        <br />
+Processed  by: tankplayer_config        <br />
+Function: Playback                <br />        <br />        
+</p>
+<p>
+Gives the name path-file of one waveform file that tankplayer should play back. path-file is a character string up to 45 characters long. Up to 50 "WaveFile" commands may be issued. Tankplayer will play the files in the order that they were listed in the configuration file, pausing between files by amount of time set in the "Pause" command. All files must contain the same type of waveform message (specified in the "PlayMsgType" command).
+</p>
+<pre class="wiki">Default:  none
+Example:  WaveFile  event1.waves
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/tankplayer?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

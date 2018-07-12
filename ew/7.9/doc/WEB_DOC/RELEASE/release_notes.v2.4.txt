@@ -1,0 +1,157 @@
+Release Notes:  Earthworm Version 2.4
+
+
+MODIFICATIONS TO EXISTING MODULES:
+**********************************
+
+
+EQVERIFY: One of the sausage routines. 
+
+1) Eqverify v2.31 and v2.4 have different tests on the temporal
+   distribution of P-arrival times:
+
+v2.31 uses function test_ptimes() which is based on Dave Oppenheimer's
+suggestions.  test_ptimes studies only picks arriving within "MaxDeltaT"
+seconds of the first-arriving pick.  It uses the median delta-t with 
+respect to the median arrival time in judging the P-arrival distribution.
+This test may label some small earthquakes in dense parts of the network 
+as noise.  It also allows some events that contain 2 groups of glitch 
+picks to slip through as earthquakes.
+
+v2.4 uses function test_pgroup() to look at the relative arrival times of 
+the picks to find groups of picks that belong to glitches.  In this test, all 
+arrivals within "MaxDeltaT" seconds (default = 30) of the first-arriving 
+pick are examined to see if they belong to a glitch as defined by default 
+settings (at least 4 picks within 0.03 seconds) or by the "define_glitch" 
+command.  If 50% or more of all picks belong to glitches, the event is 
+declared noise.  If 30-50% of the picks are glitch-picks, the event weight 
+is incremented by 1.
+For comparison, v2.4 still performs the test_ptimes() and prints a line
+for it in the log file, but it doesn't actually use its results.
+
+2) New config-file commands for v2.4:
+The following commands were added to allow the user to switch each
+noise test on or off (the tests are described in some detail in 
+.../user_doc/eqverify.commands).  These are required commands.
+	test_codawt	<switch>
+	test_freefitrms <switch>
+	test_pgroup 	<switch>
+	test_slopevsmag <switch>
+
+This command was added to set up the definition of a glitch for the
+test_pgroup function.  It's an optional command that changes default
+settings.
+ 	define_glitch <npick> <nsec>
+
+
+
+
+LOGIT:
+
+1) Bug fix on OS/2 Version: Time handling corrected so that UTC time
+will be correctly calculated and reported in the log files.
+	
+
+
+BINDER:
+
+1)  Bug fix in grid.c  4/8/96
+Previously associated, then culled picks sometimes get re-stacked
+into new events.  The bug was that the phase label from the old event
+was carried into the new stack when in fact all picks in a new stack
+should be labeled as "P" (example: if a pick was associated as "Pn" in
+a previous event, it was also called "Pn" in the newly-stacked event).
+This mis-labeling of phases sometimes caused location problems.
+A one-line addition to grid_stack() in grid.c forces all picks in a
+newly stacked event to be labeled "P".
+
+2)  Bug fix in hyp.c  4/24/96
+In hyp_pau(), these was a potential divide-by-zero problem in the
+calculation of ravg (the average epicentral distance).  Fixed.
+ 
+3)  New feature in grid.c
+Binder now has the ability to ignore glitches in its stacking phase.
+The following command was added to configure this feature:
+ 
+define_glitch <npick> <nsec>            grid_com                stack
+        Sets up the definition of a glitch for filtering arrivals before
+        stacking them.  A glitch is defined as at least <npick> arrivals
+        within <nsec> seconds.  Picks that belong to such a glitch are NOT
+        used in the stacking process.  If you want to turn off pre-stack
+        glitch filtering (ie, to make binder stack every pick), set <npick>
+        to zero (example "define_glitch 0 0.0").
+        Default:  define_glitch 4 0.03          Calnet:  define_glitch 4 0.03
+ 
+
+
+MENLO_REPORT:  
+
+Modified to log each event copied to remote system.
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+
+binder.d:	See above under binder 3.
+
+eqverify.d:	See above under eqverify 2.
+
+
+KNOWN BUGS:
+***********
+
+Hypoinverse:
+
+Hypoinverse will occasionally die or hang on an event.  The Earthworm
+recognizes that this has happened and sends an error message.  Once this
+happens, the system can no longer process earthquakes.
+
+It is recommended that a pager message go out when this error occurs and
+that the responder reboot the OS/2 box.
+
+
+Adsend:
+
+Picker does not pass on adsend module heartbeats, maybe no error messages either.
+
+
+Menlo_report:
+
+Logs twice when it sends arc file to remote system.
+
+
+Statmgr:
+
+The statmgr 'stopping' message does not always get out to pageits and email.
+
+
+Transport Layer:
+
+If the input buffer length is set too small by a program, the transport
+layer no longer returns an error message.  Instead it hangs the system
+under both solaris and os2.
+
+
+MODULES IN PROGRESS:
+********************
+
+	Export - version that forks under Solaris.
+
+	Import_generic
+
+	Export_generic
+
+	Getdst
+
+	Lptrig
+
+	Mteltrg
+
+	Picker_exp
+
+	Wave_server
+
+	Wave_client
+
+
+

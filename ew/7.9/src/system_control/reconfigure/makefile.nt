@@ -1,0 +1,34 @@
+
+
+#
+#
+#
+
+#                    Nmake File For reconfigure - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = reconfigure
+O = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $L\dirops_ew.obj $L\kom.obj \
+    $L\time_ew.obj $L\getutil.obj $L\transport.obj $L\sleep_ew.obj $L\logit.obj \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\reconfigure*

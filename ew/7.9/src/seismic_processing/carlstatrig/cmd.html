@@ -1,0 +1,370 @@
+<html>
+<head>
+<title>Earthworm Modules: CarlStaTrig commands</title>
+</head>
+
+<body TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<center><h1>Earthworm Modules: <br>CarlStaTrig Configuration File </h1>
+<i>(last revised October 6, 2006)</i></center>
+
+Page Index:<br>
+1.  <a HREF="#function">Functional command listing</a><br>
+
+2.  <a HREF="#alphabet">Alphabetic command listing & description</a><br>
+3.  <a HREF="#sample_config">Sample Configuration File</a><br>
+4.  <a HREF="#sample_station">Sample Station File</a>
+<p>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, carlstatrig reads the configuration file named on the command
+line. Commands in this file set all the parameters used for computing Carl
+Johnson triggers for individual stations. In the control file, lines may begin with a
+valid carlstatrig command (listed below) or with one of 2 special characters:
+
+<blockquote><pre>
+#  marks the line as a comment (example: # This is a comment).<br>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+
+</blockquote></pre>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<p>
+<a NAME="function">
+<h2>1.  FUNCTIONAL COMMAND LISTING</h2>
+<p>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by carlstatrig, grouped by the function
+they influence.  Most of the commands are required; they may be specified
+in any order in the control file.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<pre>	Earthworm system setup:
+		<a HREF="#MyModuleId">MyModuleId</a>		required
+		<a HREF="#RingNameIn">RingNameIn</a>		required
+		<a HREF="#RingNameOut">RingNameOut</a>		required
+		<a HREF="#HeartBeatInterval">HeartBeatInterval</a>	required
+		<a HREF="#Debug">Debug</a>
+
+	Station file and trigger parameters:
+		<a HREF="#StationFile">StationFile</a>		required
+		<a HREF="#MaxGap">MaxGap</a>
+		<a HREF="#StartUp">Startup</a>			required
+		<a HREF="#STAtime">STAtime</a>
+		<a HREF="#LTAtime">LTAtime</a>
+		<a HREF="#Ratio">Ratio</a>			required
+		<a HREF="#Quiet">Quiet</a>			required
+		<a HREF="#Decimation">Decomation</a>
+
+</pre>
+
+<a NAME="alphabet">
+<h2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</h2>
+<p>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<pre><b>
+command <font color=red>arg1</font>		processed by		function
+</pre></b>
+<hr>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<a NAME="Debug">  <!-- command name as anchor inside quotes -->
+<pre><b>Debug <font color=red>level</font>		ReadConfig		Earthworm setup
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the debug logging <font color=red>level</font> for CarlStaTrig. With <font color=red>level</font>
+
+set to zero minimal logging is done. Very verbose logging is obtained with <font color=red>level</font> set to 4.
+<pre><!-- Default and example go here   -->
+Default:  0
+Example:  Debug  3
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="Decimation">  <!-- command name as anchor inside quotes -->
+<pre><b>Decimation <font color=red>count</font>		ReadConfig		Trigger parameter
+</b><!-- command args ... -->
+
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the decimation <font color=red>count</font> for CarlStaTrig. Normally, every sample
+is used for computing averages; this is the default decimation of 1. To reduce CPU load,
+the decimation may be set to 2 or 3 without significantly affecting the trigger results.
+Then CarlStaTrig will use every second or third sample for averaging.
+<pre><!-- Default and example go here   -->
+Default:  1
+Example:  Decimation  3
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="HeartBeatInterval">  <!-- command name as anchor inside quotes -->
+<pre><b>HeartBeatInterval <font color=red>nsec</font>	ReadConfig		Earthworm Setup
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Defines the number of seconds, <font color=red>nsec</font> between TYPE_HEARTBEAT
+messages issued by carlstatrig.
+Example:  HeartBeatInterval 30
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="MaxGap">  <!-- command name as anchor inside quotes -->
+<pre><b>MaxGap <font color=red>nlevel</font>		ReadConfig		Trigger parameter
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the gap size, in sample periods, above which the station averages are restarted.
+For smaller gaps, data is interpolated to the sample period for that station. The sample
+period is specified in TRACE_BUF messages from the source module for that station.
+The default is 1; that is, reset the station averages for any gap larger than the sample
+period.
+<pre><!-- Default and example go here   -->
+Default:  1
+Example:  MaxGap  15
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<pre><b>MyModuleId <font color=red>mod_id</font>	ReadConfig		Earthworm setup
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages.
+<font color=red>mod_id</font> is a character string (valid strings are listed in earthworm.d) that relates
+to a unique single-byte number.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_CARLSTATRIG
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="Quiet">  <!-- command name as anchor inside quotes -->
+<pre><b>Quiet <font color=red>equiet</font>		ReadConfig		Trigger parameter
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the value of Carl Johnson's <font color=red>equiet</font> parameter for the station
+trigger calculation. This parameter is a trigger level adjustment.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  Quiet 4.0
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="Ratio">  <!-- command name as anchor inside quotes -->
+<pre><b>Ratio <font color=red>ratio</font>		ReadConfig		Trigger parameter
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the value of the trigger <font color=red>ratio</font>. In Carl Johnson's original
+formulation, this was enumer / edenom.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  Ratio 2.3
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="RingNameIn">  <!-- command name as anchor inside quotes -->
+<pre><b>RingNameIn <font color=red>ring</font>		ReadConfig		Earthworm setup
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Tells carlstatrig which shared memory region to use for input. <font color=red>ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique number for the key to the shared memory region.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  RingNameIn  WAVE_RING
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="RingNameOut">  <!-- command name as anchor inside quotes -->
+<pre><b>RingNameOut <font color=red>ring</font>		ReadConfig		Earthworm setup
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Tells carlstatrig which shared memory region to use for output. <font color=red>ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique number for the key to the shared memory region.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  RingNameOut PICK_RING
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="StartUp">  <!-- command name as anchor inside quotes -->
+<pre><b>StartUp <font color=red>nsec</font>		ReadConfig		Trigger parameter
+
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the startup time for stations averages to <font color=red>nsec</font> seconds. Carlstatrig waits
+this number of seconds after startup and reset before it calculates station triggers. This allows
+long-term averages to stabilize; otherwise false triggers would be sent on startup.
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  StartUp  7
+</pre>
+</blockquote>
+<hr>
+
+<a NAME="STAtime">  <!-- command name as anchor inside quotes -->
+
+<pre><b>STAtime <font color=red>nsec</font>		ReadConfig		Trigger parameter
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the time for the short-term average (STA) to <font color=red>nsec</font> seconds.
+<pre><!-- Default and example go here   -->
+Default:  1
+Example:  STAtime  3
+</pre>
+</blockquote>
+<hr>
+
+
+<a NAME="LTAtime">  <!-- command name as anchor inside quotes -->
+
+<pre><b>LTAtime <font color=red>nsta</font>		ReadConfig		Trigger parameter
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Sets the nominal time for the long-term average (LTA) time to <font color=red>nsta</font>
+STAtimes. This is the time over which the time-dependent weighting factor used in the
+averaging decreases by a factor of approximately 1/e.
+<pre><!-- Default and example go here   -->
+Default:  8
+Example:  LTAtime  20
+</pre>
+</blockquote>
+<hr>
+
+
+<a NAME="StationFile">  <!-- command name as anchor inside quotes -->
+<pre><b>StationFile <font color=red>sta_file</font>	ReadConfig		Station File
+</b><!-- command args ... -->
+</pre>
+<blockquote> <!-- command description goes here -->
+Specifes <font color=red>sta_file</font> as the file of stations to be monitored by carlstatrig.
+This file can be the same station file as the one for CarlSubTrig. CarlStaTrig uses all TRACEBUF
+messages it gets from its input ring which are listed in the station file. Any other TRACEBUF
+messages, and stations in the file for which there are no TRACEBUF messages, are ignored. In the
+following sample station file, the <b>Trigger Time To Live</b> value is not used by carlstaTrig.
+
+<pre><!-- Default and example go here   -->
+Default:  none
+Example:  StationFile  pnsn_trig.sta
+</pre>
+<a NAME="sample_config">
+<h2><br>3. Sample Configuration File </h2>
+<pre>
+# $Id: cmd.html 4571 2011-08-18 20:28:39Z stefan $
+#
+# CarlStaTrig's Parameter File
+#
+
+#
+#  Basic Earthworm Setup
+#
+MyModuleId      MOD_CARLSTATRIG # Module id for this instance of CarlStaTrig
+                                # - REQUIRED
+RingNameIn      WAVE_RING       # Name of ring from which trace data will be
+                                #   read - REQUIRED.
+RingNameOut     PICK_RING       # Name of ring to which triggers will be
+                                #   written - REQUIRED.
+HeartBeatInterval       0       # Heartbeat Interval (seconds). REQUIRED
+
+# Set debug log message level: OPTIONAL (default: 0)
+#   0  log transport errors, changes in datatype, samplerate, failure to flush
+#   1  above plus large gaps and overlaps
+#   2  above plus small gaps and overlaps, station trigger changes -
+#      best for beginning installations
+#   3  above plus station trigger values and messages
+#   4  above plus "unable to find station..."
+#   5  above plus many details of message handling - very verbose.
+
+Debug 1
+
+#
+# CarlTrig Specific Setup
+#
+StationFile     "pnsn_trig.sta" # Name of file containing station information -
+                                #   REQUIRED.
+MaxGap          1.5             # Maximum gap between trace data points that
+                                #   can be interpolated (otherwise restart the
+                                #   station). OPTIONAL (default MaxGap = 1)
+StartUp         60              # Minimum seconds of trace data needed to
+                                #   before using LTAs REQUIRED. Recommended
+                                #   value is 2.5 * LTAtime * STAtime.
+STAtime		3		# Number of seconds for short term average
+				# OPTIONAL (integer; default STAtime = 1)
+LTAtime         8               # Long-term average time (time to 1/e weight)
+				#   in units of STAtime.
+                                # OPTIONAL (default LTAtime = 8)
+Decimation      1               # Decimation factor used in averages
+                                # OPTIONAL (default Decimation = 1)
+Ratio           2.3             # Carl Trigger parameter: enumer / edenom
+                                # REQUIRED
+Quiet           4.0             # Carl Trigger equiet parameter - REQUIRED
+</pre>
+<a NAME="sample_station">
+<h2><br>4. Sample Station File </h2>
+<pre>
+#
+#   carlsta/subtrig.sta  FOR PNSN
+#
+#   PNSN station list
+#
+# Arbitrary Station Component Network Trigger
+#           Code    Code      Code    Time To Live
+# --------- ------- ------- --------- ------------
+  station   GMW	    EHZ	UW        10
+  station   GSM       EHZ	UW        10
+  station   BLN       EHZ	UW        10
+  station   CPW       EHZ     UW        10
+  station   JCW       EHZ     UW        10
+</pre>
+</blockquote>
+<hr>
+
+<center>
+<a HREF="../modules.html">Module Index</a> |
+<a HREF="../ovr/carltrig.html">CarlStaTrig/CarlSubTrig Overview</a> |
+<a HREF="carlsubtrig.html">CarlSubTrig Commands</a>
+</center>
+
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+
+</address>
+</body>
+</html>
+

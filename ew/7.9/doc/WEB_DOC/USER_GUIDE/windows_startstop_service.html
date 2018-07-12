@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+  <meta content="text/html;charset=ISO-8859-1" http-equiv="Content-Type">
+<title>Earthworm Windows Startstop Service</title></head><body bgcolor="#ffffff">
+<center>
+  <h1>Earthworm Windows Service</h1>
+  <i>(last revised 28 October 2014)</i>
+</center>
+<p> Readme for startstop_service<br>
+  ----------------------------
+</p><p>Service functionality added by:<br>
+  Mark Morrison<br>
+  USGS - Golden, CO</p>
+<p>(Additional edits to these docs by Stefan Lisowski and Eric Thomas, ISTI)</p>
+<p>Setup of startstop_service (Follow these instructions carefully.)<br>
+  --------------------------</p>
+<p>startstop_service is identical to the old startstop_nt, except that it runs
+  as a Windows service. This means that the parameters are all the same - read
+  from startstop_nt.d - but that startstop isn't just executed from a command
+  window or via the scheduler. Note that this version is taken from startstop_nt,
+  so I haven't compiled or tested any of this under Solaris or other systems.
+  I believe it's generally felt, however, that these modifications don't apply
+  to Solaris.</p>
+<p>To install startstop_service as a service, do the following:</p>
+<p> - Open a command window. Switch to the directory containing the startstop
+  executable (if it's not already in the Windows path).</p>
+<p> - Type:&nbsp; <tt>startstop_service -install</tt><br>
+  This will install the service. You should get a message saying that installation
+  was successful.</p>
+<p> - Open the Services Control Panel. (It's under Control Panel-&gt;Administrative
+  Tools-&gt;Services.) You should see something listed as "Earthworm start-stop".
+  Verify that this service is set to run in Automatic mode (meaning it automatically
+  starts after a reboot, without waiting for user intervention.)</p>
+<p> - The start-stop service needs to be setup to run using the "Local
+System" account, and with the "Allow service to interact with desktop"
+option disabled (checkbox cleared). To verify these settings, select
+the properties of the start-stop service (double-clicking or selecting
+Properties from the toolbar). Select the Log On tab, and verify that
+the settings are as just described.<br>
+</p>
+<p>- There's no way I've been able to find that allows environment variables
+  to be loaded via ew_nt.cmd (or a similar file) before the start-stop service runs. So, any
+  environment variables required for Earthworm functionality have to be loaded
+  systemwide before starting the startstop service. To set environment variables,
+  select the System control panel, select the Advanced tab, and select Environment
+  Variables. Under the "System variables" window (<b>NOT the "user
+  variables for XXX User" window</b>), make sure that any environment variables
+  you'll need are defined here. A typical subset may include:<br>
+  - EW_HOME<br>
+  - EW_INSTALLATION<br>
+  - EW_LOG<br>
+  - EW_PARAMS<br>
+  - SYS_NAME<br>
+  - TZ<br>
+  In addition, make sure \earthworm\bin directory (or whichever directory contains
+  your earthworm binaries) is included somewhere in the "Path" variable.
+  Once these are set, click OK, and reboot the machine.</p>
+<p>(Note that setting the Timezone here to UTC may affect how other non-earthworm
+  applications on your machine keep track of and display time.)</p>
+<p> - If you didn't have to change any environment variables and reboot, you can
+  now start the startstop service by clicking Start from the Services Control
+  Panel (the triangle "Play" button). If you reboot, the service will
+  start automatically.</p>
+<p>Notes on running startstop_service<br>
+  ----------------------------------</p>
+<p>Apart from running as a Windows service, startstop_service behaves just as
+  startstop_nt. One interesting note is that if you select startstop_service in
+  the Services control panel and click Stop or Restart, then startstop will attempt
+  to shut down all applications attached to its ring via an Earthworm TERMINATE
+  message.</p>The
+running startstop_service can be difficult to access, especially on
+versions of Windows newer than Windows XP. The StartstopPipeConsole
+tool provides a way to interact with the 'startstop' process using a
+console window. For more information, see the "Earthworm
+StartstopPipeConsole" documentation.<br>
+<p>Removing startstop_service<br>
+  ----------------------------------</p>
+
+If you ever need to remove startstop_service from your machine, first stop
+  the service (as above), then open a command window and type:&nbsp; <tt>startstop_service
+  -uninstall</tt><br>
+
+  You should also perform this step if you ever need to move the startstop binary
+  to another directory on your hard drive; otherwise, Windows will not know where
+  to find the executable.<br>
+<br>
+<p>Old startstop_service notes<br>
+  ----------------------------------</p>
+Below are older startstop_service notes that were created before the
+StartstopPipeConsole tool was available. They should only be referenced
+and used if the StartstopPipeConsole tool does not operate on a given
+installation.<br>
+<br>
+----<br>
+<br>
+By default, startstop is set to run as the "Local Service" account. We
+need to change this to run as the Administrator, or else any Earthworm
+rings won't be accessible to other users, and typing "status" won't
+work. To change the user the service runs under, Select the Properties
+of the startstop service (double-clicking or selecting Properties from
+the toolbar). Select the Log On tab, select This account, and select
+Browse. For Win2000 machines, select the Administrator account from the
+list, then click OK. Type in the password twice, and click OK again.
+For WinXP machines, select Advanced, then click Find Now. The listbox
+at the bottom should show all the users locally set up on that
+computer. Select the Administrator, then click OK twice. Now type in
+the Administrator password twice, then click OK again.<br>
+NOTE: This whole rigamarole means that whenever the Administrator
+password is changed on a machine running startstop, the password must
+be changed again from the Services control panel.<br>
+<br>
+----<br>
+ 
+<p>If you want to look at the Status of Earthworm, or if you want to Restart an
+  Earthworm module or Reconfigure Earthworm's modules and rings, and you aren't
+  logged in as Administrator, you can either use StartstopConsole,
+  or you can do the following if you know the Administrator password: (Instructions
+  for <b>Windows XP</b>, but may work on other versions of Windows. See below for Vista.):<br>
+  - Go to the Windows Start menu, and choose "Run"<br>
+  - Type the following:</p>
+<blockquote>
+  <p>runas /user:YOUR_MACHINE_NAME_HERE\administrator cmd </p>
+</blockquote>
+<p>- This will open up a command window which should be able to connect to the
+  running Earthworm, and thus allow you to type "restart", "reconfigure",
+  "status", "pidpau" or "pau" here.</p>
+
+  <p>
+  - To view what's going on in <b>Vista or Windows Server 2008</b>
+  </p><p>
+  StartstopConsole won't work in Vista, nor will "runas" give you access to the session zero.<br>
+  - Beforehand, add 'cmd' as a line in your startstop_nt.d with a
+  NewConsole, and reboot so the service starts this up.<br>
+  - if you're not at the machine, make a remote desktop connection as
+  whatever user you like<br>
+  - open a command prompt<br>
+  - if you're not running as administrator, in the command prompt type:<br>
+</p><pre>          runas /user:YOUR_MACHINE_NAME_HERE\administrator cmd<br>  	      enter the admin password<br></pre><p>
+  - in the new administrator command prompt that comes up type:<br>
+</p><pre>          sc config ui0detect start= auto<br>          sc start ui0detect<br></pre><p>
+  (if you get a Interactive Services Detection dialog, you can choose "Ask
+  me later)
+  </p><p>
+  Once you've done all of the above, you can access session zero. The
+  machine could be rebooted, different users couldlog in, etc. For any
+  user to access startstop_service's session zero:
+  </p><p>
+  - in a command prompt window now you can type:<br>
+</p><pre>          rundll32 winsta.dll,WinStationSwitchToServicesSession<br></pre>
+      <p>
+      This will switch you to console 0. If you added a cmd prompt to
+	  startstop_nt.d, you should see it here now, and can type "status" or
+	  whatever.
+	  </p><p>
+	  That's a bit of a handful to type. Since your earthworm bin directory is already in your Windows path,
+	  you can cd to that bin directory and do something like:<br>
+</p><pre>          echo rundll32 winsta.dll,WinStationSwitchToServicesSession &gt; session0.bat<br></pre><p>
+      So now you can just type "session0" at a command prompt to get to the startstop session.
+	  </p><p>
+	  Note that this means that ANY user of the system will be able to get a
+	  prompt with administrator privileges. I this essentially the same power
+one has with startstopconsole which has been part of Earthworm for a while.
+	</p><p>
+	(This was all tested with Vista. It _should_ work with Windows Server 2008 too, but hasn't been tested there yet. If
+	you do it successfully or unsuccessfully please let us know.)
+</p><p>
+With <b>2003 Server</b></p><p>
+How to Connect to the Console Session</p><p> (From <a href="http://support.microsoft.com/kb/278845">http://support.microsoft.com/kb/278845</a>)</p><p>When
+you connect to the console session of a Windows Server 2003-based
+server, no other user has to be already logged on to the console
+session. Even if no one is logged on to the console, you are logged on
+just as if you were sitting at the physical console.
+</p><p>
+To connect from the remote Windows Server 2003-based computer, open a command prompt, and then type the following command:</p><p>
+<code>
+mstsc -v:servername /F -console</code></p><p>where mstsc is the
+Remote Desktop connection executable file, -v indicates a server to
+connect to, /F indicates full screen mode, and -console is the
+instruction to connect to the console session. </p><p>
+
+
+
+</p><br>
+<hr>
+<address>Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+
+</body></html>

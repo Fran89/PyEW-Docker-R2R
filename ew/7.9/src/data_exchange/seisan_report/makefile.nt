@@ -1,0 +1,37 @@
+
+#
+#                  Nmake File For menlo_report and 
+#                               Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all:
+   emake $B\seisan_report.exe
+
+menlo_report:
+   emake $B\seisan_report.exe
+
+
+$B\seisan_report.exe: seisan_report.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) seisan_report.obj \
+    $L\libew.lib $L\copyfile.obj $L\dirops_ew.obj \
+    $L\sleep_ew.obj $L\nordic.obj \
+    $L\rw_mag.obj $L\read_arc.obj $L\fleng.obj \
+    -out:$B\seisan_report.exe
+
+
+.c.obj:
+   $(cc) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_CONSOLE -D_INTEL -D_CRT_SECURE_NO_DEPRECATE $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\seisan_report*

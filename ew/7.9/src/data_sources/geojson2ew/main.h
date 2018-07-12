@@ -1,0 +1,21 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+#include <fcntl.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
+#include <sys/time.h>
+#include <stdlib.h>
+#include <signal.h>
+#include "earthworm_incl.h"
+#include "die.h"
+#include "options.h"
+#include "misc.h"
+#include "externs.h"
+#include "heart.h"
+#include "geojson_process.h"

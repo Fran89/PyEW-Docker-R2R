@@ -1,0 +1,44 @@
+This directory contains primarily historic web 
+pages, diagrams, java binaries, and javascript source.
+
+For the purposes of expediting the RCS to CVS conversion
+process, I have grouped the various files.  I have then
+taken each group, tar'd, zip'd, and checked each in to RCS.
+
+That way the files should be preserved in case they are
+deemed important at some future date, but they are not
+an enormous nuisance to convert or maintain.
+
+To my knowledge, none of the files in this directory are currently
+part of the Earthworm documentation pages at the Earthworm website
+at http://folkworm.ceri.memphis.edu/ew-doc/ 
+
+DavidK 03/22/2004
+
+
+The following file groups are in this directory:
+
+ web_report
+	I don't know what this is, and why it's not in the src/ directory
+  since it looks like source code, but it's properly checked in to
+  RCS, so I just let it lie.(sp?)
+
+ carl_schema_comparison_doc.tar.gz
+  This is the Carl Johnson "schema comparison" document that compared
+  various seismic processing schemas pre-EWDB.
+
+ getlist_legend_gifs.tar.gz
+  This is a set of 3 gif images that "may-be" used as legends for
+  the Bob Simspson'esque maps built as part of the getlist web pages.
+
+ old_web_html.tar.gz
+  This is old html documents that described EW data exchange, and had
+  links to helicorder displays.
+
+ review_web.tar.gz
+  This is the Quick Review distribution including html web pages and
+  the Quick Review java applet.
+  This also includes the "tumbler" java applet, that allowed you to
+  look at picks around an earthquake(or something like that, I think)
+
+

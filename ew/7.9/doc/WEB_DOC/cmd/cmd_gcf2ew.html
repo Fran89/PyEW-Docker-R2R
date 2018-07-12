@@ -1,0 +1,392 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: gcf2ew commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>gcf2ew Configuration File Commands</H1>
+<I>(Version 1.0.0 - last revised 17 May, 2006)</I></CENTER>
+						  	 
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#function">Functional command listing</A><BR>
+3.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+4.  <A HREF="#descriptor">Descriptor file example</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, gcf2ew reads the configuration file named on the command
+line.   As always, the configuraton file contains comments:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). gcf2ew supports one diagnostic command
+line option, -v is for verbose mode so that you can see packets coming in.
+<P>
+<A NAME="example">
+<H2>1.   EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# gcf2ew configuration file
+#
+# This code receives GCF packets from an MSS100, converts them into
+# Earthworm trace buf messages, and stuffs them into a wave ring.
+#
+#
+ ModuleId	MOD_GCF2EW	# module id for this import,
+ RingName	WAVE_RING	# transport ring to use for input/output,
+
+ HeartbeatInt	10		# Heartbeat interval in seconds
+				# this should be half the g2ew.desc heartbeat!
+
+ LogFile	1		# If 0, don't write logfile at all,
+
+ SaveSOH2LOG 	1		# <Optional> write LOG chans to log file
+				# this is useful for debugging timing or
+				# data logger problems.	
+
+TimeoutNoSend	5		# If no data for X seconds from GCF for
+				# X seconds, then kill process (HB and
+				# main thread). 
+				# NOTE: this timeout does not take effect until
+				# a trace data packet comes from the MSS100. That
+				# is, LOG channels do not count! 
+				# 
+				# Iff TimeoutNoSend == 0, then this data
+				# check is DISABLED and gcf2ew will only die
+				# if EW dies.
+
+#
+# one of the following input modes should be used
+#
+
+HostAddress     mss             # the IP or hostname of the MSS100 unit
+PortNumber      3001            # the port number of the MSS100 unit
+
+# OR
+
+#gcfservAddress  isti		# the IP or hostname of the gcfserv program
+#PortNumber      45670          # the port number of the gcfserv program
+
+# OR
+
+#SerialPort     /dev/term/a     # the serial port to which the DM is connected
+#BaudRate       19200a		# an allowed baud rate for the solaris serial ports
+
+
+ 
+# The following mapping is used to map a system_id and stream_id to an SCN and as
+# a SELECTOR on those channels which should be passed along to Earthworm...channels not
+# matching the criteria below are dumped.
+# Example
+#               Sys     Strm    S       C       N
+InfoSCN         0D0081  1031Z2  ISTI    HHZ     CI
+InfoSCN         0D0081  1031N2  ISTI    HHN     CI
+InfoSCN         0D0081  1031E2  ISTI    HHE     CI
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>  
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the configure commands recognized by gcf2ew, grouped by the function 
+they influence.  Most of the commands are required.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>
+         Earthworm system setup:
+ 		<A HREF="#MyModuleId">MyModuleId</A>	   	required
+		<A HREF="#RingName">RingName</A>	   	required
+		<A HREF="#HeartbeatInt">HeartbeatInt</A>	   	required
+		<A HREF="#TimeoutNoSend">TimeoutNoSend</A>	   	required
+	
+	Input Control:
+		<A HREF="#HostAddress">HostAddress</A>	  	required
+		<A HREF="#PortNumber">PortNumber</A>	  	required
+
+			or
+
+		<A HREF="#gcfservAddress">gcfservAddress</A>	  	required
+		<A HREF="#PortNumber">PortNumber</A>	  	required
+
+			or
+
+		<A HREF="#SerialPort">SerialPort</A>	  	required
+		<A HREF="#BaudRate">BaudRate</A>	  	required
+
+	Output Control:
+		<A HREF="#LogFile">LogFile</A>		   	required
+		<A HREF="#SaveSOH2LOG">SaveSOH2LOG</A>		optional
+		<A HREF="#InfoSCN">InfoSCN</A>			required
+		<A HREF="#InfoSCNL">InfoSCNL</A>			required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed 
+in alphabetical order.  Listed along with the command (bold-type) are 
+its arguments (in red), the name of the subroutine that processes the 
+command, and the function within the module that the command influences. 
+A detailed description of the command and is also given.  Default values 
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+
+<HR>
+<A NAME="HeartbeatInt">  <!-- command name as anchor inside quotes -->	
+<PRE><B>HeartbeatInt <font color=red>beat</font>			HeartBeat		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Beat the gcf2ew heart every <font color=red>beat</font> seconds. This is
+implemented as a separate thread in gcf2ew.
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="HostAddress">  <!-- command name as anchor inside quotes -->	
+<PRE><B>HostAddress <font color=red>IPname or number</font>			main		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the mss100 at the ip address <font color=red>IP address</font>. This
+option accepts fully qualified domain names as well as IP numbers.
+Note that the PortNumber is also required.
+</BLOCKQUOTE>
+
+<HR>
+
+<A NAME="gcfservAddress">  <!-- command name as anchor inside quotes -->	
+<PRE><B>gcfservAddress <font color=red>IPname or number</font>			main		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the gcfserv module at the ip address <font color=red>IP address</font>. This
+option accepts fully qualified domain names as well as IP numbers.
+Note that the PortNumber is also required. Default port numbers for gcfserv
+are 45670.
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="SerialPort">  <!-- command name as anchor inside quotes -->	
+<PRE><B>SerialPort <font color=red>SerialDevice</font>			main		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the DM24 at the <font color=red>SerialDevice</font> specified. 
+To use this input mode, a BaudRate must also be provided.
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="BaudRate">  <!-- command name as anchor inside quotes -->	
+<PRE><B>BaudRate <font color=red>rate</font>			main		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the DM24 at the BaudRate <font color=red>rate</font> specified. 
+To use this input mode, the SerialPort directive must also be used. The
+baud rates are the standard allowable rates on a solaris host: 1200, 2400, 4800,
+9600, 19200, 38400, 57600, and 115200.
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="SaveSOH2LOG">  <!-- command name as anchor inside quotes -->	
+<PRE><B>SaveSOH2LOG <font color=red>switch</font>			none 		Main gcf2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing GSL GCF STATUS channels to the <A HREF="#LogFile">LogFile</A>.  
+If <font color=red>switch</font> is 0, no LOG channels will be written to the log.  
+If <font color=red>switch</font> is 1, gcf2ew will write all LOG channels to the LogFile. Turning
+this on will automatically turn on writing of a LogFile.
+<PRE><!-- Default and example go here   -->
+Default:  0 - do not use logit() for LOG channels
+</PRE>
+</BLOCKQUOTE>
+
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->	
+<PRE><B>LogFile <font color=red>switch</font>				GetConfig		Earthworm Setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, gcf2ew 
+will write a daily log file(s) called gcf2ewxx.log_yymmdd 
+where xx is gcf2ew's module id (set with "MyModuleId" command) 
+and yymmdd is the current UTC date (ex: 960123) on the system clock.  
+The file(s) will be written in the EW_LOG directory (environment 
+variable).  
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->	
+<PRE><B>MyModuleId <font color=red>mod_id</font>			GetConfig		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none				
+Calnet:   MyModuleId MOD_Q2EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->	
+<PRE><B>RingName <font color=red>ring</font>				GetConfig		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This is the ring into which the waveforms and messages are sent.
+<PRE>
+Default:  none, required option				
+ATWC:   RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+
+<HR>
+
+
+
+<A NAME="InfoSCN">  <!-- command name as anchor inside quotes -->	
+<PRE><B>InfoSCN <font color=red>System Stream S C N</font>			insertSCN		Main gcf2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command is used to define how gcf2ew maps a System and Stream ID to a Station Channel Name. It
+is also used as a channel selector as only those streams specified get passed on to the Earthworm
+Wave Ring.
+<font color=red>System</font> is for the DM System ID name,
+<font color=red>Stream</font> is for the DM Stream ID name ...aka channel name in GCF,
+<font color=red>S</font> is for station name,
+<font color=red>C</font> is for channel identifier, and
+<font color=red>N</font> is for network code.
+<PRE>
+#               Sys     Strm    S       C       N
+InfoSCN         0D0081  1031Z2  ISTI    HHZ     CI
+InfoSCN         0D0081  1031N2  ISTI    HHN     CI
+InfoSCN         0D0081  1031E2  ISTI    HHE     CI 
+</PRE>
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="InfoSCNL">  <!-- command name as anchor inside quotes -->	
+<PRE><B>InfoSCNL <font color=red>System Stream S C N L</font>			insertSCN		Main gcf2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command is used to define how gcf2ew maps a System and Stream ID to a Station Channel Name. It
+is also used as a channel selector as only those streams specified get passed on to the Earthworm
+Wave Ring. This forces the trace buf type to be of type TRACEBUF2. InfoSCN and InfoSCNL cannot be mixed.
+<font color=red>System</font> is for the DM System ID name,
+<font color=red>Stream</font> is for the DM Stream ID name ...aka channel name in GCF,
+<font color=red>S</font> is for station name (5 chars),
+<font color=red>C</font> is for channel identifier (3 chars), 
+<font color=red>N</font> is for network code (2 chars), and
+<font color=red>L</font> is for location code (2 chars).
+<PRE>
+#                Sys     Strm    S       C       N   L
+InfoSCNL         0D0081  1031Z2  ISTI    HHZ     CI  00
+InfoSCNL         0D0081  1031N2  ISTI    HHN     CI  00
+InfoSCNL         0D0081  1031E2  ISTI    HHE     CI  00
+</PRE>
+</BLOCKQUOTE>
+
+<A NAME="PortNumber">  <!-- command name as anchor inside quotes -->	
+<PRE><B>PortNumber <font color=red>number</font>			main		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Connect to the mss100 or gcfserv at the ip address specified and this
+port <font color=red>number</font>. 
+Note that the HostAddress or gcfservAddress is also required for this
+directive. PortNumber defaults to 3001 for mss and 45670 for gcfserv.
+</BLOCKQUOTE>
+
+
+<HR>
+<A NAME="TimeoutNoSend">  <!-- command name as anchor inside quotes -->	
+<PRE><B>TimeoutNoSend <font color=red>timeout</font>			HeartBeat		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If no waveform packets come from the DM after 
+<font color=red>timeout</font> seconds, the gcf2ew module will notify statmgr
+and die. If <font color=red>timeout</font> is set to 0, then the gcf2ew module
+will never check for this timeout. If set to 0, gcf2ew will only die if 
+the Earthworm system calls for its termination. This timeout 
+begins once the first Waveform packet is received from the DM served by 
+this MSS100.
+<PRE>
+Default:  none, required option				
+ATWC:   TimeoutNoSend 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="descriptor">
+<H2>4.  DESCRIPTOR FILE EXAMPLE</H2>
+<P>
+Here is a copy of the gcf2ew.desc file as implemented. Note that all causes of
+death for gcf2ew feed through the function gcf2ew_die() which logs all causes of
+death using logit() and sends a message to the statmgr utility.
+
+<PRE>
+modName  gcf2ew
+modId    MOD_GCF2EW
+instId   INST_UNKNOWN
+ 
+restartMe       # restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 30  page: 0  mail: 99
+ 
+# from die.h:
+#define GCF2EW_DEATH_SIG_TRAP     1
+#define GCF2EW_DEATH_EW_PUTMSG    2
+#define GCF2EW_DEATH_EW_TERM      3
+#define GCF2EW_DEATH_EW_CONFIG    4
+#define GCF2EW_DEATH_GCF_TIMEOUT  5           
+ 
+# these are the statmgr messages that gcf2ew will send before dieing
+#
+err: 1  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused gcf2ew to die"
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, gcf2ew dead"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, gcf2ew dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, gcf2ew dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "gcf2ew received NO DATA for configured TIMEOUT and died"
+#                                                      
+
+</PRE>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/gcf2ew.html">gcf2ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>support@isti.com</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,84 @@
+#Phase         NAME   TAUP_ALIAS
+#RayParam      MIN    MAX
+#DistRange     MIN    MAX
+#DistDelta     DELTA
+#DepthRange    MIN    MAX
+#DepthDelta    DELTA
+#TimeDelta     DELTA
+#ExcludeRange  DMIN DMAX ZMIN ZMAX
+
+
+#entry weights:
+# AssocStrength  - strength with which this phase binds to an Event
+# LocWeight      - weight with which this phase affects origin location
+# MagThresh      - minimum magnitude of quake which this phase can
+                   be associated with.
+				   (Some distant/special phases come in very well with
+				    larger quakes, but you don't want them wrongly assoc.
+					with a small quake)
+# ResWinWidth - width of residual window (3 sigma) for the phase.
+
+
+
+############################################
+# Upper Mantle Phases
+############################################
+Phase           Pn      P
+DistRange        0      22
+DistDelta        1
+DepthRange       0      34
+DepthDelta       1
+TimeDelta        5
+RayParam        11.53  13.809
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           Pn      P
+DistRange        0      22
+DistDelta        1
+DepthRange      35     95
+DepthDelta       3
+TimeDelta        5
+RayParam        11.53  13.809
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           Pn      p
+DistRange        5      11
+DistDelta      0.5
+DepthRange       35    95
+DepthDelta       5
+TimeDelta        5
+RayParam         0.0    13.809
+# don't allow any Pb/Pg phases to sneak in. 
+# time 0-180 sec
+# Upward P phase(p) that starts between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           Pn      P
+DistRange        0      22
+DistDelta        1
+DepthRange      95     410
+DepthDelta      15
+TimeDelta        5
+RayParam        11.53  13.809
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           Pn      p
+DistRange        0      11
+DistDelta      0.5
+DepthRange       95    410
+DepthDelta       15
+TimeDelta        5
+RayParam         0.0    13.809
+# don't allow any Pb/Pg phases to sneak in. 
+# time 0-180 sec
+# Upward P phase(p) that starts between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           Pn      p
+DistRange        0      5
+DistDelta      0.125
+DepthRange       35    95
+DepthDelta       5
+TimeDelta        2
+RayParam         0.0    13.809
+# don't allow any Pb/Pg phases to sneak in. 
+# time 0-180 sec
+# Upward P phase(p) that starts between the Moho and the base of the Asthenosphere (35 - 410km)

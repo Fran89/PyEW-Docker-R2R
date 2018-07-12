@@ -1,0 +1,184 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Earthworm Modules: K2EW overview</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+K2EW Overview</h1></center>
+
+<center><i>(last revised 8 June, 2004)</i></center>
+
+<p>
+     This module receives data packets from a Kinemetrics K2 Strong Motion
+Accelerograph.  The packets are then put into an Earthworm ring-memory
+transport buffer.  The module was developed using Earthworm version 5.0 and K2
+header version 1.40.  It is all 'C' code compiled using standard makefiles
+("makefile.nt" or "makefile.sol") like those used with other Earthworm
+modules. On WindowsNT, there are two versions of K2EW: k2ew_com, to use a COM
+port on a PC; and k2ew_tcp, for using TCP communications to a serial-to-TCP
+server (such as a Lantronix MSS100) connected to the serial port on the
+K2. For Solaris/Unix, the two versions are k2ew_tcp and k2ew_tty (for using
+a Unix TTY port.) There is one config file for the TCP versions (k2ew_tcp.d);
+the others use k2ew_com.d and k2ew_tty.d. One instance of K2EW will be needed
+for each K2, and each instance will have its own config file.
+<p>
+     The K2 is configured (outside of K2EW) by the user for its station
+name, channel names and selection of channels used.  This configuration can be
+done from the command line or, for PCs, using QuickTalk (a free program from
+Kinemetrics. QuickTalk can only be used with a COM port.) A useful manual from
+Kinemetrics is "Altus Monitor Mode Communications", available on the web. This
+manual is essential if you need to use command-line configuration.
+<p>
+    The station name (as in station, component, network or SCN) must be
+configured in the K2; channel names may be configured there as well. If
+channel names have not been entered into the K2 then the default names "CH1",
+"CH2", "CH3", etc. are used. The network name is specified in the "k2ew.d"
+file.  To enable the Serial Data Stream (SDS) output needed for K2EW, these
+parameters should be setup in the K2 as follows: 
+<pre>
+     STREAM SPS 100 
+     SDS SAMPLE_RATE 100 
+     SDS TIMEOUT 0
+</pre>
+<p>
+     The K2 must be configured to use the same baud rate as specified in the
+"k2ew.d" file.  The serial interface uses no parity, 8 data bits, 1 stop bit
+(8-n-1); and hardware handshaking.  With less than 6 channels enabled for
+output on the K2, 19200 baud is sufficient.  With 6 (or more) channels, either
+a higher baud rate needs to be used or difference compression needs to be
+enabled on the K2 (via the parameter setting "SDS FORMAT 1").
+<p>
+     The clock-time entered into the K2 is assumed to be G.M.T. and the
+timestamps derived from it are passed on to Earthworm without any timezone
+conversion.
+<p>
+     K2EW will probably run best on K2 units without PCMCIA modems
+installed, as having a modem makes the K2 enter a modem auto-answer mode every
+time is it reset, which if left enabled makes the K2 stop its serial-data
+output after a few minutes and enter modem auto-answer mode.
+<p>
+     K2EW has one command line parameter, the configuration filename.
+<p>
+     When K2EW begins, it puts the K2 into "block" mode (if the K2 is not in
+block mode already), which allows command and data packets to go back and
+forth; it shuts down any Serial Data Streaming output that may be in progress,
+and then tests the quality of the serial connection using "ping" packets.
+K2EW then retrieves parameter and status packets from the K2.  Data entries
+from these packets are used to configure program operation, and some are
+written to the console and the log file.  The program then enables Serial Data
+Stream output from the K2.  If any of these commands to the K2 fail, K2EW
+writes an error message to the console and the log file and then exits.
+<p>
+     If 'restarts' are enabled (by specifying a restart file name in the
+config file) then K2EW will look for this file on startup. If this file is new
+enough (limited by parameter set in config file) and K2EW finds that the K2 is
+already in streaming mode, then K2EW will skip the above startup procedure and
+will attempt to recover all stream data since the writing of the restart
+file. A reasonable limit on the age of the restart file is 2 minutes.
+ <P>
+<B>Important note about restart files:</B> When K2EW uses the restart file,
+it obtains the station name from that file. So the restart file must be
+unique for each K2, or trace data will be labeled with the wrong station name.
+After K2EW starts up, it requests a 'params' message from the K2. If it finds
+that the station name from the K2 does not match the station name in the 
+restart file, K2EW writes an error message and exits. 
+<p>
+     Serial Data Stream packets come in steadily from the K2 without host
+intervention, so K2EW uses a circular buffer to receive the incoming
+packets.  Should there be an erroneous or missing packet, the program requests
+a re-send of the packet from the K2, still receiving new packets while
+waiting.  During this time, the output to Earthworm is paused.  When the
+"waiting" packet arrives, it along with those packets received after it are
+sent to Earthworm.  This assures that the packet stream reaching Earthworm is
+in the correct order with no missing data packets.  Should K2EW be unable to
+keep a consecutive stream of packets going, it will write an error message to
+the console and the log file.  Whenever an erroneous or missing packet is
+detected, a warning message is written to the console and the log file.
+<p>
+     In order for the K2 to respond postively to requests for re-sending
+packets, the K2 needs to have a buffer space configured (outside of K2EW.)
+This is done with the "SDSTREAMS BUFFER_SIZE" command. This buffer will take
+up part of the space on the K2's internal disks (see below.)
+<p>
+     The Serial Data Stream sample rate coming from the K2 is fixed (in its
+firmware) at 100 samples-per-second, with 100 samples in each packet.  Packets
+for each enabled channel are sent once a second.  K2EW assumes that the
+number of samples in each packet (100) should equal the sample rate ("SDS
+SAMPLE_RATE=100").  Should this change in a future firmware revision of the
+K2, K2EW may need to be modified.
+<p>
+     Before K2EW exits, it stops the Serial Data Stream output from the K2
+(unless restarts are enabled in the config file) and writes several lines of
+statistical information to the console and the log file.
+<p>
+     The K2 can also be configured to trigger on events. See the K2 User
+Manual from Kinemetrics for details on this. When the K2 triggers on an event,
+it saves the trace data in an event file on its internal disk(s). (These disks
+are normally PCMCIA ram-disks. One or two of them can be installed in the K2.)
+The K2 will send messages to K2EW about event files, including file names and
+size, and disk space remaining. These messages are logged in the K2EW log file
+and on the screen/console as standard-error. The K2 does not automatically
+remove these files unless it is configured for "AQ AUTODELETE". You need to 
+log into the K2 (outside of K2EW, using
+QuickTalk or command-line) to download the event files (if desired) and to
+delete the old files.
+<p>
+     K2ew can be configured to query the K2 periodically to send a status
+messages. This message includes free disk space, battery voltage, event and
+alarm trigger status, and basic hardware status (OK/Fault). Newer K2's also
+have an extended status message that includes local temperature and a few
+fault indicators. If supported by the K2, K2EW can query for the extended
+status. Paramters in the K2EW config file can be set for alarm thresholds on
+several of these status parameters. When these thresholds are exceeded K2EW
+can send email or pages through earthworm.
+<p>
+<b>K2EW Packet Handling Details:</b>
+<p>
+As data packets are received from the K2 (by the main thread of the program) they are entered into a FIFO buffer.  A separate ("output") thread reads the packets from the FIFO buffer and sends them to an Earthworm ring buffer.
+<p>
+Each packet has a "stream number" that identifies its associated channel, and a "data sequence number" that is incremented for each set of stream packets.  K2EW tracks these numbers to detect when a packet in the sequence is missing.
+<p>
+When the received packet is "ahead" of the current expected stream and data sequence numbers, one of two things will happen:
+<p>
+If the data sequence number is not greater than the expected value by more than the 'WaitTime' parameter, the number of missing packets is calculated, and for each one a "waiting" block is entered into the FIFO buffer.  If the 'Debug' parameter is greater than zero then the log message "Detected # missing packets..." is generated.  The output of packets to the Earthworm ring buffer stops until the "waiting" blocks are filled or too much time passes and they are skipped.  Any time the "waiting" blocks are skipped, the log message "Cleared # wait entries..." is generated.
+<p>
+If the data sequence number is greater than the expected value by more than the 'WaitTime' parameter, a "resync" is performed.  All "waiting" blocks are skipped, the received packet is entered into the FIFO, and the current expected stream and data sequence numbers are resynchronized.  When this happens, the log message "Too many missing packets (#) detected / Resync-ing..." is generated.
+<p>
+When the received packet is "behind" the current expected stream and data sequence numbers, one of three things will happen:
+<p>
+If the stream and data sequence numbers of the received packet match those of a "waiting" block, the block is filled (thus allowing it to be processed by the "output" thread).  If 'Debug' is greater than zero then the log message "Waiting data block received..." is generated.
+<p>
+If the timestamp of the received packet is newer than the timestamp of the previous packet received by K2EW, then it is assumed that the K2 has reset its sequence numbers.  All "waiting" blocks are skipped, the received packet is entered into the FIFO, and the current expected stream and data sequence numbers are resynchronized.  When this happens, the log message "K2 sequence number reset..." is generated.
+<p>
+Otherwise, the received data packet is ignored.  If 'Debug' is greater than zero then the log message "Unexpected data block..." is generated.
+<p>
+When a missing packet is detected and a new "waiting" block is entered into the FIFO, it is necessary to issue a resend request for the packet to the K2.  If less than 'MaxReqPending' other "waiting" blocks exist in the FIFO, then the request will be issued.  (If 'Debug' is greater than zero then the log message "Requesting resend (#) of packet..." is generated.)  If resend requests for more than 'MaxReqPending' number of "waiting" blocks are pending, then no resend requests from new "waiting" blocks will be issued until 'MaxReqPending'/2 or fewer number of "waiting" blocks remain outstanding.
+<p>
+In general, when the packet for a "waiting" block is not received after 'WaitResendVal' seconds a new resend request is issued for the packet.  If 'MaxBlkResends' requests have already been issued for the packet then its "waiting" block is marked as "skipped" and the "output" thread bypasses it.  In this case the log message "Excessive resend count..." is generated.  Note that K2EW attempts to maximize its error-recovery capabilities by issuing multiple resend requests as needed while still giving priority to the "oldest" block in the FIFO that is "waiting".
+<p>
+If a received packet fills in a "waiting" block that is not the "oldest" one in the FIFO, then a resend request is re-issued for the "oldest" block that is "waiting".  If the stream and data sequence numbers of a received packet match a "waiting" block, but the packet has a payload error (such as a CRC-checksum mismatch), then a resend request is re-issued for the "waiting" block.  When either of these cases occur and 'Debug' is greater than zero, the log message "Re-requesting resend (#) of packet..." is generated.
+<p>
+Any time that the "output" thread detects a gap in the stream and data sequence numbers of the packets sent to Earthworm, the log message "Output Thread: Error detected in sequence read from circular buffer" is generated.
+<p>
+<b>Useful manuals from Kinemetrics:</b> 
+<LI> <a HREF="http://www.kinemetrics.com/eng_ftp/manuals.html">K2 User's Manual</a>. Essential for operation of the K2 instrument.
+<LI> <a HREF="http://www.kinemetrics.com/eng_ftp/manuals.html">
+Altus Monitor Mode Communications</a>. Describes all the commands for administering the K2.
+<p>8/7/2001 -- Version 2.23
+<br>Written by:&nbsp; Eric Thomas, <a href="mailto:support@isti.com">Instrumental Software Technologies, Inc.</a>
+<br>With modifications by:&nbsp; Pete Lombard
+<center>
+<p><a href="../modules.html">Module Index</a> | <a href="../cmd/k2ew.html">K2EW
+Commands</a></center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+Contact: <a href="mailto:support@isti.com"><b>support@isti.com</b></a></address>
+
+</body>
+</html>

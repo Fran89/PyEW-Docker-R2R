@@ -1,0 +1,20 @@
+#
+#                           Nmake File For snwclient
+#                             Windows NT version
+#
+APP=snwclient
+O=$(APP).obj socket_win.obj config.obj chdir_win.obj getfname_win.obj \
+  sleep_win.obj log.obj tzset_win.obj fopen_win.obj
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib ws2_32.lib
+
+$(APP).exe: $O
+   link $(linkflags) $(libs) $O -out:$(APP).exe
+
+.c.obj:
+   cl $(compflags) $(tflags) $<
+

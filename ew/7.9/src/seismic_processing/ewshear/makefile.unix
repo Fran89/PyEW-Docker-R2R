@@ -1,0 +1,34 @@
+#
+# Makefile for ewshear  -- Unix version
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lposix4 -lthread  -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+LIBDIR = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I.
+
+SRCS = ewshear.c iir.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(LIBDIR)/libew_mt.a \
+          $(LIBDIR)/ws_clientII.o \
+          $(LIBDIR)/socket_ew_common.o $(LIBDIR)/socket_ew.o $(LIBDIR)/swap.o \
+    	  $(LIBDIR)/mem_circ_queue.o $(LIBDIR)/ws2ts.o $(LIBDIR)/ew_spectra_io.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ewshear
+
+ewshear: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ewshear $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ewshear $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ewshear
+
+clean_bin:
+	rm -f $(BINDIR)/ewshear

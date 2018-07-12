@@ -1,0 +1,148 @@
+<HTML> <HEAD> <TITLE>EARTHWORM Status May 6 1998</TITLE> </HEAD> <BODY
+TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B"
+ALINK="#FF 0000">
+
+
+<H1 ALIGN=CENTER> <B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM
+Status Report<BR> </FONT></FONT></B></H1> <HR WIDTH="100%">
+
+<H5 ALIGN=RIGHT><TT>Alex Bittenbinder (alex@gldage.cr.usgs.gov) May. 4,
+1998</TT></H4>
+
+
+<H4>This is an update of Earthworm status since the notes of <A
+HREF="status.9709.html">2/12/98</A> and those of <A
+HREF="status.9802.html">Feb 12, 1998</A>.</H4>
+
+Like the stock market, the Earthworm community continues to grow at an
+amazing rate. At last count over seventeen individuals either had, or
+were, developing software for their Earthworm installations. The
+web-based documentation, thanks to the unrelenting drive provided by
+Steve Malone of the CNSS, has proven to be a powerful method for people
+to gain familiarity with the system. New installations have been
+brought up with minimal involvement of the core development team, and
+there are rumors of Earthworm running at sites with which we've had no
+contact. Further, several vendors of data loggers are moving to provide
+compatible acquisiton modules.  <P>
+
+The next challenge may well be one of 'growth managment': On one hand,
+Earthworm is publicly available, with no strings attached. On the other
+hand, one of the basic objectives of the Earthworm effort is to provide
+cost savings by preventing duplication of effort. This implies
+substantial coordination and cooperation amonst the participating
+sites; and given the traditional nature of regional networks, this is a
+task wich tends to offer much fascination and color.  <P>
+A straightforward solution would be to simply scale up: Create
+a larger Earthworm Central which would be capable of handling
+the increasing number (and complexity) of tasks. But this has
+the problem of potentially changing the nature of the effort,
+as a larger central organization might well weaken the role of
+the grass-roots membership. Such a trend would be disasterous,
+as it would undermine the basic strength of the effort.  <P>
+Another solution may be to distribute the work load among
+several community organizations. The creation of the Earthworm
+Advisory Board (EWAB) was a step in this direction, and a
+lesson has been learned from this experiment: Regional network
+personnel really are very busy. Not surprising, since Earthworm
+came into existence precisely because regional networks
+suffered major cuts in funding and personnel. As a result, the
+surviving personnel face daunting work-loads, both in terms of
+volume and 'dynamic range' of tasks. In this environment it is
+not reasonable to expect ongoing, working involvement with an
+new effort which is not directly supported. EWAB involvement,
+however, implied exactly that.  <P>
+A variation of this idea may be short term special interest
+groups. These could be convened as needed to resolve specific
+issues and dissolve promptly after the task was completed. The
+participants would be volunteers who have an active interest in
+the specific issue. Several such groups have functioned well so
+far: the specifications for CarlTrig were successfully set by
+an ad hoc group of seismologists, and numerous engineering
+promblems have been resolved by 'techie' group discussions. The
+scheme is attractive in that the participants have strong
+interests in resolving the issue and know that they are free
+once resolution has been reached (and not until then).  <P>
+
+Ideas and comments are welcome.
+
+<P> <P>
+
+
+
+<H3>CURRENT DIRECTIONS:</H3> <UL>
+
+<LI><B>1. Earthworm organization:</B> As mentioned above, a number of
+organizational problems have to be resolved. It is anticipated that
+this will proceed with close cooperation with CNSS leadership. Issues
+include creation and operation of various forums, tracking mechansims,
+communications channels, etc.
+
+<P> <LI><B>2. CNSS Earthworm web site:</B> It is expected that item (1)
+above will result in various enhancements to the web site.  <P>
+<LI><B>3. Ruggedized NT Earthworm:</B> Work is progessing on an
+NT-based Earthworm which will be able to operate in remote locations.
+Initial specs include sufficient remote access to permit routine
+operations and modification to operating parameters, unattended
+survival of power interruptions, and a remote reboot capability.
+Completion is optimistically projected for late summer.
+
+</UL>
+
+<H3>RECENT DEVELOPMENTS:</H3> <UL> <LI><B>CarlTrig:</B>  The originall
+CarlTrig written at PNL Hanford, has been enhanced as per email
+discussions. The new code is reportedly doing very well in tests at
+UofW. The new version consists of two modules: one which performs the
+station logic, and another which does the subnet association. The
+modules communicate via short messages. The objective is to permit
+remote earthworm nodes to run the station module and send station
+triggers to a central site via a narrow bandwidth comm channel.
+Documentation and release are eagerly awaited.
+
+<P> <LI><B>Documentation:</B>  Documentation has been expanded to
+include two examples of earthworm configurations, further explanation
+of internals, and more module descriptions. An Earthworm logo seems to
+have been selected, and is being browser-ized by the artist. It is
+hoped that the site now offers enough material to permit a new user to
+understand basic operation, and to perform most (but not all) of the
+initial configuration chores.  <P> <LI><B>REFTEK Earthworm
+Interface:</B> RefTek is working to integrate their latest data logger
+system to Earthworm. The product will be a well-behaved Earthworm
+module which would acquire telemetered data, manage the two-way
+protocol to the data logger, and output Earthworm compatible trace data
+messages. It will also permit control of the outstation. RefTek
+presonnel are working on the effort, with support from the Earthworm
+developer community. UofW has been designated as the test site.  <P>
+<LI><B>Guralp Earthworm Interface:</B> A similar effort is underway
+with Guralp. The effort is being undertaken by UofA Fairbanks, with
+support from Guralp and the Earthworm developer group as requested.
+<P> <LI><B>Compression/Decompression Module:</B> A trace data
+compressor and decompressor module pair has been written and is going
+into testing, initially between Menlo Park and Fairbanks. The algorithm
+originates with Boulder Real Time Technology (BRTT), as provided by
+UofA Fairbanks. The understanding is that the algorithm is available
+without restrictions.  <P> <LI><B>Improved rcv_ew Module:</B> Currently
+running in prologned tests. Recent improvements include a meaningful
+heartbeat and the option to issue an error message if no data is
+received from a station for a user-specified period. Previously, there
+were failure modes in which the heartbeats would continue, and the loss
+of one station's data was not a detected error. <P> <LI><B>Wave_serverV
+Module:</B>WaveServerV has finally been released in v3.1. It sports
+various improvements over ealier incarnations: crash recovery features,
+incorporation of the new system-independent socket wrapper routines,
+and numberous bug fixes and enhancements. It functions well within a
+known performance envelope, but malfunctions (gracefully) when the
+hardware is overdriven. WaveServerV can be a resource hog by its
+nature: continuous trace saving to disk, crash recovery, and service of
+multiple concurrent clients for hundreds of channels can easily
+saturate a machine's network, bus, CPU, and SCSI bus, and head motion
+resources. Stress testing is currently underway, and results will be
+posted on the CNSS earthworm web site.
+
+</UL>
+
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+
+</BODY>
+</HTML>
+

@@ -1,0 +1,25 @@
+EVENT DETECTED     19990727 04:47:21.32 UTC EVENT ID: 1667 AUTHOR: 014024021:025045021
+
+Sta/Cmp/Net   Date   Time                       start save       duration in sec.
+-----------   ------ ---------------    ------------------------------------------
+ CHMT EHZ MB P 19990727 04:47:23.51 UTC    save: 19990727 04:47:18.51       25
+ OVMT EHZ MB P 19990727 04:47:26.67 UTC    save: 19990727 04:47:21.67       37
+ SLMT EHZ MB P 19990727 04:47:27.08 UTC    save: 19990727 04:47:22.08       14
+ LRM EHZ MB P 19990727 04:47:46.26 UTC    save: 19990727 04:47:41.26       23
+$EVENT DETECTED     19990727 05:41:21.72 UTC EVENT ID: 1668 AUTHOR: 014024021:025045021
+
+Sta/Cmp/Net   Date   Time                       start save       duration in sec.
+-----------   ------ ---------------    ------------------------------------------
+ HBMT EHZ MB P 19990727 05:41:31.20 UTC    save: 19990727 05:41:26.20       43
+ LRM EHZ MB P 19990727 05:41:31.41 UTC    save: 19990727 05:41:26.41       37
+ LCCM EHZ MB P 19990727 05:41:33.52 UTC    save: 19990727 05:41:28.52       43
+ QLMT EHZ MB P 19990727 05:41:39.30 UTC    save: 19990727 05:41:34.30       22
+ BZMT EHZ MB P 19990727 05:41:46.91 UTC    save: 19990727 05:41:41.91      141
+$EVENT DETECTED     19990727 12:27:30.85 UTC EVENT ID: 1669 AUTHOR: 014024021:025045021
+
+Sta/Cmp/Net   Date   Time                       start save       duration in sec.
+-----------   ------ ---------------    ------------------------------------------
+ GCMT EHZ MB P 19990727 12:27:43.38 UTC    save: 19990727 12:27:38.38       20
+ LRM EHZ MB P 19990727 12:27:54.84 UTC    save: 19990727 12:27:49.84       45
+ HRY EHZ MB P 19990727 12:27:54.96 UTC    save: 19990727 12:27:49.96       33
+ HBMT EHZ MB P 19990727 12:27:56.76 UTC    save: 19990727 12:27:51.76       35

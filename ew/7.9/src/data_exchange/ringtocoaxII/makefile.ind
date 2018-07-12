@@ -1,0 +1,49 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+
+###############################
+#Set APP to your program name.
+###############################
+APP = ringtocoaxII
+FULL_APP_NAME = $(HYDRA_BINCOMMON)\$(APP)$(EXE)
+
+###############################
+#Set APP_OBJECTS to your object 
+# files
+#Set APP_OTHER to any other bind
+# options or libraries that you
+# need specially for your app.
+###############################
+APP_OBJECTS = $(APP).$(OBJ) sender.obj
+
+APP_OTHER = 
+
+cflags = $(cflags) /c /W3 /nologo /DCRTAPI1=_cdecl /D_X86_=1 \
+          /DWIN32 /D_MT /MT
+
+###############################
+#Set ALL_CLIENT_LIBS to all non DB
+# objects needed by your app.
+###############################
+
+
+EW_LIBS =       $(HYDRA_LIBCOMMON)\getutil.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\kom.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\logit.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\sleep_ew.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\transport.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\time_ew.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\threads_ew.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\sema_ew.$(OBJ) \
+		$(HYDRA_LIBCOMMON)\mem_circ_queue.$(OBJ)
+
+APPS_LIBS = libcmt.lib oldnames.lib kernel32.lib ws2_32.lib \
+            mswsock.lib advapi32.lib	
+	
+#ALL_CLIENT_LIBS = $(HYDRA_LIBCOMMON) $(APPS_LIBS) $(WATCHDOG_LIBS)
+ALL_CLIENT_LIBS = $(APPS_LIBS) $(WATCHDOG_LIBS) $(EW_LIBS)
+
+

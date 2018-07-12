@@ -1,0 +1,197 @@
+Release Notes:  Earthworm Version v2.9
+9/13/97
+
+OPERATING SYSTEMS:
+******************
+As of v2.9, Earthworm will be supported under Solaris and NT only.
+
+NEW MODULES:
+***********
+
+
+wave_viewer:
+
+	Wave_viewer is an NT only program.  It displays waveforms retrieved
+	from the Earthworm wave_server.
+
+	It has 4 modes:
+
+		Mode 1: The user can scan continuously ala the
+		develecorder days.
+
+		Mode 2:  The user can request a time segment and then
+		scroll.
+
+		Mode 3: Wave_viewer can read a trigger file which lists
+		channels and the time segments to be displayed for each
+		channels.
+
+		Mode 4: Wave_viewer can run in continuous mode.
+		Displaying waveform data in near real-time.
+	
+export_scn:
+	Same as export_generic (including all fixes listed below), 
+	with the addition of a filter such that only messages containing 
+	trace data for requested station-component-network codes are queued for 
+	export.
+
+wave_serverIII:  WaveServer III supports the following features:
+
+	* One storage tank (file) for each trace.  This allows the storage of
+	several days of data per trace.
+	
+	* Concurrently serves a number of clients without overloading the
+	system.  
+
+	* Supports the trace_buf waveform format.
+
+	* Serves ascii trace data only.
+	
+	* Supports interrupted data, either short telemetry dropouts or
+	segmented data with weeks between segments.
+	
+	* Survives being turned on and off without loosing the data already
+	stored.  It also becomes operational quickly on startstop.  ( The old
+	wave_server could take up to an hour to startup if the old tanks were
+	large. )
+	
+
+hypo_print:
+	Written for ATWC. Picks up hypo sum messages, and sends them to a 
+	printer. OS/2 only.
+
+usgs_disp:
+	Mostly by Paul Whitmore, ATWC. Picks up trace messages from an Earthworm
+	ring and injects them into ATWC's processing scheme.
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+	
+eqbuf: several fixes to prevent thread-concurrency errors, superposition
+       of two messages.
+
+pipe.c: utility routines. Fix suggested by Doug Neuhauser to use
+        actual rather than expected byte count from pipe fwrite call.
+
+ad_demux: 
+     1) Corrected calculation of sampling rate that gets loaded 
+	into the TRACE_HEADER.   Change made 6/19/97 LDD.
+	Using the values in wf, a WF_HEADER structure (data_buf.h),
+	the previous version of ad_demux incorrectly calculated:
+	  samprate = wf.nscan/wf.sample_dt;   
+	The correct calculation is:
+	  samprate = wf.nsample/wf.sample_dt;
+
+export_generic: 
+     1) changed the MessageStacker() thread so that it logs the error
+	"Circular queue lapped. Message lost" only when there is a live 
+	connection to a client (import) process.  See all references to the 
+	variable LiveConnection in the source code.  Before this change, 
+	export_generic would write extremely large log files if no client 
+ 	was connected.  Change made 6/23/97 LDD.
+     2) added a sleep_ew(500) call to the "main export service loop 
+	for current connection" (the thread-watching while-loop in main()).
+	Without this sleep, export_generic became a CPU hog every time that
+	a client connected to it.  Change made 6/24/97 LDD.
+     3) added a new optional configuration file command to turn on debug 
+	logging of queued messages, received heartbeats and sent heartbeats.
+	To turn on such logging, add the command "Verbose" (without the quotes) 
+	to the configuration file.  Be forewarned that this will probably 
+	create VERY BIG log files!  If the "Verbose" command is omitted,
+	export_generic will by default NOT log these things.  6/24/97 LDD.
+
+statmgr:
+
+	Export would hang very occasionally (and not reproduceably) when trying
+	to recover from a broken socket link. Rather than analyzing the
+	failure, we decided to implement a general restart feature:
+	
+	A module, in its ".desc" file, could request to be restarted if it's
+	heartbeat stopped. This is requested via a command "restartMe"
+	appearing anywhere in the .desc file. If the command is not present, no
+	restart attempt will be made.  The restart attempt consists of Status
+	Manager sending a TYPE_RESTART message, giving the name of the module.
+	Startstop will pick the message up, and perform the restart. This
+	scheme was resorted to as attempts to have a module restart itself
+	resulted in the module inheriting too much from it's sick predecessor,
+	and thus having related problems - e.g. weird socket effects.
+
+	The solaris Statmgr would only send email to the first person on it's
+	list.  Thanks to Pete Lombard at UW this bug was identified and fixed.
+
+
+hypoinverse:
+The latest and greatest version of hypoinverse from Fred Klein was incorporated
+into earthworm by Will on 7/18/97.  In this version, the XMC command takes  
+more arguments than the previous version.  See changes to ncal.hyp in "Changes 
+to configuration files" section below.
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+
+*.desc
+  The error descriptor files read by statmgr "xxx.desc", can now contain the 
+  optional command "restartMe". If the command is present, an attempt will be 
+  made to restart the module whenever it's heartbeat is declared missing by 
+  statmgr. If the command is not there, no restart attempt will be made.
+
+ncal.hyp (or any other hypoinverse command file)
+  Any XMC command must now be given the start date of xmag corrections to 
+  load, in addition to the previous 2 arguments.  For example, the previous 
+  version's line:
+    XMC 'hypoinverse/stas/all2.xmc' T
+
+  should to be changed to (to load the earliest xmag correction):
+    XMC 'hypoinverse/stas/all2.xmc' T 0
+
+  or to load corrections at a specific date (yr mo dy hr) change it to:
+    XMC 'hypoinverse/stas/all2.xmc' T 96 10 13 01
+
+
+KNOWN BUGS or DEFICIENCIES:
+***************************
+
+
+MODULES IN PROGRESS:
+********************
+
+Wave_serverIV:  
+
+	Serves trace data in the Earthworm binary format (trace_buf) and has
+	many additions and improvements to the requests it will honor.
+
+Dbreport:
+
+	Stores the contents of the arc message in an Oracle database.
+
+NT A/D:
+
+	Port of the old DOS A/D software to NT.  The DOS A/D was becoming
+	obsolete as it was dependent on hardware and software which we feared
+	might not be supported in the future.  The NT A/D should give us a
+	supportable system for at least 5 years. This will also allow us to run
+	low channel count earthworms on one computer.
+
+Arc2trig:
+
+	Takes a hypo arc message as input and produces a .trg file.  The .trg
+	file has a list of channels names and the time segment of data
+	to be saved for each channel.  These are used by other modules
+	to stuff databases or create files of trace data.
+
+
+Dbtrace_save
+
+	Reads a 'save_me' file created by arc2trig, requests the appropriate
+	trace data from a list of servers and stores the trace data in an
+	Oracle database.
+
+
+
+
+
+
+
+

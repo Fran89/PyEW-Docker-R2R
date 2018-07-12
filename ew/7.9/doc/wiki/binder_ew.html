@@ -1,0 +1,1258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      binder_ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/binder_ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="binder_ew.html" title="View binder_ew">binder_ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/binder_ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/binder_ew?action=diff&amp;version=20" title="Version 20 by paulf">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-06-04T13%3A19%3A11-07%3A00&amp;precision=second" title="2012-06-04T13:19:11-07:00 in Timeline">15 months</a> ago</span>
+            <span class="trac-print">Last modified on 06/04/12 13:19:11</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="binder_ew.html#EarthwormModule:binder_ew">Earthworm Module: binder_ew</a>
+    <ol>
+      <li>
+        <a href="binder_ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="binder_ew.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="binder_ew.html#GettingStarted:EarthwormSetupNetworkDefinition">Getting Started: Earthworm Setup &amp; Network Definition</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#Stacking-TheGutsofBinder">Stacking - The Guts of Binder</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#AssociatingNewPhaseswithActiveEarthquakes">Associating New Phases with Active Earthquakes</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#BindersSimpleEventLocator">Binder's Simple Event Locator</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#Post-RelocationEventReview">Post-Relocation Event Review</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#QualityControl:Pick-groupAssessment">Quality Control: Pick-group Assessment</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#ExamplesfromBindersLogFile">Examples from Binder's Log File</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#Trouble-Shooting">Trouble-Shooting</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="binder_ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="binder_ew.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="binder_ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="binder_ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:binder_ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: binder_ew</h1>
+<p>
+<strong>Contributed by: Lynn Dietz</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Associates P-arrivals (and S-arrivals) into events
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Given a list of P-wave arrival times, a set of station locations and a simple velocity model, binder's job is to identify the smallest set of hypocenters that could have produced the current list of arrival times. With each new pick, binder tries to:
+</p>
+<blockquote>
+<p>
+1) associate that arrival to an active event, or
+</p>
+</blockquote>
+<blockquote>
+<p>
+2) identify a new event by stacking the back-projections of P-wave travel times on a space-time grid to find a likely source (hypocenter) for recent unassociated picks.
+</p>
+</blockquote>
+<p>
+Sounds simple, right?  Well, there are a lot of configurable parameters that control exactly how binder will go about this task.  I'll try to explain the basic steps I go thru when I'm setting up binder for the first time in a new region of interest.  And I'll give a few details about how binder goes about its tasks (refer to this <a class="attachment" href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/binder-flowchart.pdf" title="Attachment 'binder-flowchart.pdf' in binder_ew">flowchart</a><a class="trac-rawlink" href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/binder-flowchart.pdf" title="Download">​</a> as we go). 
+</p>
+<h3 id="GettingStarted:EarthwormSetupNetworkDefinition">Getting Started: Earthworm Setup &amp; Network Definition</h3>
+<p>
+The three most basic things binder needs to know are:
+</p>
+<ol><li>Where should it get P-wave arrivals (picks) to work on?
+</li></ol><ol start="2"><li>What stations are being picked and where are they? 
+</li></ol><ol start="3"><li>What's the velocity structure like?  
+</li></ol><p>
+<strong>1. P-wave arrivals</strong>
+</p>
+<p>
+Two commands in binder's configuration file tell it where it should get the P-wave arrivals to work on.  The "RingName" command specifies which Earthworm transport ring (a shared memory region) to read from.  Make sure that this is the same ring into which pick_ew is writing its output.  Also, if you're importing picks from another source and want binder to use them, make sure you are placing them in this ring as well. 
+</p>
+<p>
+The "GetPicksFrom" command specifies the installation id and module id of the TYPE_PICK2K messages that binder will operate on.  Specific id's or wildcards can be used for either or both of these arguments.  Note: both binder_ew and eqproc should be set to listen to the same pick source(s)!
+</p>
+<p>
+<strong>2. Station List</strong>
+</p>
+<p>
+Binder expects the network's station list to be in a file in Hypoinverse station format; it gets the name of the file from the "site_file" command. Of all the fields in this file, the only ones used by binder are the station codes (5-letter site code, 2-letter network code, 3-letter component code) and the station  latitude and longitude.  A quirk of this file is that all lats and lons are listed as positive numbers; a letter is used to denote N,S,E,W, with blanks interpreted as N and W.  As binder reads the file, it converts lat and lon to decimal degrees with N and E being positive.  If a site has multiple components, each component should be listed on its own line in the station file. As of Earthworm v4.0, binder treats each component independently, so if multiple components at a site are picked, that site will be weighted more heavily in stacks and locations than a single-component site.
+</p>
+<p>
+Large networks (over 1000 channels) will have to use the "maxsite" command to increase the number of stations that binder will input and use. 
+</p>
+<p>
+Since binder works only on arrival times, it doesn't need to know anything about instrument response or gain.
+</p>
+<p>
+<strong>3. Velocity Model</strong>
+</p>
+<p>
+Binder uses one simple velocity model to calculate travel times for the entire region of interest.  If the velocity structure varies greatly in your region, make sure you give binder a decent average model.  This velocity model is specified with a series of "lay" commands in the configuration file, listed in order of  increasing depth.  The velocities in each layer are constant, and should increase with depth (no low velocity zones, please).  Pay attention to the order of the arguments of the lay command.  It should be "lay depth(km) velocity(km/s)".  If you get depth and velocity swapped, binder won't do much of anything.
+</p>
+<p>
+Binder also uses one P/S velocity ratio; the default is 1.72, but it can be changed by using the "psratio" command in the configuration file.
+</p>
+<h3 id="Stacking-TheGutsofBinder">Stacking - The Guts of Binder</h3>
+<p>
+How does binder identify new earthquakes, or what does "stacking" mean? Binder needs to find the likely origin, in space and time, of a group of P-wave arrivals. Given a single P-wave arrival (call it the "initiating pick"), binder considers the entire volume of the earth is a potential hypocenter. The addition of a second P-wave arrival gives binder information on relative timing; so it can narrow the field of possible hypocenters to a 3-dimensional surface. To determine this surface, binder essentially takes the P-wave travel-time curve, puts the curve's origin at the station's location, flips the curve upside down (about a horizontal axis), shifts it in depth considering the relative timing between the two picks, and spins the curve around a vertical axis.  This creates a conic-like surface (somewhat like a hollyhock flower opening down) that passes through all possible hypocenters which could have produced that second arrival, given the timing of the first. Binder calculates the "hollyhock" of potential hypocenters for each subsequent pick in the same manner, always using to the initiating pick's time as the
+reference time.  When the "hollyhocks" from two arrivals overlap, you get a line of potential hypocenters that is consistent with both picks and the initiating pick. The point where three or more individual "hollyhocks" intersect is a unique hypocenter (stacking location) that can explain all of those arrivals, including the initiating pick.  At this stage, with four P-wave arrival times, binder has successfully "stacked" a new "active event." It associates (or binds) these four picks into an event and passes those picks and the stacking location to its simple L1 locator for further processing.
+</p>
+<p>
+Instead of considering an infinite number of possible hypocenters, binder discretizes the problem by using a stacking grid.  Within its boundaries, the grid contains uniformly-sized cubic cells.  Only the center point of each grid cell is considered a possible hypocenter in the stacking process described above. Below I'll describe the parameters that are used to define the stacking grid and control the stacking process.
+</p>
+<p>
+While setting up the stacking grid, I find it very useful to look at a map of the seismic network and historic seismicity in the region of interest. The things I look for are:
+</p>
+<ul><li>seismic network: overall distribution &amp; station spacing
+</li><li>seismicity: latitude, longitude &amp; depth ranges
+</li></ul><p>
+<strong>Stacking Grid Boundaries</strong>
+</p>
+<p>
+The boundaries of the stacking grid are set with three commands:
+</p>
+<ul><li>"grdlat" (latitude range in decimal degrees, positive = north),
+</li><li>"grdlon" (longitude range in decimal degrees, positive = east),
+</li><li>"grdz"   (depth range in kilometers, positive = down).
+</li></ul><p>
+Reviewing the map of historic seismicity may help in setting the stacking grid boundaries.  Binder can only identify new hypocenters that lie within these boundaries, so they should include the entire volume of interest (ie, wherever you expect or hope to see earthquakes).  Also, all of your seismic stations should lie within the grid boundaries.
+</p>
+<p>
+<strong>Stacking Grid Cell Size</strong>
+</p>
+<p>
+Now you must decide how big each cell within the grid will be. Each cell is a cube, and its side-length (in kilometers) is set with the "dspace" command. That map may be useful again; hopefully, you can set dspace so that only one station falls within each grid cell. The more stations that fall within one cell, the more trouble binder will have in "focusing" the stack (when 2 stations are in the same grid cell, their "hollyhocks" will overlap 100%, which doesn't do much good for resolving potential hypocenters). Then again, you don't want to make the cell size too small, or binder will have a lot more computations to do.  So there's a tradeoff here.  FYI, the Northern California Seismic Network uses a grid cell size of 4 km.
+</p>
+<p>
+<strong>Stacking Distance Constraints</strong>
+</p>
+<p>
+When stacking each additional pick, binder considers possible hypocenters for that arrival within a limited distance of the station, not the entire stacking grid.  The stacking distance is controlled by the "rstack" command. Binder computes each pick's "hollyhock" within its stacking volume. The stacking volume includes the entire depth range of the stacking grid, but in map view the stacking volume is a square centered on the station location, extending rstack kilometers in each horizontal direction (the square's sides are 2*rstack km long). To avoid roundoff problems, rstack should be a multiple of the grid-cell dimension, dspace.
+</p>
+<p>
+Once again, the network map will be handy for choosing an appropriate rstack. Consider your network's station spacing and distribution - phases from stations
+that are more than 2*rstack km apart will not stack together other because their stacking volumes will not overlap at all.  Also consider your expected seismicity patterns - binder can only identify new hypocenters where the stacking volumes of 4 or more stations overlap.  Make sure that your expected seismicity falls within such a region, increasing rstack if necessary.  After an event is stacked, binder's L1 locator may move the hypocenter beyond the stacking volume, and possibly even outside the stacking grid boundaries.
+</p>
+<p>
+But, you have to stack it first!
+</p>
+<p>
+<strong>Stacking and Time Resolution</strong>
+</p>
+<p>
+Binder includes a time-resolution factor ("tstack" command) in calculating the set of all possible hypocenters ("the hollyhock") for each pick.  This time factor controls the thickness of the hollyhock petals. Increasing tstack could increase the number of grid cells each pick's hollyhock. As a first approximation, tstack should be at least the number of seconds it takes for a P-wave to cross a grid cell of dspace km.
+</p>
+<p>
+<strong>Pre-Stack Glitch Filtering</strong>
+</p>
+<p>
+A glitch is a group of coincident arrivals often caused by noisy telemetry. For the purposes of this filter, a glitch is defined as a certain number of picks (m) occurring in a given number of seconds (x). The values of both m and x are configurable with the "define_glitch" command (the default definition is 4 picks within 0.035 seconds).  This glitch filter was added to the stacking portion of binder to prevent it from creating new events from a group of picks having nearly identical arrival times. Picks that are flagged as belonging to a "glitch" are not used in summing the stack, but may later be associated with an event.  If you want to turn off pre-stack glitch filtering (ie, to make binder stack every pick), set m to zero (example "define_glitch 0 0.0").
+</p>
+<p>
+<strong>Summing the Stack - Stacking Weights &amp; Event Thresholds</strong>
+</p>
+<p>
+OK, here we go. Binder gets a new pick and it doesn't associate with any of its currently active hypocenters.  Binder will now attempt a stack with that new pick as the "initiating pick".  First it gathers up all recent unassociated picks (binder keeps track of the last 1000 picks it has processed, but it only tries to stack with a limited number, set with the "stack" command).  Then it reviews that list of unassociated picks to see if there are any glitches (see section above). Any picks that belong to a glitch will be eliminated from the stacking process. If the initiating pick itself belongs to a glitch, binder will not attempt a stack at all.
+</p>
+<p>
+Now let's talk about stacking weights. The stacking weight of each pick is based on the quality assigned to that pick by the pick_ew process. By default, binder stacks only quality=0 picks with a weight=1. Using "grid_wt" commands, you can include other quality picks in the stacking process. You could also give high-quality picks greater weight in the stack than low-quality picks. This differential weighting is especially useful for large networks like NCSN; we want to avoid generating events based on a few low-quality picks, but will accept an event that's based on a larger number of low-quality picks (or a combination of high-and low-quality picks). For small networks (10s of stations), I would suggest using equal stacking weight for all quality picks.  Just be sure to use a "grid_wt" command for each pick quality (including 0) that you want binder to include in the stack.
+</p>
+<p>
+The "grid_wt_instid" is a new twist (June 2002) to the stack weighting scheme. It allows you to set the stacking weight of a pick based on its pick quality and its installation_id.  For example, this allows a user to weight a quality 2 pick from one installation differently than a quality 2 pick from a different installation.  This is only useful for networks that exchange pick data with other institutions.
+</p>
+<p>
+To sum the stack, each grid cell is assigned a "hit count" to keep track of how many picks that cell is a potential hypocenter for (how many "hollyhocks" that cell is a member of). During the stack, binder only keeps track of the grid cells within the initiating pick's stacking volume. At the beginning of a stack, the hit count of every cell in the initiating pick's stacking volume is set to initiating pick's stack weight.  Then binder calculates the hollyhock for each additional  pick; for each grid cell that lies within the new pick's hollyhock and the initiating pick's stacking volume, the hit count in incremented by the stack weight of the new pick. 
+</p>
+<p>
+After binder sums the stack using all picks in its short list, it reviews the hit counts of all the grid cells. Binder prepares a list of cells that share the maximum hit value and the same minimum distance to the initiating phase. Binder declares a new hypocenter from the stack only if the maximum hit count is greater than or equal to an event threshold value (set with the "thresh" command) and the number of cells in the list is less than an event focus value (set with the "focus" command). The trial hypocenter for the declared event is calculated by averaging the center positions of all the cells in the maximum-hit-count list.  Each pick that contributed to thatmaximum hit count is associated with the new event.
+</p>
+<p>
+It's very important that at least 4 phases contribute to declaration of a newly stacked earthquake.  If all picks are being weighted equally (no "grid_wt" commands were used), the event threshold ("thresh" command)should be set to 4 or higher. If differential stacking weights are being used, the event threshold should be greater than 3 times the maximum stacking weight specified by "grid_wt" commands.
+</p>
+<p>
+Finding the optimum value for the event focus value ("focus" command) may require considerable experimentation for any specific network. The optimal value will depend somewhat on the stacking grid granularity ("dspace" command). Since the trial hypocenter is calculated by averaging the center positions of all the cells in the maximum-count list, a larger focus threshold will increase the probability of a poor starting location (which has its own attendant problems). A smaller focus value, however, will tend to reject distant events.
+</p>
+<p>
+<strong>Stacking and Eventids</strong>
+</p>
+<p>
+Every time binder identifies a new event with a stack, it assigns an eventid to it.  Binder uses this eventid in its internal bookkeeping to know which picks are associated with which events.  It also writes the eventid in the TYPE_LINK and TYPE_QUAKE2K messages that it outputs, so that downstream modules (eqproc, eqprelim) can also do their own bookkeeping.
+</p>
+<p>
+Binder keeps track of the next available eventid in a file called "quake_id.d" that is written in the EW_PARAMS directory.  The actual command written to the file is the "next_id quakeid" command. This file is read once on startup (actually, the first eventid used after startup is quakeid+1), and is updated after every new event is stacked.  To ensure sequential, non-duplicated eventids between runs, binder's configuration file must contain the command "@quake_id.d". If this command is omitted, event sequence numbers will be issued beginning at 1 each time binder is restarted.
+</p>
+<p>
+You should never see the same eventid twice, but you may see gaps.
+</p>
+<p>
+On startup, binder always skips one eventid (just in case it died in the middle of writing the quake_id.d file), and it may kill events for various reasons.  Also, the eventids may appear downstream out of numerical order. Sometimes a smaller event that occured after (thus had a higher eventid) a large one will finish first.
+</p>
+<h3 id="AssociatingNewPhaseswithActiveEarthquakes">Associating New Phases with Active Earthquakes</h3>
+<p>
+Whenever binder retreives a new pick, the first thing it does is try to associate the arrival time with one of its currently active earthquakes. Even though the Earthworm pick_ew module supposedly only picks P-wave arrivals, binder assumes the pick is an unknown phase during the association process. Knowing each event's origin time and location (binder keeps track of the most recent 100 hypocenters), the station location, and the velocity structure, binder calculates the arrival times of each event's possible phases (P, Pg, Pn, S, Sg, Sn) at that site. Then it compares the actual arrival time to the calculated times to find the residuals. Any phase with a residual within the configured residual-tolerance qualifies that pick to be associated with that event as that phase. The phase having the lowest
+residual value (within the residual-tolerance) wins!  Binder associates or links the pick with the event with the winning phase, then it hands that event to the L1 locator for further processing.  If no phase has a residual within the residual-tolerance, binder performs a stack with the new pick as the initiating pick (see stacking section above).
+</p>
+<p>
+<strong>Association and Time Constraints</strong>
+</p>
+<p>
+As I mentioned above, binder keeps track of the 100 most recent hypocenters. When it tries to associate a new pick, it doesn't actually consider all of those hypocenters as possible sources for the pick.  Instead, it considers only those hypocenters where the pick time is within a given time range of the origin time.  The "t_dif tmin tmax" command defines the acceptable time range (tmin, tmax are in seconds). If the pick time is earlier than (origintime + tmin) or later than (origintime + tmax) for a given event, binder will not attempt to associate that pick with that event.
+</p>
+<p>
+<strong>Association and Distance Constraints</strong>
+</p>
+<p>
+Binder keeps track of the average epicentral distance (rAvg) of all phases associated with each active hypocenter in its list. Before binder attempts to associate a new pick with a given hypocenter, it compares the epicentral distance of that station with a cutoff distance based on the rAvg value for that hypocenter. If the new pick's epicentral distance is greater than the cutoff distance, binder will not attempt to associate the new pick with that hypocenter. The cutoff distance is calculated by rAvg*rAvg_Factor, where rAvg_Factor is a constant (default value = 10.0) that can be set with the "rAvg_Factor" command.  This distance cutoff is important in cases where two earthquakes occur with seconds of one another in different parts of the network.  It also keeps an event from being contaminated by distant spurious noise picks which happen to match the event's travel time curve. 
+</p>
+<p>
+<strong>Configuring the Travel-time Residual Tolerance Function</strong>
+</p>
+<p>
+Whether or not a given phase is associated with, culled from, or scavenged for a given event is determined by how closely its arrival time fits the predicted arrival time for the event (ie, how large its travel-time residual is). The overall maximum-allowed travel-time residual (residual tolerance or restpr) for a pick to be associated with a given active hypocenter is composed of three terms:
+</p>
+<pre class="wiki">   restpr = dist-taper + res1_OT + res2_OT
+</pre><p>
+The first term (dist-taper) is based on the distance of the current pick to the hypocenter (controlled with the "taper" commands) and two remaining terms (res1_OT and res2_OT, controlled with the "taper_OT" command) are based on the quality of the event's location.  All of these terms are configurable to allow you to widen the residual tolerance for more distant picks and/or for more poorly located earthquakes.
+</p>
+<p>
+<strong>Residual Tolerance Distance Term, dist-taper</strong>
+</p>
+<p>
+The distance-dependent term of residual tolerance, dist-taper, is controlled with the "taper r resmax" command, where r is the epicentral distance (km) and resmax is the value of the dist-taper term (seconds). Multiple taper commands (up to 100) can be used, in order of increasing r, to define the dist-taper term of the tolerance function. Between the distances specified, the value of the dist-taper term changes linearly between corresponding resmax values. For distances less than the lowest value specified, the dist-taper term is constant at the resmax value for the smallest distance; for distances exceeding the maximum specified, the dist-taper term is constant at the resmax value set for the maximum distance. If no "taper" commands are supplied, the dist-taper term is a constant 1.0 sec for all distances. 
+</p>
+<p>
+The dist-taper function defined by the "taper" commands also plays a role in how a pick is weighted in the relocation process (see the distance-weight factor in the "Relocation and Pick Weighting" section below). 
+</p>
+<p>
+<strong>Residual Tolerance Hypocentral Quality Terms, res1_OT and res2_OT</strong>
+</p>
+<p>
+The "taper_OT OTconst1 OTconst2" sets two constants that are used to calculate the hypocenter-quality terms of the maximum-allowed travel-time residual, restpr. The thinking is, if your location is poor, you'll want to accept a phase with a higher travel-time residual.  If no taper_OT command is listed, the default values are OTconst1 = OTconst2 = 2.0.  To eliminate the two hypocentral quality terms from the residual tolerance function, set both constants to 0.0.
+</p>
+<p>
+The res1_OT term is based on event's rms residual and the number of phases associated with the event.  Binder uses the first constant, OTconst1, in calculating res1_OT for each hypocenter as follows:
+</p>
+<pre class="wiki">   res1_OT = OTconst1 * rms * Npick_factor
+
+   where  Npick_factor = 3.0                     when npick &lt;= 4
+                       = SQRT( npick/(npick-4) ) when npick  &gt; 4
+</pre><p>
+When the number of picks is small, the rms of the location is often quite low, so the Npick_factor and OTconst1 will dominate the res1_OT term. As the number of picks associated with the event increases, the Npick_factor approaches 1, so the event rms and OTconst1 will dominate the res1_OT term.
+</p>
+<p>
+The res2_OT term is based on the hypocentral distance to the nearest station and the second constant, OTconst2.  Given the hypocentral (slant) distance to the nearest station calculated by:
+</p>
+<pre class="wiki">   s = SQRT( z**2 + dmin**2 )  where    z = hypocentral depth
+                                     dmin = epicentral distance to
+                                            nearest station
+</pre><p>
+binder calculates the res2_OT tolerance term as follows:
+</p>
+<pre class="wiki">   res2_OT = 0.0                     when s  &lt; 1.0
+           = OTconst2 * log10( s )   when s &gt;= 1.0
+</pre><p>
+The larger the minimum slant distance, the more unreliable the location, and the larger this second residual taper term becomes.
+</p>
+<p>
+OK, so that describes the form of all three terms in the residual tolerance function, but it doesn't really give you a clue as to what values to use for your network. I think it's most important to set a reasonable distance taper for your network based on how well your velocity model fits your arrival-time data.  Hopefully, you already have some idea about that. The residual tolerance can then be widened if necessary using the origin uncertainty terms. The values of all three terms are printed in binder's logfile, so you may be able to empirically settle on some parameters by studying those.
+</p>
+<h3 id="BindersSimpleEventLocator">Binder's Simple Event Locator</h3>
+<p>
+After binder declares a new event from a stack, or after is associates a new pick with an active event, it passes the event to its simple L1 locator for further processing.  The locator takes a starting location and all the phase data for the event, determines a weight factor for each phase in the relocation, and performs a number of iterations to arrive at a new location. Again, there are quite a few configurable parameters available to control the locator, and I'll describe them below.
+</p>
+<p>
+<strong>Intermittent Relocation</strong>
+</p>
+<p>
+While binder's locator is simple, it can still be quite a CPU hog, especially when a large number of phases are associated with the event.  Also, as the number of associated phases grows, the hypocenter becomes more stable, and the improvement in the location with each additional phase shrinks. Therefore, we added the configuration command "locate_eq npick interval" to allow intermittent relocation of an event. Instead of relocating after every single new phase is associated, an earthquake with more than "npick" picks will relocate with every additional "interval" picks associated. Up to 10 "locate_eq" commands can be supplied (in order of increasing "npick" values) to set multiple npick-break-points and location intervals.  An event with fewer picks than the smallest "npick" value will locate after each additional pick is associated. If no "locate_eq" commands are used, every event will be relocated after each addition pick is associated.
+</p>
+<p>
+<strong>Relocation and Pick Weighting - Phase Type, Pick Quality, and Distance</strong>
+</p>
+<p>
+The overall weight of a pick in the location process is the product of three weighting factors: a phase-weight, a pick-quality-weight and a distance-weight.
+</p>
+<pre class="wiki">     wt = phase-weight * pick-quality-weight * distance-weight
+</pre><p>
+The phase-weight is based on the phase assigned to the pick by binder, in conjuction with the "ph" commands listed in the configuration file. Use one "ph phase weight" command to assign a "weight" (any number from 0.0 to 1.0, inclusive) for each "phase" (any of the strings P,S,Pg,Sg,Pn,Pg) that you want binder to use in the location.  If at least one "ph" command is supplied, other phases that were not listed in a "ph" command receive a phase-weight of 0.0 (ie, they won't be weighted in the location process). If no "ph" commands are used, all phases receive a phase-weight of 1.0.
+</p>
+<p>
+The pick-quality-weight is based on the pick-quality assigned by pick_ew, in conjuction with the "wt" commands listed in binder's configuration file. Use one "wt quality weight" command to assign a "weight" (any number from 0.0 to 1.0, inclusive) to any "quality" (0,1,2,3 or 4) of pick that you want binder to use in the location.  If at least one "wt" command is supplied, other pick-qualities that were not listed in a "wt" command receive a pick-quality-weight of 0.0 (ie, they won't be weighted in the location process). If no "wt" commands are used, all quality picks receive a pick-quality-weight of 1.0.
+</p>
+<p>
+The distance-weight is based on the epicentral distance of the station from the current starting location and the "r_max" and "taper" commands listed in the configuration file.  The "r_max" command is used to set the maximum epicentral distance for weighting picks in the location process. Any pick at a distance greater than r_max km from the starting epicenter will not be used in relocating the event.  For picks within r_max km of the epicenter, the distance-weight is a function of the current distance, r, and the distance-taper function set with the "taper" commands (see the "Residual Tolerance Distance Term, dist-taper" section above):
+</p>
+<pre class="wiki">  distance-weight = ((min dist-taper value)/(dist-taper value at r))**2
+</pre><p>
+The overall weight of a pick in the relocation process will be a number between 0.0 and 1.0, inclusive.
+</p>
+<p>
+The total number of phases binder can use in relocating an event is limited using the "maxpix" command.  The default value (256) should be plenty for most networks.
+</p>
+<p>
+<strong>Relocation and Iteration Control</strong>
+</p>
+<p>
+Binder hands its locator a starting location and a list of phases. The locator determines the pick weights as above, then calculates the event's average weighted travel-time residual (rms) to use as a reference for testing divergence.
+</p>
+<p>
+For most earthquakes, the first iteration performed by the locator will be a "Free" solution. It will invert for all four hypocentral parameters: latitude, longitude, depth, and origin time. However, if an event has no nearby picks associated, the locator will perform "Fixed Depth" solution instead. This feature is controlled with the "FixDepth dmin trialz" command (default dmin=50.0, trialz=8.0). If an earthquake has no picks closer than "dmin" km, binder sets its depth to "trialz" km, then inverts for only latitude, longitude, and origin time. This prevents events with no depth resolution from flailing.
+</p>
+<p>
+The result of the locator's inversion is the "step-vector." This is the amount by which the iteration will change all 4 hypocentral components. Binder places limits on the horizontal (xystep) and vertical (zstep) components of the step-vector in any given iteration. Those limits are set with the "MaxStep xystep zstep" command (default xystep=10.0 km, zstep=2.0 km). If either step-length is exceeded in an interation, all 4 dimensions (x, y, z and time) of the step-vector are equally damped, preserving the direction of the vector, such that each dimension is within its configured limit.
+</p>
+<p>
+Binder also place limits on the valid range for computed hypocentral depth. This range, specified with the "zrange zmin zmax" command (default range is 2.0 - 20.0 km), should span the depth range in which you expect to detect earthquakes. It must also span the entire depth range of the stacking grid ("grdz" command);  otherwise, events may stack outside of the zrange limit and this could cause locator logic errors. If during an iteration, the step-vector causes the depth to fall outside of the zmin-zmax range, that step vector is abandoned. The locator then "restarts" the iteration; beginning with the previous starting hypocenter, the locator performs a fixed-depth solution.  This feature is useful in controlling locations from network "glitches" where all picks are coincident and the apparent
+high phase velocity would try to locate the quake at the center of the Earth. 
+</p>
+<p>
+At the end of each iteration, binder recalculates the event's average weighted residual (rms) and performs a test for divergence.  If the new rms is greater than the previous rms*"constant" (set with "MaxDeltaRms" command, default = 1.01), then the solution is diverging. If the location is converging, the locator goes on to the next iteration. If a location is diverging, binder removes half of the step-vector in all 4 dimensions (x, y, z and time), backing the location up toward the starting location from that iteration, and then checks the rms again. If the solution now converges, the locator goes to the next iteration. If the solution is
+still diverging, it backs the location up farther. Up to 3 backwards steps will be made (resulting in a step-vector of 1/8 the original size) if the solution continues to diverge.
+</p>
+<p>
+Binder's locator will perform a maximum number of iterations every time that it's called. The maximum iteration count can be set with the "MaxIter" command (default = 4). However, the locator may perform fewer than MaxIter iterations if the change in the location (in X-Y-Z km) in any given iteration is less than a minimum step-length (set with the "MinXYZstep" command; default = 0.1 km).
+</p>
+<h3 id="Post-RelocationEventReview">Post-Relocation Event Review</h3>
+<p>
+<strong>Pick Culling, Pick Scavenging, and Killing Events</strong> 
+</p>
+<p>
+Binder has just relocated an earthquake. Presumably, the location is better contrained that it was before, and the arrival time fits may have changed as well.  Binder now recalculates the travel-time residuals for all phases associated with the event, regardless of whether the phase was weighted in the relocation or not.  It also calculates the event's average weighted residual (rms), and performs a series of tests.
+</p>
+<p>
+<strong>Pick Culling</strong>
+For each associated pick, binder compares the new travel-time residual to the new residual tolerance value for that station (see the "Configuring the Travel-time Residual Tolerance Function" section above).  If the new residual is larger than the tolerance, binder deassociates or culls the phase from the earthquake.  That pick is now free to associate with another event, or to stack with other picks to identify a new earthquake.  If any picks are culled from an event, that event is sent back to the locator once again.
+</p>
+<p>
+<strong>Pick Scavenging</strong>
+After an event is relocated, binder also looks through its list of recent picks to see if there are any others which may fit the travel-time curves of the new hypocenter.  Essentially, it does the association process (comparing the travel-time residuals of various phases to the residual tolerance at that station) on picks that are in already its memory; binder is scavenging.  Binder is allowed to scavenge two classes of picks in its list: those that are not associated with any active event (also known as "waifs") and those that are associated with events that have fewer phases than the scavenging event.  So big events are allowed to steal phases from smaller events, as long as the travel-time residuals fit.  Since a pick can only belong to one event at a time, this scavenging feature makes
+it possible for two events to merge into one.  This is useful in avoiding "split events", where a large event is originally identified as two events due to the order in which its arrivals were processed.   
+</p>
+<p>
+If an event successfully scavenges one or more new phases, the event is sent back to the locator once again.  Also, if any of the scavenged phases had been associated with a second event, that second event is also sent back to the locator.
+</p>
+<p>
+<strong>Killing Events</strong>
+In reviewing events, binder sometimes decides that an event is no longer valid, either because its location parameters are poor, or because it doesn't have enough supporting phases.  If after a relocation, an event's rms is larger than a cutoff value (configured with the "rmscut" command, default = 1.0 sec), binder marks that event as destroyed or killed.  Or, if after a round of scavenging, an event has fewer than 4 weighted phases (too few to relocate the  event), binder kills that event as well.
+</p>
+<p>
+When binder kills an event, it deassociates or unlinks all of its phases. Those picks are then free to associate with other active events as waifs, or to stack with other picks to identify new events. To notify downstream modules that the event was killed, binder issues a TYPE_QUAKE2K message for that eventid, setting the "number of associated phases" field to zero.
+</p>
+<h3 id="QualityControl:Pick-groupAssessment">Quality Control: Pick-group Assessment</h3>
+<p>
+Occassionally one of binder's newly stacked events will include an outlying pick which falls at a "leverage point" for the hypocenter produced by binder's locator.  This bad pick has undue influence over the hypocenter, causing a poor location which in turn leads to the mis-association of other picks.  Binder uses a test called "pick-group assessment" to identify and eliminate these outlying picks, and to produce a trial hypocenter for the locator.  Given a group of supposedly related picks, pick-group assessment tests whether all of the arrivals are indeed consistent with a single earthquake. 
+</p>
+<p>
+Pick-group assessment is most efficient when it is performed on an event with relatively few associated phases. The configuration command "assess_pk minpk maxpk" controls when the test is run; when an event has between minpk and maxpk (inclusive) picks associated with it, its pick set will be assessed before the event is handed to the locator (defaults are minpk=6, maxpk=12). If an event stacks with more than maxpk picks, its pick set will be assessed at least once.  To turn off pick-assessing totally, set minpk and maxpk to zero. 
+</p>
+<p>
+Only P-wave arrivals are used in pick-group assessment. First, the set of picks is sorted in increasing time order and is examined for glitches.  Glitch picks are eliminated from further testing (see the "define_glitch" command described in the "Pre-Stack Glitch Filtering" section above).  The remainder of the test involves a number of resampling trials.  In each trial, four picks are chosen from the pick set and the exact four-station hypocenter is calculated using a uniform velocity halfspace (configured with the "v_halfspace" command, default = 5.0 km/s). Next, binder calculates the travel-time residual with respect to that hypocenter for every pick in the pick set (again using the uniform velocity halfspace).  You can specify the maximum pick quality (assigned by pick_ew) to use in this resampling process with the "maxwt" command (valid values are 0-4, default = 3).  Picks with qualities higher than maxwt (poorer quality) may be rejected as glitches, but will not be used in resampling trials.
+</p>
+<p>
+The number of trials used in the pick-group assessment is controlled with the "maxtrial" command (default = 500).  Given n picks sampled 4 at a time, the total number of unique combinations is n!/(4!*(n-4)!).
+</p>
+<p>
+If this number is less than maxtrial, all possible combinations will be used, with no duplication. If the total is greater than maxtrial, then maxtrial random samples of 4 picks will be taken, and duplication is possible. 
+</p>
+<p>
+Statistics on the residuals from all of the trials are used to determine if each pick should be accepted or rejected. If a pick is an outlier, it will have very large residuals for any of the hypocenters determined from 4 other picks. Also, the scatter in its residuals will be large.  For each pick, binder calculates the median residual (med), its absolute value (absmed), and the median of the absolute deviations from the median residual (mad). If either the absmed or mad is greater than a configured cutoff threshold, the pick is rejected as an outlier. The cutoff values are configured with the "residual_cut maxabsmed maxmad" command (default maxabsmed = 3.0 sec, maxmad = 10.0 sec).
+</p>
+<p>
+Pick-group assessment is a multiple pass process. The first pass samples from the earliest (up to 25) P-phase picks which meet the testing criteria; this pass is used to winnow the data to arrivals with median residuals below a cutoff value. A second pass resamples the winnowed data to determine the new starting hypocenter from the average of all the 4-pick hypocenters.  This new starting hypocenter and the winnowed list of picks are handed to binder's locator for further processing.
+</p>
+<p>
+If any picks were rejected as glitches or outliers by the pick-group assessment, they are deassociated from the event and are free to restack or reassociate.  Occassionally, binder rejects enough picks that the event no longer has enough valid phases to relocate it.  In this case, the event is killed, and all of its picks are deassociated.
+</p>
+<h3 id="ExamplesfromBindersLogFile">Examples from Binder's Log File</h3>
+<ol><li><a class="attachment" href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/stack.pdf" title="Attachment 'stack.pdf' in binder_ew">Stack</a><a class="trac-rawlink" href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/stack.pdf" title="Download">​</a>: five picks stack to create a new event.
+</li></ol><ol start="2"><li><a class="attachment" href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/glitch_detection.pdf" title="Attachment 'glitch_detection.pdf' in binder_ew">Glitch detection</a><a class="trac-rawlink" href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/glitch_detection.pdf" title="Download">​</a> in Stacking Phase: a series of picks stack, until the last pick identifies the group as a glitch.
+</li></ol><ol start="3"><li><a class="attachment" href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/association.pdf" title="Attachment 'association.pdf' in binder_ew">Association</a><a class="trac-rawlink" href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/association.pdf" title="Download">​</a>: two examples: a pick associates with an active event and a pick fails to associate or stack.
+</li></ol><h3 id="Trouble-Shooting">Trouble-Shooting</h3>
+<p>
+Binder's not producing any earthquakes - what could be wrong?
+</p>
+<ol><li>Is it seeing any picks?
+</li></ol><blockquote>
+<p>
+Check the log file, you should see some lines like these:
+</p>
+<pre class="wiki"> 10  6  3 2189 MWB  NCVHZ D2  19990930005310.08     431     672     584
+19990930_UTC_00:53:15 grid_stack, mhit = 0
+</pre></blockquote>
+<p>
+The first line is a TYPE_PICK2K message, the second is the log of an stacking attempt.
+</p>
+<ol start="2"><li>Is the velocity model specified with "lay depth velocity"?
+</li></ol><ol start="3"><li>Is the station file in the correct format?
+</li></ol><p>
+All lats &amp; lons should be positive in degrees &amp; minutes, with N,S,E,W denoted by letters. If there are no letters, N and W are assumed.
+</p>
+<ol start="4"><li>Are the stacking grid boundaries set properly?
+</li></ol><p>
+Lats &amp; lons are in decimal degree with positive = N, E.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, binder_ew reads the configuration file named on the command-line. Commands in this file set up all parameters used in stacking picks, locating events, and associating phases with events. In the control file, lines may begin with a valid binder_ew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"># This is binder_ew's parameter file!
+#
+MyModuleId   MOD_BINDER    # module id for this instance of binder_ew
+RingName     PICK_RING     # transport ring for I/O
+LogFile      1             # 0 to completely turn off disk log file
+HeartbeatInt 30            # Seconds between heartbeats
+
+# List the message logos to grab from transport ring
+#              Installation       Module       Message Type
+GetPicksFrom   INST_WILDCARD    MOD_WILDCARD    # pick2k
+
+# Set level of output for writing log file
+#
+log_stack          # comment out to turn of grid-stack logging
+hypcode    7
+
+# Load station list
+#
+maxsite 2000
+site_file "calsta.hinv.qa"
+
+# Load Central California crustal model
+#
+@ncal_model.d
+
+# Define the association grid.  Set stacking parameters.
+#
+dspace          4.0
+grdlat         32.5             43.0
+grdlon       -125.0           -114.5
+grdz            0.0             20.0
+rstack 100.0
+tstack 0.65
+stack  50
+thresh 18
+focus  30
+grid_wt 0 4
+grid_wt 1 3
+grid_wt 2 2
+grid_wt 3 1
+
+# Set parameters for associating picks with active hypocenters
+#
+rAvg_Factor 7.0
+taper   0.0     1.0
+taper   50.0    1.0
+taper   200.0   2.5
+taper   400.0   4.5
+# bfh: 11/5/94: "variable taper" proportional to Origin Time Uncertainty:
+# Set both to 0.0 to get Carl's original distance taper only.
+taper_OT 2.0 1.0
+t_dif   -3.0   120.
+
+# Set parameters for locating events
+#
+wt 0 1.0
+wt 1 0.5
+wt 2 0.25
+wt 3 0.125
+ph P  1.0
+ph Pn 0.5
+ph Pg 0.5
+r_max  400.0
+zrange 1.0 30.0
+MaxStep 25.0  5.0
+MinXYZstep 0.1
+MaxIter 4
+MaxDeltaRms 1.0001
+locate_eq  25   2
+locate_eq  50   4
+locate_eq  75   8
+locate_eq 100  16
+
+# Set parameters for assessing groups of picks
+# with Bill Ellsworth's resampling technique:
+assess_pk  8  12
+maxtrial   500
+maxwt      3
+v_halfspace  5.0
+residual_cut  5.0  10.0
+#log_accepted
+
+# Load in the next valid quake sequence number
+#
+@quake_id.d
+
+# end of parameter file
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by binder_ew, grouped by the function they influence. A few of the commands are marked "required"; they describe the Earthworm system setup and network and stacking parameters; these variables have no default values. The required commands must be specified in the control file in order for binder_ew to operate.
+</p>
+<pre class="wiki">	Earthworm system setup:
+  		GetPicksFrom	required
+ 		MyModuleId	required
+		RingName	required
+		BufferRing	required
+			
+	Seismic network/model definition:
+		lay 		required	
+		psratio 	
+		site 		\  site list required; specify with
+		site_file 	/  either "site" or "site_file"
+		maxsite 
+
+	Phase stacking:
+		dspace		required
+		grdlat    	required 
+		grdlon    	required
+		grdz		required	
+		thresh		required
+		define_glitch   
+		focus
+		grid_wt
+		grid_wt_instid
+		next_id  (@quake_id.d)	
+		EventFileId (to point to quake_id file in case of multiple binder_ew's)
+		rstack
+		stack
+		tstack
+		rmsgrid		no longer used
+
+	Event location:
+		FixDepth
+		locate_eq
+		MaxIter
+		MaxDeltaRms
+		maxpix
+		MaxStep
+		MinXYZstep
+		ph
+		r_max
+		rmscut
+		rmscut_pick
+		wt
+		zrange
+
+	Phase association:
+		rAvg_Factor
+		t_dif
+		taper
+		taper_OT
+		no_S_on_Z
+
+	Pick-group assessment:
+		assess_pk
+		maxwt
+		maxtrial
+		residual_cut
+		v_halfspace
+
+	Output control:
+		LogFile		required
+		hypcode
+		log_accepted    
+		log_stack    
+		ray
+		raytst
+		region
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and the values used by Calnet are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>assess_pk [minpk maxpk]</strong><br />
+Processed by: assess_com<br />
+Function: pick assess
+</p>
+<p>
+Defines the range for assessing a group of picks using the resampling technique of Bill Ellsworth. When an event has between minpk and maxpk (inclusive) picks associated with it, its pick set will be assessed before the event is relocated. If an event stacks with more than maxpk picks, its picks will be assessed at least once. Pick-assessment is a multiple pass process based on Rex Allen's pick associator. First, the set of picks is examined for glitches. Then the exact, four-station hypocenter solution method of Ingelada and resampling (four picks at a time) are used to determine the station set that is consistent with an earthquake hypocenter. A first pass samples from the earliest (up to 25) P-phase picks which meet the testing criteria; this pass is used to winnow the data to arrivals with median residuals below a cutoff value. A second pass resamples the winnowed data to determine the trial hypocenter. If any picks are rejected as glitches or outliers, they are freed to restack or reassociate. To turn off pick-assessing totally, set minpk and maxpk to zero. Related commands include "define_glitch", "maxtrial", "maxwt", "residual_cut", "v_halfspace".
+</p>
+<pre class="wiki">Default:  assess_pk 6 12                Calnet:  assess_pk 8 12
+</pre><p>
+<strong>BufferRing [ring]</strong><br />
+Processed by: bndr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells binder_ew which shared memory region to use for private ring buffering of picks. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region. This rings name must be declared in earthworm.d BUT MOST NOT BE LISTED in startstop.d!!!
+</p>
+<pre class="wiki">Default:  none				Calnet:  BufferRing BINDER_EW_RING
+</pre><p>
+<strong>define_glitch [npick nsec]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Sets up the definition of a glitch for filtering arrivals before stacking them. A glitch is defined as at least npick arrivals within nsec seconds. Picks that belong to such a glitch are NOT used in the stacking process. If you want to turn off pre-stack glitch filtering (ie, to make binder_ew stack every pick), set npick to zero (example "define_glitch 0 0.0"). This same glitch definition is used in the pick-assessing process (see command "assess_pk") to recognise glitch-picks that have associated with an event (after it is stacked) and to remove them.
+</p>
+<p>
+Note: nsec should be set slightly larger than an integer multiple of the pick-timing resolution to avoid missing glitches due to round-off errors in floating point arithmetic (for example, our picks are reported to the nearest 0.01 seconds, so we set nsec to 0.035 sec instead of 0.03 sec).
+</p>
+<pre class="wiki">Default:  define_glitch 4 0.035          Calnet:  define_glitch 4 0.035
+</pre><p>
+<strong>dspace [dspace]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines the side-length (dspace in km) of a cell in the stacking volume. The same spatial resolution is used for latitude, longitude and depth. Decreasing cell size increases the time required for stacking as the third power, so adjust these values judiciously. The cell size you choose may also depend on your network station spacing; if too many stations fall within the same grid-cell, stacks may often be null- focused.
+</p>
+<pre class="wiki">Default:  none                          Calnet:  dspace  4.0
+</pre><p>
+<strong>EventIDFile [filename_of_quake_id]</strong><br />
+Processed by: bind_com<br />
+Function: bind
+</p>
+<p>
+This allows the operator to run multiple binder_ew instances and have each use a different quake_id file.
+</p>
+<pre class="wiki">Default:  Not SET,  uses quake_id.d by default then
+</pre><p>
+<strong>FixDepth [dmin trialz]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Sets the trial depth (km) to use for earthquakes which have no nearby stations. If an earthquake has no picks within dmin km, set its depth to trialz km and locate it with a fixed-depth solution. This prevents events with no depth resolution from flailing.
+</p>
+<pre class="wiki">Default:  FixDepth 50.0 8.0             Calnet:  FixDepth 50.0 8.0
+</pre><p>
+<strong>focus [nfocus]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines how focused a stack must be to consider declaring a new quake. A stack must have no more than nfocus cells in its maximum-count list and the maximum count value must be greater than or equal to mthresh (see "thresh" command) in order to declare a new event. Since the trial hypocenter is calculated by averaging the center positions of all the cells in the maximum-count list, a larger nfocus will increase the probability of a poor starting location (which has its own attendant problems). A smaller nfocus value, however, will tend to reject distant events. The optimal value for nfocus may also depend on the grid granularity ("dspace" command). Considerable experimentation may be required to determine an optimum value for any specific network.
+</p>
+<pre class="wiki">Default:  focus 5                       Calnet:  focus 30
+</pre><p>
+<strong>GetPicksFrom [inst mod_id]</strong><br />
+Processed by: bndr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Controls the picks input to binder_ew. Binder_ew will only process picks that come from module mod_id at installation inst. inst and mod_id are character strings (valid strings are listed in earthworm.h/earthworm.d) which are related to single-byte numbers that uniquely identify each installation and module. Up to 2 "GetPicksFrom" commands may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force binder_ew to process all picks, regardless of their place of origin. 
+Note: both binder_ew and eqproc should be set to listen to the same pick source(s)!
+</p>
+<pre class="wiki">Default:  none
+Calnet:   GetPicksFrom  INST_WILDCARD MOD_WILDCARD
+</pre><p>
+<strong>grdlat [lat1 lat2]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines the latitude range (decimal degrees; positive to the north) of the volume containing all trial stacking hypocenters (set the latitude boundaries of the regional grid). Once an event is stacked, it may relocate outside of this range, and it will continue to associate picks correctly.
+</p>
+<pre class="wiki">Default:  none                          Calnet:  grdlat   32.5   43.0
+</pre><p>
+<strong>grdlon [lon1 lon2]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines the longitude range (decimal degrees; positive to the east) of the volume containing all trial stacking hypocenters (set the longitude boundaries of the regional grid). Once an event is stacked, it may relocate outside of this range, and it will continue to associate picks correctly.
+</p>
+<pre class="wiki">Default:  none                          Calnet:  grdlon -125.0 -114.5
+</pre><p>
+<strong>grdz [z1 z2]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines the depth range (km; positive down) of the volume containing all trial stacking hypocenters (set the depth boundaries of the regional grid). The range from z1+(dspace/2) to z2-(dspace/2) must not be greater than the depth range specified in the "zrange" command; otherwise, events may stack outside of the zrange limit and this could cause locator logic errors.
+</p>
+<pre class="wiki">Default:  none                          Calnet:  grdz    0.0   20.0
+</pre><p>
+<strong>grid_wt [quality increment]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Allows picks to be weighted in the stacking process based on their quality assigned by the picker. For a pick with a given quality (0 = most reliable, 4 = least reliable), add increment to the count in the cells which meet the stacking criteria. This command is included so that poor quality picks can still contribute to a stack, but with less impact than better quality picks. The increment values set by grid_wt should be reflected in the mthresh value (set by the "thresh" command) used to declare new events (mthresh should be greater than three times the largest grid_wt increment specified). If no "grid_wt" command is issued, only 0-quality picks will be stacked, with an increment of 1. If at least one "grid_wt" command is issued, a pick whose quality was not specified by grid_wt will not used in the stack.
+</p>
+<pre class="wiki">Default:  stack only quality=0 		Calnet:  grid_wt 0 4
+          using increment=1			 grid_wt 1 3
+					         grid_wt 2 2
+					         grid_wt 3 1
+</pre><p>
+<strong>grid_wt_instid [quality increment instid]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Allows picks to be weighted in the stacking process based not only on the quality assigned by the picker, but also by the installation id that produced them. For a pick with a given quality (0 = most reliable, 4 = least reliable) from a given instid (character string found in earthworm_global.d), add increment to the count in the cells which meet the stacking criteria. This command is included so that picks from one installation can be weighted differently in a stack than picks from another installation and should only be used by networks that are exchanging pick information. The increment values set by grid_wt_instid and grid_wt should be reflected in the mthresh value (set by the "thresh" command) used to declare new events (mthresh should be greater than three times the largest increment specified). If no "grid_wt_instid" or "grid_wt" command is issued, all 0-quality picks will be stacked, with an increment of 1. If at least one "grid_wt_instid" or "grid_wt" command is issued, a pick whose quality and/or instid was not specified will not used in the stack. grid_wt_instid commands can be used in combination with grid_wt commands; a "grid_wt" command is equivalent to a "grid_wt_instid" command with instid set to INST_WILDCARD.
+</p>
+<pre class="wiki">Default:  stack only quality=0         Example:  grid_wt        0 4 
+          from any installation                  grid_wt        1 3
+          using increment=1                      grid_wt_instid 2 2 INST_MENLO
+                                                 grid_wt_instid 2 0 INST_CIT
+</pre><p>
+<strong>hypcode [value]</strong><br />
+Processed by: bind_com<br />
+Function: output
+</p>
+<p>
+Sets a value to specify how much information should be included in binder_ew's log file after each event relocation. Possible values (0-7) and the corresponding output are a sum of:
+</p>
+<p>
+0 no output from locator (default)<br />
+1 include summary location for each iteration<br />
+2 include final phase description for each associated pick<br />
+4 include final rms and dmin
+</p>
+<p>
+Generally, this parameter should only be included during testing and tuning, since significant increases in the size of the log file and a corresponding decrease in associator efficiency is incurred when it is present and non-zero.
+</p>
+<pre class="wiki">Default:  hypcode 0
+</pre><p>
+<strong>lay [depth velocity]</strong><br />
+Processed by: t_com<br />
+Function: model
+</p>
+<p>
+Defines the layered velocity structure to be used for calculating travel times. depth is the distance (km) to the top of the layer, and velocity is the seismic P-wave velocity (km/sec) within that layer. No default velocity structure is defined; therefore, the user must always supply one in the control file. Up to 20 layers can be specified, and they should be listed in order of increasing depth.
+</p>
+<pre class="wiki">Default:  none				Calnet:  lay   0.0  4.0
+						 lay   3.5  5.9
+						 lay  15.0  6.85
+ 						 lay  25.0  7.85
+</pre><p>
+<strong>locate_eq [npick interval]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Allows intermittent relocations of an event; an earthquake with more than npick picks will relocate with every additional interval picks associated. This increases binder_ew's efficiency by skipping cpu- intensive relocations of stable events. Up to 10 "locate_eq" commands can be supplied (in order of increasing npick values) to set multiple npick-break-points and location intervals. An event with fewer picks than the smallest npick value will locate after each additional pick is associated.
+</p>
+<pre class="wiki">Default: locate after every pick	Calnet:  locate_eq  25   2
+						 locate_eq  50   4
+						 locate_eq  75   8
+						 locate_eq 100  16
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: bndr_config<br />
+Function: output
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, binder_ew will write a daily log file(s) called binder_ewxx.log_yymmdd where xx is binder_ew's module id (set with "MyModuleId" command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable). The amount of information written to the file(s) can also be controlled with the "log_stack" and "hypcode" commands.
+</p>
+<pre class="wiki">Default:  none
+</pre><p>
+<strong>log_accepted</strong><br />
+Processed by: assess_com<br />
+Function: output
+</p>
+<p>
+Tells the pick-assessing function (see "assess_pk" command) to log detailed information for all accepted picks, in addition to info about rejected picks. If this command is ommitted, only information about picks rejected as glitches or outliers will be written to the log file.
+</p>
+<pre class="wiki">Default:  don't log accepted picks
+</pre><p>
+<strong>log_stack</strong><br />
+Processed: grid_com<br />
+Function: output
+</p>
+<p>
+Tells the program to print a graphical representation of the stack to the log file each time a new hypocenter is declared. Each grid cell in the depth layer containing the hypocenter is represented by a value (0-9,a-z) denoting the number of "hits" in that cell. The trial hypocenter is found by averaging the positions of all the cells which have the maximum number of hits.
+</p>
+<pre class="wiki">Default:  don't log the stack 
+</pre><p>
+<strong>MaxDeltaRms [factor]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Sets a factor in the test for divergence of an event's average weighted residual (rms). Solution diverges if rms &gt; previous rms * factor.
+</p>
+<pre class="wiki">Default:  MaxDeltaRms 1.01		Calnet:  MaxDeltaRms 1.0001
+</pre><p>
+<strong>MaxIter [num]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Sets the maximum number of iterations to perform on each relocation.
+</p>
+<pre class="wiki">Default:  MaxIter 4			Calnet:  MaxIter 4
+</pre><p>
+<strong>maxpix [maxpix]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Defines the maximum size of the problem that can be accommodated by the location algorithm. Sufficient space is allocated to allow the location of an event with maxpix picks. The reason for providing this command is so that space need only be allocated once, preventing considerable overhead in the location process.
+</p>
+<pre class="wiki">Default:  maxpix 256			Calnet:  maxpix 256
+</pre><p>
+<strong>maxsite [nsite]</strong><br />
+Processed by: site_com<br />
+Function: model
+</p>
+<p>
+Allocates memory to store nsite station locations in the site table.
+</p>
+<pre class="wiki">Default:  maxsite 1000			Calnet:  maxsite 1000
+</pre><p>
+<strong>MaxStep [xystep zstep]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Sets maximum limits (km) on the horizontal (xystep) and vertical (zstep) distance a hypocenter can move in each iteration. If either value is exceeded, all 4 dimensions (x, y, z and time) of the step- vector are equally damped, preserving the direction of the vector, such that each dimension is within its limit.
+</p>
+<pre class="wiki">Default:  MaxStep 10.0 2.0		Calnet:  MaxStep 25.0  5.0
+</pre><p>
+<strong>maxtrial [ntrial]</strong><br />
+Processed by: assess_com<br />
+Function: pick assess
+</p>
+<p>
+Restricts the pick-assessing process to a maximum of ntrial resamplings. Given n picks sampled 4 at a time, the total number of unique combinations is n!/(4!*(n-4)!). If this number is less than ntrial, all possible combinations will be considered, with no duplication. If the total is greater than ntrial, then ntrial random samples of 4 picks will be considered, and duplication is possible.
+</p>
+<pre class="wiki">Default:  maxtrial 500			Calnet:  maxtrial 500
+</pre><p>
+<strong>maxwt [wt]</strong><br />
+Processed by: assess_com<br />
+Function: pick assess
+</p>
+<p>
+Defines the maximum pick quality wt to consider in the resampling pick-assessing process (see "assess_pk" command). wt must be a character from 0 thru 4. Picks with qualities higher than wt (poorer quality) may be rejected as glitches, but will not be used in resampling to find outliers.
+</p>
+<pre class="wiki">Default:  maxwt 3			Calnet:  maxwt 3
+</pre><p>
+<strong>MinXYZstep [minstep]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Defines the step length (km) at which to stop iterating. If the x-y-z step is less than minstep km, the hypocenter is considered stable and no more iterations are done on this call to hyp_l1.
+</p>
+<pre class="wiki">Default:  MinXYZstep 0.1		Calnet:  MinXYZstep 0.1
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: bndr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none				Calnet:  MyModuleId MOD_BINDER_EW
+</pre><p>
+<strong>next_id [quakeid]</strong><br />
+Processed by: bind_com<br />
+Function: stack
+</p>
+<p>
+Defines the sequence number (quakeid+1) to assign to the next stacked event. Each time an event is created, binder_ew updates a file called "quake_id.d" which contains next available sequence number in the "next_id" command. To ensure sequential, non-duplicated event id's between runs, the parameter file "binder_ew.d" must contain the command "@quake_id.d". If this command is omitted, event sequence numbers will be issued beginning at 1 each time binder_ew is restarted.
+</p>
+<pre class="wiki">Default:  next_id 1 			Calnet:  @quake_id.d	
+</pre><p>
+ 
+Don't try and associate a vertical channel pick as an S phase. If horizontal channels are picked on, there is a possibility that a vertical could be used for a horizontal S phase (probably not the best idea in most cases). This simple flag, no argument needed, will prevent any S phases from being associated on a vertical component pick.
+</p>
+<pre class="wiki">Default:  off 				
+</pre><p>
+<strong>ph [phase weight]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Allows for differential weighting and exclusion of various associated phases in the event location process. The weighting is based on the phase assigned to the pick by the associator. phase can be any of P, S, Pn, Sn, Pg, or Sg. weight can be a number between 0.0 and 1.0, inclusive. If no "ph" commands are supplied, all phases receive a phase-weight of 1.0. If at least one "ph" command is supplied, other phases that have not been listed by "ph" are weighted 0.0. The overall weight of a pick in the location is the product of its phase-weight and quality- weight ("wt" command) divided by the taper value ("taper" command) at the appropriate distance. 
+</p>
+<pre class="wiki">Default:  all phases/1.0 weight		Calnet:  ph P  1.0
+						 ph Pn 0.5
+						 ph Pg 0.5
+</pre><p>
+<strong>psratio [value]</strong><br />
+Processed by: t_com<br />
+Function: model
+</p>
+<p>
+Sets the value of the P/S seismic velocity ratio. 
+</p>
+<pre class="wiki">Default:  psratio  1.72			Calnet:	 psratio  1.72
+</pre><p>
+<strong>r_max [rmax]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Sets the maximum epicentral distance (km) for weighting picks in the location process. Picks from stations at distances greater than rmax km are not weighted. 
+</p>
+<pre class="wiki">Default:  r_max 150.0			Calnet:  r_max 400.0
+</pre><p>
+ 
+<strong>rAvg_Factor [factor]</strong><br />
+Processed by: bind_com<br />
+Function: association
+</p>
+<p>
+Sets a factor (scalar) which controls the distance cutoff for associating picks with a given event. If a pick is from a station at an epicentral distance greater than factor*(average epicentral distance of all associated picks), binder_ew will not attempt to assocate that pick with that event.  
+</p>
+<pre class="wiki">Default:  rAvg_Factor 10.0		Calnet:  rAvg_Factor  7.0
+</pre><p>
+<strong>ray [z r]</strong><br />
+Processed by: t_com<br />
+Function: output
+</p>
+<p>
+Prints the travel time from an event at z km depth to a station on the surface at an epicentral distance of r km. This command is used mostly for testing, but might be of some interest in checking travel time calculations or plotting travel time curves. 
+</p>
+<p>
+<strong>raytst [z rmax rdel]</strong><br />
+Processed by: t_com<br />
+Function: output
+</p>
+<p>
+Prints out something dealing with the velocity model and travel times. 
+</p>
+<p>
+<strong>region [z rmax rdel]</strong><br />
+Processed by: t_com<br />
+Function: output
+</p>
+<p>
+Prints out the travel times of all possible phases at series of points on the surface from an earthquake at z km depth. Those surface points are at epicentral distances from rdel km to rmax km and are spaced rdel km apart. This command, mostly for testing, is useful for plotting travel-time curves.
+</p>
+<p>
+<strong>residual_cut [median mad]</strong><br />
+Processed by: assess_com<br />
+Function: pick assess
+</p>
+<p>
+Sets cutoff thresholds (in seconds) for travel-time residuals in the pick-assessing process. Given a group of picks, up to ntrial (see "maxtrial" command)  hypocenters are determined from various combinations of four picks. For each pick, the travel-time residual is calculated with respect to each hypocenter using a uniform-velocity halfspace. If the absolute value of the median of those residuals is greater than median sec, the pick is rejected as an outlier. And if the median of the absolute deviations from the median residual is greater than mad sec, the pick is also rejected as an outlier. 
+</p>
+<pre class="wiki">Default:  residual_cut 3.0 10.0		Calnet:  residual_cut 3.0 10.0
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: bndr_config<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells binder_ew which shared memory region to use for input and output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region. 
+</p>
+<pre class="wiki">Default:  none				Calnet:  RingName PICK_RING
+</pre><p>
+<strong>rmscut [value]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Sets a maximum value (seconds) for the average absolute residual (rms) for a successful location. If this value is exceeded as a result of culling, scavenging, or associating a new phase, the event is marked as destroyed and all of its phases are deassigned. 
+</p>
+<pre class="wiki">Default:  rmscut 1.0 			Calnet:  rmscut 1.0
+</pre><p>
+<strong>rmscut_pick [threshold number_of_picks]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Sets a maximum value (seconds) threshold for the average absolute residual (rms) for a successful location that must be met unless number_of_picks is observed. If this value is exceeded as a result of culling, scavenging, or associating a new phase, and not enough picks are observed, then the event is marked as destroyed and all of its phases are deassigned. Please note that you can have as many of these rmscut_pick commands as you need but the threshold must be in increasing order. At Caltech we found that when a mainshock and foreshock were close together in time, then the mainshock event would get killed if just an RMS of 1.0 was used. By creating this command  we allowed many picks (indicating it was a largish event, to overrule the rmscut threshold and allow the automatic location to go through).
+</p>
+<pre class="wiki">Default:  NOT USED 			Calnet:  rmscut_pick 1.0 100
+</pre><p>
+ 
+<strong>rmsgrid [value]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+No longer used. 
+</p>
+<p>
+<strong>rstack [rstack]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines the distance (km) over which phases are allowed to interact with other phases during the stacking analysis. rstack defines the dimensions of the stacking travel-time template, whose cell size is defined by "dspace" (an rstack of 100 and a dspace of 10 would yield a 10 x 10 travel time template). Phases from stations that are more than 2*rstack km apart will not stack together other because their stacking templates will not overlap. 
+</p>
+<pre class="wiki">Default:  rstack  100.0			Calnet:  rstack  100.0
+</pre><p>
+<strong>site [name latitude longitude]</strong><br />
+Processed by: site_com<br />
+Function: model
+</p>
+<p>
+Enters a station location into the station site table, where name is the station code used by the picker, and latitude and longitude are expressed in decimal degrees (positive to the north and east). Use either multiple "site" commands or one "site_file" command to load the station list into binder_ew. 
+</p>
+<p>
+<strong>site_file [filename]</strong><br />
+Processed by: site_com<br />
+Function: model
+</p>
+<p>
+Enters site codes and station locations into the site table by reading a HYPOINVERSE format station file called filename. In this file, stations are described by a 5-letter site name, a 2-letter network code and a 3-letter component code. The picker must also be using this station-naming convention. The format of the file is described under <a class="wiki" href="hypo_file_format.html">HYPOINVERSE STATION FILE FOR FULL 12-LETTER (S-N-C-L) CHANNEL NAMES</a>. Use either one "site_file" command or multiple "site" commands to load the station list into binder_ew. 
+</p>
+<p>
+<strong>stack [mstack]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Determines how many previously received picks are to be considered in the stacking process. A value of 50 to 100 seems appropriate, although if the scatter in reporting delays is large, a larger value of mstack may be required. 
+</p>
+<pre class="wiki">Default:  stack 20			Calnet:  stack 50
+</pre><p>
+<strong>t_dif [tmin tmax]</strong><br />
+Processed by: bind_com<br />
+Function: associaton
+</p>
+<p>
+Defines a time range (seconds) around an event origin-time (origin-time minus tmin to origin-time plus tmax). If a pick-time falls outside of this time range for a given event, binder_ew will not attempt to associate that pick with that event. 
+</p>
+<pre class="wiki">Default:  t_dif -1.0 120.0  		Calnet:  t_dif -3.0 120.0
+</pre><p>
+<strong>taper [r resmax]</strong><br />
+Processed by: bind_com<br />
+Function: association
+</p>
+<p>
+Defines a distance-dependent tolerance for associating, culling, or scavenging a phase, where r is the distance (km) and resmax is the maximum allowed residual (seconds). Multiple taper commands (up to 100) can be issued, in order of increasing r, to define the tolerance function. Between the distances specified, the
+value of the cutoff residual changes linearly between corresponding resmax values. For distances less than the lowest value specified, the cutoff residual is constant at the resmax value for the smallest distance; for distances exceeding the maximum specified, the cutoff is constant at the resmax value set for the maximum distance. If no "taper" commands are supplied, the cutoff residual is a constant 1.0 sec for all distances. 
+</p>
+<pre class="wiki">Default:  constant 1.0 sec		Calnet:  taper   0.0   1.0
+                  				 taper  50.0   1.0
+						 taper  200.0  2.5
+						 taper  400.0  4.5
+</pre><p>
+<strong>taper_OT [const1 const2]</strong><br />
+Processed by: bind_com<br />
+Function: association
+</p>
+<p>
+Sets constants for two additional terms to be added to the residual- tolerance function (described for "taper" command). These 2 terms widen the residual-tolerance for events with greater location uncertainty. The first added term (multiplied by const1) depends on the event rms and the number of picks associated with the event. The second additional term is: const2 * log10(distance of closest station) To eliminate the event origin-time uncertainty terms, use the command:
+taper_OT 0.0 0.0 
+</p>
+<pre class="wiki">Default:  taper_OT 2.0 2.0		Calnet:  taper_OT 2.0 1.0
+</pre><p>
+ 
+<strong>thresh [mthresh]</strong><br />
+Processed by: grid_com<br />
+Function: stack
+</p>
+<p>
+Sets the cell-count above which to consider declaring an earthquake from a stack. A completed stack is examined to prepare a list of cells that share the maximum count value and the same minimum distance to the initiating phase. The associator declares a new hypocenter from the stack only if the maximum count value is greater than mthresh and the number of cells in the list is less than nfocus (see "focus" command). The trial hypocenter for the declared event is calculated by averaging the center positions of all the cells in the maximum-count list. mthresh should be greater than 3 times the maximum increment specified by "grid_wt" commands to ensure that at least 4 phases contribute to declaration of a new earthquake.  
+</p>
+<pre class="wiki">Default:  thresh 6			Calnet:	 thresh 14
+</pre><p>
+<strong>tstack [tstack]</strong><br />
+Processedby: grid_com<br />
+Function: stack
+</p>
+<p>
+Defines how close (in seconds) the back-projection of one phase must lie with respect to the back-projection of another phase for the two phases to be considered coherent (ie, from the same source). The value of tstack should reflect the degree of crustal heterogeneity as shown in the range of station delays. As a first approximation, tstack should be at least the number of seconds it takes for a P-wave to cross a grid cell of dspace km. 
+</p>
+<pre class="wiki">Default:  tstack 0.5			Calnet:  tstack  0.65
+</pre><p>
+<strong>v_halfspace [vel]</strong><br />
+Processed by: assess_com<br />
+Function: pick assess
+</p>
+<p>
+Sets the P-wave velocity vel in km/sec of the halfspace used in the pick-assessing process to locate events by the Ingelada method and to calculate travel-times residuals (see "assess_pk" command). 
+</p>
+<pre class="wiki">Default:  v_halfspace 5.0		Calnet:  v_halfspace 5.0
+</pre><p>
+ 
+<strong>wt [quality weight]</strong><br />
+Processed by: bind_com<br />
+Function: location
+</p>
+<p>
+Controls the weight of a pick in the event location process based on the quality assigned to the pick by the picker. Picks with a quality of 0 are the most reliable, those with quality 4 are least reliable. 
+  
+quality is any of the values 0, 1, 2, 3, or 4
+</p>
+<p>
+weight is a number between 0.0 and 1.0, inclusive. 
+</p>
+<p>
+If no "wt" commands are supplied, all picks receive a quality-weight of 1.0. If at least one "wt" command is supplied, other qualites that have not been listed by "wt" are weighted 0.0. The overall weight of a pick in the location is the product of its phase-weight (see "ph" command) and quality-weight divided by the taper value (see "taper" command) at the appropriate distance. 
+</p>
+<pre class="wiki">Default:  all qualities/1.0 weight	Calnet:  wt 0 1.0
+						 wt 1 0.5
+						 wt 2 0.25
+						 wt 3 0.125
+</pre><p>
+<strong>zrange [zmin zmax]</strong><br />
+Processed by: hyp_com<br />
+Function: location
+</p>
+<p>
+Defines the valid range (km) for computed hypocentral depth. The range specified by zmin and zmax must span the depth range set in the "grdz" command; otherwise, events may stack outside of the zrange limit and this could cause locator logic errors. If during the iteration process, the depth falls outside of the zmin-zmax range, a fixed-depth solution is calculated starting at the previous iteration's hypocenter. This feature is useful in controlling locations from network  glitches" where all picks are concurrent and the apparent high phase velocity would try to locate the quake at the center of the Earth. 
+</p>
+<pre class="wiki">Default:  zrange 2.0 20.0		Calnet:  zrange 1.0 30.0
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+    <div id="attachments">
+        <h3 class="foldable">Attachments</h3>
+        <ul>
+            <li>
+    <a href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/binder-flowchart.pdf" title="View attachment">binder-flowchart.pdf</a><a href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/binder-flowchart.pdf" class="trac-rawlink" title="Download">​</a>
+       (<span title="56341 bytes">55.0 KB</span>) -
+      added by <em>branden</em> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-04T11%3A24%3A21-07%3A00&amp;precision=second" title="2012-05-04T11:24:21-07:00 in Timeline">17 months</a> ago.
+            </li>
+            <li>
+    <a href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/stack.pdf" title="View attachment">stack.pdf</a><a href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/stack.pdf" class="trac-rawlink" title="Download">​</a>
+       (<span title="93176 bytes">91.0 KB</span>) -
+      added by <em>branden</em> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-04T11%3A24%3A30-07%3A00&amp;precision=second" title="2012-05-04T11:24:30-07:00 in Timeline">17 months</a> ago.
+            </li>
+            <li>
+    <a href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/glitch_detection.pdf" title="View attachment">glitch_detection.pdf</a><a href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/glitch_detection.pdf" class="trac-rawlink" title="Download">​</a>
+       (<span title="70195 bytes">68.5 KB</span>) -
+      added by <em>branden</em> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-04T11%3A24%3A47-07%3A00&amp;precision=second" title="2012-05-04T11:24:47-07:00 in Timeline">17 months</a> ago.
+            </li>
+            <li>
+    <a href="http://earthwormcentral.com/trac/ew/attachment/wiki/binder_ew/association.pdf" title="View attachment">association.pdf</a><a href="http://earthwormcentral.com/trac/ew/raw-attachment/wiki/binder_ew/association.pdf" class="trac-rawlink" title="Download">​</a>
+       (<span title="31206 bytes">30.5 KB</span>) -
+      added by <em>branden</em> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-04T11%3A24%3A55-07%3A00&amp;precision=second" title="2012-05-04T11:24:55-07:00 in Timeline">17 months</a> ago.
+            </li>
+        </ul>
+    </div>
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/binder_ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

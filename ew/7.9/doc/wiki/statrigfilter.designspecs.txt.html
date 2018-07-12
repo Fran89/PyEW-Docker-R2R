@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      statrigfilter.designspecs.txt – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/statrigfilter.designspecs.txt?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="statrigfilter.designspecs.txt.html" title="View statrigfilter.designspecs.txt">statrigfilter.designspecs.txt</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/statrigfilter.designspecs.txt?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/statrigfilter.designspecs.txt?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-03-25T14%3A02%3A09-07%3A00&amp;precision=second" title="2012-03-25T14:02:09-07:00 in Timeline">18 months</a> ago</span>
+            <span class="trac-print">Last modified on 03/25/12 14:02:09</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">
+	    Design Requirements for the Station Trigger Filter
+
+1. The purpose of the trigger filter is to reduce the number of "duplicate" 
+   triggers from a given "station". For the trigger filter, all channels 
+   which have matching station code and network code are considered to be 
+   the from the same "station". The rules for what are considered "duplicate" 
+   triggers are given below.
+
+2. For each "station", the trigger filter will maintain a history list of 
+   triggers that have been allowed through the filter. The size of these 
+   lists will be limited to a configurable number (count) of triggers.
+ 
+   LDD: The "TriggerHistory" command specifies the number (count)
+   of triggers that will be maintained in the list for each "station".  
+   Only triggers which pass the filter rules are added to the list. Once 
+   the list is full, old triggers are removed in a simple first-in, first 
+   overwritten manner.
+
+3. The trigger filter can optionally be configured to pass triggers from 
+   only certain component codes.
+  
+   LDD: Set with "AllowComponent" command. If no "AllowComponent" command 
+   is used, ALL components will be allowed to pass. If one or more 
+   "AllowComponent" commands are used, the trigger filter will only pass 
+   triggers from the listed components.
+
+4. Each individual station trigger from carlstatrig produces a "trigger-on"
+   message and a "trigger-off" message. The following rules may be used to 
+   determine if a "trigger-on" is allowed through the filter. 
+
+   A new trigger-on is considered to "match" a trigger in the history  
+   list if the two trigger-on times are within "time tolerance" of each 
+   other. That is, a new trigger-on within "time tolerance" before or  
+   after a listed trigger is considered a duplicate of the listed trigger
+   and is rejected.
+   
+   LDD: Set with "TimeTolerance" command.
+ 
+   a. The first trigger message (either "trigger-on" or "trigger-off")
+      seen for a given station is always passed by the filter. 
+  
+   b. A trigger-on that is more than "time tolerance" newer than the 
+      most recent listed trigger is always passed by the filter.
+
+   c. "Allow older": A trigger-on that is not a duplicate of any listed
+      trigger and is more than "time tolerance" older than the youngest 
+      listed trigger is optionally passed by the filter.
+
+      LDD: Two commands to control this feature.
+      "OlderTrigAllowed" has 3 possible values:
+        0=pass no non-duplicate triggers older than the youngest passed
+          trigger for this station.
+        1=pass older triggers, but set a limit on how old they can be.
+        2=pass all non-duplicate triggers older than the youngest trigger
+          for this station. 
+      "OlderTrigLimit" is used only if OlderTrigAllowed=1. If a 
+       non-duplicate trigger is older than they youngest-passed trigger by 
+       more than OlderTrigLimit seconds, the trigger will be rejected.  
+
+       This feature is a carry-over from the original pkfilter code. 
+       It was included in pkfilter because I noticed that for CI data, 
+       some channels at a station can arrive many minutes later than 
+       another channel at the same station.  I assume that this is due to
+       recovery on a bad telemetry link.  
+
+       If we want to keep the trigger history relatively short and still
+       let older triggers thru, we need to set a time limit on the oldest 
+       triggers we'll accept. Otherwise we could still end up with lots of 
+       duplicates in the system. 
+
+       This feature not be very useful because carlsubtrig, as currently 
+       written (2005/11/22), needs to operate "in the present." It compares
+       the timestamp in the trigger message to the system clock and 
+       effectively ignore any triggers that are "too old."  If carlsubtrig
+       were re-written to be able to handle old data, then the "OldTrigAllowed"
+       feature may become useful.
+
+5. "Trigger-off" messages are filtered by the trigger filter in this manner: 
+   a. If a "trigger-off" message is the first message seen from a station, 
+      it will be passed thru with no other checks.
+   b. If a "trigger-off" message is from a station which is already in 
+      the trigger filter's list, it will only be passed if it is the
+      first "trigger-off" message which exactly matches a "trigger-on" 
+      message which has already passed thru the filter.
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/statrigfilter.designspecs.txt?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

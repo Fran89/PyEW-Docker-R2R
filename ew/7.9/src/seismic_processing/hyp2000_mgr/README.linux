@@ -1,0 +1,35 @@
+
+For version 1.3, hyp2000_mgr should be compiled with FC=gfortran
+on newer linux versions.
+
+
+Old notes below (1.2 version):
+Hyp2000_mgr has been compiled with g77 on Linux, not f77.
+
+The binary distribution has been linked accordingly and requires
+shared library libg2c.so. If you get a complaint that isn't there
+or you're trying to compile hyp2000 yourself and you get errors,
+you may need to install g77.
+
+For Ubuntu 9.10, I needed to do the following as root:
+
+edit /etc/apt/sources.list and append the following lines to the end:
+
+deb http://hu.archive.ubuntu.com/ubuntu/ hardy universe
+deb-src http://hu.archive.ubuntu.com/ubuntu/ hardy universe
+deb http://hu.archive.ubuntu.com/ubuntu/ hardy-updates universe
+deb-src http://hu.archive.ubuntu.com/ubuntu/ hardy-updates universe
+
+Next:
+
+aptitude update
+aptitude isntall g77
+
+Now the binary hyp2000_mgr works properly.
+
+It's suggested that you go back and remove the 4 lines you added to 
+sources.list since they're for the older 8.04 version of Ubuntu.
+
+(The above adapted from:
+http://0x5f.blogspot.com/2009/10/install-g77-in-ubuntu-904-jaunty.html
+)

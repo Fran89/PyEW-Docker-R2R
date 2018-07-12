@@ -1,0 +1,1 @@
+CALL sp_ins_ew_scnl('%s', '%s', '%s', '%s', %s, %s, %s, '%s', %s);

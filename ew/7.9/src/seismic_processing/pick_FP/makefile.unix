@@ -1,0 +1,34 @@
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+FilterPickerDir = ./picker
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = pick_FP.o call_FilterPicker.o restart.o config.o stalist.o compare.o \
+    index.o report.o initvar.o \
+    $(FilterPickerDir)/FilterPicker5.o $(FilterPickerDir)/FilterPicker5_Memory.o $(FilterPickerDir)/PickData.o \
+    $L/libew.a $L/swap.o $L/trheadconv.o
+
+
+all: FilterPicker pick_FP
+
+pick_FP: $O
+	$(CC) $(CFLAGS) -o $B/pick_FP $O $(SPECIFIC_FLAGS)
+
+.PHONY: FilterPicker
+FilterPicker:
+	(cd $(FilterPickerDir); make -f makefile.unix)
+
+# Clean-up rules
+clean:
+	(cd $(FilterPickerDir); make clean)
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/pick_FP*

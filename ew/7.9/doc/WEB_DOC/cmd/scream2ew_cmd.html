@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+</head>
+<body style='text-color:black;background-color:rgb(250,223,175);'>
+
+<h1 style='text-align:center;'>Scream2ew Configuration File</h1>
+<p style='text-align:center;font-style:italic;'>(last revised May 3,
+2006)</p>
+<p style='text-align:center;'>EXAMPLE SCREAM2EW CONFIGURATION FILE</p>
+
+<pre>#
+# This is scream2ew's parameter file
+#
+# Please check that line endings are set appropriately for your
+# platform. Comments begin with a '#'.
+#
+
+
+
+#
+#  Basic Earthworm setup
+#
+
+# module id for this instance of scream2ew
+MyModuleId         MOD_SCREAM2EW
+
+# shared memory ring for input/output
+RingName           WAVE_RING
+
+# 0 = log to screen only
+# 1 = log to screen and logfile
+# 2 = log to logfile only
+LogFile            1
+
+# 1 = log every packet
+# 0 = don't
+Verbose            1
+
+# seconds between heartbeats
+HeartBeatInterval  30
+
+
+
+#
+# Scream server setup
+#
+
+# If the Server option is given, the scream2ew program will contact a
+# Scream server via TCP on the specified host, and request its data from
+# there. If it is not given, the scream2ew program will instead simply
+# listen for UDP broadcast packets.
+Server 192.168.0.1
+
+# In TCP mode, this is the TCP port on which the scream server is
+# running. In UDP mode, it is the local port on which we will listen for
+# broadcast packets.
+PortNumber         1567
+
+
+
+#
+# Scream to Earthworm mapping
+#
+
+# These lines specify the mapping between the GCF system ID and stream
+# ID and the earthworm network, station, location, channel and pin
+# number.
+#
+# For example:
+#  ChanInfo "D850 EKA12 AB CDE 00 BHZ 1"
+#
+# This line would map Scream packets with:
+#  GCF system ID: D850                   [max 6 chars]
+#  GCF stream ID: EKA12                  [max 6 chars]
+#
+# To:
+#  Network:       AB                     [max 8 chars]
+#  Station:       CDE                    [max 6 chars]
+#  Location:      00                     [exactly 2 chars]
+#  Channel:       BHZ                    [max 3 chars]
+#  Pin number:    1
+#
+# If you do not wish to specify any location, use the sequence '--'.
+#
+ChanInfo "D850 EKA12 AB CDE 00 BHZ 1"
+ChanInfo "D850 EKA13 AB CDE 01 BHZ 2"</pre>
+
+<p style='text-align:center;'>
+<a href="../modules.html">Module Index</a> |
+<a href="../ovr/scream2ew_ovr.html">Scream2ew Overview</a>
+</p>
+
+<!-- USGS-required stuff at the end -->
+<hr />
+<strong>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></strong><br />
+
+
+</body>
+</html>

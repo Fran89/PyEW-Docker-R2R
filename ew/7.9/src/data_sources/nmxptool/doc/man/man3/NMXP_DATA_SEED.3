@@ -1,0 +1,70 @@
+.TH "NMXP_DATA_SEED" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NMXP_DATA_SEED \- 
+.PP
+Parameter structure for functions that handle mini-seed records.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <nmxp_data.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBn_open_files\fP"
+.br
+.ti -1c
+.RI "int \fBlast_open_file\fP"
+.br
+.ti -1c
+.RI "int \fBcur_open_file\fP"
+.br
+.ti -1c
+.RI "int \fBerr_general\fP"
+.br
+.ti -1c
+.RI "int \fBerr_outfile_mseed\fP [NMXP_DATA_MAX_NUM_OPENED_FILE]"
+.br
+.ti -1c
+.RI "FILE * \fBoutfile_mseed\fP [NMXP_DATA_MAX_NUM_OPENED_FILE]"
+.br
+.ti -1c
+.RI "char \fBfilename_mseed\fP [NMXP_DATA_MAX_NUM_OPENED_FILE][NMXP_DATA_MAX_SIZE_FILENAME]"
+.br
+.ti -1c
+.RI "char \fBoutdirseed\fP [NMXP_DATA_MAX_SIZE_FILENAME]"
+.br
+.ti -1c
+.RI "char \fBdefault_network\fP [5]"
+.br
+.ti -1c
+.RI "\fBNMXP_DATA_SEED_TYPEWRITE\fP \fBtype_writeseed\fP"
+.br
+.ti -1c
+.RI "void * \fBpmsr\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parameter structure for functions that handle mini-seed records. 
+.SH "Member Data Documentation"
+.PP 
+.SS "int \fBNMXP_DATA_SEED::n_open_files\fP"
+.SS "int \fBNMXP_DATA_SEED::last_open_file\fP"
+.SS "int \fBNMXP_DATA_SEED::cur_open_file\fP"
+.SS "int \fBNMXP_DATA_SEED::err_general\fP"
+.SS "int \fBNMXP_DATA_SEED::err_outfile_mseed\fP[NMXP_DATA_MAX_NUM_OPENED_FILE]"
+.SS "FILE* \fBNMXP_DATA_SEED::outfile_mseed\fP[NMXP_DATA_MAX_NUM_OPENED_FILE]"
+.SS "char \fBNMXP_DATA_SEED::filename_mseed\fP[NMXP_DATA_MAX_NUM_OPENED_FILE][NMXP_DATA_MAX_SIZE_FILENAME]"
+.SS "char \fBNMXP_DATA_SEED::outdirseed\fP[NMXP_DATA_MAX_SIZE_FILENAME]"
+.SS "char \fBNMXP_DATA_SEED::default_network\fP[5]"
+.SS "\fBNMXP_DATA_SEED_TYPEWRITE\fP \fBNMXP_DATA_SEED::type_writeseed\fP"
+.SS "void* \fBNMXP_DATA_SEED::pmsr\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

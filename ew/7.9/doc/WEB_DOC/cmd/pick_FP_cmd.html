@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Pick_FP commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+Pick_FP Configuration File Commands</h1>
+<i>(last revised Nov 02, 2012)</i></center>
+Page Index:<br>
+1. <a href="#example">Example configuration file</a><br>
+2. <a href="#function">Functional command listing</a><br>
+3. <a href="#alphabet">Alphabetic command listing &amp; description</a><br>
+4. <a href="#station">Station list format</a><br>
+5. <a href="#standalone">Standalone mode</a><br>
+6. <a href="#reference">Additional references on the picker algorithm</a>
+<p><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, pick_FP reads the configuration file named on the command
+line. Commands in this file set up all parameters used in picking
+P-wave arrivals from Earthworm waveform data. In the control file,
+lines may begin with a valid pick_FP command (listed below) or with one
+of 2 special characters:
+</p>
+<blockquote>
+  <pre>#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @pick_FP.d).<br></pre>
+</blockquote>
+Command names must be typed in the control file exactly as shown in
+this
+document (upper/lower case matters!).
+<p><a name="example">
+</a></p>
+<h2><a name="example">1. EXAMPLE CONFIGURATION FILE</a></h2>
+<pre><a name="example">#
+#
+#                     Pick_FP's Configuration File
+#
+MyModId        MOD_PICK_FP      # This instance of pick_FP
+StaFile        "<a href="#station">pick_FP.sta</a>"    # File containing station name/pin# info
+InRing           WAVE_RING      # Transport ring to find waveform data on,
+OutRing          PICK_RING      # Transport ring to write output to,
+HeartbeatInt            30      # Heartbeat interval, in seconds,
+RestartLength          100      # Number of samples to process for restart
+MaxGap                  15      # Maximum gap to interpolate
+Debug                    0      # If 1, print debugging message
+
+WeightTable 0.02 0.05 0.50 1.00 # Pick weight table (maximum error in seconds
+                                # for weight 0 up to weight 3)
+
+# Specify which messages to look at with Getlogo commands.
+#   GetLogo <installation_id> <module_id> <message_type>
+# The message_type must be either TYPE_TRACEBUF or TYPE_TRACEBUF2.
+# Use as many GetLogo commands as you need.
+# If no GetLogo commands are given, pick_FP will look at all
+# TYPE_TRACEBUF and TYPE_TRACEBUF2 messages in InRing.
+#-----------------------------------------------------------------
+GetLogo  INST_WILDCARD  MOD_WILDCARD  TYPE_TRACEBUF2
+</a></pre>
+
+<a name="function">
+</a>
+<h2><a name="function">2. FUNCTIONAL COMMAND LISTING</a></h2>
+<p><a name="function"><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by pick_FP, grouped by the function
+they influence. All of the commands are required; they must be
+specified in the control file (in any order) for pick_FP to operate.
+<!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: -->
+</a></p>
+<pre><a name="function">	Earthworm system setup:</a>
+		<a href="#InRing">InRing</a>		Shared memory region for input
+		<a href="#OutRing">OutRing</a>		Shared memory region for output
+		<a href="#MyModId">MyModId</a>		Module id for pick_FP
+		<a href="#HeartBeatInt">HeartBeatInt</a> 	Interval between heartbeats
+
+	Picking Parameters:
+		<a href="#RestartLength">RestartLength</a>	Number of samples to process for restarts
+		<a href="#MaxGap">MaxGap</a>		Maximum gap (#samples) to interpolate
+		<a href="#StaFile">StaFile</a>		File containing station names and picking parameters
+		<a href="#Debug">Debug</a>		Debugging flag
+		<a href="#PickIndexDir">PickIndexDir</a>	Directory where pick_FP_MMM.ndx files will be written (optional)
+		<a href="#WeightTable">WeightTable</a>	Pick weight table (maximum error in seconds for weight 0 up to weight 3)
+
+</pre>
+<a name="alphabet">
+</a>
+<h2><a name="alphabet">3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a></h2>
+<p>
+<a name="alphabet">In the following section, all configuration file
+commands are listed in alphabetical order. Listed along with the
+command (bold-type) are its arguments (in red), the name of the
+subroutine that processes the command, and the function within the
+module that the command influences. A detailed description of the
+command and is also given. None of the commands has any default value.
+The values used by Calnet are listed after each command description.
+</a></p>
+<pre><a name="alphabet"><b>
+command <font color="red">arg1</font>				processed by		function<br></b></a></pre>
+<hr>
+<!-- ADD HERE: all commands; below is a sample command blank: --><a
+ name="Debug"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="Debug"><b>Debug <font color="red">flag</font>				GetConfig		output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="Debug"><!-- command description goes here --> Sets
+a flag to control the volume of debugging information
+output by pick_FP. If <font color="red">flag</font> is zero, no debug
+info is written. If <font color="red">flag</font> is non-zero, debug
+information is written to the logfile and screen.
+  </a>
+  <pre><!-- Default and example go here   -->
+<a name="Debug">Default:  none				<br>Sample:   Debug 0<br></a></pre>
+</blockquote>
+<hr>
+<a name="HeartBeatInt"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="HeartBeatInt"><b>HeartBeatInt <font color="red">nsec</font>			GetConfig		Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="HeartBeatInt"><!-- command description goes here -->
+Defines the number of seconds, <font color="red">nsec</font>, between
+TYPE_HEARTBEAT messages issued by pick_FP.
+  </a>
+  <pre><!-- Default and example go here   -->
+<a name="HeartBeatInt">Default:  none				<br>Sample:   HeartBeatInt 30<br></a></pre>
+</blockquote>
+<hr>
+<a name="InRing"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="InRing"><b>InRing <font color="red">ring</font>				GetConfig		Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="InRing"><!-- command description goes here -->
+Tells pick_FP which shared memory region to find its input waveforms
+on.
+  <font color="red">ring</font> is a character string (valid strings
+are listed in earthworm.d) that relates (in earthworm.d) to a unique
+number for the key to the
+shared memory region. By default, pick_FP processes all TYPE_TRACEBUF
+or TYPE_TRACEBUF2 messages
+that reside on <font color="red">ring</font>, regardless of their
+installation id or module id.
+  </a>
+  <pre><!-- Default and example go here   -->
+<a name="InRing">Default:  none				<br>Sample:   InRing WAVE_RING<br></a></pre>
+</blockquote>
+<hr>
+<a name="MaxGap"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MaxGap"><b>MaxGap <font color="red">maxgap</font>				GetConfig		output</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MaxGap"><!-- command description goes here -->
+Sets <font color="red">maxgap</font>, the maximum length (in samples)
+of a data gap
+which pick_FP will allow without restarting the picking algorithm. When
+pick_FP
+detects a data gap less than or equal to <font color="red">maxgap</font>
+samples
+on a given channel, it will do a simple linear interpolation across the
+gap
+and continue in the picking algorithm as if there were no data gap. If
+a
+gap is longer than <font color="red">maxgap</font> samples, then
+pick_FP will
+drop all active pick and coda calculations for that channel and will
+enter the
+"restart" phase (see </a><a href="#RestartLength">RestartLength</a>
+command) of the
+algorithm.
+  <pre><!-- Default and example go here   -->
+Default:  none
+Sample:   MaxGap 10
+  </pre>
+</blockquote>
+<hr>
+<a name="MyModId"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="MyModId"><b>MyModId <font color="red">mod_id</font>				GetConfig		Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="MyModId"><!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font
+ color="red">mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number. If more than
+one pick_FP is running at the same time, they must be given different
+module ids! (If 2 pick_FP's are given the same module id, other modules
+that listen to pick_FP output may report many "missed message" errors).
+  </a>
+  <pre><!-- Default and example go here   --><br><a name="MyModId">Default:  none				<br>Sample:   MyModId  MOD_PICK_FP<br><br></a></pre>
+</blockquote>
+<pre><a name="MyModId">Sample:   MaxGap 10</a><br><a name="MyModId"></a></pre>
+<pre><a name="MyModId"><br>
+</a></pre>
+<hr>
+<a name="OutRing"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="OutRing"><b>OutRing <font color="red">ring</font>				GetConfig		Earthworm setup</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="OutRing"><!-- command description goes here -->
+Tells pick_FP which shared memory region to use for all its output
+(picks, codas, heartbeats and errors). <font color="red">ring</font>
+is a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the shared
+memory region.
+  </a>
+  <pre><!-- Default and example go here   -->
+<a name="OutRing">Default:  none				<br>Sample:   OutRing PICK_RING<br></a></pre>
+</blockquote>
+<pre><br><br></pre>
+<hr style="height: 2px;"><!-- command name as anchor inside quotes -->
+<pre><a name="PickIndexDir"><b>PickIndexDir <font color="red">dir</font>				GetConfig		<span
+ style="font-family: monospace;">picking params</span></b>		</a></pre>
+<br>
+<blockquote><!-- command description goes here --> This allows the
+pick_FP_MMM.ndx index files (used to track pick id's) to be placed in a
+different directory than the params directory. If this is a relative
+path, then the path should be relative to the params directory. In
+either case, the directory must already exist. This is an OPTIONAL
+FEATURE. If not set, then the pick_FP_MMM.ndx files will be written
+into the params directory as they have always been. For reference, the
+MMM refers to the module id.
+  <pre>Default:  none				<br>Sample:   PickIndexDir  pick_index</pre>
+  <pre><br></pre>
+</blockquote>
+<pre><br></pre>
+<blockquote></blockquote>
+<hr>
+<a name="RestartLength"> </a>
+<pre><a name="RestartLength"><b>RestartLength <font color="red">nrestart</font>			GetConfig		picking params</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="RestartLength"><!-- command description goes here -->
+Sets <font color="red">nrestart</font>, the number of samples pick_FP
+will process on startup
+for each channel to obtain background values before entering the P-wave
+picking phase
+for that signal. Once running, any time pick_FP detects a data gap
+longer than </a><a href="#MaxGap">MaxGap</a> samples in a given
+channel's data, pick_FP will drop any active pick or coda calculations
+for that
+channel. It will then "restart" that channel by processing the next <font
+ color="red">nrestart</font> samples to reestablish baseline values,
+after which it will return to the picking phase of the algorithm.
+  <pre><!-- Default and example go here   -->
+Default:  none
+Sample:   RestartLength 100
+  </pre>
+</blockquote>
+<hr>
+<a name="StaFile"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="StaFile"><b>StaFile <font color="red">name</font>				GetConfig		picking params</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="StaFile"><!-- command description goes here -->
+Tells pick_FP the <font color="red">name</font> of the file that
+contains the pick/don't pick flag, pin numbers, station code, and
+per-channel picking parameters.
+  <font color="red">name</font> is a character string;
+it may be enclosed in double-quotes, but it doesn't have to be.
+See </a><a href="#station">section 4</a> below for the format of this
+file.
+  <pre><!-- Default and example go here   -->
+Default:  none
+Sample:   StaFile "pick_FP.sta"
+  </pre>
+</blockquote>
+<hr>
+<a name="WeightTable"><!-- command name as anchor inside quotes --> </a>
+<pre><a name="WeightTable"><b>WeightTable <font color="red">w0 w1 w2 w3</font>			GetConfig		picking params</b><!-- command args ... -->		<br></a></pre>
+<blockquote><a name="WeightTable"><!-- command description goes here -->
+Defines a table for associating picking errors (in seconds) calcuated by
+the FilterPicker algorithm and pick weights (<font color="red">w0 w1 w2 w3</font>) needed by
+binder_ew.
+<font color="red">w0 w1 w2 w3</font> are expressed in seconds.
+  <pre><!-- Default and example go here   -->
+Default:  0.02 0.05 0.50 1.00
+Sample:   WeightTable 0.02 0.05 0.50 1.00
+  </pre>
+</a></blockquote>
+<hr>
+<a name="station"></a>
+<h2><a name="station">4. STATION LIST FORMAT</a></h2>
+<a name="station"> </a>
+<p><a name="station">By default, pick_FP processes all TYPE_TRACEBUF
+or TYPE_TRACEBUF2 messages (regardless of their
+installation id or module id) that reside on transport ring specified
+in the InRing command. All of the channels of trace data being
+processed by the Earthworm system should be described in pick_FP's
+station list file. This file contains one line per input channel. Each
+line contains 11 required
+fields used by pick_FP to identify the channel and set all the picking
+parameters for that channel.
+Upon retrieving a TYPE_TRACEBUF or TYPE_TRACEBUF2 message from the ring, pick_FP finds
+the appropriate
+parameters for that message by matching the station, component, and
+network fields in the message header to a line from the station file.
+If it can't find a match, pick_FP
+won't process that tracebuf message.
+</a></p>
+<p><a name="station">A sample portion of a pick_FP station list file
+appears below. <br>
+Note that comments are preceded by a #. </a></p>
+<p><a name="station">----------------------------------------------------
+</a></p>
+<pre><a name="station">
+# Do not leave any blank lines in this file.
+#
+#
+# Note: use negative values for filterWindow, longTermWindow
+#       and tUpEvent to let the code autoset them.
+#
+#                                      threshold1
+# Pick  Pin     Sta/Comp           longTermWindow  tUpEvent
+# Flag  Numb    Net/Loc       filterWindow  threshold2
+# ----  ----    --------      -----------------------------
+    1    00  AVG3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    01  AVG3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    02  BEL3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    03  BEL3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    04  SCL3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    05  SCL3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    06  STN3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    07  STN3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    08  PGN3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    09  PGN3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    10  VDP3 C00 IN LF   -1  -1   8.6  17.2   -1
+    1    11  VDP3 C03 IN LF   -1  -1   8.6  17.2   -1
+    1    12  CMP3 C03 IN --   -1  -1   8.6  17.2   -1
+</a></pre>
+<a name="station">----------------------------------------------------
+</a>
+<p><a name="station">Each line in the station file contains the
+following 11 fields, separated by white space:
+</a></p>
+<a name="station"><b>Channel Identification:</b>
+</a>
+<pre><a name="station"> 1. <font color="blue">Pick Flag</font>      if <font color="blue">Pick Flag</font> is 0, pick_FP will not try to pick P-wave arrivals
+                   from this trace.  If <font color="blue">Pick Flag</font> is 1, the trace will be picked.
+
+ 2. <font color="blue">Pin Numb</font>       this field is not used by pick_FP, but exists for posterity
+                   and for potential use by other programs.  Each input signal in a given
+                   Earthworm system should have a pin number <font color="blue">Pin Numb</font> (2-byte integer)
+                   that is unique across all data sources within the system.  For example,
+                   if we use two digitizers with 256 channels each, our pin numbers would
+                   range from 0 to 511.
+
+ 3. <font color="blue">Station</font>        the first of 3 fields (Station-Comp-Net) that will uniquely identify
+                   each trace of seismic data.  <font color="blue">Station</font> is a string, up to 5 characters,
+                   that identifies the physical site of the seismic instrument. This label
+                   must be unique within a given network.
+
+ 4. <font color="blue">Comp</font>           a 3-character string to identify the component of motion
+                   recorded by this seismic trace.
+
+ 5. <font color="blue">Net</font>            a 2-character string that identifies the network that
+		   operates the seismic instrument.
+
+ 6. <font color="blue">Loc</font>            a 2-character string that identifies the location code that
+		   describes the sensor location.
+</a></pre>
+
+<a name="station"><b>Waveform Filtering Parameters:</b>
+</a>
+<pre><a name="station"> 7. <font color="blue">filterWindow</font>   (in seconds) determines how far back in time the previous samples are
+		   examined.  The filter window will be adjusted upwards to be an integer
+                   N power of 2 times the sample interval (delta).  Then N + 1 "filter bands"
+                   are created. For each filter band n = 0,N  the data samples are processed
+		   through a simple recursive filter backwards from the current sample, and
+		   picking statistics and characteristic function are generated.  Picks are
+		   generated based on the maximum of the characteristic funciton values over
+		   all filter bands relative to the threshold values <font color="blue">threshold1</font> and <font color="blue">threshold2</font>.
+                   If -1, then <font color="blue">filterWindow</font> is autoset to 300 * delta.
+
+ 8. <font color="blue">longTermWindow</font> (in seconds) determines: a) a stabilisation delay time after the beginning
+		   of data; before this delay time picks will not be generated. b) the decay
+                   constant of a simple recursive filter to accumlate/smooth all picking
+                   statistics and characteristic functions for all filter bands.
+</a></pre>
+
+
+<a name="station"> <b>Event Evaluation Criteria:</b></a>
+<pre><a name="station"> 9. <font color="blue">threshold1</font>     sets the threshold to trigger a pick event (potential pick).
+		   This threshold is reached when the (clipped) characteristic function for
+		   any filter band exceeds <font color="blue">threshold1</font>.
+
+10. <font color="blue">threshold2</font>     sets the threshold to declare a pick (pick will be accepted when <font color="blue">tUpEvent</font>
+		   is reached).
+		   This threshold is reached when the integral of the (clipped) characteristic
+		   function for any filter band over the window <font color="blue">tUpEvent</font> exceeds
+		   <font color="blue">threshold2</font> * <font color="blue">tUpEvent</font> (i.e. the average (clipped) characteristic function
+		   over <font color="blue">tUpEvent</font> is greater than <font color="blue">threshold2</font>).
+
+11. <font color="blue">tUpEvent</font>       determines the maximum time for which the integral of the (clipped)
+		   characteristic function is accumlated after <font color="blue">threshold1</font> is reached (pick
+		   event triggered), to then check for this integral exceeding
+		   <font color="blue">threshold2</font> * <font color="blue">tUpEvent</font> (pick declared).
+
+</a></pre>
+
+<a name="standalone"></a>
+<h2><a name="standalone">5. STANDALONE MODE</a></h2>
+Pick_FP can operate as a standalone module. Specify a tracebuf file
+as second command line argument (after the config file name) in order to run the
+picker on tracebuf data.
+A running Earthworm stack (i.e. startstop) is not necessary for standalone mode.
+Picks are written to the standard output.<br>
+Standalone mode allows to quickly test picking parameters without having to run a
+full Earthworm/tankplayer stack.
+
+
+<a name="reference"></a>
+<h2><a name="reference">6. ADDITIONAL REFERENCES ON THE PICKER ALGORITHM</a></h2>
+<pre><a name="reference">
+Lomax, A., C. Satriano and M. Vassallo (2012), Automatic picker developments and optimization:
+        FilterPicker - a robust, broadband picker for real-time seismic monitoring and earthquake early-warning,
+        <i>Seism. Res. Lett.</i> , <b>83</b>, 531-540, doi: <a href="http://dx.doi.org/10.1785/gssrl.83.3.531">10.1785/gssrl.83.3.531</a>.
+
+Vassallo, M., C. Satriano and A. Lomax, (2012), Automatic picker developments and optimization:
+	A strategy for improving the performances of automatic phase pickers,
+        <i>Seism. Res. Lett.</i> , <b>83</b>, 541-554, doi: <a href="http://dx.doi.org/10.1785/gssrl.83.3.541">10.1785/gssrl.83.3.541</a>.
+</a></pre>
+<hr>
+<center><a name="reference"> </a><a href="../modules.html">Module Index</a> | <a href="../ovr/pick_FP_ovr.html">Pick_FP Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>Contact: <b></b></address>
+<address><b> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></b></address>
+<br>
+</body>
+</html>

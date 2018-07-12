@@ -1,0 +1,52 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6296 2015-04-08 04:56:25Z et $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2007/10/12 17:11:06  paulf
+#      first check in of UCB eqassemble head of mega module code
+#
+#     Revision 1.1  2007/02/13 23:55:19  ncss
+#     Added the standard EW makefiles
+#
+#
+#
+#
+
+#
+#                    Nmake File For eqassemble
+#                               Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all:
+   emake $B\eqassemble.exe
+
+eqassemble:
+   emake $B\eqassemble.exe
+
+$B\eqassemble.exe: eqassemble.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) eqassemble.obj $L\site.obj \
+    $L\tlay.obj \
+    $L\mnbrak.obj $L\brent.obj $L\pipe.obj \
+    $L\rdpickcoda.obj $L\libew.lib -out:$B\eqassemble.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\eqassemble*

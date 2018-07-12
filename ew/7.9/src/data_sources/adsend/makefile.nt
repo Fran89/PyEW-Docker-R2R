@@ -1,0 +1,146 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.12  2006/11/21 23:03:36  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.11  2006/11/21 22:22:56  stefan
+#     cl to $(CC) $(GLOBALFLAGS)  and include <ntwin32.mak>
+#
+#     Revision 1.10  2006/10/05 19:58:06  stefan
+#     added include of ntwin32.mak and cflags
+#
+#     Revision 1.9  2006/06/14 18:28:10  stefan
+#     e:\ to c:" makefile.nt
+#
+#     Revision 1.8  2004/04/20 16:26:32  kohler
+#     Modified adsend to produce TYPE_TRACEBUF2 messages, which contain location
+#     codes in the headers.  The configuration file, adsend.d, must contain
+#     location codes in the channel specifications.  Also, cleaned up some error
+#     reporting.  WMK 4/20/04
+#
+#     Revision 1.7  2003/05/06 20:50:08  lucky
+#     *** empty log message ***
+#
+#     Revision 1.6  2002/07/17 23:31:10  alex
+#     *** empty log message ***
+#
+#     Revision 1.5  2002/03/05 23:26:04  kohler
+#     Added support for NIDAQ version 6.9.1
+#
+#     Revision 1.4  2000/05/22 21:45:37  dietz
+#     Fixed to recompile EW library objects as single-threaded (a requirement of adsend)
+#
+#     Revision 1.3  2000/04/14 21:50:54  lucky
+#     Changed name of the binary from .EXE to .exe
+#
+#     Revision 1.2  2000/03/31 21:33:42  lucky
+#     Fixed things so that earthworm objects are included directly from the lib directory
+#
+#     Revision 1.1  2000/02/14 16:00:43  lucky
+#     Initial revision
+#
+#
+#
+
+# ----------------------------------------------------------------------
+# MakeFile for adsend
+# ----------------------------------------------------------------------
+#
+# Instructions on how to create the executable:
+#
+#     First make sure that your environmental variables
+#     'INCLUDE' and 'LIB' are set correctly.
+#
+#     You may also load this .MAK file from Visual C++.
+#     Visual C++ will then treat it as an 'external makefile'.
+#
+#     The libsrc functions are recompiled here because we need
+#     single-threaded versions instead of multi-threaded versions
+#
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+U = $(EW_HOME)\$(EW_VERSION)\src\libsrc\util
+W = $(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt
+
+!include <ntwin32.mak>
+
+
+O  = adsend.obj guidechk.obj irige.obj getconfig.obj comatose.obj \
+     nidaq_ew.obj console.obj heartbeat.obj threads.obj print_gmtime.obj \
+     errors.obj chron3.obj logit.obj kom.obj getutil.obj time_ew.obj \
+     transport.obj sleep_ew.obj
+#
+
+# Setup paths for NI-DAQ includes and libraries
+# NOTE: Different NI-DAQ versions have different default
+#       install directory names. Uncomment the lines
+#       appropriate to the version you are running!
+#
+# NI-DAQ Verion 5.0:
+# NIDAQ_INCLUDE=c:\nidaqnt\Include
+# NIDAQ_LIB=c:\nidaqnt\Lib
+#
+# NI-DAQ VERSION 6.5.1
+# NIDAQ_INCLUDE=c:\ni-daq\Include
+# NIDAQ_LIB=c:\ni-daq\Lib
+#
+# NI-DAQ VERSION 6.9.1
+NIDAQ_INCLUDE="c:\Program Files\National Instruments\NI-DAQ\Include"
+NIDAQ_LIB="c:\Program Files\National Instruments\NI-DAQ\Lib"
+
+CL_FLAGS=/c /DWIN32 /I$(NIDAQ_INCLUDE) $(cflags)
+LINK_FLAGS=/MACHINE:I386
+
+#
+# TARGET: Console application
+#
+all: adsend.exe
+
+
+adsend.exe: $O
+    link $(LINK_FLAGS) /OUT:$B\adsend.exe $O \
+      $(NIDAQ_LIB)\nidex32.lib $(NIDAQ_LIB)\nidaq32.lib
+
+# The libsrc functions are recompiled here because we need
+# single-threaded versions instead of multi-threaded versions
+
+chron3.obj: $U\chron3.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\chron3.c
+
+logit.obj: $U\logit.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\logit.c
+
+kom.obj: $U\kom.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\kom.c
+
+getutil.obj: $U\getutil.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $U\getutil.c
+
+time_ew.obj: $W\time_ew.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\time_ew.c
+
+transport.obj: $W\transport.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\transport.c
+
+sleep_ew.obj: $W\sleep_ew.c
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $W\sleep_ew.c
+
+.c.obj:
+    $(CC) $(GLOBALFLAGS)  $(CL_FLAGS) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+    -del a.out core *.o *.obj *% *~
+
+clean_bin:
+    -del $B\adsend*
+
+

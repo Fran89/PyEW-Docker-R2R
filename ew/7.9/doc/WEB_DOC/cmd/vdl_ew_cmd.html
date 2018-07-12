@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Vdl_ew commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Vdl_ew Configuration File </H1>
+<I>(last revised 10 August, 1999)</I></CENTER>
+<P>
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<P>
+<PRE>
+#
+# vdl_ew configuration file
+#
+# VDL under Earthworm is started by startstop, and given the commandline found in startstop.d
+# That's where vdl get's its cusomary command line arguments. The file here is read
+# by the "feedme" routines, which determine vdl's identity to earthworm, and what to feed to vdl.
+# VDL has been modified (7/2/99) to use SCN names rather than pin numbers.
+#
+ MyModuleId     MOD_VDL_EW   # module id for this export,
+ RingName       WAVE_RING      # transport ring to use for input/output,
+ HeartBeatInt   10             # Heartbeat interval in seconds (Earthworm internal)
+                # feedme() will consider beating the heart each time it's called, but will
+                # not beat faster than the interval above
+ LogFile        1              # If 0, don't write logfile at all,
+ MaxMsgSize     500     # length of largest message we'll ever handle - in bytes
+ MaxMessages    1000    # limit of number of message to buffer
+
+# List the message logos to grab from transport ring for us to choose from
+#  - as to which we will forward to VDL
+#              Installation       Module       Message Type
+ GetMsgLogo    INST_MENLO      MOD_WILDCARD     TYPE_TRACEBUF
+
+# List of SCN names to send to VDL, and the corresponding VDL-USNSN designators
+#               SCN name        USNSN designator
+SendSCN         JSA VHZ NC              0
+SendSCN         PTR VHZ NC              1
+SendSCN         MTU VHZ NC              2
+
+</PRE>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/vdl_ew_ovr.html">Vdl_ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

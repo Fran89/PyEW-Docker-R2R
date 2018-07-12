@@ -1,0 +1,34 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+SEEDLIBS = libdcc_seed.a libseim123.a libdcc_time.a libdcc_misc.a
+
+dcc_seed: lib/libdcc_seed.a
+
+dcc_misc: lib/libdcc_misc.a
+
+dcc_time: lib/libdcc_time.a
+
+steim123: lib/libsteim123.a
+
+lib/libdcc_seed.a:
+	cd dcc_seed; make -f makefile.unix all
+
+lib/libdcc_misc.a:
+	cd dcc_misc; make -f makefile.unix all
+
+lib/libdcc_time.a:
+	cd dcc_time; make -f makefile.unix all
+
+lib/libsteim123.a:
+	cd steim123; make -f makefile.unix all
+
+clean: 
+	cd lib; rm -f *.o *.a core *~ \#*\#
+	cd dcc_time; make -f makefile.unix clean
+	cd dcc_misc; make -f makefile.unix clean
+	cd dcc_seed; make -f makefile.unix clean
+	cd steim123; make -f makefile.unix clean
+

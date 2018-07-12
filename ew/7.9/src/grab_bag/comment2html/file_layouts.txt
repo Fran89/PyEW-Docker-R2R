@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Title Goes Here</title>
+</head>
+<body>
+<!-- EW_FORMATTED COMMENT
+DISPLAY_TYPE = <FULL,TABLE,TOC,INDEX>
+DISPLAY_LIBRARY = <* OR COMMA DELIMITED LIST>
+DISPLAY_SUBLIBRARY = <* OR COMMA DELIMITED LIST>
+DISPLAY_COMMENT_TYPES = <* OR CONSTANT,FUNCTION,TYPEDEF,LIBRARY,SUBLIBRARY>
+END OF EW_FORMATTED COMMENT
+-->
+</body>
+</html>
+
+
+1. -------------------------
+in the main file
+for each library
+   heading "lib_name" as h2
+   for each sublibrary of the current library
+     heading "sub_lib_name" as h3
+
+2. -------------------------
+in LIBRARY files
+for each library
+  create a LIBRARY file
+    Library Name
+    Library Info (ALL)
+  for each sub_library
+    "SubLibrary Name"
+    SubLibrary Description
+
+3. -------------------------
+in SUB_LIBRARY files
+for each sub library
+  create a SUB_LIBRARY file
+    SubLibrary Name
+    "Library Name"
+    SubLibrary Info (ALL)
+  for each language
+    LANGUAGE_NAME
+    for each comment type
+      COMMENT_TYPE_NAME 
+      for each SOURCE_FILE
+        SOURCE_FILE_NAME
+        Comment_Name
+        Comment_Info (ALL)
+
+

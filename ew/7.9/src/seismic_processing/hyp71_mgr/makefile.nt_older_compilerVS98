@@ -1,0 +1,61 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt_older_compilerVS98,v 1.1 2006/06/14 19:52:08 stefan Exp $
+#
+#    Revision history:
+#     $Log: makefile.nt_older_compilerVS98,v $
+#     Revision 1.1  2006/06/14 19:52:08  stefan
+#     deprecated makefile
+#
+#     Revision 1.2  2003/05/06 20:54:17  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 18:40:56  lucky
+#     Initial revision
+#
+#
+#
+
+#                  Nmake File For hyp71_mgr - Windows NT version
+
+H   = ..\hyp2000
+S   = ..\hyp2000\subs
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+OBJ = hyp71_mgr.obj $L\libew.lib $L\pipe.obj
+F   = hyp2000_ew.for $H\hyate.for $H\hybda.for $H\hybeg.f $H\hycal.for \
+      $H\hycin.f $H\hycmd.for $H\hycout.f $H\hycrh.for $H\hycrt.for \
+      $H\hydel.for $H\hydelt.f $H\hyedit.f $H\hyfile.for $H\hyfmc.for $H\hyinit.for \
+      $H\hyinp.for $H\hyloc.for $H\hylst.for $H\hymag.for $H\hymagp.for \
+      $H\hyopen.for $H\hyphs.for $H\hypoinv.for $H\hypref.for $H\hypro.for \
+      $H\hyrep.for $H\hysol.for $H\hysou.for $H\hysta.for $H\hystl.for \
+      $H\hysum.for $H\hysvd.f $H\hytime.f77 $H\hytra.for $H\hytrh.for \
+      $H\hytrl.for $H\hytrt.for $H\hyxmc.for $H\init_event.f $H\medwt.for \
+      $H\utmcal.for \
+      $S\errset.f $S\openr.f $S\openw.f $S\klas.for \
+      $S\upstr.for $S\spawn.f $S\askc.for $S\lask.for \
+      $S\jask.for $S\askr.for $S\leng.for $S\readq.for \
+      $S\dayjl.for $S\jdate.for $S\box2.for $S\box3.for \
+      $S\klass.for $S\ksic.for
+
+LIBS = dformt.lib libcmt.lib
+
+$B\hyp71_mgr.exe: hyp71_mgr.obj
+   fl32 $(OBJ) $F $(LIBS) /Fe$B\
+
+.c.obj:
+   cl -c -D_WINNT $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\hyp71_mgr*

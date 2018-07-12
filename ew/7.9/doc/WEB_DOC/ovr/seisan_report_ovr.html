@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Earthworm Program: seisan_report overview</title></head><body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Program:<br>
+seisan_report Overview</h1>
+<i>(last revised April 23, 2015)</i></center>
+<p>
+The <b>seisan_report</b> program watches an Earthworm ring for TYPE_HYP2000ARC type messages indicating that the <a href="eqproc_ovr.html">mega-module</a>
+("sausage") has located an event, and generates seisan s-files using
+parameters extracted from the messages. The program waits long enough
+to allow <a href="trig2disk_ovr.html"><b>trig2disk</b></a> to have written a wavefile, which allows the wavefile name to be included in the s-file when it is written out.<br>
+<br>
+The program also watches for TYPE_MAGNITUDE messages from <a href="localmag_ovr.html"><b>localmag</b></a>. Parameters from these messages will be added to the appropriate s-file (which should not yet have been written at that point).<br>
+<br>
+The program can be configured to write a TYPE_EVENT_ALARM message to
+the ring for alarm modules to pick up. This only happens upon receipt
+of a TYPE_MAGNITUDE message, so if <b>locmag</b> isn't running then no alarms will be sent.<br>
+<br>
+The original program was contributed by David Scott and Richard
+Luckette of the BGS (based on menlo_report). It has been modified to
+handle S arrivals from Earthwom and to have better WAV file matching.</p>
+<br>
+
+<center><b><a href="../modules.html">Module Index</a> | <a href="../cmd/seisan_report_cmd.html">seisan_report Commands</a>
+</b></center>
+<!-- USGS-required stuff at the end -->
+<hr><br>
+<b>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body></html>

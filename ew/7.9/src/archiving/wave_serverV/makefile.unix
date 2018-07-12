@@ -1,0 +1,41 @@
+
+LINUX_FLAGS=-lm -lpthread -lc -ldl
+SOLARIS_FLAGS=-lm -lnsl -lsocket -mt -lposix4 -lthread -lc -ldl
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+BINARIES = wave_serverV.o index.o server_thread.o serve_trace.o index_util.o \
+         compare.o tb_packet_db.o $L/sqlite3.o $L/dirops_ew.o \
+	 $L/libew_mt.a $L/socket_ew.o \
+	 $L/socket_ew_common.o $L/swap.o $L/mem_circ_queue.o 
+
+ALL: wave_serverV tools
+
+wave_serverV: $(BINARIES)
+	$(PURIFY_DK) $(CC) $(CFLAGS) -g -o $B/wave_serverV $(BINARIES) $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) $(CFLAGS) -g -c $(OUTPUT_OPTION) $<
+
+tools: 
+	(cd Tools; make -f makefile.unix)
+
+
+lint:
+	lint wave_serverV.c index.c server_thread.c serve_trace.c index_util.c compare.c  $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+	(cd Tools; make -f makefile.unix clean)
+
+clean_bin:
+	rm -f $B/wave_serverV*
+	(cd Tools; make -f makefile.unix clean_bin)

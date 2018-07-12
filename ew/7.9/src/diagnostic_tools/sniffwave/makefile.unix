@@ -1,0 +1,29 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -g  ${GLOBALFLAGS}
+
+
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+LIB_MS = $L/libmseed.a
+
+
+O = sniffwave.o $L/libew.a $L/swap.o
+
+sniffwave: $O
+	$(CC) $(CFLAGS) -o $B/sniffwave $O $(SPECIFIC_FLAGS) $(LIB_MS)
+
+lint:
+	lint sniffwave.c $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/sniffwave*

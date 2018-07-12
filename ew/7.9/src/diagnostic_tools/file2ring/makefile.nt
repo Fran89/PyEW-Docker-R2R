@@ -1,0 +1,46 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5320 2013-01-30 20:04:07Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:49  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:42:00  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2001/02/09 21:29:44  dietz
+#     Initial revision
+#
+#
+#
+
+#
+#                  Nmake File For menlo_report and arcfile2ring
+#                               Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+$B\file2ring.exe: file2ring.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) file2ring.obj \
+    $L\libew.lib \
+    -out:$B\file2ring.exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\file2ring*

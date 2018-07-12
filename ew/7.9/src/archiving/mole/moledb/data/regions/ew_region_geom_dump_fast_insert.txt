@@ -1,0 +1,2 @@
+To create a fastest insert you can use the following mysqldump command:
+  mysqldump --skip-opt --no-create-db --no-create-info --extended-insert  -umole -p mole ew_region_geom > ew_region_geom_dump_fast_insert.sql

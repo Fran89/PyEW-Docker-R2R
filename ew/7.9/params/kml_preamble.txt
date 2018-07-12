@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+        <name>EW Auto Location</name>
+        <Schema name="HypoinverseSummary" id="HypoSummary">
+                <SimpleField type="string" name="Origin"><displayName>&lt;b&gt;Origin&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Lat"><displayName>&lt;b&gt;Lat&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Long"><displayName>&lt;b&gt;Long&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Depth"><displayName>&lt;b&gt;Depth&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="MAG"><displayName>&lt;b&gt;MAG (Md)&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="int" name="Number_Picks"><displayName>&lt;b&gt;Number Picks&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="int" name="Azimuthal_Gap"><displayName>&lt;b&gt;Azimuthal Gap&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Nearest_Station"><displayName>&lt;b&gt;Nearest Station&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="RMS"><displayName>&lt;b&gt;RMS&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Error_H"><displayName>&lt;b&gt;Error-H&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="double" name="Error_Z"><displayName>&lt;b&gt;Error-Z&lt;/b&gt;</displayName>
+</SimpleField>
+                <SimpleField type="string" name="Quality"><displayName>&lt;b&gt;Quality&lt;/b&gt;</displayName>
+</SimpleField>
+        </Schema>
+        <StyleMap id="pointStyleMap">
+                <Pair>
+                        <key>normal</key>
+                        <styleUrl>#normPointStyle</styleUrl>
+                </Pair>
+                <Pair>
+                        <key>highlight</key>
+                        <styleUrl>#hlightPointStyle</styleUrl>
+                </Pair>
+        </StyleMap>
+        <Style id="normPointStyle">
+                <IconStyle>
+                        <color>ff00ffff</color>
+                        <scale>2.0</scale>
+                        <Icon>
+                                <href>http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png</href>
+                        </Icon>
+                </IconStyle>
+                <BalloonStyle>
+                        <text><![CDATA[<table border="0">
+  <tr><td><b>Origin</b></td><td>$[HypoinverseSummary/Origin]</td></tr>
+  <tr><td><b>Lat</b></td><td>$[HypoinverseSummary/Lat]</td></tr>
+  <tr><td><b>Long</b></td><td>$[HypoinverseSummary/Long]</td></tr>
+  <tr><td><b>Depth</b></td><td>$[HypoinverseSummary/Depth]</td></tr>
+  <tr><td><b>MAG (Md)</b></td><td>$[HypoinverseSummary/MAG]</td></tr>
+  <tr><td><b>Number Picks</b></td><td>$[HypoinverseSummary/Number_Picks]</td></tr>
+  <tr><td><b>Azimuthal Gap</b></td><td>$[HypoinverseSummary/Azimuthal_Gap]</td></tr>
+  <tr><td><b>Nearest Station</b></td><td>$[HypoinverseSummary/Nearest_Station]</td></tr>
+  <tr><td><b>RMS</b></td><td>$[HypoinverseSummary/RMS]</td></tr>
+  <tr><td><b>Error-H</b></td><td>$[HypoinverseSummary/Error_H]</td></tr>
+  <tr><td><b>Error-Z</b></td><td>$[HypoinverseSummary/Error_Z]</td></tr>
+  <tr><td><b>Quality</b></td><td>$[HypoinverseSummary/Quality]</td></tr>
+</table>
+]]></text>
+                </BalloonStyle>
+                <ListStyle>
+                </ListStyle>
+        </Style>
+        <Style id="hlightPointStyle">
+                <IconStyle>
+                        <color>ff0000ff</color>
+                        <scale>0.6</scale>
+                        <Icon>
+                                <href>http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png</href>
+                        </Icon>
+                </IconStyle>
+                <BalloonStyle>
+                        <text><![CDATA[<table border="0">
+  <tr><td><b>Origin</b></td><td>$[HypoinverseSummary/Origin]</td></tr>
+  <tr><td><b>Lat</b></td><td>$[HypoinverseSummary/Lat]</td></tr>
+  <tr><td><b>Long</b></td><td>$[HypoinverseSummary/Long]</td></tr>
+  <tr><td><b>Depth</b></td><td>$[HypoinverseSummary/Depth]</td></tr>
+  <tr><td><b>MAG (Md)</b></td><td>$[HypoinverseSummary/MAG]</td></tr>
+  <tr><td><b>Number Picks</b></td><td>$[HypoinverseSummary/Number_Picks]</td></tr>
+  <tr><td><b>Azimuthal Gap</b></td><td>$[HypoinverseSummary/Azimuthal_Gap]</td></tr>
+  <tr><td><b>Nearest Station</b></td><td>$[HypoinverseSummary/Nearest_Station]</td></tr>
+  <tr><td><b>RMS</b></td><td>$[HypoinverseSummary/RMS]</td></tr>
+  <tr><td><b>Error-H</b></td><td>$[HypoinverseSummary/Error_H]</td></tr>
+  <tr><td><b>Error-Z</b></td><td>$[HypoinverseSummary/Error_Z]</td></tr>
+  <tr><td><b>Quality</b></td><td>$[HypoinverseSummary/Quality]</td></tr>
+</table>
+]]></text>
+                </BalloonStyle>
+                <ListStyle>
+                </ListStyle>
+        </Style>
+        <Style id="sn_triangle23">
+                <IconStyle>
+                        <color>ff00ff00</color>
+                        <scale>1.2</scale>
+                        <Icon>
+                                <href>http://maps.google.com/mapfiles/kml/shapes/triangle.png</href>
+                        </Icon>
+                </IconStyle>
+                <LabelStyle>
+                        <color>ff00ff00</color>
+                        <scale>1.4</scale>
+                </LabelStyle>
+        </Style>
+        <Style id="sh_triangle22">
+                <IconStyle>
+                        <color>ff00ff00</color>
+                        <scale>1.4</scale>
+                        <Icon>
+                                <href>http://maps.google.com/mapfiles/kml/shapes/triangle.png</href>
+                        </Icon>
+                </IconStyle>
+                <LabelStyle>
+                        <color>ff00ff00</color>
+                        <scale>1.4</scale>
+                </LabelStyle>
+        </Style>
+        <StyleMap id="msn_triangle23">
+                <Pair>
+                        <key>normal</key>
+                        <styleUrl>#sn_triangle23</styleUrl>
+                </Pair>
+                <Pair>
+                        <key>highlight</key>
+                        <styleUrl>#sh_triangle22</styleUrl>
+                </Pair>
+        </StyleMap>
+

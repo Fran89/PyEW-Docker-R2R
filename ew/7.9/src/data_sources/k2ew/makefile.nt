@@ -1,0 +1,84 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5328 2013-01-31 17:43:52Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.8  2006/11/21 23:03:37  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.7  2006/10/05 20:18:04  stefan
+#     added cflag D_INTEL
+#
+#     Revision 1.6  2003/05/29 13:49:37  friberg
+#     added in k2info.o
+#
+#     Revision 1.5  2003/05/06 20:52:04  lucky
+#     *** empty log message ***
+#
+#     Revision 1.4  2001/08/08 16:11:48  lucky
+#     version 2.23
+#
+#     Revision 1.3  2000/07/28 22:36:10  lombard
+#     Moved heartbeats to separate thread; added DontQuick command; removed
+#     redo_com() since it doesn't do any good; other minor bug fixes
+#
+#     Revision 1.2  2000/05/12 19:08:43  lombard
+#     Added restart mechanism
+#
+#     Revision 1.1  2000/05/04 23:48:34  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File for k2ew - Windows NT
+
+NODEBUG=1
+#PROFILE=1
+
+!include <ntwin32.mak>
+
+cflags = $(cflags) -D_INTEL
+
+O = k2ewmain.obj outptthrd.obj terminat.obj getconfig.obj k2ewerrs.obj \
+    k2crctbl.obj k2cirbuf.obj k2pktman.obj k2misc.obj k2pktio.obj \
+    k2ewrstrt.obj heartbt.obj error_ew_nt.obj k2info.obj
+
+TCP_OBJS =  k2c_tcp.obj
+
+COM_OBJS = k2c_ser_nt.obj
+
+EW_LIBS = $L\libew_mt.lib 
+
+EW_SOCK_LIBS = $L\socket_ew_common.obj $L\socket_ew.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all: $B\k2ew_tcp.exe $B\k2ew_com.exe
+
+$B\k2ew_com.exe: $O $(COM_OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(COM_OBJS) \
+   $(EW_LIBS) -out:$B\k2ew_com.exe
+
+$B\k2ew_tcp.exe: $O $(TCP_OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(TCP_OBJS) \
+   $(EW_LIBS) $(EW_SOCK_LIBS) -out:$B\k2ew_tcp.exe
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_NTSDK -DDEBUG $<
+
+
+# -D_NTSDK added to enable definition of getpid() as _getpid() LDD.
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\k2ew*
+

@@ -1,0 +1,7 @@
+1.6  07/07/2004 - Modified code from v1.5. Additional timestamp validation code from LDD.  DavidK
+1.5  06/04/2004 - Added code to validate tracebuf timestamps before writing them to EW ring. 
+                  See README.changes for more detail. DavidK
+1.4   5/24/2004 - Added location code (SCNL); changed output to TYPE_TRACEBUF2. LDD
+1.3c 10/31/2002 - Corrected SCN and .d input processor to read unit id as hex
+1.3 10/27/2002  - RT130 support added
+0.9 06/02/97    - Beta release

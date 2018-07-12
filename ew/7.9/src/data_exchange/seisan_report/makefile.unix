@@ -1,0 +1,34 @@
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lnsl -lposix4 -lthread -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+LIBS = $L/libew_mt.a $(MT_FLAG) $(SPECIFIC_FLAGS) $(LINK_LIBS)
+
+
+SREPORT = seisan_report.o $L/copyfile.o $L/dirops_ew.o \
+		$L/rw_mag.o $L/read_arc.o $L/fleng.o $L/nordic.o
+
+all: seisan_report
+
+seisan_report: $(SREPORT)
+	$(CC) $(CFLAGS) -o $B/seisan_report $(SREPORT) $(LIBS)
+
+
+.c.o:
+	$(CC) -c $(CFLAGS)  $<
+
+
+lint:
+	lint seisan_report.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f  $B/seisan_report*

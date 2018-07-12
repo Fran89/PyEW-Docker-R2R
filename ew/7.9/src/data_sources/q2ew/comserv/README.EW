@@ -1,0 +1,16 @@
+====== IMPORTANT NOTICE ===================
+
+Since COMSERV is not really a part of EW and the
+only piece required for EW q2ew program is utils
+library of COMSERV, I removed all comserv files
+except utils, which is updated to the most recent
+version as today.
+
+If you need COMSERV, please download an 
+official distribution from UCB or Quatnerra
+
+Ilya Dricker (IGD; i.dricker@isti.com)
+2006/11/16
+=========================================
+
+

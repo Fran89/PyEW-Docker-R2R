@@ -1,0 +1,38 @@
+This is the readme file for heli_ewII 
+
+History:
+	Jim Luetgert created the original heli1 10/7/98. He did all the hard work.
+	Pete Lombard then did extensive cleaned and debugged. This effort resulted in two
+	versions: heli_standalone, which was a free-standing program (although
+	using earthworm functions), and heli_ew, which ran as a Module, thus providing
+	error processing and restarts.
+		Meanwhile, Jim Luetgert and others proceeded to develop and enhance similar
+	programs. We're aware of six such efforts. What to do. Given Pete's efforts 
+	to stabilize heli_standalone, and its proven track-record for reliability, and
+	that we're to provide a mission-critical system, as well as a community effort,
+	we're producing heli_ewII as the staid, reliable, supported product. It is a combination
+	of heli_ew and heli_standalone. 
+		We will carry fancier products as contributed to us by others in the 
+	earthworm/Contrib section. From time to time, we may adopt and adapt some 
+	of these more advanced products into the core earthworm software.
+
+Features:
+
+	1. Runs on NT and Solaris.
+
+	2. Runs as a module: Specifying earthworm parameters in its
+	   configuration file will cause it to become a module. It will attach to
+	   the specified ring, produce heartbeats, and use earthworm logging. It can
+	   be restarted if it asserts 'restartMe' in its .desc file.
+
+	3. Runs as a standalone program: If no Earthworm paramters are given in the
+	   .d file, it will run standalone. Errors will be written to stderr.
+
+	4. Does not try to move files to another machine. This was removed in the name
+	   of security and modularity. Moving the image files to a separate server machine
+	   is a reasonable option, but should be done by another facility. Shared disks via
+	   operating system features or SendFile are two options.
+
+As it stands, heli_ewII is not well-structured or easy to follow. A continual effort to
+correct this is underway. Maybe someday Carol Bryant wil save us...
+*/		

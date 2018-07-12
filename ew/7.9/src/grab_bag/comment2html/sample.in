@@ -1,0 +1,3 @@
+int GetNextLine(char * pBuffer, int BufferSize, FILE * fptr);
+
+

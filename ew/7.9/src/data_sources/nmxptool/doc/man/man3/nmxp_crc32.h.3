@@ -1,0 +1,50 @@
+.TH "include/nmxp_crc32.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp_crc32.h \- 
+.PP
+Computing a 32 bit CRC.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint.h>\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPOLYNOMIAL\fP   (uint32_t)0xedb88320"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "uint32_t \fBcrc32\fP (uint32_t crc32val, const char *buf, uint32_t len)"
+.br
+.RI "\fIComputes a 32 bit crc of the data in the buffer, and returns the crc. the polynomial used is 0xedb88320. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Computing a 32 bit CRC. 
+
+\fBId:\fP
+.RS 4
+\fBnmxp_crc32.h\fP,v 1.6 2007-12-28 11:21:51 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define POLYNOMIAL   (uint32_t)0xedb88320"
+.SH "Function Documentation"
+.PP 
+.SS "uint32_t crc32 (uint32_t crc32val, const char * buf, uint32_t len)"
+.PP
+Computes a 32 bit crc of the data in the buffer, and returns the crc. the polynomial used is 0xedb88320. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

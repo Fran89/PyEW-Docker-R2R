@@ -1,0 +1,30 @@
+# THIS FILE IS UNDER CVS - DO NOT MODIFY UNLESS YOU CHECKED IT OUT!
+#
+
+LINUX_FLAGS=-lm -pthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS= $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = coda_aav.o caav_config.o caav_stalist.o compare.o \
+    $L/swap.o $L/trheadconv.o \
+    $L/rw_coda_aav.o $L/libew.a
+
+coda_aav: $O
+	$(CC) $(CFLAGS) -o $B/coda_aav $O $(SPECIFIC_FLAGS)
+
+lint:
+	lint coda_aav.c caav_config.c caav_stalist.c compare.c \
+			$(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/coda_aav*

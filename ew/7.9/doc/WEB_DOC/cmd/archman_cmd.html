@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: archman commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+archman Configuration File </h1>
+<i>(last revised 9 June, 2009)</i></center>
+
+<HR>
+<a name="sample_config"></a>
+<h2>SAMPLE CONFIGURATION FILE</h2>
+<pre>
+# Config file for archman
+
+# Normal Earthworm stuff - all these are required
+MyModuleId		MOD_ARCHMAN
+InRingName		WAVE_RING
+OutRingName		WAVE_RING
+HeartBeatInterval	30
+LogFile			1
+
+# file where state info. is stored between invocations
+ArchmanStore	archman2.dat
+
+# Uncomment the next line for debugging info
+Verbose
+
+# The size of archived data semgents
+ContinuousDataSegmentSize	4 hours
+
+# Delay between first data message being recorded in Earthworm and all data being
+# archived (to allow time for slower data to be recorded)
+ContinuousDataDelay		1 minutes
+
+ContinuousOutput
+
+# List of stations (in s c n l format) to archive - there can be
+# as many of these as you need
+SaveSCNL             I59H1 BDF -- 01
+SaveSCNL             I59H1 LWS -- 01
+SaveSCNL             I59H1 LWD -- 01
+SaveSCNL             I59H1 LKO -- 01
+SaveSCNL             I59H2 BDF -- 01
+SaveSCNL             I59H3 BDF -- 01
+SaveSCNL             I59H4 BDF -- 01
+
+# List of waveservers from which data will be obtained - there can be
+# as many of these as you need
+WaveServer	127.0.0.1		16022
+
+# A bunch of configuration parameters passed through to waveman2disk -
+# see waveman2disk.d for details
+TimeoutSeconds		500
+MaxTraces		100
+TraceBufferLen		8000
+GapThresh		20
+MinDuration		30
+
+
+# the output format details for waveman2disk -
+# see waveman2disk.d for details
+DataFormat		wfdisc
+OutDir			/home/earthworm/wfdisc2
+OutputFormat		intel
+
+# List of directory pairs - any files in the first (source) directory
+# will be copied to the second (destination) directory, then deleted.
+# This allows data to be copied from one computer to another over
+# an NFS (or similar) disk mount
+#MoveDir /users/earthwor/data/archive /users/earthwor/linux/archive
+#MoveDir /users/earthwor/data/trigger /users/earthwor/linux/trigger
+
+# StartTime sets the time to start if there is no .dat file.  This 
+# is optional, if it is not set, archman will start with the begining 
+# tank from the waveserver
+StartTime "2009/05/28 16:20:00"
+
+</pre>
+
+<CENTER>
+  <a href="../modules.html">Module Index</a> | 
+  <a href="../ovr/archman_ovr.html">archman Overview</a> 
+</CENTER>
+
+</body>
+</html>

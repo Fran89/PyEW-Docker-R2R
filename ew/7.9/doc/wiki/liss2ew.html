@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      liss2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/liss2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="liss2ew.html" title="View liss2ew">liss2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/liss2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/liss2ew?action=diff&amp;version=6" title="Version 6 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A21%3A31-07%3A00&amp;precision=second" title="2012-05-02T09:21:31-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:21:31</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="liss2ew.html#EarthwormModule:liss2ew">Earthworm Module: liss2ew</a>
+    <ol>
+      <li>
+        <a href="liss2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="liss2ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="liss2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="liss2ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="liss2ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="liss2ew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="liss2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:liss2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: liss2ew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Liss2ew is the earthworm module for receiving trace data from the <a class="ext-link" href="http://earthquake.usgs.gov/monitoring/operations/"><span class="icon">​</span>Live Internet Seismic Server</a>.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Liss2ew is the earthworm module for receiving trace data from the <a class="ext-link" href="http://earthquake.usgs.gov/monitoring/operations/"><span class="icon">​</span>Live Internet Seismic Server</a>. The LISS is a very simple service that provides trace data in miniSEED format in near-real-time over the Internet. The liss2ew module will connect to one LISS, read selected streams of trace data, and write that trace data into the earthworm transport ring.
+One LISS normally has data for a single station. One or more components are sent together in the data stream. In some cases, one component is provided in more than one sample-rate. The `location code' is used in this case to label the different kinds of data.
+</p>
+<p>
+The miniSEED format may contain a few other types of blockettes besides the Data-Only blockette. Currently liss2ew ignores these non-trace-data blockettes.
+</p>
+<p>
+Besides the ASL, there are several other LISS servers. Some digital seismographs produce miniSEED. There is be an earthworm LISS server module, <a class="wiki" href="ew2liss.html">ew2liss</a>. This will allow the exchange of earthworm trace data by an alternate format to the current <a class="wiki" href="Import-Export.html">import/export</a> combination.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, liss2ew reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm LISS client module. (LISS is the Live Internet Seismic Server.) In the control file, lines may begin with a valid liss2ew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the commands recognized by liss2ew, grouped by the function they influence. Most of the commands are required; they may be specified in any order in the control file.
+</p>
+<pre class="wiki">   Earthworm system setup:
+                MyModuleId            required
+                OutRing                 required
+                HeartBeatInterval      required
+                Debug
+
+        LISS server and input parameters:
+                LISSaddr                required
+                LISSport                required
+                lenSEED                 optional
+                SocketTimeout           optional
+
+        Data output parameters:
+                TraceLength             required
+                MaxSCNs                 required
+                AcceptSCNL              required
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>AcceptSCNL [station component net location pinno]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data selection
+</p>
+<p>
+Specifies one stream of data to be read from the LISS and output as trace data. The station, component, and network are used to set the earthworm SCN of this data stream. These three parameters must be given explicitly (no wildcards). Many LISS channels are also identified by a location code. If you are getting data from the ASL LISS, see their table of available data streams. If you don't know the location code, you can try running dumpseed to see what is being served. The location code may be *, the wildcard. If you use the wildcard and more than one location code is available for this SCN, liss2ew will report errors such as samplerate changing as it reads first one location code and then the other. To enter the empty location code (seen on some ASL channels, use the empty string "".
+You must give one AcceptSCNL command for each SCN that you want to receive from the LISS. However, you should not specify more than one AcceptSCNL for the same SCN and different location codes. The rest of earthworm does not know about location codes, so the two data streams would get mixed together with bad results.
+</p>
+<p>
+The pin number pinno is used for internal earthworm use.
+</p>
+<pre class="wiki">Default:  none
+Example:  AcceptSCNL ANMO BHZ IU 00   1234
+</pre><p>
+<strong>Debug</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Turns on debug logging for liss2ew.
+</p>
+<pre class="wiki">Default:  no debug logging
+Example:  Debug
+</pre><p>
+<strong>HeartBeatInterval [nsec]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm Setup
+</p>
+<p>
+Defines the number of seconds, nsec between TYPE_HEARTBEAT messages issued by liss2ew.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartBeatInterval 30
+</pre><p>
+<strong>lenSEED [bytes]</strong><br />
+Processed by: ReadConfig<br />
+Function: LISS parameters
+</p>
+<p>
+Defines the number of bytes in the miniSEED records to be read from the LISS. For the ASL LISS, this is 512 bytes.
+</p>
+<pre class="wiki">Default:  512
+Example:  lenSEED 4096
+</pre><p>
+<strong>LISSaddr [address]</strong><br />
+Processed by: ReadConfig<br />
+Function: LISS parameters
+</p>
+<p>
+Specify the address of the LISS. This can be either on IP address (four period-separated numbers) or the domain name of the server.
+</p>
+<pre class="wiki">Default:  none
+Example:  LISSaddr      anmo.iu.liss.org
+</pre><p>
+<strong>LISSport [port]</strong><br />
+Processed by: ReadConfig<br />
+Function: LISS parameters
+</p>
+<p>
+Specifies the IP port number for the LISS. Normally this is 4000.
+</p>
+<pre class="wiki">Default:  none
+Example:  LISSport  4000
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm Setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is non-zero, liss2ew will write daily log file(s) called nnnnnxx.log_yyyymmdd where nnnnn is the name of the configuration file (with the suffix `.d' removed), xx is liss2ew's module id (set with MyModuleId command) and yyyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile   1
+</pre><p>
+<strong>MaxSCNs [n]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data Selection
+</p>
+<p>
+Specifies the number of AcceptSCNL commands to be found in this configuration file.
+</p>
+<pre class="wiki">Default:  none
+Example:  MaxSCNs   3
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_L2E_ANMO
+</pre><p>
+<strong>OutRing [ring]</strong><br />
+Processed by: ReadConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Tells liss2ew which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  OutRing WAVE_RING
+</pre><p>
+<strong>SocketTimeout [seconds]</strong><br />
+Processed by: ReadConfig<br />
+Function: LISS parameters
+</p>
+<p>
+Defines the number of seconds to wait for response from the LISS. This time interval must not be large than the HeartBeatInterval. Unlike in certain other Earthworm modules, you cannot turn off the timeout by using a value of -1.
+</p>
+<pre class="wiki">Default:  same as HeartBeatInterval
+Example:  SocketTimeout   20
+</pre><p>
+<strong>TraceLength [samples]</strong><br />
+Processed by: ReadConfig<br />
+Function: Data parameters
+</p>
+<p>
+Specify the number of samples to put in each TRACE_BUF message. Liss2ew always trace data in `long integer' (four byte) format. The total length of the output TRACE_BUF messages will be 64 + 4 * samples. Values are restricted to the range of 10 - 1000.
+</p>
+<pre class="wiki">Default:  none
+Example:  TraceLength  100
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+#                     Configuration File for liss2ew
+#
+MyModId          MOD_LISS2EW
+OutRing          WAVE_RING       # Transport ring to write output to,
+HeartBeatInterval     30         # Heartbeat interval, in seconds,
+LogFile               1          # 1 -&gt; Keep log, 0 -&gt; no log file
+#Debug                           # Write out debug messages (optional)
+
+
+LISSaddr   anmo.iu.liss.org      # IP address of the LISS (server)
+                                 # If you have DNS configured, you may also
+                                 # give the domain name of the LISS.
+LISSport    4000                 # Port number for LISS; often this is 4000
+
+lenSEED      512                 # The size of SEED records to read from LISS
+                                 # OPTIONAL; defaults to 512 bytes.
+
+SocketTimeout  30                # Socket timeout in seconds; not more than
+                                 # HeartBeatInterval
+
+TraceLength    100               # Number of trace data samples to put in one
+                                 # TRACE_BUF packet. Range is 10 - 1000
+
+MaxSCNs        3                 # Number of SCNs to accept; must be at least
+                                 # the number of AcceptSCNL commands.
+# List each sta/comp/net/location that you expect from LISS in an
+# "AcceptSCNL" command. Location code (LC) is a 2-digit code to further
+# identify a seismological data path. LC (and ONLY LC) may be given as `*' to
+# specify a wildcard. If the LISS has more than one LC for a give SCN,
+# using the wildcard will generate errors in log.
+# Do NOT specify the same SCN with two different LC values, as this will
+# cause great confusion within earthworm!!!!
+# If liss2ew sees an SCNL which is not listed here, it will be ignored.
+# On each line after the SCNL, list a pinnumber to use for this SCNL.
+
+#          site comp net LC pinno
+#          ---- ---- --- -- -----
+AcceptSCNL  ANMO BHZ  IU 00 1234
+AcceptSCNL  ANMO BH1  IU 00 1235
+AcceptSCNL  ANMO BH2  IU 00 1236
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/liss2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+LINUX_FLAGS=-lm -lpthread -lc
+SOLARIS_FLAGS=-lsocket -lnsl -lm -lposix4 -lc
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -g -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BINARIES = heli_ewII.o  \
+		$L/parse_trig.o $L/libew.a \
+		$L/getavail.o $L/getsysname_ew.o \
+		$L/socket_ew.o $L/socket_ew_common.o $L/ws_clientII.o\
+		$L/gd.o $L/gdfontt.o $L/gdfonts.o $L/gdfontmb.o \
+		$L/gdfontl.o $L/gdfontg.o
+
+heli1: $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/heli_ewII $(BINARIES) $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) $(CFLAGS) -g $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+lint:
+	lint heli_ewII.c $(GLOBALFLAGS)
+	
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/heli_ewII*

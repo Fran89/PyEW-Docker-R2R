@@ -1,0 +1,6 @@
+# Type . clrmodel to 'source' or run the following command
+# to clear a PARGPS environment variable.  Only run this  
+# after you have removed the corresponding PARGPS driver. 
+                                                          
+unset SrParGps0_ModelName
+

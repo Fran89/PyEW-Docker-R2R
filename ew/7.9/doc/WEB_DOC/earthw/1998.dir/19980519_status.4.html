@@ -1,0 +1,84 @@
+<HTML> <HEAD> <TITLE>EARTHWORM Status May 19 1998</TITLE> </HEAD> <BODY
+TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B"
+ALINK="#FF 0000">
+
+
+<H1 ALIGN=CENTER> <B><FONT COLOR="#FF0000"><FONT SIZE=+4>EARTHWORM
+Status Report<BR> </FONT></FONT></B></H1> <HR WIDTH="100%">
+
+<H5 ALIGN=RIGHT><TT>Alex Bittenbinder (alex@gldage.cr.usgs.gov) May. 19,
+1998</TT></H4>
+
+
+
+<H3>RECENT DEVELOPMENTS:</H3> <UL> <LI><B>RefTek Interface:</B>  
+RefTek has issued the following announcement:
+<P>
+May 13, 1998
+<P>
+New <TT>EARTHWORM</TT> Development Partner...
+<P>
+Refraction Technology, Inc. (REF TEK) of Dallas, TX has signed on as the 
+latest <TT>EARTHWORM</TT> development partner.  REF TEK intends to develop interface 
+software that will allow REF TEK products to source data to <TT>EARTHWORM</TT> via 
+industry standard protocols and interfaces.
+<P>
+Specifically, REF TEK has contracted with David Chavez of Engineering 
+Services & Software to write a REF TEK data source module for <TT>EARTHWORM</TT> 
+that will link the REF TEK Protocol (RTP).  RTP is designed to provide an 
+error-free, ordered transport over UDP/IP/PPP data links.  This enables a 
+computer running <TT>EARTHWORM</TT> to communicate with a REF TEK DAS via 
+asynchronous serial ports on the local computer or via Ethernet through 
+asynchronous serial ports on a Cisco 25xx router.  This data source module 
+will integrate any Ref Tek 72 series DAS equipped with an RT422 Error 
+Correcting Communications (ECC) Card with the <TT>EARTHWORM</TT> system.  The RT422 
+ECC Card communicates with the central computer using RTP encapsulated 
+within UDP/IP/PPP over a asynchronous serial interface.
+<P>
+The initial project is expected to be complete by the end of June, 1998 
+with the delivery of 20 systems to India.  Following the initial project, 
+REF TEK intends to port the DAS serial code to other products including its 
+112 Modem Interface.  This will allow network operators who are currently 
+using REF TEK Radio Modem telemetry to source data to <TT>EARTHWORM</TT>.
+<P>
+For more information contact Alex Bittenbinder at 
+alex@gldage.cr.usgs.gov, or Paul Passmore at p.passmore@reftek.com.
+
+
+<P> <LI><B>Module release scheme:</B>  New modules are coming
+off the assembly lines too fast for our existing release mechanism. Producing
+a new version of <TT>EARTHWORM</TT> for each module would require a lot of installing, 
+which is painfull at best. After some discussions, we've done the following:
+
+<P>On the public FTP site on <I>ghtftp</I>, there is now the directory.
+<A HREF="ftp://ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm">
+ftp://ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm</A>.
+This will contain the source and makefiles
+for modules which are not included in the last release,
+but which have been tested and are available for use. 
+
+<P> <LI><B>EvansTrig: </B>
+The venerable long-period trigger algorithm has been ported into a contemporary
+<TT>EARTHWORM</TT> module. The previous version, consisting of 'lptrig' and 'trigassoc' predated
+the current trace data format.
+
+<P> <LI><B>Compress_UA: </B>
+The BRTT compression algorithm has been incorporated into the modules 'compress_UA' and
+'decompress_UA'. The modules seem to have done well in tests between Menlo Park and Fairbanks.
+
+<P> <LI><B>CarlTrig: </B>
+The code originally written by Brian Moon of PNL has been
+modified and debugged by Pete Lombard of UofW and is currently under extensive
+tests at the UofW. It is being run in parellel with the UW <TT>SUNWORM</TT>
+trigger which uses the orginal Carl Johnson STA/LTA-subnet trigger algorithm
+tuned to be very sensitive to even very small earthquakes.
+The tests are indicating that the new <TT>EARTHWORM</TT> version of CarlTrig
+performs as well or better than the original.
+As soon as the documentation and a distribution version of the code is
+complete it will be available for general use. (within a week or so).
+</UL>
+
+Return to <A HREF="../welcome.html">EARTHWORM</A> main page, or
+<A HREF="../../welcome.html">CNSS</A> main page.
+</BODY>
+</HTML>

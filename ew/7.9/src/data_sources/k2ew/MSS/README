@@ -1,0 +1,77 @@
+How to install k2pipe on an MSS-100:
+
+The source files are k2pipe.c, k2pipe.h, and wrapper.c. These files can be
+loaded into the MSS in one of two ways: FTP or TFTP. It is expected that FTP
+will be used with deployed K2s and is described below. If you want to use
+TFTP, read "Installing the PUC Files" in chapter 2 of the Lantronix SDK USers
+Guide" in sdkguide_d11.pdf.
+
+Take a look at k2pipe.h: it has some adjustable parameters. Of particular
+interest are K2EW_PORT and DEBUG. Set these to the values you need. DO NOT use
+port 3001 or port 7000: these part numbers are already in use by the MSS. For
+production use, you will want DEBUG 0.
+
+The MSS has a memory-based filesystem which contains three directories: /ram,
+/rom, and /flash. The ram directory is volatile: when you reset the MSS, the
+contents of ram go away. The /rom directory contains files that make up the
+MSS operating system and cannot be changed. The /flash directory remembers its
+contents over MSS restarts, so that's where you want to put the k2pipe files
+for normal operation. However, the /flash memory has a limited number of
+writes in its lifetime. So if you are doing development work where you have to
+make repeated changes to the code, you should put files in /ram instead of
+/flash. And if you do a lot of PUC code development, you will find TFTP file
+upload to be more convenient. 
+
+To uploads file by FTP: ftp to the MSS, login in as "root". You will start in
+the /ram directory. If you want to put files in /flash, then "cd /flash". Copy
+the three above named files into the MSS. Then quit ftp.
+
+Before you start the k2pipe code under PUC, be sure to change the MSS access
+mode to dynamic or local. If you leave access mode in remote, k2pipe will not
+be able to read from the serial port. The command is "change access dynamic".
+
+To set up the MSs to run k2pipe as its default mode, issue the command:
+"cc -auto k2pipe.c". Then reboot the MSS: "initialize delay 0". When the MSs
+reboots, it will run the k2pipe program.
+
+If you need to stop the k2pipe program, use the command "cc -noauto" and reboot
+the MSS. 
+
+Don't hesitate to read at least chapters 2 and 3 of the SDK manual.
+
+Discussion of the k2pipe program
+
+The purpose of this program is to provide a two-way connection between the
+serial and TCP ports on the MSS, and to control the TCP socket during traffic
+congestion. While it might seem that this is the intended function of the
+MSS-100 already, it appears that the MSS will not close its TCP socket when it
+should. Neither TCP keepalives nor inactivity timer logouts have helped with
+this problem. The socket fail-to-close problem occurs when the network
+connection between the MSS and k2ew is interrupted. If there is outbound data
+in the MSS socket, the socket will hang in the "close" state. You can observe
+this with the netstat command on the MSS. 
+
+K2pipe opens the socket (at the specified port number) and the serial port. It
+alternately reads from each of these and saves the result in small
+buffers. then it sends what it read from serial to the socket, and vice
+versa. The two buffers are only large enough to hold about one K2 serial
+stream message, so there is little latency in this code.
+
+Before k2pipe writes to the socket, it does an ioctl() call to see if there is
+data pending in the MSS socket outbound buffer. If there is more than PENDMAX
+bytes (defined in k2pipe.h) in this socket buffer, k2pipe deems the network
+socket buffer "full", so it stops reading from the serial port, and starts a
+timer. After MAX_PEND_SEC, if the socket is still full, k2pipe closes the
+socket, dumps all its internal buffers, opens the socket again and waits for a
+new connection. 
+
+During this time when k2pipe is unable to send data out its socket, it is
+expected that k2ew will time out trying to read from the MSS. So k2ew will
+close its socket and attempt to open a new connection with the MSS. Naturally,
+the timing of all this stuff depends on the magic of the Internet. Your
+mileage may vary.
+
+
+Pete Lombard
+1 September 2000
+

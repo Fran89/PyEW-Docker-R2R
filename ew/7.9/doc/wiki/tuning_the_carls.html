@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      tuning_the_carls – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/tuning_the_carls?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="tuning_the_carls.html" title="View tuning_the_carls">tuning_the_carls</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/tuning_the_carls?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/tuning_the_carls?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-22T12%3A48%3A45-07%3A00&amp;precision=second" title="2012-05-22T12:48:45-07:00 in Timeline">16 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/22/12 12:48:45</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">CARL*TRIG tuning after Mammoth                      5/20/99
+------------------------------
+
+Many carlsubtrig triggers for the Mammoth sequence have been very
+long (sometimes maximum duration) and have contained multiple
+small events. Rick would've preferred that many these big triggers 
+had been a bunch of single-event triggers.  He's given me a few
+examples of triggers that he thought CUSP would've split into more
+triggers. Let's see if we can teach carl*trig to make them into a 
+series of smaller triggers.  We'll grab the waveforms and try replaying 
+them with tankplayer!  I'll grab a chuck of time a bit longer than the 
+original triggers (tack some on the beginning and end).
+
+Then we should run these data thru carl*trig with the same settings 
+as ew03/ew04 and see what results we get.  Problem is, we have to adjust 
+the timestamp on the data to match the computer's system clock so that
+carl*trig will work. Then we'll have to mentally adjust the times on the
+output so we can compare them with the original results.  We'll 
+document the hypocenters and triggers from the original real-time runs.
+All files for these tests will live on campbell in ~dietz/carltrig.
+
+First some basics on how carlsubtrig works.
+Three carlsubtrig parameters control the duration of the network triggers. 
+Here are the original ew03/ew04 settings for those parameters:
+
+NetTriggerDur    10   # Nominal duration (sec) for the base network trigger
+SubnetContrib    15   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+The current network trigger duration (let's call it NewTrig) is calculated 
+once each second based on the number of currently triggered subnets (nSubTrig)
+using the following equation:
+
+  NewTrig = NetTriggerDur + ( nSubTrig * SubnetContrib )
+
+The total network duration (TotalNetDuration) is a slightly different 
+beast, defined as the time at which the first subnet(s) triggered until 
+some time after the last subnet(s) untrigger, or until TotalNetDuration
+reaches MaxDuration.  The total network duration can reach MaxDuration 
+in one of two ways:
+
+1. Many subnets are triggered at the same time. If
+
+     nSubTrig &gt;= ( MaxDuration - NetTriggerDur )/ SubnetContrib
+
+   then the TotalNetDuration will be be limited to MaxDuration.
+
+2. One or more subnets re-trigger at frequent intervals.
+   In the one-subnet case, TotalNetDuration will keep increasing if
+
+      ReTriggerInterval &lt;= NetTriggerDur + SubnetContrib
+
+   In the more general case, if a current network trigger consists 
+   of nSubTrig triggered subnets, then TotalNetDuration will be 
+   extended if at least one subnet retriggers within
+
+      ReTriggerInterval &lt;= NetTriggerDur + nSubTrig * SubnetContrib
+
+
+The maximum-duration triggers from the Mammoth sequence have been caused
+by both of these methods.
+   
+
+===========================================================================
+Here's the first original trigger and time range in question:
+
+src     id      original trigger    dur     time range saved for testing 
+----   -----  ---------------------------   ----------------------------
+ew04   25308  19990515 23:26:27.00  500 s   start:  19990515 23:25:27.00      
+                                              end:  19990515 23:36:27.00
+                                             file:  19990515.2325.tbuf
+
+Original Hypocenters:
+a 19990515 2326 24.25 37 32.30 118 48.71   6.55 D 2.14 24 110  6.  0.06  0.3  0.6 BW   51082739 1
+b 19990515 2327 46.85 37 27.91 118 53.61  22.70 D 1.35  9 169  5.  0.20  3.3  4.5 CW   51082740 1
+c 19990515 2329 48.57 37 29.55 118 48.66   6.90 D 1.08  6 195  7.  0.01  1.4  2.7 CW   51082741 1
+d 19990515 2330 26.34 37 32.17 118 48.18   9.35 D 1.44  8 178  6.  0.04  0.8  2.7 CW   51082742 1
+e 19990515 2330 58.42 37 29.59 118 50.17   8.70 D 1.81 16 143  5.  0.04  0.4  0.6 BW   51082743 1
+f 19990515 2333 03.78 37 30.47 118 49.37   2.43 D 1.05  7 170  5.  0.06  1.0  7.6 CW   51082744 1
+g 19990515 2333 39.33 37 32.29 118 49.76   0.04 D 2.35 15 117  5.  0.91  1.9  3.4 CW   51082745 1
+h 19990515 2334 36.70 37 29.20 118 49.79   4.56 D 3.24 24 121  5.  0.06  0.2  0.6 BW   51082746 1
+
+Original Triggers:             subnets                        contains 
+                    duration   tot/coinc                      hypocenters
+19990515 23:25:48.00   33 sec   1 / 1      EVENT ID: 025307 
+19990515 23:26:27.00  500 sec   8 / 7      EVENT ID: 025308    a-g
+19990515 23:34:48.00  500 sec  44 /28      EVENT ID: 025309    h+
+
+
+Test1: carlsubtrig parameters same as ew04.
+-------------------------------------------
+NetTriggerDur    10   # Nominal duration (sec) for the base network trigger
+SubnetContrib    15   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+Test1 produced very similar results to the original! Eight hypocenters and 
+three triggers, one short and two long.  The third trigger in Test1 is 
+shorter than maximum duration (the original was maximum); this is probably 
+because the waveform data ends while the third trigger was still active.  
+Remember, the second trigger is really the one we're testing here.
+
+Test1 Hypocenters:
+a 19990521 1616 08.32 37 32.28 118 48.72   6.47 D 2.12 23 110  6.  0.06  0.3  0.6 BW   40099203 1
+b 19990521 1617 33.71 37 32.17 118 49.14   4.95 D 1.03  8 122  6.  0.02  0.5  1.3 BW   40099204 1
+c 19990521 1619 32.65 37 29.55 118 48.66   6.90 D 1.08  6 195  7.  0.01  1.4  2.7 CW   40099205 1
+d 19990521 1620 10.42 37 32.17 118 48.18   9.35 D 1.44  8 178  6.  0.04  0.8  2.7 CW   40099206 1
+e 19990521 1620 42.49 37 29.57 118 50.18   8.70 D 1.81 16 143  5.  0.04  0.4  0.6 BW   40099207 1
+f 19990521 1622 47.86 37 30.47 118 49.37   2.43 D 1.05  7 170  5.  0.06  1.0  7.6 CW   40099208 1
+g 19990521 1623 23.41 37 32.29 118 49.76   0.04 D 2.35 15 117  5.  0.91  1.9  3.4 CW   40099209 1
+h 19990521 1624 20.78 37 29.19 118 49.79   4.55 D 3.22 24 121  5.  0.05  0.2  0.6 BW   40099210 1
+
+Test1 Triggers:                   subnets                        contains 
+                      duration   tot/coinc                      hypocenters
+19990521 16:15:38.00   25 sec     1 /  1      EVENT ID: 027212    
+19990521 16:16:12.00  500 sec     8 /  7      EVENT ID: 027213   a-g
+19990521 16:24:33.00  435 sec    41 / 26      EVENT ID: 027214   h+
+
+Test2: new carlsubtrig parameters (reduce SubnetContrib)
+--------------------------------------------------------
+NetTriggerDur    10   # Nominal duration (sec) for the base network trigger
+SubnetContrib    10   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+This will make total duration for triggers shorter by something
+on the order of nSubnet * 5 seconds.  I'm not sure if this will make 
+one-subnet triggers too short or not.
+Note: Rick said that he wouldn't like to shorten the duration
+      for the one-subnet earthquake, so on to Test3!
+
+Test2 Hypocenters:
+a 19990521 1818 51.53 37 32.28 118 48.72   6.47 D 2.12 23 110  6.  0.06  0.3  0.6 BW   40099212 1
+b 19990521 1820 16.92 37 32.17 118 49.14   4.95 D 1.03  8 122  6.  0.02  0.5  1.3 BW   40099213 1
+c 19990521 1822 15.86 37 29.55 118 48.66   6.90 D 1.08  6 195  7.  0.01  1.4  2.7 CW   40099214 1
+d 19990521 1822 53.63 37 32.17 118 48.18   9.35 D 1.44  8 178  6.  0.04  0.8  2.7 CW   40099215 1
+e 19990521 1823 25.70 37 29.57 118 50.18   8.70 D 1.81 16 143  5.  0.04  0.4  0.6 BW   40099216 1
+f 19990521 1825 31.07 37 30.47 118 49.37   2.43 D 1.05  7 170  5.  0.06  1.0  7.6 CW   40099217 1
+g 19990521 1826 06.62 37 32.29 118 49.76   0.04 D 2.35 15 117  5.  0.91  1.9  3.4 CW   40099218 1
+h 19990521 1827 03.99 37 29.19 118 49.79   4.55 D 3.22 24 121  5.  0.05  0.2  0.6 BW   40099219 1
+
+Test2 Triggers:                   subnets                       contains 
+                      duration   tot/coinc                      hypocenters
+19990521 18:18:21.00   20 sec     1 /  1     EVENT ID: 027215
+19990521 18:18:55.00   84 sec     8 /  7     EVENT ID: 027216     a
+19990521 18:20:20.00   69 sec     5 /  5     EVENT ID: 027217     b
+19990521 18:21:59.00   20 sec     1 /  1     EVENT ID: 027218 
+19990521 18:22:20.00  500 sec    42 / 27     EVENT ID: 027219     c-h
+
+
+Test3: new carlsubtrig params (increase NetTriggerDur,reduce SubnetContrib)
+---------------------------------------------------------------------------
+NetTriggerDur    15   # Nominal duration (sec) for the base network trigger
+SubnetContrib    10   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+This will make total duration for triggers shorter (than original) by 
+something on the order of (nSubnet-1) * 5 seconds.  This will retain the
+original trigger length for one-subnet triggers, but make multiple-subnet
+triggers shorter.
+
+Test3 Hypocenters:
+a 19990521 1957 31.15 37 32.28 118 48.72   6.47 D 2.12 23 110  6.  0.06  0.3  0.6 BW   40099221 1
+b 19990521 1958 56.54 37 32.17 118 49.14   4.95 D 1.03  8 122  6.  0.02  0.5  1.3 BW   40099222 1
+c 19990521 2000 55.48 37 29.55 118 48.66   6.90 D 1.08  6 195  7.  0.01  1.4  2.7 CW   40099223 1
+d 19990521 2001 33.25 37 32.17 118 48.18   9.35 D 1.44  8 178  6.  0.04  0.8  2.7 CW   40099224 1
+e 19990521 2002 05.32 37 29.57 118 50.18   8.70 D 1.81 16 143  5.  0.04  0.4  0.6 BW   40099225 1
+f 19990521 2004 10.69 37 30.47 118 49.37   2.43 D 1.05  7 170  5.  0.06  1.0  7.6 CW   40099226 1
+g 19990521 2004 46.24 37 32.29 118 49.76   0.04 D 2.35 15 117  5.  0.91  1.9  3.4 CW   40099227 1
+h 19990521 2005 43.61 37 29.19 118 49.79   4.55 D 3.22 24 121  5.  0.05  0.2  0.6 BW   40099228 1
+
+Test3 Triggers:                   subnets                       contains 
+                      duration   tot/coinc                      hypocenters
+19990521 19:57:01.00   25 sec     1 /  1    EVENT ID: 027220
+19990521 19:57:34.00  160 sec     9 /  7    EVENT ID: 027221    a,b
+19990521 20:00:34.00  500 sec    44 / 29    EVENT ID: 027222    c-h
+
+
+Test4: new carlsubtrig params (increase NetTriggerDur,reduce SubnetContrib)
+---------------------------------------------------------------------------
+NetTriggerDur    17   # Nominal duration (sec) for the base network trigger
+SubnetContrib     8   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+Maintain one-subnet duration!  Decrease multi-subnet durations.
+
+Test4 Hypocenters:
+a 19990521 2025 55.50 37 32.28 118 48.72   6.47 D 2.12 23 110  6.  0.06  0.3  0.6 BW   40099230 1
+b 19990521 2027 20.89 37 32.17 118 49.14   4.95 D 1.03  8 122  6.  0.02  0.5  1.3 BW   40099231 1
+c 19990521 2029 19.83 37 29.55 118 48.66   6.90 D 1.08  6 195  7.  0.01  1.4  2.7 CW   40099232 1
+d 19990521 2029 57.60 37 32.17 118 48.18   9.35 D 1.44  8 178  6.  0.04  0.8  2.7 CW   40099233 1
+e 19990521 2030 29.67 37 29.57 118 50.18   8.70 D 1.81 16 143  5.  0.04  0.4  0.6 BW   40099234 1
+f 19990521 2032 35.04 37 30.47 118 49.37   2.43 D 1.05  7 170  5.  0.06  1.0  7.6 CW   40099235 1
+g 19990521 2033 10.59 37 32.29 118 49.76   0.04 D 2.35 15 117  5.  0.91  1.9  3.4 CW   40099236 1
+h 19990521 2034 07.96 37 29.20 118 49.79   4.56 D 3.22 24 121  5.  0.06  0.2  0.6 BW   40099237 1
+
+Test4 Triggers:                   subnets                       contains 
+                      duration   tot/coinc                      hypocenters
+19990521 20:25:25.00   25 sec     1 /  1    EVENT ID: 027223
+19990521 20:25:59.00  151 sec     8 /  7    EVENT ID: 027224    a,b
+19990521 20:29:03.00  173 sec     8 /  7    EVENT ID: 027225    c,d,e
+19990521 20:32:01.00  404 sec    44 / 27    EVENT ID: 027226    f,g,h+
+
+I left carlsubtrig running on campbell on real-time data using the parameters
+from test4.  Check its results (after 19990521 2200 UTC) against ew03/ew04.
+5/24  Turns out campbell's system clock was not set to network time.  All
+of the carltrig events are 2 minutes later than the ew03,ew04 events for
+the weekend.  I started ntp on campbell at approx. 19990524 1700 UTC.
+
+===========================================================================
+Rick gave me the following other examples of "too long multiples" from ew03:
+         tot#/#coinc  time range to save:
+025164     49/29
+025195     88/47
+025268     44/28      19990515 23:33:48.00  590 sec
+025393     32/12      19990516 08:12:11.00  509 sec
+025470     30/19      19990516 12:16:48.00  498 sec
+025777
+026089
+026090
+026169
+
+===========================================================================
+Next test case:
+
+src     id      original trigger    dur     time range saved for testing 
+----   -----  ---------------------------   ----------------------------
+ew03   25393  19990516 08:13:11.00  419 s   start:  19990516 08:12:11.00  509 sec      
+                                              end:  19990516 08:20:40.00
+                                             file:  19990516.0812.tbuf
+
+Original Hypocenters:
+a 19990516 0813 06.24 36  3.84 120 28.10   2.16 D 1.43  6 165 12.  0.03  1.2  7.5 CW   40097977 1
+b 19990516 0815 20.36 37 29.57 118 49.78   5.51 D 3.00 26 125  5.  0.05  0.3  0.6 BW   40097978 1
+
+Original Trigger:              subnets                        contains 
+                    duration   tot/coinc                      hypocenters
+19990516 08:13:11.00  419 sec  32 / 12      EVENT ID: 025393  a,b
+
+
+Test1: carlsubtrig parameters same as ew03.
+-------------------------------------------
+NetTriggerDur    10   # Nominal duration (sec) for the base network trigger
+SubnetContrib    15   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+Let's first make sure we duplicate ew03's original results!
+Well, it wasn't quite as long, but it was indeed one big trigger
+containing both events.
+
+Test1 Hypocenters:
+a 19990524 1625 31.02 36  3.84 120 28.10   2.16 D 1.43  6 165 12.  0.03  1.2  7.5 CW   40099437 1
+b 19990524 1627 45.14 37 29.57 118 49.78   5.52 D 3.00 26 125  5.  0.05  0.3  0.6 BW   40099438 1
+
+Test1 Triggers:                   subnets                        contains 
+                      duration   tot/coinc                      hypocenters
+19990524 16:25:35.00  392 sec    31 / 12      EVENT ID: 027722  a,b
+
+
+Test4: new carlsubtrig params (increase NetTriggerDur,reduce SubnetContrib)
+---------------------------------------------------------------------------
+NetTriggerDur    17   # Nominal duration (sec) for the base network trigger
+SubnetContrib     8   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+Maintain one-subnet duration!  Decrease multi-subnet durations.
+
+Test4 Hypocenters:
+a 19990524 1702 22.92 36  3.84 120 28.10   2.16 D 1.43  6 165 12.  0.03  1.2  7.5 CW   40099440 1
+b 19990524 1704 37.04 37 29.57 118 49.78   5.52 D 3.00 26 125  5.  0.05  0.3  0.6 BW   40099441 1
+
+Test4 Triggers:                   subnets                        contains 
+                      duration   tot/coinc                      hypocenters
+19990524 17:02:27.00   75 sec     6 /  6      EVENT ID: 027723  a
+19990524 17:03:58.00  293 sec    26 / 16      EVENT ID: 027724  ?,b
+
+Looks like we triggered 40 sec early for the bigger event.  The initial
+duration for the 2nd trigger was 25 sec (1 subnet); there was probabaly 
+a little eq that binder didn't get.  At least it split the 1.4 and 3.0 
+into two different triggers.
+
+
+===========================================================================
+Next test case:
+
+src     id      original trigger    dur     time range saved for testing 
+----   -----  ---------------------------   ----------------------------
+ew03   25470  19990516 08:13:11.00  419 s   start:  19990516 12:16:48.00  498 sec      
+                                              end:  19990516 12:25:06.00
+                                             file:  19990516.1216.tbuf
+
+Original Hypocenters:
+a 19990516 1217 44.19 37 31.58 118 48.85   4.09 D 0.81  6 137  6.  0.02  0.4  2.6 CW   40098078 1
+b 19990516 1218 09.54 37 31.11 118 49.49   4.29 D 2.99 25 116  5.  0.06  0.2  0.6 BW   40098079 1
+
+Original Trigger:              subnets                        contains 
+                    duration   tot/coinc                      hypocenters
+19990516 12:17:48.00  408 sec  30 / 19     EVENT ID: 025470   a,b
+
+I don't think there's any way I can separate these two because the larger
+event occurs within the minimum one-subnet event duration.  This will 
+cause the TotalNetDuration to increase due to case 2 (in the introductory
+discussion).  Let's just try Test4 anyway (but I expect it to fail).
+
+Test4: new carlsubtrig params (increase NetTriggerDur,reduce SubnetContrib)
+---------------------------------------------------------------------------
+NetTriggerDur    17   # Nominal duration (sec) for the base network trigger
+SubnetContrib     8   # Addition contribution (sec) to network trigger.
+                      #   duration for each concurrently triggered subnet.
+MaxDuration     500   # Maximum duration (sec) allowed for network trigger.
+
+Maintain one-subnet duration!  Decrease multi-subnet durations.
+
+Test4 Hypocenters:
+a 19990524 1723 17.06 37 31.58 118 48.85   4.09 D 0.81  6 137  6.  0.02  0.4  2.6 CW   40099443 1
+b 19990524 1723 42.41 37 31.11 118 49.49   4.30 D 2.99 25 116  5.  0.06  0.2  0.6 BW   40099444 1
+
+Test4 Triggers:                   subnets                        contains 
+                      duration   tot/coinc                      hypocenters
+19990524 17:23:20.00  303 sec    29 / 20      EVENT ID: 027725  a,b
+19990524 17:28:35.00   66 sec     5 /  5      EVENT ID: 027726  ?
+
+Just as I thought, I couldn't seperate events a &amp; b into individual triggers.
+However, we did generate a second trigger in Test4 that in the original
+ew03 run was probably buried at the end of the 408 second trigger.  Binder
+didn't stack this event, but it may have been fairly large, as it
+triggered 5 subnets!  So, there was indeed an improvement.
+
+===========================================================================
+
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/tuning_the_carls?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

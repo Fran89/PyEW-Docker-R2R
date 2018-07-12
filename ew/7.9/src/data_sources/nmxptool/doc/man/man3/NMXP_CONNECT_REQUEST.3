@@ -1,0 +1,42 @@
+.TH "NMXP_CONNECT_REQUEST" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NMXP_CONNECT_REQUEST \- 
+.PP
+Body of ConnectRequest message.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <nmxp.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "char \fBusername\fP [NMXP_MAX_SIZE_USERNAME]"
+.br
+.ti -1c
+.RI "int32_t \fBversion\fP"
+.br
+.ti -1c
+.RI "int32_t \fBconnection_time\fP"
+.br
+.ti -1c
+.RI "int32_t \fBcrc32\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Body of ConnectRequest message. 
+.SH "Member Data Documentation"
+.PP 
+.SS "char \fBNMXP_CONNECT_REQUEST::username\fP[NMXP_MAX_SIZE_USERNAME]"
+.SS "int32_t \fBNMXP_CONNECT_REQUEST::version\fP"
+.SS "int32_t \fBNMXP_CONNECT_REQUEST::connection_time\fP"
+.SS "int32_t \fBNMXP_CONNECT_REQUEST::crc32\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

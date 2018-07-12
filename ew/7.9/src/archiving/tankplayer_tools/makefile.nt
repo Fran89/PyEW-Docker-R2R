@@ -1,0 +1,95 @@
+#
+#                   Nmake File For remux_tbuf - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+
+APP = remux_tbuf
+O = $(APP).obj remux_code.obj
+
+APP2 = ring2tank
+O2 = $(APP2).obj
+
+APP3 = smb2tb
+O3 = $(APP3).obj hashtable.obj
+
+APP4 = ms2tank
+O4 = $(APP4).obj mseed2tank.obj
+
+APP5 = tr2dump
+O5 = $(APP5).obj 
+
+APP6 = dc2tank
+O6 = $(APP6).obj mseed2tank.obj remux_code.obj
+
+APP7 = tanksniff
+O7 = $(APP7).obj
+
+APP8 = tankcut
+O8 = $(APP8).obj remux_code.obj
+
+APP9 = sac2tb
+O9 = $(APP9).obj
+
+APP10 = wsvtank2tb
+O10 = $(APP10).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+LIBS = $L\swap.obj $L\libew.lib
+
+all: $B\$(APP).exe $B\$(APP2).exe $B\$(APP3).exe $B\$(APP4).exe $B\$(APP5).exe $B\$(APP6).exe $B\$(APP7).exe $B\$(APP8).exe $B\$(APP9).exe $B\$(APP10).exe
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(LIBS) -out:$B\$(APP).exe
+
+$B\$(APP2).exe: $(O2)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O2) $L\swap.obj $L\libew.lib \
+    -out:$B\$(APP2).exe
+
+$B\$(APP3).exe: $(O3)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O3) $L\libew.lib \
+    -out:$B\$(APP3).exe
+
+$B\$(APP4).exe: $(O4)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O4) libmseed.lib -out:$B\$(APP4).exe
+
+$B\$(APP5).exe: $(O5)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O5) $(LIBS) -out:$B\$(APP5).exe
+
+$B\$(APP6).exe: $(O6)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O6) libmseed.lib $(LIBS) $L\dirops_ew.obj -out:$B\$(APP6).exe
+
+$B\$(APP7).exe: $(O7)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O7) $(LIBS) -out:$B\$(APP7).exe
+
+$B\$(APP8).exe: $(O8)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O8) $(LIBS) $L\libew.lib -out:$B\$(APP8).exe
+
+$B\$(APP9).exe: $(O9)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O9) $(LIBS) -out:$B\$(APP9).exe
+
+$B\$(APP10).exe: $(O10)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $(O10) $(LIBS) -out:$B\$(APP10).exe
+   
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\remux_tbuf*
+	-del $B\smb2tb*
+	-del $B\tr2dump*
+	-del $B\ms2tank*
+	-del $B\tankcut*
+	-del $B\dc2tank*
+	-del $B\ring2tank*
+	-del $B\tanksniff*
+	-del $B\wsvtank2tb*
+	-del $B\sac2tb*

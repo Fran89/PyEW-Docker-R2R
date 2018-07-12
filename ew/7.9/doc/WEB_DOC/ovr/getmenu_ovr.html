@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Program: getmenu overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> Getmenu Overview</H1>
+  <I>(last revised 1 June 2006)</I>
+</CENTER>
+
+<P>
+Program <STRONG>getmenu</STRONG> gets the menu from an Earthworm wave server.
+<CENTER>
+    <code>getmenu &lt;host&gt;:&lt;port&gt; </code>
+  </CENTER>
+  <STRONG>Getmenu</STRONG> retrieves and prints the menu from the wave server running
+  on host at a specific TCP port . The menu is a list of all the station-component-network-location
+  (SCNL) combinations and their time period currently available from the wave
+  server. This menu does NOT identify any gaps in the data at the wave server.
+<P>
+Host can be a hostname or an IP address.
+<P>
+Example command lines:<p>
+
+  <code><CENTER>getmenu 192.168.5.200:16022 <br>
+  or<br>getmenu earthworm.usgs.gov:16022
+    <br>or<br>
+    getmenu localhost:16022 </CENTER></code></p>
+
+
+<P>Example output:
+<P>
+<pre>
+Tank contents:
+pin:  124    YEL.EHZ.CC.--  Start: 20060528_0536_58.19  End: 20060528_0600_00.19
+
+pin:  117   RAFT.EHZ.CC.--  Start: 20060528_0349_13.21  End: 20060528_0600_00.19
+
+pin:  105    NP1.HHZ.ZZ.01  Start: 20060530_1848_16.00  End: 20060601_1424_46.00
+
+pin:  101    NP1.HHZ.ZZ.--  Start: 20060523_1356_12.00  End: 20060530_1835_36.00
+
+pin:  106    NP1.HHN.ZZ.01  Start: 20060530_1848_16.00  End: 20060601_1424_53.00
+
+pin:  103    NP1.HHN.ZZ.--  Start: 20060523_1356_13.00  End: 20060530_1835_36.00
+
+pin:  104    NP1.HHE.ZZ.01  Start: 20060530_1848_15.00  End: 20060601_1424_40.00
+
+pin:  102    NP1.HHE.ZZ.--  Start: 20060523_1356_16.00  End: 20060530_1835_36.00
+
+pin:   71    DCP.199.NT.--  Start: 19860214_0000_00.00  End: 19890307_1125_24.29
+
+pin:   50    DCP.198.NT.--  Start: 19860202_0000_00.00  End: 19890307_1125_24.29
+
+</pre>
+  <CENTER>
+    <A HREF="../modules.html">Module Index</A>
+  </CENTER>
+  <!-- USGS-required stuff at the end -->
+<HR>
+<address>
+Questions? Issues? S<a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">ubscribe
+to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>

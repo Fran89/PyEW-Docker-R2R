@@ -1,0 +1,48 @@
+
+# ----------------------------------------------------------------------
+# Windows make file for adsendxs
+# ----------------------------------------------------------------------
+#
+!include <ntwin32.mak>
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+#
+# These are the local C modules:
+#
+O = adsendxs.obj getconfig.obj heartbeat.obj \
+    errors.obj port.obj gps.obj snw.obj \
+    setpcclock.obj
+
+#
+# Set up paths for NI-DAQmx 9.2:
+#
+NIDAQ_INCLUDE="c:\Program Files\National Instruments\NI-DAQ\DAQmx ANSI C Dev\Include"
+NIDAQ_LIB="c:\Program Files\National Instruments\NI-DAQ\DAQmx ANSI C Dev\Lib\msvc"
+
+compflags=/c /DWIN32 /I$(NIDAQ_INCLUDE) $(cflags) /wd4005
+linkflags=/MACHINE:I386
+
+#
+# Application Dependencies:
+#
+all: adsendxs.exe
+
+adsendxs.exe: $O
+    link $(linkflags) /OUT:$B\adsendxs.exe $O \
+      $L\libew_mt.lib $L\swap.obj \
+      $(NIDAQ_LIB)\nidaqmx.lib
+
+.c.obj:
+    $(CC) $(GLOBALFLAGS) $(compflags) $(tflags) $<
+
+#
+# Clean-up directives:
+#
+clean:
+    -del a.out core *.o *.obj *% *~
+
+clean_bin:
+    -del $B\adsendxs*
+

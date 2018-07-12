@@ -1,0 +1,211 @@
+INSTALLING AND CONFIGURING REFTEK DATA LOGGERS, CISCO ROUTERS, 
+AND RTPD SERVERS
+
+    Lucky Vidmar Fri Jan 29 11:49:21 MST 1999
+
+
+
+This file contains instructions for configuring RefTek data loggers
+(e.g. model 72A with serial card RT422) to deliver data into a Solaris
+or NT machine and convert it into Earthworm packets. The instructions
+contained here are the result of trial-and-error, complemented with a
+hefty dose of tech support from RefTek. Consulting ALL of the available
+RefTek documentation is strongly recommended.
+
+Communication between a RefTek data logger (Data Acquisition System -
+DAS) and the server machine is done via the RefTek Protocol (RTP).  RTP
+is designed to provide full-duplex, packet-oriented transport over UDP.
+RTP is implemented as a client-server process with a DAS with a RT422
+serial card as the client, and the RTPD application as the server. RTPD
+is available for NT and Solaris - see instructions below for installing
+RPTD on each platform.
+
+RefTek recommends that RTP is implemented through a router, for example
+a Cisco 2509, such that the set up will consist of two class C networks
+(one on each side of the router).  The client DAS is on one network and
+will connect to the router through an asynch serial interface using
+PPP. The server is on the other network and the router takes care of
+routing the traffic between the two networks.
+
+
+
+        SERVER
+         RTPD
+     192.168.6.80
+          |
+          |
+          |       192.168.6.0 network
+      -------------------------------------------
+                                      |
+                                      |
+                                      | 192.168.6.1
+                                 --------------------------
+                                 |                        |
+                                 |    CISCO 2509          |
+                                 |                        |
+                                 --------------------------
+                                   |                   |
+                                 Async1             Async2
+                              192.168.7.1         192.168.7.2
+                                   |                   |
+                                   |      PPP          |
+                                   |      LINK         |
+                                   |                   |
+                              192.168.7.9         192.168.7.10
+                                   |                   |
+                              ------------        ------------
+                              |          |        |          |     
+                              | DAS#7853 |        | DAS#7854 |     
+                              |          |        |          |     
+                              ------------        ------------
+
+
+The Cisco router configuration for the setup shown above is as
+follows:
+
+hostname RefTekRouter
+!
+!
+username das#7853 password 0 das#7853
+username das#7854 password 0 das#7854
+!
+interface Ethernet0
+ ip address 192.168.6.1 255.255.255.0
+!
+interface Serial0
+ no ip address
+ shutdown
+!
+interface Serial1
+ no ip address
+ shutdown
+!
+interface Async1
+interface Async1
+ ip address 192.168.7.1 255.255.255.0
+ ip helper-address 192.168.6.255
+ encapsulation ppp
+ async mode interactive
+ peer default ip address 192.168.7.9
+ no cdp enable
+ ppp authentication pap callin
+!
+interface Async2
+interface Async2
+ ip address 192.168.7.2 255.255.255.0
+ ip helper-address 192.168.6.255
+ encapsulation ppp
+ async mode interactive
+ peer default ip address 192.168.7.10
+ no cdp enable
+ ppp authentication pap callin
+!
+ip http server
+ip classless
+ip forward-protocol udp 2543
+ip route 192.168.6.0 255.255.255.0 Ethernet0
+ip route 192.168.7.9 255.255.255.255 Async1
+ip route 192.168.7.10 255.255.255.255 Async2
+no logging console
+access-list 101 permit ip any any
+access-list 101 deny   igrp any host 255.255.255.255
+dialer-list 1 protocol ip list 101
+!
+line con 0
+ exec-timeout 0 0
+line 1 2
+ autoselect ppp
+ modem InOut
+ transport input all
+ flowcontrol hardware
+line 3 8
+ transport input all
+line aux 0
+ transport input all
+line vty 0 4
+ exec-timeout 0 0
+ password reftek
+ login
+!
+end
+
+
+For more information about RTP consult the RefTek Protocol Manual.
+
+
+CONFIGURING RTPD SERVER
+
+More information about installing and troubleshooting RTPD can be
+found in the RTPD Installation and Users Guide Manual.
+
+1.  Windows NT 4.0
+
+To configure the RTPD server as a Windows NT 4.0 service, copy the
+service executable rtpudpsvc.exe and the startup file rtpd.ini from the
+utils/winnt directory to, for example, c:\reftek. Edit the rtpd.ini
+file to reflect local customizations (for example, directory names,
+etc) then execute the following commands to install this program as a
+service:
+
+ c:
+ cd \reftek
+ svcins rptd_service "RefTek Data Server" c:\reftek\rtpudpsvc.exe
+
+The RTPD service can now be controlled like any other NT service,
+using the Services icon within the Control Panel.
+
+
+2.  Solaris 2.6
+
+o Copy the rtpd binary from the utils/solaris directory to whatever
+  directory you find convenient, and make sure it is setuid as the user
+  you want it to run as.
+
+This example assumes user "root", with executables in /usr/local/bin.
+In that case you would copy rtpd to /usr/local/bin and execute the
+following commands:
+
+   chown root /usr/local/bin/rtpd
+   chmod 4555 /usr/local/bin/rtpd
+
+
+o Copy the rtpd.ini file from solaris/winnt to, for example,
+  /usr/local/etc directory and make any local customizations to it.
+
+The Solaris version of the file is identical to the NT version, with
+the exception that path names are different.  You also have the choice
+of using the syslog logging facility.  Suppose you want to use syslog.
+Then select a facility and give it in the ini file like:
+
+Facility   LOCAL6
+
+Then, edit /etc/syslog.conf and include the following line:
+
+local6.debug	/var/log/local6
+
+Note that it should be a TAB between the two tokens.  Create
+/var/log/local6 and HUP syslogd (as root, kill -HUP <syslogd pid>),
+once to get it to reread the conf file.  See syslog.conf(4) and
+syslogd(1M) for additional information.
+
+
+o Copy the startup script utils/solaris/rtpd_init to /etc/init.d 
+  and make sure that it is executable (mode 544) and owned by root. 
+  Change directory names and make any other local customizations. 
+
+  Make the following soft links::
+
+# ln -s /etc/init.d/rtpd_init /etc/rc3.d/S75rtpd_init
+# ln -s /etc/init.d/rtpd_init /etc/rc2.d/K10rtpd_init
+# ln -s /etc/init.d/rtpd_init /etc/rc0.d/K10rtpd_init
+
+This will cause RTPD to be started automatically at boot time, and to
+go down gracefully at system shutdown.  
+
+The following command will manually stop the RTPD server:
+
+reftek% /etc/init.d/rtpd_init stop
+
+The following command will manually start the RTPD server:
+
+reftek% /etc/init.d/rtpd_init start

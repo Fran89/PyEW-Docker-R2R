@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: scnl2scn commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+scnl2scn Configuration File</h1>
+<i>(last revised 28 December 2006)</i> </center>
+<p><span style="font-weight: bold;">scnl2scn</span> is a module to
+convert TRACEBUF2 into TRACEBUF messages by mapping SCNLs into SCNs. <br>
+</p>
+<p><span style="font-weight: bold;">BE VERY CAREFUL </span>with this
+module as this could cause DUPLICATE WAVEFORM messages if 2 components
+have the same channel name but different location codes.<br>
+</p>
+<p><br>
+&nbsp;Below is a copy of the .d file with detailed notes on each
+parameter:
+</p>
+<pre>#<br>#                     Configuration file for scnl2scn<br>#<br>MyModuleId     MOD_SCNL2SCN  # Module id for this instance of scnl2scn,<br>InRing         WAVE_RING     # Where to find input messages,<br>OutRing        WAVE_RING2    # Where to put output messages,<br>                             #  InRing and OutRing may be the same ring.<br>HeartbeatInt   15            # Heartbeat interval in secs<br>                             #   if 0, send no heartbeats<br>Debug			     # Optional command, no parameters<br>
+			     # logs every SCNL is sees!<br># List SCNL's that are to be converted and the SCN to which they are to be<br># renamed. Format is:<br># SCNL  sta chan net loc   sta chan net<br># You can list SCNL's explicitly or with wildcards. The only supported wildcard<br># for station and network names is "*"; no other characters should be included<br># in a station, network or location name if the wildcard is used.<br># For channel names, you can use "*" or two letters followed by `?', as in <br># "HH?". The `?' wildcard is supported only as the third character of the<br># channel name.<br>#<br># The output SCN must be given explicitly if the input SCNL is given<br># explicitly.<br># If a wildcard is used in the input SCNL, you can use wildcards in the output.<br># In the output SCN, the wildcard means "use whatever was in the <br># input S, C or N".<br># <br># The explicit SCNL's will be sorted with scnl2scn starts up so that a binary<br># search can be used to quickly find a match.<br># Incoming packets will be matched against this explicit list first. <br># Any packets that don't match an explicit SCNL will then be matched against<br># the wildcarded SCNLs in the order they appear in this file.<br># Any packets that do not match the wildcard list WILL NOT BE CONVERTED.<br># To ensure that all packets are converted, you could end the SCNL list<br># with "SCNL * * * *  * * *". This will simply delete the location code from<br># any packets not otherwise matched.<br># Be careful with this, however. It may cause multiple SCNLs to be converted<br># into a single SCN, producing utter garbage!<br>SCNL  * * * *  * * *
+<br><br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/scn_converters_ovr.html">scnl2scn Overview</a> </center>
+<hr>
+<address> <br>
+Contact: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </address>
+</body>
+</html>

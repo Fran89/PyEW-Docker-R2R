@@ -1,0 +1,41 @@
+From p.friberg@isti.com Mon Jun 26 15:33:41 2000
+Date: Mon, 26 Jun 2000 17:13:10 -0400
+From: Paul Friberg <p.friberg@isti.com>
+To: earthw-list@nmt.edu
+Subject: recent discussions
+
+Dear EW community,
+
+We are new to the ewlist proper and just did a read 
+through of the last years worth of discussions.
+The recent discussions about POSIX and the need for
+an improved contribution mechanism have been very
+interesting. We applaud Chris and company for their
+efforts in bringing POSIX standards to EW and hope
+that it gets adopted into the regular release. We also
+hope a more standard approach to contributions is 
+established.
+
+On the contribution discussion, we were surprised to
+hear that Kent has written a continuous data archiver
+and it never made it into the release. When will this make
+it into the release? 
+
+ISTI has made a few modifications to waveman2disk, including
+some bug fixes. We would like to contribute our work back to
+the official release. The version we have uses the Berkeley
+qlib2 to provide mseed output. We were not contracted by
+anyone to write this. Furthermore, we have not been contracted, 
+at this time, to write a separate waveserver client that does 
+continous data archiving to miniseed (referred to as ew2mseed 
+in some emails I saw on the archive). Is there still community
+interest in such a client, or will our waveman2disk mods suffice?
+
+Regards,
+
+Paul
+-- 
+ Paul Friberg - p.friberg@isti.com - http://www.isti.com
+      (914) 256-9290 Office - (914) 256-9299 FAX
+    ISTI==Instrumental Software Technologies, Inc.
+Systems Integration and Software Development Specialists

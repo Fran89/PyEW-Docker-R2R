@@ -1,0 +1,22 @@
+This directory contains the source code for the coupler module,
+provided by Refraction Technologies Inc, that translates data from
+the RTP format into the Earthworm trace data format.
+
+The makefiles for both Solaris and NT were modified to better 
+reflect the Earthworm directory structure.
+
+This module builds the reftek2ew binary. Along with this binary,
+there are several other programs provided by Reftek without source
+code. Those can be found in the utils directory:
+
+ utils/solaris:
+   rtpd  -  rtp server daemon program used to boot up Reftek
+            boxes and control communication with them
+   
+   rtpc  -  rtp client program used for Reftek control
+   
+
+ utils/winnt: (among other things)
+   rtpudpsvc.exe - rtp server
+   fsc.exe - Field Setup Controller
+   nci.exe - Network Control Interface

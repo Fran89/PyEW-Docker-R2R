@@ -1,0 +1,11 @@
+As of Earthworm 7.1, Q3302EW is entirely rewritten.  No longer based on
+Mountainair, Q3302EW now utilizes the new lib330 library for communication
+with the Q330.
+
+Windows is now Supported, as is linux and Solaris.
+
+The sample q3302ew.d contains all available options (although some are
+commented out) as well as descriptions of their use.
+
+-Hal Schechner
+h.schechner@isti.com

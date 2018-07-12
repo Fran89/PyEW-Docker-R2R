@@ -1,0 +1,37 @@
+#
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lthread -lrt
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LIBS = $(MT_FLAG) $(SPECIFIC_FLAGS) $(LINK_LIBS)
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS) -I../../libsrc/libdali 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LDLIBS = $(L)/libdali.a
+LDLD = -ldali
+
+EWLIBS = $L/mem_circ_queue.o $L/rdpickcoda.o $L/libmseed.a \
+       	 $L/swap.o $L/libew_mt.a 
+
+PROGS = ew2ringserver
+
+all: $(PROGS)
+
+ew2ringserver: ew2ringserver.o exportfilter.o $(EWLIBS) $(LDLIBS)
+	$(CC) $(CFLAGS) -o $B/ew2ringserver ew2ringserver.o exportfilter.o $(EWLIBS) $(LDLIBS) $(LIBS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+lint:
+	lint ew2ringserver.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ew2ringserver

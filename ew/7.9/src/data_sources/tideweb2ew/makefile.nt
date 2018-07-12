@@ -1,0 +1,27 @@
+#
+# Dummy makefile - only used for cleaning things up
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+
+# Clean-up rules
+clean:
+	-del a.out core *.o *.obj *% *~
+	cd qlib2
+	-del a.out core *.o *.obj *% *~
+	cd ..\comserv
+	-del a.out core *.o *.obj *% *~
+	cd clients
+	-del a.out core *.o *.obj *% *~
+	cd ..\clients.ucb
+	-del a.out core *.o *.obj *% *~
+	cd ..\comserv
+	-del a.out core *.o *.obj *% *~
+	cd ..\util
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\tideweb2ew*

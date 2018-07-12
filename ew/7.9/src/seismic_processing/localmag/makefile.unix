@@ -1,0 +1,59 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+# Makefile for localmag
+
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+LDC = $(CC)
+
+# To turn on UW-specific features, uncomment the following four lines.
+#UW_FLAGS = -Xc -DUW -I$(SNAPSHOME)/Src/Utils
+#UW_OBJ = lm_uw.o uwresp.o
+#UW_LIBS = -L$(SNAPSHOME)/Src/Utils -lutils
+#LDC = f77
+
+FFLAGS += -g
+CFLAGS = ${GLOBALFLAGS} ${UW_FLAGS} -I.
+C_OPTS = -g
+
+#B = ../../../bin
+#L = ../../../lib
+B = ${EW_HOME}/${EW_VERSION}/bin
+L = ${EW_HOME}/${EW_VERSION}/lib
+
+all: localmag
+
+OBJS = lm_main.o lm_util.o lm_config.o lm_ws.o lm_misc.o lm_sac.o \
+   lm_site.o lm_xml_event.o $(UW_OBJ)
+
+EWLIBS = $L/swap.o $L/read_arc.o \
+   $L/ws_clientII.o $L/socket_ew_common.o $L/socket_ew.o $L/libew_mt.a \
+   $L/tlay.o $L/mnbrak.o $L/brent.o $L/dirops_ew.o \
+   $L/mem_circ_queue.o \
+   $L/fft99.o $L/fft_prep.o $L/transfer.o \
+   $L/rw_mag.o 
+
+localmag: $(OBJS)
+	$(LDC) $(CFLAGS) -o $B/localmag $(OBJS) $(EWLIBS) $(UW_LIBS) $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/localmag
+
+uwresp.o: uwresp.f
+	$(FF) -c $(FFLAGS) uwresp.f
+
+readresp: readresp.o
+	$(CC) $(CFLAGS) $(FFLAGS) -o readresp readresp.o $L/logit.o $L/time_ew.o $L/fft99.o $L/fft_prep.o $L/transfer.o $(UW_OBJ) $(LIBS)
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(C_OPTS) $<
+
+

@@ -1,0 +1,54 @@
+This is the readme file for the Earthworm module ew2seisvole 
+
+The purpose is to integrate Alan Jones'
+(http://www.geol.binghamton.edu/faculty/jones) "Seisvole" display
+package. The intention is to provide a 'hood ornament'-level display of
+recently located events. This is not intended for serious use; do not
+take internally.
+
+Seisvole can be configured to look into a specified 'poll directory'
+once every 10 seconds. Any files it finds there (regardless of file
+names), are presumed to contain cubic messages. It read the files,
+inserts the hypocenters into its own catalog, and then deletes the
+files.
+
+This module listens for hypoinverse 'sum' messages (produced by the
+'eqproc' module, which includes hypoiverse). When it receives a sum
+message, it writes a file (with a unique file name derived from time)
+into the directory specified int its configuration (.d) file. This
+directory should be the same as the "poll directory" which Seisvole is
+scanning.
+
+	To set up Seisvole to do all this:
+
+	Download Seisvole from the web site above, or the IRIS site.  This
+shows up as a .exe file (yes, this is for Win32 systems only). After
+the installation has completed, you'll discover that your "Programs"
+menu item - reachable via the "Start" button (lower left on the screen)
+- has a new item called "Seismology". Under this item are several
+sub-itmes, including "Seismic Eruption" and "Seismic Eruption
+Maintenace". "Seismic Eruption" is Seisvole itsself.  
+	Execute "Seismic Eruption Maintenance". Pull down the "Alerts" menu.
+Select the item "Poll Directory". This is where Seisvole will look for
+cubic files. It must match the directory specified in ew2seisvole.  In
+summary:  Start - Programs - Seismology - Seismic Eruption Maintenance
+- Alerts - Poll directory
+
+Seisvole comes with its own catalog of earthquakes, which it
+eagerly displays, given the slightest excuse. However, the intended mode
+of operation here is to display only the most 'recent' earthquakes, as
+located Earthworm. This can be done by taking Seisvole's normal catalog
+away from it, and giving it a new (empty) one. Note that it will
+happily start adding any incoming events into this new catalog.  
+	To do this, execute Seisvole. Bring up a specific region of the world.
+Pull down the "Earthquakes" menu. Select the "Earthquake file" itme.
+Note that this item is not active until a region has bee selected.
+Under "File name" will be the name and directory of the currently used
+catalog file. Create a new catalog file in the same directory (such as
+Jan99.hy3) by using the file manager, or command line window. Enter
+that file name in Seisvole's "file" window.
+	Seisvole can be configured to cycle through a specfied time period.
+This is set from Seisvole's "Control" menu, "Set Dates" item, "Days to
+loop" window.
+
+AB for LV 2/14/99

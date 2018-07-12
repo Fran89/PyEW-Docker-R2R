@@ -1,0 +1,56 @@
+From kent@giseis.alaska.edu Mon Mar  6 16:31:19 2000
+Date: Mon, 06 Mar 2000 13:11:48 -0900
+From: "Dr. Kent Lindquist (Seismologist)" <kent@giseis.alaska.edu>
+To: Richard Baldwin <baldwin@pgc.nrcan.gc.ca>
+Cc: earthw-list@nmt.edu
+Subject: Re: maximum message size
+
+Richard Baldwin wrote:
+> 
+> Hello all,
+> 
+> A simple question:
+> 
+>     Is there a maximum allowable size for an earthworm message, regardless of
+>     the MSG_LOGO? Such a beast would be very handy for allocating buffers that
+>     could handle any possible message that might come in, avoiding altogether
+>     the error GET_TOBIG.
+> 
+> Thanks,
+> 
+> Richard
+
+The other way to go is to consider dynamic memory allocation, i.e.
+allocating the amount of memory you need for each message as it comes
+in. This has become a fairly standard technique. Dynamic memory
+allocation offers a number of advantages, for example you don't risk
+crashes or data loss if a message comes in that is too big for a
+pre-allocated buffer. This makes a more robust system: it's not good to
+have software that crashes if it gets data it didn't expect. Of course,
+it is possible with correct handling of a GET_TOOBIG return code that
+the software will merely lose data rather than crash. However, fully
+dynamic memory allocation can avoid even this lesser evil of data loss.
+Having a parameter that sets the maximum allowable size of a message is
+not ideal because that parameter either has to be compiled in (through a
+.h file or whatever) or specified in a parameter file. The first option
+permanently removes flexibility from the software package by arbitrarily
+and unnecessarily limiting the packet-sizes allowable to the end user.
+The parameter-file option reinstates that flexibility, though putting
+maximum packet size in the parameter file in essence makes the end user
+partially responsible for memory allocation. The software engineer
+should take full responsibility for this level of detail, though, rather
+than leaving part of the task to the user or leaving the system with
+restricted functionality. Therefore I'd recommend looking into removing
+all traces of statically allocated buffers and replacing them with fully
+dynamic allocation mechanisms. 
+
+Good luck,
+Kent
+
+-- 
+Dr. Kent Lindquist, Seismologist
+Geophysical Institute                Ph. (907) 474-5161
+University of Alaska                 Fax (907) 474-5618
+Fairbanks, AK 99775-7320
+
+http://giseis.alaska.edu/Seis/Input/kent/kent.html

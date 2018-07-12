@@ -1,0 +1,450 @@
+<HTML>
+<HEAD>
+<TITLE>Menlo_report commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Menlo_report Configuration File Commands</H1>
+<I>(last revised 3 November 2010)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF=#example>Example configuration file</A><BR>
+2.  <A HREF=#function>Functional command listing</A><BR>
+3.  <A HREF=#alphabet>Alphabetic command listing & description</A><BR>
+4.  <A HREF=#convention>Menlo_report's file-naming convention</A><BR>
+5.  <A HREF=#permission>Setting up permissions</A> on a remote Sun machine & local machine
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, menlo_report reads the configuration file named on the command
+line.  Commands in this file set up all parameters used in transferring
+event files to a remote machine.  In the control file, lines may begin
+with a valid menlo_report command (listed below) or with one of 2 special
+characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# This is menlo_report's parameter file
+
+#  Basic Earthworm setup:
+#
+MyModuleId         MOD_REPORT     # module id for this instance of report
+RingName           HYPO_RING      # ring to get input from
+LogFile            1              # 0 to completely turn off disk log file
+HeartBeatInterval  15             # seconds between heartbeats
+
+# List the message logos to grab from transport ring
+#              Installation       Module          Message Types
+GetEventsFrom  INST_WILDCARD    MOD_EQPROC      # hyp2000arc & h71sum2k
+
+# Set suffixes for output filenames
+# NOTE: If a suffix is "none", no file will
+#       be reported for that type of message
+ArcSuffix     ".arc"              # suffix for archive (hinvarc message) files
+SumSuffix     ".sum"              # suffix for summary (h71sum message) files
+TmpRemoteFile "temp.tmp"          # name for remote file while it's being copied
+
+# Local directory to write temporary files in
+LocalDir      /home/earthworm/run/log
+KeepLocalCopy
+
+# Create name for local file using the event origin time and
+#   - last 2 digits of the event id and ArcSuffix/SumSuffix
+#     this is the default
+#     (i.e.  201011040930_57.arc)
+#   - all digits of the event id, plus id-version,  and ArcSuffix/SumSuffix
+#     (i.e.  201011040932_0000097658_2.arc)
+#     to create long file names declare parameter EnableLongFileName
+#     This parameter is useful only when KeepLocalCopy is also declared
+# EnableLongFileName
+
+# Info about remote machine to write files on
+RemoteHost    squash                	# copy eq files to this machine
+RemoteDir     /home/earthworm/quakes    # put them in this directory
+RemoteUser    whoever            	# as this user
+RemotePasswd  whatever                  # with this password;
+                                        #  Required for NT version
+                                        #  Not used by Solaris version
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by menlo_report, grouped by the function
+they influence.  Most of the commands are required; they must be specified
+in the control file in order for menlo_report to operate.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+
+<PRE>	Earthworm system setup:
+                <A HREF=#GetEventsFrom>GetEventsFrom</A>         required
+		<A HREF=#HeartBeatInterval>HeartBeatInterval</A>  			required
+ 		<A HREF=#MyModuleId>MyModuleId</A>                	required
+		<A HREF=#RingName>RingName</A>	                  required
+
+	Local/Remote machine info:
+		<A HREF=#LocalDir>LocalDir</A>	   	required
+		<A HREF=#RemoteDir>RemoteDir</A>	   	required
+		<A HREF=#RemoteHost>RemoteHost</A>	   	required
+		<A HREF=#RemoteUser>RemoteUser</A>	   	required
+		<A HREF=#RemotePasswd>RemotePasswd</A>	   	required
+                <A HREF=#TmpRemoteFile>TmpRemoteFile</A>           required
+
+	Output Control:
+		<A HREF=#ArcSuffix>ArcSuffix</A>		required
+		<A HREF=#SumSuffix>SumSuffix</A>		required
+                <A HREF=#KeepLocalCopy>KeepLocalCopy</A>
+                <A HREF=#EnableLongFileName>EnableLongFileName</A>
+		<A HREF=#LogFile>LogFile</A>		   	required
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), the name of the subroutine that processes the
+command, and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and the values used by Calnet are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="ArcSuffix">  <!-- command name as anchor inside quotes -->
+<PRE><B>ArcSuffix <font color=red>suffix</font>			menlo_report_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a character string <font color=red>suffix</font> that is used in naming the output
+files which contain hypoinverse archive messages.  See section 3 below
+for a full description of menlo_report's file-naming convention.
+<font color=red>suffix</font> can be enclosed in double-quotes, but is not required to be.
+<font color=red>suffix</font> may be given with or without the period (for example, both
+".arc" and "arc" are valid suffixes and will result in the same file
+name).  If <font color=red>suffix</font> is "none", menlo_report will not write or deliver
+files for hypoinverse archive messages.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  ArcSuffix ".arc"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="EnableLongFileName">  <!-- command name as anchor inside quotes -->
+<PRE><B>EnableLongFileName				menlo_report_config 	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+    The parameter <B>EnableLongFileName</B> is useful only when <A HREF=#KeepLocalCopy>KeepLocalCopy</A> is also declared.<br />
+    File name can be created in two different ways:
+    <ul><li>event origin time, <br />
+	last 2 digits of the event id <br />
+	and ArcSuffix/SumSuffix<br />
+	(i.e.  201011040930_57.arc) THIS IS DEFAULT.
+	</li><li>event origin time, <br />
+	all digits of the event id, <br />
+	version of the event id, <br />
+	and ArcSuffix/SumSuffix <br />
+	(i.e.  201011040932_0000097658_2.arc) <br />
+	to create long file names declare parameter <B>EnableLongFileName</B>
+    </ul>
+
+<PRE><!-- Default and example go here   -->
+Default:                    # File name will be like 201011040930_57.arc
+Example: EnableLongFileName # File name will be like 201011040932_0000097658_2.arc
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GetEventsFrom">  <!-- command name as anchor inside quotes -->
+<PRE><B>GetEventsFrom <font color=red>inst</font> <font color=red>mod_id</font>		menlo_report_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Controls the earthquake messages input to menlo_report.  menlo_report
+will only process hypoinvserse-archive and hypo71-summary messages that
+come from module <font color=red>mod_id</font> at installation <font color=red>inst</font>.  <font color=red>inst</font> and <font color=red>mod_id</font>
+are character strings (valid strings are listed in earthworm.h/earthworm.d) which
+are related to single-byte numbers that uniquely
+identify each installation and module.  Only 1 "GetEventsFrom" command
+may be issued; wildcards (INST_WILDCARD and MOD_WILDCARD) will force
+menlo_report to process all archive and summary messages, regardless
+of their place of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   GetEventsFrom  INST_MENLO  MOD_EQPROC
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartBeatInterval">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartBeatInterval <font color=red>nsec</font>			menlo_report_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds <font color=red>nsec</font> between TYPE_HEARTBEAT messages
+issued by menlo_report.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  HeartBeatInterval 15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="KeepLocalCopy">  <!-- command name as anchor inside quotes -->
+<PRE><B>KeepLocalCopy				menlo_report_config 	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a flag such that local copies of archive and summary files are
+NOT deleted after they are sent to the remote machine.  This command
+is optional; if it is omitted, local files are deleted after they
+have been successfully copied to the remote machine (local files are
+always saved if there is an error in sending the file to the remote
+machine).
+<PRE><!-- Default and example go here   -->
+Default:  delete local archive & summary files
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LocalDir">  <!-- command name as anchor inside quotes -->
+<PRE><B>LocalDir <font color=red>path</font>				menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the local directory into which menlo_report should write its
+temporary event files.  menlo_report changes its working directory to
+<font color=red>path</font>.  On OS/2, <font color=red>path</font> must be on the same disk that menlo_report
+was started from.  The local temporary files are removed after
+they have been successfully transferred to the remote machine.  If
+an error occurs on transfer, menlo_report sends an error message and
+does not remove the local file.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   LocalDir /home/earthworm/run/log
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>				menlo_report_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, menlo_report
+will write a daily log file(s) called menlo_reportxx.log_yymmdd
+where xx is menlo_report's module id (set with "MyModuleId" command)
+and yymmdd is the current UTC date (ex: 960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>			menlo_report_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  MyModuleId MOD_REPORT
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RemoteDir">  <!-- command name as anchor inside quotes -->
+<PRE><B>RemoteDir <font color=red>path</font>				menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the directory <font color=red>path</font> on the remote machine in which to place
+the event files.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RemoteHost">  <!-- command name as anchor inside quotes -->
+<PRE><B>RemoteHost <font color=red>host</font>				menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the remote machine <font color=red>host</font> to place the event files on.
+<font color=red>host</font> is a character string; it can be either the remote host's name
+or its IP address.  See section below on setting up permissions on
+remote machine.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RemoteUser">  <!-- command name as anchor inside quotes -->
+<PRE><B>RemoteUser <font color=red>username</font>			menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Copy the event files to the remote host as <font color=red>username</font>.  The files on
+the remote machine will be owned by <font color=red>username</font>.  <font color=red>username</font> must have
+permission to write in the directory assigned by "RemoteDir" command.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RemotePasswd">  <!-- command name as anchor inside quotes -->
+<PRE><B>RemotePasswd <font color=red>passwd</font>			menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the password <font color=red>passwd</font> for the remote user on the remote
+machine.  The OS/2 version requires that <font color=red>passwd</font> be the actual
+password for the remote user.  The Solaris version, on the other hand,
+does not need to use <font color=red>passwd</font>; therefore, it should be set to a dummy
+character string for security reasons.
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font>				menlo_report_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells menlo_report which shared memory region to use for input/output.
+<font color=red>ring</font> is a character string (valid strings are listed in earthworm.d)
+that relates (in earthworm.d) to a unique number for the key to the
+shared memory region.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  RingName HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SumSuffix">  <!-- command name as anchor inside quotes -->
+<PRE><B>SumSuffix <font color=red>suffix</font>			menlo_report_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets a character string <font color=red>suffix</font> that is used in naming the output
+files which contain hypo71-format summary messages.  See section 3
+below for a full description of menlo_report's file-naming convention.
+<font color=red>suffix</font> can be enclosed in double-quotes, but is not required to be.
+<font color=red>suffix</font> may be given with or without the period (for example, both
+".sum" and "sum" are valid suffixes and will result in the same file
+name).  If <font color=red>suffix</font> is "none", menlo_report will not write or deliver
+files for hypo71-format summary messages.
+<PRE><!-- Default and example go here   -->
+Default:  none				Calnet:  SumSuffix ".sum"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="TmpRemoteFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>TmpRemoteFile <font color=red>tmpname</font> 			menlo_report_config	machine info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies a character string <font color=red>tmpname</font> to use for the name of the
+remote file while it is being transferred to the remote machine.
+<font color=red>tmpname</font> can be enclosed in double-quotes, but is not required to be.
+After the file transfer is complete, the remote file is renamed with
+the final file name (using the convention described in section 3.)<BR>
+<B>Warning:</B> if more than one copy of menlo_report is transferring files
+to the same remote directory, be sure that they are using different
+<font color=red>tmpname</font>s, otherwise they may over-write each other's files!
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  TmpRemoteFile "report.tmp"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="convention">
+<H2>4.  MENLO_REPORT'S FILE-NAMING CONVENTION</H2>
+<P>
+Menlo_report writes one temporary file for each message	it processes.  The
+prefix of each file name is unique for each event; it is derived from the
+event origin time and follows the convention "yyyymmddhhmm_xx" where:
+<PRE>
+   yyyymmdd is the UTC date of the event origin time,
+   hhmm   is the UTC hour-minute of the event origin time, and
+   xx     is the last 2 digits of the event id assigned by binder.
+
+</PRE>
+The suffix denotes the type of message the file contains.  The suffix is
+set by the user in menlo_report's configuration file with these commands:
+<PRE>
+   ArcSuffix   sets the suffix for files containing a
+               hypoinverse archive message   (ex: ArcSuffix ".arc").
+   SumSuffix   sets the suffix for	files contain a
+               hypo71-format summary message (ex: SumSuffix ".sum").
+
+Example file names:   199602131145_78.arc
+		      199602131145_78.sum
+</PRE>
+Menlo_report writes its local temporary files into the directory set by the
+"LocalDir" command.  The local temporary files are removed after they have
+been successfully transferred to the remote machine.  If an error occurs on
+transfer, menlo_report sends an error message and does not remove the local
+file.
+<HR>
+
+<A NAME="permission">
+<H2>5.  SETTING UP PERMISSIONS ON A REMOTE SUN MACHINE & LOCAL MACHINE</H2>
+<P>
+<UL>
+<LI>For menlo_report to work, make sure that the following files are set up
+properly on the Sun machine specified in the "RemoteHost" command:                                      <PRE>
+  /etc/hosts         must contain the local_hostname and its IP address
+
+  /etc/hosts.equiv   must contain local_hostname
+
+  .rhosts            in the home directory of the user specified by
+		     the "RemoteUser" command must contain a line:
+                     local_hostname local_username
+                     describing who is running menlo_report (and thus
+		     who is trying to write the files).
+</PRE>
+<P>
+<LI>Additionally, the user identified by "RemoteUser" command must have write
+permission in the "RemoteDir" directory.
+<P>
+<LI>On the local machine, make sure that entries for the remote host are
+included in these files:
+<PRE>
+   c:\WINNT\system32\drivers\etc\hosts   for a local NT machine
+
+   /etc/hosts	      for a local Solaris machine
+   /etc/hosts.equiv
+
+</PRE>
+</UL>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/menlo_report_ovr.html">Menlo_report Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

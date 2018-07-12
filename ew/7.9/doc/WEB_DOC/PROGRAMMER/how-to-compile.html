@@ -1,0 +1,126 @@
+<HTML>
+<HEAD>
+   <TITLE>Earthworm: How To Compile</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<DIV ALIGN=right><P><B>August 10, 1999</B></P></DIV>
+<CENTER>
+MAKEFILES AND COMPILATION PROCEDURES</CENTER>
+<PRE>
+
+Lucky Vidmar Mon Feb 14 21:48:28 GMT 2000
+
+There is a change in the procedure for building the complete release of
+Earthworm. Version 3.9 introduces a top-level Makefile in the src
+directory. It contains all directives necessary to build all Earthworm
+modules, as well as to clean up the Earthworm file hierarchy, under
+both Solaris and NT.
+
+Detailed information is available in the Makefile. Following are the
+procedures for building Earthworm:
+
+SOLARIS:
+
+ - source run_test/params/ew_sol_sparc.cmd
+ - cd src
+ - make solaris
+
+NT
+
+ - run script run_test/params/ew_nt.cmd
+ - cd src
+ - nmake nt
+
+
+To clean up the Earthworm file tree, i.e. to remove .o, .obj, core,
+and backup files, run the following:
+
+ - cd src; make clean_solaris (on a Solaris system)
+ - cd src; nmake clean_nt (on an NT system)
+
+
+To clean the bin directory:
+
+ - cd src: make clean_bin_solaris (on a Solaris system)
+ - cd src; nmake clean_bin_nt (on an NT system)
+
+
+Whenever a new module is added to Earthworm, or an old one is
+retired, the top-level Makefile should be modified to reflect the
+change. See the comments in the Makefile for more information.
+
+Each Earthworm module should contain makefiles for both NT and
+Solaris, regardless of the platform on which it is meant to be
+compiled. If a module is not supposed to be compiled on a platform,
+the corresponding makefile should only contain the clean-up
+directives. This enables complete clean-up of the Earthworm file
+hierarchy using the top-level Makefile on both NT and Solaris.
+
+COMPILING THE DATABASE PART OF EARTHWORM
+
+SOLARIS: 
+
+The changes described here are no longer needed, but if they are not performed, then you will receive extra 
+warning messages when newly linking an Oracle based application. 
+
+When building earthworm DBMS applications(ON A SOLARIS SYSTEM), a
+change may be made to an Oracle makefile (/opt/oracle/rdbms/lib/env_rdbms.mk to prevent harmless error messages.
+Go to the bottom of the file and comment out all lines in the file starting
+with the $(LIBCLNTSH) target definition, so that the file looks as below.
+The example provided is from Oracle8.
+#$(LIBCLNTSH): \
+#            ${ORACLE_HOME}/lib/libclient.a ${ORACLE_HOME}/lib/libsql.a \
+#            ${ORACLE_HOME}/lib/libnetv2.a ${ORACLE_HOME}/lib/libnttcp.a \
+#            ${ORACLE_HOME}/lib/libnetwork.a ${ORACLE_HOME}/lib/libncr.a \
+#            ${ORACLE_HOME}/lib/libcommon.a ${ORACLE_HOME}/lib/libgeneric.a \
+#            ${ORACLE_HOME}/lib/libmm.a ${ORACLE_HOME}/rdbms/lib/xaondy.o \
+#            ${ORACLE_HOME}/lib/libnlsrtl3.a ${ORACLE_HOME}/lib/libcore4.a \
+#            ${ORACLE_HOME}/lib/libepc.a
+# $(SILENT)$(ECHO) "Building client shared library libclntsh.so ..."
+# $(SILENT)$(ECHO) "Call script $$ORACLE_HOME/bin/genclntsh ..."
+# $(GENCLNTSH)
+# $(SILENT)$(ECHO) "Built $$ORACLE_HOME/lib/libclntsh.so ... DONE"
+
+If you do not perform the described modifications, then you will get the 
+following warning the first time you execute make in each directory (or the first 
+time after you have executed "make clean"): 
+Building client shared library libclntsh.so ...
+Call script /opt/oracle/bin/genclntsh ...
+/opt/oracle/bin/genclntsh
+cp: cannot create /opt/oracle/lib/libcommon9034.a: Permission denied
+chmod: WARNING: can't access /opt/oracle/lib/libcommon9034.a
+ar: archive, /opt/oracle/lib/libcommon9034.a, not found
+ld: fatal: file /opt/oracle/lib/libclntsh.so.1.0: cannot open file: Permission de
+nied
+ln: cannot create libclntsh.so: File exists
+Built /opt/oracle/lib/libclntsh.so ... DONE
+
+Genclntsh is a program executed by Oracle to build several libraries for your machine. It needs to 
+be run once, at Oracle install time, but never again(unless you perform an OS or Oracle upgrade). 
+Because of the way the makefiles come from Oracle, the make program will attempt to rerun the 
+genclntsh script whenever it cannot find a record of it in the local .make.state file. The program 
+runs, complains about not being able overwrite the libraries, and then completes harmlessly. 
+This should not be harmful unless it is confusing to the person compiling. 
+NOTE*: There is no negative consequence of performing the change described in the documentation. 
+
+then:
+
+ - source run_test/params/ew_sol_sparc.cmd
+ - cd src/oracle
+ - make solaris  
+ 
+NT
+ 
+ - run script run_test/params/ew_nt.cmd
+ - cd src\oracle\schema\src
+ - nmake nt
+ - cd src\oracle\apps\src
+ - nmake nt
+ 
+
+
+
+</PRE>
+

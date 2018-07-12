@@ -1,0 +1,54 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 1222 2003-05-06 20:58:03Z lucky $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.2  2003/05/06 20:57:04  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/03/05 21:46:50  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+D = lib
+DCC_TIMESTAMP = $D\timestamp
+
+all: $(DCC_TIMESTAMP)
+
+$(DCC_TIMESTAMP):
+   cd dcc_seed
+   nmake -f makefile.nt all
+   cd ..\dcc_misc
+   nmake -f makefile.nt all
+   cd ..\dcc_time
+   nmake -f makefile.nt all
+   cd ..\steim123 
+   nmake -f makefile.nt all
+   cd ..
+   copy stamp_proto $(DCC_TIMESTAMP)
+
+# Clean-up directives
+clean:
+   cd dcc_seed
+   nmake -f makefile.nt clean
+   cd ..\dcc_misc
+   nmake -f makefile.nt clean
+   cd ..\dcc_time
+   nmake -f makefile.nt clean
+   cd ..\steim123 
+   nmake -f makefile.nt clean
+   cd ..\lib
+   -del *.obj *.o
+   cd .. 
+   -del $(DCC_TIMESTAMP)
+
+clean_bin:

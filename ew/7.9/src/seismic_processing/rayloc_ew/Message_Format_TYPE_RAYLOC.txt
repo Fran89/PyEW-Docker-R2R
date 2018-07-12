@@ -1,0 +1,127 @@
+
+  Earthworm Global Processing
+  Message Format TYPE_RAYLOC (DRAFT #1)
+
+
+------------------------------------------------------------------------
+
+
+          July 13, 2004
+
+
+          Ilya Dricker (i.dricker@isti.com)
+
+
+    GENERAL:
+
+
+This document describes message pertaining to global processing:
+
+1.    TYPE_RAYLOC
+
+This is not a final version of the message format, but just an unauthorized draft
+
+All fields will be blank-separated.
+
+All fields will have at least one printing (non-whitespace) character.
+
+
+    TYPE_RAYLOC:
+
+=============================================
+
+This message shall consist of one or more 'lines'.
+Each line will start with a 'line name' string followed by an ascii space.
+Each line terminates with a ascii newline character ['\n']
+Each line will consist of blank-separated fields.
+Additional fields can be added to the end of each line as the message evolves.
+The message terminates with an additional \n  [message ends in two \n]
+The first line of the message must be a RLC (rayloc) line.  There shall be only one RLC line per message.
+Following the RLC line, data lines can appear in any order.
+The RLC line will be versioned
+For version 1, data line types are PCK (picks).
+
+NOTE: These are not fixed-width fields, the counter is only to assist with in determining the maximum size
+
+
+      rayloc header <RLC> 01
+
+
+          1         2         3         4         5         6         7         8         9         0         1
+ 12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+
+ RLC 001002003 vv xxxxxxxxxx.xxx +xx.xxxx +xxx.xxxx xxx.xx xxxx xxxx xxxx xxxx xxx xxx.xx l
+ RLC author version event_id    Origin        elat     elon    depth nsta npha suse puse gap  dmin  f
+
+ xxx.xx xxxx.x xxxx.x xxxx.x xxx.xx xxxx.x xxxx.x xxxx.x a
+  oterr laterr lonerr deperr   se    errh   errz    avh  q
+
+ xxxx.x xxx +xx xxxx.x xxx +xx xxxx.x xxx +xx
+  axis1 az1 dp1  axis2 az2 dp2  axis3 az3 dp3
+
+
+
+** Where:
+**   Origin   Event origin time in epoch seconds
+**   Elat     Geographical event latitude in signed decimal degrees (WGS84)
+**   Elon     Geographical event longitude in signed decimal degrees (WGS84)
+**   Depth    Event depth in kilometers (WGS84)
+**   Gap      Largest azimuthal gap in degrees
+**   Nsta     Number of stations associated
+**   Npha     Number of phases associated
+**   Suse     Number of stations used in the solution
+**   Puse     Number of phases used in the solution
+**   Dmin     Distance to the nearest station in degrees
+**   F        Fixed depth flag (T if depth was held, F otherwise)*
+**   Oterr    90% marginal confidence interval for origin time
+**   Laterr   90% marginal confidence interval for latitude
+**   Lonerr   90% marginal confidence interval for longitude
+**   Deperr   90% marginal confidence interval for depth
+**   Se       Standard error of the residuals in seconds
+**   Errh     Maximum horizontal projection of the error ellipsoid in kilometers
+**   Errz     Maximum vertical projection of the error ellipsoid in kilometers
+**   Avh      Equivalent radius of the horizontal error ellipse in kilometers
+**   Q        Quality flag (i.e., 'A', 'B', 'C', 'D')
+**   Axis1-3  Length in kilometers of the principle axies of the error ellipsoid
+**   Az1-3    Azimuth in degrees of the principle axies of the error ellipsoid
+**   Dp1-3    Dip in degrees of the principle axies of the error ellipsoid
+
+===============
+
+
+      rayloc picks <PCK> 01 line
+
+
+         1         2         3         4         5         6         7         8           9         0         1
+
+1234567890123456789012345678901234567890123456789012345678901234567890123456789090123456789012345678901234567890
+
+PCK 001002003 vv xxxxxxxxxx aaaaa aaa aa aa aaaaaaaa +xx.x xxx.x xxx l
+
+PCK author version PickID    sta  cmp nt lc  phase    res   dist azm w
+
+** Where:
+**  PickID   DBMS ID of pick (unsigned long)
+**  Sta      Station code (upper case)
+**  Cmp      Component code (upper case)
+**  Nt       Network code (upper case)
+**  Lc       Location code
+**  Phase    Phase code (e.g., 'P', 'S', or 'PKP')
+**  Res      Travel-time residual in seconds
+**  Dist     Source-receiver distance in decimal degrees
+**  Azm      Receiver azimuth in degrees (from the source)
+**  W        Phase weight flag (i.e., T for 1, F for 0)*
+===============
+
+------------------------------------------------------------------------
+See also:
+rayLoc_ew Overview <http://www.isti.com/%7Eilya/rayloc_ew.overview.html>
+RayLoc_ew Commands <http://www.isti.com/%7Eilya/rayloc_ew_cmd.html>
+TYPE_LOC_GLOBAL
+<http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html>
+------------------------------------------------------------------------
+The URL of this page is
+[http://www.isti.com/~ilya/Message_Format_TYPE_RAYLOC.html]
+Contact: i.dricker@isti.com
+
+

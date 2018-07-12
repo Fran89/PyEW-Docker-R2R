@@ -1,0 +1,82 @@
+#!/bin/sh
+
+# This script uninstalls the PARxCH kernel mode device driver.
+# Use the companion indriver script to install it.
+
+
+# Display message showing how to use rmdriver
+
+UsageMsg ()
+{
+    echo "                                                                  "
+    echo "ERROR: Command Line Usage: rmdriver ParXchDriverName              "
+    echo "                                                                  "
+    echo "This utility removes the PARxCH driver.  ParXchDriverName must be "
+    echo "a name of the form SrParXch# where # is a small integer like 0, 1 "
+    echo "etc.  To see what drivers are currently installed, run showdriver "
+    echo "or /sbin/lsmod | grep Sr                                          "
+    
+    exit 1
+}
+
+
+#################### Main Rmdriver Code #################### 
+
+# Banner message
+
+echo "PARxCH driver removal script : Rev {02/25/07}"
+
+
+# Set up list of allowed driver names.  Also include old 378 style names
+# in case the new code was installed before the old drivers were removed.
+
+DriverNameList="SrParXch0 SrParXch1 SrParXch2"
+OldNameList="SrParXch378 SrParXch278"
+FullNameList=$DriverNameList" "$OldNameList
+
+
+
+
+# Check for proper number of command line arguments
+
+if [ $# -ne 1 ] ; then
+    echo " "
+    echo ERROR: Wrong number of command line arguments.
+    UsageMsg
+fi
+
+
+# Process command line argument for driver name
+
+ParxchDriver=""
+for DriverName in $FullNameList
+do
+
+    if [ "$DriverName" = "$1" ] ; then
+        ParxchDriver=$1
+        break
+    fi
+done
+
+if [ "$ParxchDriver" = "" ] ; then
+    echo " "
+    echo ERROR: Invalid driver name $1.  Please use $DriverNameList or $OldNameList.
+    UsageMsg
+fi
+
+
+# Remove the driver module with rmmod
+
+/sbin/rmmod $ParxchDriver
+
+
+# Remove driver data file
+
+DriverDataFile=$ParxchDriver"_Data"
+
+if [ -e $DriverDataFile ] ; then
+    rm $DriverDataFile
+fi
+
+
+echo PARxCH driver $ParxchDriver has been removed.

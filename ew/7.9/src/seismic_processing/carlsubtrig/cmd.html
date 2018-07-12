@@ -1,0 +1,422 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: CarlSubTrig commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Earthworm Modules: <BR>CarlSubTrig Configuration File </H1>
+<I>(last revised 8 Feb 1999)</I></CENTER>
+Page Index:<BR>
+1.  <A HREF="#function">Functional command listing</A><BR>
+2.  <A HREF="#alphabet">Alphabetic command listing & description</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, CarlSubTrig reads the configuration file named on the command
+line. Commands in this file set all the parameters used for performing the subnet
+logic for the Carl Johnson trigger system. In the control file, lines may begin with a 
+valid carlsubtrig command (listed below) or with one of 2 special characters:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="function">
+<H2>1.  FUNCTIONAL COMMAND LISTING</H2>
+<P>  
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the commands recognized by carlsubtrig, grouped by the function 
+they influence.  All of the commands are required except <B>Debug</B>; they may be specified 
+in any order in the control file.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<A HREF="#command"></A>
+<PRE>	Earthworm system setup:
+		<A HREF="#MyModuleId">MyModuleId</A>		required
+		<A HREF="#RingNameIn">RingNameIn</A>		required
+		<A HREF="#RingNameOut">RingNameOut</A>		required
+		<A HREF="#HeartBeatInterval">HeartBeartInterval</A>	required
+		<A HREF="#Debug">Debug</A>
+		<A HREF="#GetEventsFrom">GetEventsFrom</A>		required
+
+	Station parameters:
+		<A HREF="#StationFile">StationFile</A>		required
+		<A HREF="#Latency">Latency</A>			required
+		<A HREF="#DefStationDur">DefStationDur</A>		required
+
+	Subnet trigger parameters:
+		<A HREF="#NetTriggerDur">NetTriggerDur</A>		required
+		<A HREF="#SubnetContrib">SubnetContrib</A>		required
+		<A HREF="#PreEventTime">PreEventTime</A>		required
+		<A HREF="#MaxDuration">MaxDuration</A>		required
+		<A HREF="#Subnet">Subnet</A>			required
+
+	Trigger message parameters:
+		<A HREF="#ListSubnets">ListSubnets</A>		optional
+		<A HREF="#AllSubnets">AllSubnets</A>		optional
+		<A HREF="#CompAsWild">CompAsWild</A>		optional
+		<A HREF="#Channel">Channels</A>		optional
+</PRE>
+
+<A NAME="alphabet">
+<H2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed 
+in alphabetical order.  Listed along with the command (<B>bold-type</B>) are 
+its arguments (in <font color=red>red</font>), the name of the subroutine that processes the 
+command, and the function within the module that the command influences. 
+A detailed description of the command and is also given.  Default values 
+and the values used by PNSN are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>			processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="AllSubnets"></A>
+<PRE><B>AllSubnets <font color=red>nsubnets</font>		ReadConfig		Earthworm setup 
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If <font color=red>nsubnets</font> trigger for an event, then the trigger message will
+include the SCN wildcard. A process reading the trigger message could understand this
+wildcard to mean "retrieve data for <B>All</B> stations".
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  AllSubnets  10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Channel"></A>
+<PRE><B>Channel <font color=red>SCN</font>			ReadConfig		Earthworm setup 
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specify a single <font color=red>SCN</font> that should be listed in all trigger messages.
+For example, this can be used to list time channels that never trigger but should always be
+present in waveform data filesets. This command can be used as many times as necessary.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  Channel WWVB.TIM.UW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="CompAsWild"></A>
+<PRE><B>CompAsWild			ReadConfig		Earthworm setup 
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Flag with no value. If present, carlsubtrig will put the wildcard `*' in the trigger message 
+in place of component names. This can be used if you have multi-component stations but only 
+want to listen for station triggers from the vertical component. 
+<PRE><!-- Default and example go here   -->
+Default:  0  (flag not set)
+Example:  CompAsWild
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Debug">  <!-- command name as anchor inside quotes -->	
+<PRE><B>Debug <font color=red>level</font>			ReadConfig		Earthworm setup 
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the debug logging <font color=red>level</font> for CarlSubTrig. With <font color=red>level</font> 
+set to zero minimal logging is done. Very verbose logging is obtained with <font color=red>level</font> set to 4.
+<PRE><!-- Default and example go here   -->
+Default:  0
+Example:  Debug  3
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="DefStationDur">  <!-- command name as anchor inside quotes -->	
+<PRE><B>DefStationDur <font color=red>nsecs</font>		ReadConfig		Station parameters
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the default station trigger duration to <font color=red>nsecs</font> seconds. This 
+value is used to terminate a station trigger only if no trigger-off message matching a
+trigger-on message is received from CarlStaTrig.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  DefStationDur  120
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="GetEventsFrom">  <!-- command name as anchor inside quotes -->	
+<PRE><B>GetEventsFrom <font color=red>inst mod_id</font>	ReadConfig		Earthworm setup
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Contrls the TYPE_CARLSTATRIG messages input to carlsubtrig. CarlSubTrig will
+only process TYPE_CARLSTATRIG messages that come from module <font color=red>mod_id</font>
+ at installation <font color=red>inst</font>. <font color=red>inst</font> and <font
+ color=red>mod_id</font> are character strings (valid 
+strings are listed in earthworm.h/earthworm.d) which are related to 
+single-byte numbers that uniquely identify each installation and 
+module.  Only one "GetSumFrom" command may be issued; wildcards 
+(INST_WILDCARD and MOD_WILDCARD) will force carlsubtrig to process all station
+trigger messages, regardless of their place of origin.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example   GetEventsFrom  INST_WILDCARD  MOD_WILDCARD
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartBeatInterval">  <!-- command name as anchor inside quotes -->	
+<PRE><B>HeartBeatInterval <font color=red>nsec</font>		ReadConfig		Earthworm setup
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds, <font color=red>nsec</font> between TYPE_HEARTBEAT 
+messages issued by carlsubtrig.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartBeatInterval 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Latency">  <!-- command name as anchor inside quotes -->	
+<PRE><B>Latency	<font color=red>nsec</font>			ReadConfig		Station parameters
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the number of seconds that carlsubtrig will wait for delivery of 
+station trigger messages. This allows for slow telemetry paths and other delays.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  Latency   15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="ListSubnets"></A>
+<PRE><B>ListSubnets <font color=red>ls</font>		ReadConfig		Earthworm setup 
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Flag for determining how which SCNs will be listed in the trigger message. When 
+<B>ListSubnets</B> is absent or <font color=red>ls</font> is 0, the trigger 
+message will include all triggered SCNs. If
+<font color=red>ls</font> is 1, the trigger list will include the untriggered
+SCNs as well as the triggered SCNs from the triggered subnets (but will omit
+triggered SCNs that are NOT in the triggered subnets).  When 
+<B>ListSubnets</B> is 2, the trigger message will list all SCNs from the 
+triggered subnets, as well as all other triggered SCNs (union of options
+0 and 1). When 
+<B>ListSubnets</B> is 3, the trigger message will list all SCNs
+in any subnets that have at least one triggered SCN. However, if more than <A HREF="#AllSubnets">AllSubnets</A> have triggered,
+then the SCN wildcard will be listed instead of a long list of non-triggered stations.
+If this flag is absent, then carlsubtrig lists only stations that actually triggered during 
+the event. 
+<P> The idea here is to adjust the number of SCNs in the trigger message for a
+small event. With <B>ListSubnets</B> at 1, we include untriggered SCNs from 
+triggered subnets. If the subnets are layed out in small geographic areas, then
+we might expect to have some seismic signal from all SCNs in triggered subnets. By
+including those SCNs in the trigger message, we allow downstream analysis to have
+the opportunity to look at the data from those SCNs. If we increase 
+<font color=red>ls</font> to 3, then we are being more conservative in that we
+save data for anything in subnets that had any SCNs trigger. In practice, we find
+that this high value results in almost every SCN being listed. This is particularly
+true when there is a lot of weather or telemetry noise present on the network.
+<PRE><!-- Default and example go here   -->
+Default:  0  (flag not set)
+Example:  ListSubnets  1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MaxDuration">  <!-- command name as anchor inside quotes -->	
+<PRE><B>MaxDuration <font color=red>nsec</font>		ReadConfig		Subnet parameters
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the maximum duration of a network trigger as <font color=red>nsec</font> seconds.
+This could be used to limit the size of datafiles retrieved from a wave server. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MaxDuration  1800
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->	
+<PRE><B>MyModuleId <font color=red>mod_id</font>		ReadConfig		Earthworm setup
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing trigger, heartbeat, and error messages. 
+<font color=red>mod_id</font> is a character string (valid strings are listed in earthworm.d) that relates 
+to a unique single-byte number. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_CARLSUBTRIG
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="NetTriggerDur">  <!-- command name as anchor inside quotes -->	
+<PRE><B>NetTriggerDur <font color=red>nsecs</font>		ReadConfig		Subnet parameters
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the base network trigger duration to <font color=red>mod_id</font> seconds. The
+minimum trigger duration is the sum of <A HREF="#PreEventTime">PreEventTime</A>, 
+<A HREF="#NetTriggerDur">NetTriggerDur</A> and <A HREF="#SubnetContrib">SubnetContrib</A> 
+times the number of subnets that triggered. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  NetTriggerDur  10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="PreEventTime">  <!-- command name as anchor inside quotes -->	
+<PRE><B>PreEventTime <font color=red>nsecs</font>		ReadConfig		Subnet parameters
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the number of seconds <font color=red>nsecs</font> before the initial station
+trigger to start the network trigger. This can be used to start saving waveform data
+prior to the first phase arrivals. The
+minimum trigger duration is the sum of <A HREF="#PreEventTime">PreEventTime</A>, 
+<A HREF="#NetTriggerDur">NetTriggerDur</A> and <A HREF="#SubnetContrib">SubnetContrib</A> 
+times the number of subnets that triggered.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  PreEventTime  10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingNameIn">  <!-- command name as anchor inside quotes -->	
+<PRE><B>RingNameIn <font color=red>ring</font>			ReadConfig		Earthworm setup
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells carlsubtrig which shared memory region to use for input. <font color=red>ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique number for the key to the shared memory region. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingNameIn  PICK_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingNameOut">  <!-- command name as anchor inside quotes -->	
+<PRE><B>RingNameOut <font color=red>ring</font>		ReadConfig		Earthworm setup
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells carlsubtrig which shared memory region to use for output. <font color=red>ring</font> is a character
+string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a
+unique number for the key to the shared memory region. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingNameOut HYPO_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="StationFile">  <!-- command name as anchor inside quotes -->	
+<PRE><B>StationFile <font color=red>sta_file</font>		ReadConfig		Station parameters
+</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifes <font color=red>sta_file</font> as the file of stations to be monitored by carlsubtrig. 
+This file can be the same station file as the one for CarlStaTrig. This file must list all
+the stations that make up the <A HREF="#Subnet">Subnets</A>. This file lists each station
+by station name, component and network. It also specifies the <B>Trigger Time To Live</B>.
+This is the number of seconds that each station trigger will be help active in CarlSubTrig
+after CarlStaTrig reports the station trigger off. This <B>Trigger Time To Live</B> allows
+for the seismic signal propagation time from each station to the other stations in the 
+subnet.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  StationFile  pnsn_trig.sta
+</PRE>
+<HR>
+<CENTER><H1><BR>Sample Station File </H1>
+</CENTER>
+<pre>
+#
+#   carlsta/subtrig.sta  FOR PNSN
+#
+#   PNSN station list
+#
+# Arbitrary Station Component Network Trigger
+#           Code    Code      Code    Time To Live
+# --------- ------- ------- --------- ------------
+  station   GMW	    EHZ	    UW        10
+  station   GSM     EHZ	    UW        10
+  station   BLN     EHZ	    UW        10
+  station   CPW     EHZ     UW        10
+  station   JCW     EHZ     UW        10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Subnet">  <!-- command name as anchor inside quotes -->	
+<PRE><B>Subnet <font color=red>code ntrig sta.comp.net ...</font>	ReadSubnet	Subnet parameters
+ </B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command lists the subnet <font color=red>code</font>, number of stations 
+<font color=red>ntrig</font> required to trigger the subnet, and the list of stations 
+making up the subnet. <font color=red>Code</font> is a string (up to 3 characters) that
+is used to identify the subnet in logged messages. There may be any number of <B>Subnet</B> commands, and there may be up
+to 20 stations in one subnet. 
+<PRE><!-- Default and example go here   -->
+Default:  none
+Examples: Subnet 2   4   LO2.EHZ.UW FMW.EHZ.UW RER.EHZ.UW RCM.EHZ.UW RCS.EHZ.UW
+          Subnet RG  3   MLK.VHZ.NC MEM.VHZ.NC MSL.VHZ.NC MCS.VHZ.NC MCM.VHZ.NC </PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SubnetContrib">  <!-- command name as anchor inside quotes -->	
+<PRE><B>SubnetContrib <font color=red>nsecs</font>		ReadConfig		Subnet parameters
+ </B><!-- command args ... -->		
+</PRE>
+Specifies the number of seconds <font color=red>nsecs</font> that each triggered subnet
+contributes to the total duration of the network trigger. The
+minimum trigger duration is the sum of <A HREF="#PreEventTime">PreEventTime</A>, 
+<A HREF="#NetTriggerDur">NetTriggerDur</A> and <A HREF="#SubnetContrib">SubnetContrib</A> 
+times the number of subnets that triggered.
+<BLOCKQUOTE> <!-- command description goes here -->
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  SubnetContrib   15
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/carltrig.html">CarlStaTrig/CarlSubTrig Overview</A> |
+<A HREF="carlstatrig.html">CarlStaTrig Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://www.cnss.org/EWAB/cmd/carlstatrig.html]</B><BR>
+Contact: <B>lombard@geophys.washington.edu</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

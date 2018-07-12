@@ -1,0 +1,52 @@
+
+
+############################################
+# Lower Mantle Phases
+############################################
+Phase           P      P
+DistRange       10      100  
+DistDelta        5
+DepthRange       0       34
+DepthDelta       8.5
+TimeDelta        5
+RayParam     4.447   11.52
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           P      P
+DistRange       10      100  
+DistDelta        5
+DepthRange      35      410
+DepthDelta       15
+TimeDelta        5
+RayParam     4.447   11.52
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           P      p
+DistRange        0      13
+DistDelta      0.5
+DepthRange     410     800
+DepthDelta       30
+TimeDelta        5
+# time 0-180 sec
+# Upward P phase(p) that starts between the Moho and the base of the Asthenosphere (35 - 410km)
+
+Phase           P      P
+DistRange       10      100  
+DistDelta        5
+DepthRange      410    800
+DepthDelta       15
+TimeDelta        5
+RayParam     4.447   11.52
+# P phase that bottoms between the Moho and the base of the Asthenosphere (35 - 410km)
+
+
+Phase        Pdif   Pdiff
+DistRange       98     112
+DistDelta        2
+DepthRange       0     800
+DepthDelta      25
+TimeDelta       20
+# time 700-1100 sec
+
+
+

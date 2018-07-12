@@ -1,0 +1,76 @@
+
+From bogaert@gldmutt.cr.usgs.gov Mon Jul 19 11:52:47 1999
+Date: Tue, 06 Jul 1999 12:01:50 -0700
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: New Earthworm Release
+
+
+Earthworm Version 3.92 has been released.  
+
+You can download the release from our new ftp site:
+	ghtftp.cr.usgs.gov:pub/OUTGOING/earthworm/release_v3.92
+
+IMPORTANT NOTICE TO ADSEND USERS
+********************************
+
+Earthworm module 'adsend' WILL FREEZE an NT system if restarted with the
+Earthworm RESTARTME mechanism.  Do not use this feature with 'adsend'.
+
+
+NEW MODULES
+********************
+ew2rsam: This module reads trace messages and computes
+  rsam values over time periods defined in the configuration file.
+  The rsam values are written out to the OutRing as message
+  type TYPE_RSAM containing the structure RSAM_MSG.
+  The rsam computation algorithm was provided by Tom Murray
+  (tlmurray@usgs.gov). 
+
+IMPORTANT CHANGE- AFFECTS ALL MODULES
+*************************************
+*************************************
+
+All modules are affected by the following change:
+
+All modules read the "Installation IDs" from an ASCII file named 
+earthworm_inst.d in the EW_PARAMS directory.  In previous versions of 
+Earthworm, the installation ids were compiled into executables. The 
+official copy of earthworm_inst.d resides in the vX.X/environment 
+directory; a working copy must be placed in the EW_PARAMS directory. 
+
+This makes it simpler to add official installation ids, without 
+producing an entire new version of Earthworm. Assignment of installation 
+ids is still under the control of the Earthworm development team. Please 
+notify Barbara Bogaert, bogaert@usgs.gov to have an Installation ID 
+assigned.
+
+
+IMPORTANT NOTICE TO ADSEND USERS
+********************************
+
+Earthworm module 'adsend' will not freeze an NT system if restarted with 
+the Earthworm RESTARTME mechanism.  Do not use this feature with 
+'adsend'.
+
+CONTRIBUTED SOFTWARE
+********************
+
+Many Earthworm modules have been developed at regional networks to meet 
+their specific needs.  Since some of these may be useful to other 
+networks, we make these available at the Earthworm ftp site in the 
+Contributed_software directory.  Currently, you will find modules 
+developed at USGS Menlo Park, University of Memphis,  University of 
+Washington and University of Alaska, Fairbanks.
+
+If you have questions or comments, please contact me at 
+bogaert@usgs.gov.
+
+Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@ghtmail.usgs.gov		Box 25046, Stop 966
+office:  303-273-8491			Denver Federal Center
+FAX:     303-273-8600			Denver, CO 80225
+
+

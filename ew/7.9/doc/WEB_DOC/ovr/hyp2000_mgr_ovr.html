@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: hyp2000_mgr overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules:<BR> Hyp2000_mgr Overview</H1>
+<I>(last revised December 29, 2006)</I></CENTER>
+
+<P>
+Hyp2000_mgr is an Earthworm program which calls an encapsulated version of hypoinverse (hyp2000), written by Fred Klein, at USGS Menlo Park.  Hyp2000_mgr gets "arc messages", containing associated picks, via a pipe from another program.  Hyp2000_mgr call hyp2000 with the contents of the "arc message".  Hyp2000 locates the event.  Hyp2000_mgr then creates a new "arc message" with the location results from hyp2000 and sends that arc message to an Earthworm transport ring.
+<P>
+Hyp2000_mgr is written in C, but most calculations are performed in FORTRAN subroutines, taken from the standard release of hypoinverse.  Minor changes to the source code are required for the program to run on different operating systems.
+<P>
+Be sure and look at the command web page for details about how Location codes are now used.
+<P>
+Hypoinverse Documentation is available in draft form at the ftp site:
+swave.wr.usgs.gov in /ftp/pub/outgoing/klein/hyp2000/docs as a WORD document and a postscript file.
+<P>
+
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/hyp2000_mgr_cmd.html">Hypo_mgrCommands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

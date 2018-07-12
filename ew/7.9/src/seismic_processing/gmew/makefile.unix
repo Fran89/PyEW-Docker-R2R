@@ -1,0 +1,51 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+# Makefile for gmew  -- UNIX version 
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+LINUX_CFLAGS = -Wdeclaration-after-statement -Wunused
+CFLAGS = -I. ${GLOBALFLAGS}
+CFLAGS = -I. -g ${GLOBALFLAGS} $($(PLATFORM)_CFLAGS)
+
+B = ${EW_HOME}/${EW_VERSION}/bin
+L = ${EW_HOME}/${EW_VERSION}/lib
+
+all: gmew compute_gm
+
+OBJS = gmew.o gm_util.o gm_ws.o gm_config.o gm_sac.o gm_xml.o \
+     lm_misc.o lm_site.o
+
+EWLIBS = $L/swap.o $L/read_arc.o $L/libew_mt.a \
+   $L/ws_clientII.o $L/socket_ew_common.o $L/socket_ew.o  \
+   $L/tlay.o $L/mnbrak.o $L/brent.o $L/dirops_ew.o \
+   $L/mem_circ_queue.o \
+   $L/fft99.o $L/fft_prep.o $L/transfer.o $L/gma.o \
+   $L/rw_strongmotionII.o $L/ew_spectra_io.o
+
+gmew: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/gmew $(OBJS) $(EWLIBS) $(SPECIFIC_FLAGS)
+
+compute_gm: compute_gm.o 
+	$(CC) $(CFLAGS) -o $B/compute_gm compute_gm.o $(EWLIBS) $(SPECIFIC_FLAGS)
+
+lm_site.o: ../localmag/lm_site.c
+	$(CC) -c ${CFLAGS} ../localmag/lm_site.c
+
+lm_misc.o: ../localmag/lm_misc.c
+	$(CC) -c ${CFLAGS} ../localmag/lm_misc.c
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/gmew $B/compute_gm
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+

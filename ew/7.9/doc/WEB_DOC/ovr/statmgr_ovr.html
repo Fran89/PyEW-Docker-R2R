@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Statmgr Overview</title></HEAD><BODY  bgcolor="#ffffff"><P> Statmgr overview
+
+
+
+<CENTER><H1> Statmgr Overview</H1>
+  <I>(last revised 2 March, 2006)</I>
+</CENTER>
+
+<P>Statmgr is tool to monitor the health of all the Earthworm modules. It reports
+  on the health by email, and it may automatically issue a restart request for
+  a dead module, if the module's .desc file configures statmgr to do so.
+<P>Statmgr works by monitoring error messages which are produced by other Earthworm
+  modules, and determines whether to report and how to report an error. Errors
+  are reported by sending email or generating TYPE_PAGE messages. User-provided
+  software can then pick up the TYPE_PAGE message and hand it to paging software
+  to transmits these messages via modem to a pager service. Statmgr also monitors
+  heartbeats of client modules, and if heartbeats are not received, an email and/or
+  pager message is produced.
+<P> Statmgr has a restart feature which allows the system to recover if any module
+  hangs by restarting only the hung module. Any module can request to be restarted
+  if it's heartbeat stops. Otherwise, no restart attempt will be made. If statmgr
+  detects that heartbeats from the module have stopped, statmgr will send a message
+  of type TYPE_RESTART to the startstop program. Startstop will then kill the
+  module process and restart the module.
+<P>Statmgr monitors for TYPE_STOP messages. If it sees one, it will not attempt
+  to restart the stopped module, assuming it's been intentionally stopped with
+  the &quot;stopmodule&quot; commandline utility, or the &quot;stopmodule&quot;
+  command in startstop. It also monitors for TYPE_RESTART messages. If it sees
+  a restart of a stopped module, it'll assume that it's been started again, and
+  will resume monitoring of it.
+<P>By default, Statmgr only monitors for heartbeat messages the RingName specified
+  in the statmgr.d config file. Typically modules only send heartbeat messages
+  to the ring they're active on. Thus if one wants to have statmgr monitor modules
+  which aren't on the ring that RingName specifies, one needs to do one of two
+  things. The first option is to set CheckAllRings to 1 in statmgr.d. Statmgr
+  will make a status request to startstop when it starts up and monitor all the
+  rings that startstop knows about. This works fine on many systems, but some
+  systems with large amounts of information moving through a single ring may overload
+  statmgr's ability to keep up. The second option is to set up a 'copystatus'
+  module to copy the status from every ring with an active module, the the ring
+  specified by RingName which statmgr is monitoring. It clutters up your status
+  screen a bit, but does the job.
+<P>
+For each module monitored by statmgr, a descriptor file must exist and be specified in the statmgr configuration file.  The earthworm convention has been to use the suffix '.desc' to indicate a descriptor file.  In the descriptor file, the user may specify the following:
+<ul>
+	<li>How often the statmgr should check for the modules heartbeat and if email and/or pagers messages should be sent in case of missing heartbeats.
+	<li>Who should pager messages (pagegroup command overrides same command in statmgr configuration file).
+	<li>For each error reported by a module, should email and/or pagers messages be sent and how often should the messages be sent.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/statmgr_cmd.html">Statmgr Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</ul></BODY>
+</HTML>

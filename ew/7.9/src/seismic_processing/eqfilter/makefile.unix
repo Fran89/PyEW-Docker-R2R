@@ -1,0 +1,35 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS=-lpthread  -lm
+SOLARIS_FLAGS=-lposix4 -lthread -lm
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJ = eqfilter.o \
+      area.o \
+      dist.o \
+      $(L)/mem_circ_queue.o \
+      $(L)/parse_trig.o \
+      $(L)/read_arc.o \
+      $(L)/libew_mt.a 
+
+eqfilter: $(OBJ); \
+        $(CC) $(CFLAGS) -o $(B)/eqfilter $(OBJ) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint eqfilter.c area.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/eqfilter*

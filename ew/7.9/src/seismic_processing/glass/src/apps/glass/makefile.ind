@@ -1,0 +1,37 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+
+# INCLUDE THIS FILE FROM makefiles.XXX
+
+APP = Glass
+
+
+OBJS = \
+	main.$(OBJ) \
+	nexus.$(OBJ) \
+	$(EW_LIB)\kom.$(OBJ) \
+	status.$(OBJ)
+
+
+
+CPP_OTHER_FLAGS = 
+
+LINK_OBJS= \
+	$(OBJS) \
+	$(GLASS_LIB)\glass_lib.$(LIB_EXT)
+
+
+
+LINK_OTHER_FLAGS = GlobalDebug.$(LIB_EXT)
+
+$(GLASS_BIN)\$(APP).$(APP_EXT) : $(LINK_OBJS)
+    $(LINK) $(APP_LINK_FLAGS)  $(LINK_OTHER_FLAGS) $(LINK_OBJS)
+
+
+clean :	
+	$(DELETE_FILES) *.$(OBJ)
+	$(DELETE_FILES) $(GLASS_BIN)\$(MODULE).*
+

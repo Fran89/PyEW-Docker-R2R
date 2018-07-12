@@ -1,0 +1,43 @@
+
+
+modName  gcf2ew
+modId    MOD_GCF2EW
+instId   ${EW_INST_ID}
+
+restartMe	# restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 30  page: 0  mail: 99
+
+# from die.h:
+#define GCF2EW_DEATH_SIG_TRAP     1
+#define GCF2EW_DEATH_EW_PUTMSG    2
+#define GCF2EW_DEATH_EW_TERM      3
+#define GCF2EW_DEATH_EW_CONFIG    4
+#define GCF2EW_DEATH_GCF_TIMEOUT  5 
+
+# these are the statmgr messages that gcf2ew will send before dieing
+#
+err: 1  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused gcf2ew to die"
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, gcf2ew dead"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, gcf2ew dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, gcf2ew dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "gcf2ew received NO DATA for configured TIMEOUT and died"
+#

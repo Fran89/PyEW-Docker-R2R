@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Liss2ew_scnl commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1>Earthworm Modules: <br>
+Liss2ew_scnl Configuration File </h1>
+<i>(last revised 30 May 2006)</i></center>
+<br>
+<br>
+The commands for liss2ew_scnl are very different from the old liss2ew.
+Here is an example configuration file:<br>
+<pre>#<br>#<br>#                     Configuration File for liss2ew_scnl<br>#<br><br>MyModId          MOD_LISS2EW<br>OutRing          WAVE_RING       # Transport ring to write output to,<br>                                 # InRing and OutRing may be the same.<br>HeartBeatInterval     30         # Heartbeat interval, in seconds,<br>LogFile            1             # 1 -&gt; Keep log, 0 -&gt; no log file<br>                                 # 2 -&gt; write to module log but not stderr/stdout<br>#Debug                           # Write out debug messages (optional)<br><br><br>lenSEED      512                 # The size of SEED records to read from LISS<br>                                 # OPTIONAL; defaults to 512 bytes.<br><br>SocketTimeout  30                # Socket timeout in seconds; not more than<br>                                 # HeartBeatInterval<br><br>TraceLength    100               # Number of trace data samples to put in one<br>                                 # TRACE_BUF packet. Range is 10 - 1000<br><br># List each Internet source in an "Address" command, followed by the IP number (or<br># DNS name) and port number.<br># Following each Address command, list one or more sta/comp/net/location expected from<br># that source in an "SCNL" command, followed by the station, component, network and<br># location codes.  Location code (LC) is a 2-digit code to further<br># identify a seismological data path. LC (and ONLY LC) may be given as `*' to<br># specify a wildcard. If the LISS has more than one LC for a give SCN,<br># using the wildcard will generate errors in the log file.<br># If liss2ew sees an SCNL which is not listed here, it will be ignored.<br><br>Address     136.177.24.74    4168<br>SCNL  WMOK BHZ  US  00 <br>SCNL  WMOK BHN  US  00  <br>SCNL  WMOK BHE  US  00 <br>SCNL  WMOK LHZ  US  00 <br>SCNL  WMOK LHN  US  00 <br>SCNL  WMOK LHE  US  00 <br><br>Address 136.177.24.74    4166<br>SCNL  AFI  BHE  IU  00<br>SCNL  AFI  BHN  IU  00<br>SCNL  AFI  BHZ  IU  00<br>SCNL  AFI  LHE  IU  00<br>SCNL  AFI  LHN  IU  00<br>SCNL  AFI  LHZ  IU  00<br><br><br><br></pre>
+<hr>
+<center><a name="sample_config"> </a><a href="../modules.html">Module
+Index</a> | <a href="../ovr/liss2ew_scnl_ovr.html">Liss2ew_scnl
+Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+Contact: <span style="font-weight: bold;"><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></span><br>
+</address>
+</body>
+</html>

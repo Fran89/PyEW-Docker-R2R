@@ -1,0 +1,34 @@
+#
+#                           Nmake File For sendfilemt
+#                             Windows NT version
+#
+!include <ntwin32.mak>
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+APP=sendfilemt
+O=$(APP).obj thread.obj config.obj fopen_win.obj socket.obj \
+  socket_win.obj status.obj thread_win.obj
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib ws2_32.lib
+
+all: $(APP).exe
+
+$(APP).exe: $O
+   link $(linkflags) $(libs) $O \
+    $L\dirops_ew.obj $L\libew_mt.lib \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(tflags) $<
+
+clean:
+   -del *.o *.obj
+
+clean_bin:
+   -del $(B)\$(APP).exe

@@ -1,0 +1,58 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.4  2006/11/21 23:04:10  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.3  2004/04/09 20:40:36  davidk
+#     added nt_clean_tree.exe
+#
+#     Revision 1.2  2002/08/26 16:19:04  davidk
+#     Updated compilation tree for better compilation on NT.
+#
+#     Revision 1.1  2000/02/14 19:08:08  lucky
+#     Initial revision
+#
+#
+#
+
+#
+#                    Nmake File For nt compilation tools - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APPS = nt_comp.exe nt_folder.exe nt_folder2.exe nt_make.exe   \
+	     nt_make_subdirs.exe nt_make_tree.exe nt_clean_tree.exe
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+all: build install
+	@echo nt compilation tools built
+
+
+build: $(APPS)
+		
+
+install: $(APPS)
+	copy *.exe $B
+
+
+#.c.exe:
+#   $(CC) $(GLOBALFLAGS)  /nologo  -out:%s $(cdebug)  %fF
+
+# Clean-up directives
+clean:
+	del *.exe *.obj *% *~
+
+clean_bin:
+	del $B\putter*

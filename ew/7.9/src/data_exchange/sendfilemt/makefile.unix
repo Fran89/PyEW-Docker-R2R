@@ -1,0 +1,26 @@
+#
+
+LINUX_FLAGS=-lpthread -lm -lc
+SOLARIS_FLAGS=-mt -lm -lsocket -lnsl -lposix4 -lthread -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B= $(EW_HOME)/$(EW_VERSION)/bin
+L= $(EW_HOME)/$(EW_VERSION)/lib
+
+OBJS = sendfilemt.o thread.o config.o fopen_sol.o socket.o \
+    socket_sol.o status.o thread_unix.o \
+    $L/dirops_ew.o $L/libew_mt.a 
+
+all: sendfilemt
+
+sendfilemt: $(OBJS)
+	$(CC) $(CFLAGS) -o $B/sendfilemt $(OBJS) \
+           $(SPECIFIC_FLAGS)
+
+clean:
+	/bin/rm -f *.o
+
+clean_bin:
+	/bin/rm -f $B/sendfilemt

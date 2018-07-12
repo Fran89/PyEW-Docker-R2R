@@ -1,0 +1,999 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      Transport_Layer – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/Transport_Layer?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="Transport_Layer.html" title="View Transport_Layer">Transport_Layer</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/Transport_Layer?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/Transport_Layer?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-19T16%3A39%3A34-08%3A00&amp;precision=second" title="2012-01-19T16:39:34-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/19/12 16:39:34</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">                             TRANSPORT.C                4/24/98 
+
+Table of contents:
+  I.  Introduction
+  1.  Overview of transport routines
+      1.1   Transport.h structures used by the calling program.
+      1.2   Initializing/terminating access to shared memory.
+      1.3   Writing messages to shared memory.
+      1.4   Retrieving messages from shared memory.
+      1.5   Buffering messages in a private memory region.	
+      1.6   Communicating with the shared memory header flag.
+      1.7   Error reporting by transport functions.
+  2.  Function calls
+      2.1   tport_create
+      2.2   tport_destroy
+      2.3   tport_attach
+      2.4   tport_detach
+      2.5   tport_putmsg
+      2.6   tport_getmsg
+      2.7   tport_copyto 
+      2.8   tport_copyfrom
+      2.9   tport_buffer
+      2.10  tport_bufthr
+      2.11  tport_putflag
+      2.12  tport_getflag
+      2.13  tport_syserr
+      2.14  tport_buferror 
+  3.  Programming tips
+  4.  Bug fixes and program modifications
+      4.1   Mishandled shared memory pointer wraps in tport_putmsg.
+      4.2   Missing argument to shmctl.
+      4.3   Speed enhancement using memcpy.
+      4.4   Making tport_putmsg multi-thread safe.
+      4.5   Mishandled shared memory pointer resets in tport_getmsg.
+      4.6   Minor crack in tport_getmsg and tport_copyfrom.
+      4.7   Logo-tracking problem with GET_TOOBIG messages, 
+	    tport_getmsg and tport_copyfrom.
+      4.8   Tracking problem when no messages of requested logo
+            are ever returned, tport_getmsg and tport_copyfrom.
+      4.9   Variable name changed to allow use of C++ compilers.
+      4.10  Semaphore operations problem in tport_putmsg and tport_copyto 
+            (Solaris version).
+
+
+I.  INTRODUCTION
+
+Transport.c contains a set of functions for accessing System V IPC shared 
+memory regions under SunOS 4.1.1 and Solaris 2.4.  These routines, with 
+exactly the same function calls, have also been ported to OS/2 and Windows NT. 
+  void  tport_create();
+  void  tport_destroy();
+  void  tport_attach();
+  void  tport_detach();
+  int   tport_putmsg();
+  int   tport_getmsg();
+  int   tport_copyto(); 
+  int   tport_copyfrom();
+  void  tport_putflag();
+  int   tport_getflag();
+  void  tport_syserr();
+
+In June 1995, a set functions were added to transport.c to create multi-
+threaded, message-buffering applications under Solaris 2.4, OS/2, and NT.
+(SunOS does not support multi-threaded applications):
+  int   tport_buffer();
+  void *tport_bufthr();
+  void  tport_buferror(); 
+
+On Solaris, source files using transport functions should include these lines:
+    #include &lt;earthworm.h&gt;   /* required by multi-thread transport functions */
+    #include &lt;transport.h&gt;
+
+On OS/2, source files using transport functions should include these lines
+(the first 3 lines must be before the transport.h include line):
+    #define INCL_DOSMEMMGR                       
+    #define INCL_DOSSEMAPHORES              
+    #include &lt;os2.h&gt;             
+    #include &lt;earthworm.h&gt;   /* required by multi-thread transport functions */
+    #include &lt;transport.h&gt;
+
+
+1.  OVERVIEW OF TRANSPORT ROUTINES
+
+In the following paragraphs, anything written in all capital letters is
+defined in transport.h.   The following topics are explained in more detail
+below:
+  1.1   Transport.h structures used by the calling program.
+  1.2   Initializing/terminating access to shared memory.
+  1.3   Writing messages to shared memory.
+  1.4   Retrieving messages from shared memory.
+  1.5   Buffering messages in a private memory region.	
+  1.6   Communicating with the shared memory header flag.
+  1.7   Error reporting by transport functions.
+
+
+1.1   Transport.h structures used by the calling program.
+
+	Many constants and five structure types and are defined in transport.h. 
+Two of the structure types are used as arguments to transport functions.  The 
+other defined structure types are used internally by the transport functions;
+for more information on those, please read the comments in transport.h.  The
+first structure type used as an argument in transport calls is a shared memory
+information structure:
+
+   Solaris version:
+       typedef struct {                    
+             SHM_HEAD  *addr;     /* pointer to beginning of memory region */
+             long       key;      /* key to shared memory region           */
+             long       mid;      /* shared memory region identifier       */
+             long       sid;      /* associated semaphore identifier       */
+       } SHM_INFO;      
+
+   OS/2 version:
+       typedef struct {                    
+             SHM_HEAD  *addr;     /* pointer to beginning of memory region */
+             long       key;      /* key to shared memory region           */
+             PVOID      objAlloc; /* pointer to memory object              */
+             HMTX       hmtx;     /* mutex semaphore handle                */
+       } SHM_INFO;                       
+
+All the values in this structure are set within function tport_create or
+tport_attach.  It contains all the information needed to identify and use the
+memory region in all other transport function calls.                  
+
+The second structure type used as an argument is the message logo structure:
+       typedef struct {                     
+             unsigned char  type;    /* message is of this type       */
+             unsigned char  mod;     /* was created by this module id */
+             unsigned char  instid;   /* at this installation          */
+       } MSG_LOGO;           
+This structure describes the message it is associated with.  A single 
+MSG_LOGO structure is passed an argument to tport_putmsg.  tport_getmsg 
+takes an array of MSG_LOGO structures as a list of requested logos and it 
+sets values in an individual MSG_LOGO structure to identify the retrieved
+message.
+
+
+1.2   Initializing/terminating access to shared memory.
+
+	Four of the transport functions deal with getting a program ready to 
+use or to finish with a shared memory region.  tport_create() creates the 
+memory region given a unique "key" to identify the region and the size (in 
+bytes) of the region. The created memory region consists of 2 parts: a header 
+section (SHM_HEAD) for keeping track of pointers, etc., and a circular buffer 
+area for storing variable-length messages.  The region should be made large 
+enough compared to the size of the messages it holds to give each message a 
+reasonable residence time in the memory before it is overwritten.  All 
+information needed to identify and use the memory region in other transport 
+function calls is stored in a shared memory information structure (SHM_INFO). 
+To access an existing shared memory region, a program must first attach to it 
+by passing tport_attach() the region's unique key.  tport_attach then sets up 
+the shared memory information structure. Note: A program should call EITHER 
+tport_create() to create and attach to a memory region OR tport_attach() to 
+attach to an existing region. It should never call both.
+	Just before exitting, a program that had attached to a memory region 
+should detach from it using tport_detach() and one that had created it should 
+destroy it using tport_destroy().  
+	None of these four functions has a return value; if a system error 
+occurs, they will write a message to stdout and exit.
+
+
+1.3   Writing messages to shared memory.
+
+	Messages are written to a shared memory region using tport_putmsg() or 
+tport_copyto(), given the region's shared memory information structure.  When 
+one tport_putmsg or tport_copyto is writing to memory, no other tport_putmsg or 
+tport_copyto can access the same region.  Both functions write a transport 
+layer header (TPORT_HEAD) in front of each message in shared memory. The first
+byte of this header is always set to FIRST_BYTE to signal the beginning of a 
+new message.  The header also includes the length of the following message, 
+its "message logo" (MSG_LOGO; its message type, module id and installation id), 
+and a sequence number.  If tport_copyto is used, the sequence number is passed 
+as an argument to the function, and sequencing from another source can be 
+preserved.  If tport_putmsg is used, the sequence number is assigned and 
+tracked by tport_putmsg; any previous sequencing of messages will be lost.  
+tport_putmsg has a limit to the number of different logos for which it can 
+keep track of sequences numbers (NTRACK_PUT).  If this limit is exceeded, 
+tport_putmsg will not write messages with new logos to memory; it will return 
+PUT_NOTRACK, write a warning to stdout and continue.  tport_copyto has no 
+tracking limits.  tport_putmsg and tport_copyto are multi-thread safe (they 
+can be used by multiple threads of the same process without problems).
+
+
+1.4   Retrieving messages from shared memory.
+
+	Messages of a given logo are retrieved from a shared memory region 
+using tport_getmsg() or tport_copyfrom(). A single logo can be requested or 
+an array of logos can be requested. Additionally, any or all components (type,
+module, instid) of the requested message logo(s) can be wildcarded (set to 
+WILD).  tport_getmsg or tport_copyfrom will return when it has found the first
+message which matches any of the requested logos.  Both functions also keep
+track of the sequence number they expect to see for the next message of each
+logo; therefore, tport_getmsg or tport_copyfrom can tell if they have missed 
+any messages.  If tport_getmsg misses messages, it returns GET_MISS; if
+tport_copyfrom misses messages, it returns either GET_MISS_LAPPED (if memory 
+was over-written by tport_putmsg or tport_copyto) or GET_MISS_SEQGAP (if a 
+gap in sequence numbers was passed along by tport_copyto).  There is a limit
+(NTRACK_GET) to the number of logos for which tport_getmsg or tport_copyfrom 
+can track sequence numbers.  If this limit is exceeded, both functions will 
+still return a message matching any requested logo, but they won't know if 
+they have missed any; they will return GET_NOTRACK, write a warning to stdout 
+and continue.  Both functions write the message logo, length (bytes), and 
+message to addresses in their argument lists.  tport_copyfrom has one 
+additional address argument to which it writes the TPORT_HEAD sequence number 
+of the returned message.  Since both functions have their own private tracking 
+variables, it is very important that each module use only one of these 
+functions to grab messages for a given region-logo combination.  Otherwise, 
+the module may see the same message twice!  tport_getmsg and tport_copyfrom 
+are not multi-thread safe; they cannot be used safely by two threads of the 
+same process.
+
+
+1.5   Buffering messages in a private memory region.
+	
+	Several functions have been added to transport.c to give modules a
+multi-threaded message-buffering capability.  After attaching to or creating 
+a public shared memory region and creating (tport_create) a private shared 
+memory region, a module can call tport_buffer() to start the buffering thread,
+passing it 2 shared memory information structures (public and private), an 
+array of logos, and the module id and installation id of the calling module.  
+tport_buffer creates a thread, tport_bufthr(), which uses tport_copyfrom and 
+tport_copyto to transfer all messages of the given logo(s) from the public 
+region to the private region.  All sequence numbers from the public region 
+are preserved in the private region.  The buffering-thread reports errors by 
+calling tport_buferror(), which writes error messages, labeled with the main 
+thread's module id and installation, to the public region using tport_putmsg.  
+The main thread must retrieve all of its buffered messages from the private 
+region using tport_getmsg. [tport_copyfrom and tport_getmsg are not multi-
+thread safe, and since the buffering-thread is hard-wired to call 
+tport_copyfrom, the main thread must use tport_getmsg.]  The buffering-thread
+will exit when the shared memory header flag in the public region is set to
+TERMINATE.  The main thread must destroy its private buffering region 
+(tport_destroy) before it exits.
+
+
+1.6   Communicating with the shared memory header flag.
+
+	Two transport functions deal only with the flag in the shared memory 
+header structure.  This flag is included as a means of communication between 
+different programs accessing the same region.  For instance, if the flag is 
+set to a certain value, all attached programs should detach and terminate. To 
+change the value of the flag in a given region, use tport_putflag().  To find 
+out the current value of the flag, use tport_getflag().
+
+
+1.7   Error reporting by transport functions.
+
+	Transport routines report errors by use of one of 2 functions, 
+tport_syserr() or tport_buferror().  Both are meant for internal use only by 
+the other transport functions.  tport_syserr is called when a system error has
+occurred; it writes a message to stdout and exits.  tport_buferror is called by 
+tport_bufthr (the buffering-thread) when return values from other transport 
+routines indicate a problem.  tport_buferror writes an error message, tagged 
+with the main thread's module id and installation id, to the public shared 
+memory region using tport_putmsg and then it returns.
+
+
+
+
+2.  FUNCTION CALLS
+          
+Below are the function calls, return values and comment lines from the 
+transport.c source code. They provide a general description of each 
+function's purpose and its program flow. 
+
+  2.1   tport_create
+  2.2   tport_destroy
+  2.3   tport_attach
+  2.4   tport_detach
+  2.5   tport_putmsg
+  2.6   tport_getmsg
+  2.7   tport_copyto 
+  2.8   tport_copyfrom
+  2.9   tport_buffer
+  2.10  tport_bufthr
+  2.11  tport_putflag
+  2.12  tport_getflag
+  2.13  tport_syserr
+  2.14  tport_buferror 
+
+
+2.1   tport_create:  create a shared memory region &amp; its semaphore, attach
+		     to it and initialize shared memory header values.
+
+void tport_create( SHM_INFO *region,   /* info structure for memory region  */
+                   long      nbytes,   /* size of shared memory region      */
+                   long      memkey )  /* key to shared memory region       */ 
+
+Arguments used as passed:  nbytes, memkey
+
+Arguments reset by function:  *region 
+
+Return Value: None. If any system error occurs during its execution, 
+              tport_create writes a message to stdout and exits.
+
+Program flow:
+/* Destroy memory region if it already exists */
+/* Create shared memory region */
+/* Attach to shared memory region */
+/* Initialize shared memory region header */
+/* Make semaphore for this shared memory region &amp; set semval = SHM_FREE */
+/* set values in the shared memory information structure */
+
+
+
+2.2   tport_destroy:  destroy a shared memory region.
+
+void tport_destroy( SHM_INFO *region )  /* info structure for memory region */
+
+Arguments used as passed:  region
+
+Arguments reset by function:  none 
+
+Return Value: None. If any system error occurs during its execution, 
+              tport_destroy writes a message to stdout and exits.
+
+Program flow:
+/* Set kill flag, give other attached programs time to terminate */
+/* Detach from shared memory region */
+/* Destroy semaphore set for shared memory region */
+/* Destroy shared memory region */
+
+
+
+2.3   tport_attach:  map to an existing shared memory region.
+
+void tport_attach( SHM_INFO *region,   /* info structure for memory region  */
+                   long      memkey )  /* key to shared memory region       */
+
+Arguments used as passed:  memkey
+
+Arguments reset by function:  *region 
+
+Return Value: None. If any system error occurs during its execution, 
+              tport_attach writes a message to stdout and exits.
+
+Program flow:
+/* attach to header; find out size memory region; detach */
+/* reattach to the entire memory region; get semaphore */
+/* set values in the shared memory information structure */
+
+
+
+2.4   tport_detach:  detach from a shared memory region. 
+
+void tport_detach( SHM_INFO *region )   /* info structure for memory region  */
+
+Arguments used as passed:  region
+
+Arguments reset by function:  none 
+
+Return Value: None. If any system error occurs during its execution, 
+              tport_detach writes a message to stdout and exits.
+
+
+
+2.5   tport_putmsg:  write a message into a shared memory region.
+
+int tport_putmsg( SHM_INFO *region,   /* info structure for memory region   */
+                  MSG_LOGO *putlogo,  /* type,module,instid of incoming msg */
+                  long      length,   /* size of incoming message           */
+                  char     *msg )     /* pointer to incoming message        */
+
+Arguments used as passed:  region, putlogo, length, msg
+
+Arguments reset by function:  none 
+
+Return values: PUT_OK if it put the message in memory with no problems.
+               PUT_NOTRACK if it did not put the message in memory because
+                   its sequence number tracking limit (NTRACK_PUT) was 
+                   exceeded.
+               PUT_TOOBIG if it did not put the message in memory because
+                   it was too long to fit in the region.
+
+If a system error occurs while tport_putmsg is executing or if a
+pointer into the memory region gets lost (doesn't point to a FIRST_BYTE),
+tport_putmsg writes a message to stdout and exits.
+
+Program flow:
+/* First time around, init the sequence counters, semaphore controls */
+/* Set up pointers for shared memory, etc. */
+/* First, see if the incoming message will fit in the memory region */
+/* Change semaphore; let others know you're using tracking structure &amp; memory */
+/* Next, find incoming logo in list of combinations already seen */
+/* Incoming logo is a new combination; store it, if there's room */
+/* Store everything you need in the transport header */
+/* First see if keyin will wrap; if so, reset both keyin and keyold */
+/* Then see if there's enough room for new message in shared memory */
+/*      If not, "delete" oldest messages until there's room         */
+/* Now copy transport header into shared memory by chunks... */
+/* ...and copy message into shared memory by chunks */
+/* Finished with shared memory, let others know via semaphore */
+
+
+
+2.6   tport_getmsg:  read a message out of shared memory.
+
+int tport_getmsg( SHM_INFO  *region,   /* info structure for memory region  */
+                  MSG_LOGO  *getlogo,  /* requested logo(s)                 */
+                  short      nget,     /* number of logos in getlogo        */
+                  MSG_LOGO  *logo,     /* logo of retrieved msg             */
+                  long      *length,   /* size of retrieved message         */
+                  char      *msg,      /* retrieved message                 */
+                  long       maxsize ) /* max length for retrieved message  */
+
+Arguments used as passed:  region, getlogo, nget, maxsize
+
+Arguments reset by function:  *logo, *length, *msg 
+
+Return values: GET_OK   if it got a message of requested logo(s).
+               GET_NONE if there were no new messages of requested logo(s).
+               GET_MISS if it got a message, but missed some.  Messages could
+		   be missed for one of 3 reasons:
+		   1) memory was overwritten before the message was retrieved.
+		   2) message was lost before being written to memory and a  
+		      sequence # gap was passed to memory by tport_copyto.
+ 		   3) previous message of returned logo was skipped because
+		      it was longer than maxsize.
+               GET_NOTRACK if it got a message, but couldn't tell if it
+                   had missed any because its sequence # tracking limit
+                   (NTRACK_GET) was exceeded.
+               GET_TOOBIG if it found a message of requested logo(s) but
+                   it was too long to fit in caller's buffer. No message
+                   returned, but length and logo of the "toobig" message
+                   are returned.
+
+If a pointer into the memory region gets lost (doesn't point to a FIRST_BYTE),
+tport_getmsg writes a message to stdout and exits.
+
+Program flow:
+/* Get the pointers set up */
+/* First time around, initialize sequence counters, outpointers */
+/* find latest starting index to look for any of the requested logos */
+/* See if keyin and keyold were wrapped and reset by tport_putmsg; */
+/*       If so, reset trak[xx].keyout and go back to findkey       */
+/* Find next message from requested type, module, instid */
+   /* make sure you haven't been lapped by tport_putmsg */
+   /* load next header; make sure you weren't lapped */
+   /* make sure it starts at beginning of a header */
+   /* see if this msg matches any requested type */
+/* Found a message of requested logo; retrieve it! */ 
+        /* complain if retrieved msg is too big */      
+        /* copy message by chunks to caller's address */
+        /* see if we got run over by tport_putmsg while copying msg */
+        /* if we did, go back and try to get a msg cleanly          */
+        /* set other returned variables */
+        /* find logo in tracked list */
+        /* new logo, track it if there's room */   
+        /* check if sequence #'s match; update sequence # */
+        /* Ok, we're finished grabbing this one */
+/* If you got here, there were no messages of requested logo(s) */
+/* update outpointer -&gt;msg after retrieved one for all requested logos */
+
+
+
+2.7   tport_copyto:  put a message into a shared memory region; preserve the 
+		     sequence number (passed as an argument) as the transport  
+		     layer sequence number.
+
+int tport_copyto( SHM_INFO     *region,  /*info structure for memory region   */
+                  MSG_LOGO     *putlogo, /*type,module,instid of incoming msg */
+                  long          length,  /*size of incoming message           */
+                  char         *msg,     /*pointer to incoming message        */
+                  unsigned char seq )    /*preserve as sequence# in TPORT_HEAD*/
+
+Arguments used as passed:  region, putlogo, length, msg, seq
+
+Arguments reset by function:  none 
+
+Return values: PUT_OK if it put the message in memory with no problems.
+               PUT_TOOBIG if it did not put the message in memory because
+                   it was too long to fit in the region.
+
+If a system error occurs while tport_copyto is executing or if a
+pointer into the memory region gets lost (doesn't point to a FIRST_BYTE),
+tport_copyto writes a message to stdout and exits.
+
+Program flow:
+/* First time around, initialize semaphore controls */
+/* Set up pointers for shared memory, etc. */
+/* First, see if the incoming message will fit in the memory region */
+/* Store everything you need in the transport header */
+/* Change semaphore to let others know you're using memory */
+/* First see if keyin will wrap; if so, reset both keyin and keyold */
+/* Then see if there's enough room for new message in shared memory */
+/*      If not, "delete" oldest messages until there's room         */
+/* Now copy transport header into shared memory by chunks... */
+/* ...and copy message into shared memory by chunks */
+/* Finished with shared memory, let others know via semaphore */
+
+
+
+2.8   tport_copyfrom:  get a message out of public shared memory; save the
+		       sequence number from the transport layer.
+
+int tport_copyfrom( SHM_INFO  *region,   /* info structure for memory region */
+                    MSG_LOGO  *getlogo,  /* requested logo(s)                */
+                    short      nget,     /* number of logos in getlogo       */
+                    MSG_LOGO  *logo,     /* logo of retrieved message        */
+                    long      *length,   /* size of retrieved message        */
+                    char      *msg,      /* retrieved message                */
+                    long       maxsize,  /* max length for retrieved message */
+                    unsigned char *seq ) /* TPORT_HEAD seq# of retrieved msg */
+
+Arguments used as passed:  region, getlogo, nget, maxsize
+
+Arguments reset by function:  *logo, *length, *msg, *seq
+
+Return values: GET_OK   if it got a message of requested logo(s).
+               GET_NONE if there were no new messages of requested logo(s).
+               GET_MISS_LAPPED if it got a message, but missed some due to 
+		   msgs being overwritten (by tport_putmsg or tport_copyto)  
+		   before it got to them.
+ 	       GET_MISS_SEQGAP if it got a message, but noticed a gap in the
+		   sequence numbers in the ring.  This means one of 2 things:
+		   1) a msg was lost before being placed in shared memory and 
+		   the sequence gap was transferred into shared memory by 
+		   tport_copyto.
+		   2) the previous message of the returned logo was skipped 
+		   because it was longer than maxsize.
+               GET_NOTRACK if it got a message, but couldn't tell if it
+                   had missed any because its sequence # tracking limit
+                   (NTRACK_GET) was exceeded.
+               GET_TOOBIG if it found a message of requested logo(s) but
+                   it was too long to fit in caller's buffer. No message
+                   returned, but length and logo of the "toobig" message
+                   are returned.
+
+If a pointer into the memory region gets lost (doesn't point to a FIRST_BYTE),
+tport_getmsg writes a message to stdout and exits.
+
+Program flow:
+Same as tport_getmsg program flow (see section 2.6).
+
+
+
+2.9   tport_buffer:  initialize the input buffering thread.
+
+int tport_buffer( SHM_INFO  *region1,      /* transport ring             */
+                  SHM_INFO  *region2,      /* private ring               */
+                  MSG_LOGO  *getlogo,      /* array of logos to copy     */
+                  short      nget,         /* number of logos in getlogo */
+                  unsigned   maxMsgSize,   /* size of message buffer     */
+                  unsigned char module,    /* module id of main thread   */
+                  unsigned char instid )   /* inst id of main thread     */
+
+Arguments used as passed:  region1, region2, getlogo, nget, maxMsgSize, 
+			   module, instid
+
+Arguments reset by function:  none
+
+Return values:   0 if there were no errors.
+		-1 if there was an error allocating the internal message buffer,
+		   or if there was an error creating the thread.
+		
+Program flow:
+/* Allocate internal message buffer */
+/* Copy function arguments to global variables */
+/* Start the input buffer thread, tport_bufthr */
+/* Yield to the buffer thread */
+
+
+
+2.10  tport_bufthr:  thread to buffer input from one transport region to another.
+
+void *tport_bufthr( void *dummy )
+
+Arguments:  none
+
+Return values:  none
+
+Program flow:
+This function is an infinite loop which will exit only when the termination
+flag is set in the public shared memory region's header:
+/* Check the flag in the public region; exit if it's set to TERMINATE */
+/* Try to copy a message from the public memory region with tport_copyfrom */
+/* Handle return values from tport_copyfrom */
+/* If you did get a message, copy it to private ring with tport_copyto */
+
+
+
+2.11  tport_putflag:  set the flag in a shared memory header.       
+
+void tport_putflag( SHM_INFO *region,  /* shared memory info structure  */
+                    short     flag )   /* value to set header flag to   */
+
+Arguments used as passed:  region, flag
+
+Arguments reset by function:  none 
+
+Return Value: none 
+
+
+
+2.12  tport_getflag:  return the value of the flag from a shared memory header.
+
+int tport_getflag( SHM_INFO *region )   /* shared memory info structure */
+  
+Arguments used as passed:  region
+
+Arguments reset by function:  none 
+
+Return value: The value of the shared memory header flag.
+
+
+
+2.13  tport_syserr:  print a system error and exit.
+
+void tport_syserr( char *msg,   /* message to print */
+                   long  key )  /* key of memory region that had an error  */
+
+Arguments used as passed:  msg, key
+
+Arguments reset by function:  none 
+
+Return Value: None. In fact it never returns, but always exits after
+              writing the error message to stdout.
+
+
+
+2.14  tport_buferror:  build an ascii earthworm error message and put it 
+		       in the public memory region using tport_putmsg.
+
+void tport_buferror( short  ierr,       /* 2-byte error word       */
+                     char  *note  )     /* string describing error */
+
+Arguments used as passed:  ierr, note
+
+Arguments reset by function:  none 
+
+Return Value:  none
+
+
+
+3.  PROGRAMMING TIPS
+     
+Here are some tips for writing and running programs using transport.c:
+
+Region key(s) should be defined in a .h file which is included by all 
+programs that will access the region(s). One program should create the 
+memory region(s) (tport_create); other programs accessing those regions 
+will attach to them (tport_attach). The "creator" can also be a "putter" 
+or "getter" or it can be a program with no purpose other than
+creating/destroying memory regions.
+
+When deciding how large to make a memory region (tport_create), remember
+that the transport layer uses a portion of the memory region for its own
+bookkeeping.  The region size is NOT required to be an even multiple of the
+size of the messages it will contain.  However, suppose a user wants the
+region to be exactly large enough to store NUMRING messages of size MSGSIZE.
+To include space for transport bookkeeping too, the region size should be:
+   sizeof(SHM_HEAD) + NUMRING * ( sizeof(TPORT_HEAD) + MSGSIZE ) 
+
+At run time, the "creator" must be started first.  A few seconds should 
+be allowed for the regions to be set up before starting "attachers". 
+Otherwise the "attachers" will exit immediately because they can't find 
+the memory regions.
+
+Any program accessing shared memory should periodically look at the flag 
+in the memory's header structure (tport_getflag).  If the flag is set to
+TERMINATE, any "attacher" should detach from memory (tport_detach) and 
+exit, and the "creator" should destroy the memory region(s) (tport_destroy) 
+and exit. 
+ 
+To initiate such a polite termination of all programs, one program
+must set that termination flag (tport_putflag).  A "killer" program,
+whose only purpose is to attach to a region and set the flag, is a useful
+tool for keyboard-initiated exits.
+
+Simple examples of these types of programs reside in the same directory
+as transport.c.  They are:
+  putter1.c   creates regions and writes messages as module 1.
+  putter2.c   attaches to regions and writes messages as module 2.
+  getter.c    attactes to regions and retrieves messages, printing them.
+  killer.c    sets terminate flag to stop all programs.
+  keys.h      include file defining shared memory region keys.
+  go          simple script to start the programs.
+  Makefile
+
+Note: Transport.c was designed to work in programs which run continuously.
+If, however, a putter or getter is a transient beast that is run only
+intermittently, the getter may return the "GET_MISS" status without actually
+missing any messages.  This is due to the fact that every time a putter or 
+starts up, its sequence # trackers are set to 0.
+
+
+
+4.  BUG FIXES AND PROGRAM MODIFICATIONS
+   
+   4.1   Mishandled shared memory pointer wraps in tport_putmsg.
+   4.2   Missing argument to shmctl.
+   4.3   Speed enhancement using memcpy.
+   4.4   Making tport_putmsg multi-thread safe.
+   4.5   Mishandled shared memory pointer resets in tport_getmsg.
+   4.6   Minor crack in tport_getmsg and tport_copyfrom.
+   4.7   Logo-tracking problem with GET_TOOBIG messages, 
+	 tport_getmsg and tport_copyfrom.
+   4.8   Tracking problem when no messages of requested logo
+         are ever returned, tport_getmsg and tport_copyfrom.
+   4.9   Variable name changed to allow use of C++ compilers.
+   4.10  Semaphore operations problem in tport_putmsg and tport_copyto 
+         (Solaris version).
+
+
+4.1   Mishandled shared memory pointer wraps.  
+Problem: tport_putmsg mishandled wraps in the shared memory header's
+         unsigned long keyin and keyold.  The caused the transport layer to
+         lose its place in the memory ring and die.
+
+The Fix: After resetting keyin and keyold, check to make sure that keyin is
+         larger than keyold.  If not make keyin = keyin + keymax.
+         Change made in tport_putmsg on 10/24/94 by Lynn Dietz.
+
+         I also changed transport.c so that it writes warning and error
+         messages to stdout (instead of stderr as it was doing) so that the
+         messages can easily be redirected to a log file.
+         Change made in transport.c on 10/24/94 by Lynn Dietz.
+
+
+4.2   Missing argument to shmctl.
+Problem: tport_create and tport_destroy each have a call to shmctl(). 
+	 Shmctl() takes 3 arguments, but I only had the first two passed.  
+	 The compiler under SunOS never complained about it, but the
+	 Solaris compiler 3.0.1 did.
+
+The Fix: I added the 3rd argument (struct shmid_ds shmbuf) to both of
+	 the shmctl() calls.
+         Change made in transport.c on 3/28/95 by Lynn Dietz.
+
+
+4.3   Speed enhancement using memcpy.
+Problem: I noticed that coaxtoring, a program that just reads messages 
+         from ethernet and puts them into shared memory using tport_putmsg, 
+         took a big chunk of the cpu on a Sparc2 when handling large 
+         messages (&gt;50,000 bytes).  Suspect that something isn't optimized. 
+
+The Fix: I changed how tport_putmsg and tport_getmsg copy messages from
+         one address to another. A byte-by-byte for loop was replaced with
+         one or two (if the message was wrapped around the end of the ring)
+         calls to memcpy().  This sped up the coaxtoring program by 20-30%.
+         Change made in transport.c on 6/20/95 by Lynn Dietz.
+
+
+4.4   Making tport_putmsg multi-thread safe.
+Problem: Previously, the semaphore was set in tport_putmsg after the incoming
+	 logo was found in the tracking list.  If more than one thread of the
+	 same process was using tport_putmsg, they could have competed for
+ 	 access to the tracking structure, potentially causing duplicated
+	 sequence numbers or other errors.
+
+The Fix: tport_putmsg now sets the semaphore before it looks for the logo in
+	 the tracking structure.  Since only one tport_putmsg can access the 
+	 tracking structure at a time, multiple threads of one process can 
+	 safely use the same routine.
+ 	 Change made in transport.c on 6/27/95 by Lynn Dietz.
+
+
+4.5   Mishandled shared memory pointer resets in tport_getmsg.
+Problem: Each tport_getmsg() and tport_copyfrom() must reset its tracking 
+         pointers (trak[xx].keyout) after shared memory header keyin &amp; keyold 
+         are wrapped and reset (by tport_putmsg or tport_copyto).  Sometimes,
+         keyout was mistakenly reset to a number less than keyold, causing 
+         the getter to grab messages from the ring starting with the oldest 
+         complete message in the ring.  This results in a "missed message" 
+         error, because of a gap in transport sequence numbers.  It also
+         causes some messages to be processed twice.
+
+The Fix: After resetting a keyout value in tport_getmsg() and tport_copyfrom(),
+         first see if it still points to the FIRST_BYTE of a message.  
+         If it does, make sure the value of keyout lies between keyold and 
+         keyin.  If it doesn't point to a FIRST_BYTE, the getter was lapped 
+         by a putter; reset keyout to keyold.
+         Change made in transport.c on 1/17/96 by Lynn Dietz
+
+
+4.6   Minor crack in tport_getmsg and tport_copyfrom.
+Problem: When reading shared memory, both tport_getmsg and tport_copyfrom use
+	 this logic: make sure I haven't been lapped by a putter, grab a 
+	 TPORT_HEAD from the ring, make sure that the TPORT_HEAD starts with 
+	 a FIRST_BYTE.  On very rare occassions, a putter will overwrite the
+	 first byte (or the TPORT_HEAD) between the getter's lap-check an its 
+	 grabbing the header from the ring.  In this case, the getter will
+	 complain that the header doesn't begin with a FIRST_BYTE and it will
+	 exit.
+
+The Fix: Add another lap-check just after tport_getmsg and tport_copyfrom
+	 grab a TPORT_HEAD from the ring.  Their logic now looks like this:
+         make sure I haven't been lapped by a putter, grab a TPORT_HEAD from 
+	 the ring, make sure I haven't been lapped by a putter, make sure 
+	 that the TPORT_HEAD starts with a FIRST_BYTE.  Note: another lap-
+	 check is done after each message is grabbed from the ring.
+
+ Change: In a move totally unrelated to the above problem, I changed 
+	 the word "WARNING" to "NOTICE" in all references to wraps of
+	 keyin/keyout/keyget to reflect the fact that this is really a 
+	 normal, albeit rare, occurrance. 
+         Changes made in transport.c on 6/12/96 by Lynn Dietz
+
+
+4.7   Logo-tracking problem with GET_TOOBIG messages, 
+      tport_getmsg and tport_copyfrom.
+Problem: Whenever tport_getmsg or tport_copyfrom find a message that matches
+	 the requested logo(s) but is too long for the target address, they 
+	 return the logo and length of the message, but they never enter the
+	 logo-tracking part of the routine.  This causes a problem only if the
+	 very first message is GET_TOOBIG; since no logos are being tracked, 
+	 these functions don't record the fact that they've looked at this 
+	 GET_TOOBIG message already.  On the next call, they look at the same 
+	 GET_TOOBIG message, and thus get stuck looking at this same message 
+	 forever... (which may put you into an infinite loop depending on
+	 how you handled the return codes).
+
+The Fix: Modify the program flow of tport_getmsg and tport_copyfrom such that
+	 after a TOOBIG message is found, they enter the logo-tracking part
+	 of the routine.  Also make sure that the return code does NOT get
+	 changed from GET_TOOBIG!
+         Changes made in transport.c on 6/12/96 by Lynn Dietz
+
+
+4.8   Tracking problem when no messages of requested logo are ever returned, 
+      tport_getmsg and tport_copyfrom.
+Symptom: If a module never finds a message of any requested logo in a given
+	 memory region, that module eventually becomes a CPU hog.  We know 
+	 something is wrong because the module has nothing to process; it 
+	 should be doing a loop something like: call tport_getmsg, get a 
+	 return code of GET_NONE, sleep a little bit, try again.  Where is 
+	 the CPU going?
+
+Problem: The problem is essentially the same as that described in section 4.7.
+         No entries exist in the logo-tracking list until a message of a
+         requested logo is actually found in shared memory.  If no such 
+	 message has been found, tport_getmsg and tport_copyfrom have no way
+         to record the position in shared memory of the last message that
+	 they considered (and rejected).  So on every single call, tport_getmsg 
+	 or tport_copyfrom start at the oldest complete message in memory and 
+	 look at every single one (even though they've probably seen most of 
+	 them already...) before concluding that none of them match their 
+ 	 request.  If the memory region is large and there are a lot of 
+	 little messages in it, this can take a lot of CPU!
+
+The Fix: Modify tport_getmsg and tport_copyfrom so that the first thing they
+	 do is verify that each of the requested logos is entered in the 	
+ 	 logo-tracking list.  This way, even if none of the requested logos 
+	 is found, there is place to record the position of the last message 
+	 that was considered for each requested logo.  (The sequence number
+	 tracking for each logo remains "inactive" until the first message
+	 with that logo is found).  On subsequent calls, tport_getmsg and
+	 tport_copyto will only look at messages they haven't seen before.
+         Changes made in transport.c on 6/18/96 by Lynn Dietz
+
+
+4.9   Variable name changed to allow use of C++ compilers.
+Problem: We had used "class" as the variable name for the installation in 
+         the MSG_LOGO structure.  However, "class" is also a keyword in C++,
+         so if you want to use a C++ compiler, you cannot use "class" as
+         a variable name. 
+
+The Fix: Change all references to "class" to "instid" to allow this software
+         to be compiled with a C++ compiler.
+         Changes made in transport.c and transport.h on 3/13/97 by Lynn Dietz
+
+
+4.10  Semaphore operations problem in tport_putmsg and tport_copyto (Solaris).
+Symptom: All modules attached to a given transport ring (running on a Solaris 
+         system) suddenly die with a message like: 
+           "ERROR: tport_getmsg; keyget not at FIRST_BYTE, Region xxxx"
+         This message implies that the transport ring is corrupted. The symptom 
+         was first noticed when Doug Neuhauser ran his transport-based UCB code 
+         on a dual-processor Ultra.  A dual-processor X86 Solaris machine has 
+         also exhibited this symptom while running Earthworm v3.1 code.  
+
+Problem: Many thanks go to Doug Neuhauser for tracking down the bug!  In both 
+         tport_putmsg and tport_copyto, the structure sembuf sops, used as
+         an argument to the semaphore operation function semop(), had been 
+         declared as a static struct. In multi-threaded code, you can have two 
+         simultaneous invocations of tport_putmsg(), eg one for a heartbeat 
+         and one for data.  Each one will overwrite the values of sops for the
+         other thread. This bug shows up readily on a multi-processor machine
+         on which two threads can really run simultaneously. It could also 
+         presumably occur on a single-processor machine, but we've never
+         experienced it yet. This bug can manifest itself with these symptoms:
+         1) a corrupted transport ring, from both threads writing to the 
+            ring at the same time, and 
+         2) deadlock, where both threads are waiting for the semaphore.
+
+The Fix: Remove "static" from the declaration of "struct sembuf sops;" in 
+         tport_putmsg and tport_copyto.  Also, pull the initialization of 
+         sops structure members out of one-time-only initialization loops.
+         Changes made in solaris/transport.c on 4/24/98 by Lynn Dietz
+
+     
+For more information contact:  Lynn Dietz
+                               dietz@andreas.wr.usgs.gov
+                               415-329-5520
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/Transport_Layer?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

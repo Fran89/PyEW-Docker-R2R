@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Message Formats: Strong Motion II format</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>StongmotionII Format</H1>
+<I>(last revised April 16, 2002)</I></CENTER>
+
+
+<PRE>
+Each TYPE_STRONGMOTIONII message is intended to contain information for one
+channel only, with optional event association information.
+
+Field units with multiple channels will produce multiple TYPE_STRONGMOTIONII
+messages. 
+
+All measurements in the Earthworm TYPE_STRONGMOTIONII message are assumed to be
+positive. Any other negative value will result in unpredictable behavior from
+strong motion applications. If you have sources that may produce signed values
+for PGA, PGV, PGD, or RSA values, you must be sure to change these to absolute
+values before they are put into this message.
+
+Message format: everything in quotes is present verbatim in the message. Other
+fields are described below. Unless otherwise shown, fields are separated by
+spaces. Lines are separated by ASCII newline characters.
+
+"SNCL:" sta.comp.net.loc
+"TIME:" date-time
+"ALT:" alternate date-time "CODE:" altcode
+"PGA:" pga "TPGA:" tpga
+"PGV:" pgv "TPGV:" tpgv
+"PGD:" pgd "TPGD:" tpdg
+"RSA:" nrsa"/"pdrsa rsa"/"pdrsa rsa...
+"QID:" qid qauthor
+
+All lines and fields must be present. Null values are described for applicable
+fields.
+
+
+sta.comp.net.loc: Station, component, network, and location codes with `.'
+between adjacent fields. Fields may be any length between 1 and (6, 8, 8, 2)
+characters in length, respectively. Use `-' if no value is used for the
+location code.
+
+
+date-time: time in the format yyyy/mm/dd hh:mm:ss.sss (year, month, day, hour,
+minute, seconds to thousandths. This time is the main timestamp for the
+message. If the message came from an SM box in the field, then this is the
+trigger time reported by the box. If the message came from a module processing
+continuous telemetry, then this is the pick time or earliest of PGA, PGV, or
+PGD time. If no value is available for this or any other time, fill the field
+with the null date-time "0000/00/00 00:00:00.000".
+
+
+alternate date-time: same format as above. This is the optional alternate
+timestamp for the message. This field is provided as a sanity check or
+correction of the main timestamp(t). This timestamp could be assigned by an
+acquisition module, database loader, human, or other. The author type of this
+timestamp is determined by altcode (see below).
+
+
+altcode: Required if alternate date-time is specified. Code specifying the
+source of the alternate date-time field. Possible values:
+ Value:         Description:
+   0           Code for no alternate time.
+   1           Code for an alternate time derived by a program module that
+                  receives a message from a box in the field. 
+   2           Code for an alternate time derived by the database or strong
+                  motion database insertion module. 
+   3           Code for an alternate time derived by a Human (who has
+                  hopefully reviewed the data). 
+
+
+pga: The Peak Ground Acceleration(PGA) for this message. (cm/s/s)
+tpga: Time of the pga, yyyy/mm/dd hh:mm:ss.sss
+pgv: The Peak Ground Velocity(PGV) for this message. (cm/s)
+tpgv: Time of the pgv, yyyy/mm/dd hh:mm:ss.sss
+pgd: The Peak Ground Displacement(PGD) for this message. (cm)
+tpgd: Time of the pgd, yyyy/mm/dd hh:mm:ss.sss
+
+
+Any values not available for pga, pgv, and pgd should be assigned -1.0, the
+null value.
+
+
+nrsa: Number of response spectral acceleration (RSA) pairs. Valid value range
+      is 0 - 20 
+pdrsa rsa: space-separated pair where pdrsa is the period at which RSA values
+           are given; rsa is the response spectral acceleration (cm/s/s). Each
+      pair of values is preceed by the "/" character. All the values must
+      appear on one line.
+</PRE>

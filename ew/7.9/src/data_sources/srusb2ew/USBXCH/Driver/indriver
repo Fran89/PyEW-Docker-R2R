@@ -1,0 +1,19 @@
+#!/bin/sh
+
+echo Running /sbin/insmod SrUsbXch0.ko ...
+
+if ! /sbin/insmod SrUsbXch0.ko ; then
+       echo Failed insmod of SrUsbXch0
+       exit 1
+fi
+
+echo Done
+
+#echo Make symbolic device link ...
+#
+#pushd /dev
+#ln -s srusbxch0 SrUsbXch0
+#popd
+
+
+

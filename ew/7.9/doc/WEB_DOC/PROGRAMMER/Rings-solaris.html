@@ -1,0 +1,28 @@
+<HTML>
+<HEAD>
+   <TITLE>Earthworm: How To Compile</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (X11; I; OSF1 V3.2 alpha) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<DIV ALIGN=right><P><B>April 16,2002</B></P></DIV>
+<CENTER>
+SOLARIS:  INCREASING THE NUMBER OF SHARED MEMORY RINGS</CENTER>
+<PRE>
+Under Solaris 2.6 (and probably other versions as well), the maximum number 
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+ set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+</PRE>
+

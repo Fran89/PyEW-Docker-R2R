@@ -1,0 +1,10 @@
+<PickStatistics>
+    <!-- BufferSize controls the size of the buffer in kilobyte used to read files -->
+    <BufferSize>1024</BufferSize>
+    
+    <!-- binDuration sets the duration of the integration period for pick counting in hours -->
+    <binDuration>1</binDuration>
+    
+    <!-- pickMsgCode should be set to the TYPE_PICK_SCNL message code -->
+    <pickMsgCode>8</pickMsgCode>
+</PickStatistics>

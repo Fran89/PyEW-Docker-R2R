@@ -1,0 +1,22 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 1222 2003-05-06 20:58:03Z lucky $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.2  2003/05/06 20:47:43  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 18:46:07  lucky
+#     Initial revision
+#
+#
+#
+
+clean:
+	-del a.out core *.o *.obj *% *~
+	cd gd_lib
+	-del a.out core *.o *.obj *% *~

@@ -1,0 +1,37 @@
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lthread -lm
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+SOLARIS_CFLAGS=-D_SPARC -D_SOLARIS
+SPECIFIC_CFLAGS=$($(PLATFORM)_CFLAGS)
+
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} -Ilib $(SPECIFIC_CFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+#CFLAGS += -xCC
+
+OBJ = archman.o \
+	$(L)/socket_ew.o $(L)/socket_ew_common.o $(L)/libew_mt.a \
+	$(L)/swap.o
+
+LIBBGS = lib/libbgs.a
+CFLAGS += -Ilib
+
+archman: $(OBJ)
+	(echo ------; cd lib; echo Making lib in:; pwd; \
+	        make -f makefile.unix);
+	$(CC) ${GLOBALFLAGS} -o $(B)/archman $(OBJ) $(LIBBGS) $(SPECIFIC_FLAGS)
+
+# Clean-up rules
+clean:
+	(echo ------; cd lib; echo Cleaning lib in:; pwd; \
+	        make -f makefile.unix clean);
+	rm -f a.out core *.o
+#	rm -f a.out core *.o *% *~
+
+clean_bin:
+	rm -f $B/archman*

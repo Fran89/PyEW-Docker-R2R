@@ -1,0 +1,167 @@
+Wave_serverV config file commands 4/11/98 DSK
+
+MyModuleId    
+ Wave_server's earthworm module id.
+
+RingName
+ Name of transport ring to get data from.
+
+LogFile
+ Switch indicating whether logfile should be written to disk or not.  
+ 1 = write log file to disk; 0 = don't write log to disk.
+
+HeartBeatInt
+ Number of seconds between heartbeats wave_server sends to statmgr.
+
+ServerIPAdr
+ IP address of network connection wave_server should listen to.  If the 
+ wave_server machine only has one network connection, then the IP address
+ of the machine running wave_server.
+
+ServerPort
+ TCP Port that wave_server should receive requests & send waves on.
+
+SocketTimeout
+ Timeout length in MILLISECONDS for socket calls This is for calls sending
+ responses back to the client. Values should be a few seconds (thousands of
+ milliseconds), certainly less than one minute.
+
+
+ClientTimeout
+ Optional. Timeout in SECONDS for response from client. If there are no idle
+ server threads, the server manager will kill threads that have not heard
+ anything from their client in this period.  Comment out or set to -1 if you
+ don't want to kill threads of silent clients.
+
+
+IndexUpdate
+ The interval in minimum number of seconds between index file updates for each
+ tank.  Each tank file has an associated in-memory index.  On re-start, the
+ index image on disk must be updated to match the tank.  The more out of 
+ date the on-disk index is, the longer it takes to rebuild.  Rebuild times
+ can be from milliseconds to minutes per tank, depending how large the tank 
+ is and how old the index is. Set IndexUpdate to the length in time in
+ seconds between updates to disk.  The larger the update interval, the
+ longer a crash recovery will take.  The smaller the update interval the
+ more disk I/O that is required for wave_server to operate, and thus the
+ slower it will operate, once it has reached I/O saturation.  
+
+TankStructUpdate
+ The interval in minimum number of seconds between TankStruct file updates
+ for all tanks.  
+ Similar to an Index, each tank has a TANK structure that depicts the tank.
+ The tank structure is maintained in memory, and periodically written to
+ disk.  The TANK structure tracks the status of the tank.  Any data written
+ to the tank since the last time the TANK structure was written to disk
+ is effectively lost.  TankStructUpdate is the interval in seconds that the
+ Tank Structure file on disk is updated.  The higher the interval, the more
+ the tank data is that is potentially lost in a crash, the lower the interval
+ the more the disk I/O that is required for wave_server to operate.
+
+TankStructFile  
+ The file where TANK structures are stored.
+
+Tank
+ Fields in order, delimited by spaces:
+  Station
+  Channel(Component)
+  Network
+  Record Size(bytes): The size of the record wave_server writes to disk for
+   this tank.  This number should be at least trace_buf message size + 1, and
+   must be a multiple of 4. But this value must not be greater than 
+   MAX_TRACEBUF_SIZ (currently 4096; defined in include/tracebuf.h).
+  Source Installation ID: The Installation ID of the source of trace_buf 
+   messages to listen for.  
+  Module ID:  Module ID of the source of trace_buf messages to listen
+   for. MOD_WILDCARD may be used to indicate any module.  Together, 
+   Installation ID, Module ID, & "TYPE_WAVEFORM" make up the LOGO of
+   the messages that wave_server will listen for.
+  File Size(Megabytes):  Size of Tank File(wave data file) in millions of
+   bytes (not 2 to the 20th power.)
+  Index Size:  The maximum number of index entries for this tank.  1 Index
+   entry is needed for every contiguous block of trace_buf messages, 
+   therefore, every time there is a GAP in the trace data received by 
+   wave_server, a new index entry is needed.  If there are no gaps in data
+   stored within the tank, then only 1 index is needed.  If there are 2000
+   gaps, then 2001 index entries are needed.
+  File Name:  Fully qualified (includes complete directory name)
+   filename of the data file for this Tank.
+
+InputQueueLen 
+ The number of messages to buffer.  Messages are buffered
+ in a queue.  They are added to the queue when they are pulled off of an
+ earthworm message ring, they are removed from the queue when the main
+ thread is ready to process them.  Depending on the CPU and disk speed
+ of the machine you are using, this number should be about twice the
+ number of tanks you are trying to serve.  Slower machines may need
+ larger queues.
+
+
+
+
+
+
+
+  
+  
+
+OPTIONAL COMMANDS ####################################################
+
+GapThresh
+ (Optional) threshhold for gap declaration in sampling periods.
+
+SocketDebug
+ (Optional) Set to 1 to get SOCKET_ew(socket routine) debug statements.
+
+Debug
+ (Optional) Turns on mass debugging statements.  Generates enormous log files!
+
+MaxMsgSize 
+ (Optional) Command to tell wave_server about TRACEBUF messages
+ that could be larger than any going to tanks for this server. This
+ may happen if you have two wave_servers and TRACEBUF sources that
+ produce different size messages, e.g., ref2ew messages are 1064 bytes.
+
+
+# Note on Redundant files
+ Wave_serverV includes a redundant file scheme, such that 2 files can 
+ be used to write alternating, redundant copies of logical data.  With
+ redundant files, if 1 file becomes corrupted, most of the data stored
+ within it is not lost, since a slightly older copy is also stored 
+ in another file.  Redundant files do not have a substantial negative
+ I/O impact, since wave_server alternates between the files, instead 
+ of writing both files each time a write is called for.
+
+RedundantIndexFiles      
+ (Optional)  Switch that tells wave_server to use redundant files for 
+ tank indexes.  1 = YES, 0 = NO.  
+
+RedundantTankStructFiles 
+ (Optional)  Switch that tells wave_server to use redundant files for the
+ server's TankStruct file, which is used to store Tank status.  
+ 1 = YES, 0 = NO.  If this switch is set to 1, the TankStructFile2 
+ command is required.  TankStructFile & TankStructFile2 may be on different
+ devices, providing protection against device failure.
+
+TankStructFile2  
+ (Required if RedundantTankStructFiles is set to 1)  The fully qualified
+ filename for the second TANK structures file.
+
+
+PleaseContinue
+ (Optional) Flag to tell wave_server to continue, even if several tanks
+ fail during initialization.  Failed tanks will be dropped.  1 = YES,
+ 0 = NO.  Default is NO.  If NO, wave_server will halt if atleast 1 tank
+ fails during initialization.
+
+SecondsBetweenQueueErrorReports
+ (Optional) Command to tell wave_server the minimum interval in seconds, that
+ it should wait between reporting new internal queue-lapped errors to 
+ statmgr.  Default is 30 seconds.
+
+
+
+
+
+
+ 

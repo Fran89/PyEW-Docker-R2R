@@ -1,0 +1,193 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (X11; I; SunOS 5.6 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER>
+<H2>
+Southern California Seismic Network</H2></CENTER>
+
+<CENTER>
+<H2>
+(California Institute of Technlogy (Caltech) and</H2></CENTER>
+
+<CENTER>
+<H2>
+United States Geological Survey (U.S.G.S) Pasadena Office)</H2></CENTER>
+
+<DIV ALIGN=right>Date: March 9, 1998</DIV>
+
+<H3>
+Location, Contact, and Address:</H3>
+Southern California Seismic Network recorded at Pasadena, California on
+the Caltech Campus.
+
+<P>Philip Maechling (<A HREF="mailto:phil@gps.caltech.edu">phil@gps.caltech.edu</A>) 626 395-3801
+
+<P>1200 E. California Blvd. MS 252-21
+<BR>Pasadena CA 91125
+<BR>&nbsp;
+<H3>
+Network Characteristics:</H3>
+<U>Analog Network:</U>
+
+<P>~250 Analog stations with 350 seperate channels and approximately 20
+low gain channels.
+<BR>Analog data are digitized and processed by the Caltech/USGS Seismic
+Processing System (CUSP) .
+<BR>This system utilizes VAX hardware and the VMS operating system.
+<BR>&nbsp;
+
+<P><U>Digital Network</U>:
+
+<P>~55 24-bit digital stations with both 3 component broad-band sensors,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+and 3 component strong motion sensors.
+<BR>~25 19-bit digital instruments with 3 component strong motion sensors.
+
+<P>The number of digital data channels recorded continuously exceeds 500
+channels due to the
+<BR>multiple sensors per site, and the various sampling rates at which
+our dataloggers generate data.
+
+<P>This network is recorded using a Sun Enterprise 4000 running Solaris
+2.5.1
+
+<P>
+<HR WIDTH="100%">
+<BR><B><FONT SIZE=+1>Description of Current Earthworm Usage:</FONT></B>
+
+<P>We use the Solaris version of Earthworm for association, location, and
+earthquake information distribution. We've introduced our own broadband
+picker, to supply picks to Binder, and our own magnitude program for use
+with Earthworm. This software runs on our operational real-time seismic
+monitoring system. It supplies information to the Caltech/USGS staff during
+Southern California earthquakes.
+
+<P>We also have demonstrated waveform and parametric data distribution
+from the Caltech/USGS CUSP system over to our digital network processing
+system using Earthworm messaging techniques. We implemented Earthworm style
+messages and messaging code on the VAX/VMS system and have been able to
+distribute data from CUSP to our SUN, running our code on CUSP and regular
+Earthworm code on the Sun.
+<BR>&nbsp;
+<BR><B><FONT SIZE=+1>Standard EarthWorm Modules in current Use:</FONT></B>
+
+<P>Earthworm code (v2.0) running on a SUN Enterprise 4000 under Solaris-2.5.1
+<UL>
+<LI>
+<B>binder</B> -Carl's associator</LI>
+
+<LI>
+<B>eqprelim</B> -rapid reporting of binder associations</LI>
+
+<LI>
+<B>hypomgr, hypoinv -</B>manage and produce standard USGS hypocenter locations</LI>
+
+<LI>
+<B>ring2coax, coax2ring, copystatus, statmgr</B> - (control and monitor)</LI>
+
+<LI>
+<B>ad_demux - </B>This routine converts multiplexed earthworm messages
+to de-multiplexed Earthworm trace messages.</LI>
+</UL>
+
+<H3>
+Associated programs/modules already developed or adapted here:</H3>
+
+<UL>
+<LI>
+<B>startstop</B>-modified startstop so that it does not require a console.</LI>
+
+<LI>
+<B>rtp-</B>Real-time picker. This phase picker was designed to pick our
+broadband waveforms. We input these picks to binder.</LI>
+
+<LI>
+<B>eqmag - </B>This modules inputs the hypoinverse results, and calculates
+a magnitude for the the event. We calculate Ml's from our broadband and
+strong motion data. By combining eqprelim and eqmag, we generate location
+and magnitude estimates quite rapidly, frequently in less than one minute
+after the origin time of a southern California earthquake.</LI>
+
+<LI>
+<B>tpagerfeeder -</B>Our digital processing system used already used some
+Unix paging software (tpage) and pagerfeeder and tpage were contending
+for the same phone line. So we modified Earthworms pagerfeeder to use tpage.</LI>
+
+<LI>
+<B>rt2udp - </B>This routine runs on a VAX/VMS CUSP system and distributes
+earthworm style waveform data. Standard Earthworm coax2ring running on
+a Sun Solaris computer can then read in the Earthworm packets from CUSP
+and record our analog data on a Sun computer.</LI>
+</UL>
+
+<H3>
+Development Plans:</H3>
+
+<UL>
+<LI>
+<B>Carl_trig </B>- We are interested in integrating a subnet triggering
+scheme into our digital processing system. We plan to evaluate the Carl_Trig
+routine as a basis for the triggering declarations.</LI>
+
+<LI>
+<B>ring2mcast - </B>We are interested in earthworm style data distribution
+using IP Multicast rather than UDP broadcast. We believe that multicast-based
+Earthworm data distribution will have efficiency advantages.</LI>
+
+<LI>
+<B>ORB server integration and evaluation</B> - We want evaluate the publicly
+available version of the JSP/Datascope software. Both the data analysis
+tools, and the ORB server/client software, are of interest to us.</LI>
+
+<LI>
+<B>WaveServer XX - </B>We have a need for a WaveServer type program. We
+want to evaluate the latest and greatest WaveServer.</LI>
+
+<LI>
+<B>Upgrade to Recent Earthworm - </B>Our Earthworm system has been stable
+and hasn't required changes for some time. However, Earthworm development
+has marched on and it now appears that we are behind the state of the Earthworm
+art. We expect to upgrade to the most recent Earthworm software sometime
+during 1998.</LI>
+
+<LI>
+<B>Year2000 Evaluation - </B>We are going to turn our system clocks ahead
+to the year 2000 and see how Earthworm likes it.</LI>
+</UL>
+
+<H3>
+Our Development Directions:</H3>
+
+<UL>
+<LI>
+<B>WavePool/WaveServer </B>- We believe that a WaveServer type application
+would provide a valuable way to distribute data after a significant earthquake.
+We would like to be able to send a data request to a Northern California
+WaveServer and received waveform data immediately over the internet. And
+we believe we could offer a service such as that if we can find a robust
+WaveServer type program.</LI>
+
+<LI>
+<B>Database integration </B>- Both our real-time systems and our data center
+are moving towards use of commercial databases. We believe that the amount
+of data that will be generated by the TriNet/SCSN project will require
+high capacity, robust, data storage only available from commercial databases.</LI>
+
+<LI>
+<B>Integration of Digital and Analog Network Data</B> - We would like to
+process both our analog network data and our digital network data on the
+same real-time processing system. We are particularly interested in understanding
+and learning from the seismic systems which current have this capability
+such as IceWorm and SunWorm systems.</LI>
+</UL>
+<HR>
+Return to main <A HREF="/EWAB">Earthworm</A> or 
+<A HREF="../sites.html">Sites</A> pages.
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,500 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: eqfilterII commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>EqfilterII Configuration File Commands</H1>
+<I>(last revised October 24, 2004)</I></CENTER>
+						  	 
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#alphabet">Alphabetic command listing & description</A>
+
+<p>eqfilterII is the so called <i> garbage rejector </i>. That is it
+performs sanity and authoritative region tests to hyp2000arc, loc_global,
+and/or rayloc messages found on the InRing and passes to the OutRing.
+InRing and OutRing can not be the same.
+
+<p>
+All tests are optional.  If a test is not configured then it is not
+performed. If a test is configured then it must pass.  Tests are tied
+to inst_id.  More or less all parameters in the hypo summary card may
+be tested for.  Additionally, authoritative regions may be configured.
+Minimum number of coda picks greater than zero for multiple magnitudes
+may also be configured.  Some tests are specific to message type and
+are ignored if the message being processed is not of that type.  All
+message types and tests may be configured in a single instance of eqfilterII.
+
+<p>
+INST_WILDCARD is allowed.  If wildcard is the only institute configured
+for a given test then arc messages from any installation will be tested
+with those parameters.  If only specific installation is configured for
+a given test, then only messages from that installation will be tested
+for and all others will fail.  If a specific installation is configured
+for a given test and wildcard is also configured for that test, then
+messages from the specific will use those parameters, and all other
+non-specified installations will use the wildcard params.
+
+<P>
+On startup, eqfilterII reads the configuration file named on the command-line.  
+Commands in this file set up all parameters used in testing events for passing
+to the clean ring.
+In the control file, lines may begin with a valid eqfilterII command (listed below)
+or with one of 2 special 
+characters:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.  EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+# Configuration file for eqfilterII
+#
+# son of eqfilter
+# now reads the following, mutually exclusive message types
+#  TYPE_HYP2000ARC
+#  TYPE_LOC_GLOBAL
+#  TYPE_RAYLOC
+#
+# pick up messages of specified type, if at least 1 authoritative
+# region is defined, extract the lat and lon of the location and the
+# installation ID of the author of the  message. Then, using the
+# authoritative region polygons, determine whether the location is
+# within this installation's authoritative region. If it is not, then
+# do not write the message to the OutRing, otherwise the message will
+# not get written. Exclude regions are also permitted.
+#
+# Next, perform all the other optional tests.  If any configured tests
+#   fail, do not write message to OutRing.
+#
+# Except for the authreg test, WildCards are permitted.  If an event
+#   logo does not have an instid contained in the list of a particular
+#   parameter, then the list is checked for a WildCard.  If there is
+#   a WildCard entry, the test is performed.  If WildCard is not
+#   configured and the logo instid is not on the list, the message
+#   will NOT be written to OutRing (but will be logged if Debut is set).
+#
+# All tests (including authreg) are optional.  Lack of any configured
+#   tests is not tested for (we assume a reasonable level of skill).
+#
+#
+# Note not all tests defined for each message type
+
+
+LogFile 1     # 0 means don't create a disc log file. 1=> do.
+              # 2 means write to module log but not to stderr/stdout
+MyModuleId MOD_EQFILTERII
+InRing     HYPO_RING
+OutRing    HYPO_RING_CLEAN
+HeartBeatInt 30
+
+#
+# Optional Debug switch - if this is uncommented
+# lots of debug messages will be produced 
+#
+Debug
+
+# What message logos to listen to. Can be more than one, but no more
+# than five.
+# The type is one of TYPE_LOC_GLOBAL, TYPE_HYP2000ARC, or TYPE_RAYLOC
+
+GetEventsFrom INST_WILDCARD MOD_WILDCARD TYPE_LOC_GLOBAL
+
+#
+# AllowUndefInst - OPTIONAL
+#  Applies only to authreg test.
+#  If this is uncommented, the TYPE_HYP2000ARC messages with installation
+#  ID not listed in any InclRegion command below will be written to the 
+#  OutRing.  To prevent writing of messages with "unknown" installation
+#  IDs, make sure that this options is NOT commented out.
+#
+AllowUndefInst
+
+#
+# List authoritative regions: at least one InclRegion keyword is required.
+#  It associates an earthworm installation ID with a polygon (max 20 sides)
+#  inside of which that installation is authoritative.
+#    o An installation can have more than one authoritative region.
+#    o A region can belong to more than one installation.
+#
+# The points of a polygon should be listed as if lines of the polygon
+# were being drawn without lifting up the pencil, until the polygon
+# is closed. Therefore, the first and the last point should be
+# the same, and each two the points in between should be the ends
+# of one side of the polygon.
+#
+# ExclRegion is optional. It allows for "holes" to be cut inside of the 
+# authoritative regions defined by InclRegion option.
+#
+
+@regions.d
+
+# for all subsequent tests INST_WILDCARD is legal but will be superceded
+# by additional Keyword entries with non-wildcard InstID.
+
+#Depth test
+# is hypo between MinDepth and MaxDepth km
+#Keyword    InstID         MinDepth  MaxDepth
+#DepthTest   INST_WILDCARD   0.0       25.0
+
+#number stations test
+# are there at least NSta stations used 
+#  not used in HYP2000 or global_loc
+#Keyword    InstID         NPhase
+#nstaTest    INST_WILDCARD   5
+ 
+#number phase (high weight) test
+# are there at least NPhase phases with phase weight greater than 0.1
+#  HYP2000 only
+#Keyword    InstID         NPhase
+#nphTest  INST_WILDCARD   5
+
+#total number phase (any weight) test
+# are there at least NPhase phases with phase weight greater than 0.0
+#  number associated in global_loc, number used in rayloc.
+#Keyword    InstID         NPhaseTotal
+nphtotalTest  INST_WILDCARD   5
+
+#gap test
+# is the gap < MaxGap  degrees
+#Keyword    InstID         MaxGap
+#GapTest     INST_MEMPHIS   270.0
+ 
+#gdmin test
+# is distance to nearest station at no greater than MaxGDmin in degrees
+# Global Loc and Rayloc only
+#Keyword    InstID         MaxGDmin
+#GDminTest    INST_MEMPHIS   50.0
+
+#dmin test
+# is distance to nearest station at no greater than MaxDmin in km
+# HYP2000 only
+#Keyword    InstID         MaxDmin
+#DminTest    INST_MEMPHIS   50.0
+ 
+#rms test
+# is the rms less than MaxRMS seconds
+#Keyword    InstID         MaxRMS
+#RMSTest     INST_MEMPHIS   2.5
+ 
+#e0 test
+# is the largest principal error less than MaxE0 km
+#Keyword    InstID         MaxE0
+#  not used for global_loc
+#MaxE0Test      INST_MEMPHIS   50.0
+ 
+#erh test
+# is the horizontal error less than MaxERH km
+#Keyword    InstID         MaxERH
+#  not used for global_loc
+#MaxERHTest     INST_MEMPHIS   50.0
+ 
+#erz test
+# is the vertical error less than MaxERZ km
+#  not used for global_loc
+#Keyword    InstID         MaxERZ
+#MaxERZTest     INST_MEMPHIS   25.0
+
+#avh test
+# is the equivalent radious of the horizontal error ellipse less than MaxAVH km
+#  rayloc only
+#Keyword    InstID         MaxAVH
+#MaxAVHTest     INST_MEMPHIS   25.0
+ 
+#Mag test
+# is the magnitude greater than MinMag
+# HYP2000 only
+#Keyword    InstID         MinMag
+MinMagTest     INST_MEMPHIS   -9.9
+MinMagTest     INST_AVO        3.0
+MinMagTest     INST_HVO        3.0
+MinMagTest     INST_BUTTE      0.0
+MinMagTest     INST_MENLO      2.5
+MinMagTest     INST_UNR        2.5
+MinMagTest     INST_UTAH       2.5
+MinMagTest     INST_UW         2.5
+MinMagTest     INST_WILDCARD   4.0
+
+#Ncoda test
+# given an event with Magnitude Mag, are there at least MinC coda picks
+# HYP2000 only
+# note here that since a test is defined for INST_MEMPHIS, unless there
+#   is a wildcard test also defined, only INST_MEMPHIS events have a
+#   chance of passing.  This is so because once a test is configured,
+#   only configured instid's will pass the test.
+#Keyword    InstID         MinC  Mag
+NcodaTest   INST_MEMPHIS   4     2.0
+NcodaTest   INST_MEMPHIS   9     3.0
+NcodaTest   INST_WILDCARD  6     2.0
+
+</pre>
+
+<A NAME="alphabet">
+<H2>2.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed in alphabetical
+order.  Listed along with the command (bold-type) are its arguments (in red)
+and a description of the command.  There are no default values so if you
+configure the command without arguments, all messages fail.
+
+</pre>
+
+<! withers put additional alphabetized commands here>
+
+<HR>
+
+<a name="AllowUndefInst">
+<pre><b>AllowUndefInst</b>
+</pre>
+<blockquote>
+Command with no arguments and applies only to Authoritative Regions.
+Any TYPE_HYP2000ARC, TYPE_LOC_GLOBAL, and/or TYPE_RAYLOC messages with installation
+ID not listed in any InclRegion will pass the Authoritative Region test.
+</blockquote>
+
+<hr>
+
+<a name="Debug">
+<pre><b>Debug</b>
+</pre>
+<blockquote>
+Command with no arguments. If present, many debug messages are logged.
+</blockquote>
+
+<hr>
+
+<a name="DepthTest">
+<pre><b>DepthTest <font color=red>Inst_ID MinDepth MaxDepth</font></b></pre>
+<blockquote>
+If defined, only messages from Inst_ID that have hypocentral depth between
+MinDepth and MaxDepth kilometers, exclusive, will be passed. All others fail.
+</blockquote>
+
+<hr>
+
+<a name="DminTest">
+<pre><b>DminTest <font color=red>Inst_ID MaxDmin</font></b></pre>
+<blockquote>
+If defined, only messages from InstID with a distance to the nearest station
+of less than MaxDmin kilometers will be passed. All others fail. Hyp2000 only.
+</blockquote>
+
+<hr>
+
+<a name="ExclRegion">
+<pre><b>ExclRegion <font color=red> Inst_ID NumSides Lat1 Lon1 Lat2 Lon2 ... Lat1 Lon1
+</font></b></pre>
+<blockquote>
+List of exclude regions to cut "holes" in a given Inst_ID's authoritave polygon.
+The points of a polygon should be listed as if lines of the polygon
+were being drawn without lifting up the pencil, until the polygon
+is closed. Therefore, the first and the last point should be
+the same, and each two the points in between should be the ends
+of one side of the polygon.  INST_WILDCARD is NOT ALLOWED with this test.
+</blockquote>
+
+<hr>
+
+<a name="GapTest">
+<pre><b>GapTest <font color=red>Inst_ID MaxGap</font></b></pre>
+<blockquote>
+If defined, only messages from InstID with azimuthal gap of less than
+MaxGap degrees will be passed. All others fail.
+</blockquote>
+
+<hr>
+
+<a name="GDminTest">
+<pre><b>GDminTest <font color=red>Inst_ID MaxGDmin</font></b></pre>
+<blockquote>
+If defined, only messages from Inst_ID with minimum distance in degrees
+of arc greater than MaxGDmin will pass.  All others fail.  Not used
+by Hyp2000.
+</blockquote>
+
+<hr>
+
+<a name="GetEventsFrom">
+<pre><b>GetEventsFrom <font color=red> INST_ID MOD_ID</font></b></pre>
+<blockquote>
+What message logos to listen to. Can be more than one, but no more than five.
+The message type is hard coded to TYPE_HYP2000ARC
+</blockquote>
+
+<hr>
+
+<a name="HeartBeatInt">
+<pre><b>HeartBeatInt <font color=red> Seconds</font></b></pre>
+<blockquote>
+Required command to define number of seconds between heartbeats placed on OutRing.
+</blockquote>
+
+<hr>
+
+<a name="InclRegion">
+<pre><b>InclRegion <font color=red> Inst_ID NumSides Lat1 Lon1 Lat2 Lon2 ... Lat1 Lon1
+</font></b></pre>
+<blockquote>
+List authoritative regions.
+It associates an earthworm installation ID with a polygon (max 20 sides)
+inside of which that installation is authoritative.
+An installation can have more than one authoritative region.
+A region can belong to more than one installation.
+The points of a polygon should be listed as if lines of the polygon
+were being drawn without lifting up the pencil, until the polygon
+is closed. Therefore, the first and the last point should be
+the same, and each two the points in between should be the ends
+of one side of the polygon.  INST_WILDCARD is NOT ALLOWED with this test.
+</blockquote>
+
+<hr>
+
+<a name="InRing">
+<pre><b>InRing <font color=red> RingName </font></b></pre>
+<blockquote>
+Read message type HYP2000ARC from this ring.
+</blockquote>
+
+<hr>
+
+<a name="LogFile">
+<pre><b>LogFile <font color=red> int </font></b></pre>
+<blockquote>
+If set to 1, turn on logging. If set to 0, turn it off.
+</blockquote>
+
+<hr>
+
+<a name="MinMagTest">
+<pre><b>MinMagTest <font color=red> Inst_ID MinMag</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with magnitude greater than
+MinMag will pass. All others fail.
+</blockquote>
+
+<hr>
+
+<a name="MaxAVHTest">
+<pre><b>MaxAVHTest <font color=red> Inst_ID MaxAVH</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with equivalent
+radius of the horizontal error ellipse greater than MaxAVH km
+will pass.  All others fail.  Used by rayloc only.
+</blockquote>
+<hr>
+
+<a name="MaxE0Test">
+<pre><b>MaxE0Test <font color=red> Inst_ID MaxE0</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with E0 less than
+MaxE0 will pass. All others fail. E0 is the value of the largest
+principal error in kilometers. Not used with global_loc.
+</blockquote>
+
+<hr>
+
+<a name="MaxERHTest">
+<pre><b>MaxERHTest <font color=red> Inst_ID MaxERH</font></b></pre>
+If defined, messages from installation Inst_ID with ERH less than
+MaxERH will pass. All others fail. ERH is the value of the largest
+horizontal error in kilometers. Not used in global_loc.
+</blockquote>
+
+<hr>
+
+<a name="MaxERZTest">
+<pre><b>MaxERZTest <font color=red> Inst_ID MaxERZ</font></b></pre>
+If defined, messages from installation Inst_ID with ERZ less than
+MaxERZ will pass. All others fail. ERZ is the value of the veritical
+error in kilometers. Not used in global_loc.
+</blockquote>
+
+<hr>
+
+<a name="MyModuleId">
+<pre><b>MyModuleId <font color=red> name</font></b></pre>
+<blockquote>
+name is the instance of this module and must be defined in earthworm.d
+</blockquote>
+
+<hr>
+
+<a name="NcodaTest">
+<pre><b>NcodaTest <font color=red> Inst_ID MinC Mag</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with magnitude greater
+than Mag, must have at least MinC coda duration picks greater than 0.
+All others fail.
+</blockquote>
+
+<hr>
+
+<a name="nstaTest">
+<pre><b>nstaTest <font color=red> Inst_ID NPhase</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID must have NPhase
+stations used in the solution.  All others will fail.  Not used for
+hyp2000 or global_loc messages.
+</blockquote>
+
+<hr>
+
+<a name="nphTest">
+<pre><b>nphTest <font color=red> Inst_ID NPhase</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with more than
+NPhase arrivals having phase weight greater than 0.1 will
+pass.  All others fail.  Not used for global_loc or rayloc messages.
+</blockquote>
+
+<hr>
+
+<a name="nphtotalTest">
+<pre><b>nphtotalTest <font color=red> Inst_ID NPhaseTotal</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with more than
+NPhase arrivals having phase weight greater than 0.0, or number
+of phases associated in the case of global_loc and rayloc message, will
+pass.  All others fail.
+</blockquote>
+
+<hr>
+
+<a name="OutRing">
+<pre><b>OutRing <font color=red> name</font></b></pre>
+<blockquote>
+Required. Outgoing messages get written to name ring. Can not be the
+same is InRing.
+</blockquote>
+
+<hr>
+
+<a name="RMSTest">
+<pre><b>RMSTest <font color=red> Inst_ID MaxRMS</font></b></pre>
+<blockquote>
+If defined, messages from installation Inst_ID with rms error
+less than MaxRMS will pass. All others fail.
+</blockquote>
+
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/eqfilterII_ovr.html">eqfilterII Overview</A>
+</CENTER>
+
+<ADDRESS>
+<HR>
+The URL of this page is  <B>[http://folkworm.ceri.memphis.edu/ew-doc/cmd/eqfilterII_cmd.html]</B><BR>
+Contact: <B>mwithers@memphis.edu</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

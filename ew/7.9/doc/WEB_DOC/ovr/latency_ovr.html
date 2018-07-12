@@ -1,0 +1,34 @@
+<title>Earthworm Modules: latency_mon overview</title>
+<body bgcolor="#FFFFFF">
+<center>
+  <h1>Earthworm Modules:<br>
+    Latency Monitor Overview</h1>
+  <i>(last revised 1 June, 2006)</i>
+</center>
+<p>This program takes waveforms dropped in InRing and logs latency and outages
+  of the data. Each time a trace arrives, its start time is compared to the end
+  time of the last packet. When there is a gap the outage is logged to a data
+  file for that station. Also, the start time is compared to real-time, and latency
+  is determined. Whenever the latency changes, it is also logged with start and
+  end time to the file. Latencies are grouped generally: <1' = 0; 1'-2' = 1; 2'-3'
+  = 2; 3'-5' = 3; >5' = 4. Here, latency is described as present time minus mid-time
+  of the packet.
+<p> The graphical output shows a line for each station in the .sta file for a
+  set length of time. Colors on the line represent the latency of the station
+  over that time interval.
+<p> This will only give accurate outage values if this module is running all the
+  time the earthworm system is up.
+<p> This module is strictly for use under Windows.
+<p> Written by Paul Whitmore, (WC/ATWC) August, 2001 Modified by John Patton (USGS)
+  July, 2002
+<p><pre>
+  Usage:  get_latency &lt;name of configuration file&gt;      </pre>
+<p>&nbsp;
+<center>
+    <b><a href="../modules.html">Module Index</a> | <a href="../cmd/latency_cmd.html">Latency_mon
+    Command File</a> </b>
+  </center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a></address>

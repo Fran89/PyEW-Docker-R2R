@@ -1,0 +1,45 @@
+LINUX_FLAGS = -lm -lpthread -lc
+SOLARIS_FLAGS = -lm -lposix4 -lthread -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+CFLAGS = $(GLOBALFLAGS) -I.
+
+SRCS = ewspectra.c iir.c
+OBJS = $(SRCS:%.c=%.o)
+
+SRCSa = activate_module.c
+OBJSa = $(SRCSa:%.c=%.o)
+
+SRCSs = sniffspectra.c
+OBJSs = $(SRCSs:%.c=%.o)
+
+EW_LIBS = $(L)/ws_clientII.o \
+          $(L)/socket_ew_common.o $(L)/socket_ew.o $(L)/swap.o \
+          $(L)/mem_circ_queue.o $(L)/ew_spectra_io.o $(L)/libew_mt.a
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: ewspectra activate_module sniffspectra
+
+ewspectra: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o ewspectra $(OBJS) $(L)/ws2ts.o $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp ewspectra $(BINDIR)
+
+activate_module: $(OBJSa)
+	$(CC) $(GLOBALFLAGS) -o activate_module $(OBJSa) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp activate_module $(BINDIR)
+
+sniffspectra: $(OBJSs)
+	$(CC) $(GLOBALFLAGS) -o sniffspectra $(OBJSs) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp sniffspectra $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f ewspectra activate_module sniffspectra
+
+clean_bin:
+	rm -f $(BINDIR)/ewspectra $(BINDIR)/activate_module $(BINDIR)/sniffspectra

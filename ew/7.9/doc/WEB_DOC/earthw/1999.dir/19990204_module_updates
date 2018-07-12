@@ -1,0 +1,27 @@
+
+From bogaert@gldmutt.cr.usgs.gov Thu Feb  4 14:09:22 1999
+Date: Thu, 04 Feb 1999 10:39:42 -0800
+From: Barbara Bogaert <bogaert@gldmutt.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: New and Enhanced Earthworm modules available
+
+A number of  new or enhanced modules are available at the Earthworm ftp site:
+ghtftp.cr.usgs.gov:~ftp/pub/OUTGOING/earthworm/pre_release. These modules are
+compatible with Earthworm Version 3.9.
+
+Reftek2ew:
+        Is the coupler module provided by Refraction Technologies Inc. The
+module translates data from the RTP format into the Earthworm trace data
+format.  The makefiles for both Solaris and NT were modified to better reflect
+the Earthworm directory structure. Along with this module, there are several
+other programs provided by Reftek which are necessary to communicate with the
+Reftek boxes.
+
+Modifications and enhancements were also made to modules rcv, adsend, statmgr. 
+The changes are described in the file README in the pre_release directory.
+
+
+
+  [Part 2, Text/HTML  21 lines]
+  [Unable to print this part]
+

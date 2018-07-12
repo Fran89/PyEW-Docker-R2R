@@ -1,0 +1,71 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (WinNT; U) [Netscape]">
+   <title>Earthworm Modules: eqcoda overview</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<center>
+<h1>
+Eqcoda Overview</h1></center>
+
+<center><i>(last revised August 17, 2000)</i></center>
+
+<p>Eqcoda is a sub-module in Earthworm's event-processing mega-module.
+It processes the event messages output by either eqproc or eqprelim, and
+writes its own output in a format that can be read by either eqverify or
+hyp2000_mgr. Eqcoda is often the third link in the mega-module, started
+by eqbuf. It could, however, be started directly by eqprelim or eqproc.
+Eqcoda in turn starts the next link specified in its "PipeTo" command (generally
+eqverify) and communicates to the next link via a one-directional pipe.
+
+<p>Once the next link is started, eqcoda's job is to read the TYPE_EVENT2K
+messages produced by either eqprelim or eqproc, perform some coda envelope
+calculations, build a TYPE_HYP2000ARC message, and pass it on to the next
+link in the mega-module. Eqcoda passes all message types other than TYPE_EVENT2K
+directly to the next link without modifying them in any way.
+
+<p>Eqcoda's calculations produce a coda duration and coda weight for each arrival
+in the event. These numbers will be used by hypoinverse to calculate duration
+magnitude. Eqcoda considers binder_ew's event location and pick_ew's
+coda amplitude and duration information in its calculations. Pick_ew reports
+the coda duration as the time from the P-arrival to the time when the average
+absolute amplitude of a 2-second trace data window reaches "cutoff" digital
+counts, where "cutoff" is specified for each channel in the station file (for the Northern
+California Seismic Network, this cutoff value is defined as the counts equivalent to a
+discriminator output of 60 mV). Pick_ew reports a
+"normal" coda if the amplitude decays to "cutoff" in less than 144 seconds
+after the P-wave arrival. If the coda does not decay to "cutoff" within
+144 seconds, pick_ew times out, reporting the observed amplitude and
+a "truncated" coda duration of 144 seconds. For traces with high pre-event
+noise levels, pick_ew reports a negative or "noisy" coda duration. In
+addition to the coda duration, pick_ew reports the average absolute amplitudes
+(in digital counts) of up to six pre-determined 2-second trace windows.
+
+<p>Eqcoda finds the rate of the coda decay by performing an L1 fit to the
+coda amplitudes reported by pick_ew. Any coda amplitudes that
+precede the predicted S-wave arrival time or that exceed the coda clipping
+threshold are not included in this L1 fit. Eqcoda arrives at a quality
+or "coda weight" for this seismogram by comparing the calculated decay
+rate to the rate expected for real earthquake signals and by analyzing
+the quality of the fit to the observed data.
+
+<p>For "normal" codas, eqcoda reports the coda duration observed by
+pick_ew. For "truncated" and "noisy" codas, eqcoda reports an extrapolated
+coda duration, using the calculated coda decay rate to estimate the time
+at which the signal's amplitude would have reached the coda cutoff level.
+For extrapolated coda lengths to be consistent with "normal" coda lengths
+reported by pick_ew, be sure that both eqcoda and pick_ew read the same
+station file.
+<center>
+<p><a href="../modules.html">Module Index</a> | <a href="../cmd/eqcoda_cmd.html">Eqcoda
+Commands</a></center>
+<!-- USGS-required stuff at the end -->
+<hr>
+<address>
+
+<br>Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b>
+</body>
+</html>

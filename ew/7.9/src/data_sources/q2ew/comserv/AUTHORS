@@ -1,0 +1,11 @@
+Original COMSERV: W. H. Owens for Quanterra, Inc.
+qlib2 and clients.ucb: Doug Neuhauser, UCB
+Support of big-endian version: Doug Neuhauser, UCB
+Porting to Linux : Ilya Dricker, Instrumental Software Tecnologies, Inc.
+Mserv and cs2mcast : Phil Maechling, CIT
+Mountainair : Phil Maechling, Jet Spring, Inc.
+Mountainair/Linux: Hal Schechner, ISTI
+Mountainair Support: support@isti.com
+Helpful comments from Paul Friberg, Sid Hellman, Joseph Steim,
+Doug Neuhauser, Torsten Grasse, Gernot Hartmann,  Kim.
+

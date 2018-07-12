@@ -1,0 +1,116 @@
+#Phase         NAME   TAUP_ALIAS
+#RayParam      MIN    MAX
+#DistRange     MIN    MAX
+#DistDelta     DELTA
+#DepthRange    MIN    MAX
+#DepthDelta    DELTA
+#TimeDelta     DELTA
+#ExcludeRange  DMIN DMAX ZMIN ZMAX
+
+
+#entry weights:
+# AssocStrength  - strength with which this phase binds to an Event
+# LocWeight      - weight with which this phase affects origin location
+# MagThresh      - minimum magnitude of quake which this phase can
+                   be associated with.
+				   (Some distant/special phases come in very well with
+				    larger quakes, but you don't want them wrongly assoc.
+					with a small quake)
+# ResWinWidth - width of residual window (3 sigma) for the phase.
+
+################################
+# P Core Phases 
+################################
+Phase           PKPdf  PKIKP
+DistRange       112.5    162.5
+DistDelta       2.5
+DepthRange       0     800
+DepthDelta      25
+TimeDelta        5
+RayParam         0     1.924  
+LocWeight        0.5
+AssocStrength    1.0
+# time 1050-1215 sec
+
+Phase           PKiKP  PKiKP
+DistRange       105    117.5
+DistDelta       2.5
+DepthRange       0     800
+DepthDelta      25
+TimeDelta        5
+RayParam         0     1.924  
+LocWeight        0.05
+AssocStrength    0.75
+# time 1050-1215 sec
+
+Phase           PKPab  PKP
+DistRange       145      175
+DistDelta        1
+DepthRange       0     800
+DepthDelta      25
+TimeDelta       5
+RayParam        3.5      4.5
+# time 1100-1310 sec
+	
+Phase           PKKPbc  PKKP
+DistRange        85      125
+DistDelta        2.5
+DepthRange       0       800
+DepthDelta      25
+TimeDelta       10
+RayParam        2.0      4.112
+LocWeight        0.05
+ResWinWidth     15.0
+# time 1660-1880 sec
+
+Phase           PKKPab  PKKP
+DistRange        105      125
+DistDelta        2.5
+DepthRange       0       800
+DepthDelta      25
+TimeDelta       10
+RayParam        4.114     4.5
+LocWeight        0.05
+ResWinWidth     15.0
+# time 1700-1810 sec
+
+Phase           PKPPKP   PKPPKP
+DistRange        55      75
+DistDelta        2.5
+DepthRange       0       200
+DepthDelta      25
+TimeDelta       10
+LocWeight        0.05
+ResWinWidth     15.0
+# time 2250-2650  sec
+
+
+
+################################
+# Other Core Phases 
+################################
+
+Phase          SKPbc     SKP
+DistRange      128       150
+DistDelta        2
+DepthRange       0     200
+DepthDelta      12.5
+TimeDelta        5
+LocWeight        0.05
+ResWinWidth     15.0
+RayParam         2.08   4.01
+# time ??? sec
+
+
+Phase          SKPbc     SKP
+DistRange      128      150
+DistDelta        2
+DepthRange     200      800
+DepthDelta      25
+TimeDelta        5
+LocWeight        0.05
+ResWinWidth     15.0
+RayParam         2.08   4.01
+# time ??? sec
+
+

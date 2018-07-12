@@ -1,0 +1,140 @@
+#########################
+nmxptool Release History
+#########################
+
+* Release 2.1.2    (2015/06/26) 
+    - Fixed major bug in small time drifting of packets stored in mini-SEED format.
+    - Started to fix 'Ubuntu vs. gettimeofday()' issue
+
+* Release 2.1.1    (2013/05/13) 
+    - Fixed bug:
+        SEED utilizes the Big Endian word order as its standard.
+        In 2003, the FDSN adopted the format rule that Steim1 and Steim2
+        data records are to be written with the big-endian encoding only.
+        From now on, nmxptool will only create big-endian Steim[12]
+        compressed mini-SEED records (thanks to C. Trabant and S. Stromme)
+    - Improvement: restart connection if any data is received within 60 seconds
+                   timeout = (NMXP_HIGHEST_TIMEOUT * 2)
+    - News: windows binary distribution is available again.
+        nmxptool has been compiled under Cygwin, it needs "cygwin1.dll".
+    - Substitude makefile.ux and makefile.sol with the single makefile.unix
+
+* Release 2.1.0    (2012/07/22) 
+    - Improvement: added capability to specify the location code within the
+        channel pattern declaration (options -C, -n).
+    - Improvement: also on earthworm, nmxptool responds quickly to 'stopmodule'
+        and 'restart' when the nanometrics server is unreachable.
+    - Improvement: incremented value of NMXP_MAX_LENGTH_DATA_BUFFER.
+    - Fixed minor bug: computing endtime for earthworm tracebuf.
+    - Fixed minor bug: in some cases did not close .nmxpstate file.
+
+* Release 2.0.0    (2010/10/22) 
+    - Improved saving of mini-SEED files, now data samples are saved using
+        the whole available space within the mini-SEED records.
+    - Added capability, using libmseed, to choose mini-SEED record length (option -r).
+    - Added capability, using libmseed, to choose between steim1 and steim2
+        compression (option -x), and data quality indicator (option -q). (R. Racine)
+    - Added feature: enabled ShortTermCompletion also in Earthworm configuration.
+        (Short-Term-Completion has been implemented in NaqsServer version 2.1)
+    - Added feature: within state file it is now allowed to insert white spaces,
+         tabs, and comment string by '#'. (involved option -F)
+    - Changed the output list of channels from NaqsServer, in order to create
+         automatically a state file. (involved option -L)
+    - Added signal handling to force to close a connection and open again
+         without quitting the program. Only for connection in near real-time
+         to NaqsServer. (Signal -USR1).
+    - Fixed some memory leaks and potential other memory bugs. (R. Racine)
+
+* Release 1.2.4    (2009/12/22) 
+    - Fixed major bugs: made code thread safe substituting functions
+        and removing static variables from own functions. (S. Pintore)
+    - Improved saving of mini-SEED files into SDS and BUD structure,
+        now it is possible to store mini-SEED in near-real-time from NaqsServer.
+    - Added feature: packets converted in mini-SEED records can be directly sent
+        to the Seedlink server by the function send_mseed(), in place of using
+        the function send_raw_depoch(). (option -K or -k).
+    - Changed SeisComP templates adding source port to the file name of channel list.
+    - Added SeisComP templates for retrieving Data On Demand with minimun delay.
+    - Added minor feature: declare timing_quality from the command-line. (option -Q).
+
+* Release 1.2.3    (2009/01/15) 
+    - Added feature: mini-SEED files can be saved directly within a
+        SeisComP Data Structure (SDS) or Buffer of Uniform Data (BUD)
+        (changed option -m, new option -o).
+    - Improvement: changed HIGHEST_TIMEOUT to 30 seconds in order to
+        handle the signals whenever data is not coming through.
+    - Fixed bug: Windows binary distribution now contains
+        "pthreadVC2.dll" that it has been compiled by MSVC++6.0
+
+* Release 1.2.2    (2008/07/23) 
+    - Added feature: channel list can be printed declaring a pattern
+        to match the desired channels. (involved options -C, -l, -L)
+    - Added feature: accept 'telnet' connection for monitoring data
+        and diagnostic purposes. Not available on Windows yet. (option -E)
+    - Improved connection management. Exit from program only on request,
+        that is, receving termination signal or ew-flag-terminate.
+    - Improved signal handling using safe threads.
+    - Improved request of channels using a separate thread.
+    - Improved printing of info about Raw Stream data buffer. (Signal -ALRM).
+    - Improved function nmxp_openSocket().
+    - Added 'pluginid' to prefix log messages when launched as Seedlink plug-in.
+    - Fixed bug: on Solaris system set a time-out using select() and recv()
+        in order to quit properly the program when any data is received.
+
+* Release 1.2.1    (2008/03/31) 
+    - Improved request of channels in order to retrieve more efficiently
+        data buffered by the NaqsServer (option -F and -b).
+        It allows data continuity, to the latency's cost,
+        when short disconnections to the NaqsServer occur.
+        Added option --mschan=mSECs/nC, short option -f.
+    - Added on Windows system, computation of the packet latencies
+        when timezone is different from GMT/UTC.
+    - Changed 'configure' options from --with-PACKAGE to --enable-FEATURE.
+    - Improved signal handling.
+    - Improved help and documentation.
+    - Option "delay" can be declared in minutes, hours or days (option -d).
+    - Fixed bug: before exiting, error message "double free" rarely occurred.
+    - Fixed bug: on Windows, argument of function Sleep() is in milliseconds.
+    - Fixed minor bugs.
+
+* Release 1.2.0     (2008/03/07)
+   - Reorganized structure of directories.
+        Compilation in a single shot of configure and make.
+   - Added UserDAP and PassDAP in Earthworm configuration files.
+
+* Release 1.1.8     (2008/03/03)
+    - Added management of channel sample sequences.
+        Allow data continuity between program restarts, (option -F)
+        within time defined by MaxDataToRetrieve (option -A)
+        and data buffered by the DataServer and NaqsServer.
+    - Added support for retrieving Data-On-Demand
+        with minimum delay from NaqsServer (option -T).
+    - Added option "buffered time" for a single channel (options -b, -B).
+    - Added ten thousandth of second in date format (option -s, -e).
+    - Added check for duplication in channel pattern declaration (options -F, -C).
+    - Added logging of sample values (option -G).
+    - Option "interval" can be declared in minutes, hours or days (option -t).
+    - Fixed major bug in DAP authentication (options -u and -p).
+    - Fixed bug in packet decompression on Big-Endian architecture.
+        Offset +1 count was added when x0 was greater than zero.
+    - Countless minor bug fixes and improvements.
+
+* Release 1.1.7     (2007/12/11)
+    - Added support for WindowsXP and Windows2000 (compilation under MinGW).
+    - Added support for recompiling earthworm sources when object files are missing.
+    - Added possibility to define channel list pattern to match all stations.
+    - Added documentation in README, earthworm/nmxptool_cmd.html, earthworm/nmxptool_ovr.html
+    - Fixed minor bugs.
+
+* Release 1.1.6     (2007/12/03)
+    - Added argument to option "-v" in order to configure level of verbosity.
+    - Changed directory structure. Library directory is under nmxptool directory.
+    - Made source independent on MSG_WAITALL using a loop.
+    - Added output of available channels on both NaqsServer and DataServer.
+    - Fixed a major bug in connection management.
+    - Fixed bug and improved log message management.
+    - Fixed minor bugs.
+
+* Release 1.1.5     (2007/10/07)
+    - First public release.
+

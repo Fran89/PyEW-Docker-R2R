@@ -1,0 +1,31 @@
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+all:
+   emake $B\web_report.exe
+
+web_report:
+   emake $B\web_report.exe
+
+
+$B\web_report.exe: web_report.obj
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) web_report.obj \
+    $L\copyfile.obj $L\dirops_ew.obj \
+    $L\libew.lib \
+    -out:$B\web_report.exe
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\web_report*

@@ -1,0 +1,50 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+CFLAGS = $(GLOBALFLAGS)
+DCC_INCLUDE = ../include
+DCC_LIB = ../lib
+
+RANLIB = ranlib
+
+#WARN = -Wall
+INCS = -I$(DCC_INCLUDE)
+
+CFLAGS += $(INCS) $(PROF) $(WARN)
+
+# DCC library definitions
+
+DCC_SEED = $(DCC_LIB)/libdcc_seed.a
+
+# END TEMPLATE SECTION
+
+OBJS =	diemsg.o	\
+	seed_blockettes.o	\
+	seed_comments.o	\
+	seed_comp.o	\
+	seed_data.o	\
+	seed_data_dec.o	\
+	seed_dec_16.o	\
+	seed_dec_32.o	\
+	seed_dec_ascii.o	\
+	seed_dec_cdsn.o	\
+	seed_dec_seed.o	\
+	seed_dec_sro.o	\
+	seed_dicts.o	\
+	seed_membase.o	\
+	seed_misc.o	\
+	seed_responses.o	\
+	seed_statchan.o	\
+	seed_write.o	\
+	sel_mem.o
+
+all:	$(DCC_SEED)
+
+$(DCC_SEED): $(OBJS)
+	$(AR) rv $@ $(OBJS)
+	${RANLIB} $(DCC_SEED)
+
+clean:
+	rm -f *.o *.a core *~ \#*\#
+

@@ -1,0 +1,1024 @@
+         Key
+         |          New Geographical Region
+         $          Geographical Region Reduced in Size
+         *          Geographical Region No Longer in Use
+
+
+              1     ALASKA - ALEUTIAN ISLANDS ARC
+
+                 1  Central Alaska, United States
+                 2  Southern Alaska, United States
+                 3  Bering Sea
+                 4  Komandorsky Islands, Russia, region
+                 5  Near Islands, Aleutian Islands, United States
+                 6  Rat Islands, Aleutian Islands, United States
+                 7  Andreanof Islands, Aleutian Islands, United States
+                 8  Pribilof Islands, Alaska, United States
+                 9  Fox Islands, Aleutian Islands, United States
+                10  Unimak Island, Alaska, United States, region
+                11  Bristol Bay, Alaska, United States
+                12  Alaska Peninsula, United States
+                13  Kodiak Island, Alaska, United States, region
+                14  Kenai Peninsula, Alaska, United States
+                15  Gulf of Alaska
+                16  South of Aleutian Islands
+                17  South of Alaska
+
+
+              2     EASTERN ALASKA TO VANCOUVER ISLAND
+
+                18  Southern Yukon Territory, Canada
+                19  Southeastern Alaska, United States
+                20  Off coast of southeastern Alaska, United States
+                21  West of Vancouver Island
+                22  Queen Charlotte Islands, Canada, region
+                23  British Columbia, Canada
+                24  Alberta, Canada
+                25  Vancouver Island, Canada, region
+                26  Off coast of Washington, United States
+                27  Near coast of Washington, United States
+                28  Washington-Oregon border region
+                29  Washington, United States
+
+
+              3     CALIFORNIA - NEVADA AREA
+
+                30  Off coast of Oregon, United States
+                31  Near coast of Oregon, United States
+                32  Oregon, United States
+                33  Western Idaho, United States
+                34  Off coast of northern California, United States
+                35  Near coast of northern California, United States
+                36  Northern California, United States
+                37  Nevada, United States
+                38  Off coast of California, United States
+                39  Central California, United States
+                40  California-Nevada border region
+                41  Southern Nevada, United States
+                42  Western Arizona, United States
+                43  Southern California, United States
+                44  California-Arizona border region
+                45  California-Baja California border region
+                46  Western Arizona-Sonora border region
+
+
+              4     BAJA CALIFORNIA AND GULF OF CALIFORNIA
+
+                47  Off west coast of Baja California, Mexico
+                48  Baja California, Mexico
+                49  Gulf of California, Mexico
+                50  Sonora, Mexico
+                51  Off coast of central Mexico
+                52  Near coast of central Mexico
+
+
+              5     MEXICO - GUATEMALA AREA
+
+                53  Revilla Gigedo Islands, Mexico, region
+                54  Off coast of Jalisco, Mexico
+                55  Near coast of Jalisco, Mexico
+                56  Near coast of Michoacan, Mexico
+                57  Michoacan, Mexico
+                58  Near coast of Guerrero, Mexico
+                59  Guerrero, Mexico
+                60  Oaxaca, Mexico
+                61  Chiapas, Mexico
+                62  Mexico-Guatemala border region
+         $      63  Off coast of Mexico
+                64  Off coast of Michoacan, Mexico
+                65  Off coast of Guerrero, Mexico
+                66  Near coast of Oaxaca, Mexico
+                67  Off coast of Oaxaca, Mexico
+                68  Off coast of Chiapas, Mexico
+                69  Near coast of Chiapas, Mexico
+                70  Guatemala
+                71  Near coast of Guatemala
+         |     730  Northern East Pacific Rise
+
+
+              6     CENTRAL AMERICA
+
+                72  Honduras
+                73  El Salvador
+                74  Near coast of Nicaragua
+                75  Nicaragua
+                76  Off coast of central America
+                77  Off coast of Costa Rica
+                78  Costa Rica
+                79  North of Panama
+                80  Panama-Costa Rica border region
+                81  Panama
+                82  Panama-Colombia border region
+                83  South of Panama
+
+
+              7     CARIBBEAN LOOP
+
+                84  Yucatan Peninsula, Mexico
+                85  Cuba region
+                86  Jamaica region
+                87  Haiti region
+                88  Dominican Republic region
+                89  Mona Passage
+                90  Puerto Rico region
+                91  Virgin Islands
+                92  Leeward Islands
+                93  Belize
+         $      94  Caribbean Sea
+                95  Windward Islands
+                96  Near north coast of Colombia
+                97  Near coast of Venezuela
+                98  Trinidad
+                99  Northern Colombia
+               100  Lake Maracaibo, Venezuela
+               101  Venezuela
+         |     731  North of Honduras
+
+
+              8     ANDEAN SOUTH AMERICA
+
+               102  Near west coast of Colombia
+               103  Colombia
+               104  Off coast of Ecuador
+               105  Near coast of Ecuador
+               106  Colombia-Ecuador border region
+               107  Ecuador
+               108  Off coast of northern Peru
+               109  Near coast of northern Peru
+               110  Peru-Ecuador border region
+               111  Northern Peru
+               112  Peru-Brazil border region
+               113  Western Brazil
+               114  Off coast of Peru
+               115  Near coast of Peru
+               116  Central Peru
+               117  Southern Peru
+               118  Peru-Bolivia border region
+               119  Northern Bolivia
+               120  Central Bolivia
+               121  Off coast of northern Chile
+               122  Near coast of northern Chile
+               123  Northern Chile
+               124  Chile-Bolivia border region
+               125  Southern Bolivia
+               126  Paraguay
+               127  Chile-Argentina border region
+               128  Jujuy Province, Argentina
+               129  Salta Province, Argentina
+               130  Catamarca Province, Argentina
+               131  Tucuman Province, Argentina
+               132  Santiago del Estero Province, Argentina
+               133  Northeastern Argentina
+               134  Off coast of central Chile
+               135  Near coast of central Chile
+               136  Central Chile
+               137  San Juan Province, Argentina
+               138  La Rioja Province, Argentina
+               139  Mendoza Province, Argentina
+               140  San Luis Province, Argentina
+               141  Cordoba Province, Argentina
+               142  Uruguay
+
+
+              9     EXTREME SOUTH AMERICA
+
+               143  Off coast of southern Chile
+               144  Southern Chile
+               145  Southern Chile-Argentina border region
+               146  Southern Argentina
+
+
+             10     SOUTHERN ANTILLES
+
+               147  Tierra del Fuego
+               148  Falkland Islands region
+               149  Drake Passage
+               150  Scotia Sea
+               151  South Georgia Island region
+               152  South Georgia Rise
+               153  South Sandwich Islands region
+               154  South Shetland Islands
+               155  Antarctic Peninsula
+         $     156  Southwestern Atlantic Ocean
+               157  Weddell Sea
+         |     732  East of South Sandwich Islands
+
+
+             11     NEW ZEALAND AREA
+
+               158  Off west coast of North Island, New Zealand
+               159  North Island, New Zealand
+               160  Off east coast of North Island, New Zealand
+               161  Off west coast of South Island, New Zealand
+               162  South Island, New Zealand
+               163  Cook Strait, New Zealand
+               164  Off east coast of South Island, New Zealand
+               165  North of Macquarie Island
+               166  Auckland Islands, New Zealand, region
+               167  Macquarie Island, Australia, region
+               168  South of New Zealand
+
+
+             12     KERMADEC - TONGA - SAMOA BASIN AREA
+
+               169  Samoa Islands region
+               170  Samoa Islands
+               171  South of Fiji Islands
+         *     172  West of Tonga Islands (REGION NOT IN USE)
+               173  Tonga Islands
+               174  Tonga Islands region
+               175  South of Tonga Islands
+               176  North of New Zealand
+               177  Kermadec Islands region
+               178  Kermadec Islands, New Zealand
+               179  South of Kermadec Islands
+
+
+             13     FIJI ISLANDS AREA
+
+               180  North of Fiji Islands
+               181  Fiji Islands region
+               182  Fiji Islands
+
+
+             14     VANUATU ISLANDS
+
+               183  Santa Cruz Islands region
+               184  Santa Cruz Islands
+               185  Vanuatu Islands region
+               186  Vanuatu Islands
+               187  New Caledonia
+               188  Loyalty Islands
+               189  Southeast of Loyalty Islands
+
+
+             15     BISMARCK AND SOLOMON ISLANDS
+
+               190  New Ireland, Papua New Guinea, region
+               191  North of Solomon Islands
+               192  New Britain, Papua New Guinea, region
+               193  Bougainville - Solomon Islands region
+               194  D'Entrecasteaux Islands, Papua New Guinea, region
+               195  South of Solomon Islands
+
+
+             16     NEW GUINEA AREA
+
+               196  Irian Jaya, Indonesia, region
+               197  Near north coast of Irian Jaya, Indonesia
+               198  Ninigo Islands, Papua New Guinea, region
+               199  Admiralty Islands, Papua New Guinea, region
+               200  Near north coast of New Guinea, Papua New Guinea
+               201  Irian Jaya, Indonesia
+               202  New Guinea, Papua New Guinea
+               203  Bismarck Sea
+               204  Aru Islands, Indonesia, region
+               205  Near south coast of Irian Jaya, Indonesia
+               206  Near south coast of New Guinea, Papua New Guinea
+               207  Eastern New Guinea, Papua New Guinea, region
+               208  Arafura Sea
+
+
+             17     CAROLINE ISLANDS TO GUAM
+
+               209  Western Caroline Islands, Micronesia
+               210  South of Mariana Islands
+
+
+             18     GUAM TO JAPAN
+
+               211  Southeast of Honshu, Japan
+               212  Bonin Islands, Japan, region
+               213  Volcano Islands, Japan, region
+               214  West of Mariana Islands
+               215  Mariana Islands region
+               216  Mariana Islands
+
+
+             19     JAPAN - KURIL ISLANDS - KAMCHATKA PENINSULA
+
+               217  Kamchatka Peninsula, Russia
+               218  Near east coast of Kamchatka Peninsula, Russia
+               219  Off east coast of Kamchatka Peninsula, Russia
+               220  Northwest of Kuril Islands, Russia
+               221  Kuril Islands, Russia
+               222  East of Kuril Islands, Russia
+               223  Eastern Sea of Japan
+               224  Hokkaido, Japan, region
+               225  Off southeast coast of Hokkaido, Japan
+               226  Near west coast of eastern Honshu, Japan
+               227  Eastern Honshu, Japan
+               228  Near east coast of eastern Honshu, Japan
+               229  Off east coast of Honshu, Japan
+               230  Near south coast of eastern Honshu, Japan
+
+
+             20     SOUTHWESTERN JAPAN AND RYUKYU ISLANDS
+
+               231  South Korea
+               232  Western Honshu, Japan
+               233  Near south coast of western Honshu, Japan
+               234  Northwest of Ryukyu Islands, Japan
+               235  Kyushu, Japan
+               236  Shikoku, Japan
+               237  Southeast of Shikoku, Japan
+               238  Ryukyu Islands, Japan
+               239  Southeast of Ryukyu Islands, Japan
+               240  West of Bonin Islands, Japan
+               241  Philippine Sea
+
+
+             21     TAIWAN
+
+               242  Near coast of southeastern China
+               243  Taiwan region
+               244  Taiwan
+               245  Northeast of Taiwan
+               246  Southwestern Ryukyu Islands, Japan
+               247  Southeast of Taiwan
+
+
+             22     THE PHILIPPINES
+
+               248  Philippine Islands region
+               249  Luzon, Philippine Islands
+               250  Mindoro, Philippine Islands
+               251  Samar, Philippine Islands
+               252  Palawan, Philippine Islands
+               253  Sulu Sea
+               254  Panay, Philippine Islands
+               255  Cebu, Philippine Islands
+               256  Leyte, Philippine Islands
+               257  Negros, Philippine Islands
+               258  Sulu Archipelago, Philippine Islands
+               259  Mindanao, Philippine Islands
+               260  East of Philippine Islands
+
+
+             23     BORNEO - SULAWESI
+
+               261  Borneo
+               262  Celebes Sea
+               263  Talaud Islands, Indonesia
+               264  North of Halmahera, Indonesia
+               265  Minahassa Peninsula, Sulawesi, Indonesia
+               266  Northern Molucca Sea
+               267  Halmahera, Indonesia
+               268  Sulawesi, Indonesia
+               269  Southern Molucca Sea
+               270  Ceram Sea
+               271  Buru, Indonesia
+               272  Seram, Indonesia
+
+
+             24     SUNDA ARC
+
+               273  Southwest of Sumatera, Indonesia
+               274  Southern Sumatera, Indonesia
+               275  Java Sea
+               276  Sunda Strait, Indonesia
+               277  Jawa, Indonesia
+               278  Bali Sea
+               279  Flores Sea
+               280  Banda Sea
+               281  Tanimbar Islands, Indonesia, region
+               282  South of Jawa, Indonesia
+               283  Bali, Indonesia, region
+               284  South of Bali, Indonesia
+               285  Sumbawa, Indonesia, region
+               286  Flores, Indonesia, region
+               287  Sumba, Indonesia, region
+               288  Savu Sea
+               289  Timor, Indonesia, region
+               290  Timor Sea
+               291  South of Sumbawa, Indonesia
+               292  South of Sumba, Indonesia
+               293  South of Timor, Indonesia
+
+
+             25     MYANMAR AND SOUTHEAST ASIA
+
+               294  Myanmar-India border region
+               295  Myanmar-Bangladesh border region
+               296  Myanmar
+               297  Myanmar-China border region
+               298  Near south coast of Myanmar
+         *     299  Southeast Asia (REGION NOT IN USE)
+               300  Hainan Island, China
+               301  South China Sea
+         |     733  Thailand
+         |     734  Laos
+         |     735  Kampuchea
+         |     736  Vietnam
+         |     737  Gulf of Tongking
+
+
+             26     INDIA - XIZANG - SICHUAN - YUNNAN
+
+               302  Eastern Kashmir
+               303  Kashmir-India border region
+               304  Kashmir-Xizang border region
+               305  Western Xizang-India border region
+               306  Xizang
+               307  Sichuan, China
+               308  Northern India
+               309  Nepal-India border region
+               310  Nepal
+               311  Sikkim, India
+               312  Bhutan
+               313  Eastern Xizang-India border region
+               314  Southern India
+               315  India-Bangladesh border region
+               316  Bangladesh
+               317  Northeastern India
+               318  Yunnan, China
+               319  Bay of Bengal
+
+
+             27     SOUTHERN XINJIANG TO GANSU
+
+               320  Kyrgyzstan-Xinjiang border region
+               321  Southern Xinjiang, China
+               322  Gansu, China
+               323  Western Nei Mongol, China
+               324  Kashmir-Xinjiang border region
+               325  Qinghai, China
+
+
+             28     LAKE ISSYK-KUL TO LAKE BAYKAL
+
+               326  Southwestern Siberia, Russia
+               327  Lake Baykal, Russia, region
+               328  East of Lake Baykal, Russia
+               329  Eastern Kazakhstan
+               330  Lake Issyk-Kul, Kyrgyzstan, region
+               331  Kazakhstan-Xinjiang border region
+               332  Northern Xinjiang, China
+               333  Tuva-Buryatia-Mongolia border region
+               334  Mongolia
+
+
+             29     WESTERN ASIA
+
+               335  Ural Mountains, Russia, region
+               336  Western Kazakhstan
+               337  Eastern Caucasus
+               338  Caspian Sea
+               339  Northwestern Uzbekistan
+               340  Turkmenistan
+               341  Iran-Turkmenistan border region
+               342  Turkmenistan-Afghanistan border region
+               343  Turkey-Iran border region
+               344  Iran-Armenia-Azerbaijan border region
+               345  Northwestern Iran
+               346  Iran-Iraq border region
+               347  Western Iran
+               348  Northern and central Iran
+               349  Northwestern Afghanistan
+               350  Southwestern Afghanistan
+               351  Eastern Arabian Peninsula
+               352  Persian Gulf
+               353  Southern Iran
+               354  Southwestern Pakistan
+               355  Gulf of Oman
+               356  Off coast of Pakistan
+
+
+             30     MIDDLE EAST - CRIMEA - EASTERN BALKANS
+
+               357  Ukraine - Moldova - Southwestern Russia region
+               358  Romania
+               359  Bulgaria
+               360  Black Sea
+               361  Crimea, Ukraine, region
+               362  Western Caucasus
+               363  Greece-Bulgaria border region
+               364  Greece
+               365  Aegean Sea
+               366  Turkey
+               367  Turkey-Georgia-Armenia border region
+               368  Southern Greece
+               369  Dodecanese Islands, Greece
+               370  Crete, Greece
+               371  Eastern Mediterranean Sea
+               372  Cyprus region
+               373  Dead Sea region
+               374  Jordan - Syria region
+               375  Iraq
+
+
+             31     WESTERN MEDITERRANEAN SEA AREA
+
+               376  Portugal
+               377  Spain
+               378  Pyrenees
+               379  Near south coast of France
+               380  Corsica, France
+               381  Central Italy
+               382  Adriatic Sea
+               383  Northwestern Balkan Peninsula
+               384  West of Gibraltar
+               385  Strait of Gibraltar
+               386  Balearic Islands, Spain
+               387  Western Mediterranean Sea
+               388  Sardinia, Italy
+               389  Tyrrhenian Sea
+               390  Southern Italy
+               391  Albania
+               392  Greece-Albania border region
+               393  Madeira Islands, Portugal, region
+               394  Canary Islands, Spain, region
+               395  Morocco
+               396  Northern Algeria
+               397  Tunisia
+               398  Sicily, Italy
+               399  Ionian Sea
+               400  Central Mediterranean Sea
+               401  Near coast of Libya
+
+
+             32     ATLANTIC OCEAN
+
+        $      402  North Atlantic Ocean
+               403  Northern Mid-Atlantic Ridge
+               404  Azores Islands region
+               405  Azores Islands, Portugal
+               406  Central Mid-Atlantic Ridge
+               407  North of Ascension Island
+               408  Ascension Island region
+               409  South Atlantic Ocean
+               410  Southern Mid-Atlantic Ridge
+               411  Tristan da Cunha region
+               412  Bouvet Island region
+               413  Southwest of Africa
+               414  Southeastern Atlantic Ocean
+         |     738  Reykjanes Ridge
+         |     739  Azores-Cape St. Vincent Ridge
+
+
+             33     INDIAN OCEAN
+
+               415  Eastern Gulf of Aden
+               416  Socotra region
+         $     417  Arabian Sea
+               418  Lakshadweep, India, region
+               419  Northeastern Somalia
+               420  North Indian Ocean
+               421  Carlsberg Ridge
+               422  Maldive Islands region
+               423  Laccadive Sea
+               424  Sri Lanka
+         $     425  South Indian Ocean
+               426  Chagos Archipelago region
+               427  Mauritius - Reunion region
+               428  Southwest Indian Ridge
+               429  Mid-Indian Ridge
+               430  South of Africa
+               431  Prince Edward Islands, South Africa, region
+               432  Crozet Islands region
+               433  Kerguelen Islands region
+               434  Broken Ridge
+               435  Southeast Indian Ridge
+               436  Southern Kerguelen Plateau
+         $     437  South of Australia
+         |     740  Owen Fracture Zone region
+         |     741  Indian Ocean Triple Junction
+         |     742  Western Indian-Antarctic Ridge
+
+
+             34     EASTERN NORTH AMERICA
+
+               438  Saskatchewan, Canada
+               439  Manitoba, Canada
+               440  Hudson Bay
+               441  Ontario, Canada
+               442  Hudson Strait, Canada, region
+               443  Northern Quebec, Canada
+               444  Davis Strait
+               445  Labrador, Canada
+               446  Labrador Sea
+               447  Southern Quebec, Canada
+               448  Gaspe Peninsula, Canada
+               449  Eastern Quebec, Canada
+               450  Anticosti Island, Canada
+               451  New Brunswick, Canada
+               452  Nova Scotia, Canada
+               453  Prince Edward Island, Canada
+               454  Gulf of St. Lawrence, Canada
+               455  Newfoundland, Canada
+               456  Montana, United States
+               457  Eastern Idaho, United States
+               458  Hebgen Lake, Montana, United States, region
+               459  Yellowstone, United States, region
+               460  Wyoming, United States
+               461  North Dakota, United States
+               462  South Dakota, United States
+               463  Nebraska, United States
+               464  Minnesota, United States
+               465  Iowa, United States
+               466  Wisconsin, United States
+               467  Illinois, United States
+               468  Michigan, United States
+               469  Indiana, United States
+               470  Southern Ontario, Canada
+               471  Ohio, United States
+               472  New York, United States
+               473  Pennsylvania, United States
+               474  Vermont - New Hampshire, United States, region
+               475  Maine, United States
+               476  Southern New England, United States
+               477  Gulf of Maine, United States
+               478  Utah, United States
+               479  Colorado, United States
+               480  Kansas, United States
+               481  Iowa-Missouri border region
+               482  Missouri-Kansas border region
+               483  Missouri, United States
+               484  Missouri-Arkansas border region
+               485  Missouri-Illinois border region
+               486  New Madrid, Missouri, United States, region
+               487  Cape Girardeau, Missouri, United States, region
+               488  Southern Illinois, United States
+               489  Southern Indiana, United States
+               490  Kentucky, United States
+               491  West Virginia, United States
+               492  Virginia, United States
+               493  Chesapeake Bay, United States, region
+               494  New Jersey, United States
+               495  Eastern Arizona, United States
+               496  New Mexico, United States
+               497  Northwestern Texas-Oklahoma border region
+               498  Western Texas, United States
+               499  Oklahoma, United States
+               500  Central Texas, United States
+               501  Arkansas-Oklahoma border region
+               502  Arkansas, United States
+               503  Louisiana-Texas border region
+               504  Louisiana, United States
+               505  Mississippi, United States
+               506  Tennessee, United States
+               507  Alabama, United States
+               508  Western Florida, United States
+               509  Georgia, United States
+               510  Florida-Georgia border region
+               511  South Carolina, United States
+               512  North Carolina, United States
+               513  Off east coast of United States
+               514  Florida Peninsula, United States
+               515  Bahama Islands
+               516  Eastern Arizona-Sonora border region
+               517  New Mexico-Chihuahua border region
+               518  Texas-Mexico border region
+               519  Southern Texas, United States
+               520  Near coast of Texas, United States
+               521  Chihuahua, Mexico
+               522  Northern Mexico
+               523  Central Mexico
+               524  Jalisco, Mexico
+               525  Veracruz, Mexico
+               526  Gulf of Mexico
+               527  Bay of Campeche
+
+
+             35     EASTERN SOUTH AMERICA
+
+               528  Brazil
+               529  Guyana
+               530  Suriname
+               531  French Guiana
+
+
+             36     NORTHWESTERN EUROPE
+
+               532  Eire
+               533  United Kingdom
+               534  North Sea
+               535  Southern Norway
+               536  Sweden
+               537  Baltic Sea
+               538  France
+               539  Bay of Biscay
+               540  The Netherlands
+               541  Belgium
+               542  Denmark
+               543  Germany
+               544  Switzerland
+               545  Northern Italy
+               546  Austria
+               547  Czech and Slovak Republics
+               548  Poland
+               549  Hungary
+
+
+             37     AFRICA
+
+         *     550  Northwest Africa (REGION NOT IN USE)
+               551  Southern Algeria
+               552  Libya
+               553  Egypt
+               554  Red Sea
+               555  Western Arabian Peninsula
+               556  Chad region
+               557  Sudan
+               558  Ethiopia
+               559  Western Gulf of Aden
+               560  Northwestern Somalia
+               561  Off south coast of northwest Africa
+               562  Cameroon
+               563  Equatorial Guinea
+               564  Central African Republic
+               565  Gabon
+               566  Congo
+               567  Zaire
+               568  Uganda
+               569  Lake Victoria region
+               570  Kenya
+               571  Southern Somalia
+               572  Lake Tanganyika region
+               573  Tanzania
+               574  Northwest of Madagascar
+               575  Angola
+               576  Zambia
+               577  Malawi
+               578  Namibia
+               579  Botswana
+               580  Zimbabwe
+               581  Mozambique
+               582  Mozambique Channel
+               583  Madagascar
+               584  South Africa
+               585  Lesotho
+               586  Swaziland
+               587  Off coast of South Africa
+         |     743  Western Sahara
+         |     744  Mauritania
+         |     745  Mali
+         |     746  Senegal - Gambia region
+         |     747  Guinea region
+         |     748  Sierra Leone
+         |     749  Liberia region
+         |     750  Cote d'Ivoire
+         |     751  Burkina Faso
+         |     752  Ghana
+         |     753  Benin - Togo region
+         |     754  Niger
+         |     755  Nigeria
+
+
+             38     AUSTRALIA
+
+               588  Northwest of Australia
+               589  West of Australia
+               590  Western Australia
+               591  Northern Territory, Australia
+               592  South Australia
+               593  Gulf of Carpentaria, Australia
+               594  Queensland, Australia
+               595  Coral Sea
+               596  Northwest of New Caledonia
+               597  New Caledonia region
+               598  Southwest of Australia
+               599  Off south coast of Australia
+               600  Near coast of South Australia
+               601  New South Wales, Australia
+               602  Victoria, Australia
+               603  Near southeast coast of Australia
+               604  Near east coast of Australia
+               605  East of Australia
+               606  Norfolk Island, Australia, region
+               607  Northwest of New Zealand
+               608  Bass Strait, Australia
+               609  Tasmania, Australia, region
+               610  Southeast of Australia
+
+
+             39     PACIFIC BASIN
+
+               611  North Pacific Ocean
+               612  Hawaiian Islands region
+               613  Hawaiian Islands, United States
+               614  Eastern Caroline Islands, Micronesia, region
+               615  Marshall Islands region
+               616  Enewetak Atoll, Marshall Islands, region
+               617  Bikini Atoll, Marshall Islands, region
+               618  Gilbert Islands, Kiribati, region
+               619  Johnston Island region
+               620  Line Islands, Kiribati, region
+               621  Palmyra Island, Kiribati, region
+               622  Kiritimati, Kiribati, region
+               623  Tuvalu region
+               624  Phoenix Islands, Kiribati, region
+               625  Tokelau Islands region
+               626  Northern Cook Islands
+               627  Cook Islands region
+               628  Society Islands region
+               629  Tubuai Islands region
+               630  Marquesas Islands region
+               631  Tuamotu Archipelago region
+               632  South Pacific Ocean
+
+
+             40     ARCTIC ZONE
+
+               633  Lomonosov Ridge
+               634  Arctic Ocean
+               635  Near north coast of Kalaallit Nunaat
+               636  Eastern Kalaallit Nunaat
+               637  Iceland region
+               638  Iceland
+               639  Jan Mayen Island region
+               640  Greenland Sea
+               641  North of Svalbard
+               642  Norwegian Sea
+               643  Svalbard, Norway, region
+               644  North of Franz Josef Land
+               645  Franz Josef Land, Russia
+               646  Northern Norway
+               647  Barents Sea
+               648  Novaya Zemlya, Russia
+               649  Kara Sea
+               650  Near coast of northwestern Siberia, Russia
+               651  North of Severnaya Zemlya
+               652  Severnaya Zemlya, Russia
+               653  Near coast of northern Siberia, Russia
+               654  East of Severnaya Zemlya
+               655  Laptev Sea
+
+
+             41     EASTERN ASIA
+
+               656  Southeastern Siberia, Russia
+               657  Priamurye-Northeastern China border region
+               658  Northeastern China
+               659  North Korea
+               660  Sea of Japan
+               661  Primorye, Russia
+               662  Sakhalin Island, Russia
+               663  Sea of Okhotsk
+               664  Southeastern China
+               665  Yellow Sea
+               666  Off east coast of southeastern China
+
+
+             42     NORTHEASTERN ASIA, NORTHERN ALASKA TO GREENLAND
+
+               667  North of New Siberian Islands
+               668  New Siberian Islands, Russia
+               669  Eastern Siberian Sea
+               670  Near north coast of eastern Siberia, Russia
+               671  Eastern Siberia, Russia
+               672  Chukchi Sea
+               673  Bering Strait
+               674  St. Lawrence Island, United States, region
+               675  Beaufort Sea
+               676  Northern Alaska, United States
+               677  Northern Yukon Territory, Canada
+               678  Queen Elizabeth Islands, Canada
+               679  Northwest Territories, Canada
+               680  Western Kalaallit Nunaat
+               681  Baffin Bay
+               682  Baffin Island, Canada, region
+
+
+             43     SOUTHEASTERN AND ANTARCTIC PACIFIC OCEAN
+
+               683  Southeastcentral Pacific Ocean
+               684  Southern East Pacific Rise
+               685  Easter Island region
+               686  West Chile Rise
+               687  Juan Fernandez Islands, Chile, region
+               688  East of North Island, New Zealand
+               689  Chatham Islands, New Zealand, region
+               690  South of Chatham Islands
+               691  Pacific-Antarctic Ridge
+         $     692  Southern Pacific Ocean
+         |     756  Southeast of Easter Island
+
+
+             44     GALAPAGOS AREA
+
+         $     693  Eastcentral Pacific Ocean
+               694  Central East Pacific Rise
+               695  West of Galapagos Islands
+               696  Galapagos Islands region
+               697  Galapagos Islands, Ecuador
+               698  Southwest of Galapagos Islands
+               699  Southeast of Galapagos Islands
+         |     757  Galapagos Triple Junction region
+
+
+             45     MACQUARIE LOOP
+
+               700  South of Tasmania
+               701  West of Macquarie Island
+               702  Balleny Islands region
+
+
+             46     ANDAMAN ISLANDS TO SUMATERA
+
+               703  Andaman Islands, India, region
+               704  Nicobar Islands, India, region
+               705  Off west coast of northern Sumatera, Indonesia
+               706  Northern Sumatera, Indonesia
+               707  Malay Peninsula
+               708  Gulf of Thailand
+
+
+             47     BALUCHISTAN
+
+               709  Southeastern Afghanistan
+               710  Pakistan
+               711  Southwestern Kashmir
+               712  India-Pakistan border region
+
+
+             48     HINDU KUSH AND PAMIR
+               713  Central Kazakhstan
+               714  Southeastern Uzbekistan
+               715  Tajikistan
+               716  Kyrgyzstan
+               717  Afghanistan-Tajikistan border region
+               718  Hindu Kush, Afghanistan, region
+               719  Tajikistan-Xinjiang border region
+               720  Northwestern Kashmir
+
+
+             49     NORTHERN EURASIA
+
+               721  Finland
+               722  Norway-Murmansk border region
+               723  Finland-Karelia border region
+               724  Baltic States - Belarus - Northwestern Russia region
+               725  Northwestern Siberia, Russia
+               726  Northern and central Siberia, Russia
+
+
+             50     ANTARCTICA
+
+               727  Victoria Land, Antarctica
+               728  Ross Sea
+               729  Antarctica
+
+
+              5     MEXICO - GUATEMALA AREA
+
+         |     730  Northern East Pacific Rise
+
+
+              7     CARIBBEAN LOOP
+
+         |     731  North of Honduras
+
+
+             10     SOUTHERN ANTILLES
+
+         |     732  East of South Sandwich Islands
+
+
+             25     MYANMAR AND SOUTHEAST ASIA
+
+         |     733  Thailand
+         |     734  Laos
+         |     735  Kampuchea
+         |     736  Vietnam
+         |     737  Gulf of Tongking
+
+
+             32     ATLANTIC OCEAN
+
+         |     738  Reykjanes Ridge
+         |     739  Azores-Cape St. Vincent Ridge
+
+
+             33     INDIAN OCEAN
+
+         |     740  Owen Fracture Zone region
+         |     741  Indian Ocean Triple Junction
+         |     742  Western Indian-Antarctic Ridge
+
+
+             37     AFRICA
+
+         |     743  Western Sahara
+         |     744  Mauritania
+         |     745  Mali
+         |     746  Senegal - Gambia region
+         |     747  Guinea region
+         |     748  Sierra Leone
+         |     749  Liberia region
+         |     750  Cote d'Ivoire
+         |     751  Burkina Faso
+         |     752  Ghana
+         |     753  Benin - Togo region
+         |     754  Niger
+         |     755  Nigeria
+
+
+             43     SOUTHEASTERN AND ANTARCTIC PACIFIC OCEAN
+
+         |     756  Southeast of Easter Island
+
+
+             44     GALAPAGOS AREA
+
+         |     757  Galapagos Triple Junction region

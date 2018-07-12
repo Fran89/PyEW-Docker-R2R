@@ -1,0 +1,1 @@
+select a.id, a.fk_module, a.version, a.ot_dt, a.lat, a.lon, GROUP_CONCAT(b.id, '.', b.version ORDER BY b.fk_module, b.version SEPARATOR ',') from ew_arc_summary a left join ew_arc_summary b on (b.id > 6000 AND fn_similarity_generic_hypocenters(a.ot_dt, b.ot_dt, a.lat, a.lon, b.lat, b.lon) < 30.0) WHERE a.id > 6000  group by id;

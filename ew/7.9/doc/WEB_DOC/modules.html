@@ -1,0 +1,1340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;
+      charset=ISO-8859-1">
+    <title>Earthworm Modules: Index</title>
+    <meta name="generator" content="Bluefish 1.0.7">
+    <link ref="stylesheet" href="ew_doc.css" type="text/css">
+    <style type="text/html">
+.maillink {
+   font-weight: bold ;
+   color:       #000000;
+   text-decoration: underline ;
+}
+  </style>
+  </head>
+  <body style="color: rgb(0, 0, 0); background-color: rgb(250, 192,
+    162);" alink="#ff0000" link="#0000ee" vlink="#551a8b">
+    <a href="http://www.usgs.gov/"><br>
+    </a>
+    <h1><img src="GIFS/ew.logo.tiny.gif" alt="EARTHWORM Logo"
+        align="texttop" height="61" width="71">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EARTHWORM MODULES</h1>
+    <div align="right">Last revised October 26, 2016&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <big><b>Version 7.9</b></big>
+    <h2>Modules Index</h2> 
+    <a href="#sys">SYSTEM</a><br>
+    <a href="#STATUS_AND_ERROR_REPORTING_MODULES_">STATUS AND ERROR
+      REPORTING </a><br>
+    <a href="#DATA_SOURCE_MODULES_">DATA SOURCE</a><br>
+    <a href="#PROCESSING_MODULES_">SEISMIC PROCESSING</a><br>
+    <a href="#DATA_EXCHANGE_MODULES_">DATA EXCHANGE</a><br>
+    <a href="#ARCHIVINGPLAYBACK_MODULES_">ARCHIVING AND PLAYBACK</a><br>
+    <a href="#DISPLAY_MODULES_">DISPLAY</a><br>
+    <a href="#HELPFUL_PROGRAMS_">HELPFUL UTILITIES</a><br>
+    <br>
+    <hr style="width: 100%; height: 2px;"><br>
+    <h2><a name="sys"></a> SYSTEM MODULES </h2>
+    <table border="2" width="95%">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+        </tr>
+        <tr>
+          <td align="center">startstop </td>
+          <td>Starts &amp; stops all <tt>EARTHWORM</tt> modules on a
+            computer. This module is the core of the earthworm system.</td>
+          <td><a href="ovr/startstop_ovr.html">overview</a></td>
+          <td align="center">commands:<br>
+            <a href="cmd/startstop_nt.html">Windows<br>
+            </a><a href="cmd/startstop_sol.html">Solaris</a><br>
+            <a href="cmd/startstop_linux.html">Linux</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">restart </td>
+          <td>Allows manual restarting of individual modules.</td>
+          <td><a href="ovr/restart_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/restart_cmd.html"> commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">reconfigure</td>
+          <td> Allows adding new modules or rings to a running <tt>EARTHWORM</tt>
+            </td>
+          <td><a href="ovr/reconfigure_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/reconfigure_cmd.html">
+              commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">pau</td>
+          <td>Completely shuts down <tt>EARTHWORM</tt> and all modules/
+            rings</td>
+          <td><a href="ovr/pau_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/pau_cmd.html"> commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">stopmodule</td>
+          <td>Given an <tt>EARTHWORM</tt> module process ID, stopmodule
+            stops it, and startstop marks it as "Stop" to prevent
+            statmgr from restarting it.</td>
+          <td><a href="ovr/stopmodule_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/stopmodule_cmd.html"> commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">pidpau</td>
+          <td>Given an <tt>EARTHWORM</tt> module process ID, pidpau
+            stops it.</td>
+          <td><a href="ovr/pidpau_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/pidpau_cmd.html"> commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">StarstopPipeConsole</td>
+          <td>Provides a way to interact with the 'startstop' process using
+              a console window. This is useful on Windows installations with
+              'startstop' service installed.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.8</span>)</td>
+          <td><a href="USER_GUIDE/windows_StartstopPipeConsole.html">overview</a></td>
+          <td align="center"> none </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><a name="STATUS_AND_ERROR_REPORTING_MODULES_"></a> STATUS AND
+      ERROR REPORTING MODULES </h2>
+    <table border="2" width="95%">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+        </tr>
+        <tr>
+          <td align="center">statmgr </td>
+          <td>Monitors <tt>EARTHWORM </tt>system integrity via
+            heartbeat and error messages. Sends email and pager messages
+            as required </td>
+          <td><a href="ovr/statmgr_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/statmgr_cmd.html"> commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">copystatus </td>
+          <td>Copies heartbeats and error messages from one shared
+            memory region to another</td>
+          <td><a href="ovr/copystatus.html">overview</a></td>
+          <td align="center"> <a href="cmd/copystatus.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">diskmgr</td>
+          <td>Monitors the amount of free disk space available</td>
+          <td><a href="ovr/diskmgr_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/diskmgr_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">status</td>
+          <td>Outputs to the screen <tt>EARTHWORM</tt> status of rings
+            and modules. </td>
+          <td><a href="ovr/status_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/status_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ewhtmlemail</td>
+          <td>Listens for HYP2000ARC event messages and sends graphical
+            alert emails</td>
+          <td><a href="ovr/ewhtmlemail_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ewhtmlemail_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ewhtmlreport</td>
+          <td>Generates interactive html reports from HYP2000ARC files</td>
+          <td><a href="ovr/ewhtmlreport_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ewhtmlreport_cmd.html">commands</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><a name="DATA_SOURCE_MODULES_"></a> DATA SOURCE MODULES </h2>
+    <table border="2">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note%201">note 1</a>)</th>
+        </tr>
+        <tr>
+          <td align="center">adsend</td>
+          <td>Digitizes analog seismic signals on Win2000 system only
+            using National Instruments digitizer boards.<br>
+          </td>
+          <td align="center"><a href="ovr/adsend_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/adsend_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">gcf2ew</td>
+          <td>Guralp Digitizers Earthworm feed via direct connection to
+            serial port or TCP terminal server. (Solaris and Linux only)
+          </td>
+          <td align="center"><a href="ovr/over_gcf2ew.html">overview</a></td>
+          <td align="center"><a href="cmd/cmd_gcf2ew.html">commands</a></td>
+        </tr>
+          <td align="center">geojson2ew</td>
+          <td>Receives data from an AMQP server.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.8</span>)</td>
+          <td align="center"><a href="ovr/geojson2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/geojson2ew_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">grf2ew</td>
+          <td>NetDas Digitizers Earthworm feed via direct connection to
+            GRF server. (Solaris, Linux, Windows)<br>
+          </td>
+          <td align="center"><a href="ovr/grf2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/grf2ew_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">k2ew</td>
+          <td style="vertical-align: top;">Receives data packets from a
+            Kinemetrics K2 Strong Motion Accelerograph via serial port
+            or TCP on either Solaris or Win2000.</td>
+          <td align="center"><a href="ovr/k2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/k2ew_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">naqs2ew</td>
+          <td> Naqs2ew is an interface through which waveform data
+            collected by the Nanometrics data acquisition software,
+            NaqsServer, can be fed into an Earthworm system in
+            near-real-time. </td>
+          <td align="center"><a href="ovr/naqs2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/naqs2ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td align="center">nmxptool</td>
+          <td> nmxptool is an IMPROVED interface through which waveform
+            data collected by the Nanometrics data acquisition software,
+            NaqsServer, can be fed into an Earthworm system in
+            near-real-time. (Contributed by INGV)</td>
+          <td align="center"><a href="ovr/nmxptool_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/nmxptool_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">psnadsend<br>
+          </td>
+          <td style="vertical-align: top;">PSNadsend for Public Seismic
+            Network (webtronics digitizer)
+          </td>
+          <td align="center"><a href="ovr/PsnAdSend_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/PsnAdSend_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">q2ew</td>
+          <td> A Quanterra/COMSERV data feeding program.</td>
+          <td align="center"><a href="ovr/q2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/q2ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">q3302ew<br>
+          </td>
+          <td style="vertical-align: top;">A Quanterra Q330 data feeding
+            program, rewritten by ISTI using Lib330 from Quanterra (not
+            MountainAir).<br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/q3302ew_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="cmd/q3302ew_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">reftek2ew</td>
+          <td> A Reftek data feeding program</td>
+          <td><a href="ovr/reftek2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/reftek2ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td align="center">samtac2ew</td>
+          <td> Imports data from SAMTAC-802U over tcp/ip or serial on
+            windows</td>
+          <td><a href="ovr/samtac2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/samtac2ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">rock2ew<br>
+          </td>
+          <td style="vertical-align: top;">Provides a data relay from a
+            Kinemetrics-Rockhound-compatible instrument into Earthworm
+            via export/import.</td>
+          <td style="vertical-align: top;"><a
+              href="ovr/RockToEW_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="cmd/RockToEW_desc.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">saraadsend<br>
+          </td>
+          <td style="vertical-align: top;">A SARA digitizer earthworm
+            data feeding module (serial input, windows only).<br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/SaraAdSend_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="cmd/SaraAdSend_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">scream2ew</td>
+          <td> Scream2ew converts data from Guralp SCREAM server to
+            trace_buf earthworm messages and puts them into an earthworm
+            ring.</td>
+          <td><a href="ovr/scream2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/scream2ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">srpar2ew<br>
+          </td>
+          <td style="vertical-align: top;">Symmetric Research Digitzer
+            module for parallel port digitizers, formerly known as
+            srparxchewsend.<br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/srpar2ew_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="cmd/srpar2ew_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">srusb2ew<br>
+          </td>
+          <td style="vertical-align: top;">Symmetric Research Digitzer
+            module for usb port digitizers.</td>
+          <td style="vertical-align: top;"><a
+              href="ovr/srusb2ew_ovr.html">overview</a></td>
+          <td style="vertical-align: top;"><a
+              href="cmd/srusb2ew_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center"> windsr2ew<br>
+          </td>
+          <td>Receives data packets from a windsr digitizer (webtronics)
+            using TCP/IP.</td>
+          <td><a href="ovr/Ws2Ew_ovr.html">overview</a><br>
+          </td>
+          <td align="center"><a href="cmd/Ws2Ew_cmd.html">commands</a><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><a name="PROCESSING_MODULES_"></a> PROCESSING MODULES </h2>
+    
+<table border="2">
+  <tbody> 
+  <tr> 
+    <th>Module name </th>
+    <th>Its function, briefly </th>
+    <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+  </tr>
+  <tr> 
+    <td align="center">pick_ew </td>
+    <td>Picks P-arrivals and makes coda measurements </td>
+    <td style="text-align: center;"><a href="ovr/pick_ew_ovr.html">overview</a> 
+      <br>
+      <a href="ovr/picker_tune.html">tuning info</a></td>
+    <td align="center"><a href="cmd/pick_ew_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">pick_FP </td>
+    <td>Picks phase arrivals using a multiband picking algorithm</td>
+    <td style="text-align: center;"><a href="ovr/pick_FP_ovr.html">overview</a> 
+    <td align="center"><a href="cmd/pick_FP_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">pkfilter<br>
+    </td>
+    <td style="vertical-align: top;">A duplicate pick removal filter.</td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/pkfilter_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/pkfilter_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">coda_aav</td>
+    <td style="vertical-align: top;">Produces 2s coda avg absolute values (aav) 
+      (Menlo contrib)
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/coda_aav_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/coda_aav_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td style="text-align: center;">coda_dur</td>
+    <td style="vertical-align: top;">Reads picks and coda avg absolute values 
+      (aav) and then determines the coda duration for each pick (Menlo contrib) 
+    </td>
+    <td style="text-align: center;"><a href="ovr/coda_dur_ovr.html">overview</a><br>
+    </td>
+    <td style="text-align: center;"><a href="cmd/coda_dur_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td align="center">binder_ew </td>
+    <td>Associates P-arrivals into events</td>
+    <td style="text-align: center;"> <a
+              href="ovr/binder_setup.html">overview<br>/setup</a></td>
+    <td align="center"><a href="cmd/binder_ew_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqproc </td>
+    <td>Initiates final event processing (head of mega-module).</td>
+    <td style="text-align: center;"><a href="ovr/eqproc_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/eqproc_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqprelim </td>
+    <td>Initiates preliminary event processing (alternate head of mega-module). 
+    </td>
+    <td style="text-align: center;"><a
+              href="ovr/eqprelim_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/eqprelim_cmd.html">commands </a></td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">eqassemble</td>
+    <td style="vertical-align: top;">Initiates event processing multiple times 
+      (CISN contrib)
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/eqassemble_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/eqassemble_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td align="center">eqbuf </td>
+    <td>Buffers events (part of mega-module) </td>
+    <td style="text-align: center;"><a href="ovr/eqbuf_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/eqbuf_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqcoda </td>
+    <td>Performs coda calculations (part of mega-module)</td>
+    <td style="text-align: center;"><a href="ovr/eqcoda_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/eqcoda_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqverify </td>
+    <td>Passes only events verified as earthquakes (part of mega-module) </td>
+    <td style="text-align: center;"><a
+              href="ovr/eqverify_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/eqverify_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqverify_assemble </td>
+    <td>Passes only events verified as earthquakes (part of mega-module with eqassemble) 
+    </td>
+    <td style="text-align: center;"><a
+              href="ovr/eqverify_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/eqverify_assemble_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">gegqproc</td>
+    <td>Clone of eqproc designed to work with glass.</td>
+    <td style="text-align: center;"><a href="ovr/geqproc_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/geqproc_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">glass</td>
+    <td>Carl Johnson's Global Associator. See the overview for the Glass Manual 
+      written for Hydra by Dave Kragness.</td>
+    <td style="text-align: center;"><a href="ovr/glass_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/glass_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">hyp2000_mgr </td>
+    <td>Relocates earthquakes using Hypoinverse (tail of mega-module) </td>
+    <td style="text-align: center;"><a
+              href="ovr/hyp2000_mgr_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/hyp2000_mgr_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">hyp2000 </td>
+    <td>Hyp2000 is the stand-alone version of hypoinverse, an earthquake location 
+      program, written and maintained by Fred Klein at USGS, Menlo Park </td>
+    <td style="text-align: center;"><a href="ovr/hyp2000_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/hyp2000_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">nll_mgr </td>
+    <td>Relocates earthquakes using NonLinLoc from Anthony Lomax (tail of mega-module) 
+      </td>
+    <td style="text-align: center;"><a
+              href="ovr/nll_mgr_overview.html">overview</a></td>
+    <td align="center"><a href="cmd/nll_mgr_commands.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">evanstrig and evansassoc</td>
+    <td>Evanstrig monitors waveforms for long-period signals; evansassoc associates 
+      LP triggers into events. </td>
+    <td style="text-align: center;"><a
+              href="ovr/evanstrig_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/evanstrig_cmd.html">Evanstrig Commands</a><br>
+      <a href="cmd/evansassoc_cmd.html">Evansassoc Commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">carl*trig<br>
+    </td>
+    <td>The Carl Johnson coincidence trigger for Earthworm consists of two programs. 
+      CarlStaTrig produces station trigger messages on a transport ring. CarlSubTrig 
+      reads these and writes a TRIGLIST message. </td>
+    <td style="text-align: center;"><a
+              href="ovr/carltrig_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/carlstatrig_cmd.html">CarlStaTrig</a><br>
+      <a href="cmd/carlsubtrig_cmd.html">CarlSubTrig</a></td>
+  </tr>
+  <tr> 
+    <td align="center">rayloc_ew</td>
+    <td>Ray Buland's global earthquake locator.</td>
+    <td style="text-align: center;"><a
+              href="ovr/rayloc_ew_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/rayloc_ew_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">raypicker</td>
+    <td>Ray Buland's global picker.</td>
+    <td style="text-align: center;"><a
+              href="ovr/raypicker_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/raypicker_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">statrigfilter<br>
+    </td>
+    <td style="vertical-align: top;">A pkfilter like module for filtering out 
+      duplicate station triggers.</td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/statrigfilter_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/statrigfilter_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td align="center">compress_UA and decompress_UA</td>
+    <td>The compress_UA and decompress_UA modules implement the gencompress algorithm 
+      which is used with permission from Boulder Real Time Technologies, Inc., 
+      copyright 1997. </td>
+    <td style="text-align: center;"><a
+              href="ovr/compress_UA_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/compress_UA_cmd.html">Compress_UA</a><br>
+      <a href="cmd/decompress_UA_cmd.html">Decompress_UA</a></td>
+  </tr>
+  <tr> 
+    <td align="center">decimate </td>
+    <td>Implements filter and decimate routines. </td>
+    <td style="text-align: center;"><a
+              href="ovr/decimate_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/decimate_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">fir </td>
+    <td>Implements a general-purpose FIR filter for trace data. </td>
+    <td style="text-align: center;"><a href="ovr/fir_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/fir_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">arc2trig </td>
+    <td>Takes a hypo arc message as input, and produces a .trg file (also puts 
+      trig message on out ring).</td>
+    <td style="text-align: center;"><a
+              href="ovr/arc2trig_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/arc2trig_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqfilter </td>
+    <td>Performs parameter tests on Hypoinverse ARC messages.</td>
+    <td style="text-align: center;"><a
+              href="ovr/eqfilter_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/eqfilter_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">eqfilterII </td>
+    <td>Clone of eqfilterII to work with any of TYPE_HYP2000ARC, TYPE_LOC_GLOBAL, 
+      and TYPE_RAYLOC</td>
+    <td style="text-align: center;"><a
+              href="ovr/eqfilterII_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/eqfilterII_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">localmag </td>
+    <td>Calculates the Local Magnitude</td>
+    <td style="text-align: center;"><a
+              href="ovr/localmag_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/localmag_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">gmew </td>
+    <td>Calculates strong motion parameters</td>
+    <td style="text-align: center;"><a href="ovr/gmew_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/gmew_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">wftimefilter<br>
+    </td>
+    <td style="vertical-align: top;">Sanitizer of waveform packets to eliminate 
+      out of order and badly timed packets (overlaps and dups etc).</td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/wftimefilter_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/wftimefilter_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">wftimeshifter<br>
+    </td>
+    <td style="vertical-align: top;">Adds a fixed time offset to waveform packets. 
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/wftimeshifter_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/wftimeshifter_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td style="vertical-align: top; text-align: center;">ewintegrate<br>
+    </td>
+    <td style="vertical-align: top;"> Realtime computation of integration of waveforms, 
+      useful for taking acceleration to velocity or velocity to displacement. 
+      Also allows filtering.</td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="ovr/ewintegrate_ovr.html">overview</a><br>
+    </td>
+    <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/ewintegrate_cmd.html">commands</a><br>
+    </td>
+  </tr>
+  <tr> 
+    <td style=" text-align: center; vertical-align: top;">ewdrift<br>
+    </td>
+    <td style="vertical-align: top;">Realtime computation of drift between 2 channels 
+      of waveforms.</td>
+    <td style="text-align: center; vertical-align: top;"><a
+              href="ovr/ewdrift_ovr.html">overview</a></td>
+    <td style="text-align: center; vertical-align: top;"><a
+              href="cmd/ewdrift_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">ewspectra </td>
+    <td>Takes data from one or more waveservers, computes and processes their 
+      spectra</td>
+    <td style="text-align: center;"><a
+              href="ovr/ewspectra_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/ewspectra_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">compute_spectra </td>
+    <td>Posts a message for <a href="ovr/ewspectra_ovr.html">ewspectra</a> to 
+      begin processing. (Deprecated 5/5/2011; use <a
+              href="ovr/activate_module_ovr.html">activate_module</a> instead.)</td>
+    <td style="text-align: center;"> <a
+              href="ovr/compute_spectra_ovr.html">overview</a></td>
+    <td align="center">none </td>
+  </tr>
+  <tr> 
+    <td align="center">ewthresh </td>
+    <td>Monitors a ring for TRACEBUF2X messages and generates an alarm message 
+      when a SCNL-specific threshold is exceeded.</td>
+    <td style="text-align: center;"><a
+              href="ovr/ewthresh_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/ewthresh_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">ewnotify </td>
+    <td>Monitors a ring for ACTIVATE_MODULE or alarm messages; generates email 
+      and posts a message to a ring for an instance of activated_scripts.</td>
+    <td style="text-align: center;"><a
+              href="ovr/ewnotify_ovr.html">overview</a></td>
+    <td align="center"><a href="cmd/ewnotify_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">ewaccel </td>
+    <td>An acceleration threshold monitor; reads TRACEBUF2 packets from sensors 
+      on different floors of a building, compares the sum of their forces w/ a 
+      threshold which, if exceeded, causes an alarm message to be written to a 
+      ring.</td>
+    <td style="text-align: center;"><a href="ovr/ewaccel_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/ewaccel_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">ewshear </td>
+    <td>A shear wave velocity monitor; reads TRACEBUF2 packets from sensors on 
+      different floors of a building, compares the change in velocity w/ a percentage 
+      threshold which, if exceeded, causes an alarm message to be written to a 
+      ring.</td>
+    <td style="text-align: center;"><a href="ovr/ewshear_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/ewshear_cmd.html">commands</a></td>
+  </tr>
+  <tr> 
+    <td align="center">ew_rsamalarm </td>
+    <td>An RSAM monitor; reads TRACEBUF and TRACEBUF2 as would be produced by 
+      ew2rsam. Recognizes when identified stations have an event, logging and 
+      producing messages with statistics on each event. Groups stations into subnets; 
+      when enough stations in a subnet participate in an event concurrently, an 
+      alarm message is produced.</td>
+    <td style="text-align: center;"><a href="ovr/ew_rsamalarm_ovr.html">overview</a> 
+    </td>
+    <td align="center"><a href="cmd/ew_rsamalarm_cmd.html">commands</a></td>
+  </tr>
+  </tbody> 
+</table>
+    <h2><a name="DATA_EXCHANGE_MODULES_"></a> DATA EXCHANGE MODULES </h2>
+    <table border="2">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+        </tr>
+        <tr>
+          <td align="center">coaxtoring </td>
+          <td>Reads <tt>EARTHWORM</tt> messages from Ethernet and
+            places them into shared memory</td>
+          <td><a href="ovr/coaxtoring_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/coaxtoring_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">condenselogo</td>
+          <td>Reads messages from a list of logos from one transport
+            ring and writes them to another ring using its own
+            installation and module id in the logo.</td>
+          <td style="text-align: center;"><a
+              href="ovr/condenselogo_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/condenselogo_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ringtocoax </td>
+          <td>Reads <tt>EARTHWORM</tt> messages from shared memory and
+            broadcasts them onto Ethernet</td>
+          <td><a href="ovr/ringtocoax_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ringtocoax_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">ringtocoaxII</td>
+          <td style="vertical-align: top;">Same as ringtocoax but with
+            an input queue
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/ringtocoaxII_ovr.html">overview</a><br>
+          </td>
+          <td style="text-align: center;"><a
+              href="cmd/ringtocoaxII_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">menlo_report </td>
+          <td>Transfers single-event HYPOINVERSE archive files to a
+            remote machine </td>
+          <td><a href="ovr/menlo_report_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/menlo_report_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center"> export_generic<br>
+            export_scn<br>
+            export_scnl<br>
+            export_scn_pri<br>
+            export_ack<br>
+            export_scnl_ack<br>
+            export_gen_actv<br>
+          </td>
+          <td> Exports <tt>EARTHWORM</tt> messages over Internet
+            (partner to import_generic)
+          </td>
+          <td><a href="ovr/import-export_ovr.html">overview</a></td>
+          <td align="center"> <a href="cmd/export_cmd.html">export_generic</a><br>
+            <a href="cmd/export_scn_cmd.html">export_scn</a><br>
+            <a href="cmd/export_scn_pri_cmd.html">export_scn_pri</a><br>
+            <a href="cmd/export_ack_cmd.html">export_ack</a><br>
+            <a href="cmd/export_scnl_cmd.html">export_scnl</a><br>
+            <a href="cmd/export_scnl_ack_cmd.html">export_scnl_ack</a><br>
+            <a href="cmd/export_gen_actv_cmd.html">export_gen_actv</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">ew2file<br>
+          </td>
+          <td style="vertical-align: top;">Converts <tt>EARTHWORM</tt>
+            messages into files.<br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/ew2file_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/ew2file_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">file2ew<br>
+          </td>
+          <td style="vertical-align: top;">Inserts <tt>EARTHWORM</tt>
+            messages files onto rings.<br>
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/file2ew_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/file2ew_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">import_generic<br>
+            import_pasv </td>
+          <td>Imports <tt>EARTHWORM</tt> messages over Internet
+            (partner to export_generic)</td>
+          <td><a href="ovr/import-export_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/import_cmd.html">import_generic
+
+
+              commands</a><br>
+            <a href="cmd/import_pasv_cmd.html">import_pasv commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">vdl_ew </td>
+          <td>This is the Earthworm encapsulation of the USNSN code
+            written by Dave Ketchum, USNSN. </td>
+          <td><a href="ovr/vdl_ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/vdl_ew_cmd.html">commands </a></td>
+        </tr>
+        <tr>
+          <td align="center">import_ida </td>
+          <td>This program enables an Earthworm to retrieve and process
+            continuous trace data from numerous IDA data servers. </td>
+          <td><a href="ovr/import_ida_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/import_ida_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">rcv_ew </td>
+          <td>The module permits turn-key, two-way trace data exchange
+            between the USNSN and regional networks. </td>
+          <td><a href="ovr/rcv_ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/rcv_ew_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">liss2ew</td>
+          <td>Liss2ew is the earthworm module for receiving trace data
+            from the Live Internet Seismic Server. </td>
+          <td><a href="ovr/liss2ew_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/liss2ew_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">liss2ew_scnl</td>
+          <td>Liss2ew_scnl is the earthworm module for receiving trace
+            data from the Live Internet Seismic Server. This is a
+            rewrite of liss2ew for SCNL and has only been tested under
+            windows</td>
+          <td><a href="ovr/liss2ew_scnl_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/liss2ew_scnl_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ew2liss</td>
+          <td>Ew2liss is the Earthworm module for serving Earthworm
+            trace data in LISS (Live Internet Seismic Server) format.</td>
+          <td><a href="ovr/ew2liss_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ew2liss_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ringdup</td>
+          <td>Ringdup reads messages from one ring and deposits them into another.</td>
+          <td align="center"><a href="ovr/ringdup_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ringdup_generic_cmd.html">Ringdup_generic</a><br>
+            <a href="cmd/ringdup_scn_cmd.html">Ringdup_scn</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">tbuf2mseed</td>
+          <td>Reads TRACEBUF2 messages from one ring, converts them to MiniSEED messages,
+              and deposits them into another ring.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td align="center"><a href="ovr/tbuf2mseed_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/tbuf2mseed_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">mseed2tbuf</td>
+          <td>Reads MiniSEED messages from one ring, converts them to TRACEBUF2 messages,
+              and deposits them into another ring.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td align="center"><a href="ovr/mseed2tbuf_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/mseed2tbuf_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">ew2ringserver</td>
+          <td>Collects TRACEBUF2 or TYPE_MSEED messages from an Earthworm ring and
+              sends miniSEED records to an IRIS ringserver SeedLink server.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td align="center"><a href="ovr/ew2ringserver_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ew2ringserver_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">ewexport2ringserver</td>
+          <td>Collects data from an Earthworm export process and sends the data to
+              an IRIS ringserver SeedLink server.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td align="center"><a href="ovr/ewexport2ringserver_ovr.html">overview</a></td>
+          <td align="center">none</td>
+        </tr>
+        <tr>
+          <td align="center">seisan_report</td>
+          <td>Watches for TYPE_HYP2000ARC type messages and generates seisan s-files.</td>
+          <td align="center"><a href="ovr/seisan_report_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/seisan_report_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top;">
+            <div style="text-align: center;">scn2scnl<br>
+            </div>
+            <div style="text-align: center;">scnl2scn
+            </div>
+          </td>
+          <td>SCN 2 SCNL converters for waveform packets</td>
+          <td align="center"><a
+              href="ovr/scn_converters_ovr.html">overview</a>
+          </td>
+          <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/scn2scnl_cmd.html">scn2scnl</a><br>
+            <a href="cmd/scnl2scn_cmd.html">scnl2scn</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">pickwasher<br>
+          </td>
+          <td style="vertical-align: top;">Pick format (scnl to global)
+            converter from NEIC(Windows and Solaris compat)
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/pickwasher_ovr.html">overview </a><br>
+          </td>
+          <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/pickwasher_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="vertical-align: top; text-align: center;">slink2ew<br>
+          </td>
+          <td style="vertical-align: top;">Seedlink importer module from
+            Chad Trabant (Windows and Solaris compat)
+          </td>
+          <td style="vertical-align: top;"><a
+              href="ovr/slink2ew_ovr.html">overview</a><br>
+          </td>
+          <td style="vertical-align: top; text-align: center;"><a
+              href="cmd/slink2ew_cmd.html">commands</a><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center"> sendfileII<br>
+            getfileII<br>
+            makehbfile </td>
+          <td> Set of programs used to transfer files between computers
+            running Windows 2000 and/or Sun Solaris. These programs do
+            not require an Earthworm setup. </td>
+          <td><a href="ovr/getfileII_sendfileII.html">overview</a></td>
+          <td align="center"> ---- </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><a name="ARCHIVINGPLAYBACK_MODULES_"></a> ARCHIVING/PLAYBACK
+      MODULES </h2>
+    <table border="2">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+          <td align="center">archman</td>
+          <td>archman provides a wrapper for waveman2disk for continuous
+            output of data to file.</td>
+          <td><a href="ovr/archman_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/archman_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">wave_serverV</td>
+          <td>Wave_serverV provides a network-based service for trace
+            data. It acquires Earthworm trace data messages for
+            specified channels and maintains a disk-based circular
+            buffer for each channel. </td>
+          <td><a href="ovr/wave_serverV_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/wave_serverV_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ew2mseed</td>
+          <td>ew2mseed is a standalone module that builds continuous
+            miniSEED day files from a wave_serverV connection.</td>
+          <td><a href="ovr/ew2mseed_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ew2mseed_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">ewmseedarchiver</td>
+          <td>Reads TYPE_MSEED messages from a transport ring and writes the
+              miniSEED records to the file system.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td><a href="ovr/ewmseedarchiver_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/ewmseedarchiver_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">tankplayer </td>
+          <td>Simulates an adsend module: reads a waveform file and puts
+            waveform messages in shared memory in pseudo-real-time.</td>
+          <td><a href="ovr/tankplayer_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/tankplayer_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">tankplayer_tools<br>
+          </td>
+          <td style="vertical-align: top;">Tools to assist the user in
+            building a tank. Converters like sac2tb, ms2tank, ring2tank,
+            remux_tbuf and utilities tanksniff,tankcut, and dc2tank.
+          </td>
+          <td align="center"><a
+              href="ovr/tankplayer_ovr.html#tankplayer_tools">overview</a>
+          </td>
+          <td align="center">none</td>
+        </tr>
+        <tr>
+          <td align="center">trig2disk <br>
+          </td>
+          <td>Trig2disk module reads trigger messages and retrieves
+            waveform data from wave_serverV into AH or SAC format files.
+          </td>
+          <td><a href="ovr/trig2disk_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/trig2disk_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+          <td align="center">runwws</td>
+          <td>Wrapper to run the Winston Waveserver Java programs as an Earthworm Module (Windows compatible)</td>
+          <td><a href="ovr/runwws_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/runwws_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">waveman2disk<br>
+          </td>
+          <td>Manual, interactive program to save trace data from
+            Earthworm Wave_servers to disk. </td>
+          <td><a href="ovr/waveman2disk_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/waveman2disk_cmd.html">
+              commands </a></td>
+        </tr>
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+  <h2><a name="DISPLAY_MODULES_"></a> DISPLAY MODULES </h2>
+    <table border="2">
+      <tbody>
+        <tr>
+          <th>Module name </th>
+          <th>Its function, briefly </th>
+          <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+        </tr>
+        <tr>
+          <td align="center">wave_viewer </td>
+          <td>Wave_viewer, which runs under Win2000, acts as an
+            electronic develecorder. It retrieves waveform data from
+            wave_serverV and displays it. </td>
+          <td style="text-align: center;"><a
+              href="ovr/wave_viewer_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/wave_viewer_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">heli_ewII</td>
+          <td>heli_ewII is designed to automatically provide GIF images
+            of waveforms for display on the WWW. It can run as an
+            Earthworm module or a standalone program.</td>
+          <td align="center"><a href="ovr/heli_ewII_ovr.html">overview</a></td>
+          <td align="center"><a href="cmd/heli_ewII_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">sgram </td>
+          <td>Creates spectrogram displays for the WWW.</td>
+          <td style="text-align: center;"><a href="ovr/sgram_ovr.html">overview</a>
+          </td>
+          <td align="center"><a href="cmd/sgram_cmd.html">commands</a></td>
+        </tr>
+        <tr>
+          <td align="center">latency_mon</td>
+          <td>Logs and displays latency and outages of data from a
+            specified ring (Windows only).</td>
+          <td style="text-align: center;"><a href="ovr/latency_ovr.html">overview</a>
+          </td>
+          <td align="center"><a href="cmd/latency_cmd.html">commands</a>
+          </td>
+        </tr>
+        <tr>
+          <td align="center">PickStatistics</td>
+          <td>Computes statistics graphically on picks from binder logs
+            or pick recorder files for evaluation of the event picker.</td>
+          <td style="text-align: center;"><a
+              href="ovr/pickstatistics_ovr.html">overview</a></td>
+          <td align="center"><a>none</a></td>
+        </tr>
+        <tr>
+          <td align="center">webswave</td>
+          <td>Standalone tool for plotting traces and picks in real time
+              using a web browser.
+              (<span style="color:rgb(255, 0, 0);">New in EW v7.7</span>)</td>
+          <td style="text-align: center;"><a
+              href="ovr/webswave_ovr.html">overview</a></td>
+          <td align="center"><a>none</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <h2><a name="HELPFUL_PROGRAMS_"></a> HELPFUL PROGRAMS </h2>
+      <table border="2">
+        <tbody>
+          <tr>
+            <th>Module name </th>
+            <th>Its function, briefly </th>
+            <th colspan="2">more info (<a href="#note1">note 1</a>)</th>
+          </tr>
+          <tr>
+            <td align="center">cleandir<br>
+            </td>
+            <td>Windows directory cleaning module as a windows service.
+              </td>
+            <td><a href="ovr/cleandir_ovr.html">overview</a></td>
+            <td align="center"><a href="cmd/cleandir_cmd.html">commands</a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">config_ws<br>
+            </td>
+            <td>Create the WaveServerV tankfiles based on polling of a
+              WAVE_RING.</td>
+            <td><a href="ovr/config_ws_ovr.html">overview</a></td>
+            <td align="center"><a href="cmd/config_ws_cmd.html">commands</a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">dumpwave<br>
+            </td>
+            <td>Dump a waveform data file to the screen.</td>
+            <td><a href="ovr/dumpwave_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">file2ring<br>
+            </td>
+            <td>Load contents of file into a ring.</td>
+            <td><a href="ovr/file2ring_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center" height="23">ellipse2arc </td>
+            <td height="23">ellipse2arc -- convert from HypoEllipse
+              (Hypo71) Message into Hypoinverse format Message</td>
+            <td align="center" height="23"> none </td>
+            <td align="center" height="23"><a
+                href="cmd/ellipse2arc_cmd.html">commands</a></td>
+          </tr>
+          <tr>
+            <td align="center">findwave </td>
+            <td>Program to listen to a ring, and write to a file the <tt>SCN(L)</tt>'s
+                of all <tt>TRACEBUF</tt> or <tt>TRACEBUF2</tt> messages
+              found there and some statistics about the <tt>SCN(L)</tt>.</td>
+            <td><a href="ovr/findwave_overview.htm">overview</a></td>
+            <td align="center"> none </td>
+          </tr>
+          <tr>
+            <td align="center">gaplist </td>
+            <td>Program to search for gaps in <tt>TRACEBUF</tt> or <tt>TRACEBUF2</tt>
+              messages and print tables. Developed by Will Kohler at
+              USGS, Menlo Park. </td>
+            <td align="center">none </td>
+            <td align="center"> <a href="cmd/gaplist_cmd.html">commands</a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">getmenu<br>
+              [UW] </td>
+            <td>Retrieves and prints the menu from the wave server.</td>
+            <td><a href="ovr/getmenu_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">getstation </td>
+            <td>Retrieves and prints a station list from the wave
+              server. A subset of getmenu. <br>
+            </td>
+            <td><a href="ovr/getstation_ovr.html">overview</a></td>
+            <td align="center"><a href="cmd/getstation_cmd.html">commands</a></td>
+          </tr>
+          <tr>
+            <td align="center">maketrace </td>
+            <td>Trace data load test component<br>
+            </td>
+            <td><a href="ovr/maketrace_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center"">pick_recorder<br>
+            </td>
+            <td style="vertical-align: top;">Records picks SCNL or
+              PICK2K to a file per day in a user specified directory<br>
+            </td>
+            <td style="vertical-align: top;"><a
+                href="ovr/pick_recorder.html">overview</a><br>
+            </td>
+            <td style="vertical-align: top;"><a
+                href="cmd/pick_recorder_cmd.html">commands</a><br>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">putpick </td>
+            <td>Reads a file containing a series of pick/coda msgs and
+              writes them to shared memory ring<br>
+            </td>
+            <td><a href="ovr/putpick_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">sniffring </td>
+            <td>Latches onto a user-defined transport ring, reads every
+              message and prints logo to screen.</td>
+            <td><a href="ovr/sniffring_ovr.html">overview</a></td>
+            <td align="center"> none </td>
+          </tr>
+          <tr>
+            <td align="center">sniffspectra </td>
+            <td>Latches onto a user-defined transport ring, reads every
+              spectra message (as from <a href="ovr/ewspectra_ovr.html">ewspectra</a>);
+              prints information to screen or to a file
+            <td style="text-align: center;"> <a
+                href="ovr/sniffspectra_ovr.html">overview<br>/setup</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">sniffwave </td>
+            <td>Reads waveform messages from Earthworm transport ring
+              and for each message, prints the logo and header
+              information to the screen.</td>
+            <td><a href="ovr/sniffwave_ovr.html">overview</a></td>
+            <td align="center"> none </td>
+          </tr>
+          <tr>
+            <td align="center">template </td>
+            <td>A template module for programmers who want to create
+              ther own Earthworm module <br>
+            </td>
+            <td><a href="ovr/template_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">wave_probe </td>
+            <td>Sends a trace request for one station in a waveserver,
+              creating a debugging file<br>
+            </td>
+            <td><a href="ovr/wave_probe_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">wsv_test </td>
+            <td>Program to request menu from a list of wave_serverVs and
+              report to the status manager if any wave server process is
+              dead. Developed by Will Kohler at USGS, Menlo Park. </td>
+            <td align="center">none </td>
+            <td align="center"> <a href="cmd/wsv_test_cmd.html">commands</a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">activate_module </td>
+            <td>Puts an ACTIVATE_MODULE message in the specified ring,
+              the body of which starts with the module ID of the
+              specified target module, followed by the remaining
+              command-line arguments.</td>
+            <td style="text-align: center;"> <a
+                href="ovr/activate_module_ovr.html">overview</a></td>
+            <td align="center">none </td>
+          </tr>
+          <tr>
+            <td align="center">activated_scripts </td>
+            <td>When it reads an ACTIVATE_MODULE message from the
+              specified ring, the body of which is a list of
+              command-line arguments, it executes a sequence of scripts
+              using those arguments, and write a completion message to a
+              ring when done.</td>
+            <td style="text-align: center;"> <a
+                href="ovr/activated_scripts_ovr.html">overview</a></td>
+            <td align="center"><a href="cmd/activated_scripts_cmd.html">commands</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </h2>
+    <h2> <a href="Contributed/Contributed.htm">CONTRIBUTED SOFTWARE </a></h2>
+    <p><a name="note1"></a><b>Note 1</b>: The configuration files in
+      this table should be verified by comparison with the configuration
+      file examples in the source directory of each module.</p>
+    <table border="0" width="87%">
+      <tbody>
+        <tr>
+          <td width="74%">Originally funded and developed by:<br>
+            <a href="http://www.doi.gov/">U.S. Department of the
+              Interior</a>, U.S. Geological Survey, Reston, VA, USA<br>
+            <br>
+            <b>
+              <address> Questions? Issues? <a
+                  href="http://groups.google.com/group/earthworm_forum?hl=en"
+                  target="_blank">Subscribe to the Earthworm Google
+                  Groups List. </a></address>
+            </b> <br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

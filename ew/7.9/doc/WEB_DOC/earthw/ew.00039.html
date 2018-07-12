@@ -1,0 +1,180 @@
+<!-- MHonArc v2.4.6 -->
+<!--X-Subject: Statmgr discussion -->
+<!--X-From-R13: Brgr Zbzoneq <ybzo4185Ncnporyy.arg> -->
+<!--X-Date: Tue, 15 Aug 2000 07:13:27 &#45;0600 (MDT) -->
+<!--X-Message-Id: 15509.966355885.0@NO&#45;ID&#45;FOUND.mhonarc.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Head-End-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML//EN">
+<HTML>
+<HEAD>
+<TITLE>Statmgr discussion</TITLE>
+<LINK REV="made" HREF="mailto:lomb4185@pacbell.net">
+</HEAD>
+<BODY>
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+<HR>
+[<A HREF="ew.00038.html">Date Prev</A>][<A HREF="ew.00040.html">Date Next</A>][<A HREF="ew.00036.html">Thread Prev</A>][<A HREF="ew.00040.html">Thread Next</A>][<A HREF="welcome.html#00039">Date Index</A>][<A HREF="threads.html#00039">Thread Index</A>]
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<H1>Statmgr discussion</H1>
+<HR>
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<UL>
+<LI><em>To</em>: <A HREF="mailto:earthw-list@nmt.edu">earthw-list@nmt.edu</A></LI>
+<LI><em>Subject</em>: Statmgr discussion</LI>
+<LI><em>From</em>: Pete Lombard &lt;<A HREF="mailto:lomb4185@pacbell.net">lomb4185@pacbell.net</A>&gt;</LI>
+<LI><em>Date</em>: Tue, 15 Aug 2000 07:13:27 -0600 (MDT)</LI>
+</UL>
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<HR>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+<PRE>
+
+
+Anyone who has run earthworm knows it sends far too many email messages. Often
+the solution is to turn off statmgr, the module that controls these
+messages. This message discusses the current statmgr and proposes some changes
+that may improve things. I discuss only email messages here, although the
+problem for paging messages is very similar. Sorry about the length of this
+message: it's a confusing topic!
+
+There are two types of messages that statmgr deals with: messages about
+modules dying and restarting, and error messages initiated by other
+modules. The controls and logic for these two groups of messages are
+different.
+
+Module `dead' messages are initiated by statmgr when a module heartbeat does
+not arrive by the expected time. Modules send heartbeats at intervals
+specified in their config file (the .d file) with a command like
+"HeartbeatInt". Statmgr gets the expected heartbeat interval from the module's
+.desc file: it's the first number after the "tsec" command.
+
+After issuing the module `dead' message, statmgr may send a module "restart"
+message to statmgr. This will happen if the "restartMe" command appears in the
+module's .desc file, and if statmgr knows the process ID (pid) of the module
+that just died. Statmgr learns module pids from heartbeat messages, so if a
+module never sends a heartbeat message before it dies, statmgr will not be
+able to have that module restarted.  When a module gets restarted and sends
+its heartbeat to statmgr, statmgr will send an "alive" message, to cancel the
+previous `dead' message.
+
+The number of `dead' and `alive' messages can be controlled by a parameter in
+the .desc file: after the `tsec' command is `mail:' followed by a number. This
+is the total number of `dead' and `alive' messages that statmgr will send for
+this module. After that number is reached, NO more messages of this type will
+be sent until statmgr is restarted.
+
+If a module is unable to keep running (for example, the remote process it
+needs to connect to is not running), then statmgr will keep restarting this
+module at intervals near to the expected heartbeat interval. This will cause
+lots of email messages, log file entries, and general annoyance.
+
+The second type of message is the error message that comes from a module. Each
+of these messages is identified by an "err" number, in the module's .desc
+file. Also listed in the .desc file for each message are the crypticly labeled
+numbers "nerr", "tsec" and "mail". The "mail" number is simple: no more than
+this number of messages of this type will ever be sent by statmgr. The "nerr"
+and "tsec" message work together to control the rate of messages. If "tsec" is
+zero and "nerr" is 1, then every message will be sent. If "nerr" is 2, then
+every second message will be sent, etc. 
+
+If "tsec" is some positive number of seconds, then statmgr must receive "nerr"
+messages before it will send one mail message. If it gets less than "nerr"
+messages in "tsec" seconds, it will not send any email messages of this
+type. So if nerr &gt; 1 and tsec &gt; 0, infrequent module messages will never be
+sent by email.
+
+Proposed changes:
+
+1. Fix the logic used with "nerr" and "tsec" to control module error
+messages. Infrequent messages should always be sent unless the user
+intentionally turns them off. For frequent module messages, it should be the
+first of a sequence that gets emailed, not some later message.
+
+and: 
+2. Change the way the "mail" number controls module messages. Perhaps this
+number should be the number of messages allowed per day. At the end of the UTC
+day, the counter would get reset to zero.  Then "nerr" and "tsec" would
+provide short-term limits on module messages, while the "mail" number would
+provide a long-term (24 hours) control. Should the user be able to specify this
+long time interval?
+
+and:
+3. Change the controls on `dead' and `alive' messages: make the "mail" number
+a 24-hour limit as in item 2 above. Should this interval be configurable? This
+would limit the amount of email messages about module restarts but would have
+no effect on the actual restart schedule.
+
+or:
+4. Provide controls on how often a module will be restarted. For example, the
+restartMe command could be extended to "restartMe A B C", where A is a number,
+and B and C are times in minutes. If a module would be restarted A times in B
+minutes, then it gets placed in "slow-restart" mode. Then only one restart
+would happen every C minutes. The module would stay in "slow-restart" mode
+until it had managed to stay alive for at least C minutes. If the module
+proved to be viable, then it would go back on the normal restart schedule as
+described above.
+
+
+Does any of this make any sense? Are there any other ideas or complaints about
+statmgr? To minimize traffic on this list, you can send replies to me; I'll
+summarize the responses.
+
+-- 
+Pete Lombard
+Earthworm Engineer
+
+815 Ramona Ave
+Albany, CA 94706-1819
+
+email: lomb4185@pacbell.net
+voice: (510) 526-2950
+
+
+
+----- End Included Message -----
+
+</PRE>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<HR>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<UL>
+<LI>Prev by Date:
+<STRONG><A HREF="ew.00038.html">Re: todo list</A></STRONG>
+</LI>
+<LI>Next by Date:
+<STRONG><A HREF="ew.00040.html">Win 2000 Support</A></STRONG>
+</LI>
+<LI>Prev by thread:
+<STRONG><A HREF="ew.00036.html">Wave_serverV documentation</A></STRONG>
+</LI>
+<LI>Next by thread:
+<STRONG><A HREF="ew.00040.html">Win 2000 Support</A></STRONG>
+</LI>
+<LI>Index(es):
+<UL>
+<LI><A HREF="welcome.html#00039"><STRONG>Date</STRONG></A></LI>
+<LI><A HREF="threads.html#00039"><STRONG>Thread</STRONG></A></LI>
+</UL>
+</LI>
+</UL>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</BODY>
+</HTML>

@@ -1,0 +1,375 @@
+.TH "include/nmxp_base.h" 3 "Mon Jan 24 2011" "Version 1.2.4" "libnmxp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/nmxp_base.h \- 
+.PP
+Base for Nanometrics Protocol Library.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'nmxp_data.h'\fP
+.br
+\fC#include 'nmxp_chan.h'\fP
+.br
+\fC#include 'nmxp_log.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNMXP_SLEEPMAX\fP   60"
+.br
+.ti -1c
+.RI "#define \fBNMXP_SOCKET_OK\fP   0"
+.br
+.ti -1c
+.RI "#define \fBNMXP_SOCKET_ERROR\fP   -1"
+.br
+.ti -1c
+.RI "#define \fBNMXP_HIGHEST_TIMEOUT\fP   30"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBnmxp_openSocket\fP (char *hostname, int portNum, int(*func_cond)(void))"
+.br
+.RI "\fILooks up target host, opens a socket and connects. \fP"
+.ti -1c
+.RI "int \fBnmxp_closeSocket\fP (int isock)"
+.br
+.RI "\fIClose a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_send_ctrl\fP (int isock, void *buffer, int length)"
+.br
+.RI "\fISends a buffer on a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_setsockopt_RCVTIMEO\fP (int isock, int timeoutsec)"
+.br
+.RI "\fIReceives length bytes in a buffer from a socket. \fP"
+.ti -1c
+.RI "char * \fBnmxp_strerror\fP (int errno_value)"
+.br
+.RI "\fIWrapper to strerror, strerror_r or WSAGetLastErrorMessage. \fP"
+.ti -1c
+.RI "int \fBnmxp_recv_ctrl\fP (int isock, void *buffer, int length, int timeoutsec, int *recv_errno)"
+.br
+.RI "\fIReceives length bytes in a buffer from a socket. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendHeader\fP (int isock, \fBNMXP_MSG_CLIENT\fP type, int32_t length)"
+.br
+.RI "\fISends header of a message. \fP"
+.ti -1c
+.RI "int \fBnmxp_receiveHeader\fP (int isock, \fBNMXP_MSG_SERVER\fP *type, int32_t *length, int timeoutsec, int *recv_errno)"
+.br
+.RI "\fIReceives header of a message. \fP"
+.ti -1c
+.RI "int \fBnmxp_sendMessage\fP (int isock, \fBNMXP_MSG_CLIENT\fP type, void *buffer, int32_t length)"
+.br
+.RI "\fISends header and body of a message. \fP"
+.ti -1c
+.RI "int \fBnmxp_receiveMessage\fP (int isock, \fBNMXP_MSG_SERVER\fP *type, void *buffer, int32_t *length, int timeoutsec, int *recv_errno, int buffer_length)"
+.br
+.RI "\fIReceives header and body of a message. \fP"
+.ti -1c
+.RI "\fBNMXP_DATA_PROCESS\fP * \fBnmxp_processCompressedData\fP (char *buffer_data, int length_data, \fBNMXP_CHAN_LIST_NET\fP *channelList, const char *network_code_default)"
+.br
+.RI "\fIProcess Compressed Data message by function func_processData(). \fP"
+.ti -1c
+.RI "\fBNMXP_DATA_PROCESS\fP * \fBnmxp_processDecompressedData\fP (char *buffer_data, int length_data, \fBNMXP_CHAN_LIST_NET\fP *channelList, const char *network_code_default)"
+.br
+.RI "\fIProcess decompressed Data message by function func_processData(). \fP"
+.ti -1c
+.RI "unsigned int \fBnmxp_sleep\fP (unsigned int sleep_time)"
+.br
+.RI "\fIWrapper for functions sleep on different platforms. \fP"
+.ti -1c
+.RI "unsigned int \fBnmxp_usleep\fP (unsigned int usleep_time)"
+.br
+.RI "\fIWrapper for functions usleep on different platforms. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Base for Nanometrics Protocol Library. 
+
+Author: Matteo Quintiliani Istituto Nazionale di Geofisica e Vulcanologia - Italy quintiliani@ingv.it
+.PP
+\fBId:\fP
+.RS 4
+\fBnmxp_base.h\fP,v 1.36 2010-09-15 13:14:33 mtheo Exp 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NMXP_SLEEPMAX   60"Maximum time between connection attempts (seconds). 
+.SS "#define NMXP_SOCKET_OK   0"Return message for succes on socket. 
+.SS "#define NMXP_SOCKET_ERROR   -1"Return message for error on socket. 
+.SS "#define NMXP_HIGHEST_TIMEOUT   30"Maximum time out for receiving data (seconds). 
+.SH "Function Documentation"
+.PP 
+.SS "int nmxp_openSocket (char * hostname, int portNum, int(*)(void) func_cond)"
+.PP
+Looks up target host, opens a socket and connects. \fBParameters:\fP
+.RS 4
+\fIhostname\fP hostname 
+.br
+\fIportNum\fP port number 
+.br
+\fIfunc_cond\fP Pointer to function for exit condition from loop.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fIsd\fP A descriptor referencing the socket. 
+.br
+\fI-1\fP 'Empty host name', 'Cannot lookup host', ... 
+.RE
+.PP
+
+.SS "int nmxp_closeSocket (int isock)"
+.PP
+Close a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI0\fP Success 
+.br
+\fI-1\fP Error 
+.RE
+.PP
+
+.SS "int nmxp_send_ctrl (int isock, void * buffer, int length)"
+.PP
+Sends a buffer on a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIbuffer\fP Data buffer. 
+.br
+\fIlength\fP Length in bytes.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_setsockopt_RCVTIMEO (int isock, int timeoutsec)"
+.PP
+Receives length bytes in a buffer from a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fItimeoutsec\fP Time-out in seconds
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+getsockopt() return value 
+.RE
+.PP
+
+.SS "char* nmxp_strerror (int errno_value)"
+.PP
+Wrapper to strerror, strerror_r or WSAGetLastErrorMessage. \fBReturns:\fP
+.RS 4
+String message of errno_value. It is not static, need to be freed. 
+.RE
+.PP
+
+.SS "int nmxp_recv_ctrl (int isock, void * buffer, int length, int timeoutsec, int * recv_errno)"
+.PP
+Receives length bytes in a buffer from a socket. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fIbuffer\fP Data buffer. 
+.br
+\fIlength\fP Length in bytes. 
+.br
+\fItimeoutsec\fP Time-out in seconds 
+.br
+\fIrecv_errno\fP errno value after recv()
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Data buffer it has to be allocated before and big enough to contain length bytes!
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendHeader (int isock, \fBNMXP_MSG_CLIENT\fP type, int32_t length)"
+.PP
+Sends header of a message. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fItype\fP Type of message within \fBNMXP_MSG_CLIENT\fP. 
+.br
+\fIlength\fP Length in bytes.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_receiveHeader (int isock, \fBNMXP_MSG_SERVER\fP * type, int32_t * length, int timeoutsec, int * recv_errno)"
+.PP
+Receives header of a message. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fItype\fP Type of message within \fBNMXP_MSG_CLIENT\fP. 
+.br
+\fIlength\fP Length in bytes. 
+.br
+\fItimeoutsec\fP Time-out in seconds 
+.br
+\fIrecv_errno\fP errno value after recv()
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_sendMessage (int isock, \fBNMXP_MSG_CLIENT\fP type, void * buffer, int32_t length)"
+.PP
+Sends header and body of a message. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fItype\fP Type of message within \fBNMXP_MSG_CLIENT\fP. 
+.br
+\fIbuffer\fP Data buffer. It could be NULL. 
+.br
+\fIlength\fP Length in bytes. It must be greater or equal to zero.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "int nmxp_receiveMessage (int isock, \fBNMXP_MSG_SERVER\fP * type, void * buffer, int32_t * length, int timeoutsec, int * recv_errno, int buffer_length)"
+.PP
+Receives header and body of a message. \fBParameters:\fP
+.RS 4
+\fIisock\fP A descriptor referencing the socket. 
+.br
+\fItype\fP Type of message within \fBNMXP_MSG_SERVER\fP. 
+.br
+\fIbuffer\fP Pointer to the Data buffer. 
+.br
+\fIlength\fP Length in bytes. 
+.br
+\fItimeoutsec\fP Time-out in seconds 
+.br
+\fIrecv_errno\fP errno value after recv() 
+.br
+\fIbuffer_length\fP Max length of Data buffer.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINMXP_SOCKET_OK\fP on success 
+.br
+\fINMXP_SOCKET_ERROR\fP on error 
+.RE
+.PP
+
+.SS "\fBNMXP_DATA_PROCESS\fP* nmxp_processCompressedData (char * buffer_data, int length_data, \fBNMXP_CHAN_LIST_NET\fP * channelList, const char * network_code_default)"
+.PP
+Process Compressed Data message by function func_processData(). \fBParameters:\fP
+.RS 4
+\fIbuffer_data\fP Pointer to the data buffer containing Compressed Nanometrics packets. 
+.br
+\fIlength_data\fP Buffer length in bytes. 
+.br
+\fIchannelList\fP Pointer to the Channel List. 
+.br
+\fInetwork_code_default\fP Value of network code to assign returned structure. It should not be NULL.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Return a pointer to static struct \fBNMXP_DATA_PROCESS\fP. 
+.RE
+.PP
+
+.SS "\fBNMXP_DATA_PROCESS\fP* nmxp_processDecompressedData (char * buffer_data, int length_data, \fBNMXP_CHAN_LIST_NET\fP * channelList, const char * network_code_default)"
+.PP
+Process decompressed Data message by function func_processData(). \fBParameters:\fP
+.RS 4
+\fIbuffer_data\fP Pointer to the data buffer containing Decompressed Nanometrics packets. 
+.br
+\fIlength_data\fP Buffer length in bytes. 
+.br
+\fIchannelList\fP Pointer to the Channel List. 
+.br
+\fInetwork_code_default\fP Value of network code to assign returned structure. It should not be NULL.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Return a pointer to static struct \fBNMXP_DATA_PROCESS\fP. 
+.RE
+.PP
+
+.SS "unsigned int nmxp_sleep (unsigned int sleep_time)"
+.PP
+Wrapper for functions sleep on different platforms. \fBParameters:\fP
+.RS 4
+\fIsleep_time\fP time in seconds
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI....\fP 
+.RE
+.PP
+
+.SS "unsigned int nmxp_usleep (unsigned int usleep_time)"
+.PP
+Wrapper for functions usleep on different platforms. \fBParameters:\fP
+.RS 4
+\fIusleep_time\fP time in microseconds
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fI....\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libnmxp from the source code.

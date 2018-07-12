@@ -1,0 +1,49 @@
+
+/************************************************
+************ SPECIAL FORMATTED COMMENT **********
+TYPE FUNCTION_PROTOTYPE
+
+LIBRARY EWDB_ORA_API
+
+SUB_LIBRARY UNKNOWN
+
+LANGUAGE C
+
+LOCATION THIS_FILE
+
+
+FUNCTION GetNextLine
+
+STABILITY NEW
+
+SOURCE_LOCATION THIS_FILE
+
+RETURN_TYPE int 
+
+RETURN_VALUE Default_Return_Value
+RETURN_DESCRIPTION Description of the default return value
+
+PARAMETER 1
+PARAM_NAME pBuffer
+PARAM_TYPE char * 
+PARAM_DESCRIPTION Optional description of (pBuffer)
+
+PARAMETER 2
+PARAM_NAME BufferSize
+PARAM_TYPE int 
+PARAM_DESCRIPTION Optional description of (BufferSize)
+
+PARAMETER 3
+PARAM_NAME fptr
+PARAM_TYPE FILE * 
+PARAM_DESCRIPTION Optional description of (fptr)
+
+DESCRIPTION Optionally, write a description of what the function does
+and how it behaves.
+
+NOTE Optionally, write a note about 
+the function here.
+
+
+*************************************************
+************************************************/

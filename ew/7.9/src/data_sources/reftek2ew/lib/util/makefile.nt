@@ -1,0 +1,16 @@
+!include <ntwin32.mak>
+
+CFLAGS=-O -I..\.. -DWINNT
+
+OBJS = bcd2long.obj dump.obj getline.obj mstime.obj \
+       parse.obj string.obj swap.obj timefunc.obj timer.obj 
+
+all: libutil.lib
+
+libutil.lib: $(OBJS)
+	-del ..\libutil.lib
+	lib /nologo /out:..\libutil.lib $(OBJS)
+
+clean:
+	-del *.obj *.o ..\libutil.*
+

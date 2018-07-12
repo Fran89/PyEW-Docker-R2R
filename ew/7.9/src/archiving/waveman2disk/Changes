@@ -1,0 +1,65 @@
+Changes to trig2disk, waveman2disk, and putaway routines
+
+1. Reorganized *head.h files: all function prototypes of the specific *putaway
+   routines that are called by putaway.c are now in pa_subs.h; it is likely
+   that putaway.c is the only file that will need pa_subs.h.  Other *head.h
+   files are split into *head.h for things that only have to do with this
+   format's header (ahhead.h, sachead.h, sudshead.h) and *putaway.h for things
+   needed by the putaway routines (sacputaway.h).
+
+2. In ahputaway.c, moved mallocs to AHPA_init instead of in AHPA_next_evt.
+   Removed different path delimiters; '/' works for both NT and Unix.
+
+3. Reorganized *PA_next for all putaway routines except tankputaway to be more
+   efficient about transfering data from TRACEBUF to file buffers.
+   Removed mapping of NC component names into SEED standard names.
+   Rationalized logit calls: errors should go to STDERR; debugs should not.
+
+4. Changed suds_putaway.c so that it clips data to MIN_SHRT/MAX_SHRT instead
+   of truncating it. Now a warning is issued as well. Initialized structures
+   before writing SUDS files. 
+
+5. Created putaway.h; removed the PA_* function prototypes from waveman2disk
+   and trig2disk.
+
+6. Removed MaxTraceMsg argument from PA_init(); it was only used by
+   TANKPA_init and is not needed now that tankputaway.c has been fixed.
+
+7. Removed several unneeded includes from all putaway sources; removed several
+   unneeded libs from makefiles.
+
+8. Removed an unnecessary SACHEAD buffer and associated memcpy from
+   sacputaway.c; simplified swapsac function. Added lines to SACmac_repick to
+   turn off the annoying SAC bell.
+
+9. Added cpp commands to prevent multiple inclusions of several header files.
+
+10. Moved xdr* files (used only on NT) from trig2disk and waveman2disk to
+    libsrc/winnt/rpc. 
+
+11. Enclosed C++ comments in sudsputaway.h in C-style comments. Makes the C
+    compiler much happier.
+
+12. Cleaned up lots of comments and indentation.
+
+13. Added three functions to mem_circ_queue.c: dumpqueue() to write the queue
+    to file; undumpqueue() to read from file back into memory; and
+    peekNextElement(), to see what's next in the queue without removing
+    it. These are needed for changes to trig2disk.
+
+14. Waveman2disk: removed part of WriteEvent that was collecting waitTimes
+    from wave_serverV; it was never implemented. Removed MaxTraceMsg and
+    TravelTimeout from config file; not used any more. Tried to fix confusing
+    settings of "EventId" and "EventID" (two different variables apparently
+    for the same value.) Cleaned up match() function to make it more
+    efficient. Fixed CatPseudoTrig.c so it won't overflow its buffer; made it
+    more efficient.
+
+15. trig2disk: All of waveman2disk fixes plus: removed pin number from
+    TrigStation config command. Added optional QueueFile and QueueSize
+    parameters: the first allows for saving the queue to disk and loading it
+    on restart; the second adjusts the queue size (used to be fixed at 10
+    entries.) Added optional DelayTime parameter to config file. This will
+    delay the processing of a trigger message for this many seconds from time
+    of receipt. Cleaned up terminate processing to prevent crashes. Took
+    SocketSysInit() out of loop: it must only be called once on NT.

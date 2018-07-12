@@ -1,0 +1,43 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P> fir  overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR> Decimate Overview</H1>
+<I>(last revised 28 July, 2004)</I></CENTER>
+<P>
+The fir module implements a general-purpose FIR filter routine to
+process wave data (TYPE_TRACEBUF2) coming from the InRing defined in
+decimate.d. Decimated trace messages are written to the OutRing with their
+SCNLs changed as specified in fir.d. The filtered trace message retains
+its TYPE_TRACEBUF2 type, but it (normally) has a new SCNL name. 
+This module can be configured as a low-pass, high-pass, multi-band pass or
+notch filter. Using Band commands in the <A HREF="../cmd/fir_cmd.html">configuration file</A>
+any of these filter types can be specified. 
+<P>
+This FIR filter causes considerable time delay in the data,
+Fortunately filter has linear phase so the delay does not change
+the shape of the wave. This delay is removed by adjusting the timestamp of the
+output data, resulting in zero phase delay. Note that there will be small 
+precursory artifacts before impulsive wave arrivals. See "Of Poles and Zeros" 
+by Frank Scherbaum for more details.
+The FIR filter coefficients are determined using the
+Remez Exchange algorithm. This produces an equi-ripple filter. The 
+coefficients and zeroes of the filter, as well as the effective delay, are 
+logged on startup. (FIR filters have no poles.)
+<P>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../cmd/fir_cmd.html">Fir Configuration File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://www.cnss.org/EWAB/ovr/fir_ovr.html]</B><BR>
+Contact: <B>bogaert@usgs.gov</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

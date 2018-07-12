@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Earthworm Setup Examples
+</TITLE>
+<META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FAC0A2" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<H1><IMG SRC="../GIFS/ew.logo.tiny.gif" ALT="EARTHWORM Logo (We need one)" HEIGHT=61 WIDTH=71 ALIGN=TEXTTOP>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  EARTHWORM SETUP EXAMPLES</H1>
+
+<DIV ALIGN=right><P><B>April 17, 1998</B></P></DIV>
+This section provides a more detailed description of Earthworm
+structure and features. Two examples are used to present a number of
+concepts in increasing level of detail.
+
+<H2>Example 1</H2>
+
+<A HREF="../GIFS/diagram1.gif">Diagram 1</A>
+shows a very simple construction to illustrate the basic
+concepts. The circle in the diagram represents a <I>message ring</I>, and
+the rectangles represent modules. Each module can establish linkages to
+message ring(s) via its configuration file. A module may specify one
+input ring, from which it can receive desired message types, and one
+output ring into which it may broadcast its output messages. These
+linkages are represented in the diagram by the arrows to and from the
+single message ring.
+<p>
+Briefly, this system would function as follows: The system is started
+by executing the program <B>startstop</B>. Its job is to create the message
+ring(s) and start the modules. It does this by reading its
+configuration file (startstop.d), which lists the ring(s) to be
+created, the modules to be started, and the configuration files each
+module will read. As each module starts, it reads its configuration
+file, which specifies the identity of the instance of that module (in
+case several copies of a module are desired), the names of the message
+rings the module is to use for input and output, and any other
+module-specific parameters.
+<p>
+<B>adsend</B> is a digitizer module which controls an A/D converter, and
+outputs trace data messages. <B>pick_ew</B> is the Rex Allen picking
+algorithm that listens to trace data messages, and produces pick- and
+coda-messages. <B>binder_ew</B> listens to pick messages and produces trial
+location messages. <B>eqproc</B> consists of a number of sub-modules which
+pre-process <B>binder_ew</B>s trial locations, and run hypo-inverse. The output
+of <B>eqproc</B> is a message containing the hypo-inverse <I>arc</I> output.
+<B>menlo_report</B> listens to <I>arc</I> messages, and passes them to remote
+computer(s) for further processing.
+
+
+<H2>Example 2</H2>
+
+<A HREF="../GIFS/diagram2.gif">Diagram 2</A>
+shows a simplified version of the configuration in operation
+at University of Washington, Seattle. Several key features have been
+omitted for the purpose of this example.
+<P>
+Note that multiple message rings are used. There are two main reasons
+for this. One is conceptual: the configuration is easier to understand
+and maintain if different rings are used to carry related types of
+messages (and the diagram is easier to draw). The other is performance
+related: if the rate of message production into a single ring is too
+high, the computer may be unable to run all receiving modules quickly
+enough, with the result that some modules may miss messages of interest
+(note that this is a detectable error, and constitutes a system crash).
+Given contemporary processor speeds, this is generally no longer a
+problem. Missed messages do indicate that the hardware is being
+severely over-driven.
+<P>
+Internal names:  Earthworm uses names to identify four types of system
+components. Each set is defined by a table of names and associated
+numeric values. In operation, the user creates the desired entries in
+these tables, and then uses the names in the configuration files. At
+run time, utilities are used to resolve the names to their respective
+numeric values. The four categories of names are:
+<UL>
+<LI><B> Installation Ids:</B>These are the names given to the various
+institutions that operate Earthworm systems. It is the only set
+of names that is centrally administered. That is, Installation
+names and the associated numeric values must be requested from
+Golden. The reason for this is that as Earthworms exchange
+data, only the Installation Id uniquely identifies the source
+of a message. This table is part of a compile-time C header
+file, .../include/earthworm.h. All other name sets are
+run-time; the defining tables are kept in
+.../run/params/earthworm.d. This file is read during system
+startup, and thus can be altered without recompiling any source
+code. The syntax of the table is as per standard Earthworm
+parameter files (contributed by Carl). A # marks the start of a
+comment field.
+<LI><B> Message Rings:</B> These are all the ring names
+known to the local Earthworm system. The associated numeric
+values must be valid shared memory key values. This table is
+kept in earthworm.d, and read by various utility routines at
+startup time. Each individual installation is free to define
+its own set if it so chooses. Earthworm releases, however,
+include the default set.
+<LI><B> Module names:</B> These are all module
+names known to the local Earthworm system. The conventions are
+as with Message Ring names.
+<LI><B> Message types:</B> As with Module
+names above.
+</UL>
+<P>
+The modules <B>copystatus</B> and <B>statmgr</B> are part of the earthworm
+error-processing scheme. The scheme offers two services: detection of
+lost heartbeats and individualized processing of various errors. Such
+processing includes use of pagers, email, permissible rates, limiting
+the number of notifications, and restarting the offending module. The
+scheme is optional in two ways: First, a given earthworm configuration
+may choose to not run <B>statmgr</B>. In this case, no system-wide error
+processing will be performed. Second, if <B>statmgr</B> is run, each module
+can decide whether to utilize the scheme. To participate, a module must
+do three things:
+<UL>
+<LI>First, submit to <B>statmgr</B> a file (.desc) containing processing
+instructions for the various errors that it can generate. This
+is done be creating such a file in the run/params/ directory,
+and making a corresponding entry in <B>statmgr</B>s parameter file
+(statmgr.d).
+<LI>Second a participating module must broadcast
+periodic heartbeat messages, at or above the promised rate, as
+stated in its .desc file. These will be received by <B>statmgr</B>.
+If <B>statmgr</B> does not receive a heartbeat within the advertised
+time period, it will initiate the actions specified in the
+.desc file. Such actions can include issuing notification, and
+terminating and restarting the offending module. This restart
+feature has proven to be very useful for communication modules
+that are subject to unusual failure modes.
+<LI>Third, a module may
+issue status (error) messages in the standard format. These are
+received by <B>statmgr</B>, and the actions specified in the .desc
+file are taken.  Since the architecture allows one input and
+one output per module, helper modules called <B>copystatus</B> are used to
+move status and heartbeat messages from various rings to the ring to
+which <B>statmgr</B> is listening.
+</UL>
+<P>
+This configuration has three sources of trace data, all of which
+broadcast into a message ring named <I>Wave_Ring</I>:
+<UL>
+<LI> Four <B>ref2_ew</B> modules, each of which controls a
+communications line, receives trace data from a remote RefTek
+data logger, and broadcasts standard earthworm format trace
+data.
+<LI> A <B>sun_demux</B> module, which receives trace data from
+UofW's own digitizer, demultiplexes it, and produces standard trace
+data messages,
+<LI> And an <B>import-generic</B> module: this is the long-distance
+message receiver. It communicates with its companion module
+<B>export_scn</B> via a TCP socket connection. Any type of earthworm
+messages can be shipped in this way; in this case, several
+channels of trace data are being received from Menlo Park. The
+shipping delay is on the order of several seconds, plus
+transmission time.
+</UL>
+<P>
+The trace data messages must be in the standard internal Earthworm
+format, as described in .../src/include/trace_buf.h. Briefly, this
+format consists of a header followed by a variable number of data
+samples, represented as either 16 or 32 bit signed integers in either
+byte order. This format supports two channel identification schemes:
+The dominant scheme consists of three ASCII strings defining the
+'station', 'component', and 'network' (SCN names). The second is the
+'pin number'. This is an integer that can be used to identify the
+sensor and signal path of a channel. It addresses the case where a
+given sensor is acquired by two different telemetry paths. It also
+provides support for processing data from sensors that do not have SCN
+names.
+<P>
+Four modules listen to the messages on the <I>Wave_Ring</I>:
+<UL>
+<LI> <B>WaveServerV</B>: This module maintains rotating histories of
+selected channels, and offers a service capable of supplying
+requested segments of historic trace data.
+<LI> <B>export_scn</B>:
+This is the long-distance shipping module (companion to
+import_generic), specialized to send specific data channels
+(Station, Component, Network names). In this application,
+several selected channels of data are being sent to another
+installation.
+<LI> <B>copystatus</B>, which conducts status messages
+and heartbeats to the <I>Hypo_ring</I>. <B>statmgr</B> is listening to
+that ring, and will be able to receive and process them.
+<LI> <B>pick_ew</B>, as above, listens to selected trace channels, and
+produces pick and coda messages (along with status and
+heartbeat messages). These are broadcast into <I>Pick_Ring</I>.
+</UL>
+Three modules listen to the messages on <I>Pick_Ring</I>:
+<UL>
+<LI> <B>binder_ew</B> is the event associator (conceived and written by
+Carl Johnson). This module listens to pick messages, and
+produces trial location messages as well as link messages that
+relate picks to trial locations (via sequence numbers).
+<LI> <B>eqproc</B> is the first of a series of sub-modules that perform
+event locations via hypo-inverse. The sub-modules are linked
+via operating system pipes, and as a group behave as an
+earthworm module. Briefly, their functions are as follows:
+<B>eqproc</B> assembles the trial locations produced by <B>binder_ew</B>
+with the associated pick and coda messages produced by
+<B>pick_ew</B>, and if the event has not been recalled by <B>binder_ew</B>
+within a time-out period, sends the assembled event parameters
+to <B>eqbuf</B>. This acts as a buffer, in case events are produced
+faster than the remaining sub-modules can process them. From
+there it passes to <B>eqcoda</B>, which computes coda durations from
+the coda measurements generated by <B>pick_ew</B>. It is then passed
+to <B>eqverify</B>, which applies a series of sanity checks to
+eliminate spurious events. From there it is passed to
+<B>hypo_mgr</B>, which is the encapsulation layer for hypo-inverse.
+Hypo-inverse has not been modified for Earthworm. The standard
+FORTRAN source code is used, permitting any future changes to hypo-inverse to be
+directly inserted. The result of <B>hypo_mgr</B> is a message
+containing the standard hypo-inverse <I>arc</I> file information.
+This message is broadcast into the <I>Hypo_Ring</I>.
+<LI> As before,
+<B>copystatus</B> is used to conduct heartbeat and status messages
+from the <I>Pick_Ring</I> to the <I>Hypo_Ring</I>, where <B>statmgr</B> can
+hear them.
+</UL>
+Three modules listen to the messages on <I>Hypo_Ring</I>:
+<UL>
+<LI> <B>statmgr</B>: As mentioned above, this module processes error
+messages, and takes specified actions if a module's heartbeat
+ceases.
+<LI> <B>export_generic</B>: this is the general long distance message shipper.
+In this case used to ship hypo-centrer messages to another institution.
+<LI> <B>uw_report</B>: used to send hypocentral and pick information
+to the UofW processing and archving system.
+</UL>
+<P>
+
+Return to the Earthworm <A HREF="../index.html">Table of Contents Page</A>.
+<hr>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+
+</BODY>
+</HTML>
+

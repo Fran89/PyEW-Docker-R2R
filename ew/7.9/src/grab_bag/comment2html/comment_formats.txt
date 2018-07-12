@@ -1,0 +1,167 @@
+
+/* Items not currently supported
+    1) multi-line quoted strings.
+    2) backslash at end of line used as a line join
+    3) multiline #defines
+    4) anything else that fails
+************************************/
+
+/************************************************
+************ SPECIAL FORMATTED COMMENT **********
+EW5 API FORMATTED COMMENT
+TYPE DEFINE 
+
+LIBRARY  Library_Name /* such as EW_ORA_API_LIB or EW_LIBSRC */
+
+SUB_LIBRARY Sub_Library_Name /* such as RAW_INFRA_INTERNAL or logit.c */
+
+LANGUAGE Language_Name{C, JAVA, SQL}
+
+LOCATION filename {THIS_FILE as a special constant that the program fills in}
+
+CONSTANT_GROUP Constant_Group
+
+CONSTANT Constant_Name
+VALUE Value
+DESCRIPTION Optional Description ended by a blank line.
+Note that the DESCRIPTION line is not required.
+
+You can write extra junk in here anywhere, 
+but it will not be copied to the formatted 
+comments. So if you want to write comments
+like (This doesn't really work!) and you
+don't want it to show up in the pretty
+comments, then do it in on an unlabled line.
+Remember to leave a blank line after your
+junk comment!!!
+
+CONSTANT Constant_Name2
+VALUE Value2
+DESCRIPTION Optional Description2 Note: A blank line
+is required after the final field, otherwise the 
+DESCRIPTION value is unterminated.
+
+*************************************************
+************************************************/
+
+
+/************************************************
+************ SPECIAL FORMATTED COMMENT **********
+EW5 API FORMATTED COMMENT
+TYPE TYPEDEF 
+
+LIBRARY  Library_Name /* such as EW_ORA_API_LIB or EW_LIBSRC */
+
+SUB_LIBRARY Sub_Library_Name /* such as RAW_INFRA_INTERNAL or logit.c */
+
+LANGUAGE Language_Name{C, JAVA, SQL}
+
+LOCATION filename {THIS_FILE as a special constant that the program fills in}
+
+TYPEDEF New_Type_Name
+TYPE_DEFINITION Existing_Type
+DESCRIPTION Optional Description ended by a blank line.
+Note that the DESCRIPTION line is not required.
+
+MEMBER Member_Name
+MEMBER_TYPE Member_Type
+MEMBER_DESCRIPTION Optional Member description 
+ended by a blank line.
+
+MEMBER Member_Name2
+MEMBER_TYPE Member_Type2
+MEMBER_DESCRIPTION Optional Member2 description 
+ended by a blank line.
+
+NOTE Only one Typedef per comment.  Remember
+to always have a blank line after a description 
+field.  You may also write any extra junk in a
+block like this, but remember to end it with a
+blank line, otherwise everything will be treated
+like junk!!!
+
+*************************************************
+************************************************/
+
+/************************************************
+************ SPECIAL FORMATTED COMMENT **********
+EW API FORMATTED COMMENT
+TYPE LIBRARY
+
+LIBRARY  Library_Name /* such as EW_ORA_API_LIB or EW_LIBSRC */
+
+LANGUAGE Language_Name{C, JAVA, SQL}
+
+LOCATION filename {THIS_FILE as a special constant that the program fills in}
+
+DESCRIPTION Multiline description of the library
+
+*************************************************
+************************************************/
+
+/************************************************
+************ SPECIAL FORMATTED COMMENT **********
+EW API FORMATTED COMMENT
+TYPE FUNCTION_PROTOTYPE
+
+LIBRARY  Library_Name /* such as EW_ORA_API_LIB or EW_LIBSRC */
+
+SUB_LIBRARY Sub_Library_Name /* such as RAW_INFRA_INTERNAL or logit.c */
+
+LANGUAGE Language_Name{C, JAVA, SQL}
+
+LOCATION filename {THIS_FILE as a special constant that the program fills in}
+
+/*either*/
+
+FUNCTION Function_Name
+
+/* or */
+
+PROCEDURE Procedure_Name
+RETURN_PARAMETER 1
+
+/* end diff FUNCTION/PROCEDURE */
+
+/* optional */
+
+SOURCE_LOCATION Source_Location /* THIS_FILE or location string */
+
+/* end optional */
+
+RETURN_TYPE Return_Type
+
+RETURN_VALUE Return_Value1
+RETURN_DESCRIPTION Optional Description of Return_Value1.
+
+RETURN_VALUE Return_Value2
+RETURN_DESCRIPTION Optional Description of Return_Value2.
+
+PARAMETER 1
+PARAM_NAME Param_Name1
+PARAM_TYPE Param_Type1
+PARAM_DESCRIPTION Optional Parameter Description for Param1.
+Ended of course by a blank line.
+
+PARAMETER 2
+PARAM_NAME Param_Name2
+PARAM_TYPE Param_Type2
+PARAM_DESCRIPTION Optional Parameter Description for Param2.
+Ended of course by a blank line.
+
+You can write extra junk in here anywhere, 
+but it will not be copied to the formatted 
+comments. So if you want to write comments
+like (This doesn't really work!) and you
+don't want it to show up in the pretty
+comments, then do it in on an unlabled line.
+Remember to leave a blank line after your
+junk comment!!!
+
+DESCRIPTION Optional Function Description ended by a blank line.
+Note that the DESCRIPTION line is not required.
+
+NOTE This is a sample note.
+
+*************************************************
+************************************************/

@@ -1,0 +1,15 @@
+Ew2mseed is is a non interactive automatic Earthworm WaveServerV
+client for archiving continuous nov-overlapping time-ordered waveforms
+in MiniSEED format. ew2mseed is written by Ilya Dricker
+ (i.dricker@isti.com), Instrumental Software Technologies, Inc. for
+IRIS DMC. 
+
+
+This work is done under a supervision of Sandy Stromme and Paul Friberg, 
+and Dr. Tim Ahern.
+
+Thank you for feedbacks from Mitch Withers, Alex Bittenbinder, and 
+Steven Malone.
+
+Refer to the HTLM files ew2mseed_cmd.html and ew2mseed_ovr.html for the
+additional information and configuration of ew2mseed.

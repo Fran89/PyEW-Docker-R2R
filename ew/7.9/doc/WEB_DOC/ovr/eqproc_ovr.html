@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqproc overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Eqproc Overview</H1>
+<I>(last revised August 9, 1999)</I></CENTER>
+
+<P>
+Eqproc is the first process in the earthquake-processing mega-module
+(sometimes referred to as "the sausage") that produces final earthquake
+locations for the Earthworm system. Only eqproc, the first link in the
+mega-module, is listed in startstop's configuration file to be
+started by startstop.  Eqproc then starts the next process, specified in
+its "PipeTo" command, and communicates with it via a one-directional pipe.
+Each newly created sub-module starts the next link in the same way.  From
+startstop's point of view, the whole mega-module inherits the name of the
+first link (eqproc) and that's the only name it displays.  From statmgr's
+point of view, all processes within the mega-module share one module id,
+one heartbeat, and one descriptor file.  However, each sub-module has its
+own configuration file and its own log file.
+<P>
+
+After starting up the next link in "the sausage," eqproc's main job is to
+gather information from picker(s) and binder, to decide when binder has
+completed a given event, to assemble all the information related to that
+event, and to pass it on to the next event-processing sub-module.
+<P>
+
+Eqproc collects messages from the picker(s) (TYPE_PICK2K and TYPE_CODA2K) and
+from binder (TYPE_QUAKE2K and TYPE_LINK). A TYPE_PICK2 message contains
+an observed P-wave arrival-time and amplitude for a given seismic channel
+along with the installation id, module id, and pick sequence number;
+the picker releases the pick message within ~3 seconds of a P-wave detection.
+A TYPE_CODA2 message contains coda duration and amplitude information along
+with the installation id, module id, and sequence number of the pick
+it relates to; the picker releases the coda message up to 144 seconds after
+its corresponding pick message. A TYPE_QUAKE2K message contains an event id
+number, origin time and hypocenter; binder issues a new quake message each
+time it associates a new pick with [or deletes pick(s) from] a given event id.
+A TYPE_LINK message contains an event id, an installation id, a picker module
+id, a pick sequence number and a phase identifier; binder issues a new link
+message for every pick it associates with (or deletes from) an active event.
+<P>
+Eqproc maintains two circular buffers:
+<dl>
+<dt>1. Pick list
+<dd>Contains the most recent MAXPCK (=1000) picks and their coda and
+   link information (related by installation id, module id and pick
+   sequence number) and the system-time that the pick was entered.
+<dt>2. Quake list
+<dd>Contains the most recent location and status of the last
+   MAXHYP (=100) event ids and the system-time that the location
+   was entered.
+</dl>
+<P>
+Every so often, eqproc looks thru its quake list to see how long it's been
+since a new location was entered for each event id. If no new location has
+been seen for "rpt_dwell" seconds (set in the configuration file), eqproc
+assumes that binder has completed that event.  To "finalize" this event,
+eqproc:
+<dl>
+<dt>1) looks through its pick list for all picks linked to that event id.
+<dd>a) If all of these picks have coda information, eqproc continues to
+      finalize the event now.
+<dd>b) If any of these picks do not have coda information and it has been
+      less than 150 seconds since the picks were entered into the pick
+      list, eqproc will not finalize the event now, but will wait for
+	coda messages to arrive.
+<dd> c) If some picks do not have coda info and it's been longer than 150
+      seconds since the pick was entered in the pick list, eqproc 	assumes that the coda message will never be seen. It continues to
+	finalize the event with zeroed coda information for those picks.
+</dl>
+<dt>2) builds an ascii TYPE_EVENT2K message containing the event's location and
+   all of its supporting phase information,
+
+<dt>3) pipes the TYPE_EVENT2K message to the next process in the mega-module,
+
+<dt>4) notes in the quake list that the status of this event id is "finalized."
+<P>
+Occasionally, eqproc will receive more TYPE_QUAKE2K and TYPE_LINK message for
+a given event id after it has finalized that event.  Eqproc will note these
+messages in its log file, but it will never send another TYPE_EVENT2K
+message thru the mega-module for that event id.
+<P>
+For a detailed description of the eqproc logfile:  <A HREF="eqproc_logfile.html">Eqproc Logfile Description </A>
+</P>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/eqproc_cmd.html">Eqproc Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

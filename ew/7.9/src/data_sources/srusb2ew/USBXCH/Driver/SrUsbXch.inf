@@ -1,0 +1,153 @@
+; FILE: SrUsbXch.inf            Copyright (c), Symmetric Research, 2009-2010
+;
+; Installation file for Symmetric Research USB drivers
+;
+;
+
+
+[Version]
+Signature="$WINDOWS NT$"
+Class       = %SrInstrumentationClass%
+ClassGuid   = {AD1787FF-EF97-45D4-A4A8-620D8A00AC56}
+; was Class=Sample
+; was ClassGuid={78A1C341-4539-11d3-B88D-00C04FAD5171}
+Provider=%Symres%
+DriverVer=03/30/2010,%SrInstrumentationClassVersion%
+;;CatalogFile = symres.cat
+
+
+; ================= Format reminders section =====================
+
+;[Manufacturer]
+;mfg_name = mfg_section,os
+
+;[SourceDisksNames]
+;diskid = desc,tagfile,unused_on_NT,subdir_of_installation_root
+
+;[SourceDisksFiles]
+;filename = diskid,subdir_of_srcdisknames_path,size
+
+;[SrInstrumentationModels]
+;product_model = install_section, hw_id, compat_id
+
+;[XxxAddReg]
+; reg_root(Class/{...}/000X),subkey,entry_name,flags,value
+;HKR,,"XxxEntryName",,"XxxParmE"
+;HKR,"XxxSubkey",,,"XxxParmS"
+
+;[XxxHwAddReg]
+; reg_root(Enum/Root/xxx/000X/Device Parameters),subkey,entry_name,flags,value
+;HKR,,%XxxDriverName%,,%XxxDriverDesc%
+
+;[XxxEvAddReg]
+; reg_root(Services/Eventlog/System/xxx),subkey,entry_name,flags,value
+; value must really be all on one line
+;HKR,,TypesSupported,0x00010001,7
+;HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\drivers\xxx.sys;
+;                                  %%SystemRoot%%\System32\IoLogMsg.dll"
+
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SrInstrumentationClassAddReg
+
+[SrInstrumentationClassAddReg]
+HKR,,,,%SrInstrumentationClassDesc%  ; or HKR,,,0,%SrInstrumentationClassDesc%
+HKR,,Icon,,-9                        ; neg value takes icon from setupapi.dll
+HKR,,Class,,%SrInstrumentationClass%
+HKR,,Ver,,%SrInstrumentationClassVersion%
+
+
+; ==================== Driver Mfg/Model section ======================
+
+[Manufacturer]
+%Symres% = SymmetricResearch,NTx86
+
+; For Win2K
+[SymmetricResearch]
+%USB\VID_15D3&PID_5504.DeviceDesc%=SrUsb4ch, USB\VID_15D3&PID_5504
+%USB\VID_04B4&PID_6473.DeviceDesc%=SrUsb4ch, USB\VID_04B4&PID_6473
+
+; For XP and later
+[SymmetricResearch.NTx86]
+%USB\VID_15D3&PID_5504.DeviceDesc%=SrUsb4ch, USB\VID_15D3&PID_5504
+%USB\VID_04B4&PID_6473.DeviceDesc%=SrUsb4ch, USB\VID_04B4&PID_6473
+
+
+
+; ================= USB4CH model section =====================
+
+[DestinationDirs]
+DefaultDestDir = 12                      ; \drivers for WinNT
+SrUsb4ch_CoInstaller_CopyFiles = 11      ; \system32 for WinNT
+
+[SourceDisksNames]
+1=%SrUsbXchDiskDesc%,,,
+
+[SourceDisksFiles]
+SrUsbXch.sys = 1
+WdfCoInstaller01007.dll = 1
+
+
+
+; ================= USB4CH model section =====================
+
+[SrUsb4ch.NT]
+CopyFiles=SrUsb4ch_CopyFiles
+
+[SrUsb4ch.NT.Services]
+Addservice = SrUsbXch, 0x00000002, SrUsb4ch_AddService
+
+[SrUsb4ch.NT.CoInstallers]
+CopyFiles=SrUsb4ch_CoInstaller_CopyFiles
+AddReg=SrUsb4ch_CoInstaller_AddReg
+
+[SrUsb4ch.NT.Wdf]
+KmdfService = SrUsbXch, SrUsb4ch_CoInstaller_WdfSection
+
+[SrUsb4ch_CopyFiles]
+SrUsbXch.sys
+
+[SrUsb4ch_AddService]
+DisplayName    = %SrUsb4chDriverDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %10%\System32\Drivers\SrUsbXch.sys ; 10 = windir = \winnt or \windows
+AddReg         = SrUsb4ch_AddReg
+LoadOrderGroup = Data acquisition
+Dependencies   = usbhub
+
+[SrUsb4ch_AddReg]
+HKR, Parameters\Wdf, VerboseOn,       0x00010001, 1
+HKR, Parameters\Wdf, VerifierOn,      0x00010001, 1
+HKR, Parameters\Wdf, DbgBreakOnError, 0x00010001, 1
+
+[SrUsb4ch_CoInstaller_CopyFiles]
+WdfCoInstaller01007.dll
+
+[SrUsb4ch_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000,"WdfCoInstaller01007.dll,WdfCoInstaller"
+
+[SrUsb4ch_CoInstaller_WdfSection]
+KmdfLibraryVersion = 1.7
+
+
+
+
+; ================= String section =====================
+
+;Note: The .DeviceDesc strings appear in the device manager list
+;      DriverName not currently used
+
+[Strings]
+Symres                           = "Symmetric Research"
+SrInstrumentationClass           = "SrInstrumentationClass"
+SrInstrumentationClassDesc       = "SR Instrumentation"
+SrInstrumentationClassVersion    = "1.0.0.0"
+SrUsbXchDiskDesc                 = "SR UsbXch Installation Disk"
+SrUsb4chDriverName               = "SrUsbXch"
+SrUsb4chDriverDesc               = "SR UsbXch 24 bit A/D Driver (SrUsbXch.sys)"
+USB\VID_15D3&PID_5504.DeviceDesc = "SR UsbXch 24 bit A/D (4 channel = 15D3_5504)"
+USB\VID_04B4&PID_6473.DeviceDesc = "SR UsbXch with Cypress FX1 (04B4)"

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>sun_demux.n</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+<H1>sun_demux(1) </H1>
+
+<H2>NAME </H2>
+
+<P>sun_demux - earthworm module to read and demultiplex sunworm data </P>
+
+<H2>SYNOPSIS </H2>
+
+<P><B>sun_demux config-file </B></P>
+
+<H2>DESCRIPTION </H2>
+
+<P><B>Sun_demux reads multiplexed sunworm data from a </B><I>worm_serve
+</I>process, on a different machine, and demultiplexes the data into earthworm
+TRACE_BUF messages on the wave ring. </P>
+
+<H2>CONFIGURATION FILE COMMANDS </H2>
+
+<P><B>RingName </B><I>ring </I>specifies the tarnsport ring to which <B>sun_demux
+</B>will write TRACE_BUF messages. Normally this will be the <I>wave </I>ring.
+This command is required. </P>
+
+<P><B>MyModuleId </B><I>modid </I>sets the module ID for this invocation
+of <B>sun_demux </B>. Module ID's are found in <B>earthworm.d </B>. This
+command is required. </P>
+
+<P><B>LogFile </B><I>n </I>sets the diagnostic logging flag to <I>n </I>.
+Use 1 to cause <B>sun_demux </B>to write its log to disk, 0 for no logging.
+This command is required. </P>
+
+<P><B>HeartBeatInt </B><I>n </I>specifies the heartbeat interval in seconds.
+This command is required. </P>
+
+<P><B>RemoteMessHost </B><I>host </I>identifies the server from which sunworm
+multiplexed data is optained. <I>host </I>may be a domain name or IP address.
+This command is required. </P>
+
+<P><B>Port </B><I>port </I>specifies the TCP port number <I>port </I>.
+This command is required. </P>
+
+<P><B>sun_n_scan </B><I>n </I>sets the number of scans in a sunworm waveform
+message to <I>n </I>. This command is required. </P>
+
+<P><B>sun_n_chan </B><I>n </I>sets the number of channels in a sunworm
+waveform message to <I>n </I>. This command is required. </P>
+
+<P><B>StationFile </B><I>file </I>names <I>file </I>as the station file.
+This file should be the same station file as used by <B>pick_uw </B>. This
+command is required. </P>
+
+<H2>FILES </H2>
+
+<H2>ENVIRONMENT </H2>
+
+<H2>SEE ALSO </H2>
+
+<P><A HREF="http://www.geophys.washington.edu/SEIS/PNSN/SHOP/sunworm.html">Sunworm
+documentation.</A> </P>
+
+<P><BR>
+Written by Pete Lombard and Steve Malone, Oct. 1997</P>
+
+<P>Earthworm provided by Alex Bittenbinder, Barbara Bogaert, <BR>
+Lynn Dietz, and Will Kohler of the US Geological Survey, <BR>
+Menlo Park, California <BR>
+<BR>
+<BR>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B>Pete Lombard, 
+steve@geophys.washington.edu</A></B><BR>
+</ADDRESS>
+
+</BODY>
+</HTML>
+

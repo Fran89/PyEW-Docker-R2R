@@ -1,0 +1,408 @@
+Release Notes:  Earthworm Version "working"
+Cleaned out after release of v7.4 on 4/27/2010
+
+These notes are for release v7.5
+
+NEW MODULES:
+***********
+
+Hypo71PC
+This is not a module, but an independant binary used by hyp71_mgr.
+It is a slightly modified version by Alexandre Nercessian of the widely used USGS location program.
+Modifications allow higher number of stations, altitudes to be taken into account,
+earthquakes above sea level as well as stations below sea level.
+Jean-Marie SAUREL 07/15/2011
+
+ewhtmlemail
+Written by Ruben Luis of CVARG. Produces a fancy email with HTML using
+embedded images and a google map. Is triggered by a TYPE_HYP2000ARC
+message. This is in the reporting section of the source
+Ruben Luis 07/07/2011
+
+
+nq2ring
+nq2wws
+nq2wws_ack
+nq2pgm
+nq2gif
+Written by Jim Luetgert for taking netquakes mseed data and injecting it
+into a ring, winston wave server, gif files and peak ground motion calcuations.
+Moved from Contrib/Menlo to data_sources in EW7.5
+Moved by Paul Friberg 07/07/2011
+
+nll_mgr
+This is a module to do for NonLinLoc what hyp2000_mgr does for hypoinverse. It
+basically runs NonLinLoc and converts the input and output so that it matches
+what hyp2000 does so that downstream programs can get a new earthquake solution.
+This uses Anthony Lomax's NonLinLoc locator program found here:
+	http://alomax.free.fr/nlloc/
+The nll_mgr was contributed by INGV but written by Anthony. Formerly this was in
+the Contrib bundle, but it is in use in a few places as a production module.
+NOTE that we are also including NonLinLoc with each EW release as a convenience,
+but if you need the latest, go to Anthony's web site link above.
+Loaded into SVN by Paul Friberg 05/15/2011
+
+EWQuakeAlert
+A Java 1.6 GUI that receives HYP2000ARC messages from import and creates alert
+emails and SMS (sms using clickatel interface) with information about the
+event. In addition to the origin info, it sends emails with a google map of
+the location and a .png display of the waveforms that had picks.
+Written by Ruben Luis
+Loaded into SVN by Paul Friberg 04/18/2011
+
+cont_trig
+This module sends regularly trig2k messages in order for a listening trig2disk
+to produce continuous data archiving. It can replace the contrecord Perl and modules
+of GlowWorm package (used until v6.3).
+Based on carlsubtrig module.
+Tested under Linux CentOS.
+Jean-Marie Saurel 03/12/2010
+
+trig2arc
+This module converts trig2k messages into hyp2000_arc messages.
+Only the stations that has been trigged are send in the output.
+P arrival time is the trigger time for each station, and the weight is 4.
+Tested under Linux CentOS.
+Jean-Marie Saurel 03/12/2010
+
+seisan_report
+This module is contributed from Richard Luckette and Doug Scott of the BGS
+and it takes an HYPO2000ARC message and converts it to SEISAN event format.
+Paul Friberg 12/07/2010
+
+hyp71_mgr
+This module allows to use Hypo71 at the end of the megamodule instead of hyp2000.
+The input/output is the same as hyp2000_mgr module.
+It allors also to compute and integrate local magnitude using standalone mode
+of localmag.
+Tested under several Linux flavours.
+Jean-Marie Saurel 10/12/2010
+
+ewspectra
+This module takes data from one or more waveservers, computes and processes
+their spectra; results can be written either to a file or a ring.  Processing
+includes tapering, smoothing, filtering, and peak identification.  Data
+acqusition can be initiated from the config file or from a message read from a
+specified ring (see 'compute_spectra').
+Scott Hunter 04/26/2011
+
+compute_spectra
+This module posts a message that, when read by ewspectra, begins processing data
+starting at the specified date/time.  (Deprecated w/ the creation of
+activate_module)
+Scott Hunter 04/26/2011
+
+sniffspectra
+This module is a sniffwave for spectra messages, as written by ewspectra.  Results
+can be directed to stdout or to a different file for each message "sniffed", in
+a specified directory.
+Scott Hunter 04/26/2011
+
+ewthresh
+This module monitors a ring for TRACEBUF2X messages and generates an alarm message
+when a SCNL-specific threshold is exceeded.
+Scott Hunter 04/26/2011
+
+activate_module
+This module puts an ACTIVATE_MODULE message in the specified ring, the body of
+which starts with the module ID of the specified target module, followed by the
+remaining command-line arguments.
+Scott Hunter 05/05/2011
+
+activated_scripts
+This module, upon reading an ACTIVATE_MODULE message in the specified ring,
+executes a sequence of scripts (making substitutions w/ supplied arguments),
+and reports the final return code in a message to the specified ring.
+Scott Hunter 05/18/2011
+
+ewnotify
+This module monitors a ring for ACTIVATE_MODULE or alarm messages; generates email
+and posts a message to a ring for an instance of activated_scripts.
+Scott Hunter 05/20/2011
+
+ewaccel
+This module monitors a ring for TRACEBUF2 messages, assumed to be from
+sensors on different floors of a building.  The sum of the forces for the floors
+is computed for each sample time and, if it exceeds a specified threshold, an
+alarm message is written to an output ring.
+Scott Hunter 06/08/2011
+
+sendfilemt
+This module is a multi-threaded version of sendfileII that runs as an Earthworm module,
+meaning it sends heartbeats to statmgr, and restarts like other well-behaved EW modules.
+Running sendfilemt is equivalent to running multiple copies of sendfileII, but
+only one only one configuration file is needed, and sendfilemt needs to be mentioned only
+once in the startstop.d and statmgr.d files.  The module was tested on Solaris and Windows,
+Since sendfilemt uses the standard multithread Earthworm functions, it will probably run
+ok on other operating systems too, if the appropriate makefiles are written.
+Will Kohler 7/24/2011
+
+adsendxs
+Adsendxs is a rewrite the old adsend module that works with newer model DAQ hardware and
+GPS receivers. Here are some features of adsendxs:
+- Runs on National Instruments X-series DAQ modules, which come in PCI Express and USB
+  versions.
+- Uses the NI-DAQmx API, rather than the legacy NI-DAQ API.
+- Not tested on Linux.  The NI drivers may or may not be Linux compatible.
+- Obtains accurate time from an inexpensive Trimble ThunderBolt E GPS Disciplined Clock.
+- Seismic amplitudes are scaled the same as the older adsend program, to ensure
+  compatibility with existing downstream software.
+- Runs at a user-configurable sample rate.  Tested at sample rates up to 2000 sps.
+- Periodically updates the O/S clock, using time from Trimble GPS.
+Will Kohler 7/24/2011
+
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+********************************************
+carlsubtrig
+Added in CoincidentStaTriggers option to squash triggers of telemetry spikes. This was
+done for the Azores network but could be applicable elsewhere.
+Note that I also added a version number to the program which is stored in the log file
+AND also echoed to the command line if no args are provided. All EW modules should do this.
+Paul Friberg July 19, 2011 (with testing help from Ruben Luis).
+On August 18, 2011, I added IgnoreCoincident to ignore the coincident check if more than a
+specified number of subnets triggered coincidentally. The idea being that a telemetry glitch
+would not cross more than this number of subnets.
+
+hypoinverse 1.3 upgrade
+Note that the docs have changed and one command (ZTR has 2 args
+instead of one). This new version is really 1.35 and allows hypoellipse
+features which have now been integrated in.
+Fred Klein did all the code, Paul Friberg integrated with EW and checked it in.
+July 18, 2011
+
+binder_ew
+Added a new option no_S_on_Z which is a simple flag to
+not allow S phases to be associated with picks on vertical
+component channels. This option is off by default.
+Thanks to Barry Hirshorn for the idea from binder_agl.
+Paul Friberg 07/04/2011
+
+restart
+Now accepts multiple pids for restart instead of just one!
+I made the configfile option a flag (-c) too.
+Usage: restart [-c config_file] <pid> [<pid> ...]
+Paul Friberg 06/28/2011
+
+tankcut
+Fixed the -e option, which apparently never worked!
+Paul Friberg 06/10/2011
+
+localmag
+Stefan and I fixed the windows compilation which produced bogus numbers and never got
+a magnitude (despite running fine). The issue was a output array was filled with
+garbage numbers (not zeroed). While this was easy to solve (zero the array
+before calling convertWave()), it was not easy to find!
+Also, later we added the new configuration option ChannelNumberMap
+to map numbered channels to letter code orientations.
+New version is 2.1.4 (DOES NOT EFFECT ANY UNIX build of this)
+Paul Friberg & Stefan Lisowski 06/08/2011
+Later on added in capability to  for Z channel mags, via optional allowVerticals
+New version after allowVerticals is 2.1.5
+Paul Friberg 06/30/2011
+
+sniffring
+added in a -n option to allow  NO FLUSHING of messages if you want to see all
+the messages in a ring at a given instant you can use this new feature.
+Paul Friberg 06/01/2011
+
+tankplayer
+Fixed a bug where no heartbeats were issued if the Directory Scanning mode was
+used to playback data.
+Paul Friberg 04/29/2011
+
+eqassemble
+modified main tport_getmsg loop such that messages received with return codes
+GET_OK, GET_MISS, and GET_NOTRACK are all processed.  Previously, only msgs
+returned with GET_OK were processed. Msgs with GET_MISS and GET_NOTRACK returns
+were essentially ignored; only the return code was logged.
+Lynn Dietz 04/01/2011
+
+nmxptool
+updated nmxptool to version 2.0.0
+Matteo Quintiliani 01/24/2011
+
+sniffwave
+added in tracebuf2.1 detection capability display (to show a conversion factor instead
+of data quality flags). This is fully backward compatible with all prior
+versions.
+Kevin Frechette 01/12/2011
+
+localmag
+Fixed a case where if multiple wave_serverV's were listed, only the first one
+was ever polled for data (the rest were marked as duplicates).
+Paul Friberg 01/12/2011
+
+export_generic
+any linux module using PTHREAD_STACK set to 8192 can possibly segfault on
+64-bit linux (unreliably). The thread stack size was increased to 81920
+for Linux #ifdefined statement and all problems went away. This was not
+tested on Solaris or Windows or Mac OS X.
+Paul Friberg 12/02/2010
+
+tankplayer tools, wave_probe, dumpwave, cleandir, glass, startstopservice
+On Windows, added kom.obj to link so that the new kom dependency to logit
+is taken into account.
+Stefan Lisowski 11/11/2010
+
+tankplayer tools, ew2mseed, dumpwave, getmenu
+On Solaris and Unix makefiles, added kom.o to link so that the new kom
+dependency to logit is taken into account.
+Matteo Quintiliani 11/4/2010
+
+menlo_report
+Added parameter EnableLongFileName in the configuration file of menlo_report.
+It enables writing arc/sum files with format DATETIME_ID_VER.SUFFIX
+(i.e. 201011040932_0000097658_2.arc)
+Matteo Quintiliani 11/4/2010
+
+eqcoda
+Increased buffer size to 512 bytes for reading a line from the station file.
+Same behaviour of pick_ew.
+Matteo Quintiliani 8/25/2010
+
+sniffwave
+Fixed a misleading print statement when WaveMsg2MakeLocal() failed on a SCNL, it
+showed possible spaces in the SCNL that were not really there.
+Paul Friberg 8/19/2010
+
+fir
+Added QueueSize optional parameter to increase the default from 100
+Added SleepMilliSeconds optional parameter to decrease the default from 500ms
+Paul Friberg 8/18/2010
+
+statmgr
+*Bugfix You can now comment out the line that includes an email addres
+        so nobody gets emailed by statmgr, and you don't need to put a
+        fake email address in to get statmgr to start. This is the
+        behavior that is desccribed in the config file. Fix by Paul Friberg
+        201006
+
+sniffwave
+- Removed hundredths of second from values of latency.
+- Changed the SCNL line output format in order to increase the readability.
+  Now each field falls nearly at same column.
+- Quality fields are now displayed in hexadecimal.
+  Before non-ASCII characters were improperly printed to the terminal.
+- Distinguished output for gaps and overlaps.
+Matteo Quintiliani 6/22/2010
+
+ew2mseed
+Removed -D_SPARC from CFLAGS line of makefile.sol. This flag prevented
+proper byte-swapping on Solaris for little-endian (Intel) platform.
+Ilya Dricker 5/05/2010
+
+ew2mseed
+*Bugfix to prevent overflow in printing of location code
+*Fixed a condition of a bogus 'FULLY in THE GAP' return from waverserver.
+ Now if waverserver insists that the request is fully in the gap, but the
+ requested startTime is more than 12 hours AFTER the current time, we redefine
+ the waveServer FLAG is 'REQUEST-AFTER-THE-TANK'
+Ilya Dricker 5/19/2010
+
+trig2disk
+Postproc external script is now launched with tow arguments :
+date (YYYYMMDD) and time (HHMM) of the processed event.
+Change by Frederic Randriamora.
+Jean-Marie Saurel 27/12/2010
+
+gmew
+Added ability to recognize ACTIVATE_MODULE messages to initiate processing; also
+added ability to override the set of spectral periods to be processed.
+Scott Hunter 05/18/2011
+
+startstop
+Fixed writing of empty error messages
+Scott Hunter 5/17/2011
+
+startstop
+Restored ability of unix versions to control modules by id; made Windows version
+of this more robust
+Scott Hunter 6/22/2011
+
+statmgr
+Now allows for up to 10 mailservers; when mail is sent, each is tried in order
+until one works.
+Scott Hunter 6/29/2011
+
+startstop
+Uses new transport call to clear ring flag requesting termination of a process
+Scott Hunter 6/29/2011
+
+startstop
+Changed to reflect changes to transport library
+Scott Hunter 7/8/2011
+
+pick_ew_analysis
+I have made very significant changes to the first version. Here is a short list of the main:
+1.       Windowed or full-screen - This allows larger traces
+2.       Multiple and prioritized waveform sources - One may have multiple waveform sources. The app will automatically select one according to the required station and time interval
+3.       List of available stations and time intervals for each source - This allows checking if a waveform source carries the data that we need. Similar to get menu but extended to other waveform sources.
+4.       Reads data from wave/Winston servers, tank files (SCNL only), and mini-seed files - I included the latter to be able to check data from continuous archives.
+5.       On-screen indication of available data for each station within requested time interval - There is a small check after each station to let the user know that there is data available for the requested time interval.
+6.       Facilitated automatic setting of the request time interval based on availability of the sources - I included a button to automatically set the start and end times according to the time interval available from the sources. In case of waveservers it sets the end time to NOW-1 minute (I think) and NOW-21 minutes.
+7.       Indication of incorrect date/time settings - Characters turn red if you make an obvious mistake or swap start and end times
+8.       Zoom-in and pan buttons as well as drag-to-zoom - Swarm like waveform browsing is really cool to find details.
+9.       Missing parameters from pickew are included: NoCoda, RestartLength and MaxGap - I had some requests for this, particularly the nocoda
+10.   Tooltips with the pick and coda texts 
+11.   Tooltips with the causes for failed picks - Same as before.
+2011-07-06 Ruben S. Luis (commited to svn by Stefan)
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+****************************************************
+
+Environment Variable expansion in .d files
+Added file environment/earthworm_commonvars.d for declaring "Earthworm Common Variables"
+It is now possible to declare variables like ${...} within .d configuration files
+Matteo Quintiliani 11/4/2010
+
+
+KNOWN BUGS:
+***********
+
+
+KNOWN DEFICIENCIES:
+*******************
+
+
+LIBRARY CHANGES:
+****************
+
+Added a tport_flush call to the transport library; acts as if tport_getmsg were
+called repeatedly until no more messages were found, but doesn't incur the
+overhead of returning the messages (which would get ignored anyway).
+Scott Hunter 5/18/2011
+
+Changed default mail program used by SendMail for MacOSX
+Scott Hunter 5/20/2011
+
+Added a tport_detachFromFlag call to support change in flag: instead of
+a single value, it now records all individual process IDs put to it
+(until TERMINATE is put to it, which effectively replaces the list) --
+this prevents the flag from being changed before the target process
+reads it (which is now possible, due to making the stop & restart
+commands multi-threaded).  tport_getflag now yields TERMINATE if that
+has been put; if it hasn't but the process's own ID is in the list, that
+is returned; otherwise, 0 is returned.  tport_detachFromFlag is now used
+to remove a value from the list (what used to be done by putting a 0).
+Scott Hunter 6/29/2011
+
+In order to support legacy modules not using the new transport library,
+SHM_HEAD was restored to its original form, and the new list-of-IDs flag
+is kept in a distinct ring which is only used for this purpose.  Processes
+that do not use the new library will be communicated with via the old flag
+field (which has the original overwriting issue, but now contention is only
+between legacy modules).
+Scott Hunter 7/8/2011
+
+Modified transport library so if a module using the new library is run with
+a startstop built against the transport library using the original flag
+representation, module will use the old style flag.  Also modified to allow
+key for flag ring to be specified in earthworm.d (named FLAG_RING).
+Scott Hunter 7/19/2011
+
+Modified getutils to provide a version of GetKey (GetKeyWithDefault) which
+takes a default value to return if the specified key does not exist; modified 
+transport to use this new function to avoid error messages when FLAG_RING is
+not defined (and a default value is used).
+Scott Hunter 7/25/2011

@@ -1,0 +1,39 @@
+Release Notes:  Earthworm Version 2.31
+
+New Modules:
+************
+
+EQVERIFY: One of the sausage routines. 
+	The Program  takes an event message from eqcoda and studies the:
+	+ distribution of arrival times and                            
+	+ coda amplitude characteristics and coda duration            
+	and make a decision about whether the event is a noise-event    
+	or a real earthquake                                            
+	
+	NOTE: This code was written to emulate the glitch-detecting part
+	 of the program "eqmeas" by Al Lindh and Barry Hirshorn.  Some  
+ 	variables used here store the same information about the pick  
+ 	or coda that eqmeas does.  In that case, the equivalent eqmeas 
+	 variable name is included in the comments of the variable       
+ 	declaration as ("name").
+
+
+Modifications to existing modules:
+**********************************
+
+HYPO_MGR: OS/2 Version.  
+	Modified to reset the maximum number of file handles.  Done because
+	we could not run eqverify in the sausage due to running out of file
+	handles.  Solaris did not have this problem.
+
+
+Modules in Progress:
+********************
+
+	Export - version that forks under Solaris.
+
+	Import_generic
+
+	Export_generic
+
+	Digi

@@ -1,0 +1,62 @@
+
+From bogaert@gldage.cr.usgs.gov Sun Jul 19 10:02:54 1998
+Date: Sat, 18 Jul 1998 16:16:13 -0600
+From: Barbara Bogaert <bogaert@gldage.cr.usgs.gov>
+To: earthw-list@nmt.edu
+Subject: Release of Earthworm V3.2
+
+Earthworm Version 3.2 has been released.  
+
+WHERE TO GET IT:
+
+Our ftp site at gldage.cr.usgs.gov:pub/OUTGOING/earthworm.
+
+
+FEATURES OF V3.2
+
+New convention:
+
+Originally, the entire earthworm.d configuration file was
+installation-specific.  However, we have discoverd that networks sharing
+data need to use the same naming convention for certain message_types.
+
+To facilitate this process, the Earthworm Development Group has defined
+a group of reserved message_types as follows:
+
+   0- 99 are reserved by "Earthworm Central" to label types of messages
+         which may be exchanged between installations. These string/value
+         mappings must be global to all Earthworm systems.
+
+ 100-255 are controlled by each Earthworm installation. These values 
+         should be used to label messages which remain internal to 
+         an Earthworm system or installation.
+
+New Modules:
+
+evanstrig:  
+This module is actually an adaptation of lptrig. Evanstrig runs John
+Evans' long-period trigger algorithm on single-channel TYPE_TRACEBUF
+messages and produces single-channel triggers.  These triggers can then
+be associated into "events" by the module trg_assoc.
+
+carlstatrig/carlsubtrig: 
+The Carl Johnson coincidence trigger. Carlstatrig reads tracedata,
+calculates station averages and writes station trigger messages to a
+transport ring. Carlsubtrig reads station trigger messages from one or
+more carlstatrig modules, performs subnet coincidence logic, and writes
+a TRIGLIST message. Carlsubtrig can be configured to allow for station
+latency due to telemetry delays.
+
+Compress_UA and Decompress_UA:
+The compress_UA and decompress_UA modules implement the gencompress
+algorithm  which is used with permission from Boulder Real Time
+Technologies, Inc., copyright 1997.
+ 
+If you have any questions, please contact me at email or phone number below.
+
+- Barbara
+
+Barbara Bogaert				U.S. Geological Survey
+bogaert@gldage.cr.usgs.gov	        Box 25046, Stop 967
+office:  303-273-8491                   Denver Federal Center
+FAX:     303-273-8600          		Denver, CO 80225

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<TITLE>Earthworm Modules: gmew overview</TITLE>
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ee" VLINK="#551a8b" BGCOLOR="#ffffff">
+<H1 ALIGN=CENTER>Earthworm Modules:</H1>
+<H1 ALIGN=CENTER>Gmew Overview</H1>
+<P ALIGN=CENTER><I>(last revised 10 May 2010)</I></P>
+
+<P ALIGN=LEFT>GMEW is an Earthworm module for computing ground-motion
+parameters: peak ground acceleration, velocity and displayment, plus spectral
+response values.</P>
+
+<P ALIGN=LEFT>When in starts up, gmew connects to a transport ring and reads
+HYP2000_ARC messages, produced by hypoinverse. Gmew also uses the transport
+ring for sending strong-motion messages, as well as heartbeat and status
+messages. Gmew reads the summary line of the HYP2000_ARC message, starts
+collecting trace data from one or more wave_servers, and processes the data
+for that event. Once the processing (described below) is completed, the gmew
+module becomes dormant, waiting for the next event to arrive and beating its
+heart at the specified interval.</P>
+
+<P>(5/10/11) If the &lt;watchForAlarm&gt; command is included in the config file,
+gmew will now also read ACTIVATE_MODULE messages that have been tagged for gmew,
+but instead of computing the start of the window, uses the time provided in the
+message (using the duration specified in the &lt;watchForAlarm&gt; command); 
+time is expected to be expressed in YYYYMMDDHHMMSS format.</P>
+
+<P ALIGN=LEFT>Gmew prepares the new data for processing
+by checking for gaps and removing the mean. Then gmew transforms the trace
+data into the frequency domain using an FFT (fast fourier tranform). A cosine
+taper is applied to remove the lowest and highest frequency components. The
+default values for the cosine taper ranges are 0.05 to 0.1 Hz at the low end
+and 45% to 50% of samplerate at the high end. Individual SCNLs may be
+configured to use other filter values if necessary. The low frequency cutoff
+is essential to stabilize the displacement trace.</P>
+
+<P ALIGN=LEFT>The instrument response is removed, and acceleration, velocity
+and displacement traces are computed. In addition, spectra response data is
+computed for the three periods of 0.3 seconds, 1.0 seconds, and 3.0 seconds,
+with 0.5% damping. All six of these traces are computed in the frequency
+domain, since integration or differentiation are easily computed there. The
+spectral response traces are computed by generating the response function for
+a one degree of freedom harmonic oscillator with the specified free period and
+damping. All six of these synthetic traces are then transformed back to the
+time domain by an FFT that handles multiple arrays simultaneously.</P>
+
+<P>(5/10/11) If one or more &lt;AddSpectraResponseAt&gt; commands are included
+in the config file, then those periods will be computed instead of the standard
+ones listed above.  This does <strong>not</strong> affect what gets written
+to the ShakeMap XML.</P>
+
+<P ALIGN=LEFT>When the synthetic traces have been returned to the time domain,
+the peak amplitudes are located for each trace.  The search for peak amplitude
+is done within a time window related to the estimated S-phase arrival time and
+specified in the configuratiion file.</P>
+
+<P ALIGN=LEFT>Gmew writes a TYPE_STRONGMOTIONII message for each SCNL that it
+processes. This message contains the PGA, PGV, PGD and spectral response
+values for the SCNL. In addition, the user can configure gmew to write an XML
+file for the entire event. This file is in the format used by ShakeMap
+(version 2) for station readings.</P>
+
+<P ALIGN=LEFT>Some warnings about this program: Currently gmew does not
+know to wait for trace data to appear in the wave_servers. So when run as an
+Earthworm module, it may not be able to obtain enough trace data for adequate
+processing. You may want to run gmew manually after all the desired trace
+data has accumulated in the wave_server.</P>
+
+<P>Gmew uses a quite a bit of CPU time, depending on the number and
+duration of traces requested. If this and other CPU-intensive modules such as
+localmag are running on the same machine, they will have a significant impact on
+the machine load after one or more large events. Until Earthworm has some sort
+of scheduling system, you may want to run these programs at reduced priority.</P>
+
+<P>Gmew will gradually use increasing amounts of memory. This is normal. It is
+keeping information about FFT factors and trig functions, so that these do not
+need to be recalculated for each trace calculation.</P>
+
+
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><A HREF="../modules.html">Module
+Index</A> | <A HREF="../cmd/gmew_cmd.html">Gmew Commands</A></P>
+<hr><address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>

@@ -1,0 +1,64 @@
+# ----------------------------------------------------------------------
+# MakeFile for psnadsend
+# ----------------------------------------------------------------------
+#
+# Instructions on how to create the executable:
+#
+#     First make sure that your environmental variables
+#     'INCLUDE' and 'LIB' are set correctly.
+#
+#     You may also load this .MAK file from Visual C++.
+#     Visual C++ will then treat it as an 'external makefile'.
+#
+#
+NODEBUG=1
+#
+!include <ntwin32.mak>
+#
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+O = PsnAdSend.obj PsnAdUtils.obj getconfig.obj filter.obj
+J = $L\logit.obj $L\getutil.obj $L\time_ew.obj $L\kom.obj $L\transport.obj $L\sleep_ew.obj
+D = .\PsnAdBoard
+#
+#
+# TARGET: Console application
+#
+all: dll PsnAdSend.exe
+#
+PsnAdSend.exe: $O
+    link libcmt.lib $D/PSNADBoardEw.lib /OUT:$B\PsnAdSend.exe $O $J 
+#    
+#
+PsnAdSend.obj: PsnAdSend.cpp PsnAdSend.h
+PsnAdUtils.obj: PsnAdUtils.cpp PsnAdSend.h
+getconfig.obj: getconfig.cpp PsnAdSend.h
+filter.obj: filter.cpp PsnAdSend.h
+#
+#
+.c.obj:
+    cl /c /DWIN32 $(GLOBALFLAGS) $(cvarsmt) $(tflags) $<
+#
+.cpp.obj:
+    cl /c /DWIN32 $(GLOBALFLAGS) $(cvarsmt) $(tflags) $<
+#
+dll:
+    cd PSNAdBoard
+    nmake -f makefile.nt
+    cd ..
+#
+# Clean-up directives
+clean:
+    cd PSNAdBoard
+    nmake -f makefile.nt clean
+    cd ..
+    -del *.obj
+    -del $B\PSNAdBoardEw.dll
+    -del $B\PsnAdSend.exe
+
+clean_bin:
+    cd PSNAdBoard
+    nmake -f makefile.nt clean_bin
+    cd ..
+    -del $B\PSNAdBoardEw.dll
+    -del $B\PsnAdSend.exe

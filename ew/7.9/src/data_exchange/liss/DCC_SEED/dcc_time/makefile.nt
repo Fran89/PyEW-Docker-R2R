@@ -1,0 +1,80 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:26  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:56:55  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/03/13 23:48:35  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+DCC_INCLUDE = ..\include
+DCC_LIB = ..\lib
+
+INCS = /I$(DCC_INCLUDE)
+
+
+OBJS = 	st_addtodelta.obj	\
+	st_addtotime.obj	\
+	st_cleandate.obj	\
+	st_deltacomp.obj	\
+	st_deltaprint.obj	\
+	st_deltatoms.obj	\
+	st_difftimes.obj	\
+	st_flttotime.obj	\
+	st_formdelta.obj	\
+	st_getcurrent.obj	\
+	st_getlocal.obj	\
+	st_getjulian.obj	\
+	st_julian.obj	\
+	st_minusdelta.obj	\
+	st_parsetime.obj	\
+	st_printcal.obj	\
+	st_printdate.obj	\
+	st_printdec.obj	\
+	st_setupdate.obj	\
+	st_spanprint.obj	\
+	st_timecomp.obj	\
+	st_timeminusd.obj	\
+	st_timenorm.obj	\
+	st_timepar.obj	\
+	st_timeplusd.obj	\
+	st_timespan.obj	\
+	st_timetoflt.obj	\
+	st_limits.obj	\
+	st_oracle.obj	\
+	st_minmax.obj	\
+	st_unixtimes.obj
+
+all: $(OBJS) install
+
+install: $(OBJS)
+    copy *.obj $(DCC_LIB)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(INCS) $<
+
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+
+# Extras: 	st_formatdate.obj

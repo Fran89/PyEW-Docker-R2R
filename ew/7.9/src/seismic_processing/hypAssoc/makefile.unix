@@ -1,0 +1,36 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4 -lthread  -lnsl -lsocket
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+OBJ = hypAssoc.o \
+      $L/dirops_ew.o \
+      $L/libew_mt.a \
+      $L/socket_ew.o \
+      $L/socket_ew_common.o \
+      $L/mem_circ_queue.o \
+      $L/read_arc.o \
+      $L/swap.o 
+
+hypAssoc: $(OBJ); \
+	$(CC) $(CFLAGS) -o $(B)/hypAssoc $(OBJ) $(SPECIFIC_FLAGS)
+
+lint:
+	lint hypAssoc.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/hypAssoc*

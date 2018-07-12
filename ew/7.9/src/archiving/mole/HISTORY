@@ -1,0 +1,59 @@
+#########################
+Mole Release History
+#########################
+
+* Release 1.2    (2013/08/22) 
+
+      moledb    1.2.4 2013-08-22 
+      ew2moledb 1.2.3 2013-07-29 
+      moleface  1.2.5 2013-08-22 
+
+  NEW:
+    - Added Earlybird messages TYPE_PICKTWC, TYPE_HYPOTWC and TYPE_ALARM
+       * moledb:
+	 - added tables eb_picktwc, eb_hypotwc and eb_alarm
+	 - added stored procedure sp_ins_eb_picktwc(), sp_ins_eb_hypotwc()
+           and sp_ins_eb_alarm()
+       * ew2moledb
+	 - added management of TYPE_PICKTWC,  TYPE_HYPOTWC and
+           TYPE_ALARM messages
+    - Added TYPE_HEARTBEAT message.
+
+  CHANGES:
+    - moledb:
+       * changed structure of SQL's scripts and added the new initialization
+	 scripts "init_db.sh" and "init_grants.sh" in place of
+	 "moledb_master_script.sh".
+       * changed the engine of mysql tables from MyISAM to InnoDB.
+       * changed field names of foreign keys:
+           - ewmodidpick --> fk_module_pick
+           - ewmodidloc  --> fk_module_loc
+           - ewmodid     --> fk_module
+           - scnlid      --> fk_scnl
+           - ewsqkid     --> fk_sqkseq
+           - ewid        --> fk_instance
+           - ewspkid     --> fk_spkseq
+       * renamed table ew_events_summary to ew_hypocenters_summary
+       * added primary key to the table ew_region_geom
+       * added field qknph to table ew_sqkseq
+       * added trigger tr_ew_quake2k_a_i
+    - ew2moledb:
+       * test MySQL connection at the beginning and exit in case of error
+       * now can simultaneously read messages from multiple rings
+         (based on multiple threads).
+       * management of the local queue of messages is more efficient and
+         reliable (based on semaphores).
+       * fixed a damned bug causing loss of very few messages; fortunately,
+         only on very very rare occasions.
+       * some parameters in ew2moledb.d are changed. There is no complete
+              backward compatibility with the previous configuration files.
+    - moleface:
+       * Added password encryption, bug fixes and other improvements.
+
+------------------------------------------------------------------------------
+
+* Release 1.0    (2012/06/20) 
+    - First public release.
+
+------------------------------------------------------------------------------
+

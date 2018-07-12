@@ -1,0 +1,26 @@
+
+ew2ringserver:
+https://seiscode.iris.washington.edu/projects/ew2ringserver
+
+Read TRACEBUF and/or MSEED messages from an Earthworm ring, create
+512-byte miniSEED records and forward them to a DataLink server, aka
+ringserver.
+
+See the instructions in HowTo-EW-SeedLink.txt regarding how to set up a
+SeedLink server for data in an Earthworm system.
+
+
+To build this module the Earthworm headers and libraries must be
+available and the makefiles expect a configured Earthworm environment.
+
+For example, if your Earthworm headers and libraries are in
+/opt/earthworm/earthworm-src/ you can setup a shell with by typing:
+
+$ source /opt/earthworm/earthworm-src/environment/ew_macosx_intel.sh
+
+(subsitituting your path and architecture-dependent script)
+
+Then you can compile the module like this (assuing you have installed
+the appropriate development tools):
+
+$ make -f makefile.unix

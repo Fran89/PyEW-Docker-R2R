@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: file2ew commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+file2ew Configuration File</h1>
+<i>(last revised June 1, 2006)</i> </center>
+<p>file2ew is a&nbsp; utility for reading in messages from a file (in
+binary form) and injecting them into a ring.
+</p>
+<p>Below is a copy of the .d file with detailed notes on each
+parameter
+</p>
+<pre># file2ew.d<br>#<br># Picks up files from a specified directory, converts the contents <br># to an Earthworm message and places  it into a message ring. The type<br># of message produced is configurable by the suffix of the filename.<br>#<br># Option to save (to subdir ./save) or delete the file afterwards.<br># If it has trouble converting a file, it saves it to subdir ./trouble. <br># Maintains its own local heartbeat and also monitors the peer's<br># heartbeat via a file. Complains if the peer's expected heartbeat<br># interval is exceeded; announces resumption of peer's heartbeat.<br><br># Basic Module information<br>#-------------------------<br>MyModuleId        MOD_FILE2EW      # module id <br>RingName          HYPO_RING        # shared memory ring for output<br>HeartBeatInterval 30               # seconds between heartbeats to statmgr<br><br>LogFile           1                # 0 log to stderr/stdout only; <br>                                   # 1 log to stderr/stdout and disk;<br>                                   # 2 log to disk module log only.<br><br>Debug             0                # 1=&gt; debug output. 0=&gt; no debug output<br><br># Data file manipulation<br>#-----------------------<br>GetFromDir      c:\incoming_files  # look for files in this directory<br>CheckPeriod     1                  # sleep this many seconds between looks<br>OpenTries       5                  # How many times we'll try to open a file <br>OpenWait        200                # Milliseconds to wait between open tries<br>SaveDataFiles   1                  # 0 = remove files after processing<br>                                   # non-zero = move files to save subdir<br>                                   #            after processing  <br>LogOutgoingMsg  0                  # If non-zero, write contents of each <br>                                   #   outgoing msg to the daily log.<br><br>  <br><br># Peer (remote partner) heartbeat manipulation<br>#---------------------------------------------<br>PeerHeartBeatFile  terra1  HEARTBT.TXT  600 <br>                                   # PeerHeartBeatFile takes 3 arguments:<br>                                   # 1st: Name of remote system that is <br>                                   #   sending the heartbeat files.<br>                                   # 2nd: Name of the heartbeat file. <br>                                   # 3rd: maximum #seconds between heartbeat <br>                                   #   files. If no new PeerHeartBeatFile arrives<br>                                   #   in this many seconds, an error message will<br>                                   #   be sent.  An "unerror message" will be<br>                                   #   sent after next heartbeat file arrives<br>                                   #   If 0, expect no heartbeat files.<br>                                   # Some remote systems may have multiple <br>                                   # heartbeat files; list each one in a<br>                                   # seperate PeerHeartBeatFile command<br>                                   # (up to 5 allowed).<br><br>PageOnLostPeer technician          # Optional command: Name of group to page <br>                                   #   if PeerHeartBeatFile is late. This allows<br>                                   #   pages to be sent to groups other than <br>                                   #   those listed in statmgr.d. Up to 5 <br>                                   #   PageOnLostPeer commands can be used.<br>                                   # Must run telafeeder on same system to <br>                                   #   actually get the pages sent.<br><br>LogHeartBeatFile 1                 # If non-zero, write contents of each<br>                                   #   heartbeat file to the daily log.<br><br><br># Commands specific to file2ew<br>#-----------------------------<br><br>MaxSuffixType 5                    # Optional command.  Set the maximum number<br>                                   #   of file suffix/message type pairs to<br>                                   #   configure here (default=5)<br><br># The filename suffix will determine the Earthworm message type<br># (and optionally the Earthworm installation id) that file2ew will <br># use when placing the contents of the file into the Earthworm ring.<br># If the installation is ommitted, file2ew will use the local<br># installation id.<br><br>#           suffix   EW MsgType           EW Installation (optional)<br>#           ------   ----------------     --------------------------<br>SuffixType  .arc     TYPE_HYP2000ARC     <br>SuffixType  .sm      TYPE_STRONGMOTIONII<br>SuffixType  .smUCB   TYPE_STRONGMOTIONII  INST_UCB<br>     <br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/file2ew_ovr.html">file2ew Overview</a> </center>
+<hr>
+<address> <br>
+Contact: </address>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</body>
+</html>

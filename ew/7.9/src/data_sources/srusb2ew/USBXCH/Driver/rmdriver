@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo Running /sbin/rmmod SrUsbXch0 ...
+
+if ! /sbin/rmmod SrUsbXch0 ; then
+       echo Failed rmmod of SrUsbXch0
+       exit 1
+fi
+
+echo Done
+
+#echo Remove symbolic device link ...
+#
+#pushd /dev
+#rm SrUsbXch0
+#popd

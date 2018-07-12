@@ -1,0 +1,28 @@
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_
+
+E = Mm
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+#EBLIBS= complex.o filters.o get_pick.o report.o ReadStationData.o geotools.o mags.o taulib.o mjstime.o
+EBLIBS=-lebpick -lebloc
+LIBFLAGS=-L$L
+
+O= $E.o Mm_config.o Mm_processing.o Mm_threads.o \
+    $L/libew_mt.a $L/swap.o $L/trheadconv.o 
+
+$E: $O
+	$(CC) $(CFLAGS) -o $B/$E $O $(LIBFLAGS) $(EBLIBS) $(SPECIFIC_FLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/$E

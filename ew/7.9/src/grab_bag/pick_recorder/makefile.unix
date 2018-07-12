@@ -1,0 +1,29 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+SRCS = pick_recorder.c
+OBJS = pick_recorder.o
+
+PICK_REC = $(OBJS) $L/libew_mt.a $L/swap.o $L/mem_circ_queue.o
+
+pick_recorder: $(PICK_REC)
+	$(CC) $(CFLAGS) -o $B/pick_recorder $(PICK_REC) $(SPECIFIC_FLAGS)
+
+
+lint:
+	lint pick_recorder.c $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/pick_recorder*

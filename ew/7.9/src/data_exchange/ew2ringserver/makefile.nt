@@ -1,0 +1,29 @@
+
+#                    Nmake File For ew2ringserver - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ew2ringserver
+O = $(APP).obj
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+LD_DIR = ..\..\libsrc\libdali          # location of libdali.h file
+
+EW_LIBS = $L\mem_circ_queue.obj $L\rdpickcoda.obj $L\libmseed.lib \
+          $L\libdali.lib $L\swap.obj $L\libew_mt.lib
+
+$B\$(APP).exe: $O exportfilter.obj
+    $(link) $(conlflags) $(ldebug) $(conlibsmt) $O exportfilter.obj $(EW_LIBS) \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS) /nologo $(cflags) /I$(LD_DIR) $(cdebug) $(cvarsmt) $(tflags) $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP).exe

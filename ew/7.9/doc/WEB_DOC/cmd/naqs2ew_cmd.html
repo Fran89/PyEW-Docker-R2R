@@ -1,0 +1,361 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: naqs2ew commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>Naqs2ew Configuration File Commands</H1>
+<I>(last revised 22 April 2002)</I></CENTER>
+
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#function">Functional command listing</A><BR>
+3.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, naqs2ew reads the configuration file named on the command
+line.   As always, the configuraton file contains comments:
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).
+<P>
+<A NAME="example">
+<H2>1.   EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+# naqs2ew config file
+
+MyModuleId      MOD_NAQS2EW
+RingName        WAVE_RING
+HeartBeatInt    30
+
+LogFile         1
+Debug           0
+SocketDebug     0
+
+NaqsServer      192.168.1.1 28000   # IP address and Port of NaqsServer
+MaxSamplePerMsg 200
+
+TimeJumpTolerance 600  # (in seconds) This term is used to catch packets with
+                       # dubious timestamps.  If a time gap is detected in an
+                       # incoming data stream, the new packet's timestamp is
+                       # compared to the system clock.  If it is later than
+                       # the current system time by more than TimeJumpTolerance
+                       # seconds, naqs2ew assumes the packet timestamp is bogus
+                       # (it's in the future) and it ignores the entire packet.
+                       # NOTE: if you use this feature with small tolerances,
+                       # the PC's system clock must be kept pretty close to
+                       # network time!!!
+                       # Set to -1 if you never want to compare packet times
+                       # to the system clock.
+                       # Valid values are -1 or any number >= 0.0
+
+# Set up list of channels you want to receive from NaqsServer using
+# a 'RequestChannel' command for each channel, with these arguments:
+#
+#   sta       station code you want to receive data from (no wildcards).
+#   comp      component (channel) of data you want to receive (no wildcards).
+#   net       2-character network code to label this channel with (no wildcards).
+#             NaqsServer supplies its own station and component codes to its clients,
+#             but not a network code. The sta and comp codes you supply in this file
+#             must match the codes supplied by NaqsServer. The TYPE_TRACEBUF messages
+#             output to the Earthworm system will be labeled with the sta, comp, net
+#             codes listed in this file.
+#
+#   pinno     pin number to assign to this channel (0-32767)
+#
+#   delay     short-term-completion time (in seconds) -1s <= s <= 300s.
+#             When NaqsServer misses packets from the field, it will wait for the
+#             given amount of time for the gap to be filled by re-transmitted
+#             packets before sending data to naqs2ew. Specifying delay=0 will
+#             guarantee that packets are in chronological order, without
+#             waiting for missed data.  Setting delay=-1 will deliver the packets
+#             with no delay, in the order they were received (possibly out of
+#             chronological order).
+#
+#   format    format in which you want to receive the data:
+#              -1   = compressed packets (raw format from HRD)
+#               0   = uncompressed packets, original sample rate.
+#             0 < r = requested output sample rate.  NaqsServer will accomodate.
+#
+#   sendbuf   Buffer flag:
+#               0 = do not send buffered packets for these channels.
+#               1 = send buffered packets for these channels.  This effectively
+#                   moves the start of the data stream several packets into
+#                   the past.
+#             WARNING: if naqs2ew is auto-restarted with sendbuf = 1,
+#               duplicate data could enter the Earthworm system.
+#               Therefore, we strongly recommend setting sendbuf = 0.
+#
+#                 sta   comp  net  pinno  delay(s)   format  sendbuf
+RequestChannel    CSU    VDZ   NC   2001    30         0        0
+RequestChannel    CSU1   VDN   NC   2002    30         0        0
+RequestChannel    CSU1   VDE   NC   2003    30         0        0
+RequestChannel    CSU1   ADZ   NC   2004    30         0        0
+RequestChannel    CSU1   ADN   NC   2005    30         0        0
+RequestChannel    CSU1   ADE   NC   2006    30         0        0
+#
+
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the configure commands recognized by naqs2ew, grouped by the function
+they influence.  Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!).  Most of the commands are required.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>
+        Earthworm system setup:
+ 		<A HREF="#MyModuleId">MyModuleId</A>	   	required
+		<A HREF="#RingName">RingName</A>	   	required
+		<A HREF="#HeartbeatInt">HeartbeatInt</A>	   	required
+
+	Waveform acquistion:
+		<A HREF="#NaqsServer">NaqsServer</A>	   	required
+		<A HREF="#MaxSamplePerMsg">MaxSamplePerMsg</A>	   	required
+		<A HREF="#RequestChannel">RequestChannel</A>		required
+		<A HREF="#TimeJumpTolerance">TimeJumpTolerance</A>   required
+
+	Output Control:
+		<A HREF="#LogFile">LogFile</A>		   	required
+		<A HREF="#Debug">Debug</A>		   	optional
+		<A HREF="#SocketDebug">SocketDebug</A>		optional
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed
+in alphabetical order.  Listed along with the command (bold-type) are
+its arguments (in red), and the function within the module that the command influences.
+A detailed description of the command and is also given.  Default values
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>							function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+
+</BLOCKQUOTE>
+<A NAME="Debug">  <!-- command name as anchor inside quotes -->
+<PRE><B>Debug <font color=red>flag</font></B>							Output Control
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Optional command to control the amount of logging done by naqs2ew.
+If <font color=red>flag</font> is zero, debug-level logging is turned off;
+naqs2ew will do normal logging of start, stop, and error conditions.
+If <font color=red>flag</font> is non-zero, naqs2ew will also make a line entry
+for every packet it sends and receives, and it will log the entire contents
+of every decompressed trace data packet.
+<PRE><!-- Default and example go here   -->
+Default:  Debug 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="HeartbeatInt">  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartbeatInt <font color=red>nsec</font></B>						Earthworm setup
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the minimum number of seconds <font color=red>nsec</font> between
+TYPE_HEARTBEAT messages issued by naqs2ew. The heartbeat is
+implemented within both the connection-making and the socket-reading
+loops of naqs2ew.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  HeartbeatInt 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font></B>							Output Control
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written, but messages may go to stderr and/or stdout.
+If <font color=red>switch</font> is 1, naqs2ew
+will write to stderr/stdout and to a daily log file(s) called naqs2ewxx.log_ccyymmdd
+where xx is naqs2ew's module id (set with "MyModuleId" command)
+and ccyymmdd is the current UTC date (ex: 19960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).  If <font color=red>switch</font> is 2, the log file will be written, but
+no messages will go to stderr or stdout.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  LogFile 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MaxSamplePerMsg">  <!-- command name as anchor inside quotes -->
+<PRE><B>MaxSamplePerMsg <font color=red>nsamp</font></B>						Waveform Acquisition
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the maximum length of each outgoing TYPE_TRACEBUF message to <font color=red>nsamp</font> samples. The number of samples in each TYPE_TRACEBUF message depends on the sample rate of the channel. Normally naqs2ew loads one-second's worth of data into each TYPE_TRACEBUF message.  However, if the sample rate for
+a channel is greater than <font color=red>nsamp</font> samples per second, naqs2ew
+limits that channel's TYPE_TRACEBUF messages to <font color=red>nsamp</font> samples each.
+In processing a packet from NaqsServer, naqs2ew will buffer any fractional second of data until it receives the next packet for that channel in an attempt to always send out
+equal length messages.
+If naqs2ew detects a time tear between packets from NaqsServer, it may output a message containing less than one second of data.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MaxSamplePerMsg 200
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font></B>						Earthworm setup
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  MyModuleId MOD_NAQS2EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+
+<A NAME="NaqsServer">  <!-- command name as anchor inside quotes -->
+<PRE><B>NaqsServer <font color=red>IPaddress port</font></B>					Waveform Acquisition
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Identifies the <font color=red>IPaddress</font> and <font color=red>port</font>
+number of the NaqsServer application to receive data from.
+<PRE>
+Default:  none
+Example:  NaqsServer 192.168.1.1 28000
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->
+<PRE><B>RingName <font color=red>ring</font></B>							Earthworm setup
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Tells naqs2ew which shared memory region to use for output. <font color=red>ring</font>
+is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d)
+to a unique number for the key to the shared memory region.
+<PRE>
+Default:  none
+Example:  RingName WAVE_RING
+</PRE>
+
+</BLOCKQUOTE>
+<HR>
+<A NAME="RequestChannel">  <!-- command name as anchor inside quotes -->
+<PRE><B>RequestChannel <font color=red>sta comp net pinno delay format sendbuf</font></B>		Waveform Acquisition
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Use one RequestChannel command for each channel of trace data that you want to
+request from NaqsServer (no hard-coded limit).  Details of the arguments
+are given below:
+<PRE>
+  <font color=red>sta</font>       station code you want to receive data from (up to 5 chars, no wildcards).
+
+  <font color=red>comp</font>      component (channel) of data you want to receive (up to 3 chars, no wildcards).
+
+  <font color=red>net</font>       network code to label this channel with (up to 2 chars,no wildcards).
+            NaqsServer supplies its own station and component codes to its clients,
+            but not a network code. The <font color=red>sta</font> and <font color=red>comp</font> codes you supply in this command
+            must match the codes supplied by NaqsServer. The TYPE_TRACEBUF messages
+            output to the Earthworm system will be labeled with the <font color=red>sta, comp, net</font>
+            codes listed in this command.
+
+  <font color=red>pinno</font>     pin number to assign to this channel (0-32767)
+
+  <font color=red>delay</font>     short-term-completion time (in seconds) -1s <= s <= 300s.
+            When NaqsServer misses packets from the field, it will wait for the
+            given amount of time for the gap to be filled by re-transmitted
+            packets before sending data to naqs2ew. Specifying <font color=red>delay</font> = 0 will
+            guarantee that packets are in chronological order, without
+            waiting for missed data.  Setting <font color=red>delay</font> = -1 will deliver the packets
+            with no delay, in the order they were received (possibly out of
+            chronological order).
+
+  <font color=red>format</font>    format in which you want to receive the data from NaqsServer:
+               -1   = compressed packets (raw format from HRD)
+                0   = uncompressed packets, original sample rate.
+              0 < r = requested output sample rate.  NaqsServer will accomodate.
+            Data is reformatted into Earthworm TYPE_TRACEBUF packets before it is
+            written to the transport ring.
+
+  <font color=red>sendbuf</font>   Buffer flag:
+                0 = do not send buffered packets for these channels.
+                1 = send buffered packets for these channels.  This effectively
+                    moves the start of the data stream several packets into
+                    the past.
+            WARNING: if naqs2ew is auto-restarted with <font color=red>sendbuf</font> = 1,
+              duplicate data could enter the Earthworm system (this is generally not
+              a good thing). Therefore, we strongly recommend setting <font color=red>sendbuf</font> = 0.
+
+Default:  none
+Example:  RequestChannel  CSU1 VDN NC 2002  30  0  0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="SocketDebug">  <!-- command name as anchor inside quotes -->
+<PRE><B>SocketDebug <font color=red>flag</font></B>						Output Control
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Optional command to control the amount of logging done by the socket library.
+If <font color=red>flag</font> is zero, debug-level logging is turned off.
+If <font color=red>flag</font> is non-zero, the socket library write LOTS of
+debugging info. WARNING: turing socket debugging on generates huge log files.
+<PRE><!-- Default and example go here   -->
+Default:  SocketDebug 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="TimeJumpTolerance">  <!-- command name as anchor inside quotes -->
+<PRE><B>TimeJumpTolerance <font color=red>flag</font></B>						Waveform Acquisition
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+(in seconds) This term is used to catch packets with dubious timestamps.
+If a time gap is detected in an incoming data stream, the new packet's
+timestamp is compared to the system clock.  If it is later than
+the current system time by more than TimeJumpTolerance
+seconds, naqs2ew assumes the packet timestamp is bogus
+(it's in the future) and it ignores the entire packet.
+NOTE: if you use this feature with small tolerances,
+the PC's system clock must be kept pretty close to
+network time!!!
+Set to -1 if you never want to compare packet times
+to the system clock.
+Valid values are -1 or any number >= 0.0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/naqs2ew_ovr.html">naqs2ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+
+

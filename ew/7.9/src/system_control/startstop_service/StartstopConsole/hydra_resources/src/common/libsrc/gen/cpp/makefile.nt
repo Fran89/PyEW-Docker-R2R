@@ -1,0 +1,201 @@
+#
+# this file includes full text of included files, minus revision logging
+#
+# A lot of stuff could still be pruned from this file
+#
+# note that included  makefile.ind is where the objects being made are noted
+
+#!include $(HYDRA_BUILDENV)/make_common_defs.nt
+#
+##################################################################
+
+
+# Set MS Make Variable NODEBUG based on EW_DEBUG setting
+!IF "$(EW_DEBUG)" == "1"
+LIBC = libcmtd.lib libcpmtd.lib oldnames.lib /NODEFAULTLIB:libcmt.lib
+BUILD_TYPE=Debug
+LIBTYPE = _debug
+
+!ELSE
+NODEBUG=1
+LIBC = libcmt.lib libcpmt.lib oldnames.lib
+BUILD_TYPE=Release
+LIBTYPE = 
+
+!ENDIF
+
+###############################
+#NT System Makefile
+###############################
+!include <ntwin32.mak>
+
+# Define NEIC directories
+# NOTE in the future we should add directory slashes to the end of lib and bin
+# directories, with a blank space after the \ character, as without a blank
+# space the \ acts as  line continuation character
+HYDRA_LIBCOMMON  = ..\..\..\..\..\lib\common\ 
+HYDRA_LIB  = $(HYDRA_LIBCOMMON)
+HYDRA_LIBCPP  = $(HYDRA_LIBCOMMON)
+HYDRA_LIBCPP_DUAL = $(HYDRA_LIBCPP)$(BUILD_TYPE)\ 
+
+EW_LIB  = $(HYDRA_LIBCOMMON)
+EWDB_LIB  = $(HYDRA_LIBCOMMON)\dbms
+EWDB_APPS_LIB = $(HYDRA_LIBCOMMON)
+
+SQL_DIR = $(HYDRA_LIBCOMMON)\sql
+APPS_LIB = $(HYDRA_LIBCOMMON)
+APPS_LIBCPP = $(HYDRA_LIBCOMMON)
+API_LIB = $(HYDRA_LIBCOMMON)\dbms\ 
+API_LIBCPP = $(API_LIB)$(BUILD_TYPE)\ 
+
+###########################
+###############################
+#OBJECT FILES EXTENSION
+###############################
+OBJ     = obj
+EXE     = .exe
+
+# DEFINE EWDB ORA_API libraries
+#ALL_ORA_API_LIBS = $(HYDRA_LIBCOMMON)\ewdb.lib
+
+CHEATER_EARTHWORM_PLATFORM_FLAGS = -D_WINNT -D_INTEL -D_WIN32_WINNT=0x0502 /D_USE_32BIT_TIME_T
+HYDRA_C_INCLUDE	= 
+
+		
+!IF "$(EW_DEBUG)" == "1"
+#cflags  = /nologo /DWIN32 /MTd /W3 /GX /Z7 /Od /D "_DEBUG" /FD /RTC1 /c \
+#   $(CHEATER_EARTHWORM_PLATFORM_FLAGS) $(HYDRA_C_INCLUDE) 
+cflags  = /nologo /DWIN32 /MTd /W3 /EHsc /Z7 /Od /D "_DEBUG" /FD /RTC1 /c \
+   $(CHEATER_EARTHWORM_PLATFORM_FLAGS) $(HYDRA_C_INCLUDE) /D_CRT_SECURE_NO_DEPRECATE /wd4996
+!ELSE
+#cflags  = /nologo /DWIN32 /MT /W3 /GX /O2 /c $(CHEATER_EARTHWORM_PLATFORM_FLAGS) $(HYDRA_C_INCLUDE)
+cflags  = /nologo /DWIN32 /MT /W3 /EHsc /O2 /c $(CHEATER_EARTHWORM_PLATFORM_FLAGS) $(HYDRA_C_INCLUDE) \
+          /D_CRT_SECURE_NO_DEPRECATE /wd4996
+
+!ENDIF
+
+cppflags = $(cflags)  /TP /D "_VC80_UPGRADE=0x0600" 
+
+##########################
+
+# non-debug defines /DNDEBUG
+# uncomment the next line to remove asserts
+# HYDRA_CPP_DEBUG=/DNDEBUG
+
+# Multi-byte character strings
+# uncomment the next line to enable MultiByte Character String (MBCS) support.
+# HYDRA_MBCS = /D_WINDOWS /D_Windows /D_MBCS
+
+# Other flags used for building cpp files on Windows
+#HYDRA_CPP_OTHER = /GX /YX /FD
+HYDRA_CPP_OTHER =  /FD
+
+# CPP include path
+HYDRA_CPP_INCLUDE = -I..\..\..\include\gen\cpp 
+		
+
+# MBCS defines  
+
+# Add NEIC include to cflags
+cflags  = $(cflags) -I..\..\..\include\gen\c  /W3
+# /W3  flag causes warnings to be issued for un-prototyped functions and undefined
+#      variables.
+# /WX  add this flag, to treat WARNINGS as ERRORS  (use with /W3 or /W2)
+
+# Consolidate NEIC cpp flags
+HYDRA_CPP_FLAGS = $(HYDRA_CPP_DEBUG) $(HYDRA_MBCS) $(HYDRA_CPP_OTHER) $(HYDRA_CPP_INCLUDE)
+cppflags = $(cppflags) $(HYDRA_CPP_FLAGS)
+
+# Override the ALL_ORA_API_LIBS var to include the neicora library
+#ALL_ORA_API_LIBS = $(ALL_ORA_API_LIBS) $(HYDRA_LIBCOMMON)\neicora.lib
+
+WATCHDOG_LIBS = 	\
+  					$(HYDRA_LIBCOMMON)\watchdog_client.$(OBJ) \
+					$(HYDRA_LIBCOMMON)\DatagramSocket.$(OBJ) \
+					$(HYDRA_LIBCOMMON)\socket_ew.$(OBJ) \
+					$(HYDRA_LIBCOMMON)\socket_ew_common.$(OBJ)
+
+TRAVELTIME_LIBS     = $(HYDRA_LIBCOMMON)\ttt.$(OBJ) $(HYDRA_LIBCOMMON)\phase.$(OBJ) 
+
+TRAVELTIME_CPP_LIBS = $(HYDRA_LIBCOMMON)\ttt_class.$(OBJ) $(HYDRA_LIBCOMMON)\tttlist_class.$(OBJ) \
+                      $(TRAVELTIME_LIBS)
+
+ASSOCIATE_CPP_LIBS  = $(HYDRA_LIBCOMMON)\AssociatePicks.$(OBJ) \
+                      $(HYDRA_LIBCOMMON)\Rank.$(OBJ) \
+                      $(HYDRA_LIBCOMMON)\Sphere.$(OBJ) \
+                      $(HYDRA_LIBCOMMON)\WeightedCluster.$(OBJ) \
+
+STD_HYDRA_C_LIBS   =  ewdb.lib
+
+!IF "$(EW_DEBUG)" == "1"
+LIBCPP = nafxcwd.lib $(LIBC)
+CPP_LDFLAGS = /NODEFAULTLIB:"msvcrt.lib" /NODEFAULTLIB:"msvcrtd.lib" /NODEFAULTLIB:"libcmt.lib" /NODEFAULTLIB:"libc.lib" /NODEFAULTLIB:"nafxcw.lib"  /subsystem:windows /pdb:none /debug /machine:I386
+!ELSE
+LIBCPP = nafxcw.lib $(LIBC)
+CPP_LDFLAGS = /NODEFAULTLIB:"msvcrt.lib" /NODEFAULTLIB:"msvcrtd.lib" /NODEFAULTLIB:"libcmtd.lib" /NODEFAULTLIB:"libcd.lib" /NODEFAULTLIB:"nafxcwd.lib"  /subsystem:windows /pdb:none /machine:I386
+
+!ENDIF
+
+
+DISPLAY_CPP_LIBS = \
+  kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib  \
+  shell32.lib ole32.lib oleaut32.lib uuid.lib wsock32.lib\
+  comctl32.lib oledlg.lib olepro32.lib urlmon.lib \
+  winmm.lib ctl3d32s.lib
+
+
+RES = res
+RESOURCE_INCLUDE_DIRS = ..\..\..\include\display\cpp\resources
+
+HELP = hlp
+
+ALL_HYDRA_LIBS = $(STD_HYDRA_C_LIBS) common_display$(LIBTYPE).lib common_gen_cpp.lib  \
+                 ewdb_cpp$(LIBTYPE).lib common_ew.lib common_gen_c.lib common_dbms_apps.lib \
+                 common_display_map_img.lib
+
+
+
+!include makefile.ind
+#!include $(HYDRA_BUILDENV)/make_lib_base.nt
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+##################################################################
+
+.c.obj:
+        $(CC) $(GLOBALFLAGS)  $(cflags) $<
+        copy $@  $(HYDRA_LIB)
+
+!IF "$(DUAL_BUILD)" == "1"
+{$(MAKEDIR)}.cpp{$(HYDRA_LIBCPP_DUAL)}.obj:
+		$(CC) $(GLOBALFLAGS)  $(cppflags) $<
+        copy $(MAKEDIR)\$(@F)  $(HYDRA_LIBCPP_DUAL)
+!ELSE
+.cpp.$(OBJ):
+		$(CC) $(GLOBALFLAGS)  $(cppflags) $<
+        copy $@  $(HYDRA_LIBCPP)
+!ENDIF
+
+
+clean: $(CLEAN_OTHER)
+        -del /f core *.o *.obj $(LIB_NAME) *% *~
+!IF "$(DUAL_BUILD)" == "1"
+		cd $(HYDRA_LIBCPP)Debug
+		-del /f *.o *.obj *% *~
+		cd $(HYDRA_LIBCPP)Release
+		-del /f *.o *.obj *% *~
+		cd $(MAKEDIR)
+!ENDIF
+
+install:
+    copy *.$(OBJ) $(HYDRA_LIB)
+
+make_lib:
+        link -lib /nologo  /out:$(HYDRA_LIB)\$(LIB_NAME) $(OBJS)
+
+
+#        link -lib /nologo $(ldebug) /out:$(HYDRA_LIB)\$(LIB_NAME) $(OBJS)
+
+
+

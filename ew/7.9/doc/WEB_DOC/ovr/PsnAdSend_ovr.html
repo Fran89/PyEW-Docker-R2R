@@ -1,0 +1,307 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: PsnAdSend Overview</TITLE>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<CENTER><H1><a name="Top"></a>Earthworm Modules: <BR> PsnAdSend Version 2.6 for Earthworm
+7.x Overview</H1>
+<p align="center"><i>Updated: December 21, 2014</i></CENTER>
+
+<blockquote>
+
+<h3 align="left">Index:</h3>
+  <ul>
+    <li><a href="#Introduction">Introduction</a></li>
+    <li><a href="#Addition Configuration File Information">Addition Configuration File Information</a></li>
+    <li><a href="#Additional Derived Channels">Additional Derived Channels</a></li>
+    <li><a href="#Data Time Stamping">Data Time Stamping</a></li>
+    <li><a href="#Built-in Digital Filters">Built-in Digital Filters</a></li>
+    <li><a href="#TCP/IP Connection to ADC Board">TCP/IP Connection to ADC Board</a></li>
+    <li><a href="#New Features in Version 2.5">New Features in Version 2.5</a></li>
+    <li><a href="#New Features in Version 2.6">New Features in Version 2.6</a></li>
+    <li><a href="#Additional Information">Additional Information</a></li>
+  </ul>
+</blockquote>
+<hr>
+
+<h3 align="left"><a name="Introduction">Introduction</a>:</h3>
+<blockquote>
+  <P>PsnAdSend is a digitizing module similar to ADSend for Earthworm. This module runs under Windows
+  (2000, XP, Vista or Win7) or Linux and produces demultiplexed data to one of the transport data
+rings. This program was designed to work with the Webtronics' 16-Bit 8-Channel <a href="http://www.seismicnet.com/serialatod.html">PSN-ADC-SERIAL
+  or PSN-ADC-USB</a> Analog to Digital boards, <a href="http://www.seismicnet.com/psnaccel.html">PSN-ACCEL</a>
+  (our new strong motion board) as well as the VolksMeter Sensor.
+  The 16-Bit ADC board can record 1 to 8 channels
+at sample rates of 10, 20, 50, 100, 200, 250 or 500 sample per second. At 500
+  SPS the maximum number of channels the board can digitize is 4. To use the
+  board you will need one free RS-232 Comm port or use the USB version of the
+  board. If the system only has USB ports, a USB to RS-232 converter can be used
+between the computer and the PSN-ADC-SERIAL board.&nbsp;Adapters based on the
+  FTDI chip set are recommended. The PSN-ACCEL board has both RS-232 and USB
+  ports and can record up to 4 channels at 15, 25, 30, 50, 60, 100, 120 or 200
+  samples per second.<P>The Windows version of the module was built using Microsoft Visual C++
+  8.0 (Visual Studio 2005) and the Linux version is build and tested using
+  OpenSuse 11.4. The program (PsnAdSend.exe)
+has been tested using Earthworm version 7.7. The PsnAdSend module uses
+the PSNADBoard.dll to interface between the program and the ADC board. See this <a href="http://www.seismicnet.com/PSNADBoardDLL.html">page</a>
+for more information on the DLL / Linux library. <b>Under Windows this file must be in the same bin directory as
+  PsnAdSend.exe and be DLL version 5.1 or higher</b>. The Linux version does not need any other files other
+  then the
+  PsnAdSend executable.&nbsp;
+</blockquote>
+<h3>
+<a name="Addition Configuration File Information">
+Addition Configuration File Information</a>:</h3>
+<blockquote>
+  <p>PsnAdSend Version 2 has some additional configuration file parameters;&nbsp;</p>
+  <p>The <i>ConsoleDisplay</i> parameter is only used under Windows and controls
+  how PsnAdSend displays status information on the screen.&nbsp; If set to 1,
+  the&nbsp; program will clear the screen, reposition the cursor to the top of
+  the window and display the status information.&nbsp; When <i>ConsoleDisplay</i>
+  = 0, status information will be appended to the end of the screen buffer.</p>
+  <p>The <i>ControlCExit </i>parameter controls how the module handles console
+  event signals like Control-C. If the parameter = 1, PsnAdSend will exit, if 0,
+  the program will ignore Control-C keyboard input.</p>
+  <p>The <i>RefreshTime</i> parameter is used to automatically display the
+  module status on the screen. The number entered is in seconds. If the user
+  enters 0 (zero) for this parameter no status information will be displayed on
+  the screen.</p>
+  <p><i>CheckStdin </i>is another Windows only feature. If set to 1, the program
+  will pole the STDIN buffer using kbhit() for any user input. Currently only
+  the 'c' key is used to clear the packet received counter, all other input will
+  redisplay the module status information.</p>
+  <p>The Station/Component/Network/Location (SCNL) channel line format has been
+  changed and the need for Nchan has been removed. The number of channels that
+  the ADC board will record is now controlled by how many SCNL channel lines are
+  found in the configuration file. Older versions of PsnAdSend required a index
+  parameter per Channel line, this is no longer needed. The new SCNL line format
+  looks like this:</p>
+  <blockquote>
+    <blockquote>
+      <pre>     # Stat Comp Net Loc Bits Gain FltrDly Invert Send DcOffset
+     # ---- ---- --- --- ---- ---- ------- ------ ---- --------
+Chan   CH1  SHZ  PN  01   16    1     20      N     Y     0
+Chan   CH2  SHN  PN  02   16    1     20      N     Y     0
+    </pre>
+    </blockquote>
+    <ul>
+      <li>CH1 = Station ID; Can be 1 to 5 characters</li>
+      <li>SHZ = Component Name; Must be 3 characters&nbsp;</li>
+      <li>PN = Network ID; Must be 2 characters</li>
+      <li>01 = Location code; Must be 2 characters</li>
+      <li>16 = Number of bits to use from the ADC channel.<i> <b>See Note 1 for
+        more information</b></i></li>
+      <li>1 = ADC Channel Gain; Must be 1 for 16-Bit digitizer boards, can be
+        1,2,4,8,16,32 or 64 for SDR24 Board</li>
+      <li>20 = Low-Pass Filter Delay in Milliseconds;&nbsp; Can be a + or - . <i><b>See Note 2 for more information</b></i></li>
+      <li>N = Invert data; Can be (Y)es&nbsp; or (N)o</li>
+      <li>Y = Send to ring; Can be (Y)es or (N)o</li>
+      <li>0 = DC Offset added to the incoming ADC data; Can be a + or - integer
+        number.&nbsp;</li>
+    </ul>
+  </blockquote>
+  <p><b>Note #1</b>: This parameter controls how many converter bits will be
+  used from the ADC channel. For 16 bit boards this parameter can be in the
+  range of 12 to 16. The VolksMeter and SDR24 boards use a 24 bit converter, so
+  the range can be 12 to 24.&nbsp;</p>
+  <p><b>Note #2</b>: <font size="3">The Filter Delay parameter is used to
+  compensate for the propagation delay of the signal through the low-pass filter
+  connected between the sensor and the A/D card. This is done by subtracting
+  time from the packet start time before sending the data to the EW ring.</font>&nbsp;</p>
+</blockquote>
+<h3><a name="Additional Derived Channels">Additional Derived Channels</a>:</h3>
+<blockquote>
+  <p>Version 2.x of the PsnAdSend Module has a new feature that allows the user
+  to create additional channels from one of the real ADC channels. This can be
+  used with the new built in digital filters (see below for more information) to
+  send both the filtered data and raw data to EW. The SCNL line is similar to
+  the normal channel SCNL control line.</p>
+  <blockquote>
+    <blockquote>
+      <pre>#       AdcCh Stat Comp Net Loc Bits FltrDly Invert Send DcOffset
+#       ----- ---- ---- --- --- ---- ------- ------ ---- --------
+AddChan   1    CH9  BHN  NC  02  16     0      N     Y     0</pre>
+    </blockquote>
+    <ul>
+      <li>1 = Raw or physical ADC channel number&nbsp;</li>
+      <li>CH9 = Station ID; Can be 1 to 5 characters</li>
+      <li>BHZ = Component Name; Must be 3 characters&nbsp;</li>
+      <li>NC =
+    Network ID; Must be 2 characters</li>
+      <li>02 = Location code; Must be 2 characters</li>
+      <li>16 = Number of bits to use from the ADC channel</li>
+      <li>20 = Filter Delay in Milliseconds;&nbsp; Can be a + or - integer
+        number</li>
+      <li>N = Invert data; Can be (Y)es&nbsp; or (N)o</li>
+      <li>Y = Send to ring; Can be (Y)es or (N)o</li>
+      <li>0 = DC Offset added to the incoming ADC data; Can be a + or - integer
+        number</li>
+    </ul>
+  </blockquote>
+</blockquote>
+<h3>
+<a name="Data Time Stamping">
+Data Time Stamping</a>:</h3>
+<blockquote>
+  <P>The PSN-ADC-SERIAL/PSN-ADC-USB boards and the PSNADBoard.dll can use various methods to
+time stamp the data. The most accurate timing (&lt; 3 milliseconds) can be achieved
+using a GPS receiver connected to the digitizer. Currently the board supports the
+Garmin GPS 16, <a href="http://www.seismicnet.com/gps/gps18.html">Garmin GPS 18x
+  LVC</a> Sensors or the older and now obsolete Motorola ONCORE receiver series.&nbsp;
+  If the system is
+running a program like the NTP, the user can expect an overall
+accuracy of around +-50 milliseconds. DLL/Linux Library version 2.0 and some of
+  our ADC boards now support the <a href="http://www.sureelectronics.net/goods.php?id=99">Sure
+  Electronics GPS Evaluation</a> board. To use this GPS receiver the user must
+  solder a wire from the GPS' 1-PPS signal to pin 1 of the RS-232 connector. To
+  power the receiver from the ADC board the user can solder another wire from
+  pin 5 of the RS-232 connector to the +5VDC buss on the GPS evaluation board.&nbsp;<P>PsnAdSend
+  version 2.4 and above now supports generic OEM GPS receivers running at 4800
+  or 9600 baud. The GPS receiver must have a 1 Pulse Per Second signal going to
+  Pin 1 of the GPS connector on the ADC board. This signal must be a few
+  milliseconds in duration to be detected correctly by the board. Use &quot;<i>HighToLowPPS     1&quot;</i>
+  in the PsnAdSend configuration&nbsp; file if the 1PPS signal has a high to low
+  direction at the top of the second. This will need to be done if the 1PPS
+  signal goes through an inverter before going into the A/D board.
+</blockquote>
+  <h3><a name="Built-in Digital Filters">Built-in Digital Filters</a>:</h3>
+<blockquote>
+  <P>The PsnAdSend module now has some basic digital filtering. Each channel,
+  including the derived channels, can have one or more of the of the following
+  filter types:
+  <blockquote>
+    <ul>
+      <li>Low-Pass</li>
+      <li>High-Pass</li>
+      <li>Inverse or Period Extending Filter</li>
+    </ul>
+  </blockquote>
+  <p>See <a href="http://www.seismicnet.com/epf/">http://www.seismicnet.com/epf/</a>
+  for more information on the inverse filter. The <a href="http://sites.google.com/site/bobmcclure90/inversefilter">Inverse
+  Period Extending Software filter</a> is based on work by Bob McClure.</p>
+</blockquote>
+<h3><a name="TCP/IP Connection to ADC Board">TCP/IP Connection to ADC Board</a>:</h3>
+<blockquote>
+  <p>Version 2.x of the PsnAdSend now supports a TCP/IP connection to the ADC
+  board through a TCP/IP to RS-232 bridge. This can be either wired or wireless
+  based on the adapter type. We have been experimenting with <a href="http://www.wiznettechnology.com/Sub_Modules/en/product/Product_Detail.asp?cate1=&amp;cate2=&amp;cate3=&amp;pid=1133">WiFi
+  adapter</a>&nbsp; that seems to work Ok. To use this feature set the &quot;TcpMode&quot;
+  parameter in the PsnAdSend.d file to 1, set the &quot;CommPortTcpHost&quot;
+  to the host IP address or host name of the adapter and &quot;TcpPort&quot; to
+  the adapters port number. The RS-232 bridge must be configured as a server and
+  listen for a connection from the host computer running
+  PsnAdSend.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</blockquote>
+<h3><a name="New Features in Version 2.5">New Features in Version 2.5</a>:</h3>
+<blockquote>
+  <p>A new parameter MUX_DATA_RING has been added to the configuration file.
+  This parameter can be used to send raw multiplexed ADC data as well as log
+  file messages to the specified transport ring. This parameter is option so it
+  can be commented out, removed from the *.d file or set to 0 (zero) to disable
+  this feature. The sending of the raw multiplexed data can be used by our Ew2Ws
+  (Earthworm two WinSDR) module to send ADC data to our WinSDR datalogging
+  program through Earthworm. Messages sent to the specified ring are sent with
+  the TYPE_ADBUF message-type tag defined in the earthworm_global.d file. The
+  user will need to use an unused transport ring or define a new one in the
+  earthworm.d file.&nbsp; Example:</p>
+  <blockquote>
+    <pre><i>Ring MUX_DATA_RING   1038      # multiplexed waveform data ring</i></pre>
+  </blockquote>
+  <p align="left">You will also need to define and set the size of the ring in
+  your startstop_*.d file. Example:</p>
+  <blockquote>
+    <div align="left">
+      <pre align="left"><i>nRing 2
+Ring WAVE_RING       2048
+Ring MUX_DATA_RING   2048</i></pre>
+    </div>
+  </blockquote>
+  <p align="left">Five other parameters, all optional, have been added to the
+  configuration file. The first three are used to send time reference error
+  messages to the StatMgr. They are;</p>
+  <blockquote>
+    <p align="left"><i>SystemTimeError </i>- Used to test the time difference
+    between the ADC board time and the system time. This parameter is in
+    seconds. If the time difference exceeds the specified amount an error
+    message will be sent to the StatMgr. Setting this parameter to 0 will
+    disable this test.</p>
+    <p align="left"><i>PPSTimeError</i> - Used to test the time difference
+    between the GPS receiver and the time on the ADC board. This parameter is in
+    milliseconds. If the time difference exceeds the specified amount an error
+    message will be sent to the StatMgr. A value greater then 10 milliseconds
+    should be used for this parameter. Setting this parameter to 0 will disable
+    this test.</p>
+    <p align="left">NoLockTimeError - Used to test for a long unlocked time
+    reference condition. This parameter is in minutes. If the ADC board becomes
+    unlocked or never locks to the time reference in the specified time
+    limit&nbsp; PsnAdSend will send an error message to the StatMgr.&nbsp;</p>
+  </blockquote>
+  <p align="left">The last two parameters are used to filter out some time
+  reference log messages from going to the log file.</p>
+  <blockquote>
+    <p align="left"><i>FilterSysTimeDiff </i>- If the <i>SystemTimeError</i>
+    feature is enabled the message below will be sent to the log file every 5
+    minutes. When the <i>FilterSysTimeDiff&nbsp; </i>feature is enabled these
+    messages will be blocked from going to the log file.</p>
+    <blockquote>
+      <div align="left">
+        <pre align="left"><i>DLL: Time difference between A/D Board and Host Computer=-0.001 seconds</i></pre>
+      </div>
+    </blockquote>
+    <p align="left"><i>FilterGPSMessages</i> -&nbsp;When the time reference type
+    is set to one of the GPS receiver options PsnAdSend will log a status
+    message every 5 minutes that looks like this from 24-Bit boards:&nbsp;</p>
+    <div align="left">
+      <blockquote>
+    <pre align="left">DLL: GPSRef: Sts:1 Lck:1 Sats:10 LckTm:12 10:49 Vco:48% VcoChg:00:00/00:02 PPSDif:0</pre>
+      </blockquote>
+    </div>
+    <p>And this from 16-Bit boards:</p>
+    <blockquote>
+      <pre>DLL: GPSRef: Sts:2 Lck:1 Sats:12 AdjTm:23:45.6 A LckTm:13 12:18 MsAdj:-2 MsOff:-3 1PPSDif:-1</pre>
+    </blockquote>
+    <p>If the <i>FilterGpsMessages</i> option is enabled PsnAdSend will filter
+    out messages indicating a good lock status.&nbsp;</p>
+  </blockquote>
+</blockquote>
+<hr>
+<h3><a name="New Features in Version 2.6">New Features in Version 2.6</a>:</h3>
+<blockquote>
+  <p>One new feature has been added to PsnAdSend version 2.6. This feature,
+  controlled by the <i>StartTimeError</i> parameter in the configuration file,
+  can be used to seed the system time when PsnAdSend first starts running. This
+  is for systems like the Linux based BeagleBone or <span class="st">Raspberry
+  Pi</span> boards that do not have a Real-Time Clock (RTC) to set the system
+  time after boot-up. This option may not be needed if the BeagleBone or <span class="st">Raspberry
+  Pi</span> board has access to a NTP time server. A system without a RTC, or
+  NTP server access, will boot-up with the system time set to a date sometime in
+  the past.&nbsp;</p>
+  <p>When the <i>StartTimeError</i> parameter is used PsnAdSend will wait for
+  the GPS receiver to lock onto UTC time and then set the system time to the
+  current date and time. The <i>StartTimeError</i> feature is similar to but
+  independent from the <i>UpdateSysClock</i> parameter. The <i>StartTimeError</i>
+  only checks the system time once after GPS lock. If the error, in seconds, is
+  greater then the number entered in the <i>StartTimeError</i> parameter
+  PsnAdSend will set the system time. Once the system time is set or the time
+  difference is below the <i>StartTimeError</i> number, PsnAdSend will stop
+  performing the time test. The <i>UpdateSysClock </i>should be enabled to continuously
+  monitor and set the system time if the time difference is greater then 50
+  milliseconds. Please note that this feature is not available on PsnAdSend
+  built for Windows.&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</blockquote>
+<hr>
+<h3><a name="Additional Information">Additional Information</a>:</h3>
+<ul>
+  <li><a href="http://www.seismicnet.com/serialatod.html">PSN-ADC-SERIAL and
+    PSN-ADC-USB Board Information</a></li>
+  <li><a href="http://www.seismicnet.com/serialamp.html">Anti-aliasing filter
+    Filter Board</a></li>
+  <li><a href="http://www.ftdichip.com/Drivers/VCP.htm">FTDI USB Driver</a> -
+    The USB version of the ADC board used the FTDI FT232RL USB chip. Both
+    Windows and Linux are supported</li>
+  <li><a href="Ws2Ew_ovr.html">Ws2Ew Module</a> - Used to import waveform data
+    from our WinSDR datalogger program into Earthworm</li>
+</ul>
+<hr>
+<p align="center"><b>[ <a href="#Top">Top</a> ] [ <a href="../cmd/PsnAdSend_cmd.html">Commands</a> ]</b></p>
+</BODY>
+</HTML>

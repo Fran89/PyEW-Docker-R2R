@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm System: cleandir commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ alink="#ff0000" link="#0000ee" vlink="#551a8b">
+<center>
+<h1> <br>
+cleandir Configuration File</h1>
+<i>(last revised June 1, 2006)</i> </center>
+<p>cleandir is a windows only utility for cleaning out files from a
+directory as a windows service.
+</p>
+<p>Below is a copy of the .d file with detailed notes on each
+parameter
+</p>
+<pre>##############################<br># cleandir.d<br>#<br># This specifies the parameters for cleandir.<br># Age - number of days old a file has to be before it is deleted<br>#       Default is 100 days<br># CheckInterval - time interval between checking the directories (in seconds)<br>#       Default is 14400 seconds (4 hours)<br># Directory - directory to check.  Up to 16 directories can be specified,<br>#       each on a separate line.  This will not navigate into subdirectories.<br>##############################<br><br>Age             100<br>CheckInterval   14400<br>Directory       C:\tmp<br>Directory       C:\Temp<br>Directory       $EW_LOG<br><br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/cleandir_ovr.html">cleandir Overview</a> </center>
+<hr>
+<address> <br>
+Contact: </address>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</body>
+</html>

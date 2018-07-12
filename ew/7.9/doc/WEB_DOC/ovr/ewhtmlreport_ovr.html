@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<title>Earthworm Modules: EWHTMLREPORT overview</title>
+	</head>
+	<body bgcolor="#ffffff">
+		<center>
+			<h1>Earthworm Modules:<br>
+				EWHTMLREPORT Overview</h1>
+			<i>(last revised 2 November 2012)</i></center>
+		<p>
+			This module periodically reads HYP2000ARC messages stored in a folder to generate
+			interactive html reports. The user can select the period of time considered for
+			each report, the interval between reports and the time of day that the report is generated.
+			EWHTMLREPORT can also read a folder with MAGNITUDE files to use local magnitude for the 
+			production of the report.<br>
+			This module can be used as an Earthworm module or as a standalone module. In the
+			latter case, the html report will be sent to stdout. This simplifies its usage
+			with php or cgi scripts to generate a website dynamically.
+			<br>
+			<br>
+			The following presents a typical report, generated with random data (warning: Internet Explorer 9.0 will complain about ActiveX content).
+			<br>
+		</p>
+		<table>
+			<tr>
+				<td>
+			<iframe src="ewhtmlreport_example.html" width="920" height="1400"></iframe>
+				</td>
+				<td>
+					<table>
+						<tr>
+							<td>
+						<b>Report Contents</b>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Summary</u></i><br>
+						The summary presents some of the highlights of the report. Strongest and deepest events; number of events and stations.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Daily Event Count</u></i><br>
+								The daily event count presents the number of events per day at 12AM corrected for local time.
+								The range selector allows zooming in or out and acts as a filter for the seismicity map below.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Seismicity Map</u></i><br>
+								The seismicity map is an interactive google map of the events considered for each report, filtered with
+								the range selector of the daily event count. Below and to the right are East-West and North-South depth profiles.
+								These profiles are aligned with the map coordinates and will adjust appropriately as the user pans or zooms the map.
+								Note that the depth profiles are not filtered by the daily event count range selector.<br>
+								The seismic events are marked as filled circles with transparency dependent on the quality of the location. This
+								approach gives focus to well located events, disregarding lower quality solutions. A similar approach is followed
+								in the depth profiles with lighter blue for lower quality events.
+								The colors of the icons in the map reflect
+								their age with respect to the date of the report. Yellow for events older than 20 days, orange for 
+								events between 10 and 20 days and red for events younger than 10 days. <br>
+								The size of each marker represents its magnitude in a fixed scale from the highest magnitude (10 pixels) to the
+								lowest magnitude (1 pixel). The same scale is used for the depth profiles. The default magnitude chosen for the
+								marker size is ML. However, if ML is not available, MD will be used instead.<br>
+								Clicking on each icon will access an info window for that event.<br>
+								The seismicity map also presents the stations as blue circles filled in white. Tooltips show the name of the station
+								and clicking on each station will access an info window with basic information on it.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Magnitude Statistics</u></i><br>
+								The two plots show the dependency of the event count on the magnitude. Separate plots for ML and MD are considered.<br>
+								Clicking and dragging on each plot allows zooming in whereas double clicking returns to the initial plot.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Events per Station</u></i><br>
+								The chart shows the event count for each station during the period considered for the report. This allows detecting
+								failed stations or stations with unusual number of events. To further assist the identification of problems in the
+								stations or corresponding event detection system, the chart shows also the local average event count for each station.
+								This is computed by taking the event counts of all the stations within a configurable radius of the considered station 
+								and computing the average. This allows determining if a station is more or less effective than the surrounding stations
+								to report seismic events.
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<i><u>Events Table</u></i><br>
+								The final element of the report is a table with all the considered events and corresponding information. Clicking on
+								the event ID will highlight the corresponding event on the seismicity map.
+							</td>
+						</tr>
+					</table>
+				</td>
+		</table>
+		<br>
+		<br>
+		<p>
+			EWHTMLREPORT was written by Ruben S. Luis, National Institute for Information and Communications Networks - Japan 
+			and Paul Friberg, ISTI.<br><br>
+		</p>
+		<p></p>
+		<center> <a href="../modules.html">Module Index</a> | <a
+				href="../cmd/ewhtmlreport_cmd.html">ewhtmlreport Commands</a>
+		</center>
+		<!-- USGS-required stuff at the end -->
+		<hr><b></b>
+		<address>Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+		</address>
+	</body>
+</html>

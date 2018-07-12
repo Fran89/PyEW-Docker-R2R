@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>Earthworm Modules: RayLoc_ew Overview</title>
+</head>
+<body>
+<h1 align="center">Earthworm Modules: <br>
+&nbsp;
+RayLoc_ew Overview</h1>
+<div style="text-align: center;"><span style="font-style: italic;">(last
+revised 6 June, 2006)</span><br>
+<br>
+<div style="text-align: left;">Rayloc_ew is an Earthworm Module to
+perform global relocation of earthquakes and travel time computation. <br>
+<br>
+Rayloc_ew is an Earthworm-style wrapper around a Fortran program RayLoc,
+written by Ray Buland. The fortran from Ray is forward model using a
+Gauss-Newton iteration process fitting to the AK135 (Kennett, Engdahl,
+and Buland, 1995, GJR v122) update to the iasp91 earth model.
+<br>
+<br>
+Rayloc_ew attaches itself to the input ring and monitors the ring
+buffer for the <a
+ href="http://folkworm.ceri.memphis.edu/ew-doc/PROGRAMMER/GlobalMessages.html">TYPE_LOC_GLOBAL</a>
+messages. <br>
+<br>
+Rayloc_ew reformats the input and calls the FORTRAN RayLoc processing
+machinery. The output of rayloc_ew <br>
+is a <a
+ href="http://www.isti.com/%7Eilya/Message_Format_TYPE_RAYLOC.html">TYPE_RAYLOC</a>
+message, which is written to the output ring.<br>
+<br>
+The wrapper accepts TYPE_LOC_GLOBAL messages and outputs TYPE_RAYLOC as
+described above. <br>
+<br>
+Rayloc_ew requires three model files (tau.table, ak135.hed, ak135.tbl).
+These files are parts of rayloc_ew distribution.<br>
+</div>
+<i><br>
+</i></div>
+<br>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/rayloc_ew_cmd.html">rayloc_ew commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+<BR>
+</BODY>
+</HTML>
+

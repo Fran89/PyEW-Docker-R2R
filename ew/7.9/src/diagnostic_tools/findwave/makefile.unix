@@ -1,0 +1,26 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = findwave.o $L/libew.a $L/swap.o
+
+findwave: $O
+	$(CC) $(CFLAGS) -o $B/findwave $O $(SPECIFIC_FLAGS)
+
+lint:
+	lint findwave.c $(GLOBALFLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/findwave*

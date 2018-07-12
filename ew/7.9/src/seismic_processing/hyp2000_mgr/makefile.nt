@@ -1,0 +1,98 @@
+
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 6194 2014-11-20 20:42:42Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.6  2007/03/02 17:00:21  stefan
+#     remove hardcoded path for ifort
+#
+#     Revision 1.5  2006/11/21 23:04:47  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.4  2006/11/21 22:05:21  stefan
+#     cl to $(CC) $(GLOBALFLAGS)  and include <ntwin32.mak>
+#
+#     Revision 1.3  2006/06/14 19:52:16  stefan
+#     mv makefile.nt_intel9 makefile.nt
+#
+#     Revision 1.1  2006/06/06 21:10:24  paulf
+#     added for intel9
+#
+#     Revision 1.1  2005/09/09 20:11:55  paulf
+#     intel9.0 fortran compiler makefile
+#
+#     Revision 1.1.1.1  2005/07/14 20:10:34  paulf
+#     Local ISTI CVS copy of EW v6.3
+#
+#     Revision 1.2  2003/05/06 20:54:17  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 18:40:56  lucky
+#     Initial revision
+#
+#
+#
+
+#                  Nmake File For hyp2000_mgr - Windows NT version
+
+!include <ntwin32.mak>
+
+H   = ..\hyp2000
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+OBJ = hyp2000_mgr.obj $L\pipe.obj $L\read_arc.obj $L\libew.lib
+
+# Paul:
+#F = $H\hypoinv.for  $H\hybda.for $H\hycmd.for $H\hysta.for $H\hydel.for $H\hyate.for $H\hyfmc.for $H\hycal.for \
+#        hyxmc.for hycrh.for hycrt.for hystl.for hyopen.for hyinit.for hyphs.for $H\hysou.for \
+#        hytrl.for hyloc.for hysol.for hysvd.for hytra.for hytrh.for hytrt.for \
+#        hymag.for hyrep.for hylst.for hysum.for hyinp.for hypro.for medwt.for utmcal.for \
+#        hydelt.for hyedit.for hytime.for hybeg.for hypref.for hymagp.for linv.for linvol.for \
+#        hyfile.for hylinv.for hylin.for hycre.for hytre.for trvcon.for allsubs.for
+
+F =   hyp2000_ew.for $H\hyate.for $H\hybda.for $H\hybeg.f $H\hycal.for  \
+	 $H\hycmd.for $H\hycrh.for $H\hycrt.for $H\hydel.for $H\hydelt.f  \
+	 $H\hyedit.f $H\hyfile.for $H\hyfmc.for $H\hyinit.for $H\hyinp.for $H\hyloc.for $H\hylst.for  \
+	 $H\linv.for $H\linvol.for $H\hylinv.for $H\hylin.for $H\hycre.for $H\hytre.for $H\trvcon.for  \
+	 $H\hymag.for $H\hymagp.for $H\hyopen.for $H\hyphs.for hypoinv.for $H\hypref.for  \
+	 $H\hypro.for $H\hyrep.for $H\hysol.for $H\hysou.for $H\hysta.for $H\hystl.for  \
+	 $H\hysum.for $H\hysvd.f $H\hytime_intel9.for $H\hytra.for $H\hytrh.for $H\hytrl.for  \
+	 $H\hytrt.for $H\hyxmc.for $H\medwt.for $H\utmcal.for  \
+	 $H\allsubs.f $H\hydatum.for
+
+# old 1.2 version
+#F   = hyp2000_ew.for $H\hyate.for $H\hybda.for $H\hybeg.f $H\hycal.for \
+#      $H\hycin.f $H\hycmd.for $H\hycout.f $H\hycrh.for $H\hycrt.for \
+#      $H\hydel.for $H\hydelt.f $H\hyedit.f $H\hyfile.for $H\hyfmc.for $H\hyinit.for \
+#      $H\hyinp.for $H\hyloc.for $H\hylst.for $H\hymag.for $H\hymagp.for \
+#      $H\hyopen.for $H\hyphs.for $H\hypoinv.for $H\hypref.for $H\hypro.for \
+#      $H\hyrep.for $H\hysol.for $H\hysou.for $H\hysta.for $H\hystl.for \
+#      $H\hysum.for $H\hysvd.f $H\hytime_intel9.for $H\hytra.for $H\hytrh.for \
+#      $H\hytrl.for $H\hytrt.for $H\hyxmc.for $H\init_event.f $H\medwt.for \
+#      $H\utmcal.for 
+
+#LIBS = dformt.lib libcmt.lib
+#LIBS = libcmt.lib
+LIBS = /NODEFAULTLIB:libcmt
+LIBS = /NODEFAULTLIB:libc /DEFAULTLIB:libifcoremt /NODEFAULTLIB:libifcore /DEFAULTLIB:libmmt
+
+$B\hyp2000_mgr.exe: hyp2000_mgr.obj
+   ifort $(OBJ) $F /Fe$B\ /link  -I$H $(LIBS)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  -c -D_WINNT -D_WINNT_INTEL9 $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\hyp2000_mgr*

@@ -1,0 +1,66 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:25  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:56:51  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/03/13 23:47:51  lombard
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For liss2ew - Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+DCC_INCLUDE = ..\include
+DCC_LIB = ..\lib
+
+INCS = /I$(DCC_INCLUDE)
+
+
+OBJS =	diemsg.obj	\
+	seed_blockettes.obj	\
+	seed_comments.obj	\
+	seed_comp.obj	\
+	seed_data.obj	\
+	seed_data_dec.obj	\
+	seed_dec_16.obj	\
+	seed_dec_32.obj	\
+	seed_dec_ascii.obj	\
+	seed_dec_cdsn.obj	\
+	seed_dec_seed.obj	\
+	seed_dec_sro.obj	\
+	seed_dicts.obj	\
+	seed_membase.obj	\
+	seed_misc.obj	\
+	seed_responses.obj	\
+	seed_statchan.obj	\
+	seed_write.obj	\
+	sel_mem.obj
+
+all: $(OBJS) install
+
+install: $(OBJS)
+    copy *.obj $(DCC_LIB)
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $(INCS) $<
+
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+

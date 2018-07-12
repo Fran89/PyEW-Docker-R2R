@@ -1,0 +1,38 @@
+
+From steve@geophys.washington.edu Wed Jun  3 17:10:14 1998
+Date: Wed, 3 Jun 1998 16:48:56 -0700 (PDT)
+From: Steve Malone <steve@geophys.washington.edu>
+To: earthw-list@nmt.edu
+Subject: New earthworm modules available, earth2sac and carltrig
+
+
+Earthwormers may be interested that there are now two new modules
+available to help with the `back-end' of earthworm (triggering and
+saving waveform data for manual analysis).
+
+earth2sac - This program produces SAC-format data files from data
+originating from wave_serverV sources. It only fills in the SAC headers
+relevant to the trace data itself at this point.  Adapted from the program
+'earth2uw' by Pete Lombard.
+
+carl_trig - The Carl Johnson coincidence trigger for Earthworm consists of
+two programs. CarlStaTrig produces station trigger messages on a transport
+ring. CarlSubTrig reads these and writes a TRIGLIST message to a transport
+ring and/or produces a psudo-pickfile for use by data extraction routines
+such as 'earth2sac'.  These two programs were written by Pete Lombard and
+Brian Moon. 
+
+Both of these programs have only been thoroughly tested on Solaris-2.x at
+the University of Washington.  Documentation is available on the Earthworm
+WEB pages (http://www.cnss.org/EWAB) and the distributions are available
+in the contribed_software part of the Earthworm FTP site 
+(ftp://gldage.cr.usgs.gov/pub/OUTGOING/earthworm).
+
+
+
+	Steve Malone			E-mail: steve@geophys.washington.edu
+	Geophysics Program 		Phone: (206) 685-3811
+	University of Washington	FAX: (206)543-0489
+	Box 351650			Office: ATG-226
+	Seattle, WA 98195	http://www.geophys.washington.edu
+

@@ -1,0 +1,259 @@
+<HTML>
+<HEAD>
+<TITLE>Appendix: Earthworm Solaris Autostart</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Solaris Autostart</H1>
+<I>(last revised 13 March, 2001)</I></CENTER>
+<P>
+Following are steps needed to have earthworm (EW) start up
+automatically when a Sun workstation running Solaris boots up.
+<P>
+Overview of the steps:
+<ol>
+<li> Create and customize the startup script
+<li> Install the script in the startup directories
+<li> Can Earthworm be started automatically, but not run as superuser?
+</ol>
+
+
+<PRE>
+
+The following is an example script which can be used to start earthworm
+automatically whenever the system boots up:
+
+
+--------- /etc/init.d/earthworm ---------
+#!/bin/sh
+# /etc/init.d script to start/stop earthworm under Solaris
+
+
+#
+# Change the value of PARAM_DIR to reflect the earthworm
+# configuration which is to be started at boot time
+#
+PARAM_DIR=/home/earthworm/run_test/params
+
+case "$1" in
+'start')
+
+        # Verify processes not already running
+
+        PROCESS_LIST="startstop"
+        for PROC in $PROCESS_LIST; do
+        id=`/usr/bin/ps -ef | /usr/bin/grep $PROC | /usr/bin/grep -v grep | /usr/bin/awk '{print $2}'`
+        if test -n "$id"
+        then
+                echo "$PROC already running"
+                exit 1
+        fi
+        done
+
+	# Start up from a known location
+	cd /tmp
+	echo "starting earthworm"
+
+	# Source the CTS configuration
+	if [ -f $PARAM_DIR/ew_sol_sparc.cmd ] ; then
+		csh -c "source $PARAM_DIR/ew_sol_sparc.cmd >& /dev/null; startstop >& /dev/null &"
+	else
+		echo  "$PARAM_DIR/ew_sol_sparc.cmd file not found. Exitting."
+	fi
+
+	# Start the processes
+
+	;;
+
+'stop')
+
+	# Stop from a known location
+	cd /tmp
+	echo "Stopping earthworm"
+
+	# Source the CTS configuration
+	if [ -f $PARAM_DIR/ew_sol_sparc.cmd ] ; then
+		csh -c "source $PARAM_DIR/ew_sol_sparc.cmd >& /dev/null; pau >& /dev/null"
+	else
+		echo  "$PARAM_DIR/ew_sol_sparc.cmd file not found. Exitting."
+	fi
+
+	;;
+
+'status')
+
+	# Go to a known location
+	cd /tmp
+	echo "Getting earthworm status"
+
+	# Source the CTS configuration
+	if [ -f $PARAM_DIR/ew_sol_sparc.cmd ] ; then
+		csh -c "source $PARAM_DIR/ew_sol_sparc.cmd >& /dev/null; status"
+	else
+		echo  "$PARAM_DIR/ew_sol_sparc.cmd file not found. Exitting."
+	fi
+
+	;;
+*)
+	echo "Usage: /etc/init.d/earthworm { start | stop | status }"
+	;;
+esac
+
+
+After the value of the PARAM_DIR has been changed to reflect the path
+to the local configuration directory, the script should be installed as
+/etc/init.d/earthworm on the target machine. Make sure that the
+permissions on it are 755.
+
+Now, create the following soft links. You will need to be logged in as
+superuser to do this:
+
+# ln -s /etc/init.d/earthworm /etc/rc3.d/S99earthworm
+# ln -s /etc/init.d/earthworm /etc/rc2.d/K10earthworm
+# ln -s /etc/init.d/earthworm /etc/rc0.d/K10earthworm
+
+Just FYI: the first link tells Solaris to start earthworm when booting
+into multi-user state (run level 3). The next two links tell it to
+gracefully quit earthworm when going either into single user mode or
+shutting down completely.
+
+Once this is done, earthworm will start automatically at boot time.
+Also, the /etc/init.d/earthworm command can be used to start, stop, or
+get status from, earthworm:
+
+ > /etc/init.d/earthworm start
+ > /etc/init.d/earthworm stop
+ > /etc/init.d/earthworm status
+
+
+
+
+RUNNING AS NON-ROOT USER
+
+The procedure above is fairly simple -- it makes earthworm start
+automatically at boot time. In addition, the /etc/init.d/earthworm
+script can be a useful tool for all users on the system to quickly
+start, stop or get status from Earthworm.
+
+The major drawback of this procedure is that Earthworm runs as root
+(superuser) when it is started at boot time. Some sites find this
+inconvenient. Unfortunately, there is not an easy and elegent way to
+have Solaris start up a process during boot time without that process
+being run by root.  The version of the /etc/init.d/earthworm script
+below gets around this problem.  It introduces another variable USER
+which should be set to the username under which Earthworm should be
+started:
+
+--------- /etc/init.d/earthworm ---------
+#!/bin/sh
+# /etc/init.d script to start/stop earthworm under Solaris
+
+# Change USER to the user you want earthworm to run as.
+# Change the value of PARAM_DIR to reflect the earthworm
+# configuration which is to be started at boot time.
+#
+USER=ppicker
+PARAM_DIR=/home/earthworm/run/params
+ENV_FILE=ew_sol_sparc.cmd
+
+case "$1" in
+'start')
+
+        # Verify processes not already running
+
+        PROCESS_LIST="startstop"
+        for PROC in $PROCESS_LIST; do
+        id=`/usr/bin/ps -ef | /usr/bin/grep $PROC | /usr/bin/grep -v grep | /usr/bin/awk '{print $2}'`
+        if test -n "$id"
+        then
+                echo "$PROC already running"
+                exit 1
+        fi
+        done
+
+        # Start up from a known location
+        cd /tmp
+        echo "starting earthworm as $USER"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/$ENV_FILE ] ; then
+                su $USER -c "source $PARAM_DIR/$ENV_FILE >& /dev/null; startstop >& /dev/null &"
+        else
+                echo "$PARAM_DIR/$ENV_FILE file not found. Exiting."
+        fi
+
+        # Start the processes
+
+        ;;
+
+'stop')
+
+        # Stop from a known location
+        cd /tmp
+        echo "Stopping earthworm as $USER"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/$ENV_FILE ] ; then
+                su $USER -c "source $PARAM_DIR/$ENV_FILE >& /dev/null; pau >& /dev/null"
+        else
+                echo  "$PARAM_DIR/$ENV_FILE file not found. Exiting."
+        fi
+
+        ;;
+
+'status')
+
+        # Go to a known location
+        cd /tmp
+        echo "Getting earthworm status"
+
+        # Source the CTS configuration
+        if [ -f $PARAM_DIR/ew_sol_sparc.cmd ] ; then
+                csh -c "source $PARAM_DIR/ew_sol_sparc.cmd >& /dev/null; status"
+        else
+                echo  "$PARAM_DIR/ew_sol_sparc.cmd file not found. Exiting."
+        fi
+
+        ;;
+*)
+        echo "Usage: /etc/init.d/earthworm { start | stop | status }"
+        ;;
+esac
+
+
+
+
+The main advantage of the script above is that it will run Earthworm as
+the user defined by the USER variable, whenever it is invoked. One
+major drawback of this scheme, however, is that the
+/etc/init.d/earthworm script, when executed by a non-superuser, will
+prompt for the password of the user defined by the USER variable.
+
+Some sites may want to use this quirk as a "security feature." For
+example, if a "dummy account" is created (say, username earthworm) and
+the USER variable is set to earthworm, then only those users on the
+system who know the password for the user earthworm will be able to
+start and stop earthworm using the /etc/init.d/earthworm script. This
+may server as a very rudimentary security feature on a multi-user
+Solaris system.
+
+
+
+CHANGING THE CONFIGURATION DIRECTORY
+
+Whenever a new configuration directory is desired, the
+/etc/init.d/earthworm script must be edited, and the value of the
+PARAM_DIR variable updated to reflect the new path to the configuration
+directory.
+
+</PRE>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>
+
+
+

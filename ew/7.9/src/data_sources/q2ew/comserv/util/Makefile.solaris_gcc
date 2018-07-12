@@ -1,0 +1,64 @@
+########################################################################
+#
+# Makefile     : Comserv Utilities
+#
+# Author       : Phil Maechling
+#
+# Last Revised : 2004/07/12
+#
+########################################################################
+
+########################################################################
+# Solaris 2 definitions
+#
+CC	 = gcc
+INCL	 = ../include
+DEBUG	 = 
+
+CFLAGS		= -I$(INCL) -DSOLARIS2 $(DEBUG)
+LDLIBS	= -lposix4 -lnsl -lsocket 
+RANLIB	= /bin/true
+########################################################################
+
+LIB	= libutil.a
+
+OBJECTS = service.o cfgutil.o stuff.o seedutil.o timeutil.o # mmutil.o 
+
+
+.PRECIOUS:	$(LIB)
+
+ALL =		$(LIB)
+
+all:		$(ALL)
+
+$(LIB):		$(LIB)($(OBJECTS))
+		$(RANLIB) $@
+
+timeutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/stuff.h timeutil.c
+		$(CC) -c $(CFLAGS) timeutil.c
+
+seedutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/seedstrc.h $(INCL)/stuff.h seedutil.c
+		$(CC) -c $(CFLAGS) seedutil.c
+
+mmutil.o:	$(INCL)/dpstruc.h $(INCL)/quanstrc.h $(INCL)/service.h \
+		$(INCL)/stuff.h mmutil.c
+		$(CC) -c $(CFLAGS) mmutil.c
+
+service.o:	$(INCL)/dpstruc.h $(INCL)/service.h $(INCL)/stuff.h \
+		service.c
+		$(CC) -c $(CFLAGS) service.c
+
+cfgutil.o:	$(INCL)/dpstruc.h cfgutil.c $(INCL)/stuff.h
+		$(CC) -c $(CFLAGS) cfgutil.c
+
+stuff.o:	$(INCL)/dpstruc.h stuff.c
+		$(CC) -c $(CFLAGS) stuff.c
+
+clean:
+		-rm *.o $(LIB)
+
+veryclean:	clean
+
+install:

@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P> Evanstrig Overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Modules: <BR> Evanstrig and Evansassoc Overview</H1>
+<I>(last revised 24 July, 1998)</I></CENTER>
+<P>
+The <strong>evanstrig</strong> program  is an adaptation of lptrig. Evanstrig runs
+John Evans' long-period trigger algorithm on single-channel TYPE_TRACEBUF
+messages and produces single-channel triggers.  These triggers can then be
+associated into "events" by the moduleevansassoc.
+<P>
+The <strong>evansassoc</strong> program associates long-period triggers from several scn's.  The association rule is that triggers from a certain number of scn's must be received within a specified time interval.  The association parameters are specified in <A HREF="../cmd/evansassoc_cmd.html">evansassoc 's parameter file </A>.
+<P>
+NOTE: evanstrig will only work on 100 hz data!
+<P>
+The details of John Evans' long period trigger algorithm are discussed in the following two papers:
+<P> A Teleseism-Specific Detection Algorithm for Single Short-Period Traces, Bull. Seism. Soc. Am. 73, 1173-1186,  Evans and S.S. Allen, 1983.
+<P> Reliable Automatic Detection of Long-Period Volcanic Earthquakes at Long Valley Caldera, California, Bull. Seism. Soc. Am. 85, 1518-1522,  Evans and Pitt, 1995.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/evanstrig_cmd.html">Evanstrig Commands</A> |
+<A HREF="../cmd/evansassoc_cmd.html">Evansassoc Commands</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

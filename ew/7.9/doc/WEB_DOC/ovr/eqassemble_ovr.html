@@ -1,0 +1,123 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Eqassemble overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1> Eqassemble Overview</H1>
+<I>(last revised February 11, 2007)</I></CENTER>
+
+<P>
+Eqassemble is the first process in the earthquake-processing mega-module
+(sometimes referred to as "the sausage") that produces earthquake
+locations for the Earthworm system. Only eqassemble, the first link in the
+mega-module, is listed in startstop's configuration file to be started
+by startstop. Eqassemble then starts the next process, specified in its
+"PipeTo" command, and communicates with it via a one-directional pipe.
+Each newly created sub-module starts the next link in the same way. From
+startstop's point of view, the whole mega-module inherits the name of
+the first link (eqassemble) and that's the only name it displays. From
+statmgr's point of view, all processes within the mega-module share one
+module id, one heartbeat, and one descriptor file. However, each
+sub-module has its own configuration file and its own log file.
+<P>
+
+Eqassemble is the result of merging three other Earthworm programs: eqprelim,
+eqrapid (used only at Caltech), and eqproc. This merger was needed for the
+CISN project. It results in a single module that can release event messages
+meeting any of three different rule sets that are derived from the original
+programs' rules. By merging the three programs into one, we also gain by
+having to run only a single sausage instead of three.
+<P>
+
+After starting up the next link in "the sausage," eqassemble's main job is to
+gather information from picker(s) and binder, to decide when en event is ready
+for release, to assemble all the information related to that event, and to
+pass it on to the next event-processing sub-module.
+<P>
+
+Eqassemble collects messages from the picker(s) (TYPE_PICK_SCNL and
+TYPE_CODA_SCNL) and from binder (TYPE_QUAKE2K and TYPE_LINK). A TYPE_PICK_SCNL
+message contains an observed P-wave (or S-wave) arrival-time and amplitude for
+a given seismic channel along with the installation id, module id, and pick
+sequence number; the picker releases the pick message within ~3 seconds of a
+P-wave detection. A TYPE_CODA_SCNL message contains coda duration and
+amplitude information along with the installation id, module id, and sequence
+number of the pick it relates to; the picker releases the coda message up to
+144 seconds after its corresponding pick message. A TYPE_QUAKE2K message
+contains an event id number, origin time and hypocenter; binder issues a new
+quake message each time it associates a new pick with [or deletes pick(s)
+from] a given event id. A TYPE_LINK message contains an event id, an
+installation id, a picker module id, a pick sequence number and a phase
+identifier; binder issues a new link message for every pick it associates with
+(or deletes from) an active event.
+<P>
+
+Eqassemble maintains two circular buffers:
+
+<dl>
+<dt>1. Pick list
+<dd>Contains the most recent MAXPCK (=1000) picks and their coda and
+    link information (related by installation id, module id and pick
+    sequence number) and the system-time that the pick was entered.
+<dt>2. Quake list
+<dd> Contains the most recent location and status of the last MAXHYP
+    (=100) event ids and the system-time that the location was entered.
+</dl>
+<P>
+Eqassemble applies up to three configurable rule sets to decide when to
+release event messages. These rule sets are:
+
+<dl>
+<dt>preliminary rule:
+<dd>N (=25) P phases associated with the event. At Menlo Park,
+	this is used to publish a preliminary location (with no magnitude) for
+	an event of potential interest to the public. This event message is
+	assigned version 0.
+<dt>rapid rule:
+<dd>release the event message N (=90) seconds after either origin time
+	or detection time, provided there are at least M (=5) P phases
+	associated with the event. This message is used in CISN to initiate Ml
+	calculations. The waiting time is to allow sufficient waveforms to be
+	available to compute local magnitude as rapidly as feasible. This
+	event message is assigned version 1.
+<dt>final rule:
+<dd>release the event message N (=60) seconds after binder has stopped
+	updating the solution, provided there are M (=4) associated P
+	phases. In addition, eqassemble can optionally wait for the
+	TYPE_CODA_SCNL messages for this event. If eqassemble is configured to
+	wait for codas, it will wait until coda messages are received for all
+	associated picks; but not more that 150 seconds. The 150 second wait
+	duration is not configurable, since it is based on the 144 second coda
+	time of pick_ew. This event message is assigned version 2.
+<P>
+	If eqassemble is configured not to wait for codas, then the event
+	message produced by eqassemble will contain no coda durations. This
+	option is intended for networks which do not want to produce duration
+	magnitudes with the Earthworm sausage.
+</dl>
+<P>
+Occasionally, binder will decide to cancel event on which it has been working,
+It indicates this by reducing the number of associated picks to zero. If
+eqassemble sees this happen after it has released any version of the event
+message, it will issue a TYPE_CANCELEVENT message.
+<P>
+Occasionally, eqassemble will receive more TYPE_QUAKE2K and TYPE_LINK
+message for a given event id after it has finalized that event. Eqassemble
+will note these messages in its log file, but it will never send another
+TYPE_EVENT2K message thru the mega-module for that event id.
+<P>
+</P>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+
+<A HREF="../cmd/eqassemble_cmd.html">Eqassemble Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,33 @@
+
+Welcome to the geojson2ew - geoJSON to Earthworm module.
+
+This release was compiled and tested on an system running
+Ubuntu 14.04.1 LTS and gcc version 4.8.2.
+
+INSTALL
+
+To build and run this module you need the following:
+
+o	Earthworm - Earthworm v7.8 was used for this writing.
+o 	RabbitMQ C AMQP client v0.8.0 (https://github.com/alanxz/rabbitmq-c)
+o	Jansson JSON library version 2.7 (https://github.com/akheron/jansson)
+
+The RabbitMQ C AMQP client and Jansson libraries should be built and installed using the make files provided in the libraries (“make” and “make install”.)
+
+Note that Earthworm requires 32-bit libraries so if your system is not 32-bit then extra setup is required. For my testing on a 64-bit Linux I first built the libraries on a 32-bit system, copied the files to my 64-bit machine, modified the makefiles to include -m32 (for CFLAGS, LDFLAGS and AM_CFLAGS) and then ran “make clean”, “make” and “sudo make install”.
+
+Note if you do not wish to use the socket version of the code only and not compile with RabbitMQ C then use the 'geojson2ew_socket' target in the makefile.
+However, it is recommended that you compile the 'geojson2ew' targert with the specified RabbitMQ C library.
+
+Making geojson2ew under Linux, type:
+
+	make -f makefile.unix
+
+	
+Copy the geojson2ew.d and geojson2ew.desc files to the params directory specified
+in your earthworm installation and modify as needed.
+
+Add the geojson2ew module ID (MOD_GEOJSON2EW) to the earthworm configuration file (params/earthworm.d):
+ Module  MOD_GEOJSON2EW     57
+
+Copy the geojson2ew binary to your earthworm bin directory.

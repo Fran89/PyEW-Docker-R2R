@@ -1,0 +1,1 @@
+CALL sp_ins_ew_params_picks_vs_phases('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %s, %s, %s, %s);

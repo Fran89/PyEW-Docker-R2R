@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm Modules: trig2disk overview</title>
+  <meta name="generator" content="Bluefish 1.0.7">
+</head>
+<body bgcolor="#ffffff">
+<h1 align="center">Earthworm Modules: <br>
+Trig2disk Overview</h1>
+<center>
+<p><i>(last revised June 8, 2009)</i> </p>
+</center>
+<h2>trig2disk</h2>
+<p>
+trig2disk allows an Earthworm to save waveform data to several formats:
+sac,
+ah, PCSUDS, Earthworm tankplayer, GSE, and Seisan. Trig2disk reads
+type_triglist2k messages from its message ring (e.g. those produced by
+arc2trig and by carltrig) and writes triggered data files to disk. It
+uses the same putaway routines as waveman2disk. Minimal location code
+support is provided but is naturally output data format dependent.<br>
+</p>
+<p>PSN4 format was added for windows in Earthworm 7.1 (contact <a
+ href="http://www.webtronics.com">www.webtronics.com</a> for details).<br>
+</p>
+<p>MSEED format was added for solaris in Earthworm 7.1.<br>
+</p>
+<p>WFDISC format was added for Linux in Earthworm 7.4.<br>
+wfdisc format can take advantage of a wfdisc params config file which must be
+located at "EW_PARAMS/wfdisc_params.d" where EW_PARAMS is the EW_PARAMS env
+variable.  The content of this file is very specific and allows one to specify
+station/channel specific information on chanid, calib, calper, instype and
+segtype.  See the command document for file syntax and formatting<br>
+</p>
+<p>
+The ah data is in xdr format which is transparent between sun/solaris
+and intel/NT so long as the ioroutin.c interface is used. </p>
+<p>
+The NT port of the xdr routines was accomplished by modifying the
+OpenBSD
+code from the ftp site at umich. Thus modifications must include this
+source should be careful not to remove the copyright statements and
+can't
+be sold. Cavalier commenting of pieces of this source that weren't
+needed
+to write local xdr is ubiquitous. Thus it is not rpc compatible.
+</p>
+<p>
+Will get restarted if restartMe is in the .desc
+</p>
+<p>
+This module is cloned from ora_trace_save. Thanks Alex.
+The putaway routines are cloned from those in earth2sac. Thanks Pete.
+Many others contributed the various format putaway routines.
+</p>
+<p> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/trig2disk_cmd.html">trig2disk
+Commands</a><!-- USGS-required stuff at the end --> </p>
+<hr>
+<p></p>
+Contact: <b>
+<address> Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</b><br>
+</body>
+</html>

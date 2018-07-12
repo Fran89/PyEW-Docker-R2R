@@ -1,0 +1,65 @@
+# FILE: makefile.unix                 Copyright (c), Symmetric Research 2004-2007
+#
+#                    Make file for SrPar2Ew
+#
+
+#CFLAGS = -g ${GLOBALFLAGS} -DDEBUG
+CFLAGS = -g ${GLOBALFLAGS}
+
+
+
+# The following lines set the location of the SR PARxCH and PARGPS 
+# library functions needed to compile SrPar2Ew.  Un-comment the
+# first line below when compiling from the earthworm directory tree
+# and the second when compiling from the SR directory tree.
+
+SR_HOME=$(EW_HOME)/$(EW_VERSION)/src/data_sources/srpar2ew
+#SR_HOME=/usr/local/sr
+
+PARXCH=$(SR_HOME)/parxch
+PARGPS=$(SR_HOME)/pargps
+
+PARXCHINC = $(PARXCH)/include
+PARGPSINC = $(PARGPS)/include
+PARXCHLIB = $(PARXCH)/lib/parxch.c
+PARGPSLIB = $(PARGPS)/lib/pargps.c
+
+
+PDEF  = -DSROS_LINUX -DSRA2D_PARANY -DGPS_AVAILABLE
+CFLAGSR = -fPIC
+
+APP = srpar2ew
+O = $(APP).o parxch.o pargps.o
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS= #SOLARIS VERSION NOT SUPPORTED (NO SOLARIS PARxCH DRIVERS)
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+
+EWLIBS = $L/libew.a
+
+$B/$(APP): $O
+	$(CC) $(CFLAGS) -o $B/$(APP) $O $(EWLIBS) $(SPECIFIC_FLAGS)
+
+$(APP).o: $(APP).c
+	$(CC) -c $(CFLAGS) $(PDEF) -I$(PARXCHINC) -I$(PARGPSINC) -o $@  $(APP).c
+
+parxch.o: $(PARXCHLIB)
+	$(CC) -c $(CFLAGS) $(CFLAGSR) $(PDEF) -I$(PARXCHINC) -I$(PARGPSINC) $(PARXCHLIB)
+
+pargps.o: $(PARGPSLIB)
+	$(CC) -c $(CFLAGS) $(CFLAGSR) $(PDEF) -I$(PARGPSINC) $(PARGPSLIB)
+
+.c.o:
+	$(CC) $(CFLAGS) -o $@
+
+
+# Clean-up directives
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/$(APP)*

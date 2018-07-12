@@ -1,0 +1,67 @@
+#
+#                    Nmake File For ws2matlab - Windows NT version
+#
+
+!include <ntwin32.mak>
+
+APP1 = mGetMenu
+APP2 = mGetAscii
+O1 = $(APP1).obj
+O2 = $(APP2).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+libs = ws2_32.lib libmex.lib libmx.lib
+
+INC1 = "C:\Program Files\DevStudio\VC\include"
+INC2 = "C:\MATLAB6p5\extern\include"
+
+CPP_PROJ = /nologo /ML /W3 /GX /O2 /D "WIN32" /D "_WINNT" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "MATLAB_MEX_FILE" /YX /FD /I$(INC1) /I$(INC2) /c
+
+#SWAPIT will swap output bytes regardless of any other issues
+#INTEL will swap input bytes
+compflags = /c /W3 /MT /Di386 /DSWAPIT /I$(INC1) /I$(INC2)
+
+linkflags = /nologo /dll /incremental:no /libpath:"C:\MATLAB6p5\extern\lib\win32\microsoft\msvc60" /EXPORT:mexFunction
+
+LIBSEW = $L/ws_clientII.obj \
+	$L/putaway.obj \
+	$L/ahputaway.obj \
+	$L/sacputaway.obj \
+	$L/geo_to_km.obj \
+	$L/sudsputaway.obj \
+	$L/tankputaway.obj \
+	$L/gseputaway.obj \
+	$L/seiputaway.obj \
+	$L/seiutils.obj \
+	$L/dirops_ew.obj \
+	$L/socket_ew.obj \
+	$L/socket_ew_common.obj \
+	$L/sema_ew.obj \
+	$L/swap.obj \
+	$L/libew.lib \
+	$L/xdr.obj \
+	$L/xdr_stdio.obj \
+	$L/xdr_float.obj \
+	$L/xdr_array.obj
+
+ALL: $B\$(APP1).dll $B\$(APP2).dll
+
+ws2matlab: $B\$(APP1).dll $B\$(APP2).dll
+
+$B\$(APP1).dll: $(O1)
+   link $(linkflags) $(libs) $(O1) $(LIBSEW) -out:$B\$(APP1).dll
+
+$B\$(APP2).dll: $(O2)
+   link $(linkflags) $(libs) $(O2) $(LIBSEW) -out:$B\$(APP2).dll
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(cflags) $(cvarsmt) $(tflags) /Od $<
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\mGetMenu* $B\mGetBinary* $B\mGetAscii*

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WebSWave</title>
+		<script type="text/javascript">
+			/* Globals */
+			var stations;
+			function initialize()
+			{
+				var Socket;
+				if( "WebSocket" in window )
+				{
+					/* Initialize stations */
+					stations = new StationMgr( 'CanvasDiv' );
+					var url = 'ws://' + window.location.host;
+					var Socket = new WebSocket( url );
+					Socket.binaryType = "arraybuffer";
+
+					Socket.onmessage = function( evt )
+					{
+						if( evt.data instanceof ArrayBuffer )
+							stations.update( EwMsgEval( evt.data ) );
+					}
+
+					Socket.onerror = function( e )
+					{
+						console.log( 'Error with websocket: ' );
+						console.log( e );
+					}
+				}
+				else
+				{
+					alert( 'This browser does not support websockets' );
+					return;
+				}
+				
+				Socket.send("Hello World!");
+			}
+
+
+			/* Evaluate ew message */
+			function EwMsgEval( d )
+			{
+				var tl = new Uint8Array( d, 0, 1 );
+				var t = String.fromCharCode.apply( null, new Uint8Array( d, 1, tl[0] ) );
+
+				if( t == 'TYPE_PICK_SCNL' )
+					return new PickSCNL( d.slice( 1 + tl[0] ) );
+				else if( t == 'TYPE_TRACEBUF2' )
+					return new TraceBuf2( d.slice( 1 + tl[0] ) );
+				else
+					console.error( 'EwMsgEval: Unknown message type.' );
+				return null;
+			}
+
+
+			/* tracebuf2 object */
+			function TraceBuf2( d )
+			{
+				var self = this;
+				if( arguments.length > 0 )
+					;
+				self.update( d );
+			}
+
+			TraceBuf2.prototype =
+					{
+						update: function( data )
+						{
+							if( data == null )
+								return;
+							var self = this;
+
+							/* pinno, nsamp */
+							var a = new Int32Array( data, 0, 2 );
+							self.pinno = a[0];
+							self.nsamp = a[1];
+
+							/* starttime, endtime, samplerate */
+							var b = new Float64Array( data, 8, 3 );
+							self.starttime = b[0] * 1000;
+							self.endtime = b[1] * 1000;
+							self.samprate = b[2] / 1000; // samples per milisecond
+
+							/* scnl */
+							self.sta = ( String.fromCharCode.apply( null, new Uint8Array( data, 32, 7 ) ).match( /[^\0]*/i ) + '\0' ).replace( /\0/gi, "" );
+							self.net = String.fromCharCode.apply( null, new Uint8Array( data, 39, 9 ) ).replace( /\0/gi, "" );
+							self.chan = String.fromCharCode.apply( null, new Uint8Array( data, 48, 4 ) ).replace( /\0/gi, "" );
+							self.loc = String.fromCharCode.apply( null, new Uint8Array( data, 52, 3 ) ).replace( /\0/gi, "" );
+							//console.log(self.sta.length);
+							/* data type */
+							self.datatype = String.fromCharCode.apply( null, new Uint8Array( data, 57, 3 ) );
+
+							/* samples */
+							if( self.datatype[1] == 2 )
+							{
+								self.samples = new Int16Array( data, 64 );
+							}
+							else
+							{
+								self.samples = new Int32Array( data, 64 );
+							}
+						}
+					}
+
+
+
+
+			/* PickSCNL Object */
+			function PickSCNL( data )
+			{
+				if( arguments.length > 0 )
+					;
+				this.update( data );
+			}
+
+			PickSCNL.prototype =
+					{
+						update: function( data )
+						{
+							var self = this;
+							var i;
+							var pick = String.fromCharCode.apply( null, new Uint8Array( data ) );
+							//console.log(pick);
+							var parts = pick.split( ' ' );
+							var sname = parts[4].split( '.' );
+							self.sta = sname[0];
+							self.chan = sname[1];
+							self.net = sname[2];
+							self.loc = sname[3].substr( 0, 2 );
+							self.qual = parts[5];
+							self.at = parsePickTime( parts[6] );
+
+
+							function parsePickTime( t )
+							{
+								var d = new Date();
+								d.setUTCFullYear( t.substr( 0, 4 ) );
+								d.setUTCMonth( t.substr( 4, 2 ) - 1 );
+								d.setUTCDate( t.substr( 6, 2 ) );
+								d.setUTCHours( t.substr( 8, 2 ) );
+								d.setUTCMinutes( t.substr( 10, 2 ) );
+								d.setUTCSeconds( t.substr( 12, 2 ) );
+								d.setUTCMilliseconds( t.substr( 15, 3 ) );
+								return d.getTime();
+							}
+						}
+					}
+
+
+			/* Manages all the stations */
+			function StationMgr( parentID )
+			{
+				var self = this;
+				self.stations = []; /* Array of stations */
+				self.container = document.getElementById( 'CanvasDiv' );
+				if( !self.container )
+					console.error( 'Unable to find element to create trace canvas' );
+
+				/* Default Options */
+				self.CanvasWidth = 250;
+				self.CanvasHeight = 80;
+
+				/* Time pointers */
+				self.endtime = new Date().getTime();
+				self.starttime = self.endtime - 60000; //TODO make this dynamic
+
+				/* Table Element */
+				self.table = document.createElement( 'table' );
+				self.table.setAttribute( 'class', 'StationTable' );
+				self.container.appendChild( self.table );
+
+				/* Periodic update */
+				setInterval( function() {
+					self.redraw();
+				}, 1000 );
+			}
+
+			StationMgr.prototype =
+					{
+						update: function( buf )
+						{
+							if( buf == null )
+								return;
+							var self = this;
+							var i;
+
+							/* Check if this station is already in list of stations */
+							var csta = null;
+							for( i in self.stations )
+							{
+								if( self.stations[i].sta == buf.sta && self.stations[i].chan == buf.chan
+										&& self.stations[i].net == buf.net && self.stations[i].loc == buf.loc )
+								{
+									csta = self.stations[i];
+									break;
+								}
+							}
+							/* This is a new station */
+							if( csta == null )
+							{
+								/* Create station object */
+								csta =
+										{
+											/* trace data */
+											sta: buf.sta,
+											chan: buf.chan,
+											net: buf.net,
+											loc: buf.loc,
+											samprate: buf.samprate,
+											/* DOM elements */
+											//div : document.createElement( 'div' ),
+											canvas: document.createElement( 'canvas' ),
+											tstart: null,
+											tend: null,
+											buffer: [],
+											pbuffer: []
+										}
+								console.log( 'New station: ' + csta.sta + '.' + csta.chan + '.' +
+										csta.net + '.' + csta.loc );
+								var pos;
+								var rowID = buf.net+buf.sta+buf.loc;
+								var tr = document.getElementById( rowID );
+								if( tr == null )
+								{
+									/* Create row for this station */
+									pos = -1;
+									for( i = 0; i < self.table.rows.length; i++ )
+									{
+										if( self.table.rows[i].id > buf.sta )
+										{
+											pos = i;
+											break;
+										}
+									}
+									if( pos == -1 )
+										pos = self.table.rows.length;
+									tr = self.table.insertRow( pos );
+									tr.setAttribute( 'id', rowID );
+								}
+								var stastr = buf.sta + '.' + buf.chan + '.' +
+										buf.net + '.' + buf.loc
+								pos = -1;
+								for( i = 0; i < tr.cells.length; i++ )
+									if( tr.cells[i].id > stastr )
+									{
+										pos = i;
+										break
+									}
+								if( pos == -1 )
+									pos = tr.cells.length;
+								var cell = tr.insertCell( pos );
+								cell.setAttribute( 'id', stastr );
+								cell.innerHTML = '<div class="StaTitleDiv">' + stastr + '</div>';
+								var cdiv = document.createElement( 'div' );
+								cell.appendChild( cdiv );
+								cdiv.setAttribute( 'class', 'CanvasDiv' );
+
+								/* Place canvas element in div */
+								cdiv.appendChild( csta.canvas );
+								csta.canvas.setAttribute( 'width', self.CanvasWidth );
+								csta.canvas.setAttribute( 'height', self.CanvasHeight );
+
+								/* Place time divs in main div */
+								var ttable = document.createElement( 'table' );
+								ttable.setAttribute( 'class', 'TimeTable' );
+								var trow = ttable.insertRow( 0 );
+								csta.tstart = trow.insertCell( 0 );
+								csta.tstart.setAttribute( 'class', 'StartTimeDiv' );
+								csta.tend = trow.insertCell( 1 );
+								csta.tend.setAttribute( 'class', 'EndTimeDiv' );
+								cell.appendChild( ttable );
+
+								/* Add stration object to array of stations */
+								self.stations.push( csta );
+							}
+
+							/* Add message to buffer */
+							if( buf instanceof TraceBuf2 )
+								csta.buffer.push( buf );
+							else if( buf instanceof PickSCNL )
+								csta.pbuffer.push( buf );
+							else
+								console.error( 'Station update: Unknown message type' );
+						},
+						setTimeInt: function( v )
+						{
+							this.starttime = this.endtime - v;
+						},
+						/* Function to update canvas */
+						redraw: function()
+						{
+							var self = this;
+
+							/* New time interval */
+							var nend = new Date().getTime();
+							var deltat = nend - self.endtime;
+							var nsta = self.starttime + deltat;
+
+							var nshift;
+
+							/* Update time interval */
+							self.starttime = nsta;
+							self.endtime = nend;
+
+							/* Cycle through stations */
+							var s, i, t;
+							for( s = 0; s < self.stations.length; s++ )
+							{
+								var sta = self.stations[s];
+
+								/* Check if there is any data */
+								if( sta.buffer.length == 0 )
+									continue;
+
+								/* Update time divs */
+								sta.tstart.innerHTML = self.getTimeStr( self.starttime );
+								sta.tend.innerHTML = self.getTimeStr( self.endtime );
+
+								/* Clear tracebufs outside of canvas */
+								t = 0;
+								for( i = 0; i < sta.buffer.length; i++ )
+								{
+									if( sta.buffer[i].endtime < self.starttime )
+										t = i + 1;
+								}
+								sta.buffer.splice( 0, t );
+
+								/* Clear picks outside canvas */
+								t = 0;
+								for( i = 0; i < sta.pbuffer.length; i++ )
+								{
+									if( sta.pbuffer[i].at < self.starttime )
+										t = i + 1;
+								}
+								sta.pbuffer.splice( 0, t );
+
+
+
+								/* Redraw data */
+								self.drawstation( sta );
+							}			},
+						/* method to plot a trace */
+						drawstation: function( sta )
+						{
+							var self = this;
+
+							var t, i, b, c = 0;
+							var avg = 0;
+							max = -Number.MAX_VALUE;
+							var ctx = sta.canvas.getContext( '2d' );
+							var xpos = [];
+							ypos = [];
+
+							if( sta.buffer.length == 0 )
+							{
+								ctx.clearRect( 0, 0, self.CanvasWidth, self.CanvasHeight );
+								return;
+							}
+
+
+							/* Produce raw xpos and ypos values */
+							for( t = 0; t < sta.buffer.length; t++ )
+							{
+								b = sta.buffer[t];
+								for( i = 0; i < b.samples.length; i++ )
+								{
+									xpos.push( Math.round( ( b.starttime - self.starttime + i / b.samprate ) /
+											( self.endtime - self.starttime ) * self.CanvasWidth ) );
+									ypos.push( b.samples[i] );
+									avg += b.samples[i];
+									c++;
+								}
+							}
+							avg /= c; // Compute average;
+
+							/* Calculate sample maximum */
+							for( i = 0; i < ypos.length; i++ )
+							{
+								ypos[i] = ypos[i] - avg;
+								if( ypos[i] > max )
+									max = ypos[i];
+								if( -ypos[i] > max )
+									max = -ypos[i];
+							}
+							//console.log(xpos)
+							/* Clear canvas */
+							ctx.clearRect( 0, 0, self.CanvasWidth, self.CanvasHeight );
+
+							/* Plot data */
+							ctx.strokeStyle = '#000';
+							ctx.lineWidth = 1;
+							ctx.beginPath();
+							ctx.moveTo( xpos[0], Math.round( self.CanvasHeight / 2 * ( 1 - ypos[0] / max ) ) );
+							for( i = 1; i < xpos.length; i++ )
+							{
+								ctx.lineTo( xpos[i], Math.round( self.CanvasHeight / 2 * ( 1 - ypos[i] / max ) ) );
+							}
+							ctx.stroke();
+
+							/* Plot picks */
+							var xp;
+							ctx.strokeStyle = '#090';
+							ctx.font = "10px, Arial";
+							for( i = 0; i < sta.pbuffer.length; i++ )
+							{
+								xp = Math.round( ( sta.pbuffer[i].at - self.starttime ) /
+										( self.endtime - self.starttime ) * self.CanvasWidth );
+								ctx.beginPath();
+								ctx.moveTo( xp, 0 );
+								ctx.lineTo( xp, self.CanvasHeight );
+								ctx.stroke();
+								ctx.strokeText( sta.pbuffer[i].qual, xp - 14, 10 );
+							}
+						},
+						getTimeStr: function( otn )
+						{
+							var ot = new Date( otn );
+							return ot.getUTCFullYear() + '.' + pan( ot.getUTCMonth() + 1, 2 ) + '.' + pan( ot.getUTCDate(), 2 ) + ' ' +
+									pan( ot.getUTCHours(), 2 ) + ':' + pan( ot.getUTCMinutes(), 2 ) + ':' + pan( ot.getUTCSeconds(), 2 );
+
+							function pan( a, b )
+							{
+								var out = a.toString();
+								return ( '000000000000000000000000' ).substr( 0, b - out.length ) + out;
+							}
+						}
+					}
+
+		</script>
+		<style type="text/css">
+			html, select {
+				font : 10px arial,sans-serif;
+			}
+			.CanvasDiv {
+			}
+			.StartTimeDiv {
+				border : none;
+				text-align : left;
+			}
+			.EndTimeDiv {
+				border : none;
+				text-align : right;
+			}
+			.StationTable, td {
+				border : 1px solid black;
+				border-collapse : collapse;
+			}
+			.StaTitleDiv {
+				font : 10px arial,sans-serif;
+			}
+			.TimeTable {
+				width : 100%;
+				border : none;
+				font : 9px arial,sans-serif;
+				border-collapse : collapse;
+			}
+			.StaTitleDiv {
+				background-color : #000055;
+				color : white;
+				text-align : center;
+			}
+			.plug {
+				font : 9px arial,sans-serif;
+			}
+			h1 {
+				font : 14px arial,sans-serif;
+				font-weight : bold;
+			}
+		</style>
+	</head>
+	<body onload="initialize()">
+		<h1>WebSWave</h1>
+		<div>
+
+			<form>
+				Set Time Interval
+				<select onchange="stations.setTimeInt( this.value )">
+					<option value="60000">1 minute</option>
+					<option value="120000">2 minutes</option>
+					<option value="300000">5 minutes</option>
+					<option value="600000">10 minutes</option>
+				</select>
+			</form>
+		</div>
+		<hr>
+		<div id="CanvasDiv">
+		</div>
+		<div class="plug">Streaming data from Earthworm using WebSWave</div>
+	</body>
+</html>

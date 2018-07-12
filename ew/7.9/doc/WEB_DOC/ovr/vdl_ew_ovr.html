@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: vdl_ew overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Vdl_ew Overview</H1>
+<I>(last revised 14 April, 1998)</I></CENTER>
+
+<P>
+This is the Earthworm encapsulation of the USNSN code written by Dave
+Ketchum. It takes trace data messages from specified channels, buffers them
+in a circular FIFO, and feeds them to VDL. VLD executes a frequency-domain
+single-station event detector, and sends triggered, compressed event data to
+the USNSN. The encapsulating code shows its age by using numeric pin numbers
+rather than ASCII station-component-network names.
+
+Startup sequence: Earthworm is brought up by 'startstop'. Startstop reads
+its configuration file (startstop.d) containing command lines. The command
+line for vdl is found there. That command line contains the usual vdl
+command line, plus an Earthworm "-e" switch specifying the parameter file:
+<pre>
+                        vdl ... -e vdl_params.d ...
+</pre>
+<P>
+where "vdl_params.d" will be read by feedme_init(), and contains all the
+Earthwormy things, like module id, ring to attach to, station to send, and
+what to call it. feedme_init() initiates logging, reads the parameter file,
+initializes the memory FIFO buffer of trace messages, and starts the MsgGet
+thread. This thread picks messages from the transport ring, sees if they're
+the pin numbers to be sent, and if so swaps as required, and pushes them
+into the memory FIFO.
+<dl>
+<dt>Shutdown:
+<dd>When the message getting thread gets a termination message from the
+transport ring, it'll set a status variable to -1, and exit. feedme() will
+see the negative status the next time it's called, and send the signal
+SIGQUIT to its own pid. VDL gets the hint, and performs a decent shutdown
+(we presume). This includes calling feedme_shutdown(), which shuts down the
+Earthwormy stuff.
+<dt>Operating System:
+<dd>This module is system dependent. At this time, VDL runs on Solaris only.
+<dl>
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/vdl_ew_cmd.html">Vdl_ew Commands</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

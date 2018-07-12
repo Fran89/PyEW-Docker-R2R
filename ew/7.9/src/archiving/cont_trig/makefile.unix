@@ -1,0 +1,59 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lthread -lm -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS=${GLOBALFLAGS} -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+CTOBJS = cmprscn.o \
+     cont_trig.o \
+	 initpars.o \
+	 initsta.o \
+	 prodtrig.o \
+	 readcnfg.o \
+	 readewh.o \
+	 readstas.o \
+	 sbntthrd.o \
+     statrpt.o \
+	 $L/libew_mt.a \
+	 $L/swap.o
+
+cont_trig: $(CTOBJS)
+	$(CC) $(CFLAGS) -o $(B)/cont_trig $(CTOBJS) $(SPECIFIC_FLAGS)
+
+lint:
+	lint cmprscn.c cont_trig.c initpars.c initsta.c \
+			prodtrig.c readcnfg.c readewh.c \
+			readstas.c sbntthrd.c \
+			statrpt.c  $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/cont_trig*
+
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+cont_trig.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h 
+cont_trig.o: ${EW_HOME}/${EW_VERSION}/include/transport.h
+cmprscn.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h
+initpars.o:  cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h
+initsta.o:  cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h
+prodtrig.o:  cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h 
+prodtrig.o: ${EW_HOME}/${EW_VERSION}/include/time_ew.h
+prodtrig.o: ${EW_HOME}/${EW_VERSION}/include/transport.h
+readcnfg.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h 
+readcnfg.o: ${EW_HOME}/${EW_VERSION}/include/kom.h
+readewh.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h
+readstas.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h
+sbntthrd.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h 
+sbntthrd.o: ${EW_HOME}/${EW_VERSION}/include/transport.h
+sbntthrd.o: ${EW_HOME}/${EW_VERSION}/include/time_ew.h
+statrpt.o: cont_trig.h ${EW_HOME}/${EW_VERSION}/include/earthworm.h 
+statrpt.o: ${EW_HOME}/${EW_VERSION}/include/transport.h

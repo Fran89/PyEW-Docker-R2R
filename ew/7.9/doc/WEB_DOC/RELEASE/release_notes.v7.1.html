@@ -1,0 +1,665 @@
+<HTML>
+<HEAD>
+<TITLE> EW v7.1 released on April 5, 2007</TITLE>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER>
+  <H1>Earthworm Release Notes V7.1</H1>
+  <I>(April 5, 2007)</I> 
+</CENTER>
+<p> <a href="#modules">New Modules</a><br>
+  <a href="#modifications">Modifications/ Bug Fixes to Existing Modules</a> <br>
+  <a href="#config">Changes To Configuration Files And Descriptor Files</a><br>
+  <a href="#bugs">Known Bugs</a> <br>
+  <a href="#deficiencies">Known Deficiencies</a>
+<p>
+<PRE>
+
+Release Notes:  Earthworm Version "working"
+Cleaned out after release of v7.0 on 6/15/2006
+This release is EW V7.1 and has all of 7.0 SCNL upgrades.
+
+EW v7.1 released on April 5, 2007
+
+<b><a name=modules>NEW MODULES:</a></b>
+***********
+
+Added data_exchange/pickwasher, a prerequisite for glass.
+Source from Hydra project, tested and documented by Mitch, 
+committed and makefiles cleaned up by Stefan. Makefiles for 
+Solaris and Windows only at this point. 
+Stefan Lisowski 20070403 
+
+Created a 'params' directory at the root level of Earthworm
+containing the .d and .desc files for all modules. Each 
+release of earthworm will require updating these files from
+the .src tree. 
+Stefan Lisowski 200704 
+
+Added in MAC OS X flags to compile on Intel and PPC chip
+sets. This works for all my test modules except, you
+guessed it, hyp2000_mgr which doesn't compile because
+of GNU g77 or gfortran issues.
+One thing you must do for Mac OS X is to increase
+the shared memory segments by adding in a /etc/sysctl.conf
+with these settings:
+kern.sysv.shmmax=16777216
+kern.sysv.shmmin=1
+kern.sysv.shmmni=32
+kern.sysv.shmseg=16
+kern.sysv.shmall=4096
+To find out the default settings type this:
+sysctl -a | grep shm
+This work was done jointly by:
+Paul Friberg ISTI and Rae Yip (Caltech) 2007/03/28
+
+Added psn4putaway for PSN4 format  to libsrc/util for
+windows only, and added it to docs, trig2disk and
+waveman2disk .d files and makefile.nt's.
+Paul Friberg 2007/03/05
+
+Added ws2ew and psnadsend for windows for webtronics
+digitzers. These 2 modules were put in data_sources.
+Paul Friberg 2007/03/04
+
+tankplayer_tools/ms2tb - miniSEED to tracebuf converter
+for playing back miniSEED format time-series.
+Paul Friberg 2006/08/08
+
+condense_logo - Reads messages from a list of logos from one 
+transport ring and writes them to another ring using its own 
+installation and module id in the logo. Menlo Park
+contribution. (included/tested by Stefan 2006/11/22)
+
+
+<b><a name="modifications">MODIFICATIONS/BUG FIXES TO EXISTING MODULES:</a></b>
+********************************************
+
+q3302ew - new version based on lib330! This one
+is a vast improvement over the one based on Mountainair.
+Hal Schechner 2007/04/04
+
+startstop - all flavors, modified MAX_CHILD to 200 (was set
+to 100, probably to limit process usage or memory usage
+by startstop in the early days). 
+Paul Friberg 2007/04/03
+
+localmag - 2.1.1
+INGV contributed a feature to write EVENT files in 
+SHAKEMAP XML format to the SAC output directory. This optional feature
+is only usable when you also use the saveTrace option.
+Contributed by Matteo Quintiliani and Marco Oliveri of INGV.
+Integrated in with current version by Paul Friberg 2007/03/29
+
+diagnostic_tools/sniffwave
+Earthworm Class March 2007, added statistics flag to sniffwave
+y, n, or s options are now handled, tport function changed
+2007/03/23
+
+Many warnings under windows with MS 2005 compiler were
+fixed relating to time related variables using long instead
+of time_t. This had segmentation violations under some
+programs so we decided to fix all of the warnings.
+Here is the list:
+tankplayer, wave_serverV,condenselogo, ringdup, ws_clientIIx.h,
+file2ew, ringtocoax and II, config_ws, gaplist, arc2trig,
+localmag, gmew, pkfilter, statrigfilter
+Paul Friberg 2007/02/23
+
+archiving/trig2disk archiving/waveman2disk Solaris only
+Added Richard Luckett's support for writing miniseed format.
+This added Chad Trabant's libmseed to libsrc/util. Note
+an older version of this library is hiding in 
+data_exchange/slink2ew/libslink as well. New stuff didn't
+seem to be directly backward compatible. At some point this
+shoudl be reconciled so we only have one libmseed!!
+Stefan Lisowski 2002/02/20
+
+diagnostic_tools/template - fixed a longstanding bug
+in template where long was used as the time type instead
+of time_t.
+Paul Friberg 2007/02/20
+
+lockfile_ew.c and lockfile.c added to libsrc for file locking
+for earthworm. See the lockfile.h in the include directory for
+the function declarations. Also, see the updated diagnostic_tools/template.c
+for an example of its use. The intent is to use this for
+startstop which should NEVER have more than one instance
+running per startstop_*.d file! This lockfile implementation
+works for both Windows, Linux, and Solaris (tested on each)
+Paul Friberg 2007/02/20
+
+data_sources/scream2ew
+scream2ew - the first call to logit_init needs to have 1 as 4th argument not the undefined config.writelog, otherwise the second call doesn't work.
+Richard Luckett
+committed to CVS by stefan 2007/02/19
+
+archiving/wave_serverV Linux patch
+The following patch is for wave_serverV.c to enable it to be compiled
+under linux (specifically gcc 3.3.6 doesn't seem to recognise the "#else
+if defined(...)" construct properly, at least with the default CFLAGS.
+Matthew van de Werken
+committed to CVS by stefan 2007/02/19
+
+seismic_processing/fir 
+I believe I have discovered a bug in earthworm 7.0. It seems there
+is now a 2-byte field called version in the trace header. This is
+never set up in the fir module, so that it outputs packets to the
+transport ring with no valid information in this field. I noticed
+this when I set up a carlstatrig module which kept crashing when
+being fed with data from fir - carlstatrig checks the trace header
+for a valid version. I solved the problem by adding the lines
+outHead->version[0] = TRACE2_VERSION0; 
+outHead->version[1] = TRACE2_VERSION1;
+to firfilt.c at the point where data is being copied into the
+outgoing packet.
+David Scott. 2006/9/22 (commited to CVS 2006/12/30 stefan)
+
+archiving/tankplayer_tools
+data_exchange/liss
+data_sources/scream2ew
+linux makefile fixes per david J Scott 20060720 
+(commited to CVS 2006/12/30 stefan)
+
+libsrc/qlib2 - an old (10 year) version of qlib2 was in data_sources/q2ew
+We now place qlib2 in libsrc. I populated directory libsrc/qlib2
+with the qlib2 from qlib2.tar.2006.313.gz downloaded from
+http://www.ncedc.org/qug/software/ucb/ and commited the src code
+to CVS
+Ilya Dricker 2006/11/16
+
+
+evanstrig
+Fix for linux compilation.
+Laurence Withers, GSL 2006/10/23
+
+carlstatrig
+Michelle Kline of Utah added in STAtime as a configurable
+value (was statically set to 1 in the C code). This configuration
+is backward compatible to the old version and is an optional
+parameter. Michelle kindly updated the documentation too.
+committed to CVS 2006/10/20 Paul Friberg
+
+trig2disk
+Michael Lofgren of CSIRO fixed a log message bug.
+commited to CVS 2006/10/18 Paul Friberg
+
+gaplist:
+Changed gap- binning boundaries from 1.0 to 1.1 sec so that gaps from
+1 second timing errors will show up in a different bin from gaps caused
+by 1 missed packet (for most digital dataloggers). 2007/01/10 Lynn Dietz
+
+hyp2000:
+I grabbed Fred Klein's newest version of hypoinverse where he  
+added the processing domain and version feature. The new command is: 
+VER 'NC' '01'   / Processing domain and version
+Hypoinverse puts these two 2-character strings to the end of summary 
+cards and at the top of print files. These six source files were changed:
+common.inc hycmd.for hysum.for hystl.for hyp.for hybda.for 
+committed to CVS 2006/10/30 Lynn Dietz
+PS: someone needs to change hystl.fpp for Linux!!
+Incorporated Fred Klein's 11/09/2006 version of hyp2000 in which he changed
+the magnitude weight calculation from the sum of weights (float) to the
+count (int) of weighted station magnitudes.
+Committed to CVS 2007/1/4 Lynn Dietz
+Incorporated Fred Klein's 2/2007 version 1.1 of hyp2000. In this version
+Fred added the option to fix origin time (changes to common.inc, hyloc.for,
+hyp.for, hyphs.for) and did some minor tweaks to make the g77 compiler
+happy (changes to hydelt.f, hyedit.f, hyinp.for, hystl.for).
+I also removed a bunch of source files and .com files which are not
+used in either hyp2000 or hyp2000_mgr under Earthworm.
+Committed to CVS 2007/03/02 Lynn Dietz
+Incorporated Fred Klein's 3/21/2007 bug fixes. Minor logic changes in
+hyphs.for and hyloc.for related to fixing origin time or depth (which
+can now be fixed at 0.0). The program now does what the documentation
+says it will.  Committed to CVS 2007/03/23 Lynn Dietz
+
+hyp2000_mgr - windows issue
+The ew7.0 version of this for windows did not work properly
+due to a bad pass by value in the link to the fortran code.
+Fixed 2006/10/16 Paul Friberg
+
+arc2trig
+David Scott of the BGS upgrade this to be SCNL compliant. Thanks!
+commited to CVS 2006/10/13 Paul Friberg
+
+startstop_unix_generic.c
+Removed an fprint() from EncodeStatus() which was causing a partially
+completed EW status message to go to stderr after info from each
+child process was added to the status.  I think this was a debugging
+leftover. Lynn Dietz 2006/09/22
+
+gcf2ew
+Modified for TYPE_GCFSOH_PACKET output of SOH packets for SNW monitoring
+of state of health packets from guralps DM24. Same for scream2ew
+Paul Friberg, 2006/09/01
+Modified to correctly put in the TRACEBUF2 version  member values
+Paul Friberg, 2006/11/08
+
+q2ew
+Modified to correctly put in the TRACEBUF2 version  member values
+Ported to and tested on Linux (added makefile.ux support)
+Ilya Dricker, 2006/11/21
+
+scream2ew
+Modified for TYPE_GCFSOH_PACKET output of SOH packets.
+Paul Friberg, 2006/09/01
+Laurence Withers, GSL 2006/10/23 provided linux compilation fix
+
+grab_bag/pick_recorder - made it SCNL compliant and added
+the app to the documentation.
+Paul Friberg 2006/09/01
+
+tankplayer_tools/sac2tb - fixed a minor bug in the TRACE2_HEADER that
+overwrote the version element of the trace header. This bug caused
+tankplayer to barf.
+Paul Friberg 2006/08/08
+
+heli_ewII -- heli_ewII.h
+samp_sec now a float instead of a long to accommodate sample rates 
+less than 1 Hz  
+Stefan Lisowski 20060726
+
+scn2scnl -- to_trace_scnl.c/ scn_convert.c
+I've fixed scn2scnl so that it will truncate invalid-length SCNL strings
+and prevent strings from overrunning their bounds.  I've attached the
+files that were changed.  Both of them live in
+src\data_exchange\scn_convert.
+to_trace_scnl.c contains the fix.  The function to_trace_scnl() will now
+force the last character of each SCNL buffer to be null.  This is needed
+because strncpy will not append a null character if the source string used
+during copies is as long or longer than the number of characters to count.
+scn_convert.c has a minor fix where some local variables in s2s_com() were
+declared twice.  I removed the redundant declaration to prevent any future
+headaches.
+Mark Morrison Mon, 26 Jun 2006 15:57:19 -0600 (MDT)
+
+sniffwave -- sniffwave.c
+additional significant digits for sample rates < 1hz
+Stefan Lisowski 20060726
+
+tankplayer -- tankplayer.c
+SendLate command in tankplayer.d did not appear to be working. 
+The problem is that while tankplayer will play back 3 waveform types
+(TypeADBuf, TypeTraceBuf, TypeTraceBuf2) it would only set the time 
+if the type was one of the first two. Should now work for TraceBuf2 as 
+well.
+John Patton (Tested, compiled and added to CVS by Stefan 20060630)
+
+wave_serverV -- wave_serverV.c
+The problem was that the size of the tankfile is not an integer multiple 
+of the packet size and so occasionally there is a mess up at the end of 
+the file (mine were 3 in this example).  The result was that the data 
+requested from the server was not returned and an event file failed to 
+be written.
+[Fix was to add an else to wave_serverV_config]
+Richard R Luckett, BGS (Tested, compiled and added to CVS by Stefan 20060711)
+Laurence Withers, GSL provided a fix for linux 10/23/2006
+
+Signals were not being handled at all under linux (which caused SIGPIPE signals
+to take down the server).  I changed some ifdefs around so that the solaris
+signal handling is compiled in under linux as well.
+Hal Schechner
+
+Modified behavior so that client socket-disconnects between requests are no
+longer recorded/logged as socket-errors, even when the server thinks the 
+socket was not closed cleanly.  This should get rid of messages like:
+>>>> 20060210_UTC_08:51:22 Wave_serverV:ListenForMsg: Bad socket read.  iReadResult = -1
+which cause people to think an error has occurred.
+Updated server_thread.c timestamp.
+David Kragness 2006/10/09
+
+
+ws_clientIIoc / ws_clientII.h
+Upped the max menu str len (as defined by wsREPLEN) so that it is large
+enough to handle a 5000+ SCNL menu from a single wave_server.
+Downside is that it must temporarily allocate 400kb instead of 80kb when
+parsing a menu.  This seemed like a reasonable tradeoff.
+Added protection against oversized SCNL fields in wave server menus:
+increased the size of the buffers used to capture SCNL values from the
+menu, in order to reduce the chance of clobbering memory if a channel
+with SCNL longer than the spec'd tracebuf2 sizes is found in a menu.
+Fixed a bug where wsGetTraceAsciiL() was returning WS_ERR_NONE even 
+though there was a warning flag (with a WS_WRN_FLAGGED) return code
+from wsParseAsciiHeaderReplyL().
+Added a work around for handling flagged wave_server returns where the 
+datatype does not get properly filled in.
+DK 061906
+
+eqcoda:
+Modified to read per-channel parameters from more than one "StaFile".
+Final station list is sorted after all station files are input.
+Lynn Dietz 2006/09/20
+Modified to ignore channels in the "StaFile" whose pick flags are
+set to 0. Previously, those lines ended up in total count of channels.
+Lynn Dietz 2007/01/09
+
+pick_ew:
+Modified to be able to process multiple "StaFile" commands for setting
+per-channel picking parameters.  
+Lynn Dietz 2006/09/20
+Changed name of index file to pick_ew_XXX.ndx where XXX is the moduleid
+of the current instance of pick_ew. This allows multiple instances of
+pick_ew to run on the same computer without competing for the same
+index file.   
+Lynn Dietz 2006/11/16
+
+wave_viewer:
+Modified to accept sample rates >= 1000hz.
+David Kragness  2006/10/09
+Modified format of left-hand column so that channel naming and other 
+information is more compact.
+David Kragness  2006/10/26
+
+sniffwave:
+Now if you give station, channel, network and location codes on command line,
+sniffwave will sniff only for TYPE_TRACEBUF2 and TYPE_TRACE2_COMP_UA
+packets. Or if you give station, channel and network, then sniffwave will
+sniff only for TYPE_TRACEBUF or TYPE_TRACE_COMP_UA. This gives you more
+control over what sniffwave looks for. However, it means you can no long sniff
+for both TYPE_TRACEBUF and TYPE_TRACEBUF2 packets at the same time with a
+single instance of sniffwave.
+Pete Lombard 2006/12/28
+
+scnl2scn:
+Now can perform complete mapping of SCNL names to SCN names, using
+configuration commands similar to those of scn2scnl. This is in place of the
+all-or-nothing approach of the previous scnl2scn.
+Pete Lombard 2006/12/28
+
+scnl2scn:
+Fixed bug in scnl2scn.c: forgot to sort the explicit list.
+Added Debug option to log the configured mapping as well as logging how it
+maps (or not) each SCNL it sees. Very verbose, so run it with Debug on only as
+long as you need it.
+Pete Lombard 2007/01/17
+
+naqsserTG:
+Incorporated Paul Whitmore's most recent code for processing tide gauge
+data from Nanometrics serial data streams. Paul added 5 new arguments
+to his "RequestChannel" command. See sample .d file for details.
+Lynn Dietz 2007/02/09
+
+wftimefilter:
+Added a sanity check on number of samples in a packet. Packets with
+nsamp <= 0 are rejected.  
+Modified samplerate comparison to allow for a bit of slop before 
+declaring that a samplerate has "changed." This is to allow for the 
+case where a datasource is reporting the actual sample rate instead 
+of nominal sample rate.  
+Re-worded the logic of the if() statements which limit the logging 
+of bad packets and warnings.
+Lynn Dietz 2007/02/14
+
+<b><a name="config">CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:</a><br></b>****************************************************
+****************************************************
+
+scnl2scn: 
+Now requires commands to specify the mapping from SCNL to SCN. The commands
+are very similar to those used by scn2scnl. See the comments in scnl2scn.d
+Pete Lombard 2006/12/28
+
+scnl2scn:
+Added Debug option to log the configured mapping as well as logging how it
+maps (or not) each SCNL it sees. Very verbose, so run it with Debug on only as
+long as you need it.
+Pete Lombard 2007/01/17
+
+<b><a name="bugs">KNOWN BUGS:</a></b>
+***********
+
+liss2ew:
+liss2ew has been observed intermittantly producing malformed
+TRACE_BUF messages.  Currently the conditions for causing this problem
+are unknown.  Due to this, liss2ew should be treated as suspect.  Use at
+your own risk.  JMP 6-18-2003
+
+k2ew:
+k2ew uses the k2hdr.rwParms.misc.channel_bitmap parameter to decide
+which channels it will see as streams from the K2.  This is actually the
+parameter which the K2 uses to decide which channels to record in an event
+file (see K2's <bitmap> command).  The K2's <sdstreams bitmap> is the parameter
+that shows which channels the K2 is streaming out.  This is the parameter
+that k2ew should be using to decide what data it will see.  The big problem
+is that none of the header files from Kinemetrics (nkwhdrs.h) seem to
+show this parameter anywhere. This issue is only a problem for those folks
+who want to record more channels on the K2 than they want to stream continuously.
+Terry Dye (Univ of Utah) discovered this problem when trying to stream only
+3 channels of a 12 channel K2.  LDD 4/11/2002    FIXED PNL, 6/9/03
+
+
+wave_serverV:
+it occasionally sends the following error to statmgr:
+UTC_Thu Sep 06 03:30:14 2001  WSV1/wave_serverV_nano ReadBlockData
+failed for tank [z:\nano57.tnk], with offset[999908] and record
+size[64]! errno[0] Mail sent.
+The nominal tank size is 1 megabyte, and the actual tank size is 999908.
+It looks like waveserver is trying to read off the end of the tank.
+WMK 9/6/01
+
+wave_serverV:
+appears not to reply to requests for a single sample of data. I noticed
+when testing wave_viewer, that if the start time and end time of a request were
+equal (in which case there should be one sample of data) then wave_serverV did
+not reply to the request (ASCII request) at all. No Data, No Flags, No Reply,
+No Nothing.  It needs to issue a reply to every request.
+DavidK 09/25/01
+
+wave_serverV:
+Wave server appears to be limited (on 32-bit systems) to 1GB tank sizes.
+A bug (a signed integer overflow of tmpoE at Line 1155 of 
+serve_trace.c  (LocateRoughOffset()))
+prevents data retrieval from the tank under certain conditions when the
+tank size exceeds 1 GB.
+DavidK & PNL 09/27/04
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+
+libsrc/utils/site.c: The strings used for station, channel and network are
+required to be fixed length with trailing spaces added to short names. If
+the strings given to site_index do not have these trailing blanks, SCN names
+will not match. This is not documented anywhere.  PNL 10/15/00
+
+socket_ew: (libsrc/util/socket_ew_common.c libsrc/solaris/socket_ew.c
+    libsrc/winnt/socket_ew.c include/socket_ew.h)
+Fixed a bug in the connect_ew function().
+When run in non-blocking mode (clients connecting to
+a server - using a timeout value), there was a bug in
+the connection code(discovered on Solaris) that caused
+the function to return a timeout-error when there was
+any kind of error during connection.
+The bug was discovered when connecting to a non-existent socket.
+When trying to connect to a non-existent wave_server on a machine,
+the underlying socket library was returning a Connection-Refused error,
+but the socket_ew library was passing back a timeout error.
+-
+The change only applies when a socket-error occurs while the function is
+waiting for the connect to happen.  The instance where you will most-likely
+see a difference, is when you try connecting to a non-existent socket.
+Previously the function would return TIMEOUT, now it will return
+connection REFUSED.
+-
+Added a new function: socketSetError_ew(),
+and defined a new socket_ew return code: CONNREFUSED_EW.
+DK 2003/02/04
+
+sm_ew2ora:
+There is a bug in sm_ew2ora that involves having multipe time intervals for
+components and channels.  If a strong motion message containing information
+for a channel that the DB has never seen before is loaded into the DB, and
+then later another message for the same channel with an earlier timestamp
+is loaded, the load of the second message will fail, due to problems with
+overlapping time intervals, and the call that sm_ew2ora uses to create
+those time intervals.  This problem only affects stations that were
+not previously loaded via one of the station loader programs stalist*2ora,
+and only when receiving SM data that is timestamped with a time that is
+prior to the original time for that channel.  The bug lies in the logic
+of ewdb_api_PutSMMessage(), and not in the underlying code.
+Davidk 05/25/01
+
+A change was made to ewdb_api_PutSMMessage() that dramatically affects
+sm_ew2ora.  Please see the note about that function.  Davidk 2001/07/26
+
+ewdb_api_CreateWaveform()  (ewdb_internal_CreateSnippet.c
+		    ewdb_internal_CreateWaveformDesc.c)
+Added a call to release the cursors used by the internal functions, when they
+fail.  Fixes a bug which resulted in a DB cursor leak when a call to stuff
+a snippet into the DB failed.
+DK 2003/02/04
+
+logit.c:
+1) Added a new function logit_core()
+int logit_core( char *flag, char *format, va_list ap);
+This function is the same as logit(), except that it takes a va_list argument
+for the variable length parameter instead of '...', and it has an int
+return value.
+This function can be called by other functions that receive a '...' variable
+argument list, where as logit() cannot.  logit_core() is to logit()
+what vsprintf() is to sprintf().
+-
+2) Moved all of the functionality in logit() to logit_core(), and modify
+logit to call logit_core().
+-
+3)  Added a new function get_prog_name2(), as an intended replacement
+of get_prog_name().  get_prog_name2() includes an additional
+parameter (the buffer length of the output buffer).
+-
+4)  Modified logit_init() to use get_prog_name2() instead of get_prog_name()
+-
+All four(4) of these changes should be backwards compatible with all existing
+earthworm code, and the modified logit.c has already been tested with several
+earthworm modules.
+-
+
+
+ewdb_api:
+Added new function ewdb_api_GetEventSummaryInfo() to retrieve summary
+information for an event(including the preferred szSource and szSourceEventID
+of the event).   011904 DK
+
+
+
+<b><a name="deficiencies">KNOWN DEFICIENCIES:</a></b>
+*******************
+k2ew: Kinemetrics control software has been modified to configure location
+codes inside the K2 itself (in previously unused space). k2ew has not yet
+been modified to read these location codes from the K2 header. For the
+time-being, location codes must be set with the "LocationNames" command
+in the config file.  Lynn Dietz 2007/02/09
+
+ringtocoax:
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+statmgr: A space is needed between "tsec:" and the value.
+If it isn't there, things fail. Artifcat of the kom routines. (Alex)
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+carlsubtrig:
+The system time must be set to GMT and ew_nt.cmd must have
+TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+
+localmag:
+needs GMT set on the system
+
+ew2seisvole:
+on NT, exits with horrible crash when system is stopped.
+
+NUMBER OF RINGS LIMITED ON SOLARIS:
+Under Solaris 2.6 (and probably other versions as well), the maximum number
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+set shmsys:shminfo_shmmax = 4294967295
+set shmsys:shminfo_shmmin = 1
+set shmsys:shminfo_shmmni = 100
+set shmsys:shminfo_shmseg = 20
+set semsys:seminfo_semmns = 200
+set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+
+Lucky Vidmar (7/6/2000)
+
+startstop_solaris:
+Fixed bug in call to logit_init().
+The program was printing error messages:
+Invalid arguments passed in.
+Call to get_prog_name failed.
+WARNING: Call logit_init before logit.
+
+startstop_solaris:
+There MAY be a problem with the signal that
+startstop sends to modules during the shutdown sequence. The shutdown
+sequence is started (after typing "quit" to startstop or running "pau")
+by startstop placing a terminate message on all transport rings. Modules
+should see this message and start their own shutdown. After a configurable
+delay, startstop checks to see that all modules have exitted. Any that are
+still running are sent a signal to terminate them. Currently that signal
+is SIG_TERM. But since wave_serverV has a handler for SIG_TERM, wave_serverV
+sees that as essentially the same as a terminate message. So if wave_serverV
+is having problems completing its shutdown, SIG_TERM won't do anything. The
+result is that startstop may give up and exit, leaving wave_serverV running.
+If that happens, the operator will have to terminate wave_serverV by doing
+"kill -9 <wave_serverV-pid>". That may leave shared memory and semaphores
+stranded in the kernel: run the command "ipcs -a" to see. If necessary,
+the stranded shared memory and semaphores may be cleaned up with the
+ipcrc command; must be run as root; see the man page.
+This problem only exists on Solaris/Unix, not on WindowsNT.
+PNL, 10/4/2000
+
+libsrc/utils/kom.c:  fix comment in k_open()
+
+The comment above k_open() says that only one file can
+be open at a time. Yet the Kbuf array has slots for MAXBUF (currently 4) open
+files. Does this work, or is the comment to be taken at it's word?
+PNL 10/15/00
+
+libsrc/utils/logit.c: logit_init() requires a module_id number, which it uses
+to construct the log file name. This is not helpful, since the module_id
+number is not meaningful to people. Worse, it requires that the config file be
+read and earthworm.d lookups be completed before logit calls can be made. Thus
+errors in the config file can only be reported to stderr or stdout instead of
+being saved in a file.  PNL 11/29/00
+
+libsrc/util/k2evt2ew.c: This library supports a maximum EVT data size
+of 800000 samples per channel per EVT file.  This value is hardcoded
+as MAXTRACELTH in include/k2evt2ew.h.  k2evt2ew() will return a warning
+if the EVT file exceeds this size, and process as much as the EVT file
+as the hardcoded limit allows.
+DK 2003/01/18
+
+import_ida:  Modified to build under WIN32(#ifdef'd a couple of includes
+and modified the NT makefiles.)  (saved under tag HYDRA_V1-20)
+Modified for SCNL and Tracebuf2.
+DK 2005/04/22
+
+
+TRACEBUF messages.
+The definition of `endtime' of the TRACEBUF message is not documented.
+Some programmers are taking it as the "expected start time of the next
+TRACEBUF packet (if the sample interval is uniform.)" The more accepted
+practice is that `endtime' is the time of the last sample of the current
+TRACEBUF packet; that is, one sample interval less than the expected
+start time of the next TRACEBUF messsage. Using this last definition, if a
+TRACEBUF packet has exactly one sample, then its starttime and endtime are
+the identical. Clearly this distinction needs to be documented. The file
+waveform_format (in the /home/earthworm/DOC directory) gives no specifics
+about start or end times.  PNL 1/24/01
+
+</PRE>
+</BODY>
+</HTML>
+

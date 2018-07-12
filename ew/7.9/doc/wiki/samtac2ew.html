@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      samtac2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/samtac2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="samtac2ew.html" title="View samtac2ew">samtac2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/samtac2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/samtac2ew?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-04-08T17%3A49%3A32-07%3A00&amp;precision=second" title="2012-04-08T17:49:32-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 04/08/12 17:49:32</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="samtac2ew.html#EarthwormModule:samtac2ew">Earthworm Module: samtac2ew</a>
+    <ol>
+      <li>
+        <a href="samtac2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="samtac2ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="samtac2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="samtac2ew.html#FunctionalCommandListing">Functional Command Listing</a>
+          </li>
+          <li>
+            <a href="samtac2ew.html#AlphabeticCommandListingDescription">Alphabetic Command Listing &amp; Description</a>
+          </li>
+          <li>
+            <a href="samtac2ew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="samtac2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:samtac2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: samtac2ew</h1>
+<p>
+<strong>Contributed by: Tim Zander of ISTI. Development funded by Tokyo Sokushin.</strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Imports data from SAMTAC-802U over tcp/ip or serial on windows (new in EW v7.4)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+This module recieves data packets from a SAMTAC-802U. The data packets are then put into an Earthworm ring-memory transport buffer. The module was developed using Earthworm version 7.2. It is all 'C' code compiled using standard makefiles ("makefile.nt") like those used with other Earthworm modules. On Windows there are two versions of SAMTAC2EW: samtac2ew_com, to use a COM port on a PC; and samtac2ew_tcp, for using TCP communications to a serial-to-TCP server connected to the serial port on the SAMTAC-802U. There is one config file for the TCP version (samtac2ew_tcp.d) and another config file for the COM version (samtac2ew_com.d.) One instance of SAMTAC2EW will be needed for each SAMTAC, and each instance will have its own config file.
+</p>
+<p>
+<strong>SAMTAC2EW Packet Handling Details</strong>
+</p>
+<p>
+As data packets are received from the SAMTAC the headers are read, and a SOH message is sent to earthworm. The packets are then demuxed and a tracebuf2 packets for each channel is sent to the ring buffer. If there is a break in the sequence numbers or the checksums are bad, samtac2ew will write an error message to the ring buffer.
+</p>
+<p>
+<strong>SAMTAC2EW State Of Health Details</strong>
+</p>
+<p>
+SAMTAC2EW will send out a State Of Health(SOH) packet at a configurable interval(default 5 minutes) or if the SOH changes. The Packet Type used is TYPE_SAMTACSOH_PACKET and this must be defined in the earthworm.d file. An example SOH packet:
+</p>
+<pre class="wiki">ZZ-ISTI 1232641240
+DeviceID: 21
+Detecting Earthquake: 0
+Media Capacity Alarm: 0
+Power Supply Voltage Alarm: 0
+GPS Alarm: 1
+</pre><p>
+Where <strong>ZZ-ISTI</strong> is the Network-Station and <strong>1232641240</strong> is the epoch time the packet was sent.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, samtac2ew reads the configuration file named on the command line. Commands in this file set all the parameters used for configuring the Earthworm samtac2ew module. In the control file, lines may begin with a valid samtac2ew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @SCNL.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FunctionalCommandListing">Functional Command Listing</h3>
+<p>
+Below are the commands recognized by samtac2ew, grouped by the function they influence. Some of the commands are required, as noted. They may be specified in any order in the control file, with the exception of the SAMTAC-802U communications mode settings: these must be listed in the order shown here.
+</p>
+<pre class="wiki">    Earthworm system setup:
+                ModuleId                required
+                RingName                required
+                LogFile                 required
+                HeartbeatInt            required
+                DeviceID                required
+                Debug                   optional
+
+    The two commands for any ONE of the two communication modes:
+        SAMTAC communication parameters: TCP mode
+                TcpAddr                 required
+                TcpPort                 required
+
+        SAMTAC communication parameters: Windows COM port
+                ComPort                 required
+                Speed                   required
+ 
+        SAMTAC2EW buffer and timing parameters:
+                CommTimeout             optional
+ 
+        SAMTAC configuration, status and alarm parameters:
+                InfoSCNL                required
+                SOH_int                 optional
+</pre><h3 id="AlphabeticCommandListingDescription">Alphabetic Command Listing &amp; Description</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>CommTimeout [n]</strong>
+</p>
+<p>
+Sets the communication timeout to n milliseconds. If unable to communicate with SAMTAC for n milliseconds, retry socket or terminate. Default: 5000 (milliseconds)
+</p>
+<p>
+<strong>ComPort [n]</strong>
+</p>
+<p>
+Sets the com port number to n.
+</p>
+<p>
+<strong>Debug [n]</strong>
+</p>
+<p>
+Sets the debug level: 0 or commented out for no debug logging; 1 - 4 for increasing verbosity. Default: no debug output.
+</p>
+<p>
+<strong>DeviceID [n]</strong>
+</p>
+<p>
+Sets DeviceID(serial) of the SAMTAC. This will be used to identify data coming from the SAMTAC and should match Sys values from SCNL.
+</p>
+<p>
+<strong>HeartbeatInt [beat]</strong>
+</p>
+<p>
+Beat the samtac2ew heart every beat seconds.
+</p>
+<p>
+<strong>InfoSCNL [System Channel S C N L]</strong>
+</p>
+<p>
+This command is used to define how samtac2ew maps a System and Channel Number to a Station Channel Name. It is also used as a channel selector as only those streams specified get passed on to the Earthworm Wave Ring. This forces the trace buf type to be of type TRACEBUF2. System is for the SAMTAC System ID name, Channel is for the SAMTAC channel number, S is for station name (5 chars), C is for channel identifier (3 chars), N is for network code (2 chars), and L is for location code (2 chars).
+</p>
+<pre class="wiki">#                Sys     Channel S       C       N   L
+InfoSCNL         21      1       ISTI    HHZ     CI  00
+InfoSCNL         21      2       ISTI    HHN     CI  00
+InfoSCNL         21      3       ISTI    HHE     CI  00
+</pre><p>
+<strong>LogFile [n]</strong>
+</p>
+<p>
+If 0, don't output to logfile; if 1, do if 2, log to module log but not stderr/stdout
+</p>
+<p>
+<strong>ModuleId [mod_id]</strong>
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<p>
+<strong>RingName [ring]</strong>
+</p>
+<p>
+This is the ring into which the waveforms and messages are sent.
+</p>
+<p>
+<strong>SOH_int [seconds]</strong>
+</p>
+<p>
+The interval in seconds between State of Health packets. Default in 300 seconds(5 minutes)
+</p>
+<p>
+<strong>Speed [rate]</strong>
+</p>
+<p>
+Connect to the SAMTAC-802U at the Speed rate specified. To use this input mode, the ComPort directive must also be used. The baud rates are the standard allowable rates : 1200, 2400, 4800, 9600, 19200, 38400, 57600, and 115200.
+</p>
+<p>
+<strong>TcpAddr [IP address]</strong>
+</p>
+<p>
+Connect to the SAMTAC-802U at the ip address IP address. Note that the TcpPort is also required.
+</p>
+<p>
+<strong>TcpPort [number]</strong>
+</p>
+<p>
+Connect to the SAMTAC-802U at the ip address specified and this port number. Note that the TcpAddr is also required for this directive. TcpPort defaults to 5001 for the SAMTAC-802U.
+</p>
+<h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki">#
+# samtac2ew configuration file
+#
+# This code receives serial data stream (SDS) packets from the SAMTAC via
+# a TCP/IP port, converts them into Earthworm trace buf messages, and
+# stuffs them into a wave ring.
+#
+
+TcpAddr         192.168.4.5     # IP address of SAMTAC interface
+TcpPort         5001            # TCP port number of SAMTAC interface
+
+# ComPort       1               # SAMTAC-802U COM port ID, 1=COM1, 2=COM, etc
+# Speed         57600           # SAMTAC-802U baud rate
+
+DeviceID        21              # SAMTAC DeviceID(serial), must be defined here for SCNL map
+
+ModuleId        MOD_SAMTAC2EW   # module id for this import
+RingName        WAVE_RING       # transport ring to use for input/output
+
+LogFile         1               # If 0, don't output to logfile; if 1, do
+                                # if 2, log to module log but not stderr/stdout
+
+HeartbeatInt    30              # Heartbeat interval in seconds
+
+# Optional commands:
+
+SOH_int         300             # State Of Health packet interval in seconds. 
+                                # Default is 5 minutes
+
+CommTimeout     5000            # If unable to communicate with SAMTAC for X
+                                # milliseconds, retry socket or terminate
+                                # default: 5000 (milliseconds)
+
+Debug           4               # debug level: 0 or commented out for no debug
+                                # logging; 1 - 4 for increasing verbosity
+                                # default: no debug output
+
+#           Sys     Channel S       C       N   L
+InfoSCNL    21      1       ISTI    HHA     ZZ  01
+InfoSCNL    21      2       ISTI    HHB     ZZ  01
+InfoSCNL    21      3       ISTI    HHC     ZZ  01
+InfoSCNL    21      4       ISTI    HHD     ZZ  01
+InfoSCNL    21      5       ISTI    HHE     ZZ  01
+InfoSCNL    21      6       ISTI    HHF     ZZ  01
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/samtac2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

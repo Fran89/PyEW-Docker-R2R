@@ -1,0 +1,103 @@
+Earthworm Version 3.0 Release Notes
+2/7/98
+
+NEW MODULES:
+***********
+
+adsend:  The functionality of the Earthworm DOS a/d box has been implemented under Microsoft NT.  The NT Adsend  was designed to work with a single National Instruments DAQ board (model PCI-MIO-16E-4) and up to four MUX boards (model AMUX-64T).  The NT Adsend  is implemented as a standard Earthworm module within the Earthworm software architecture.  This allows additional Earthworm modules to be run on the same computer with Adsend.
+
+getmenu: Separate program that requests the menu from a wave_server. 
+   usage:  getmenu <server:port>  
+   
+restart: Separate program that send a TYPE_RESTART message to
+startstop. usage:  restart <pid>.  This program is run by the statmgr
+when a module no longer is sending a heartbeat.  To implement this
+feature, the 'restartMe' parameter must be added to the module's .desc
+file.
+
+rcv_ew: The Earthworm suite now includes this program to permit turn-key, 
+trace data exchange from the USNSN to the regional networks.
+
+import_ida:  This program enables an Earthworm to retrieve and process continuous trace data from numerous IDA data servers.
+   
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+
+hypo_mgr: The program creates two temporary arc files (later removed by
+program).  The temp file names now have the module id appended to them.
+This permits more than one instance of hypo_mgr to run.
+
+binder: The heartbeat interval is now a configuration file parameter.  
+
+eqprelim: The heartbeat interval is now a configuration file parameter.
+
+pick_ew: MyModId is now a config file parameter.  This allows multiple
+instances of pick_ew to run.
+
+wave_serverIV: 
+	* changed to select stations to be tanked by SCN name
+		       rather than pin number.
+	
+	* changed to accept variable gap threshold
+
+	* Added optional "Debug" parameter in .d file
+	
+	* Added one warning message if oversized trace message detected
+
+
+copyfile() for Windows NT:  menlo_report was crashing after about 1200
+rcp calls.  copyfile now closes the process and thread handles for rcp
+and rsh.
+
+arc2trig: As part of the change to the trigger message format: mod to cause
+          it to write <S><C><N> names with space delimiters.
+
+ringtocoax: An option was added to control packet broadcasting using
+"wait timers".  ringtocoax blocks on a timer, which the kernel resets
+every 0.01 second.  Each time the timer resets, ringtocoax sends a burst of
+1 to 5 packets to the Ethernet line.  If the packets are not delayed in this
+way, coaxtoring will drop packets.  Currently, the wait-timer option is only
+supported under Windows NT.  
+
+import_generic:
+Changed as per Doug Neuhauser's suggestion for reading as much as available
+from socket. It helped a lot. Thanks Doug.
+
+export_generic:
+Changed to accept Doug Neuhauser's bug fix for messages ending in an ESC.
+
+startstop_solaris: now can be run in background as well as in foreground. This
+is done by setting SIGTTIN to IGNORE. See the README file in 
+src/startstop_solaris for details.
+
+startstop_solaris:
+Changed status message so that the arguments are included at the end of each
+line, up to an 80-character wide line. When running multiple instances of a
+module, this list of arguments will help identify the module instances.
+
+
+CHANGES TO CONFIGURATION FILES:
+*******************************
+binder: HeartbeatInt added to the config file.
+
+eqprelim: HeartbeatInd added to the config file.
+
+pick_ew: MyModId added to the config file.
+
+wave_serverIV:  * stations selected by SCN names rather than pin numbers.
+ 		* Switch to permit safe but slow operation: writes index file
+ 		  after every tank write.
+		* threshold for declaring break in data.
+		* Added optional "Debug" parameter in .d file
+
+
+ringtocoax: Parameters added to control a Windows NT wait timer.
+
+make_ew_os2.cmd: Modified for consistency with Solaris and Windows NT. 
+
+ew_os2.cmd: Modified for consistency with Solaris and Windows NT. 
+
+*.desc files:	Option 'restartMe' addded.
+
+

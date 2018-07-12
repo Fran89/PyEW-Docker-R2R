@@ -1,0 +1,33 @@
+#
+
+LINUX_FLAGS=-lpthread -lm
+SOLARIS_FLAGS=-lnsl -lposix4 -lthread -lc
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+LIBS = $(MT_FLAG) $(SPECIFIC_FLAGS) $(LINK_LIBS)
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS) -g
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+EWLIBS = $L/mem_circ_queue.o $L/rdpickcoda.o $L/swap.o $L/libew_mt.a $L/libmseed.a
+
+PROGS = ewmseedarchiver 
+
+all: $(PROGS)
+
+ewmseedarchiver: ewmseedarchiver.o dsarchive.o exportfilter.o $(EWLIBS)
+	$(CC) $(CFLAGS) -o $B/ewmseedarchiver ewmseedarchiver.o dsarchive.o exportfilter.o $(EWLIBS) $(LIBS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c  $(OUTPUT_OPTION) $<
+
+lint:
+	lint ewmseedarchiver.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ewmseedarchiver

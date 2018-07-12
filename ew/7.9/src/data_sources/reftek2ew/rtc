@@ -1,0 +1,90 @@
+#!/bin/sh
+#*******************************************************
+# /etc/init.d script to control RTCC under Linux
+#*******************************************************
+
+RTCC_USR=cellworm
+RTCC_DIR=/home/$RTCC_USR/reftek/rtcc
+PATH=/bin:/usr/bin
+
+
+#*******************************************************
+# Start RTCC
+#-------------------------------------------------------
+rtcc_start() {
+
+# Is rtcc already running?
+    id=`ps -f -u $RTCC_USR | grep rtcc | grep -v grep`
+    if test -n "$id"
+    then
+        echo "rtcc is already running"
+        exit 1
+    fi
+
+# By default, the configuration file (rtcc.ini)
+# is found in RTCC_DIR.
+    if test -d "$RTCC_DIR"
+    then
+        cd $RTCC_DIR
+    else
+        echo "Directory $RTCC_DIR does not exist"
+        exit 1
+    fi
+
+# Start the rtcc process
+    su $RTCC_USR -c "$RTCC_DIR/rtcc >&/dev/null &"
+    exit
+}
+
+
+#*******************************************************
+# Stop RTCC
+#-------------------------------------------------------
+rtcc_stop() {
+# Is rtcc already stopped?
+    pid=`ps -u $RTCC_USR -o pid= -o cmd= | grep rtcc | grep -v grep | awk '{ print $1 }'`
+    if test -z "$pid"
+    then
+        echo "rtcc is already stopped"
+        exit 1
+    fi
+
+# Stomp on the rtcc process
+    kill $pid
+    echo "rtcc stopped"
+    exit
+}
+
+
+#*******************************************************
+# Get status of RTCC
+#-------------------------------------------------------
+rtcc_status() {
+    id=`ps -f -u $RTCC_USR | grep rtcc | grep -v grep`
+    if test -n "$id"
+    then
+        echo "rtcc is running"
+    else
+        echo "rtcc is not running"
+    fi
+    exit
+}
+
+
+#*******************************************************
+# Select the operation to perform
+#-------------------------------------------------------
+case "$1" in
+    'start')
+        rtcc_start
+        ;;
+    'stop')
+        rtcc_stop
+        ;;
+    'status')
+        rtcc_status
+        ;;
+    *)
+        echo "Usage: rtc { start | stop | status }"
+        ;;
+esac

@@ -1,0 +1,31 @@
+2015.071: 0.5
+	- Modified to support building and running under Windows.  For the
+          Windows build it needs some of the Earthworm libraries to compile,
+          but then the generated executable can be run as a stand-alone
+          program.
+2013.276: 0.4
+	- Add detection of heart beat messages based on matching the type to
+	TYPE_HEARTBEAT and improve logging of expected versus received heart
+	beat text when they do not match.
+
+2013.275: 0.3
+	- Add code to maintain the time base of internal data buffers according
+	to the start time of received tracebufs.  This avoids accumulating 
+	timing imperfections of the incoming data and means any significant
+	timing imperfections are more accuratley represented by the output stream.
+	- Include blockette 1001 in generated miniSEED records for microsecond
+	resolution time stamps.
+	- Add -Ie option to specify miniSEED encoding for 32-bit integer sample
+	data, default is STEIM2 compression.
+	- Update libmseed to 2.12 (non-EW-repository release).
+	
+2013.261: 0.2
+	- Convert 16-bit integer data to 32-bit integer data, this allows using
+	STEIM1 compression and for creating broadly supported miniSEED.
+	- Change encoding for 32-bit integers to STEIM1 (from STEIM2) for the 
+	most general case, which can include spikes, etc.
+	- Add datatype to verbose message when receiving tracebufs.
+	- Update libdali to 1.6.
+
+2013.147: 0.1
+	- Initial version

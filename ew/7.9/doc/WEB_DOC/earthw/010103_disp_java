@@ -1,0 +1,33 @@
+From RORTT@mgs.md.gov Wed Jan  3 11:08:26 2001
+Date: Wed, 3 Jan 2001 13:47:06 -0500 
+From: "Ortt, Richard" <RORTT@mgs.md.gov>
+To: earthw-list@nmt.edu
+Cc: "Conkwright, Bob" <BCONKWRIGHT@mgs.md.gov>,
+     "Labin, Jon" <jlabin@mgs.md.gov>
+Subject: Java applet for displaying waveform
+
+    [ The following text is in the "iso-8859-1" character set. ]
+    [ Your display is set for the "US-ASCII" character set.  ]
+    [ Some characters may be displayed incorrectly. ]
+
+We are in the process of having a college intern create a java program that
+will display real-time output on any generic computer with Internet access.
+The intent is to allow general access to the datastream while away from the
+earthworm site and for public affairs.  Most likely, he will be programming
+a server program in NT or in C++ to run in Linux to accept a generic_export
+stream from the earthworm system and then allow the java programs to stream
+the data from the server program.
+
+If anyone has done this or is currently working on this, your help and / or
+insight would be greatly appreciated.
+
+-Rich Ortt
+
+______________________________________________
+Richard Ortt			| rortt@mgs.md.gov
+Maryland Geological Survey 	| http://www.mgs.md.gov
+2300 Saint Paul Street		| Phone: 410-554-5541
+Baltimore, MD 21218		| Fax: 410-554-5502
+______________________________________________
+
+

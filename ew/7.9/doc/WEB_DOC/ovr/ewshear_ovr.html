@@ -1,0 +1,45 @@
+
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: <P>ewshear overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER><H1>Earthworm Module: <BR>Ewshear Overview</H1>
+<I>(last revised 31 October, 2011)</I></CENTER>
+<P>
+The ewshear module takes data from a specified ring from two sensors
+assumed to be placed on different floors of a building.  By computing the
+relative drop in shear wave velocity between subsequent time windows,
+an alarm message is posted to a specified ring when that drop is large enough.
+</P>
+<p>
+The primary options are:
+</P>
+<UL>
+<LI>
+Identification of the SCNL for each floor's sensor
+</LI>
+<LI>
+The vertical distance between the two sensors
+</LI>
+<LI>
+Optionally, the threshold (as a percentage change) in velocity drop which will
+trigger an alarm (default is 20%)
+</LI>
+</UL>
+<P>
+Other options include tapering of the original timeseries.
+<P>
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../cmd/ewshear_cmd.html">Ewintegrate Configuration File</A>
+
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <B><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

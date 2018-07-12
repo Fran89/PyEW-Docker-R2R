@@ -1,0 +1,37 @@
+#
+# Makefile for activated_scripts  -- Unix version
+#
+
+LINUX_FLAGS=-lpthread -lc -lm
+SOLARIS_FLAGS=-lm -lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+BINDIR = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+LINUX_CFLAGS = -Wdeclaration-after-statement
+
+CFLAGS = $(GLOBALFLAGS) -g -I. $($(PLATFORM)_CFLAGS)
+
+SRCS = activated_scripts.c
+OBJS = $(SRCS:%.c=%.o)
+
+EW_LIBS = $(L)/libew_mt.a  $(L)/mem_circ_queue.o \
+          $(L)/socket_ew_common.o $(L)/socket_ew.o $(L)/swap.o \
+          $(L)/ew_spectra_io.o
+ 
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: activated_scripts
+
+activated_scripts: $(OBJS)
+	$(CC) $(GLOBALFLAGS) -o activated_scripts $(OBJS) $(EW_LIBS) $(SPECIFIC_FLAGS)
+	cp activated_scripts $(BINDIR)
+
+clean:
+	rm -f *.o
+	rm -f activated_scripts
+
+clean_bin:
+	rm -f $(BINDIR)/activated_scripts

@@ -1,0 +1,37 @@
+############################
+# Makefile for ewhtmlemail #
+############################
+
+LINUX_FLAGS=$(MT_FLAG) -lpthread -lm
+SOLARIS_FLAGS=-mt -lsocket -lnsl -lrt $(LINK_LIBS)
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+EWBIN = $L/site.o \
+	$L/read_arc.o $L/fleng.o $L/ws_clientII.o $L/earthworm_defs.o\
+	$L/socket_ew_common.o $L/socket_ew.o $L/swap.o $L/rw_mag.o \
+	$L/gd.o $L/gdfonts.o $L/transferFunction.o $L/butterworth.o \
+        $L/ioc_filter.o $L/complex_math.o $L/watchdog_client.o \
+        $L/convertInstResponse.o $L/residue.o $L/geo_to_km.o  $L/libew_mt.a
+
+all:
+	make -f makefile.unix ewhtmlemail
+
+ewhtmlemail: ewhtmlemail.o kml_event.o $(EWBIN)
+	$(CC) $(CFLAGS) -o $B/ewhtmlemail ewhtmlemail.o kml_event.o \
+	$(EWBIN) $(SPECIFIC_FLAGS)
+
+lint:
+	lint ewhtmlemail.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ewhtmlemail*

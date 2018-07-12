@@ -1,0 +1,1024 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Gmew Commands</title>
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(250, 223, 175);"
+ link="#0000ee" vlink="#551a8b">
+<h1 align="center">Earthworm Modules: <br>
+Gmew Configuration File </h1>
+<p style="margin-bottom: 0in;" align="center"><i>(last revised 8 January 2012)</i></p>
+<p>Page Index:
+</p>
+<ol>
+  <li><a href="#function">Functional command listing</a> </li>
+  <li><a href="#alphabet">Alphabetic command listing &amp; description</a>
+  </li>
+  <li><a href="#sample_config">Sample Configuration File</a> </li>
+</ol>
+<p>On startup, gmew reads commands from a configuration file. Commands
+in this file set all the parameters for configuring the Earthworm gmew
+module.
+In the control file, lines may begin with a valid gmew command (listed
+below) or with one of 2 special characters: </p>
+<pre style="margin-left: 0.39in; margin-right: 0.39in;">#  marks the line as a comment (example: # This is a comment).<br>   <br>@  allows control files to be nested; one control file can be <br>   accessed from another with the command "@" followed by <br>   a string representing the path name of the next control file <br>   (example: @model.d).</pre>
+<p>Command names must be typed in the control file exactly as shown in
+this document (upper/lower case matters!). Blank lines are also
+permitted in the control file. </p>
+<h2><a name="function"></a>1. FUNCTIONAL COMMAND LISTING</h2>
+<div align="center">
+<table cols="3" width="80%">
+  <tbody>
+    <tr>
+      <th colspan="2" align="left"> Earthworm system setup:</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#MyModuleId">MyModuleId</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#RingInName">RingInName</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#RingOutName">RingOutName</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#getEventsFrom">getEventsFrom</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#HeartBeatInterval">HeartBeatInterval</a>
+      </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#logSwitch">log switch</a> </td>
+      <td>Optional</td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Memory allocation commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxSta">maxSta</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxTrace">maxTrace</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Event and Trace commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#traceSource">traceSource</a> </td>
+      <td>Optional</td>
+      <td>-t</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#extraDelay">extraDelay</a> </td>
+      <td>Optional</td>
+      <td></td>
+    </tr>
+    <tr>
+    <tr>
+      <td align="center"><a href="#traceTimes">traceTimes</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Add">Add</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Del">Del</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#allowDuplicates">allowDuplicates</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#maxDist">maxDist</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#saveTrace">saveTrace</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#searchWindow">searchWindow</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#LookAtVersion">LookAtVersion</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Auxiliary Data Sources</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#respSource">respSource</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#staLoc">staLoc</a> </td>
+      <td>Required</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#velocity">velocity model</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#SCNpar">SCNLpar</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <th colspan="2" align="left">Miscellaneous Commands</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="#Debug">Debug</a></td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#wsTimeout">wsTimeout</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#XMLDir">XMLDir</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#TempDir">TempDir</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#MappingFile">MappingFile</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#watchForAlarm">watchForAlarm</a> </td>
+      <td>Optional</td>
+    </tr>
+    <tr>
+      <td align="center"><a href="#AddSpectraResponseAt">AddSpectraResponseAt</a> </td>
+      <td>Optional</td>
+    </tr>
+  </tbody>
+</table>
+<p>
+</p>
+<h2><a name="alphabet"></a>2. ALPHABETIC COMMAND LISTING &amp;
+DESCRIPTION</h2>
+<p>In the following section, all configuration file commands are
+listed in alphabetical order. Listed along with the command
+(bold-type) are its arguments (in red.) A detailed description of the
+command
+and is also given. Default values and example commands are listed after
+each
+command description. </p>
+<table cols="2">
+  <tbody>
+    <tr>
+      <td>command <font color="#ff0000">arg1</font></td>
+      <td> function</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="Add"></a>Add <font color="#ff0000">STA COMP NET LOC</font>
+      </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Add the trace(s) with station name <font color="#ff0000">STA</font>,
+component name <font color="#ff0000">COMP</font>, network name <font
+ color="#ff0000">NET</font> , and location code LOC to the selection
+list. Any of STA, COMP and NET may be the wildcard character `*'. COMP
+may be given as the first two letters of the component name, to select
+all direction desgnators (North and East) are accepted for that
+component. Zero, one or many Add commands may be listed in the
+configuration file. If no Add commands are given, all SCNLs from the
+trace source will be selected. The <a href="#Del">Del</a> command may
+be used to narrow the selection implied by wildcard values in an Add
+command or by the absence of any Add commands.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: all traces are selected from a trace source<br>Example: Add * BH *<br>         Add SEA EH UW</pre>
+      <hr></td>
+    </tr>
+
+    <tr>
+      <td><a name="AddSpectraResponseAt"></a>AddSpectraResponseAt <font color="#ff0000">period</font>
+      </td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Add the <font color="#ff0000">period</font> to the list of those processed.  If this
+is the first occurrence of this command, then replace the standard list (0.3, 1.0 and 3.0)
+with <font color="#ff0000">period</font>.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 0.3, 1.0 and 3.0<br>Example: AddSpectraResponseAt 2.0<br>         AddSpectraResponseAt 2.5</pre>
+      <hr></td>
+    </tr>
+
+    <tr>
+      <td><a name="allowDuplicates"></a>allowDuplicates
+      </td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul> This allows SCNL duplicates to occur for the same site since the normal gmew code ignores location code's in decising dups. This allows you to have HNZ 00 and HNZ 01 or in the case of buildings where you have 36 or more location codes for the same site! This feature is turned off if not put into the .d file. This is a boolean flag whose existence in the .d file indicates that it should be turned on.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: OFF<br>Example: allowDuplicates<br></pre>
+      <hr></td>
+    </tr>
+
+    <tr>
+      <td><a name="Debug"></a>Debug <font color="#ff0000">D</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set the debug level to <b>D</b>.
+There are many different debug options; one or more of them may be
+activated
+using the Debug command. More than one Debug command may be used, or
+the
+different values (from the table) may be added together into one Debug
+command. Except as noted, the debug information is printed to STDERR
+and the
+log file (depending on the setting of <a href="#logSwitch"> log switch</a>.)
+Select from these debug options:
+        <dl>
+          <dt><font color="#ff0000">1</font>: </dt>
+          <dd>trace and search times and P and S arrival estimates
+(relative to event origin time) </dd>
+          <dt><font color="#ff0000">2</font>: </dt>
+          <dd>SCNL selection tests </dd>
+          <dt><font color="#ff0000">16</font>: </dt>
+          <dd>ws_client debugging </dd>
+          <dt><font color="#ff0000">32</font>: </dt>
+          <dd>poles. zeros and gain values </dd>
+          <dt><font color="#ff0000">64</font>: </dt>
+          <dd>trial frequency response functions to STDOUT. Produces
+about 1500 lines for each SCNL, which should be saved to a file. </dd>
+          <dt><font color="#ff0000">128</font>: </dt>
+          <dd>full frequency response function to STDOUT. Produces
+several thousand lines for each SCNL, which should be saved to a file. </dd>
+          <dt><font color="#ff0000">256</font>: </dt>
+          <dd>Input and output trace data including in padded arear to
+STDOUT. Produces several thousand lines for each SCNL, which should be
+saved to a file. </dd>
+        </dl>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 0; no debug output<br>Example: Debug 3 # turns on options 1 and 2</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="Del"></a>Del <font color="#ff0000">STA COMP NET LOC</font>
+      </td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Delete the trace(s) with station name <font color="#ff0000">STA</font>,
+component name <font color="#ff0000">COM,</font> network name <font
+ color="#ff0000">NET</font> , and location code LOC from the selection
+list. Any of STA, COMP ,&nbsp; NET and LOC may be the wildcard
+character `*'. COMP may be given as the
+first two letters of the component name, to select all direction
+desgnators (Vertical, North and East) are accepted for that component.
+Zero, one or many Del commands may be listed in the configuration file.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: all traces are selected from a trace source<br>Example: Del SEA BH UW --</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="getEventsFrom"></a>getEventsFrom <font
+ color="#ff0000">INST MOD</font></td>
+      <td> Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Get event messages (TYPE_HYP2000ARC) from installation <font
+ color="#ff0000">INST</font> and module <font color="#ff0000">MOD</font>.
+These installation and module IDs are found in earthworm.d and
+earthworm_global.d. Use as many <b>getEventsFrom</b> commands as
+necessary.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  getEventsFrom INST_WILDCARD MOD_EQPROC</pre>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td><a name="HeartBeatInterval"></a>HeartBeatInterval <font
+ color="#ff0000">H</font></td>
+      <td> Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Send TYPE_HEARTBEAT messages every <font color="#ff0000">H</font>
+seconds to the transport ring.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  HeartbeatInterval 30</pre>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td><a name="logSwitch"></a>log switch: <code>-l<font
+ color="#ff0000">S</font></code></td>
+      <td>Earthworm Setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+This is not a config-file command but a command line switch
+Sets the value of the logging switch to <font color="#ff0000">S</font>.
+Possible values of S are:
+        <dl>
+          <dt><font color="#ff0000">0</font>: </dt>
+          <dd>Do not create a log file. Some logging data will be
+printed to the screen (stdout or stderr.) </dd>
+          <dt><font color="#ff0000">1</font>: </dt>
+          <dd>Create a log file in the directory named by the EW_LOG
+environment variable. The log file name will based on the config-file
+name and the current data. A new file will be created for each day (but
+only if there are logging entries to be made.) Some logging data will
+be printed to the screen (stdout or stderr,) as with option `0' above. </dd>
+          <dt><font color="#ff0000">2</font>: </dt>
+          <dd>Create a log file as for option `1', but do not write
+anything to the screen (stdout or stderr.) </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 1<br>Example (on the command-line):  -l0 (lower-case ell zero; turns off creation of<br>        log file)</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="LookAtVersion"></a>LookAtVersion <font color="#ff0000">Event-version</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+<p>
+Optional parameter to use with <i>eqassemble</i> which declares the version
+of an event such as <i>Prelim</i>, <i>Rapid</i> and <i>Final</i>. Possible values for the
+parameter LookAtVersion are: <i>All</i>, <i>Prelim</i>, <i>Rapid</i> and <i>Final</i>.
+</p>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default is <i>All</i></pre>
+      <hr style="width: 100%; height: 2px;">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;"><br></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="MappingFile"></a>MappingFile <font color="#ff0000">map-file</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specifes that name of a mapping file for use in writing
+XML files (see <a href="#XMLDir">XMLDir</a>). This file provides for
+three
+different mappings: from station-net codes (used in SCNL) to
+descriptive
+station names; from net codes to descriptivce agency names, and from
+station-component-network codes to instrument type. See the file
+NCSN.map in
+the gmew source distribution for an example of this file. This file is
+not
+required by gmew, and the descriptivce names are not required by
+shakemap.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: no mapping file if this command is not given<br>Example: MappingFile NCSN.map</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="maxSta"></a>maxSta <font color="#ff0000">N</font></td>
+      <td>Memory Allocation</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+At startup, gmew will allocate space for <font color="#ff0000">N</font>
+individual stations (unique station/network names.)
+Each station may have any number of different components
+(BHE/BHN/HHE/HHN.) If
+gmew tries to read more than <b>N</b> stations, the excess ones will
+be
+skipped with a logged warning message. The order that stations are read
+into
+gmew is determined by the trace source and thus
+may be arbitrary.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, this command is required.<br>Example: maxSta 100</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="maxTrace"></a>maxTrace <font color="#ff0000">M</font></td>
+      <td>Memory Allocation</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Allocate memory for <font color="#ff0000">M</font><a href="#traceTimes">traceTimes</a>
+command and the estimated P and S phase
+arrival times.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none, this command is required<br>Example: maxTrace 60000<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="MyModuleId"></a>MyModuleId <font color="#ff0000">mod_id</font></td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Sets the module id for labeling
+all outgoing gmew, heartbeat, and error messages. <font color="#ff0000">mod_id</font>
+is a character string (valid strings are listed
+in earthworm.d) that relates to a unique single-byte number. In
+general, a
+different module ID is needed for each instance of gmew.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none<br>Example: MyModuleId MOD_LOCALMAG</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="respSource"></a>respSource <font color="#ff0000">SOURCE
+[params]</font> </td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells gmew where to find instrument response
+data. This command is required. Choices
+for <b>SOURCE</b> are:
+        <dl>
+          <dt><font color="#ff0000">FILE dirname pz-filename-format</font>
+          </dt>
+          <dd>find response files in the <b>dirname</b> directory. <b>pz-filename-format</b>
+is a string similar to the printf format: %S, %C, %N are replaced by
+station, component and network names, respectively, all in upper case.
+Similarly %s, %c, %n work for lower-case station, component and
+network. The digraph %% stands for %; all other characters are taken
+literally.
+            <p>The response file format is similar to that used by SAC
+POLEZERO files with some extra requirements. The options in the file
+are keyword driven and the numbers are in free format. You may specify
+a multiplicative scaling constant by putting a line in the file
+containing the keyword "CONSTANT" followed by a floating point number.
+The default for this constant is 1.0 if you omit this line. You specify
+the number of poles by putting a line in the file with the keyword
+"POLES" following by an integer number. The next lines in the file
+until another keyword is read become the poles for this instrument.
+Each such line contains two floating point numbers specifying the real
+and imaginary parts of one of the poles. If you have fewer lines
+specifying poles than you stated on the "POLES" line, the remaining
+poles are assumed to lie at the origin. You specify the zeros in the
+same way with a "ZEROS" keyword line following by lines specifying the
+zeros that do not lie at the origin. You may specify up to as many
+poles and zeros as you need. </p>
+            <p>The poles, zeros and gain constant of the response file <b>MUST</b>
+be for an input of displacement in nanometers. See the <a
+ href="http://seismo.ethz.ch/autodrm/autodrm_doc.html">documentation</a>
+provided by the NEIC AutoDRM for more details. The poles and zeros
+specify the Laplace transform of the analogue instrument response.
+Currently gmew has no provision for handling digital FIR or IIR filter
+responses. For example, the following is the specification for the NSN
+broadband seismometer OCWA.BHE.US: </p>
+            <pre><blockquote><br>CONSTANT    0.50280E+11<br>ZEROS       3<br>        0.00000E+00    0.00000E+00<br>        0.00000E+00    0.00000E+00<br>        0.00000E+00    0.00000E+00<br>POLES       6<br>       -0.31420E-01    0.00000E+00<br>       -0.19790E+00    0.00000E+00<br>       -0.20110E+03    0.00000E+00<br>       -0.69740E+03    0.00000E+00<br>       -0.75400E+03    0.00000E+00<br>       -0.10560E+04    0.00000E+00<br></blockquote></pre>
+          </dd>
+          <dt><font color="#ff0000">EWDB</font> </dt>
+          <dd>Query an Earthworm Database for reponse information. Not
+currently implemented. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none<br>Example: File /earthworm/responses %S_%C_%N.pz</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="RingInName"></a>RingInName <font color="#ff0000">ring</font>
+      </td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells gmew which shared
+memory region to use for input transport. <font color="#ff0000">ring</font>
+is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the shared
+memory region. Gmew reads TYPE_HYP2ARC messages from this ring.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  RingInName HYPO_RING</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="RingOutName"></a>RingOutName <font color="#ff0000">ring</font>
+      </td>
+      <td>Earthworm setup</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells gmew which shared
+memory region to use for output transport. <font color="#ff0000">ring</font>
+is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique number for the key to the shared
+memory region. Gmew writes TYPE_STRONGMOTIONII, TYPE_HEARTBEAT and
+TYPE_ERROR messages to this ring. RingOutName can be the same as
+RingInName if
+desired.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example:  RingOutName SM_RING</pre>
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="saveTrace"></a>saveTrace ST [params] <font
+ color="#ff0000">DIR FORMAT</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells gmew whether and how to save synthetic traces. If the <b>saveTrace</b>
+command is absent, no traces
+will be saved. Choices for <b>ST</b> include:
+        <dl>
+          <dt><font color="#ff0000">SAC baseDir dirFormat
+filename-format</font> </dt>
+          <dd>Save synthetic traces in SAC-format files. The full
+pathname for each SAC file will be made up of base directory, formatted
+directory, and formatted filename plus a descriptive ending; all
+concatenated together with appropriate path separators. The endings are
+"-acc", "-vel", "-disp", "-psa03", "-psa10" and "-psa30" for the
+appropriate traces.
+            <dl>
+              <dt><font color="#ff0000">baseDir</font> </dt>
+              <dd>Specifies a fixed directory name. This can be an
+absolute directory path or a path relative to the current directory. It
+can contain one or more parts with pathname separators. This all
+components of this path (except possibly the last) must exist before
+gmew is started. </dd>
+              <dt><font color="#ff0000">dirFormat</font> </dt>
+              <dd>Gives a formattted subdirectory name; the format
+string is that used for the Unix <b>date</b> command applied to the
+event origin time, with the addition of `%i' to indicate the event ID.
+Be careful with this; some formats produce output not compatible with
+directory names. The directory name derived from <b>dirFormat</b> must
+not contain any path separators. Suitable format strings include:
+                <dl>
+                  <dt><font color="#ff0000">%C</font> </dt>
+                  <dd>Century number (the year divided by 100 and
+truncated to an integer as a decimal number [1,99]); single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%d</font> </dt>
+                  <dd>Day of month [1,31]; single digits are preceded
+by 0. </dd>
+                  <dt><font color="#ff0000">%h</font> </dt>
+                  <dd>Locale's abbreviated month name. </dd>
+                  <dt><font color="#ff0000">%H</font> </dt>
+                  <dd>Hour (24-hour clock) [0,23]; single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%i</font> </dt>
+                  <dd>The Earthworm event ID. Currently this event ID
+can only be read from a hyp2000 archive message. </dd>
+                  <dt><font color="#ff0000">%j</font> </dt>
+                  <dd>Day number of year [1,366]; single digits are
+preceded by 0. </dd>
+                  <dt><font color="#ff0000">%m</font> </dt>
+                  <dd>Month number [1,12]; single digits are preceded
+by 0. </dd>
+                  <dt><font color="#ff0000">%M</font> </dt>
+                  <dd>Minute [00,59]; leading zero is permitted but not
+required. </dd>
+                  <dt><font color="#ff0000">%R</font> </dt>
+                  <dd>Time as %H:%M </dd>
+                  <dt><font color="#ff0000">%S</font> </dt>
+                  <dd>Seconds [00,61] </dd>
+                  <dt><font color="#ff0000">%T</font> </dt>
+                  <dd>Time as %H:%M:%S </dd>
+                  <dt><font color="#ff0000">%u</font> </dt>
+                  <dd>Weekday as a decimal number [1,7], with 1
+representing Sunday. </dd>
+                  <dt><font color="#ff0000">%U</font> </dt>
+                  <dd>Week number of year as a decimal number [00,53],
+with Sunday as the first day of week 1. </dd>
+                  <dt><font color="#ff0000">%V</font> </dt>
+                  <dd>Week number of the year as a decimal number
+[01,53], with Monday as the first day of the week. If the week
+containing 1 January has four or more days in the new year, then it is
+considered week 1; otherwise, it is week 53 of the previous year, and
+the next week is week 1. </dd>
+                  <dt><font color="#ff0000">%w</font> </dt>
+                  <dd>Weekday as a decimal number [0,6], with 0
+representing Sunday. </dd>
+                  <dt><font color="#ff0000">%W</font> </dt>
+                  <dd>Week number of year as a decimal number [00,53],
+with Monday as the first day of week 1. </dd>
+                  <dt><font color="#ff0000">%y</font> </dt>
+                  <dd>Year within century [00,99]. </dd>
+                  <dt><font color="#ff0000">%Y</font> </dt>
+                  <dd>Year, including the century (for example 1993), </dd>
+                </dl>
+              </dd>
+              <dt><font color="#ff0000">filename-format </font> </dt>
+              <dd>Gives the formatted file name using % to introduce
+one of the format specifiers "sScCnNLl%" `s' is the station name in
+lower case; `S' is upper case. Likewise for component and network
+names; `%' stands for itself. All other characters are taken literally.
+This works in the same way as the format string for response files. </dd>
+            </dl>
+Gmew adds the following special fields to SAC file headers. The peak
+amplitude is written to user0; in t0 is the time, relitive to event
+origin, of the peak amplitude. In kuser0 and kt0 are the labels for
+these user values. For the acceleration, the labels would be "Acc_max"
+and "Acc_amp", respectively. Other traces have similar labels. The SAC
+header variable kinst has the units for the trace, such as "cm/sec^2"
+for acceleration. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  command is absent (no traces are saved)<br>Example: SAC /earthworm/SAC/GM %Y%j%i %S.%C.%N<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="SCNpar"></a>SCNLpar <font color="#ff0000">STA COMP
+NET LOC special-parameters</font></td>
+      <td>Auxilliary Data
+Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set certain parameters (described below) for specific
+traces identified by their SCNL: <b>STA</b>, <b>COMP</b>, and <b>NET</b>
+(station/component/network name.) No wildcards are permitted here; each
+SCNL
+must be given explicitly, but only if special values are needed for
+that
+SCNL. Often, the default values will be adequate for most SCNLs. If
+there are
+only a few of these commands, they may be listed in the configuration
+file. But if a large number of them are needed, it may be more
+convenient to
+place them in a separate file. Then that file will get included with
+the
+configuration file by the syntax:
+        <blockquote>@scnl_param_file</blockquote>
+Note that the format of this files is identical to the one used by the
+localmag module.
+Each SCNLpar command must include the STA, COMP, NET, LOC names
+followed by the
+following seven decimal values. Use spaces between all elevent items in
+each SCNLpar
+line. All values must be present; no default values are used for an SCN
+if it
+has an SCNpar line. The seven decimal values are:
+        <dl>
+          <dt><font color="#ff0000">magnitude correction</font> </dt>
+          <dd>This value is ignored by gmew; it is used only by the
+localmag module. </dd>
+          <dt><font color="#ff0000">taper low-freq off</font> </dt>
+          <dd>The frequency at the low end of the passband below which
+the cosine taper has zero value. This taper is applied to the frequency
+response function before it is convolved with the trace. Frequency
+units are Hz. </dd>
+          <dt><font color="#ff0000">taper low-freq on</font> </dt>
+          <dd>The frequency at the low end of the passband above which
+the cosine taper has a value of 1. The low-end taper can be eliminated
+by setting the off and on values to the same value. The default low-end
+taper is turned off, passing all low frequencies. </dd>
+          <dt><font color="#ff0000">taper high-freq on</font> </dt>
+          <dd>The frequency at the high end of the passband below which
+the cosine taper has a value of 1. </dd>
+          <dt><font color="#ff0000">taper high-freq off</font> </dt>
+          <dd>The frequency at the high end of the passband above which
+the cosine taper has a value of 0. The high-end taper can be eliminated
+by setting the off and on values to the same value. The default
+high-end taper has an off value equal to the trace Nyquist frequency
+(one half the sample rate.) The default on frequency is 90% of the
+Nyquist frequency. </dd>
+          <dt><font color="#ff0000">clipping limit</font> </dt>
+          <dd>The value, in digital counts, beyond which in absolute
+value the unprocessed trace should be considered clipped. If the trace
+is declared clipped by gmew, it will synthesized into ground motion
+traces, but it will not have amplitude picks performed. The default
+clipping limit is 7.55e+06 counts, 90% of 2^23, the limit of a 24-bit
+digitizer. </dd>
+          <dt><font color="#ff0000">taper time interval</font> </dt>
+          <dd>The number of seconds for which a cosine taper will be
+applied to both ends of the input time series before it is transformed
+to the frequency domain. This taper will shorten the useful length of
+the time series from the length specifed by the <a href="#traceTimes">traceTimes</a>
+command by twice this taper interval. The default value is 0 - no taper
+is applied to time series. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: as described above<br>Example: SCNLpar SEA EHE UW -- 0.2   0.1 0.1 20 25   2.9e4 1.0<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="searchWindow"></a>searchWindow <font color="#ff0000">A
+B C D</font></td>
+      <td>Amplitude Controls</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the time interval in which gmew will search
+for peak amplitudes in the synthetic traces. Together with the P- and
+S-phase arrival times estimated from the <a href="#velocity">velocity
+model</a>, these four parameters set the start and end times of this
+search
+window. The four parameters are:
+        <dl>
+          <dt><font color="#ff0000">A</font>: </dt>
+          <dd>The multiple of the estimated interval P - S to start the
+search before estimated S arrival. Use a negative value to start after
+the S arrival. </dd>
+          <dt><font color="#ff0000">B</font>: </dt>
+          <dd>The minimum number of seconds before estimated S arrival
+to start the peak search. </dd>
+          <dt><font color="#ff0000">C</font>: </dt>
+          <dd>The multiple of the estimated interval P - S to end the
+search after the estimated S arrival. </dd>
+          <dt><font color="#ff0000">D</font>: </dt>
+          <dd>The minimum number of seconds after estimated S arrival
+to start the peak search. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: searchWindow 0.0 2.0 0.0 30.0 # Search window runs from 2 seconds<br>        before to 30 seconds after the estimated S arrival, independent of<br>        the P - S interval.<br>Example: searchWindow 0.1 2.0 2.0 15.0 # some random values<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="staLoc"></a>staLoc <font color="#ff0000">LOC
+[params]</font></td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Tells gmew where to find station location
+information. Station locations are used to find the station-epicenter
+distance, which is then used in the estimate of P and S phase arrivals.
+The
+choices for <b>LOC</b> are:
+        <dl>
+          <dt><font color="#ff0000">File loc-file</font>: </dt>
+          <dd>Get station locations from a hyp2000-format station
+location file named <b>loc-file</b>. This file must be in text format,
+not the binary-format file sometimes used by hyp2000. If the file is
+not located in the current directory, partial or full path information
+must be included in <b>loc-file</b>. </dd>
+          <dt><font color="#ff0000">EWDB</font> </dt>
+          <dd>Query the Earthworm database for station locations. Not
+currently implemented. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none; this command is required<br>Example: staLoc File /earthworm/run/params/hypoinverse/stas/uw_sta.hinv<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="TempDir"></a>TempDir <font color="#ff0000">temp-dir</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the temporary directory for writing an XML file
+(see <a href="#XMLDir">XMLDir</a>). This command is ignored unless an
+XMLDir
+command is given, in which case TempDIr is required.
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: none; this command is required if XMLDir is given<br>Example: TempDir Shake/temp<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="traceSource"></a>tracesource <font color="#ff0000">SOURCE
+[params]</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Directs gmew to obtain trace data from <b>SOURCE</b>. Choices are:
+        <dl>
+          <dt><font color="#ff0000">waveServer server-list</font> </dt>
+          <dd>Obtain trace data from the wave servers in <b>server-list</b>,
+a space delimited list of one or more <b>server:port</b> pairs. The <b>server</b>
+can be an IP address or a hostname for the wave server. The <b>port</b>
+is the port number used by that wave server. </dd>
+          <dt><font color="#ff0000">waveServer File server-file</font> </dt>
+          <dd>Command line: <b>-tv</b>Obtain trace data from the wave
+servers listed in the file named <b>server-file</b>. This file
+consists of lines listing <b>server</b> and <b>port</b>, one server
+to each line. The two entries on a line may be separated by space or
+colon.
+            <p>Gmew will connect to one server at a time. For each
+connection, it will obtain the server's current menu, match SCNLs on
+the menu against the selection list from <a href="#Add">Add</a> and <a
+ href="#Del">Del</a> commands, obtain and process the trace data
+segment for each of the selected SCNLs. The time interval for each
+trace is established by the <a href="" #tracetimes="">traceTimes</a>
+command. After all the selected SCNLs for one wave server have been
+processed, the connection to that server will be closed and the next
+server will be accessed. </p>
+          </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  waveServer with list of servers read from the file $EW_PARAMS/servers<br>Example: traceSource waveServer 123.45.67.89:16021 123.45.67.89:16022<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="extraDelay"></a>extraDelay <font color="#ff0000"> DelaySecs</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+This is the delay in seconds to wait after receiving an Event message to hit the waveServers for traces.
+        <dl>
+          <dt><font color="#ff0000">DelaySecs</font>: </dt>
+          <dd>is the number of seconds to sleep. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: extraDelay 0<br>Example: extraDelay 20<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="traceTimes"></a>traceTimes <font color="#ff0000">START
+END</font></td>
+      <td>Event and Trace Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Specify the start and end times of trace data to be used
+from any trace source.
+        <dl>
+          <dt><font color="#ff0000">START</font>: </dt>
+          <dd>is the number of seconds before estimated P arrival to
+start the trace. </dd>
+          <dt><font color="#ff0000">END</font>: </dt>
+          <dd>is the number of seconds after estimated S arrival to end
+the trace. </dd>
+        </dl>
+      </ul>
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: traceTimes 5.0 60.0<br>Example: traceTimes 10.0 40.0<br><hr></pre>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="velocity"></a>velocity model</td>
+      <td>Auxilliary Data Sources</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Read in the one-dimensional velocity model to be used to
+estimate P and S phase arrival times. This is done using the syntax:
+        <blockquote>@velocity_file</blockquote>
+Typically this will be the same file
+as used for binder_ew. Gmew will always look for this file in the
+current
+directory, so appropriate path information must be included if the file
+is
+located elsewhere. Ask Earthworm Central for documentation of this
+long-used
+file format.
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default:  none<br>Example: @/earthworm/run/params/uw_velovity.d<br></pre>
+      </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+    <tr>
+      <td><a name="watchForAlarm"></a>watchForAlarm <font color="#ff0000">duration</font>
+      </td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Read ACTIVATE_MODULE messages tagged for gmew from the input ring, and process
+similarly to a HYPOARC2000 message, but instead of computing the window, use
+the timestamp included in the message as the start of the window and
+<font color="#ff0000">duration</font> as its length in seconds.
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: ignore ACTIVATE_MODULE messages<br>Example: watchForAlarm 10</pre>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+
+    <tr>
+      <td><a name="wsTimeout"></a>wsTimeout <font color="#ff0000">M</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Set the timeout for wave server connections to <b>M</b>
+milliseconds. If no response is heard from the wave server after this
+time,
+gmew will assume this wave server is dead and proceed to the next one.
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: 5000 milliseconds<br>Example: wsTimeout 10000<br><hr></pre>
+      </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><a name="XMLDir"></a>XMLDir <font color="#ff0000">xml-dir</font></td>
+      <td>Miscellaneous Commands</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <ul>
+Gmew can optionally write an XML file for an event. This
+file will be in the format used by ShakeMap (version 2). While the file
+is
+being written, it will reside in <a href="#TempDir">temp-dir</a>. When
+the file
+is completed, it will be moved to <font color="#ff0000">xml-dir</font>.
+The
+file's name will be "_dig_dat.xml" with the Event ID prepended. By
+writing to
+a temporary directory and moving the completed file to xml-dir, gmew
+will
+ensure that only a complete XML file will be in xml-dir. (On Unix, you
+must
+ensure that temp-dir and xml-dir are on the same filesystem; otherwise
+the
+file movement will not be an atomic operation.)
+        <pre style="margin-left: 0.39in; margin-right: 0.39in;">Default: XMLDir command not given; no XML file is written<br>Example: XMLDir  Shake/input<br><hr></pre>
+      </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<h2><a name="sample_config"></a><br>
+3. Sample Configuration File </h2>
+<pre># Configuration file for gmew<br># Some of these parameters can be overridden on the command-line;<br># some of them only make sense on the command-line.<br>#<br># Required Commands: <br># The following five commands are always required by gmew.<br># Other commands below may be required when certain options are given.<br>#<br># Earthworm Transport commands<br># RingInName <ring>: specify the name of the earthworm transport ring from<br>#  which to read TYPE_HYP2000ARC messages for event notification.<br><br>RingInName HYPO_RING<br><br># RingOutName <ring>: specify the name of the earthworm transport ring from<br>#  which to write Magnitude, Heartbeat and Error messages. This may be<br>#  the same is the RingInName if desired.<br><br>RingOutName GM_RING<br><br># MyModId &lt;module-id&gt;: specify the module ID for gmew<br> MyModId MOD_GMEW<br><br># HeartBeatInterval int: How often gmew should beat its heart.<br><br>HeartBeatInterval 30<br><br># getEventsFrom  INST_ID MOD_ID<br># Specify the installation ID and module ID names from which to get<br># hypoinverse archive messages to read event data. These names may be<br># selected from earthworm.d and earthworm_global.d. No default values.<br>Use as many of these commands as necessary.<br><br>getEventsFrom INST_UW MOD_WILDCARD<br>getEventsFrom INST_MENLO MOD_WILDCARD<br><br><br># maxSta number<br># The number of stations to be used by gmew must be specified with<br># the maxSta command. This is the number of unique SNs to be used; each<br># SN combination can have any number of components. The maxSta command<br># must come before any "Pri" commands.<br><br>maxSta 100<br><br># maxDist km<br># The maximum epicenter - station distance in kilometers. <br># Stations lying outside this radius will not be used by gmew.<br>#<br>maxDist 600<br><br><br># maxTrace nsamples<br># The maximum number of trace data samples to process from one SCNL.<br># This is the product of the trace length in seconds and the highest <br># expected sample rate. For example, 10 minutes of data at 100 samples per<br># second gives 60000 samples.<br><br>maxTrace 60000<br><br><br># staLoc: station location source<br>#    Choices: File &lt; loc-file&gt; - get station locations from a hyp2000-format<br>#                               file named loc-file<br>#             EWDB - query the EW database for station locations; access info<br>#                    given below.<br><br>staLoc File /earthworm/run/params/hypoinverse/stas/uw_sta.hinv<br><br><br># Regional Velocity model: must be specified as "@vel_model_file". Typically<br>#    this will be the same file as used for binder_ew.<br><br>@uw_velocity.d<br><br><br># traceSource: Where gmew will obtain trace data<br>#    choices are: waveServer <server-list> - raw traces from wave_servers; <br>#                              server-list is either a space separated list<br>#                              of ip-address:port or <br>#                           "File <server-file>"<br>#    default: waveServer with list of servers read from $EW_PARAMS/servers<br><br>traceSource waveServer 123.45.67.89:16021 123.45.67.89:16022<br><br><br># Add STA COMP NET<br># Del STA COMP NET<br># SCNL selection is done by a selection list and a rejection list.<br># The station selection command `Add' specifies the names of <br># STA (station), COMP (component), and NET (network). <br># The wildcard `*' may be used for any or all of STA, COMP, NET.<br># COMP may be given as the first two letters of the component name,<br># to select all direction desgnators are accepted for that component.<br># If no Add commands are given, all SCNLs will be selected.<br># The Del command is used to put SCNLs on the rejection list:<br># for example: "Add * EL UW" followed by "Del LAB EL UW" to include<br># all ELE and ELN components from UW except LAB.ELE.UW and LAB.ELN.UW.<br># List as many Add and Del commands as desired, one to a line<br><br>Add * BH *<br>Add * HH *<br>Add * SL *<br>Add * EL *<br>Del LAB * UW<br><br><br># respSource: Tells gmew where to get response information; <br>#    Choices: EWDB - query the EW databse for pole-zero-gain responses.<br>#             File &lt; dirname*gt; &lt; pz-filename-format&gt; - find response files in the <br>#                            directory dirname. dirname can be <br>#                            a full directory name, or relative to $EW_PARAMS.<br>#                            filename-format is a string similar to printf<br>#                            format: %S, %C, %N are replaced by station, <br>#                            component and network names, respectively,<br>#                            all in upper case. Similarly %s, %c, %n work<br>#                            for lower-case station, component and network.<br>#                            The digraph %% stands for %; all other <br>#                            characters are taken literally.<br>#                            The response file format is that used by SAC.<br># <br>#    default: none; you must specify one of the above choices.<br><br>respSource File responses %S_%C_%N.pz<br><br><br># traceTimes start end<br># The start and end times for traces is set here. <br>#   &lt; start&gt; is the number of seconds before estimated P arrival to start<br>#           the trace.<br>#   &lt;end&gt; is the number of seconds after estimated S arrival to end the trace.<br>#   default: traceTimes 5.0 60.0 # starts trace 5 seconds before estimated P<br>#           arrival and ends trace 60 seconds after estimated S arrival.<br><br>traceTimes 5.0 60.0<br><br><br># searchWindow A B C D<br># The time window for searching for peak amplitudes is set here.<br>#    &lt;A&gt; is the multiple of the estimated interval P - S to start the <br>#        search before estimated S arrival.<br>#    &lt;B&gt; is the minimum number of seconds before estimated S arrival to<br>#        start the peak search.<br>#    &lt;C&gt; is the multiple of the estimated interval P - S to end the<br>#        search after the estimated S arrival.<br>#    &lt;D&gt; is the minimum number of seconds after estimated S arrival to<br>#        start the peak search.<br># default: searchWindow 0.0 2.0 0.0 30.0 # Search window runs from 2 seconds<br>#        before to 30 seconds after the estimated S arrival, independent of<br>#        the P - S interval.<br><br>searchWindow 0.0 2.0 0.0 30.0<br><br>#saveTrace: whether and how to save synthetic ground-motion traces<br>#            If saveTrace command is absent, no traces will be saved.<br>#   Choices: SAC &lt;baseDir&gt; &lt;dirFormat&gt; &lt;filename-format&gt; - <br>#                  save gm traces in SAC-format files. <br>#                baseDir specifies a fixed directory name.<br>#                dirFormat gives a formattted subdirectory name; the<br>#                  format string is that used for the "date" command applied<br>#                  to the event origin time, with the addition of `%i' <br>#                  to indicate the event ID. Be careful with this; some<br>#                  formats produce output not compatible with file names.<br>#                filename-format gives the formatted file name using<br>#                  % to introduce one of the format specifiers "sScCnN%"<br>#                  `s' is the station name in lower case; `S' is upper case<br>#                  Likewise for component and network names; `%' stands for<br>#                  itself. All other characters are taken literally.<br>#<br>#   default: None (no traces are saved.)<br><br><br># XMLDir dirname<br># Optional command to cause ground-motion results to be written to<br>#   a ShakeMap XML file. This directory must already exist.<br>XMLDir Shake/input<br><br># TempDir dirname<br># Temporary directory for writing XML file. If XMLDir is given, TempDir must<br>#   also be given. On Solaris (Unix), these two directories should be on <br>#   the same filesystem. This will ensure that the XML file will be complete<br>#   as soon as it is moved into XMLDir. This directory must already exist.<br>TempDir Shake/temp<br><br># MappingFile filename<br># To provide descriptive names in the shakemap XML file, a mapping file<br>#   may optionally be given. This file contain mappings of SCNL to instrument <br>#   type, SN to long station names, and N to agency names.<br>MappingFile   PNSN.map              <br>                                    <br><br># Debug N<br># There are several different debug features, listed below. <br># You can give one Debug command for each feature you want to turn on, <br># or you can add together the values of desired features and give <br># one Debug command.<br># value   feature<br>#     1   trace and search times and P and S arrival estimates<br>#     2   SCNL selection tests<br>#    16   ws_client debugging<br>#    32   poles. zeros and gain values<br>#    64   trial frequency response functions to STDOUT<br>#   128   full frequency response function to STDOUT<br><br><br># SCNL Parameters: normally this command will be given as "@SCNL_param_file"<br># to cause the separate file "SCNL_param_file" to be processed.<br><br># watchForAlarm S<br># Recognize ACTIVATE_MODULE messages to initiate processing for a window<br># S seconds long<br>#watchForAlarm 30<br><br># AddSpectraResponseAt period<br># Add period to the list being processed<br># The first replaces the default list (0.3, 1.0, 3.0)<br># This does NOT affect what gets written to the ShakeMap XML<br>#AddSpectraResponseAt 2.0<br>#AddSpectraResponseAt 2.5</server-file></server-list></ring></ring></pre>
+  <hr>
+<p style="margin-bottom: 0in;" align="center"><a href="../modules.html">Module
+Index</a> | <a href="../ovr/gmew_ovr.html">gmew Overview</a> </p>
+<p
+ style="border-style: none none double; border-color: -moz-use-text-color -moz-use-text-color rgb(128, 128, 128); border-width: medium medium 1.1pt; padding: 0in;">
+<hr><address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</body>
+</html>

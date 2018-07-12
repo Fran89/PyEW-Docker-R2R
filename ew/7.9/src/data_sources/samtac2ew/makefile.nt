@@ -1,0 +1,44 @@
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+cflags = $(cflags) -D_INTEL
+
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+O = samtac2ew_main.obj getconfig.obj samtac2ew_misc.obj heartbt.obj error_ew_nt.obj scnl_map.obj logo.obj convert.obj terminat.obj samtac2ew_buffer.obj
+J = $L\libew_mt.lib  
+	
+EW_LIBS = $L\libew_mt.lib
+
+TCP_OBJS =  samtac2c_tcp.obj
+
+COM_OBJS = samtac2c_ser_nt.obj
+
+EW_SOCK_LIBS = $L\socket_ew_common.obj $L\socket_ew.obj
+
+#
+# TARGET: Console application
+#
+all: samtac2ew_com.exe samtac2ew_tcp.exe
+#
+
+samtac2ew_com.exe: $O $(COM_OBJS)
+   link $(conlflags) $(ldebug) $(conlibsmt) $(O) $(COM_OBJS) \
+   $(J) -out:$B\samtac2ew_com.exe
+
+samtac2ew_tcp.exe: $O $(TCP_OBJS)
+   link $(conlflags) $(ldebug) $(conlibsmt) $O $(TCP_OBJS) \
+   $J $(EW_SOCK_LIBS) -out:$B\samtac2ew_tcp.exe
+#    
+.c.obj:
+    $(CC) $(GLOBALFLAGS)  $(cflags) $(cdebug) $(cvarsmt) $(tflags) -D_NTSDK -DDEBUG $<
+
+# Clean-up rules
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\samtac2ew*

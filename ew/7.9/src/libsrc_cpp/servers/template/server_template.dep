@@ -1,0 +1,356 @@
+# Microsoft Developer Studio Generated Dependency File, included by server_template.mak
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\getutil.c : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\kom.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\kom.c : \
+	"$(EW_HOME)\$(EW_VERSION)\include\kom.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\logit.c : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\time_ew.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\sleep_ew.c : 
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\socket_ew.c : \
+	"c:\progra~1\micros~1\vc98\Include\basetsd.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\util\socket_ew_common.c : \
+	"c:\progra~1\micros~1\vc98\Include\basetsd.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\time_ew.c : \
+	"$(EW_HOME)\$(EW_VERSION)\include\time_ew.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc\winnt\transport.c : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_environ.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\comfile.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\comfile.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_environ.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\comfile.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\oracleconfigsource.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\oracleconfigsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\passport.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\passport.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\result_status.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\result_status.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.h"\
+	
+
+$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\dbmutableserver.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\dbmutableserver.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\result_status.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_signal.h"\
+	
+
+.\request_template.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	".\request_template.h"\
+	
+
+.\result_template.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	".\result_template.h"\
+
+.\server_template.cpp : \
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\fft99.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\fft_prep.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\rw_strongmotionii.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\swap.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\tlay.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\trace_buf.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transfer.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\ws_clientii.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\c_geo_to_km.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\result_status.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\dbmutableserver.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\oracleconfigsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	"$(SCHEMA_DIR)\src\include\ewdb_ora_api.h"\
+	"$(SCHEMA_DIR)\src\include\internal\ewdb_cli_base.h"\
+	".\request_template.h"\
+	".\result_template.h"\
+	".\server_template.h"\
+	
+
+.\main.cpp : \
+	"c:\progra~1\micros~1\vc98\Include\basetsd.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_complex_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\earthworm_simple_funcs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\platform.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\socket_ew.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\trace_buf.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transfer.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include\transport.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_defs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_socket.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_statuscode.h"\
+	"$(EW_HOME)\$(EW_VERSION)\include_cpp\worm_types.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\serverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\result_status.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableservermessage.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverrequest.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\messaging\mutableserverresult.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\mutableserverbase.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\servers\dbmutableserver.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\comfile.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configsource.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\configurable.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\globalutils.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\logger.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\mutex.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\sockets\socket_exception.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\threadableobject.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\timefuncs.h"\
+	"$(EW_HOME)\$(EW_VERSION)\src\libsrc_cpp\util\worm_exceptions.h"\
+	".\request_template.h"\
+	".\result_template.h"\
+	".\server_template.h"\
+	

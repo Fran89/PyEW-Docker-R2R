@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      naqs2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/naqs2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="naqs2ew.html" title="View naqs2ew">naqs2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/naqs2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/naqs2ew?action=diff&amp;version=4" title="Version 4 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-04-07T05%3A34%3A07-07%3A00&amp;precision=second" title="2012-04-07T05:34:07-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 04/07/12 05:34:07</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="naqs2ew.html#EarthwormModule:naqs2ew">Earthworm Module: naqs2ew</a>
+    <ol>
+      <li>
+        <a href="naqs2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="naqs2ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="naqs2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="naqs2ew.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="naqs2ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="naqs2ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="naqs2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:naqs2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: naqs2ew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Naqs2ew is an interface through which waveform data collected by the Nanometrics data acquisition software, NaqsServer, can be fed into an Earthworm system in near-real-time.
+</p>
+<h2 id="Details">Details</h2>
+<p>
+Naqs2ew is an interface through which waveform data collected by the Nanometrics data acquisition software, NaqsServer, can be fed into an Earthworm system in near-real-time. Naqs2ew is a client of NaqsServer's "Online Data Streams" service which allows client programs to open a socket connection, subscribe to only the data they want, and receive the requested data over the same socket. The "online data streams" protocol and data formats are described in the Nanometrics Reference Manuals. Currently the only NaqsServer packet types that naqs2ew can process are: channel list messages, decompressed data packets, compressed data packets, and error messages. Naqs2ew is not required to run on the same computer as NaqsServer.
+</p>
+<p>
+Naqs2ew is a single-threaded program. After reading its configuration file, allocating working buffers, and attaching to a transport ring, naqs2ew attempts to open a socket connection to NaqsServer, using a timeout of CONNECT_TIMEOUT seconds (currently 5 s). If the connection attempt fails, naqs2ew will attempt to connect every CONNECT_RETRY_DT seconds (currently 10 sec) forever. Naqs2ew will continue beating its own heart while trying to establish a NaqsServer connection.
+</p>
+<p>
+Once it establishs a socket connection with NaqsServer, naqs2ew initiates the "online data streams" protocol. It sends a "connect message," reads and logs the list of available channels, and requests only the channels listed in its own configuration file. If some channels in the configuration file are not available, naqs2ew logs that fact and continues. While the socket connection remains open, naqs2ew reads a complete packet (blocking), converts it to one or more Earthworm TYPE_TRACEBUF messages, and writes the message(s) to the transport ring. Naqs2ew makes no attempt to reorder timeseries packets. It does attempt to produce one-second TYPE_TRACEBUF messages for each channel, buffering any fractional seconds between packets from NaqsServer if necessary. Time tears between packets will cause naqs2ew to produce TYPE_TRACEBUF packets shorter than one-second long. Naqs2ew also logs any error messages it receives from NaqsServer. After each packet is processed, naqs2ew enters its heartbeat function, and issues a heartbeat if its heartbeat timer has expired.
+</p>
+<p>
+If naqs2ew experiences any socket errors or if NaqsServer breaks the connection, naqs2ew closes the socket and issues a TYPE_ERROR message stating the reason the connection was dropped. It then goes back to looping on reconnection attempts. When the connection is reestablished, naqs2ew will issue another TYPE_ERROR message (really an "un-error" message), stating that everything's OK again.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, naqs2ew reads the configuration file named on the command line. As always, the configuraton file contains comments:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!).
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"># naqs2ew config file
+
+MyModuleId      MOD_NAQS2EW
+RingName        WAVE_RING
+HeartBeatInt    30
+
+LogFile         1
+Debug           0
+SocketDebug     0
+
+NaqsServer      192.168.1.1 28000   # IP address and Port of NaqsServer
+MaxSamplePerMsg 200
+
+TimeJumpTolerance 600  # (in seconds) This term is used to catch packets with
+                       # dubious timestamps.  If a time gap is detected in an
+                       # incoming data stream, the new packet's timestamp is
+                       # compared to the system clock.  If it is later than
+                       # the current system time by more than TimeJumpTolerance
+                       # seconds, naqs2ew assumes the packet timestamp is bogus
+                       # (it's in the future) and it ignores the entire packet.
+                       # NOTE: if you use this feature with small tolerances,
+                       # the PC's system clock must be kept pretty close to
+                       # network time!!!
+                       # Set to -1 if you never want to compare packet times
+                       # to the system clock.
+                       # Valid values are -1 or any number &gt;= 0.0
+
+# Set up list of channels you want to receive from NaqsServer using
+# a 'RequestChannel' command for each channel, with these arguments:
+#
+#   sta       station code you want to receive data from (no wildcards).
+#   comp      component (channel) of data you want to receive (no wildcards).
+#   net       2-character network code to label this channel with (no wildcards).
+#             NaqsServer supplies its own station and component codes to its clients,
+#             but not a network code. The sta and comp codes you supply in this file
+#             must match the codes supplied by NaqsServer. The TYPE_TRACEBUF messages
+#             output to the Earthworm system will be labeled with the sta, comp, net
+#             codes listed in this file.
+#
+#   pinno     pin number to assign to this channel (0-32767)
+#
+#   delay     short-term-completion time (in seconds) -1s &lt;= s &lt;= 300s.
+#             When NaqsServer misses packets from the field, it will wait for the
+#             given amount of time for the gap to be filled by re-transmitted
+#             packets before sending data to naqs2ew. Specifying delay=0 will
+#             guarantee that packets are in chronological order, without
+#             waiting for missed data.  Setting delay=-1 will deliver the packets
+#             with no delay, in the order they were received (possibly out of
+#             chronological order).
+#
+#   format    format in which you want to receive the data:
+#              -1   = compressed packets (raw format from HRD)
+#               0   = uncompressed packets, original sample rate.
+#             0 &lt; r = requested output sample rate.  NaqsServer will accomodate.
+#
+#   sendbuf   Buffer flag:
+#               0 = do not send buffered packets for these channels.
+#               1 = send buffered packets for these channels.  This effectively
+#                   moves the start of the data stream several packets into
+#                   the past.
+#             WARNING: if naqs2ew is auto-restarted with sendbuf = 1,
+#               duplicate data could enter the Earthworm system.
+#               Therefore, we strongly recommend setting sendbuf = 0.
+#
+#                 sta   comp  net  pinno  delay(s)   format  sendbuf
+RequestChannel    CSU    VDZ   NC   2001    30         0        0
+RequestChannel    CSU1   VDN   NC   2002    30         0        0
+RequestChannel    CSU1   VDE   NC   2003    30         0        0
+RequestChannel    CSU1   ADZ   NC   2004    30         0        0
+RequestChannel    CSU1   ADN   NC   2005    30         0        0
+RequestChannel    CSU1   ADE   NC   2006    30         0        0
+#
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the configure commands recognized by naqs2ew, grouped by the function they influence. Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Most of the commands are required.
+</p>
+<pre class="wiki">        Earthworm system setup:
+ 		MyModuleId	   	required
+		RingName	   	required
+		HeartbeatInt	   	required
+
+	Waveform acquistion:
+		NaqsServer	   	required
+		MaxSamplePerMsg	   	required
+		RequestChannel		required
+		TimeJumpTolerance   required
+
+	Output Control:
+		LogFile		   	required
+		Debug		   	optional
+		SocketDebug		optional
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>Debug [flag]</strong><br />
+Function: Output Control
+</p>
+<p>
+Optional command to control the amount of logging done by naqs2ew. If flag is zero, debug-level logging is turned off; naqs2ew will do normal logging of start, stop, and error conditions. If flag is non-zero, naqs2ew will also make a line entry for every packet it sends and receives, and it will log the entire contents of every decompressed trace data packet.
+</p>
+<pre class="wiki">Default:  Debug 0
+</pre><p>
+<strong>HeartbeatInt [nsec]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Defines the minimum number of seconds nsec between TYPE_HEARTBEAT messages issued by naqs2ew. The heartbeat is implemented within both the connection-making and the socket-reading loops of naqs2ew.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartbeatInt 30
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Function: Output Control
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written, but messages may go to stderr and/or stdout. If switch is 1, naqs2ew will write to stderr/stdout and to a daily log file(s) called naqs2ewxx.log_ccyymmdd where xx is naqs2ew's module id (set with "MyModuleId" command) and ccyymmdd is the current UTC date (ex: 19960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable). If switch is 2, the log file will be written, but no messages will go to stderr or stdout.
+</p>
+<pre class="wiki">Default:  none
+Example:  LogFile 1
+</pre><p>
+<strong>MaxSamplePerMsg [nsamp]</strong><br />
+Function: Waveform Acquisition
+</p>
+<p>
+Sets the maximum length of each outgoing TYPE_TRACEBUF message to nsamp samples. The number of samples in each TYPE_TRACEBUF message depends on the sample rate of the channel. Normally naqs2ew loads one-second's worth of data into each TYPE_TRACEBUF message. However, if the sample rate for a channel is greater than nsamp samples per second, naqs2ew limits that channel's TYPE_TRACEBUF messages to nsamp samples each. In processing a packet from NaqsServer, naqs2ew will buffer any fractional second of data until it receives the next packet for that channel in an attempt to always send out equal length messages. If naqs2ew detects a time tear between packets from NaqsServer, it may output a message containing less than one second of data.
+</p>
+<pre class="wiki">Default:  none
+Example:  MaxSamplePerMsg 200
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none
+Example:  MyModuleId MOD_NAQS2EW
+</pre><p>
+<strong>NaqsServer [IPaddress port]</strong><br />
+Function: Waveform Acquisition
+</p>
+<p>
+Identifies the IPaddress and port number of the NaqsServer application to receive data from.
+</p>
+<pre class="wiki">Default:  none
+Example:  NaqsServer 192.168.1.1 28000
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells naqs2ew which shared memory region to use for output. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingName WAVE_RING
+</pre><p>
+<strong>RequestChannel [sta comp net pinno delay format sendbuf]</strong><br />
+Function: Waveform Acquisition
+</p>
+<p>
+Use one RequestChannel command for each channel of trace data that you want to request from NaqsServer (no hard-coded limit). Details of the arguments are given below:
+</p>
+<pre class="wiki">  sta       station code you want to receive data from (up to 5 chars, no wildcards).
+
+  comp      component (channel) of data you want to receive (up to 3 chars, no wildcards).
+
+  net       network code to label this channel with (up to 2 chars,no wildcards).
+            NaqsServer supplies its own station and component codes to its clients,
+            but not a network code. The sta and comp codes you supply in this command
+            must match the codes supplied by NaqsServer. The TYPE_TRACEBUF messages
+            output to the Earthworm system will be labeled with the sta, comp, net
+            codes listed in this command.
+
+  pinno     pin number to assign to this channel (0-32767)
+
+  delay     short-term-completion time (in seconds) -1s &lt;= s &lt;= 300s.
+            When NaqsServer misses packets from the field, it will wait for the
+            given amount of time for the gap to be filled by re-transmitted
+            packets before sending data to naqs2ew. Specifying delay = 0 will
+            guarantee that packets are in chronological order, without
+            waiting for missed data.  Setting delay = -1 will deliver the packets
+            with no delay, in the order they were received (possibly out of
+            chronological order).
+
+  format    format in which you want to receive the data from NaqsServer:
+               -1   = compressed packets (raw format from HRD)
+                0   = uncompressed packets, original sample rate.
+              0 &lt; r = requested output sample rate.  NaqsServer will accomodate.
+            Data is reformatted into Earthworm TYPE_TRACEBUF packets before it is
+            written to the transport ring.
+
+  sendbuf   Buffer flag:
+                0 = do not send buffered packets for these channels.
+                1 = send buffered packets for these channels.  This effectively
+                    moves the start of the data stream several packets into
+                    the past.
+            WARNING: if naqs2ew is auto-restarted with sendbuf = 1,
+              duplicate data could enter the Earthworm system (this is generally not
+              a good thing). Therefore, we strongly recommend setting sendbuf = 0.
+</pre><pre class="wiki">Default:  none
+Example:  RequestChannel  CSU1 VDN NC 2002  30  0  0
+</pre><p>
+<strong>SocketDebug [flag]</strong><br />
+Function: Output Control
+</p>
+<p>
+Optional command to control the amount of logging done by the socket library. If flag is zero, debug-level logging is turned off. If flag is non-zero, the socket library write LOTS of debugging info. WARNING: turing socket debugging on generates huge log files.
+</p>
+<pre class="wiki">Default:  SocketDebug 0
+</pre><p>
+<strong>TimeJumpTolerance [flag]</strong><br />
+Function: Waveform Acquisition
+</p>
+<p>
+(in seconds) This term is used to catch packets with dubious timestamps. If a time gap is detected in an incoming data stream, the new packet's timestamp is compared to the system clock. If it is later than the current system time by more than TimeJumpTolerance seconds, naqs2ew assumes the packet timestamp is bogus (it's in the future) and it ignores the entire packet. NOTE: if you use this feature with small tolerances, the PC's system clock must be kept pretty close to network time!!! Set to -1 if you never want to compare packet times to the system clock. Valid values are -1 or any number &gt;= 0.0
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/naqs2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

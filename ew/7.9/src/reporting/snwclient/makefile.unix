@@ -1,0 +1,29 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#                     Make file for snwclient
+#
+LINUX_FLAGS=-lm -lc
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = -g ${GLOBALFLAGS}
+
+B = ${EW_HOME}/${EW_VERSION}/bin
+
+O = snwclient.o socket_lnx.o config.o chdir_sol.o getfname_sol.o \
+    sleep_sol.o log.o tzset_sol.o fopen_sol.o
+
+all: snwclient
+
+snwclient: $O
+	${CC} ${CFLAGS} -o snwclient $O $(SPECIFIC_FLAGS)
+	mv snwclient $B
+
+clean:
+	rm -f *.o
+
+clean_bin:
+	rm -f $B/snwclient 
+ 

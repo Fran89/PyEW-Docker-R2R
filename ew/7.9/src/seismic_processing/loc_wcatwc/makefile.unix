@@ -1,0 +1,35 @@
+
+
+# note that loc_wcatwc is only geared to run in real time, so to allow 
+# old picks to be used set the _ALLOW_TANKPLAYBACK flag on for compilation
+#CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_ -D_ALLOW_TANKPLAYBACK
+
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lrt
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_
+CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_ -D_ALLOW_TANKPLAYBACK
+
+E = loc_wcatwc
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+EBLIBS=-lebpick -lebloc
+
+EBLIBS_LOC=get_hypo.o locquake.o logquake.o dummy.o littoral.o fereg.o display.o
+
+O= loc_wcatwc.o locate.o config.o \
+    $L/libew_mt.a $L/swap.o $L/trheadconv.o
+
+$E: $O
+	$(CC) $(CFLAGS) -o $B/$E $O -L$L $(EBLIBS) $(SPECIFIC_FLAGS)
+
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/$E

@@ -1,0 +1,296 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "Catalog"=.\MODULES\Catalog\Catalog.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Earth"=.\modules\Earth\Earth.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Earthworm"=.\modules\EarthWorm\Earthworm.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Flinn"=.\modules\Flinn\Flinn.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GlassMod"=.\modules\Glass\Glass.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Glint"=.\modules\Glint\Glint.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "GlobalDebug"=.\modules\GlobalDebug\GlobalDebug.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Glock"=.\modules\Glock\Glock.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Grok"=.\modules\Grok\Grok.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Network"=.\modules\Network\Network.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "PDE"=.\modules\PDE\PDE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Residuals"=.\modules\Residuals\Residuals.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Solve"=.\modules\Solve\Solve.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Summary"=.\modules\Summary\Summary.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "glass"=.\APPS\glass\glass.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name GlobalDebug
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "lib"=.\lib\lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

@@ -1,0 +1,28 @@
+
+LINUX_FLAGS=-lm -lpthread -ldl
+SOLARIS_FLAGS=-lm -lposix4
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+BINARIES =  $L/dirops_ew.o $L/sleep_ew.o $L/swap.o $L/libew.a
+
+all:
+	make -f makefile.unix ark2arc pdl2ark
+
+ark2arc: $(BINARIES) ark2arc.o
+	$(CC) $(CFLAGS) -o $B/ark2arc ark2arc.o $(BINARIES) $(SPECIFIC_FLAGS) $L/sqlite3.o
+
+pdl2ark: $(BINARIES) pdl2ark.o
+	$(CC) $(CFLAGS) -o $B/pdl2ark $(BINARIES) pdl2ark.o $(SPECIFIC_FLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/ark2arc*

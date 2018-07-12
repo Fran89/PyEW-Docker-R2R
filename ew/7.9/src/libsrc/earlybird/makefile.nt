@@ -1,0 +1,49 @@
+#
+#                  Nmake File For Utility Routines
+#
+!IF "$(EW_DEBUG)" == "1"
+!ELSE
+NODEBUG=1
+!ENDIF
+
+
+!include <ntwin32.mak>
+
+CFLAGS= -I. $(GLOBALFLAGS) -D_ADD_TRACE2_HEADER_
+
+
+PICKLIB=libebpick.lib
+LOCLIB=libebloc.lib
+
+# loc_wcatwc and pick_wcatwc need these
+EBLIBS= diskrw.obj complex.obj filters.obj get_pick.obj report.obj ReadStationData.obj geotools.obj mags.obj taulib.obj mjstime.obj
+# loc_wcatwc needs these
+EBLIBS_LOC=get_hypo.obj locquake.obj logquake.obj dummy.obj littoral.obj fereg.obj display.obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+OBJS= $(EBLIBS) $(EBLIBS_LOC)
+
+all: $(OBJS) $(PICKLIB) $(LOCLIB) install
+
+$(PICKLIB): $(EBLIBS)
+	link.exe /lib /nologo /out:$(PICKLIB) $(EBLIBS)
+
+$(LOCLIB): $(EBLIBS_LOC)
+	link.exe /lib /nologo /out:$(LOCLIB) $(EBLIBS_LOC)
+
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) /D_INTEL $(cvarsmt) $(tflags) $<
+
+install:
+   copy *.obj $L
+   copy $(PICKLIB) $L
+   copy $(LOCLIB) $L
+
+
+clean:
+	-del *.obj 
+	-del $(PICKLIB) 
+	-del $(LOCLIB)

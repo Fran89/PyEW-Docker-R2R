@@ -1,0 +1,26 @@
+#
+
+LINUX_FLAGS=-lpthread
+SOLARIS_FLAGS=-lnsl -lsocket -lposix4 -lthread
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+BINARIES = import_gen_pasv.o $L/libew_mt.a \
+           $L/socket_ew.o $L/socket_ew_common.o $L/mask_check.o
+          
+
+import_gen_pasv: $(BINARIES)
+	$(CC) $(CFLAGS) -o $B/import_gen_pasv $(BINARIES)  $(MT_FLAG) $(SPECIFIC_FLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/import_gen_pasv*

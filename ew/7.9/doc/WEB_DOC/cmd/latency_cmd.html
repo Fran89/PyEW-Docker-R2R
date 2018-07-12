@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: latency_mon commands</TITLE>
+</HEAD>
+
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+
+0000">
+<CENTER>
+  <H1> <BR>
+    Latency Monitor<br>
+    Configuration File</H1>
+  <I>(last revised June 1, 2006)</I>
+</CENTER>
+<PRE>
+
+
+#
+#                     Latency_mon's Configuration File
+#
+MyModId    MOD_LATENCY_MON     # This instance of latency_mon
+InRing           WAVE_RING     # Input waveform ring
+HeartbeatInt            30     # Heartbeat interval, in seconds
+
+# ATWC-style station files. Specify these, OR the Findwave file below.
+StaFile        "pick_wcatwc.sta" # File containing stations to be displayed
+StaDataFile    "station.dat"   # File with information about stations
+
+# FindWave-style, debug-mode station list. Specify this OR the ATWC files above
+FindWaveFile	"zorch.txt"
+
+# FileRowSize -- number of entries per circular station file
+#                1000 rows apx 24K bytes
+#
+FileRowSize 1000
+
+#
+LogPath "c:\earthworm\run\log\status\" # Path where to put latency information
+NumTracePerScreen       40     # Number of stations to show on visible screen
+                               # (the rest will scroll)
+
+PrinterPath "\\Earlybird3\lq870" # Printer path-PRN, COMx, or \\cpu\printername
+#
+Debug                    0     # If 1, print debugging message</PRE>
+<CENTER>
+  <a href="../modules.html">Module Index</a> | <a href="../ovr/latency_ovr.html">Latency_mon
+  Overview</a>
+</CENTER>
+
+<HR>
+<ADDRESS> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe
+to the Earthworm Google Groups List. </a><BR>
+</ADDRESS>
+</BODY>
+</HTML>

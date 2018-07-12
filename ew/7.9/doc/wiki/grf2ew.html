@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      grf2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/grf2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="grf2ew.html" title="View grf2ew">grf2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/grf2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/grf2ew?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-03-19T17%3A55%3A25-07%3A00&amp;precision=second" title="2012-03-19T17:55:25-07:00 in Timeline">18 months</a> ago</span>
+            <span class="trac-print">Last modified on 03/19/12 17:55:25</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="grf2ew.html#EarthwormModule:grf2ew">Earthworm Module: grf2ew</a>
+    <ol>
+      <li>
+        <a href="grf2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="grf2ew.html#Details">Details</a>
+        <ol>
+          <li>
+            <a href="grf2ew.html#Overview">Overview</a>
+          </li>
+          <li>
+            <a href="grf2ew.html#RunningGRF2EW">Running GRF2EW</a>
+          </li>
+          <li>
+            <a href="grf2ew.html#DrivingGRF2EWwithstartstop">Driving GRF2EW with startstop</a>
+          </li>
+          <li>
+            <a href="grf2ew.html#ConfiguringGRF2EW">Configuring GRF2EW</a>
+          </li>
+          <li>
+            <a href="grf2ew.html#TheServergroup">The 'Server' group</a>
+            <ol>
+              <li>
+                <a href="grf2ew.html#TheEndpointentry">The 'Endpoint' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheReadTimeoutentry">The 'ReadTimeout' entry</a>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="grf2ew.html#TheEarthwormgroup">The 'Earthworm' group</a>
+            <ol>
+              <li>
+                <a href="grf2ew.html#TheRingentry">The 'Ring' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheInstallationIDentry">The 'InstallationID' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheModuleNameentry">The 'ModuleName' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheHeartbeatentry">The 'Heartbeat' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheCorrectRateentry">The 'CorrectRate' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheMinTimeQualityentry">The 'MinTimeQuality' entry</a>
+              </li>
+              <li>
+                <a href="grf2ew.html#TheMessageFormatentry">The 'MessageFormat' entry</a>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="grf2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:grf2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: grf2ew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+NetDas Digitizers Earthworm feed via direct connection to GRF server. (Solaris, Linux, Windows) (new in EW v7.2)
+</p>
+<h2 id="Details">Details</h2>
+<h3 id="Overview">Overview</h3>
+<p>
+GRF2EW is a simple GRF client application that converts GRF data packets to Earthworm TraceBuf or !TraceBuf2 messages and writes them to an Earthworm transport ring. The program also generates heartbeat messages at a user specified interval. The program is controlled primarily through an ASCII configuration file but it also accepts various command line options.
+</p>
+<p>
+GRF2EW requires Earthworm version 6.1 or later and is currently available on Solaris, Linux, and Win32 platforms.
+</p>
+<p>
+GRF2EW has been developed as a component of the GRF Tools Suite, a collection of tools for the routine processing of GRF data. More information about the GRF and the GRF Tools Suite is available at the <a class="ext-link" href="http://banfill.net/grf.html"><span class="icon">​</span>GRF Home Page</a>. Acquisition systems that employ the GRF are available from <a class="ext-link" href="http://www.daqsystems.com/"><span class="icon">​</span>DAQ Systems</a>.
+</p>
+<h3 id="RunningGRF2EW">Running GRF2EW</h3>
+<p>
+GRF2EW is invoked from the command line by typing grf2ew and pressing return. However, most Earthworm users will likely use the startstop program to control operation of the program along with other Earthworm modules. We will cover the configuration of the startstop program below.
+</p>
+<p>
+A simple help screen is available by specifying the -h option:
+</p>
+<pre class="wiki">Usage: grf2ew [-hdc] [-s ip_addr[:port] | -f input_file]
+              [-t seconds] [-r output_ring] [-H seconds]
+              [configuration file]
+
+   -h  Help display.
+   -d  Debug logging.
+   -c  Apply sampling rate corrections (No).
+   -s  IP address and port number to connect to for input data.
+          port number defaults to 3757 if not otherwise specified.
+   -f  File to read for input data.
+   -t  Socket read timeout in seconds. (30)
+   -r  Output ring for TRACE_BUF messages. (WAVE_RING)
+   -H  Heartbeat interval in seconds. (10).
+
+The configuration file argument defaults to './grf2ew.d' if not otherwise specified.
+[] = optional, () = default, | = mutually exclusive.\
+</pre><p>
+All of these command line options are equivalent to their corresponding entries in the configuration file.
+</p>
+<h3 id="DrivingGRF2EWwithstartstop">Driving GRF2EW with startstop</h3>
+<p>
+In order to use the startstop program to drive GRF2EW you will need to create a configuration file (see below) in your Earthworm parameters directory and ensure that the grf2ew.exe executable to the Earthworm bin directory. Typically, the configuration file will be named:
+</p>
+<pre class="wiki">%EW_HOME%\params\grf2ew.d
+</pre><p>
+and the executable:
+</p>
+<pre class="wiki">%EW_HOME%\bin\grf2ew.exe
+</pre><p>
+Edit the startstop_nt.d file and add the grf2ew module. Below is an example fragment of this file that runs the grf2ew, wave_serverV, and: heli_ewII modules:
+</p>
+<pre class="wiki"># startstop.d
+
+nRing               1
+Ring   WAVE_RING 1024
+
+MyModuleId        MOD_STARTSTOP
+HeartbeatInt      15
+MyPriorityClass   Normal
+LogFile           1
+KillDelay         10
+
+Process          "grf2ew grf2ew.d"
+PriorityClass     Normal
+ThreadPriority    Normal
+Display           NoNewConsole
+
+Process          "wave_serverV wave_serverV.d"
+PriorityClass     Normal
+ThreadPriority    Normal
+Display           NoNewConsole
+
+Process          "heli_ewII heli_ewII.d"
+PriorityClass     Normal
+ThreadPriority    Normal
+Display           NoNewConsole
+</pre><p>
+Once things are properly configured, startstop will drive grf2ew along with all other Earthworm modules.
+</p>
+<h3 id="ConfiguringGRF2EW">Configuring GRF2EW</h3>
+<p>
+The configuration file allows you to configure and control all aspects of the programs behavior. This simple ASCII file can be edited using your favorite editor.
+</p>
+<p>
+The name of the configuration is passed as an argument on the command line at program startup. It is an Earthworm convention to give module configuration files an extension of .d and and store them in the params directory. Therefore the default configuration filename is grf2ew.d and it will be searched for in the %EW_HOME%/params directory.
+</p>
+<p>
+The configuration file is made up of keywords followed by an entry. Some keywords define groups of entries and curly braces {} are used to delimit these groups. White space characters and/or commas separate keywords and entries. Comments may appear anywhere in the file and always begin with a pound sign '#'.
+</p>
+<p>
+The file is made of two basic groups of entries:
+</p>
+<ul><li><strong>Server</strong> - This group specifies the server that GRF2EW will connect to as a client.
+</li><li><strong>Earthworm</strong> - This group defines various Earthworm parameters.
+</li></ul><p>
+Throughout the example configuration file, the default values for each entry are show in end-of-line comments inside parentheses.
+</p>
+<h3 id="TheServergroup">The 'Server' group</h3>
+<p>
+The server group defines the source server that the program will connect to. This group contains two keywords:
+</p>
+<pre class="wiki"># Copyright (c) 2000-2007 - DAQ Systems, LLC - All rights reserved.
+# Configuration file for grf2ew version 1.3.8 or later
+# Defaults for each entry are shown in ()
+
+# The logging group is now deprecated as logging in now performed 
+# using the Earthworm logging facility.
+
+# GRF server settings...
+Server {
+    Endpoint          192.168.1.5       # GRF server endpoint to connect to
+    ReadTimeout       10                # Socket read timeout in seconds (10)
+}
+</pre><h4 id="TheEndpointentry">The 'Endpoint' entry</h4>
+<p>
+This entry is used to specify an upstream server endpoint that will be connected to as a client. The program will maintain this connection for the life of the program.
+</p>
+<p>
+An endpoint may be specified as an IP number in dotted decimal form or as a domain name. The port number may be specified by appending a colon (:) followed by the decimal port number to the address. If no port is specified, the default port (3757) is used. For example, '192.168.1.1' is equivalent to '192.168.1.1:3757'.
+</p>
+<h4 id="TheReadTimeoutentry">The 'ReadTimeout' entry</h4>
+<p>
+This entry is used to specify the timeout value in seconds for upstream client socket connections. If the network connection to the server is very slow or high latency, you may need to increase this value. Under normal operating conditions, the default value of 30 seconds should be appropriate.
+</p>
+<h3 id="TheEarthwormgroup">The 'Earthworm' group</h3>
+<p>
+This group is used to specify the parameters of the Earthworm system. It has seven keyword entries:
+</p>
+<pre class="wiki"># Earthworm settings...
+Earthworm {
+    Ring              WAVE_RING         # Destination ring for TRACEBUF messages. (WAVE_RING)
+    ModuleName        MOD_GRF2EW        # Our module name. (MOD_GRF2EW)
+    InstallationID    INST_WILDCARD     # Installation identifier (INST_WILDCARD).  May be entered
+                                        #   as a lookup string or decimal value 0-255.  If the 
+                                        #   environment variable EW_INSTALLATION is defined, its 
+                                        #   contents are used.  This configuration entry 
+                                        #   overrides the environment variable setting.
+    Heartbeat         15                # Heartbeat interval in seconds. (10)
+    CorrectRate       No                # Apply sampling rate corrections?  Yes or (No).
+    MinTimeQuality    0                 # Drop data packets with time quality less than this value. 
+                                        #   0=Unknown, 1=Bad, (2)=Poor, 3= Good, 4=Very good.
+    MessageFormat     TRACE_BUF2        # Output message format: TRACE_BUF or TRACE_BUF2.
+}
+</pre><h4 id="TheRingentry">The 'Ring' entry</h4>
+<p>
+This entry is used to specify the Earthworm ring that GRF2EW will attach to and write TraceBuf or !TraceBuf2 messages. The startstop program will create this ring as specified in your startstop.d configuration file.
+</p>
+<p>
+GRF names are copied to Earthworm SCN names in the output TraceBuf or !TraceBuf2 messages. Note that the station name is limited to seven characters in TraceBuf messages so you should carefully choose GRF station names to avoid truncation in the conversion process.
+</p>
+<h4 id="TheInstallationIDentry">The 'InstallationID' entry</h4>
+<p>
+The installation identifier may be specified as either a string that will be looked up in the earthworm_global.d file, or an unsigned integer value in the range 0-255. This entry defaults to 'INST_WILD', which resolves to 0.
+</p>
+<p>
+At program startup, installation identifier is set to the default value. The environment is then searched for a variable named 'EW_INSTALLATION' and if found, the installation identifier is set to its value. If the 'InstallationID' entry is then found in the configuration file, the installation identifier is set to its value overriding the environment variable setting.
+</p>
+<h4 id="TheModuleNameentry">The 'ModuleName' entry</h4>
+<p>
+This the Earthworm module name used to identify the GRF2EW program. This module name must be defined in your earthworm.d file.
+</p>
+<h4 id="TheHeartbeatentry">The 'Heartbeat' entry</h4>
+<p>
+This entry is used to specify the interval in seconds at which the GRF2EW program will generate heartbeat messages to the output ring.
+</p>
+<h4 id="TheCorrectRateentry">The 'CorrectRate' entry</h4>
+<p>
+Use this entry to specifiy whether GRF sampling rate corrections should be applied as messages are created.
+</p>
+<h4 id="TheMinTimeQualityentry">The 'MinTimeQuality' entry</h4>
+<p>
+Use this entry to specify the minimum acceptable GRF time quality. If data are encountered with a time quality less than the specified value, those data are not converted and sent to the output ring.
+</p>
+<h4 id="TheMessageFormatentry">The 'MessageFormat' entry</h4>
+<p>
+Use this entry to specify the output message format. !TraceBuf2 messages will contain the default location code ('--').
+</p>
+<h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/grf2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080" BGCOLOR="#fadfaf">
+
+<B><I><FONT FACE="Arial"><P ALIGN="CENTER">SENDFILE, GETFILE, GETFILE_EW, AND MAKEHBFILE</P>
+<P ALIGN="CENTER">OVERVIEW</P>
+</B></I></FONT><FONT FACE="Courier New" SIZE=2><P ALIGN="CENTER">April 19, 2002</P>
+<P>&nbsp;</P>
+<B><P>INTRODUCTION</P>
+</B><P>The <I>sendfile</I>, <I>getfile</I>, <I>getfile_ew</I>, and <I>makehbfile</I> programs are used to transfer files between computers running Windows NT and/or Sun Solaris. The programs run continuously, so they are appropriate for real-time applications.</P>
+<P>The <I>sendfile</I> program gets files from a "queue directory", transmits the files via a socket connection, and deletes the files from the queue directory. The <I>getfile</I> program receives data files from <I>sendfile</I> via a socket connection and saves them in specified directories. The <I>makehbfile</I> program periodically places a "heartbeat file" in the queue directory used by <I>sendfile</I>.</P>
+<P>If the network connection between computers is down, for any reason, files will accumulate in <I>sendfile</I>'s queue directory until the network comes back up. Then, all files will be sent immediately.</P>
+<P>One <I>getfile</I> process can accept files from any number of <I>sendfile</I> processes running on different computers.</P>
+<P>NOTE: <I>Getfile, sendfile</I>, and <I>makehbfile</I> are standalone programs which were developed by Will Kohler at USGS, Menlo Park. <I>Getfile_ew</I> took the getfile program and enhanced it to optionally run as an Earthworm module.</P>
+<P>The standalone programs can be found as a zip in on the Earthworm ftp site in the 'contributed_software' directory. <I>Getfile_ew</I> is part of the Earthworm release.</P>
+<P>WARNING: The <I>sendfile</I> and <I>getfile</I> programs do no data "translation". Ifbinary files are transferred, the data format and byte-order of the file may be incompatible with the receiving computer.</P>
+</FONT><FONT FACE="Courier New"><P>&nbsp;</P>
+
+</FONT><B><FONT FACE="Courier New" SIZE=2><P>INSTALLATION and STARTUP of STANDALONE PROGRAMS</P></B>
+</B>
+
+<P>The zip distribution contains Windows and Solaris executable files for each program. Windows executable files are named &lt;progname&gt;.exe, and Solaris executable files are named &lt;progname&gt;. To install the programs, simply copy the executable files to any directory, which is in the user's search path. </P>
+<P>The programs can also be run by typing the full path name. The name of the program configuration file is specified on the command line, eg:</P>
+<P>sendfile sendfile.d or getfile getfile.d</P>
+<P>On Solaris, the programs can be run in a window, or they can be started automatically at boot time. On Windows NT, the executable (or a shortcut to the executable) can be placed in the user's startup directory. See Windows documentation for details.</P>
+<P>&nbsp;</P>
+<B><P>COMPILING THE PROGRAMS of STANDALONE PROGRAMS</P>
+</B>
+<P>If it's necessary to recompile a program, change the working directory to the program distribution directory. On a Windows NT system, type:</P>
+<P>nmake /f makefile.win</P>
+<P>On a Solaris system, type:</P>
+<P>make -f makefile.sol</P>
+<P>The programs were compiled using Microsoft Visual C++ 6.0 on Windows NT, and Sun C 4.2 on Solaris. All user functions are included in the distribution directories.</P>
+<P>&nbsp;</P>
+<B><P>SENDFILE NOTES</P>
+</B><P>The <I>sendfile</I> program requires a configuration file, typically named sendfile.d. A sample configuration file is included in the distribution directory and is shown below. Any line which begins with the # sign is interpreted as a comment, so feel free to add your own comment lines.</P>
+<P>The output (queue) and log directories must exist before running the program. They should be created manually using the mkdir command (or the equivalent windows/file manager operation). In Solaris, the user must have write permission for these directories.</P>
+<P>The TimeZone parameter is used only for time stamping entries in the log file.</P>
+<P>#</P>
+<P># sendfile.d - Configuration file for the sendfile program</P>
+<P>#</P>
+<P># ServerIP = IP address of computer running getfile</P>
+<P># ServerPort = Well known port of getfile program</P>
+<P># TimeOut = Send/receive will time out after TimeOut seconds.</P>
+<P># RetryInterval = If an error occurs, retry after this many seconds</P>
+<P># OutDir = Path of directory containing files to send to getfile</P>
+<P># LogFile = If 0, don't log to screen or disk.</P>
+<P># If 1, log to screen only.</P>
+<P># If 2, log to disk only.</P>
+<P># If 3, log to screen and disk.</P>
+<P># TimeZone = Timezone of computer system clock (ignored in Solaris)</P>
+<P># LogFileName = Full path name of log files. The current date will</P>
+<P># be appended to log file names.</P>
+<P>#</P>
+<P>-ServerIP 130.118.43.31</P>
+<P>-ServerPort 3456</P>
+<P>-TimeOut 15</P>
+<P>-RetryInterval 60</P>
+<P>-LogFile 3</P>
+<P>-TimeZone GMT</P>
+<P># Solaris</P>
+<P># -------</P>
+<P>-OutDir /home/earthworm/outdir</P>
+<P>-LogFileName /home/earthworm/run/log/sendfile.log</P>
+<P># Windows</P>
+<P># -------</P>
+<P>#-OutDir c:\earthworm\outdir</P>
+<P>#-LogFileName c:\earthworm\run\log\sendfile.log</P>
+<P>After the <I>sendfile</I> program is invoked, it patiently waits for files to appear in output queue directory. When it detects a file, it opens a socket connection to <I>getfile</I>, sends the file, and then deletes the file from the queue directory.</P>
+<P>Under Windows NT, if a file is copied or moved to the queue directory using the "copy" or "move" command (recommended), <I>sendfile</I> will wait until the file is completely transferred to the queue directory before it is sent to <I>getfile</I>. This prevents a partial file from being sent. The Windows version also uses the _fsopen() system call which provides file locking. <I>Sendfile</I> waits until all other processes are done with a file before accessing it.</P>
+<P>The Solaris version of <I>sendfile</I> works somewhat differently. If a file is cp'd to the queue directory, it's possible that <I>sendfile</I> might not transfer the whole file. So, I don't recommend using the cp command for this purpose. The preferred technique is to create a complete file in another directory in same disk partition as the queue directory. Then create a hard link to the queue directory using the command:</P>
+<P>ln &lt;file&gt; &lt;queue directory)</P>
+<P>After the file has been transferred by <I>sendfile</I>, <I>sendfile</I> will remove the link, which leaves the original file intact.</P>
+<P>An alternative is to create the file on another directory on the same disk partition and move it to the queue directory using the mv command. After the file has been transferred by <I>sendfile, sendfile</I> will erase the file.</P>
+<P>&nbsp;</P>
+<B><P>GETFILE NOTES</P>
+</B><P>The <I>getfile</I> program requires a configuration file, typically named getfile.d. A sample configuration file is included in the distribution directory and is shown below. Any line which begins with the # sign is interpreted as a comment, so feel free to add your own comment lines.</P>
+<P>The input, temporary, and log directories must exist before running the program. They should be created manually using the mkdir command (or the equivalent windows/file manager operation). In Solaris, the user must have write permission for these directories.</P>
+<P>The TimeZone parameter is used only for time stamping entries in the log file.</P>
+<P>SAMPLE CONFIGURATION FILE:</P>
+<P>#</P>
+<P># getfile.d - Configuration file for the getfile program</P>
+<P>#</P>
+<P># ServerIP = IP address of this computer's host adapter</P>
+<P># ServerPort = Well-known port used by this program</P>
+<P># TimeOut = Send/receive will time out after TimeOut seconds.</P>
+<P># LogFile = If 0, don't log to screen or disk.</P>
+<P># If 1, log to screen only.</P>
+<P># If 2, log to disk only.</P>
+<P># If 3, log to screen and disk.</P>
+<P># TimeZone = Timezone of computer system clock (ignored in Solaris)</P>
+<P># LogFileName = Full path name of log files. The current date will</P>
+<P># be appended to log file names.</P>
+<P># TempDir = Full path name of directory to contain temporary files.</P>
+<P># This directory must be on the same partition as the</P>
+<P># client directories.</P>
+<P># Client = IP address of trusted client, followed by the path of</P>
+<P># directory to contain files sent by this client.</P>
+<P># Connections from all other IP addresses are rejected.</P>
+<P># The client directories must be on the same disk</P>
+<P># partition as is TempDir.</P>
+<P>#</P>
+<P>-ServerIP 130.118.43.31</P>
+<P>-ServerPort 3456</P>
+<P>-TimeOut 15</P>
+<P>-LogFile 3</P>
+<P>-TimeZone GMT</P>
+<P>-LogFileName /home/earthworm/run/log/getfile.log</P>
+<P>-TempDir /home/earthworm/indir</P>
+<P>-Client 130.118.43.36 /home/earthworm/indir/billy</P>
+<P>-Client 130.118.43.38 /home/earthworm/indir/campbell</P>
+<P>END OF CONFIGURATION FILE</P>
+<P>The <I>getfile</I> program accepts connections from any number of <I>sendfile</I> processes on remote systems. Only one socket connection at a time is allowed. If a sendfile process wants to connect while the <I>getfile</I> connection is busy, <I>getfile</I> will queue the connection request. <I>Getfile</I> writes data from the socket connection to a directory of temporary files. After the data transfer from the socket is complete, <I>getfile</I> moves the file from the temporary directory to the client directories. This ensures that all files in the client directores are complete.</P>
+<P>&nbsp;</P>
+<B><P>GETFILE_EW NOTES</P>
+</B><I><P>Getfile_ew</I> performs the same functionality as getfile, but can run as an Earthworm module. The configuration file is the same except for the addition of the Earthworm specific commands:</P>
+<P>#</P>
+<P># Optional Earthworm Setup</P>
+<P># If present, this module will attach to the OutRing and</P>
+<P># beat its heart as prescribed. Otherwise, the module</P>
+<P># works as a standalone program</P>
+<P>#</P>
+<P>MyModuleId MOD_ARC2TRIG # module id for this instance of arc2trig</P>
+<P>OutRingName HYPO_RING # shared memory ring for output</P>
+<P>EwLogSwitch 1 # 0 to turn off disk log file; 1 to turn it on</P>
+<P># 2 to log to module log but not to stderr/stdout</P>
+<P>HeartBeatInterval 30 # seconds between heartbeats</P>
+<P ALIGN="CENTER">&nbsp;</P>
+<B><P>MAKEHBFILE NOTES</P>
+</B><P>The <I>makehbfile</I> program makes heartbeat files and places them in a specified directory. The output directory should be the same as the <I>sendfile</I> queue directory, and it must exist before running <I>makehbfile</I>.</P>
+<P>The <I>makehbfile</I> program requires a configuration file, typically named makehbfile.d. A sample configuration file is included in the distribution directory and is shown below. Any line which begins with the # sign is interpreted as a comment, so feel free to add your own comment lines.</P>
+<P>SAMPLE CONFIGURATION FILE:</P>
+<P>#</P>
+<P># makehbfile.d - Configuration file for the makehbfile program</P>
+<P>#</P>
+<P># Path = Name of directory to contain heartbeat files.</P>
+<P># HbName = Name of the heartbeat file (without path)</P>
+<P># Interval = Create a heartbeat file every "Interval" seconds</P>
+<P>#</P>
+<P>-HbName hb.hollyhock</P>
+<P>-Interval 60</P>
+<P># Solaris</P>
+<P>-Path /home/earthworm/outdir</P>
+<P># Windows</P>
+<P>#-Path c:\earthworm\outdir</P>
+<P>END OF CONFIGURATION FILE</P>
+<P>All heartbeat files will be created with the same name, as specified in the <I>makehbfile</I> configuration file. If a heartbeat file already exists in the output directory, it will be overwritten by the most recent heartbeat file.</P>
+<P>All heartbeat files contain a sequence of ASCII characters representing the computer system time, in seconds since midnight, Jan 1, 1970.</P>
+<P>&nbsp;</P>
+<P>Please direct questions and bug reports to:</P>
+<P>Will Kohler</P>
+<P>U.S. Geological Survey</P>
+<P>Mail Stop 977</P>
+<P>345 Middlefield Rd</P>
+<P>Menlo Park, CA 94025</P>
+<P>phone: (650) 329-4761</P>
+<P>email: <address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></P></FONT></BODY>
+</HTML>

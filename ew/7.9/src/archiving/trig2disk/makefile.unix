@@ -1,0 +1,46 @@
+LINUX_FLAGS=-lpthread -lm ../../../lib/libuw.a
+SOLARIS_FLAGS=-lsocket -lnsl -lposix4 -lthread -lm ../../../lib/libuw.a
+SPECIFIC_FLAGS=$($(PLATFORM)_FLAGS)
+
+CFLAGS = -D_REENTRANT $(GLOBALFLAGS)
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+OBJ = trig2disk.o \
+      CatPsuedoTrig.o \
+      $L/putaway.o \
+      $L/ahputaway.o \
+      $L/sacputaway.o \
+      $L/gseputaway.o \
+      $L/seiputaway.o \
+      $L/seiutils.o \
+      $L/geo_to_km.o \
+      $L/sudsputaway.o \
+      $L/tankputaway.o \
+      $L/mseedputaway.o \
+      $L/uwputaway.o \
+      $L/libmseed.a \
+      $L/wfdiscputaway.o \
+      $L/libew_mt.a \
+      $L/dirops_ew.o \
+      $L/socket_ew.o \
+      $L/socket_ew_common.o \
+      $L/mem_circ_queue.o \
+      $L/parse_trig.o \
+      $L/ws_clientII.o \
+      $L/swap.o 
+
+trig2disk: $(OBJ); \
+	$(CC) $(CFLAGS) -o $(B)/trig2disk $(OBJ) $(SPECIFIC_FLAGS)
+
+lint:
+	lint trig2disk.c CatPsuedoTrig.c $(GLOBALFLAGS)
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/trig2disk*

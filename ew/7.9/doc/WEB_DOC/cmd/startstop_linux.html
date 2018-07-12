@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: Startstop commands (Linux version)</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+
+<CENTER><H1>Earthworm Modules: <BR>Startstop Configuration File Commands<BR>(Linux version)</H1>
+<I>(last revised 8 July 2016, adapted from <a href="startstop_sol.html">Solaris version</a>)</I></CENTER>
+
+Page Index:<BR>
+
+1. <A HREF="#Configuration">Example Configuration File</A><BR>
+
+2.  <A HREF="#function">Functional command listing</A><BR>
+
+3.  <A HREF="#detail">Detailed command description</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+Startstop is a system-specific module; the configuration file described here is for
+the Linux version.  On startup, startstop changes to the directory specified by the EW_PARAMS environment variable.  Then it reads the configuration file
+named <b>startstop_unix.d</b>.  This file sets up all parameters required to run an Earthworm system.  In the configuration file, lines may begin with
+a valid startstop command (listed below) or with a # to denote a comment.  Command names must be typed in the configuration file exactly as shown in this
+document (upper/lower case matters!).
+</P>
+<A NAME="Configuration"></A>
+<H2>1. EXAMPLE startstop_unix.d CONFIGURATION FILE</H2>
+<PRE>
+#
+#       Startstop (Linux Version) Configuration File
+#
+#    &lt;nRing&gt; is the number of transport rings to create.
+#    &lt;Ring&gt; specifies the name of a ring followed by it's size
+#    in kilobytes, eg        Ring    WAVE_RING 1024
+#    The maximum size of a ring depends on your operating system,
+#    amount of physical RAM and configured virtual (paging) memory
+#    available. A good place to start is 1024 kilobytes.
+#    Ring names are listed in file earthworm.d.
+#
+ nRing               3
+ Ring   WAVE_RING 1024
+ Ring   PICK_RING 1024
+ Ring   HYPO_RING 1024
+#
+ MyModuleId    MOD_STARTSTOP  # Module Id for this program
+ HeartbeatInt  50             # Heartbeat interval in seconds
+ MyClassName   TS             # For this program
+ MyPriority     0             # For this program
+ LogFile        1             # 1=write a log file to disk, 0=don't
+ KillDelay      5             # seconds to wait before killing modules on
+                              #  shutdown
+ HardKillDelay  5             # seconds to wait after SIGKILL
+                              #   if absert, no SIGKILL is sent
+# maxStatusLineLen 120         # Uncomment to specify length of lines in status
+ Stderr         None          # Where to send stderr messages: None, Console or File
+#
+#    Class must be RT or TS
+#    RT priorities from 0 to 59
+#    TS priorities le 0
+#
+#    If the command string required to start a process contains
+#    embedded blanks, it must be enclosed in double-quotes.
+#    Processes may be disabled by commenting them out.
+#    To comment out a line, preceed the line by #.
+#    The optional Agent command lists the user and group names under which
+#       the command will be run. Make sure they are valid names!
+#       You cannot use "root" as the Agent user. If an earthworm module
+#       needs to run as root, you should make that module's binary setuid root.
+#
+ Process          "pick_ew pick_ew.d"
+ Class/Priority    TS 0
+ Agent             "eworm" "net"
+#
+# Process          "coaxtoring coaxtoring.d"
+# Class/Priority    RT 10
+#
+# Process          "export_generic export_picks.d"
+# Class/Priority    TS 0
+#
+ Process          "binder_ew binder_ew.d"
+ Class/Priority    TS 0
+ Stderr            File
+#
+#
+ Process          "eqproc eqproc.d"
+ Class/Priority    TS 0
+ Stderr            Console
+#
+ Process          "diskmgr diskmgr.d"
+ Class/Priority    TS 0
+#
+ Process          "pagerfeeder pagerfeeder.d"
+ Class/Priority    TS 0
+#
+ Process          "statmgr statmgr.d"
+ Class/Priority    TS 0
+#
+# Process          "eqalarm_ew eqalarm_ew.d"
+# Class/Priority    TS 0
+#
+ Process          "copystatus WAVE_RING HYPO_RING"
+ Class/Priority    RT 5
+#
+ Process          "copystatus PICK_RING HYPO_RING"
+ Class/Priority    RT 5
+#
+ Process          "menlo_report menlo_report.d"
+ Class/Priority    TS 0
+#
+</PRE>
+
+<A NAME="function"></A>
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Unlike most other Earthworm modules, startstop expects the lines in its
+control file to be in a certain order.  Below are the commands recognized
+by startstop, grouped by the function they influence and listed in
+the order in which they must appear in the control file.  All commands
+are required!
+</P>
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+
+<PRE>	Shared memory setup:
+                <A HREF="#nRing">nRing</A>		   	required
+ 		<A HREF="#Ring">Ring</A>		   	required (nRing)
+
+        Startstop-specific info:
+ 		<A HREF="#MyModuleId">MyModuleId</A>	   	required
+		<A HREF="#HeartbeatInt">HeartbeatInt</A>		required
+		<A HREF="#MyClassName">MyClassName</A>		required
+		<A HREF="#MyPriority">MyPriority</A>		required
+		<A HREF="#LogFile">LogFile</A>		   	required
+		<A HREF="#KillDelay">KillDelay</A>		required
+		<A HREF="#HardKillDelay">HardKillDelay</A>		optional
+		<A HREF="#maxStatusLineLen">maxStatusLineLen</A>	optional
+		<A HREF="#Stderr">Stderr</A>			optional
+
+	Earthworm modules to run:
+		<A HREF="#Process">Process</A>		 	required \
+		<A HREF="#Class/Priority">Class/Priority</A>		required  |  one set
+		<A HREF="#Stderr">Stderr</A>			optional  | per module
+		<A HREF="#Agent">Agent</A>			optional /
+
+</PRE>
+
+<A NAME="detail"></A>
+<H2>3.  DETAILED COMMAND DESCRIPTION</H2>
+<P>
+In the following section, a detailed description of each startstop command
+is given.  Again, the commands are listed in the order that they must appear
+in the configuration file, <b>startstop_unix.d</b>.  Example commands are given after
+each command description.<BR>
+Comment lines in <b>startstop_unix.d</b> begin with a #.
+</P>
+<PRE><B>
+command <font color=red>arg1</font>
+</B></PRE>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="nRing"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>nRing <font color=red>nRing</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the number of shared memory regions (aka transport rings)
+that startstop will create for "public" use by the modules of this
+Earthworm system. <font color=red>nRing</font> should be an integer from 1 to MAX_RING
+(currently defined to be 50).
+<PRE><!-- Default and example go here   -->
+Example:  nRing 3
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Ring"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>Ring <font color=red>name</font> <font color=red>size</font></B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the <font color=red>name</font> and <font color=red>size</font>, in kilobytes, of one transport ring.
+There must be exactly <font color=red>nRing</font> "Ring" commands following the "nRing"
+command in the <b>startstop_unix.d</b>.  <font color=red>name</font> is a character string (up to
+19 characters long, valid strings are listed in earthworm.d) that
+relates (in <b>earthworm.d</b>) to a unique number for the key to the shared
+memory region.  <font color=red>size</font> should be an integer between 1 and 1024 (the
+default maximum size).  When deciding how large to make
+a memory region, realize that the transport layer uses a portion of
+the memory region for its own bookkeeping.  The region size is NOT
+required to be an even multiple of the size of the messages it will
+contain.  However, suppose you want the region to be exactly large
+enough to store NUM messages of size MSGSIZE.  To include space for
+transport bookkeeping too, the region size (in bytes) should be:
+<P>
+sizeof(SHM_HEAD) + NUM * ( sizeof(TPORT_HEAD) + MSGSIZE )
+</P>
+where SHM_HEAD and TPORT_HEAD are structures defined in <b>transport.h</b>.
+Startstop places all of its outgoing messages in the memory region
+specified by the first "Ring" command.
+<PRE><!-- Default and example go here   -->
+Example:  Ring  WAVE_RING 1024
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>MyModuleId <font color=red>mod_id</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (up to 30 characters, valid strings listed in
+<b>earthworm.d</b>) that relates (in <b>earthworm.d</b>) to a unique single-byte
+number.	 Startstop places its outgoing messages on the shared memory
+ring specified by the first "Ring" command in startstop_sol.d.
+<PRE><!-- Default and example go here   -->
+Example:  MyModuleId MOD_STARTSTOP
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="HeartbeatInt"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>HeartbeatInt <font color=red>nsec</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Defines the number of seconds, <font color=red>nsec</font>, between TYPE_HEARTBEAT messages
+issued by startstop.  Startstop places its heartbeats on the shared
+memory ring specified by the first "Ring" command in <b>startstop_unix.d</b>.
+<PRE><!-- Default and example go here   -->
+Example:  HeartbeatInt 30
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyClassName"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>MyClassName <font color=red>class</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the process <font color=red>class</font> for startstop.  <font color=red>class</font> is a character string
+that must be set to either "RT" (for Real-Time) or "TS" (for Time-
+Share) on solaris.
+<PRE><!-- Default and example go here   -->
+Example:  MyClassName RT
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyPriority"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>MyPriority <font color=red>priority</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the process <font color=red>priority</font> for startstop.  See the "Class/Priority"
+command below for allowed values.  After startstop reads its
+configuration file, it changes its own class/priority to the values
+specified in the "MyClassName" and "MyPriority" commands.
+<PRE><!-- Default and example go here   -->
+Example:  MyPriority 4
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>LogFile <font color=red>switch</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, startstop
+will write a daily log file(s) called <i>cfname</i><b>_</b><i>yyyymmdd</i><b>.log</b>
+where <i>cfname</i> is the name (without extension) of startstop's configuration file
+(ex: startstop_unix)
+and <i>yyyymmdd</i> is the current UTC date (ex: 19960123) on the system clock.
+The file(s) will be written in the EW_LOG directory (environment
+variable).
+<PRE><!-- Default and example go here   -->
+Example:  LogFile 1
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="KillDelay"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>KillDelay <font color=red>nsec</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Gives the number of seconds <font color=red>nsec</font> that startstop will wait
+for modules to shutdown gracefully on termination. After this delay, startstop will force
+modules to shut down with the TERM signal.  If module still does not stop after <font color="red">nsec</font>
+seconds, behavior is determined by the "HardKillDelay" command.
+<PRE><!-- Default and example go here   -->
+Example:  KillDelay 10
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<a name="HardKillDelay"></A> <!-- command name as anchor inside quotes -->
+<pre><b>HardKillDelay <font color="red">nsec</font>
+</B></pre>
+<blockquote><!-- command description goes here -->
+Optional specification of number of seconds <font color="red">nsec</font> that
+startstop will wait
+for modules to shutdown after being sent a KILL signal before aborting a restart of the module.
+If not specified, no KILL signal is issued, and any restart is aborted after sequence described in
+the "KillDelay" command.
+<pre><!-- Default and example go here   -->
+Example:  HardKillDelay 10
+</pre>
+</blockquote>
+<hr>
+
+<a name="maxStatusLineLen"></A> <!-- command name as anchor inside quotes -->
+<pre><b>maxStatusLineLen <font
+ color="red">nchars</font></B></pre>
+<blockquote><!-- command description goes here -->
+Optional specification of maximum length of a line when printing status to <font
+ color="red">nchars</font> characters; default is 80, and new value cannot be smaller.
+When specified, status will adjust column widths to minimize truncation of information.
+<pre><!-- Default and example go here   -->
+Example:  maxStatusLineLen 120
+</pre>
+</blockquote>
+<hr>
+
+<a name="Stderr"></A> <!-- command name as anchor inside quotes -->
+<pre><b>Stderr <font
+ color="red">target</font></B></pre>
+<blockquote><!-- command description goes here -->
+Optional specification of what to do with messages printed to stderr; <font color="red">target</font> can be either "Console"
+(the screen, the default), "None" (messages are eliminated), or "File" (messages get written to a file in the Log directory,
+named as the log file for this module would be but with the extension .err).  When specified for startstop itself, it is
+the default for all modules (save startstop); when specified for a specific module, it overrides the specification for all modules.
+In the <a href="#Configuration">example configuration</a>, every module's stderr messages are surpressed except for <tt>eqproc</tt>
+(whose go to the screen) and <tt>binder_ew</tt> (whose go to a file).
+<pre><!-- Default and example go here   -->
+Example:  Stderr File
+</pre>
+</blockquote>
+<hr>
+
+<A NAME="Process"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>Process <font color=red>cmdstring</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Gives the command string, <font color=red>cmdstring</font>, (up to 79 characters) that will
+be used to start one Earthworm module.  Each "Process" command
+must be immediately followed by a "Class/Priority" command.  If the
+<font color=red>cmdstring</font> required to start a process contains embedded blanks, it
+must be enclosed in double-quotes.  Startstop can create up to MAX_CHILD (currently defined as 200) child processes.
+<PRE><!-- Default and example go here   -->
+Example:  Process "binder_ew binder_ew.d"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Class/Priority"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>Class/Priority <font color=red>class priority</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Specifies the <font color=red>class</font> and <font color=red>priority</font> under which the module given by
+the previous "Process" command will be run.  <font color=red>class</font> is a 2-character
+string and <font color=red>priority</font> is an integer; their values are restricted to:
+<PRE>
+		      class     priority
+	Real-Time     "RT"      0 to 59
+	Time-Share    "TS"       &lt;= 0
+</PRE>
+Class RT processes run at higher priority than class TS processes.
+Take care not to assign known CPU hogs (binder_ew, for example) to the RT
+class.  Such an assignment could bog down all class TS processes,
+causing poor Earthworm system performance. After a "Class/Priority"
+line, startstop expects to find the "Process" command of the next
+Earthworm module it should spawn.
+<PRE><!-- Default and example go here   -->
+Example:  Class/Priority  TS  0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="Agent"></A>  <!-- command name as anchor inside quotes -->
+<PRE><B>Agent <font color=red>user group</font>
+</B></PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Optional command to specify the <font color=red>user</font> and
+<font color=red>group</font> names under which this module will run. Normally this
+feature will not be used. But if you need to have the output and log files from
+this module owned by a user other than the one who runs startstop, then you can use
+Agent to do this. You cannot specify root as the user agent. If you need to
+have a module run with root privelege, you should set that module's file
+permissions to make it setuid root. Make sure that <font color=red>user</font> is a
+valid user name and <font color=red>group</font> is a valid group name for your system.
+<PRE><!-- Default and example go here   -->
+Example:  Agent "eworm" "net"
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<CENTER>
+<A HREF="../modules.html">Module Index</A> |
+<A HREF="../ovr/startstop_ovr.html">Startstop Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+Contact: <b>Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></b><BR>
+</ADDRESS>
+</BODY>
+</HTML>

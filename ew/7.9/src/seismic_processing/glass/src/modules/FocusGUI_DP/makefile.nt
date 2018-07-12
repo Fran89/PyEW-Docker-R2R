@@ -1,0 +1,26 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 2176 2006-05-22 16:04:15Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.1  2006/05/22 16:01:25  paulf
+#     added from hydra_proj, new version
+#
+#     Revision 1.1.1.1  2005/06/22 19:30:48  michelle
+#     new directory tree built from files in HYDRA_NEWDIR_2005-06-20 tagged hydra and earthworm projects
+#
+#     Revision 1.1  2004/04/05 18:09:55  davidk
+#     no message
+#
+#     Revision 1.1  2004/04/05 18:07:31  davidk
+#     no message
+#
+#
+##################################################################/
+
+!include <$(GLASS_DIR)\src\make_defs.nt>
+!include "makefile.ind"
+#!include <$(GLASS_DIR)\src\make_defs.nt>

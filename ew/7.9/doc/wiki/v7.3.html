@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      v7.3 – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/v7.3?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="v7.3.html" title="View v7.3">v7.3</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/v7.3?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/v7.3?action=diff&amp;version=2" title="Version 2 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-01-17T12%3A50%3A40-08%3A00&amp;precision=second" title="2012-01-17T12:50:40-08:00 in Timeline">20 months</a> ago</span>
+            <span class="trac-print">Last modified on 01/17/12 12:50:40</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">Earthworm Release Notes V7.3
+
+(December 23, 2008)
+New Modules
+Modifications/ Bug Fixes to Existing Modules 
+Changes To Configuration Files And Descriptor Files
+Known Bugs 
+Known Deficiencies
+
+
+NEW MODULES:
+SaraAdSend - new module to import data from a SARA digitizer
+over a serial port. Written by Larry Cochrane (webtronics).
+Imported into EW by Paul Friberg 2008-02-11
+
+RockToEW - Provides a data relay from a Kinemetrics-Rockhound-compatible 
+instrument into Earthworm via an export of Tracebuf2 messages
+Written by Eric Thomas of ISTI 2008-11-06
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+raypicker - upgrade from Carol Bryan, latest version from NEIC
+Paul Friberg 2008-12-02
+
+srparxchewsend - with direction from Symmetric, downloaded latest code 
+from 
+http://www.symres.com/support/download.htm
+installed and and tested compiles on Windows and Linux. 
+Stefan Lisowski 2008-12-02
+
+localmag - Claudio Satriano noticed a bug in the SAC input file
+reading that was causing seg faults. This is now fixed in the
+latest version.
+Paul Friberg 2008-12-01
+
+tankplayer - added a GetFromDir option to the module so that one could
+load tanks dynamically. This is a way for groups who have strange format
+data to convert them into tanks and run them in near real time. This 
+code borrows heavily from the file2ew implementation. It has been tested
+in both old style (listing WaveFile entries) and with GetFromDir mode.
+The Documentation will be updated to reflect the new mode in v7.3 of ew.
+Paul Friberg 2008-09-09
+
+sniffring - fixed a weird case where a module id was foreign to a
+local installation (imported) and thus not lookupable in the earthworm.d
+module list. Verbose mode would core dump in this case.
+Paul Friberg 2008-07-31
+
+naqs2ew - updated the list of Nanometrics Instrument types to include
+all current Nmx hardware.  Lynn Dietz 2008-07-21
+
+scream2ew - Modified to issue a single Earthworm heartbeat at the end 
+of ewc_init(), which is called just before a connection to the 
+SCREAM server is attempted. Previously, the first Earthworm heartbeat
+was issued only after the SCREAM connection was complete. If the
+SCREAM connection failed, scream2ew exited with no heartbeat, making
+it impossible for statmgr to issue an auto-restart request because 
+it didn't know scream2ew's PID. Now if the SCREAM connection fails,
+auto-restarts via statmgr/startstop will be possible. 
+Lynn Dietz 2008-06-26
+
+startstop - for UNIX, if you had a bug in your startstop_sol.d or
+startstop_unix.d configuration files, then the program would stop and
+issue a bogus message about logit_init() not set. However, if you
+put the .d file on the command line, it would intelligently process
+the .d file and warn you where the problem was. I fixed this by
+modifying the startstop_unix_generic.c library call.
+Paul Friberg 2008-05-19
+
+k2ew_tcp - Lynn Dietz discovered and fixed a compilation issue for special
+cases of k2s that have modems and serial streaming (used at CGS).
+
+trig2disk - fixed starttime of additional SCNL includes. It was incorrectly
+providing the max start time of the TRIGGER message. It now correctly uses
+the minimum start time of the SCNLs in the TRIGGER message for any 
+additional SCNLs. Bug spotted by Franco Mele of INGV, fixed by Paul
+Friberg 2008-04-28
+
+ms2tank - improved code so that it can handle mulitplexed mseed packets.
+Paul Friberg 2008-04-22
+
+binder_ew - added optional command "BufferRingKB" to control the size of
+binder's private buffer ring. The default is 256 KB (262144 bytes) is
+slightly larger than the previous hard-coded size (250000 bytes).
+Lynn Dietz 2008-04-22
+
+src/libsrc/util/libmseed - upgraded to 2.1.4 version of libmseed library
+from Chad Trabant of IRIS DMC.
+Paul Friberg 2008-04-04
+
+pick_ew - added a PickIndexDir optional setting to allow the pick_ew_MMM.ndx
+files to be written somewhere other than the params directory. The params
+directory is getting cluttered up enough and its nice to have the option
+to write these indexes elsewhere.
+Paul Friberg 2008-03-28
+
+slink2ew - 2.0ewd - upgrade from Chad Trabant that inclues Matteo's
+fix and some new features for wildcarding (Paul Friberg 2008-03-14)
+slink2ew - 1.4.1 - fixed a crashing problem that involved bad
+mseed packets not being detected. They are now skipped.
+Matteo Quintilani 2008-03-05
+
+waveman2disk - upgraded the logit_init() call to be able to handle
+the largest possible trigger message size MAX_TRIG_BYTES. Before
+it was set to just 1024 and this would throw out a bogus error
+message that the logit buffer was too small. Reported by
+Jean-Michel Douchain.
+Paul Friberg 2008-02-25
+
+carlstatrig - would report that it was not using STAtime in an error
+message when it actually was! This was fixed by David Wilson of HVO
+and is a minor change to the readcnfg.c module.
+Paul Friberg 2008-02-21
+
+fir - fixed a byte-order issue that appeared when the WaveMsg2MakeLocal()
+was called before some header values were checked. This resulted in
+a failure that indicated zero length traces.
+Mitch Withers 2008-02-13
+
+reftek2ew - add makefile.ux
+Richard Godbee 2008-02-11
+
+sniffwave - added in a new simple command line option to replicate:
+	sniffwave RING wild wild wild wild n
+by simply typing:
+	sniffwave RING
+This will hopefully save folks just wishing to look at the tracebufs
+in a ring sometime.
+Paul Friberg 2008-01-19
+
+putpick - didn't have a makefile.ux, now it does
+Paul Friberg 2008-01-16
+
+localmag - fixed a bug with the LM option of outputFormat. I am
+shocked this was never discovered before...basically an if should
+have been an "else if".
+Paul Friberg 2008-01-08
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES: 
+
+KNOWN BUGS:
+
+liss2ew:
+liss2ew has been observed intermittantly producing malformed
+TRACE_BUF messages.  Currently the conditions for causing this problem
+are unknown.  Due to this, liss2ew should be treated as suspect.  Use at
+your own risk.  JMP 6-18-2003
+
+wave_serverV:
+appears not to reply to requests for a single sample of data. I noticed
+when testing wave_viewer, that if the start time and end time of a request were
+equal (in which case there should be one sample of data) then wave_serverV did
+not reply to the request (ASCII request) at all. No Data, No Flags, No Reply,
+No Nothing.  It needs to issue a reply to every request.
+DavidK 09/25/01
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+
+libsrc/utils/site.c: The strings used for station, channel and network are
+required to be fixed length with trailing spaces added to short names. If
+the strings given to site_index do not have these trailing blanks, SCN names
+will not match. This is not documented anywhere.  PNL 10/15/00
+
+
+KNOWN DEFICIENCIES:
+ringtocoax:
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+carlsubtrig:
+The system time must be set to GMT and ew_nt.cmd must have
+TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+	
+localmag:
+needs GMT set on the system
+
+ew2seisvole:
+on NT, exits with horrible crash when system is stopped.
+
+NUMBER OF RINGS LIMITED ON SOLARIS:
+Under Solaris 2.6 (and probably other versions as well), the maximum number
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+ set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+
+     Lucky Vidmar (7/6/2000)
+
+
+TRACEBUF messages.
+The definition of `endtime' of the TRACEBUF message is not documented.
+Some programmers are taking it as the "expected start time of the next
+TRACEBUF packet (if the sample interval is uniform.)" The more accepted
+practice is that `endtime' is the time of the last sample of the current
+TRACEBUF packet; that is, one sample interval less than the expected
+start time of the next TRACEBUF messsage. Using this last definition, if a
+TRACEBUF packet has exactly one sample, then its starttime and endtime are
+the identical. Clearly this distinction needs to be documented. The file
+waveform_format (in the /home/earthworm/DOC directory) gives no specifics
+about start or end times.  PNL 1/24/01
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/v7.3?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

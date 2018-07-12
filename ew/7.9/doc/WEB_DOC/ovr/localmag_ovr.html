@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>Earthworm Modules: localmag overview</title></head><body bgcolor="#ffffff" link="#0000ee" text="#000000" vlink="#551a8b">
+<h1 align="center">Earthworm Modules:<br>
+Localmag Overview</h1>
+
+<p align="center"><i>(last revised May 12, 2015)</i></p>
+
+<p align="left">Localmag can run as an Earthworm module or as a
+standalone program. It can be used in several different ways for
+calculating the local (or Richter) magnitude of an event. There are a
+large number of options that can be specified in the configuration
+file or on the command line for this program. But don't let them
+scare you: once you decide how you want to use localmag, you will
+need to set only a portion of these parameters.</p>
+
+<p align="left">When run as an Earthworm module, localmag connects to
+a transport ring and reads HYP2000_ARC messages, produced by
+hypoinverse. Localmag also uses the transport ring for sending
+heartbeat and status messages as is common practice for Earthworm
+modules. Localmag reads the summary line of the HYP2000_ARC message,
+starts collecting trace data from one or more wave_servers, and
+processes that data for that event. Once the processing (described
+below) is completed, the localmag module becomes dormant, waiting
+for the next event to arrive and beating its heart at the specified
+interval.</p>
+
+<p align="left">As a standalone program, localmag is run one or more
+times for
+each event. It can get event information from a number of different
+sources:
+HYP2000_ARC messages (read from standard input), SAC files, an
+Earthworm
+Database among others. Localmag can get trace data (if necessary) from
+wave_servers, SAC files of raw trace data or previously synthesized
+Wood-Anderson traces, or from other sources. And instead of reading
+trace
+data, localmag can read Wood-Anderson amplitudes (from SAC files or
+other
+sources) and compute local magnitudes directly from these. These
+methods could
+be used to as part of the review process after localmag module
+generated the
+initial automatic local magnitude.</p>
+
+<p align="left">After localmag prepares (the new data for processing
+by checking for gaps (if the data was obtained from wave servers) and
+removes the mean. Then localmag synthesizes these traces into
+Wood-Anderson traces. This conversion is done by a frequency domain
+convolution to remove the original instrument response and replace it
+with the Wood-Anderson response. The frequency response function
+(generated
+as an intermediate step in this process) may optionally have a cosine
+taper
+applied to either or both the low and high ends of the frequency range.</p>
+
+<p align="left">When the synthetic Wood-Anderson traces have been
+returned to the time domain, the peak amplitude is located for each
+trace.
+The search for peak amplitude is done within a time window
+related to the estimated Sg phase arrival time. One or two `peak'
+values
+may be located. First, the largest (absolute value) zero-to-peak is
+found. This zero-to-peak value is compared to the largest zero-to-peak
+found
+before the estimated P arrival. If the event zero-to-peak does not
+exceed the
+pre-event zero-to-peak by the factor <a href="../cmd/cmd_localmag.d:#z2pThresh">
+z2pThresh</a>, then that trace is not used for local magnitude
+calculations
+and no further peak searches are performed for that trace. This
+threshold
+should prevent the use of station/channels that are far from a small
+event or
+have a lot of background noise. It may also prevent localmag from
+processing
+traces where one event is preceeded by the coda of another large event.</p>
+
+<p align="left">The second peak value is a "sliding window" search, in
+which
+the largest plus-to-minus or minus-to-plus swing is found within a
+specified
+interval (normally 0.8 seconds, the free period of the Wood-Anderson
+instrument.) The motivation for this algorithm is to reduce the chances
+of
+picking a noise glitch instead of seismic signal. When computing the
+local
+magnitude, localmag uses one half of this peak-to-peak signal. Note
+that one
+half of peak-to-peak will usually be a smaller value than the largest
+zero-to-peak value.</p>
+
+<p align="left">The Wood-Anderson traces may optionally be saved in SAC
+(or
+other format) files, along with the peak amplitude picks, for review by
+human
+beings. If pick locations are changed or bad traces are thrown out, the
+traces
+or picks can be read back in by localmag to update the calculated
+magnitude.</p>
+
+<p align="left">Besides the peak amplitude values from the
+Wood-Anderson
+traces, localmag needs the -log(A0) values to correct for attenuation
+with
+station-hypocenter distance. The table of these values is read from a
+file. Thus regional networks can use their own attenuation relations
+in place of the one Richter (later Richter &amp; Guttenburg)
+developed of Southern California. This table can be configured to use
+station to epicenter distance or station to hypocenter distance. For
+each
+horizontal component that has a valid trace (no data gaps, not clipped,
+sufficient event signal) localmag computes a local magnitude value.</p>
+
+<p align="left">The magnitude values from all the traces are combined
+in the
+following manner. For stations with traces from both horizontal
+components
+(East and North) of a given instrument band (broadband or
+accelerometer), a
+station `band' local magnitude is found in one of two ways. Either the
+mean of
+the component magnitudes is used, or the mean of the component
+amplitudes is
+used to compute a station magnitude. If a station has more than one
+band of
+instrument (both broadband and accelerometer), the station magnitude is
+always
+the mean of the band magnitudes.</p>
+
+<p align="left">Finally, all the station magnitude values are averaged;
+the
+standard deviation and the median are computed.
+These results are logged in all cases. When localmag is connected to
+an Earthworm transport ring, the results are sent to transport as a
+TYPE_MAGNITUDE message; other forms of output may be selected as well.</p>
+
+<p align="left">Localmag will wait for trace data to appear in the
+wave_servers,
+when run as an Earthworm module. It computes the time need to wait from
+event
+origin until the trace window has propagted to the maximum distance to
+be
+used. When an event message arrives, localmag compares the origin time
+with
+the system time and sleeps until sufficient time has passed. This means
+that
+you should run localmag on a computer which is accurately set to UTC,
+the same
+time as is used to timestamp phase picks.
+</p>
+
+<p>Some warnings about this program: Localmag uses a quite a bit of CPU
+time,
+depending on the number and
+duration of traces requested. If this and other CPU-intensive modules
+such as
+gmew are running on the same machine, they will have a significant
+impact on
+the machine load after one or more large events. Until Earthworm has
+some sort
+of scheduling system, you may want to run these programs at reduced
+priority.
+</p>
+
+<p>When run as an earthworm module, localmag will gradually use
+increasing
+amounts of memory. This is normal. It is keeping information about FFT
+factors
+and trig functions, so that these do not need to be recalculated for
+each
+trace calculation.
+</p>
+
+<h4 align="center">Transport Ring Output Messages</h4>
+
+<p align="left">When localmag is connected to an Earthworm transport
+ring, it will send heartbeat, result and error messages into the ring.
+When a magnitude result has been calculated, a TYPE_MAGNITUDE message
+is sent into the transport ring. The following is an example (as
+displayed using the '<a href="sniffring_ovr.html" target="_blank">sniffring</a>'
+tool):</p>
+
+<pre>1430878174 Received INST_MEMPHIS MOD_LOCALMAG TYPE_MAGNITUDE <seq: 0=""> <length: 656=""><br>567 MAG 1 ML 3.82 MED 3 6 0.12 -1.00 58.61 -1 014024006:028055006 1 0<br>GNAR.HHE.NM 3.79 58.61 0.00 -9.23E+000 1430877997.12     -1.00 9.11E+000 1430877996.74     -1.00<br>GNAR.HHN.NM 3.84 58.61 0.00 -8.26E+000 1430877990.37     -1.00 1.22E+001 1430877990.54     -1.00<br>SFTN.EH1.NM 3.94 112.69 0.00 -6.34E+000 1430877992.81     -1.00 7.81E+000 1430877993.06     -1.00<br>SFTN.EH2.NM 4.05 112.69 0.00 -1.21E+001 1430877983.45     -1.00 6.06E+000 1430877983.60     -1.00<br>PWLA.EHE.NM 3.70 193.91 0.00 -2.09E+000 1430878006.78     -1.00 1.80E+000 1430878007.00     -1.00<br>PWLA.EHN.NM 3.81 193.91 0.00 -2.68E+000 1430878005.66     -1.00 2.35E+000 1430878005.46     -1.00</length:></seq:></pre>
+
+<p align="left">The values in the second line above are as follows:</p>
+
+<small>
+<pre>eventId MAG magTypeIdx magType magVal algorithm nstations nchannels error quality mindist azimuth author origin_version qdds_version</pre>
+</small>
+<p align="left">In response to certain error conditions, localmag will
+send a TYPE_ERROR message into the transport ring. The message will
+contain a textual description of the error. See the "localmag.desc"
+file for a list of possible errors.</p>
+
+<p align="left">As of localmag version "2.1.18 SNCL - 2015-05-05" the
+program will send a TYPE_NOMAGNITUDE message into the transport ring
+when an event has been processed but a magnitude could not be computed.
+The following is an example (as displayed using the '<a href="sniffring_ovr.html" target="_blank">sniffring</a>' tool):</p>
+
+<pre>1430863296 Received INST_MEMPHIS MOD_LOCALMAG TYPE_NOMAGNITUDE <seq: 0=""> <length: 55=""><br>1430863296 6 No local magnitude available, eventId=581, magType=ML, magTypeIdx=1</length:></seq:></pre>
+
+<p align="left">The following variation will be sent if the reason the
+magnitude was not generated was because the '<a href="../cmd/localmag_cmd.html#minStationsMl" target="_blank">minStationsMl</a>'
+limit was not met:</p>
+
+<pre>1430863296 Received INST_MEMPHIS MOD_LOCALMAG TYPE_NOMAGNITUDE <seq: 0=""> <length: 101=""><br>1430863296 6 No local magnitude available, eventId=583, magType=ML, magTypeIdx=1 (min num of sta for ML not met, only 3 avail)</length:></seq:></pre>
+
+<p align="left">In the example messages above, the "1430863296" value
+is an epoch time stamp, and the "6" value is an error number that
+corresponds to the error-message values in the "localmag.desc" file.<br>
+</p>
+
+<p align="left">There should be a TYPE_NOMAGNITUDE entry in the
+"earthworm_global.d" file for the installation. If none is found,
+localmag will generate a warning at startup and then use the TYPE_ERROR
+value in its place.<br>
+</p>
+
+<h4 align="center">Acknowledgement</h4>
+
+<p align="left">I give thanks here to Jim Pechmann of UUSS for
+providing many
+useful comments and his SAC macros for local magnitude calculations.
+Many
+features of this program are the result of his ideas.
+</p>
+
+<h4 align="center">Response File Example</h4>
+
+<p>
+While any manufacturer or instument might be used as an illustrative
+example
+for creating response files, we select a Guralp CMG5TD which has the
+following
+manufacturer supplied calibration information:<br>
+</p>
+
+<pre>Poles (no Zeros) in Hz:<br><br>-63.7927 +- 90.3864i<br>-209.656 +  0i<br>-755.898 +  0i<br><br>Normalizing factor at 1Hz: 1.9396e9<br></pre>
+
+<p>
+To convert from Hz to radians, multipy each pole and zero by 2pi.
+The normalizing factor must also be scaled to account for the
+discrepency
+in the number of factors of 2pi in the poles (denominator ) and zeros
+(numerator) of the transfer function. Multiply A0 by 2pi*(np-nz).
+That is, A(radians) = A(Hz) * (2*pi)^(np-nz) where np and nz are
+the number of poles and number of zeros respectively. So, the response
+of a 5td (without the sensor gain) in radians is<br>
+</p>
+
+<pre>Poles (no Zeros) in radians:<br><br>-400.8214 +- 567.9145i<br>-1317.3 +  0i<br>-4749.4 +  0i<br><br>Normalizing factor at 1Hz: 3.0230e12<br></pre>
+
+<p>
+To convert from acceleration to displacement, multiply the acceleration
+response by two factors of i*omega (-w^2). Equivalently, "add" two
+zeros.
+</p>
+
+<p>The 5td sensor has a constant of about 0.256 V/m/s2.
+</p>
+
+<p>The DM24 has a digitizer constant of about 1.9e-6 volts/count.
+</p>
+
+<p>So the overall system gain (excludes any pole/zero factors) is about
+7.422e-6 m/s^2 per count (or about 7.422 micron/s per count).
+</p>
+
+<p>Soo, the constant in the complete transfer function (in
+microns/count
+and radians) is the normalizing factor (radians) * 1e6 (microns/meter)
+*
+7.422e-6 (m/s^2 per count) = 7.422 * 3.0230e12 = 2.2437e13.
+</p>
+
+<p>Sooo, the complete transfer function for a cmt5td set to +-2g will
+be
+(in microns/count and radians) in sac format:
+</p>
+
+<pre>ZEROS 2<br>POLES 4<br>-400.8214 -567.9145<br>-400.8214  567.9145<br>-1317.3 0.0<br>-4749.4 0.0<br>CONSTANT 2.2437e13<br></pre>
+
+<p>
+<b>The earthworm transfer library (used by localmag, gmew, etc) expects
+responses to be in units of nanometers of displacement</b>. The cmg5td
+response
+is then (in nanometers/count and radians),
+</p>
+
+<pre>ZEROS 2<br>POLES 4<br>-400.8214 -567.9145<br>-400.8214  567.9145<br>-1317.3 0.0<br>-4749.4 0.0<br>CONSTANT 2.2437e16<br></pre>
+
+<p>
+Note that we ignored the effect of the anti-aliasing filter which is
+a brickwall lowpass FIR at the Nyquist frequency. It should be included
+to be correct but we ignore it for the sake of simplicity.
+</p>
+
+<h4 align="center">Response File Generation from Dataless</h4>
+
+<p>
+Note that if you have the IRIS program rdseed and a dataless seed
+volume for your station you can get
+out the appropriate format SAC poles and zeroes file using the command:<br>
+</p>
+
+<pre>rdseed -pf dataless<br><br></pre>
+
+Note that you will still need to add zeroes (e.g. one if going from
+velocity, two if going from acceleration)
+to get it to displacement and then must convert units to nanometers.
+<ul>
+
+If Input Units is METERS you're already in displacement, and don't need
+to add anything to the ZEROES value. If, for example, it were
+METERS/SEC, and your ZEROES value was 2, you'd need to make it 3.
+  <p>1 nanometer = 1.0 x 10<sup>-9</sup> meters. So if we see Input
+Units of METERS and the CONSTANT is 5.356916e+17, then Nanometers is:
+CONSTANT 5.356916e+26 </p>
+</ul>
+
+<p style="margin-bottom: 0in;" align="center"><a href="../modules.html">Module
+Index</a> | <a href="../cmd/localmag_cmd.html">Localmag Commands</a></p>
+
+<hr>
+<address>Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+
+</body></html>

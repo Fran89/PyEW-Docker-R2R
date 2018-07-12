@@ -1,0 +1,31 @@
+#
+# tideweb2ew - NetQuakes mSEED to earthworm interface
+#
+
+
+CFLAGS = -D_REENTRANT ${GLOBALFLAGS} -g 
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+all: tideweb2ew
+
+SRCS = tideweb2ew.c http_fetcher.c http_error_codes.c
+
+OBJS = tideweb2ew.o http_fetcher.o http_error_codes.o
+ 
+EW_LIBS = \
+	$L/dirops_ew.o \
+	$L/libew_mt.a
+
+tideweb2ew: $(OBJS); \
+        $(CC) $(CFLAGS) -o $(B)/tideweb2ew $(OBJS) $(EW_LIBS) -lutil -lm -lpthread
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/tideweb2ew*
+
+FORCE:

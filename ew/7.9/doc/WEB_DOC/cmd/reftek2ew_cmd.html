@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: Reftek2ew commands</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+<center>
+<h1>Reftek2ew Configuration Files</h1>
+<i>(last revised 26 May 2006)</i></center>
+<p>
+This file contains examples of the reftek2ew configuratin file and
+descriptor file. This was upgraded to SCNL for EW v7.0.<br>
+</p>
+<p> </p>
+<center>EXAMPLE REFTEK2EW CONFIGURATION FILE</center>
+<pre># @(#)import_rtp.d	1.3 07/01/98<br># reftek2ew parameter file<br><br>#  Basic Earthworm setup:<br><br>MyModuleId         MOD_REFTEK2EW  # module id for this process<br>WaveRing           WAVE_RING      # output ring for TRACEBUF messages<br>RawRing            RAW_RING       # output ring for REFTEK messages<br>HeartBeatInterval  30             # seconds between heartbeats<br><br># At least one of WaveRing and RtpRing must be defined.<br>#<br># If you have selected a WaveRing to output TRACEBUF messages, then it<br># is necessary to define a mapping between the digitizer, stream, channel<br># information that is contained in each packet to the station, channel,<br># net, and pin number that is required by the TRACEBUF messages.  There<br># is no standard way to do this in vanilla Earthworm, therefore import_rtp<br># defines yet another parameter file.  If you don't specify this file,<br># then import_rtp issues a warning message on start up and then generates<br># its own names.  Station name is the unit id, channel name is built up<br># from the stream and channel values in the DT header (stream:chan), the<br># networm name is set to "RTP", and the pin number is set to -1.<br><br>SCNLFile            reftek.scnl<br><br># Give the fully qualified host name, or the IP address of the server in<br># the usual decimal dot notation, followed by the port number for the RTP<br># service.  If you are running this on the same computer as the RTP server,<br># then specify "localhost" as the host name.<br><br>Server             localhost    7000<br><br># The API allows you to request data from a single, specific, DAS or from<br># all DAS(es).  There is no provision in the API for requesting data from<br># a subset of the available digitizers.  If you want data from a single DAS,<br># give its unit id here, otherwise enter 0 to select all digitizers.<br><br>DASid              0<br><br># You may filter the input based on packet type.  The following types are<br># supported: AD CD DS DT EH ET OM SC SH.  List the ones you want, or enter<br># ALL for all available.<br><br>PktMask            ET DT SC<br><br># You may filter the DT packets based on stream.  List the stream id's you<br># want to see.  The stream codes here are the one-based values that are<br># used by people, not the zero-based values that are in the headers.<br><br>StrMask            1 2 3 4 5 6 7 8<br><br><br><br></pre>
+<hr style="width: 100%; height: 2px;">
+<pre><br></pre>
+<p>
+</p>
+<center>EXAMPLE REFTEK2EW DESCRIPTOR FILE</center>
+<pre>modName  reftek2ew<br>modId    MOD_REFTEK2EW<br>instId   INST_MENLO<br>#<br>tsec: 60  page: 0  mail: 10<br>#<br># Uncomment the "restartMe" line to enable automatic restart of this<br># process by statmgr/startstop.  statmgr will issue a TYPE_RESTART<br># message for this process_id if it declares the patient dead.<br>#<br>restartMe<br>#<br>err: 1  nerr: 1  tsec: 0  page: 0  mail: 20 <br>text: "RTP server OK."<br>#<br>err: 2  nerr: 1  tsec: 0  page: 0  mail: 20 <br>text: "RTP server not responding."<br>#<br>err: 3  nerr: 1  tsec: 0  page: 0  mail: 20 <br>text: "no data from RTP server."<br></pre>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../ovr/reftek2ew_ovr.html">Reftek2ew Overview</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></b><br>
+</address>
+</body>
+</html>

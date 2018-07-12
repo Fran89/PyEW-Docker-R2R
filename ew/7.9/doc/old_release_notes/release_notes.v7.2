@@ -1,0 +1,274 @@
+Release Notes:  Earthworm Version 7.2
+
+V7.2 was finalized on 12/27/2007
+Cleaned out after release of v7.1 on 4/15/2007
+
+This release is EW V7.2 and has all of 7.0 SCNL upgrades.
+
+NEW MODULES:
+***********
+data_sources/nmxptool
+Version 1.1.7 of Matteo Quintiliani of INGV contributed this very
+useful module which can talk directly to NAQS and produce gap
+free nanometrics data (provided there are no gaps at the source)
+into Earthworm rings.
+Paul Friberg 2007/12/15
+
+seismic_processing/eqassemble
+Contributed by Peter Lombard of UCB. This module is an alternate head
+of the EW megamodule pipeline for doing hypocentral locations. Its a
+new variant that can mimic how earthquake processing is handled in
+the CISN codes.
+Paul Friberg 2007/10/12
+
+tankplayer_tools/tanksniff - show a sniffwave output of a tanks contents.
+Saves you having to run tankplayer just to view the content.
+Paul Friberg 2007/08/28
+
+tankplayer_tools/tankcut - a way to cut out a section of a tankplayer
+tank using a start time and end time or duration.
+Paul Friberg 2007/08/28
+
+tankplayer_tools/dc2tank - a way to pull data from the DMC data center using
+DHI (requires Java to be installed and DHI2mseed.jar with accompanying files).
+Builds a tank file given a SCNL list and a start time and or end time.
+Paul Friberg 2007/08/28
+
+tankplayer_tools/tr2dump - dump tankplayer tank as ASCII info to stdout
+(only in makefile.nt and makefile.ux currently)
+Ron Bakerian 2007/07/18 
+
+tankplayer_tools/ms2tank - new miniseed tank writer that works on Windows,
+Mac OS X, Linux, Solaris.
+Paul Friberg 2007/07/17
+
+tankplayer_tools/ring2tank - suck tracebufs out of a ring and write them
+directly to a tank for later playback. Tested on Solaris, Windows and Mac OS X.
+Paul Friberg 2007/05/20
+
+tankplayer_tools/smb2tb - take SMB format and convert to tanks. SMB format
+is from the Trinidad Soufrier system (part of the Carribean Tsunami work).
+Ron Bakerian 2007/06/15
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+********************************************
+glass/rayloc_ew upgraded from hydra_proj by Paul Friberg and Mitch Withers
+respectively. This upgrades these modules to the latest versions
+December 2007
+
+hyp2000/hyp2000_mgr - Fred Klein upgraded all of the hyp2000 to be compilable
+using the GNU fortran 77 compiler. This allows hyp2000 to work on Linux and
+Mac OS X.
+Paul Friberg integrated the new hyp2000 into hyp2000_mgr for Linux.
+2007/12/17
+
+k2ew_tcp v2.43
+Modified the code to handle a dual modem and serial data stream case
+better when the ForceBlockMode is turned on. This mode also requires
+that status requests be turned off and a new k2 firmware version be
+installed for it to work.
+Paul Friberg 2007/12/17
+
+sniffwave
+Modified the output to show the TRUE datatype (s2,i2,i4,s4) rather than
+the one converted to by WaveMsg2MakeLocal().
+Paul Friberg 2007/12/14 
+
+WaveMsg2MakeLocal() in libsrc/util/swap.c was improperly using a long
+and assuming it was 4 bytes in length. On some operating systems
+a long can be 8 bytes. I patched the function to use int's instead.
+Paul Friberg 2007/12/14
+
+pick_ew
+Fixed a bad use of long (where int should have been used) that caused
+long ints to be 8 bytes for the data samples on Linux OS. At the same
+time I put an assertion error inside SwapLong() of swap.c to throw
+a fatal error message to stderr if the sizeof(long)=4 bytes assumption
+is violated.
+Paul Friberg 2007/12/14
+
+wave_serverV
+Added in Ron Bakerian's sqlite3 implementation for managing gaps and overlapping
+data that previously got dropped by wave_serverV. This feature needs .d entries
+to be activated. See the updated docs.
+Paul Friberg 2007/11/30
+
+sac2tb (in archiving/tankplayer_tools)
+Fixed a bug where a location code of "<space-char><space-char>" was not being
+converted to "--", the default blank location code.
+Paul Friberg 2007/11/13
+
+q3302ew
+lib330 was updated by Quanterra to solve some issues. The earthworm
+copy of this was updated and q3302ew uses this new version.
+Paul Friberg 2007/10/24
+
+display/heli_ewII
+Jean-Michel Douchain pointed out that the IndexFile config setting was
+not working. I fixed it in this new version.
+Paul Friberg 2007/10/24
+
+archiving/tankplayer_tools/sac2tb 
+Matteo Quintiliani of INGV modified sac2tb so that it will read both SAC
+files written in Sparc and Intel byteorder. Previously it only handled
+SPARC (motorola byte order).
+Paul Friberg 2007/10/22
+
+Fixes to many export modules as per Alex Nercessian recommendation:
+This short variable is found in the files:
+export_actv/export_actv.c:      char     processor[15];
+export/export.c:                char     processor[15];
+export/export_scn_pri.c:        char     processor[15];
+ringdup/ringdup.c:              char     processor[15];
+Made them all 17 or in some cases 20 to be safe.
+Paul Friberg 2007/09/20
+
+import_gen_pasv: was using a bad way to strncpy the module ID such that
+errors could happen and the module could fail at startup.
+Paul Friberg 2007/09/18
+
+remux_tbuf:
+modified to use a common code base for the remuxing since I reused it
+in a number of tankpayer_tools modules.
+Paul Friberg 2007/08/28
+
+localmag:
+space for saveXMLdir not malloc'ed.  Fixed using strdup.
+Mitch Withers 2007/07/20
+
+wave_serverV:
+data_type's in tanks were turning up with blank values!
+There was a serious memory alignment bug in calls to WaveMsg2MakeLocal() - fixed,
+and the return of WaveMsg2MakeLocal() was checked for bad values, but the
+return which was being reported was the previous packet, not the bad one - fixed,
+Added more details about datatype to the error warnings for bad packets.
+Paul Friberg 2007/05/28
+
+gmew:
+Fixed a bug reported by Ali Moeinvaziri of Utah.A qsort() call
+had some args switched! This caused some segfaults and was seen
+as far back as v6.2! Thanks to Ali for this catch.
+Fixed by Paul Friberg 2007/05/15
+
+sgram:
+sgram.c had a number of fgets() calls that had
+a bad specification of the size of the char * array. This
+has been fixed. A new version is available.
+Bug reported by Alex Nercessian, Fixed by Paul Friberg 2007/05/15
+
+k2ew_com,k2ew_tcp:
+Added a CtrlHandler (Windows only) to catch/ignore user logoff events
+so that k2ew console windows will survive user logouts when Earthworm
+is started with startstop_service. Also modified to log a descriptive
+message instead of a numeric value for handled signals.  
+Changed version to v2.42.  2007/05/09 Lynn Dietz
+
+file2ring:
+Added optional command-line argument <sequence#> to be supplied as 
+any positive integer. File2ring does sequence%256 before handing the 
+sequence to transport, so an ever-increasing integer can be used as 
+the sequence# argument for repeated invocations of file2ring. 
+This feature can be used to implement Earthworm-style messages and 
+heartbeats from non-Earthworm scripts. Remember to keep a seperate
+sequence counter for each <instid modid msgtype> used within each
+script. If the sequence# argument is ommitted, file2ring will load
+the message in transport with sequence=0.  2007/08/02 Lynn Dietz
+
+naqs2ew:
+Added three new Nanometrics instrument types: Taurus,Apollo,Trident305.
+These instruments will now be properly identified in log messages.
+2007/10/02 Lynn Dietz
+
+eqprelim: 
+Added new config command "ReportCoda" to control whether coda information
+is written to output. If ReportCoda=0, no coda info will be written,
+even if some exists at the time the event is reported. If ReportCoda is
+non-zero, coda information that exists at the time of report will be 
+included. Default is ReportCoda=1 which is the previous default behavior.
+The new command is optional.  2007/11/29 Lynn Dietz
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+****************************************************
+
+KNOWN BUGS:
+***********
+
+liss2ew:
+liss2ew has been observed intermittantly producing malformed
+TRACE_BUF messages.  Currently the conditions for causing this problem
+are unknown.  Due to this, liss2ew should be treated as suspect.  Use at
+your own risk.  JMP 6-18-2003
+
+wave_serverV:
+appears not to reply to requests for a single sample of data. I noticed
+when testing wave_viewer, that if the start time and end time of a request were
+equal (in which case there should be one sample of data) then wave_serverV did
+not reply to the request (ASCII request) at all. No Data, No Flags, No Reply,
+No Nothing.  It needs to issue a reply to every request.
+DavidK 09/25/01
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+
+libsrc/utils/site.c: The strings used for station, channel and network are
+required to be fixed length with trailing spaces added to short names. If
+the strings given to site_index do not have these trailing blanks, SCN names
+will not match. This is not documented anywhere.  PNL 10/15/00
+
+
+KNOWN DEFICIENCIES:
+*******************
+ringtocoax:
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+carlsubtrig:
+The system time must be set to GMT and ew_nt.cmd must have
+TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+	
+localmag:
+needs GMT set on the system
+
+ew2seisvole:
+on NT, exits with horrible crash when system is stopped.
+
+NUMBER OF RINGS LIMITED ON SOLARIS:
+Under Solaris 2.6 (and probably other versions as well), the maximum number
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+ set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+
+     Lucky Vidmar (7/6/2000)
+
+
+TRACEBUF messages.
+The definition of `endtime' of the TRACEBUF message is not documented.
+Some programmers are taking it as the "expected start time of the next
+TRACEBUF packet (if the sample interval is uniform.)" The more accepted
+practice is that `endtime' is the time of the last sample of the current
+TRACEBUF packet; that is, one sample interval less than the expected
+start time of the next TRACEBUF messsage. Using this last definition, if a
+TRACEBUF packet has exactly one sample, then its starttime and endtime are
+the identical. Clearly this distinction needs to be documented. The file
+waveform_format (in the /home/earthworm/DOC directory) gives no specifics
+about start or end times.  PNL 1/24/01
+

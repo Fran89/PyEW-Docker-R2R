@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      gmew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/gmew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="gmew.html" title="View gmew">gmew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/gmew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/gmew?action=diff&amp;version=9" title="Version 9 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-07-18T12%3A51%3A56-07%3A00&amp;precision=second" title="2012-07-18T12:51:56-07:00 in Timeline">14 months</a> ago</span>
+            <span class="trac-print">Last modified on 07/18/12 12:51:56</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="gmew.html#EarthwormModule:gmew">Earthworm Module: gmew</a>
+    <ol>
+      <li>
+        <a href="gmew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="gmew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="gmew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="gmew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="gmew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="gmew.html#SampleConfigurationFile">Sample Configuration File</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="gmew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:gmew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: gmew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Calculates strong motion parameters
+</p>
+<h2 id="Details">Details</h2>
+<p>
+GMEW is an Earthworm module for computing ground-motion parameters: peak ground acceleration, velocity and displayment, plus spectral response values.
+</p>
+<p>
+When in starts up, gmew connects to a transport ring and reads HYP2000_ARC messages, produced by hypoinverse. Gmew also uses the transport ring for sending strong-motion messages, as well as heartbeat and status messages. Gmew reads the summary line of the HYP2000_ARC message, starts collecting trace data from one or more wave_servers, and processes the data for that event. Once the processing (described below) is completed, the gmew module becomes dormant, waiting for the next event to arrive and beating its heart at the specified interval.
+</p>
+<p>
+(5/10/11) If the &lt;watchForAlarm&gt; command is included in the config file, gmew will now also read ACTIVATE_MODULE messages that have been tagged for gmew, but instead of computing the start of the window, uses the time provided in the message (using the duration specified in the &lt;watchForAlarm&gt; command.
+</p>
+<p>
+Gmew prepares the new data for processing by checking for gaps and removing the mean. Then gmew transforms the trace data into the frequency domain using an FFT (fast fourier tranform). A cosine taper is applied to remove the lowest and highest frequency components. The default values for the cosine taper ranges are 0.05 to 0.1 Hz at the low end and 45% to 50% of samplerate at the high end. Individual SCNLs may be configured to use other filter values if necessary. The low frequency cutoff is essential to stabilize the displacement trace.
+</p>
+<p>
+The instrument response is removed, and acceleration, velocity and displacement traces are computed. In addition, spectra response data is computed for the three periods of 0.3 seconds, 1.0 seconds, and 3.0 seconds, with 0.5% damping. All six of these traces are computed in the frequency domain, since integration or differentiation are easily computed there. The spectral response traces are computed by generating the response function for a one degree of freedom harmonic oscillator with the specified free period and damping. All six of these synthetic traces are then transformed back to the time domain by an FFT that handles multiple arrays simultaneously.
+</p>
+<p>
+(5/10/11) If one or more &lt;AddSpectraResponseAt&gt; commands are included in the config file, then those periods will be computed instead of the standard ones listed above. This does not affect what gets written to the ShakeMap XML.
+</p>
+<p>
+When the synthetic traces have been returned to the time domain, the peak amplitudes are located for each trace. The search for peak amplitude is done within a time window related to the estimated S-phase arrival time and specified in the configuratiion file.
+</p>
+<p>
+Gmew writes a TYPE_STRONGMOTIONII message for each SCNL that it processes. This message contains the PGA, PGV, PGD and spectral response values for the SCNL. In addition, the user can configure gmew to write an XML file for the entire event. This file is in the format used by ShakeMap (version 2) for station readings.
+</p>
+<p>
+Some warnings about this program: Currently gmew does not know to wait for trace data to appear in the wave_servers. So when run as an Earthworm module, it may not be able to obtain enough trace data for adequate processing. You may want to run gmew manually after all the desired trace data has accumulated in the wave_server.
+</p>
+<p>
+Gmew uses a quite a bit of CPU time, depending on the number and duration of traces requested. If this and other CPU-intensive modules such as localmag are running on the same machine, they will have a significant impact on the machine load after one or more large events. Until Earthworm has some sort of scheduling system, you may want to run these programs at reduced priority.
+</p>
+<p>
+Gmew will gradually use increasing amounts of memory. This is normal. It is keeping information about FFT factors and trig functions, so that these do not need to be recalculated for each trace calculation.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, gmew reads commands from a configuration file. Commands in this file set all the parameters for configuring the Earthworm gmew module. In the control file, lines may begin with a valid gmew command (listed below) or with one of 2 special characters:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+   
+@  allows control files to be nested; one control file can be 
+   accessed from another with the command "@" followed by 
+   a string representing the path name of the next control file 
+   (example: @model.d).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). Blank lines are also permitted in the control file.
+</p>
+<h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<pre class="wiki">Earthworm system setup:
+MyModuleId	        Required
+RingInName	        Required
+RingOutName	        Required
+getEventsFrom	        Required
+HeartBeatInterval	Required
+log switch	        Optional	
+
+Memory allocation commands:
+maxSta	Required
+maxTrace	        Required
+
+Event and Trace commands:
+traceSource	        Optional	-t
+extraDelay	        Optional	
+traceTimes	        Optional
+Add	                Optional
+Del	                Optional
+maxDist	                Required
+saveTrace	        Optional
+searchWindow	        Optional
+
+Auxiliary Data Sources:
+respSource	        Optional
+staLoc	                Required
+velocity model	        Optional
+SCNLpar	                Optional
+
+Miscellaneous Commands:
+Debug	                Optional
+wsTimeout	        Optional
+XMLDir	                Optional
+TempDir	                Optional
+MappingFile	        Optional
+watchForAlarm	        Optional
+AddSpectraResponseAt	Optional
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red.) A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>Add [STA COMP NET LOC]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+Add the trace(s) with station name STA, component name COMP, network name NET , and location code LOC to the selection list. Any of STA, COMP and NET may be the wildcard character `*'. COMP may be given as the first two letters of the component name, to select all direction desgnators (North and East) are accepted for that component. Zero, one or many Add commands may be listed in the configuration file. If no Add commands are given, all SCNLs from the trace source will be selected. The Del command may be used to narrow the selection implied by wildcard values in an Add command or by the absence of any Add commands.
+</p>
+<pre class="wiki">Default: all traces are selected from a trace source
+Example: Add * BH *
+         Add SEA EH UW
+</pre><p>
+<strong>AddSpectraResponseAt [period]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Add the period to the list of those processed. If this is the first occurrence of this command, then replace the standard list (0.3, 1.0 and 3.0) with period.
+</p>
+<pre class="wiki">Default: 0.3, 1.0 and 3.0
+Example: AddSpectraResponseAt 2.0
+         AddSpectraResponseAt 2.5
+</pre><p>
+<strong>Debug [D]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Set the debug level to D. There are many different debug options; one or more of them may be activated using the Debug command. More than one Debug command may be used, or the different values (from the table) may be added together into one Debug command. Except as noted, the debug information is printed to STDERR and the log file (depending on the setting of log switch.) Select from these debug options:
+</p>
+<p>
+1: trace and search times and P and S arrival estimates (relative to event origin time)
+</p>
+<p>
+2: SCNL selection tests
+</p>
+<p>
+16: ws_client debugging
+</p>
+<p>
+32: poles. zeros and gain values
+</p>
+<p>
+64: trial frequency response functions to STDOUT. Produces about 1500 lines for each SCNL, which should be saved to a file.
+</p>
+<p>
+128: full frequency response function to STDOUT. Produces several thousand lines for each SCNL, which should be saved to a file.
+</p>
+<p>
+256: Input and output trace data including in padded arear to STDOUT. Produces several thousand lines for each SCNL, which should be saved to a file.
+</p>
+<pre class="wiki">Default: 0; no debug output
+Example: Debug 3 # turns on options 1 and 2
+</pre><p>
+<strong>Del [STA COMP NET LOC]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+Delete the trace(s) with station name STA, component name COM, network name NET , and location code LOC from the selection list. Any of STA, COMP ,  NET and LOC may be the wildcard character `*'. COMP may be given as the first two letters of the component name, to select all direction desgnators (Vertical, North and East) are accepted for that component. Zero, one or many Del commands may be listed in the configuration file.
+</p>
+<pre class="wiki">Default: all traces are selected from a trace source
+Example: Del SEA BH UW --
+</pre><p>
+<strong>getEventsFrom [INST MOD]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Get event messages (TYPE_HYP2000ARC) from installation INST and module MOD. These installation and module IDs are found in earthworm.d and earthworm_global.d. Use as many getEventsFrom commands as necessary.
+</p>
+<pre class="wiki">Default:  none
+Example:  getEventsFrom INST_WILDCARD MOD_EQPROC
+</pre><p>
+<strong>HeartBeatInterval [H]</strong><br />
+Function: Earthworm Setup
+</p>
+<p>
+Send TYPE_HEARTBEAT messages every H seconds to the transport ring.
+</p>
+<pre class="wiki">Default:  none
+Example:  HeartbeatInterval 30
+</pre><p>
+<strong>log switch: -lS</strong><br />        
+Function: Earthworm Setup
+</p>
+<p>
+This is not a config-file command but a command line switch Sets the value of the logging switch to S. Possible values of S are:
+</p>
+<p>
+0: Do not create a log file. Some logging data will be printed to the screen (stdout or stderr.)
+</p>
+<p>
+1: Create a log file in the directory named by the EW_LOG environment variable. The log file name will based on the config-file name and the current data. A new file will be created for each day (but only if there are logging entries to be made.) Some logging data will be printed to the screen (stdout or stderr,) as with option `0' above.
+</p>
+<p>
+2: Create a log file as for option `1', but do not write anything to the screen (stdout or stderr.)
+</p>
+<pre class="wiki">Default: 1
+Example (on the command-line):  -l0 (lower-case ell zero; turns off creation of log file)
+</pre><p>
+<strong>MappingFile [map-file]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Specifes that name of a mapping file for use in writing XML files (see XMLDir). This file provides for three different mappings: from station-net codes (used in SCNL) to descriptive station names; from net codes to descriptivce agency names, and from station-component-network codes to instrument type. See the file NCSN.map in the gmew source distribution for an example of this file. This file is not required by gmew, and the descriptivce names are not required by shakemap.
+</p>
+<pre class="wiki">Default: no mapping file if this command is not given
+Example: MappingFile NCSN.map
+</pre><p>
+<strong>maxSta [N]</strong><br />
+Function: Memory Allocation
+</p>
+<p>
+At startup, gmew will allocate space for N individual stations (unique station/network names.) Each station may have any number of different components (BHE/BHN/HHE/HHN.) If gmew tries to read more than N stations, the excess ones will be skipped with a logged warning message. The order that stations are read into gmew is determined by the trace source and thus may be arbitrary.
+</p>
+<pre class="wiki">Default: none, this command is required.
+Example: maxSta 100
+</pre><p>
+<strong>maxTrace [M]</strong><br />
+Function: Memory Allocation
+</p>
+<p>
+Allocate memory for MtraceTimes command and the estimated P and S phase arrival times.
+</p>
+<pre class="wiki">Default: none, this command is required
+Example: maxTrace 60000
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing gmew, heartbeat, and error messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates to a unique single-byte number. In general, a different module ID is needed for each instance of gmew.
+</p>
+<pre class="wiki">Default: none
+Example: MyModuleId MOD_LOCALMAG
+</pre><p>
+<strong>respSource [SOURCE [params]]</strong><br />
+Function: Auxilliary Data Sources
+</p>
+<p>
+Tells gmew where to find instrument response data. This command is required. Choices for SOURCE are:
+</p>
+<p>
+FILE dirname pz-filename-format
+</p>
+<p>
+see also: how to make <a class="wiki" href="pz-files.html">pz-files</a>
+</p>
+<p>
+find response files in the dirname directory. pz-filename-format is a string similar to the printf format: %S, %C, %N are replaced by station, component and network names, respectively, all in upper case. Similarly %s, %c, %n work for lower-case station, component and network. The digraph %% stands for %; all other characters are taken literally.
+</p>
+<p>
+The response file format is similar to that used by SAC POLEZERO files with some extra requirements. The options in the file are keyword driven and the numbers are in free format. You may specify a multiplicative scaling constant by putting a line in the file containing the keyword "CONSTANT" followed by a floating point number. The default for this constant is 1.0 if you omit this line. You specify the number of poles by putting a line in the file with the keyword "POLES" following by an integer number. The next lines in the file until another keyword is read become the poles for this instrument. Each such line contains two floating point numbers specifying the real and imaginary parts of one of the poles. If you have fewer lines specifying poles than you stated on the "POLES" line, the remaining poles are assumed to lie at the origin. You specify the zeros in the same way with a "ZEROS" keyword line following by lines specifying the zeros that do not lie at the origin. You may specify up to as many poles and zeros as you need.
+</p>
+<p>
+The poles, zeros and gain constant of the response file MUST be for an input of displacement in nanometers. See the documentation provided by the NEIC AutoDRM for more details. The poles and zeros specify the Laplace transform of the analogue instrument response. Currently gmew has no provision for handling digital FIR or IIR filter responses. For example, the following is the specification for the NSN broadband seismometer OCWA.BHE.US:
+</p>
+<pre class="wiki">CONSTANT    0.50280E+11
+ZEROS       3
+        0.00000E+00    0.00000E+00
+        0.00000E+00    0.00000E+00
+        0.00000E+00    0.00000E+00
+POLES       6
+       -0.31420E-01    0.00000E+00
+       -0.19790E+00    0.00000E+00
+       -0.20110E+03    0.00000E+00
+       -0.69740E+03    0.00000E+00
+       -0.75400E+03    0.00000E+00
+       -0.10560E+04    0.00000E+00
+</pre><p>
+EWDB
+</p>
+<p>
+Query an Earthworm Database for reponse information. Not currently implemented.
+</p>
+<pre class="wiki">Default: none
+Example: File /earthworm/responses %S_%C_%N.pz
+</pre><p>
+<strong>RingInName [ring]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells gmew which shared memory region to use for input transport. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region. Gmew reads TYPE_HYP2ARC messages from this ring.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingInName HYPO_RING
+</pre><p>
+<strong>RingOutName [ring]</strong><br />
+Function: Earthworm setup
+</p>
+<p>
+Tells gmew which shared memory region to use for output transport. ring is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique number for the key to the shared memory region. Gmew writes TYPE_STRONGMOTIONII, TYPE_HEARTBEAT and TYPE_ERROR messages to this ring. RingOutName can be the same as RingInName if desired.
+</p>
+<pre class="wiki">Default:  none
+Example:  RingOutName SM_RING
+</pre><p>
+<strong>saveTrace [ST [params] DIR FORMAT]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+Tells gmew whether and how to save synthetic traces. If the saveTrace command is absent, no traces will be saved. Choices for ST include:
+</p>
+<p>
+SAC baseDir dirFormat filename-format
+</p>
+<p>
+Save synthetic traces in SAC-format files. The full pathname for each SAC file will be made up of base directory, formatted directory, and formatted filename plus a descriptive ending; all concatenated together with appropriate path separators. The endings are "-acc", "-vel", "-disp", "-psa03", "-psa10" and "-psa30" for the appropriate traces.
+</p>
+<p>
+baseDir
+</p>
+<p>
+Specifies a fixed directory name. This can be an absolute directory path or a path relative to the current directory. It can contain one or more parts with pathname separators. This all components of this path (except possibly the last) must exist before gmew is started.
+</p>
+<p>
+dirFormat
+</p>
+<p>
+Gives a formattted subdirectory name; the format string is that used for the Unix date command applied to the event origin time, with the addition of `%i' to indicate the event ID. Be careful with this; some formats produce output not compatible with directory names. The directory name derived from dirFormat must not contain any path separators. Suitable format strings include:
+</p>
+<pre class="wiki">%C: Century number (the year divided by 100 and truncated to an integer as a decimal number [1,99]); 
+single digits are preceded by 0.
+
+%d: Day of month [1,31]; single digits are preceded by 0.
+
+%h: Locale's abbreviated month name.
+
+%H: Hour (24-hour clock) [0,23]; single digits are preceded by 0.
+
+%i: The Earthworm event ID. Currently this event ID can only be read from a hyp2000 archive message.
+
+%j: Day number of year [1,366]; single digits are preceded by 0.
+
+%m: Month number [1,12]; single digits are preceded by 0.
+
+%M: Minute [00,59]; leading zero is permitted but not required.
+
+%R: Time as %H:%M
+
+%S: Seconds [00,61]
+
+%T: Time as %H:%M:%S
+
+%u: Weekday as a decimal number [1,7], with 1 representing Sunday.
+
+%U:Week number of year as a decimal number [00,53], with Sunday as the first day of week 1.
+
+%V: Week number of the year as a decimal number [01,53], with Monday as the first day of the week. 
+If the week containing 1 January has four or more days in the new year, then it is considered week 1; 
+otherwise, it is week 53 of the previous year, and the next week is week 1.
+
+%w: Weekday as a decimal number [0,6], with 0 representing Sunday.
+
+%W: Week number of year as a decimal number [00,53], with Monday as the first day of week 1.
+
+%y: Year within century [00,99].
+
+%Y: Year, including the century (for example 1993),
+</pre><p>
+filename-format
+</p>
+<p>
+Gives the formatted file name using % to introduce one of the format specifiers "sScCnNLl%" <tt>s' is the station name in lower case; </tt>S' is upper case. Likewise for component and network names; `%' stands for itself. All other characters are taken literally. This works in the same way as the format string for response files.
+Gmew adds the following special fields to SAC file headers. The peak amplitude is written to user0; in t0 is the time, relitive to event origin, of the peak amplitude. In kuser0 and kt0 are the labels for these user values. For the acceleration, the labels would be "Acc_max" and "Acc_amp", respectively. Other traces have similar labels. The SAC header variable kinst has the units for the trace, such as "cm/sec<sup>2" for acceleration.
+</sup></p>
+<pre class="wiki">Default:  command is absent (no traces are saved)
+Example: SAC /earthworm/SAC/GM %Y%j%i %S.%C.%N
+</pre><p>
+<strong>SCNLpar [STA COMP NET LOC special-parameters]</strong><br />
+Function: Auxilliary Data Sources
+</p>
+<p>
+Set certain parameters (described below) for specific traces identified by their SCNL: STA, COMP, and NET (station/component/network name.) No wildcards are permitted here; each SCNL must be given explicitly, but only if special values are needed for that SCNL. Often, the default values will be adequate for most SCNLs. If there are only a few of these commands, they may be listed in the configuration file. But if a large number of them are needed, it may be more convenient to place them in a separate file. Then that file will get included with the configuration file by the syntax:
+</p>
+<p>
+@scnl_param_file
+</p>
+<p>
+Note that the format of this files is identical to the one used by the localmag module. Each SCNLpar command must include the STA, COMP, NET, LOC names followed by the following seven decimal values. Use spaces between all elevent items in each SCNLpar line. All values must be present; no default values are used for an SCN if it has an SCNpar line. The seven decimal values are:
+</p>
+<p>
+<em>magnitude correction</em>: This value is ignored by gmew; it is used only by the localmag module.
+</p>
+<p>
+<em>taper low-freq off</em>: The frequency at the low end of the passband below which the cosine taper has zero value. This taper is applied to the frequency response function before it is convolved with the trace. Frequency units are Hz.
+</p>
+<p>
+<em>taper low-freq on</em>: The frequency at the low end of the passband above which the cosine taper has a value of 1. The low-end taper can be eliminated by setting the off and on values to the same value. The default low-end taper is turned off, passing all low frequencies.
+</p>
+<p>
+<em>taper high-freq on</em>: The frequency at the high end of the passband below which the cosine taper has a value of 1.
+taper high-freq off
+The frequency at the high end of the passband above which the cosine taper has a value of 0. The high-end taper can be eliminated by setting the off and on values to the same value. The default high-end taper has an off value equal to the trace Nyquist frequency (one half the sample rate.) The default on frequency is 90% of the Nyquist frequency.
+</p>
+<p>
+<em>clipping limit</em>: The value, in digital counts, beyond which in absolute value the unprocessed trace should be considered clipped. If the trace is declared clipped by gmew, it will synthesized into ground motion traces, but it will not have amplitude picks performed. The default clipping limit is 7.55e+06 counts, 90% of 2<sup>23, the limit of a 24-bit digitizer.
+</sup></p>
+<p>
+<em>taper time interval</em>: The number of seconds for which a cosine taper will be applied to both ends of the input time series before it is transformed to the frequency domain. This taper will shorten the useful length of the time series from the length specifed by the traceTimes command by twice this taper interval. The default value is 0 - no taper is applied to time series.
+</p>
+<pre class="wiki">Default: as described above
+Example: SCNLpar SEA EHE UW -- 0.2   0.1 0.1 20 25   2.9e4 1.0
+</pre><p>
+<strong>searchWindow [A B C D]</strong><br />
+Function: Amplitude Controls
+</p>
+<p>
+Specify the time interval in which gmew will search for peak amplitudes in the synthetic traces. Together with the P- and S-phase arrival times estimated from the velocity model, these four parameters set the start and end times of this search window. The four parameters are:
+</p>
+<p>
+A: The multiple of the estimated interval P - S to start the search before estimated S arrival. Use a negative value to start after the S arrival.
+</p>
+<p>
+B: The minimum number of seconds before estimated S arrival to start the peak search.
+</p>
+<p>
+C: The multiple of the estimated interval P - S to end the search after the estimated S arrival.
+</p>
+<p>
+D: The minimum number of seconds after estimated S arrival to start the peak search.
+</p>
+<pre class="wiki">Default: searchWindow 0.0 2.0 0.0 30.0 # Search window runs from 2 seconds
+        before to 30 seconds after the estimated S arrival, independent of
+        the P - S interval.
+Example: searchWindow 0.1 2.0 2.0 15.0 # some random values
+</pre><p>
+<strong>staLoc [LOC [params]]</strong><br />
+Function: Auxilliary Data Sources
+</p>
+<p>
+Tells gmew where to find station location information. Station locations are used to find the station-epicenter distance, which is then used in the estimate of P and S phase arrivals. The choices for LOC are:
+</p>
+<p>
+File loc-file: Get station locations from a hyp2000-format station location file named loc-file. This file must be in text format, not the binary-format file sometimes used by hyp2000. If the file is not located in the current directory, partial or full path information must be included in loc-file.
+</p>
+<p>
+EWDB: Query the Earthworm database for station locations. Not currently implemented.
+</p>
+<pre class="wiki">Default: none; this command is required
+Example: staLoc File /earthworm/run/params/hypoinverse/stas/uw_sta.hinv
+</pre><p>
+<strong>TempDir [temp-dir]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Specify the temporary directory for writing an XML file (see XMLDir). This command is ignored unless an XMLDir command is given, in which case TempDIr is required.
+</p>
+<pre class="wiki">Default: none; this command is required if XMLDir is given
+Example: TempDir Shake/temp
+</pre><p>
+<strong>tracesource [SOURCE [params]]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+Directs gmew to obtain trace data from SOURCE. Choices are:
+</p>
+<p>
+waveServer server-list: Obtain trace data from the wave servers in server-list, a space delimited list of one or more server:port pairs. The server can be an IP address or a hostname for the wave server. The port is the port number used by that wave server.
+</p>
+<p>
+waveServer File server-file: Command line: -tvObtain trace data from the wave servers listed in the file named server-file. This file consists of lines listing server and port, one server to each line. The two entries on a line may be separated by space or colon.
+</p>
+<p>
+Gmew will connect to one server at a time. For each connection, it will obtain the server's current menu, match SCNLs on the menu against the selection list from Add and Del commands, obtain and process the trace data segment for each of the selected SCNLs. The time interval for each trace is established by the traceTimes command. After all the selected SCNLs for one wave server have been processed, the connection to that server will be closed and the next server will be accessed.
+</p>
+<pre class="wiki">Default:  waveServer with list of servers read from the file $EW_PARAMS/servers
+Example: traceSource waveServer 123.45.67.89:16021 123.45.67.89:16022
+</pre><p>
+<strong>extraDelay [DelaySecs]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+This is the delay in seconds to wait after receiving an Event message to hit the waveServers for traces.
+</p>
+<p>
+DelaySecs: is the number of seconds to sleep.
+</p>
+<pre class="wiki">Default: extraDelay 0
+Example: extraDelay 20
+</pre><p>
+<strong>traceTimes [START END]</strong><br />
+Function: Event and Trace Commands
+</p>
+<p>
+Specify the start and end times of trace data to be used from any trace source.
+</p>
+<p>
+START: is the number of seconds before estimated P arrival to start the trace.
+</p>
+<p>
+END: is the number of seconds after estimated S arrival to end the trace.
+</p>
+<pre class="wiki">Default: traceTimes 5.0 60.0
+Example: traceTimes 10.0 40.0
+</pre><p>
+<strong>velocity [model]</strong><br />
+Function: Auxilliary Data Sources
+</p>
+<p>
+Read in the one-dimensional velocity model to be used to estimate P and S phase arrival times. This is done using the syntax: @velocity_file
+</p>
+<p>
+Typically this will be the same file as used for binder_ew. Gmew will always look for this file in the current directory, so appropriate path information must be included if the file is located elsewhere. Ask Earthworm Central for documentation of this long-used file format.
+</p>
+<pre class="wiki">Default:  none
+Example: @/earthworm/run/params/uw_velovity.d
+</pre><p>
+<strong>watchForAlarm [duration]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Read ACTIVATE_MODULE messages tagged for gmew from the input ring, and process similarly to a HYPOARC2000 message, but instead of computing the window, use the timestamp included in the message as the start of the window and duration as its length in seconds.
+</p>
+<pre class="wiki">Default: ignore ACTIVATE_MODULE messages
+Example: watchForAlarm 10
+</pre><p>
+<strong>wsTimeout [M]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Set the timeout for wave server connections to M milliseconds. If no response is heard from the wave server after this time, gmew will assume this wave server is dead and proceed to the next one.
+</p>
+<pre class="wiki">Default: 5000 milliseconds
+Example: wsTimeout 10000
+</pre><p>
+<strong>XMLDir [xml-dir]</strong><br />
+Function: Miscellaneous Commands
+</p>
+<p>
+Gmew can optionally write an XML file for an event. This file will be in the format used by ShakeMap (version 2). While the file is being written, it will reside in temp-dir. When the file is completed, it will be moved to xml-dir. The file's name will be "_dig_dat.xml" with the Event ID prepended. By writing to a temporary directory and moving the completed file to xml-dir, gmew will ensure that only a complete XML file will be in xml-dir. (On Unix, you must ensure that temp-dir and xml-dir are on the same filesystem; otherwise the file movement will not be an atomic operation.)
+</p>
+<pre class="wiki">Default: XMLDir command not given; no XML file is written
+Example: XMLDir  Shake/input
+</pre><h3 id="SampleConfigurationFile">Sample Configuration File</h3>
+<pre class="wiki"># Configuration file for gmew
+# Some of these parameters can be overridden on the command-line;
+# some of them only make sense on the command-line.
+#
+# Required Commands: 
+# The following five commands are always required by gmew.
+# Other commands below may be required when certain options are given.
+#
+# Earthworm Transport commands
+# RingInName : specify the name of the earthworm transport ring from
+#  which to read TYPE_HYP2000ARC messages for event notification.
+
+RingInName HYPO_RING
+
+# RingOutName : specify the name of the earthworm transport ring from
+#  which to write Magnitude, Heartbeat and Error messages. This may be
+#  the same is the RingInName if desired.
+
+RingOutName GM_RING
+
+# MyModId &lt;module-id&gt;: specify the module ID for gmew
+ MyModId MOD_GMEW
+
+# HeartBeatInterval int: How often gmew should beat its heart.
+
+HeartBeatInterval 30
+
+# getEventsFrom  INST_ID MOD_ID
+# Specify the installation ID and module ID names from which to get
+# hypoinverse archive messages to read event data. These names may be
+# selected from earthworm.d and earthworm_global.d. No default values.
+Use as many of these commands as necessary.
+
+getEventsFrom INST_UW MOD_WILDCARD
+getEventsFrom INST_MENLO MOD_WILDCARD
+
+
+# maxSta number
+# The number of stations to be used by gmew must be specified with
+# the maxSta command. This is the number of unique SNs to be used; each
+# SN combination can have any number of components. The maxSta command
+# must come before any "Pri" commands.
+
+maxSta 100
+
+# maxDist km
+# The maximum epicenter - station distance in kilometers. 
+# Stations lying outside this radius will not be used by gmew.
+#
+maxDist 600
+
+
+# maxTrace nsamples
+# The maximum number of trace data samples to process from one SCNL.
+# This is the product of the trace length in seconds and the highest 
+# expected sample rate. For example, 10 minutes of data at 100 samples per
+# second gives 60000 samples.
+
+maxTrace 60000
+
+
+# staLoc: station location source
+#    Choices: File &lt; loc-file&gt; - get station locations from a hyp2000-format
+#                               file named loc-file
+#             EWDB - query the EW database for station locations; access info
+#                    given below.
+
+staLoc File /earthworm/run/params/hypoinverse/stas/uw_sta.hinv
+
+
+# Regional Velocity model: must be specified as "@vel_model_file". Typically
+#    this will be the same file as used for binder_ew.
+
+@uw_velocity.d
+
+
+# traceSource: Where gmew will obtain trace data
+#    choices are: waveServer  - raw traces from wave_servers; 
+#                              server-list is either a space separated list
+#                              of ip-address:port or 
+#                           "File "
+#    default: waveServer with list of servers read from $EW_PARAMS/servers
+
+traceSource waveServer 123.45.67.89:16021 123.45.67.89:16022
+
+
+# Add STA COMP NET
+# Del STA COMP NET
+# SCNL selection is done by a selection list and a rejection list.
+# The station selection command `Add' specifies the names of 
+# STA (station), COMP (component), and NET (network). 
+# The wildcard `*' may be used for any or all of STA, COMP, NET.
+# COMP may be given as the first two letters of the component name,
+# to select all direction desgnators are accepted for that component.
+# If no Add commands are given, all SCNLs will be selected.
+# The Del command is used to put SCNLs on the rejection list:
+# for example: "Add * EL UW" followed by "Del LAB EL UW" to include
+# all ELE and ELN components from UW except LAB.ELE.UW and LAB.ELN.UW.
+# List as many Add and Del commands as desired, one to a line
+
+Add * BH *
+Add * HH *
+Add * SL *
+Add * EL *
+Del LAB * UW
+
+
+# respSource: Tells gmew where to get response information; 
+#    Choices: EWDB - query the EW databse for pole-zero-gain responses.
+#             File &lt; dirname*gt; &lt; pz-filename-format&gt; - find response files in the 
+#                            directory dirname. dirname can be 
+#                            a full directory name, or relative to $EW_PARAMS.
+#                            filename-format is a string similar to printf
+#                            format: %S, %C, %N are replaced by station, 
+#                            component and network names, respectively,
+#                            all in upper case. Similarly %s, %c, %n work
+#                            for lower-case station, component and network.
+#                            The digraph %% stands for %; all other 
+#                            characters are taken literally.
+#                            The response file format is that used by SAC.
+# 
+#    default: none; you must specify one of the above choices.
+
+respSource File responses %S_%C_%N.pz
+
+
+# traceTimes start end
+# The start and end times for traces is set here. 
+#   &lt; start&gt; is the number of seconds before estimated P arrival to start
+#           the trace.
+#   &lt;end&gt; is the number of seconds after estimated S arrival to end the trace.
+#   default: traceTimes 5.0 60.0 # starts trace 5 seconds before estimated P
+#           arrival and ends trace 60 seconds after estimated S arrival.
+
+traceTimes 5.0 60.0
+
+
+# searchWindow A B C D
+# The time window for searching for peak amplitudes is set here.
+#    &lt;A&gt; is the multiple of the estimated interval P - S to start the 
+#        search before estimated S arrival.
+#    &lt;B&gt; is the minimum number of seconds before estimated S arrival to
+#        start the peak search.
+#    &lt;C&gt; is the multiple of the estimated interval P - S to end the
+#        search after the estimated S arrival.
+#    &lt;D&gt; is the minimum number of seconds after estimated S arrival to
+#        start the peak search.
+# default: searchWindow 0.0 2.0 0.0 30.0 # Search window runs from 2 seconds
+#        before to 30 seconds after the estimated S arrival, independent of
+#        the P - S interval.
+
+searchWindow 0.0 2.0 0.0 30.0
+
+#saveTrace: whether and how to save synthetic ground-motion traces
+#            If saveTrace command is absent, no traces will be saved.
+#   Choices: SAC &lt;baseDir&gt; &lt;dirFormat&gt; &lt;filename-format&gt; - 
+#                  save gm traces in SAC-format files. 
+#                baseDir specifies a fixed directory name.
+#                dirFormat gives a formattted subdirectory name; the
+#                  format string is that used for the "date" command applied
+#                  to the event origin time, with the addition of `%i' 
+#                  to indicate the event ID. Be careful with this; some
+#                  formats produce output not compatible with file names.
+#                filename-format gives the formatted file name using
+#                  % to introduce one of the format specifiers "sScCnN%"
+#                  `s' is the station name in lower case; `S' is upper case
+#                  Likewise for component and network names; `%' stands for
+#                  itself. All other characters are taken literally.
+#
+#   default: None (no traces are saved.)
+
+
+# XMLDir dirname
+# Optional command to cause ground-motion results to be written to
+#   a ShakeMap XML file. This directory must already exist.
+XMLDir Shake/input
+
+# TempDir dirname
+# Temporary directory for writing XML file. If XMLDir is given, TempDir must
+#   also be given. On Solaris (Unix), these two directories should be on 
+#   the same filesystem. This will ensure that the XML file will be complete
+#   as soon as it is moved into XMLDir. This directory must already exist.
+TempDir Shake/temp
+
+# MappingFile filename
+# To provide descriptive names in the shakemap XML file, a mapping file
+#   may optionally be given. This file contain mappings of SCNL to instrument 
+#   type, SN to long station names, and N to agency names.
+MappingFile   PNSN.map              
+                                    
+
+# Debug N
+# There are several different debug features, listed below. 
+# You can give one Debug command for each feature you want to turn on, 
+# or you can add together the values of desired features and give 
+# one Debug command.
+# value   feature
+#     1   trace and search times and P and S arrival estimates
+#     2   SCNL selection tests
+#    16   ws_client debugging
+#    32   poles. zeros and gain values
+#    64   trial frequency response functions to STDOUT
+#   128   full frequency response function to STDOUT
+
+
+# SCNL Parameters: normally this command will be given as "@SCNL_param_file"
+# to cause the separate file "SCNL_param_file" to be processed.
+
+# watchForAlarm S
+# Recognize ACTIVATE_MODULE messages to initiate processing for a window
+# S seconds long
+#watchForAlarm 30
+
+# AddSpectraResponseAt period
+# Add period to the list being processed
+# The first replaces the default list (0.3, 1.0, 3.0)
+# This does NOT affect what gets written to the ShakeMap XML
+#AddSpectraResponseAt 2.0
+#AddSpectraResponseAt 2.5
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/gmew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,344 @@
+
+MOLE: an open near real-time database-centric Earthworm subsystem.
+
+  Matteo Quintiliani and Stefano Pintore
+  Istituto Nazionale di Geofisica e Vulcanologia - Italy
+  Mail bug reports and suggestions to <matteo.quintiliani@ingv.it> 
+
+
+CONTENTS
+  INTRODUCTION
+  MOLE COMPONENTS AND SUPPORTED PLATFORMS
+  MOLEDB: INSTALLATION AND CONFIGURATION
+  EW2MOLEDB: INSTALLATION AND CONFIGURATION
+  MOLEFACE: INSTALLATION AND CONFIGURATION
+  TEST MOLEDB DUMPS
+  HISTORY
+  ACKNOWLEDGEMENT
+  REFERENCES
+  LICENSE
+
+
+- INTRODUCTION
+
+  Earthworm (Johnson et al. 1995) is an automatic processing system for
+  locating earthquakes. The initial objective of the project, started in 1993,
+  was to provide rapid notification of seismic events. The original requirements
+  were for a system able to manage hundreds of channels in near real-time with
+  robustness and speed but not necessarily to have a persistent memory of the
+  past events. Subsequently, the Interactive Earthworm subsystem was provided in
+  addition to the automatic, and it was made up of several modules for loading
+  information in an Oracle database and then retrieving it for post-processing
+  and alarm notifications (Earle et al. 2003).
+
+  However, the last Earthworm public distribution containing the Interactive
+  subsystem is the release 6.3, which dates back to May 2003, after which, for
+  various technical and operational reasons, it was discontinued and no other
+  database has been included in Earthworm up to the version 7.5, released in
+  August 2011.
+
+  After several years of successful tests using Earthworm for seismic event
+  detection in Italy (Mazza et al. 2008), INGV National Earthquake Center decided
+  to substitute the preexisting location program with the Earthworm system,
+  interfacing it with the current event revision procedures, the seismological
+  database called SeisEv and the station instruments database called SeisNet. The
+  main issue was that the common output parameters produced by Earthworm, like
+  phase picks, event locations, magnitudes, data triggers, and error messages
+  were reported only by e-mail or recorded on local disk files: one has to deal
+  with scattered files in diverse formats, whenever analyzing or debugging an
+  Earthworm system.
+
+  The lack of a database in the Earthworm distribution considerably restricted
+  the chances of data analysis and developing new procedures for post-processing
+  and seismic information dissemination. There already existed, and still exist,
+  several examples of dedicated database-centric projects interfacing to
+  Earthworm's core (Friberg et al. 2010a), among which the most widespread are
+  HYDRA (Buland et al. 2009) and AQMS (ANSS 2010; Bhadha et al. 2010, Friberg et
+  al. 2010b) which have been developed for different purposes but they both rely
+  on the Oracle Database Management System (DBMS). Adopting a commercial DBMS
+  like Oracle is technically unobjectionable but this choice could be too costly
+  for most of the Earthworm users, whose need could also be met with a solution
+  based on open-source and free software currently available. Hydra, developed by
+  USGS/NEIC for locating global earthquakes and compiled only for Windows
+  platform, uses the old Interactive Earthworm database. AQMS is not an open
+  project at this time and even when it will be publicly released, the cost of
+  the Oracle license should reduce the appeal of Earthworm when compared to other
+  free earthquake monitoring systems like SeisComP3 (Olivieri and Clinton 2012).
+
+  The experience provided by the Winston software (Cervelli et al. 2004;
+  Cervelli 2005) had already demonstrated that a MySQL DBMS could sustain the
+  heavy load of storing in near real-time the waveforms coming from the Earthworm
+  system. This fact encouraged us to rely on MySQL to develop a new system
+  potentially capable of collecting all possible kinds of Earthworm messages.
+
+  We have designed and developed Mole, an open-source and cross-platform
+  Earthworm subsystem made up of a MySQL database, an Earthworm module, and a web
+  interface. Although it sprang from INGV requirements, Mole is as
+  general-purpose as possible in order to provide a high-level communication
+  layer to Earthworm. In this sense, Mole intends to be a starting point for the
+  Earthworm community to fire up a development effort for a new "Open Interactive
+  Earthworm". Mole is freely available from the distribution of Earthworm 7.6
+  released on November 2012.
+
+
+- MOLE COMPONENTS AND SUPPORTED PLATFORMS
+
+  At present, Mole consists of:
+
+    - moledb: a MySQL database which hosts Earthworm messages information. It
+	must be created running the installation script containing all MySQL
+	definitions.
+    - ew2moledb: an Earthworm module which feeds moledb with information read
+	from the Earthworm rings. It has to be compiled for the same architecture where
+	Earthworm is running (Solaris, Linux, Windows, Mac OS X, etc.).
+    - moleface: a PHP web interface for browsing the information stored in
+	moledb. It must be installed on a web server that supports PHP and MySQL.
+
+  Mole has been designed and developed taking in account the cross-platform
+  compilation aspects. It can run on Windows and Unix-like operating systems
+  such as Linux, Mac OS X and Solaris.
+
+
+- MOLEDB: INSTALLATION AND CONFIGURATION
+
+  * Install the MySQL database server (version 5.x)
+
+  * Initialize Mole database
+	Launch the script "init_db.sh" under directory moledb.
+	It will create all you need on a database on your localhost.
+	The syntax is the following:
+	     init_db.sh  root-password  dbname-dbowner  dbowner-password  dbdirectory  [ flag_root 'yes' or 'no' ]
+	The meaning of the arguments:
+             - root-password    : password of the root user of your MySQL server
+	     - dbname-dbowner   : database to create and the owner user with
+	       all privileges on it have the same name by default.
+             - dbowner-password : new password for the 'dbowner'
+             - dbdirectory      : directory where the SQL scripts resides.
+	     - flag_root        : if it is 'no' then the scripts expects that the
+	       'dbname' already exists and 'dbowner' has all privileges on it.
+	       Default is 'yes'.
+	An example:
+	     ./init_db.sh  RootSecretPassword  mole  OwnerDBPassword  ./  yes
+	Windows note: Windows natively doesn't run ".sh" files. You can install
+		Cygwin. Make sure to install the 'mysql' client in Cygwin as well
+		as the built-in Windows command-line client won't work in Cygwin.
+		Cygwin mysql wants hostname too; to be able to run the above script
+		without any changes, you can put the hostname in ~/.my.cnf like so:
+		  echo [client] > ~/.my.cnf
+		  echo host=127.0.0.1 >> ~/.my.cnf
+		then
+		  cd /cygdrive/c/earthworm/earthworm_XXX/src/archiving/mole/moledb
+		  ./init_db.sh  RootSecretPassword  mole  OwnerDBPassword  ./  yes
+		
+		
+
+- EW2MOLEDB: INSTALLATION AND CONFIGURATION
+
+  Earthworm requires compiling 32-bit binaries even on 64-bit architectures.
+
+  * Compiling ew2moledb:
+	Dependencies:
+	    - Earthworm environment configuration.
+            - Connector/C (libmysql), a MySQL client library for C development.
+              Source from http://www.mysql.com/downloads/connector/c/ must be
+              compiled as 32-bit !
+            - Compiling Connector/C (libmysql) requires 'cmake'.
+
+        Automatic compilation procedure:
+                # cd mole
+                # make -f makefile.XXX 
+            Set in your environment the variable LD_LIBRARY_PATH (or DYLD_LIBRARY_PATH), i.e.:
+	        export LD_LIBRARY_PATH=$EW_HOME/$EW_VERSION/src/archiving/mole/mysql-connector-c-build/lib
+	        setenv LD_LIBRARY_PATH $EW_HOME/$EW_VERSION/src/archiving/mole/mysql-connector-c-build/lib
+
+  * Configure ew2moledb:
+	- Use one of the following template files:
+		ew2moledb.d            reading all messages from multiple rings
+		ew2moledb_hyporing.d   reading common messages from HYPO_RING
+		ew2moledb_pickring.d   reading common messages from PICK_RING
+		ew2moledb_wavering.d   reading common messages from WAVE_RING
+	- Copy them and .desc file to directory $EW_PARAMS
+	- Edit the files 
+	- Set properly the following variables:
+		MyModuleId
+		InRing
+		DBHostname
+		DBName
+		DBUsername
+		DBPassword
+		GetMsgLogo ....	
+		GetMsgLogo ....
+
+  * Details about compilation of  ew2moledb:
+
+        The automatic procedure approximately executes, for example on a unix machine:
+                 # cd mysql-connector-c-build
+                 # cd mysql-connector-c-6.0.2
+                 # Within ./CMakeLists.txt add the option "-m32" to variables CMAKE_C**_FLAGS
+                 # cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../mysql-connector-c-build
+                 # make 
+                 # make install 
+                 # cd ../ew2moledb
+                 # make makefile.ux
+
+        If the compilation is not static, then set properly the variable LD_LIBRARY_PATH, i.e.
+                 # export LD_LIBRARY_PATH=/somewhere/mysql-connector-c-build/lib
+
+        If you have already installed somewhere the mysql library as 32-bit, then you
+        could compile ew2moledb following these steps:
+	   - cd ew2moledb
+	   - Edit the makefile.XXX for your architecture and set properly
+		MYSQL_CONFIG_PROG_PATH
+		with the path of program mysql_config
+	   - Run "make -f makefile.XXX dynamic" and good luck ;-)
+
+
+- MOLEFACE: INSTALLATION AND CONFIGURATION
+
+    Moleface is based on the free open-source PHP framework Xataface 
+    Download from http://xataface.com/
+    Moleface has been successfully tested with Xataface 1.3.3 and 2.0.1.
+    Xataface documentation http://xataface.com/wiki/
+
+    Installation requirements:
+        - Apache with PHP and MySQL support.
+	- Xataface.
+
+    Moleface/Xataface step-by-step installation:
+
+     - Copy the directory mole/moleface in a web-accessible location
+       (i.e. /home/me/public_html).
+
+     - Unpack xataface-x.x.x.tar.gz and move the directory xataface-x.x.x in
+       your web-accessible location.
+
+     - In order to display the ew_region_geom tab of moleface, it is necessary
+       to edit the file xataface-x.x.x/lib/SQL/Dialect_MySQL.php and add to the
+       array called 'functions' the following functions :
+	  'astext',
+	  'envelope',
+	  'geometrytype'
+
+     - xataface requires 'short_open_tag=On' in your php.ini file. (Often
+       located at /etc/php.ini). The default is 'Off" on some distributions, so
+       you may need to set this On; check the current value. If you change it, you'll
+       need to restart Apache.
+
+     - Edit and change the moleface login properties within the sql script file
+       moledb/data/moleface/datafaceew_users.sql, and then import it into your
+       mole database.
+
+     - Make the moleface/templates_c directory writable by the web server.  An
+       unsafe way to do this is to chmod 777 moleface/templates_c. But it would
+       be better to just give write access to the web server user.
+
+     - Set the proper value of the php variable 'dataface_version_for_moleface'
+       within the file moleface/index.php .
+
+     - Set the proper values of the moleface db connection variables 'host',
+       'user', 'password', 'name' in the section [_database] within the file
+       moleface/conf.ini .
+
+     - Point your web browser where moleface directory resides (i.e.
+       http://localhost/~me/moleface/). Username and password have been set by
+       the sql script in moledb/data/moleface/datafaceew_users.sql
+
+     For the complete Xataface documentation, please refer to http://xataface.com/wiki/index.php?-table=wiki
+     Specifically for the installation, refer to http://xataface.com/documentation/tutorial/getting_started/installation
+
+
+- TEST MOLEDB DUMPS
+
+  Some moledb dumps for testing purposes are available here:
+
+     ftp://ftp.rm.ingv.it/pub/matteo.quintiliani/mole/
+
+  If you want to share your data with the community, please, let us know by
+  e-mail at <matteo.quintiliani@ingv.it> 
+
+- HISTORY
+    Read file HISTORY for release notes.
+
+
+- ACKNOWLEDGEMENT
+
+  * Salvatore Mazza - I.N.G.V.
+  * Andrea Bono - I.N.G.V.
+  * Valentino Lauciani - I.N.G.V.
+  * Alfonso Mandiello - I.N.G.V.
+  * Carlo Marcocci - I.N.G.V.
+  * Franco Mele - I.N.G.V.
+  * Laura Scognamiglio - I.N.G.V.
+  * Paul Friberg - ISTI (Instrumental Software Technologies, Inc.)
+  * Stefan Lisowski - ISTI
+
+
+- REFERENCES
+
+  ANSS (2010). AQMS: Advanced National Seismic System Quake Management
+    System. http://vault.gps.caltech.edu/trac/cisn
+
+  Bhadha, R., Chen, S., Crummey, J., Hauksson, E., Solanki, K., Thomas, V.
+    I., Watkins, M., Yip, R., Yu, E., Given, D., Peats, R., and S. Schwarz (2010).
+    Caltech/USGS Southern California Seismic Network: Recent Developments. American
+    Geophysical Union, Fall Meeting 2010, abstract #S13C-2018.
+
+  Buland, R. P., Guy, M., Kragness, D.; Patton, J., Erickson, B., Morrison,
+    M., Bryon, C., Ketchum, D., and H. Benz (2009). Comprehensive Seismic
+    Monitoring for Emergency Response and Hazards Assessment: Recent Developments
+    at the USGS National Earthquake Information Center. American Geophysical Union,
+    Fall Meeting 2009, abstract #S11B-1696.
+
+  Cervelli, D. P., Cervelli, P. F., and T. L. Murray (2004). New Software for
+    Long-Term Storage and Analysis of Seismic Wave Data. American Geophysical
+    Union, Fall Meeting 2004, abstract #SF13A-0705.
+
+  Cervelli, D. P. (2005). Winston Manual.
+    http://www.avo.alaska.edu/Software/winston/W_Manual_TOC.html
+
+  Earle, P., Bittenbinder, A., Bogaert, B., and C. Johnson (2003). Turn to the
+    worm: seismic network operation using the USGS Earthworm system, in
+    Observations and Research Facilities for European Seismology, ORFEUS Newsl. 5,
+    no. 1, http://www.orfeus-eu.org/Organization/Newsletter/vol5no1/earthworm.html
+
+  Friberg, P., CISN developers (2010b). A Reorganization of Earthquake
+    Post-processing Systems at Regional Seismic Networks in the United States using
+    AQMS. European Seismological Commission abstract, September 6-10, 2010,
+    S21/Tu/O13.
+
+  Friberg, P., Lisowski, S., Dricker, I., and S. Hellman (2010a). Earthworm
+    in the 21st century. European Geosciences Union General Assembly 2010, held 2-7
+    May, 2010 in Vienna, Austria, p.12654.
+
+  Hannah, S. (2009). Xataface-A Better Way to Build a Front-end for Your
+    MySQL Database. http://www.xataface.com/ .
+
+  Johnson, C.E., A. Bittenbinder, B. Bogaert, L. Dietz, and W. Kohler (1995).
+    Earthworm: a flexible approach to seismic network processing, IRIS Newsletter,
+    14, 1-4.
+
+  Mazza, S., Mele, F., Olivieri, M.,Pintore, S., Quintiliani, M.,
+    Scognamiglio, L., and G. Selvaggi (2008). A new System for Earthquake Detection
+    and Source Parameters Determination in Italy. European Seismological Commission
+    ESC 2008, 31st General Assembly.
+
+  Olivieri, M., and J. Clinton (2012). An Almost Fair Comparison Between
+    Earthworm and SeisComp3. Seismological Research Letters, July/August 2012,
+    v. 83, no. 4, p. 720-727. 
+
+  Quintiliani, M., and S. Pintore (2013). Mole: an open near real-time
+    database-centric Earthworm subsystem. Seismological Research Letters,
+    Electronic Seismologist, July/August 2013, v. 84, p. 695-701.
+    http://www.seismosoc.org/publications/SRL/SRL_84/srl_84-4_es/index.html
+
+
+- LICENSE
+
+    Software is open-source and released under GNU Library General Public License.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.
+
+    Read file COPYING for details.
+

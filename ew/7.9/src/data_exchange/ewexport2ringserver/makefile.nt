@@ -1,0 +1,13 @@
+
+SUB_DIR = src
+
+all: make_sub_dirs
+
+make_sub_dirs:
+  @nt_make_subdirs $(SUB_DIR)
+
+clean:
+  @nt_clean $(SUB_DIR)
+
+clean_bin:
+  @nt_clbin $(SUB_DIR)

@@ -1,0 +1,44 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <title>Earthworm Modules: SAMTAC2EW overview</title>
+</head>
+<body alink="#ff0000" bgcolor="#fadfaf" link="#0000ee" text="#000000"
+ vlink="#551a8b">
+
+<center>
+<h1>
+Earthworm Modules:<br>
+SAMTAC2EW Overview</h1></center>
+
+<center><i>(last revised 22 January, 2009)</i></center>
+
+<p>
+This module recieves data packets from a SAMTAC-802U.  The data packets are then put into an Earthworm ring-memory transport buffer.  The module was developed using Earthworm version 7.2.  It is all 'C' code compiled using standard makefiles ("makefile.nt") like those used with other Earthworm modules. On Windows there are two versions of SAMTAC2EW: samtac2ew_com, to use a COM port on a PC; and samtac2ew_tcp, for using TCP communications to a serial-to-TCP server connected to the serial port on the SAMTAC-802U. There is one config file for the TCP version (samtac2ew_tcp.d) and another config file for the COM version (samtac2ew_com.d.)  One instance of SAMTAC2EW will be needed for each SAMTAC, and each instance will have its own config file. 
+</p>
+<p>
+<strong>SAMTAC2EW Packet Handling Details</strong><br>
+As data packets are received from the SAMTAC the headers are read, and a SOH message is sent to earthworm.  The packets are then demuxed and a tracebuf2 packets for each channel is sent to the ring buffer.  If there is a break in the sequence numbers or the checksums are bad, samtac2ew will write an error message to the ring buffer.  
+</p>
+<strong>SAMTAC2EW State Of Health Details</strong><br>
+SAMTAC2EW will send out a State Of Health(SOH) packet at a configurable interval(default 5 minutes) or if the SOH changes.  The Packet Type used is <strong>TYPE_SAMTACSOH_PACKET</strong> and this must be defined in the earthworm.d file.  An example SOH packet:<br>
+<pre>ZZ-ISTI 1232641240
+DeviceID: 21
+Detecting Earthquake: 0
+Media Capacity Alarm: 0
+Power Supply Voltage Alarm: 0
+GPS Alarm: 1</pre>
+</br>
+Where <strong>ZZ-ISTI</strong> is the Network-Station and <strong>1232641240</strong> is the epoch time the packet was sent.
+</p>
+
+<CENTER>
+  <a href="../modules.html">Module Index</a> | <a href="../cmd/samtac2ew_cmd.html">SAMTAC2EW 
+  Command File</a> 
+</CENTER>
+<br>
+Module developed by Tim Zander of ISTI. Development funded by Tokyo Sokushin.<br>
+For questions or assistance please contact ISTI here: <a href="http://www.isti.com/contact-info">http://www.isti.com/contact-info</a>
+</body>
+</html>

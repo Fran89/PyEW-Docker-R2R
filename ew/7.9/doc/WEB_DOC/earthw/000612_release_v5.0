@@ -1,0 +1,107 @@
+From aster@dutchman.nmt.edu Mon Jun 12 17:37:44 2000
+Date: Mon, 12 Jun 2000 11:30:25 -0600 (MDT)
+From: Rick Aster <aster@dutchman.nmt.edu>
+To: earthw-list@nmt.edu
+Subject: V5.0
+
+	Hi Earthwormers,
+
+	A message relayed from Barbara Bogaert...
+
+Earthworm V5.0 Release
+**********************
+6/12/00
+
+V5.0 Is Released
+****************
+It can be retrieved from the Earthworm ftp site
+ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.0
+
+
+New Features of EW V5.0
+***********************
+Earthworm v5.0 contains an OPTIONAL Server Package. This server consists of:
+        *  a DBMS Server (Oracle v8, Standard Edition), 
+        *  a web server (Apache), and 
+        *  a map server (based on GMT). 
+The initial suite of functions of this server are fairly minimal, but the idea
+is that the infrastructure is in place, and we will be in good position to
+produce additional capabilities.
+                Note that the Server Package is not required to run the
+Earthworm system. If no DBMS server is available, all Earthworm functions will
+continue to operate as before, and will be supported and enhanced as before.
+There will, however, be a growing suite of features which will be available
+only if a Server is available.
+
+The initial set of DBMS-based server features are:
+        * The DBMS is presumed to be a network-based service. That is, the DBMS
+server may reside in the local Earthworm computer, in another computer at the
+installation, or at a remote site. 
+        * All event data, both parametric and waveform, known to the local
+Earthworm system can be loaded into the agreed-upon DBMS servers as it is
+computed (or received).
+        * An Earthworm system can send and/or accept real-time data to/from any
+number of DBMS servers (local or distant).
+        * A DBMS server can support any number of concurrent, authorized
+clients.
+        * All data feeds from a local Earthworm system to any DBMS servers are
+under exclusive control of the local Earthworm configuration.
+        * The DBMS server supports a web site offering rapid-response,
+interactive seismicity maps. The maps, and the associated pages, provide
+graphic access to event, trace, and station data in the DBMS.
+        * Event and station data, including instrument response, can be pushed
+to a browser client in SAC format. Other formats will be incorporated.
+        * Archiving of parametric and waveform data.
+
+For additional information about the Server Package, or for installation
+assistance, please contact me.
+
+OTHER NEW MODULES
+*****************
+
+LISS2EW
+Liss2ew is the earthworm module for receiving trace data from the Live Internet
+Seismic Server. The LISS is a protocol that provides trace data in mini-SEED
+format in near-real-time over an IP link. The liss2ew module will connect to
+one LISS, read selected streams of trace data, and write that trace data into
+the earthworm transport ring. 
+
+EW2LISS
+Ew2liss is the Earthworm module for serving Earthworm trace data in LISS (Live
+Internet Seismic Server) format. The ew2liss module will convert selected SCNs
+(station-component-network) of trace data from an Earthworm transport ring,
+convert that data to miniSEED format, and serve the data to a single LISS
+client (such as liss2ew) over a IP network connection. 
+
+
+CONTRIBUTED SOFTWARE
+**************************
+
+The contributed software can be found at 
+        ghtftp.cr.usgs.gov/pub/OUTGOING/earthworm/release_v5.0
+
+UNIVERSITY OF UTAH:
+REFTOEW: Reftoew collects data from a UNR RefTek Data Server, a disk file or
+an  Earthworm transport ring.  The data (DT) packets are forwarded to the
+Earthworm Transport layer as TRACE_BUF format packets and optionally written to
+disk as binary SAC files.
+
+VOLCANO PROGRAM:
+The wonderful people at CVO have modified Carlsubtrig, Trig2disk,
+Heli_standalone, and Sgram for the greater flexibility required in the volcano
+networks.
+
+CARLSUBTRIG: Many new options regarding how subnets are triggered and which
+stations are saved.
+
+TRIG2DISK:  Functions Putaway.c SudsPutaway.c and AhPutaway.c were modified to
+use the named subnets now supplied by Carlsubtrig in naming the directories.
+
+HELI_STANDALONE:  Ported to NT. 
+
+SGRAM: Ported to NT. 
+
+In addition, an NT-based Earthworm interface has been developed by CVO, which
+replaces startstop, statmgr, and provides a GUI interface to various Earthworm
+functions. 
+

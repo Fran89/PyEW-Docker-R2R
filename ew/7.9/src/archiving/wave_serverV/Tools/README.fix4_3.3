@@ -1,0 +1,44 @@
+The wave_serverV TANK structure changed after v3.2, adding some elements to
+the structure. One of the new elements is used to keep track of index
+overwrites. (The new structure includes some empty elements for future use,
+hopefully precluding the need to translate old structures to new ones.
+
+The utility program fix4_3.3 is provided to translate the v3.2 (or earlier)
+tank file structures to the new (version 3.3) structures. There are one or two
+of these files for each wave_serverV and have the string ".str" at the end of
+their file names.
+
+***** NOTE ***** A bug in v3.2 wave_serverV caused the tank index files (*.inx
+* files) to become corrupted after they filled up. The most likely way for the
+* index files to fill up is for the tank data to be so badly fragmented (lots
+* of gaps) that the index files run out of entries. This condition will show
+* up in the wave_serverV log: "wave_serverV: Ran out of free indexes." A more
+* reliable way to see if the index file has filled up is to check its file
+* size. If the index file size in bytes is exactly 24 times the "Index Size"
+* parameter in wave_serverV.d, then the file has not filled up and should be a
+* good file. If the index file size is 12 bytes more than 24 times the "Index
+* Size", then the index file has filled up and may be corrupted.
+*
+* If the index file(s) for a tank are corrupted, they should be removed
+* because the wave_serverV (any version) may hang when it tries to read them
+* on startup. Since it may take a long time to recreate the index from a badly
+* fragmented tank, the tank file should probably be deleted at the same time
+* as the index files are removed.
+*****
+
+To use fix4_3.3 to translate the structure files: 
+
+shut down earthworm so that the running v3.2 wave_serverV can save its tanks
+and exit normally.  
+Change directory (cd) to the tank directory. 
+Run fix4_3.3 on each of the structure files:
+   fix4_3.3 p1000-1.str; fix4_3.3 p1000-2.str
+This will create new files p1000-1.str.new and p1000-2.str.new, leaving the
+old structure files unchanged. 
+Rename the old and new structure files:
+   mv p1000-1.str p1000-1.str.old
+   mv p1000-1.str.new p1000-1.str
+   mv p1000-2.str p1000-2.str.old
+   mv p1000-2.str.new p1000-2.str
+
+Now the v3.3 wave_serverV can use these tank structure files.

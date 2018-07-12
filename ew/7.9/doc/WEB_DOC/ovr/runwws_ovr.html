@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Program: RunWWS overview</TITLE>
+</HEAD>
+<BODY  bgcolor="#ffffff">
+<CENTER>
+  <H1>Earthworm Modules:<BR>
+    RunWWS Overview</H1>
+  <I>(last revised Nov 14, 2012)</I>
+</CENTER>
+
+<P> RunWWS is a wrapper for the Winston Java programs included with Earthworm, added originally as a contribution from Menlo Park's Will Kohler. This wrapper makes the Winston modules act like regular Earthworm modules, sending heartbeats and responding to stop or restart requests.
+<P>Winston's original author was Dan Cervelli working for AVO. Winston is composed of an importer that takes TRACEBUF2 information from an Earthworm export, and a server that serves requests for waveform data just like wave_serverV does. The database on the back-end is MySQL, and requires some configuration. The Winston Java programs can be found in the src/archiving section of the Earthworm distribution. You need to run an instance of runwws for each of the Java programs you'd like to run under Earthworm.
+<P>Winston configuration information can be found here as of this writing:
+<P><a href="http://www.avo.alaska.edu/Software/winston/W_Manual_SR.html">http://www.avo.alaska.edu/Software/winston/W_Manual_SR.html 
+</a>
+<P><a href="http://www.avo.alaska.edu/Software/winston/W_Manual_TUT.html">http://www.avo.alaska.edu/Software/winston/W_Manual_TUT.html 
+  </a>
+<P> <a href="http://www.avo.alaska.edu/Software/winston/W_Manual_CF.html">http://www.avo.alaska.edu/Software/winston/W_Manual_CF.html </a>
+<P>Configuration for RunWWS can be found in the section RunWWS Commands. Currently RunWWS is only compatible with Windows.
+<hr>
+<P><strong>Running Winston under UNIX</strong>
+<P>For now if you wish to run Winston within Earthworm from within Unix, you can have Winston started and killed by startstop by adding it to startstop*d as following. Note that the kill is not a clean quit request, and statmgr can't monitor Winston to restart it if it has problems. This isn't as robust as using RunWWS under Windows.
+<P>IF YOU ARE USING UNIX AND NOT USING RUNWWS:
+<P>You can put the following in your startstop*d. Note for the following to work you'll need to put your .config files and your 'lib' directory for Winston in the Earthworm Params directory ($EW_PARAMS)
+<pre>
+#
+# Winston waveserver itself
+  Process         "/usr/bin/java gov.usgs.winston.server.WWS --noinput"
+  Class/Priority    TS 0
+#
+# Winston import from earthworm to waveserver
+  Process         "/usr/bin/java gov.usgs.winston.in.ew.ImportEW --noinput"
+  Class/Priority    TS 0
+</pre>
+Note that you do not want to use --noinput if you are using RunWWS. However, if you're using the above commands on Unix, it is highly recommend to use --noinput if you have Earthworm automatically start up when your machine boots. If there's no interactive console for Winston, if you don't use --noinput you can peg your CPU to 100% and you wouldn't want that.
+  
+  
+<P>
+  <CENTER>
+    <b><A HREF="../modules.html">Module Index</A> | <A HREF="../cmd/runwws_cmd.html">RunWWS
+    Commands</A> </b>
+  </CENTER>
+<B>
+<HR>
+<ADDRESS> <BR>
+<address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> </ADDRESS>
+</b>
+</BODY>
+</HTML>

@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      gcf2ew – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/gcf2ew?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="gcf2ew.html" title="View gcf2ew">gcf2ew</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/gcf2ew?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/gcf2ew?action=diff&amp;version=3" title="Version 3 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-05-02T09%3A38%3A40-07%3A00&amp;precision=second" title="2012-05-02T09:38:40-07:00 in Timeline">17 months</a> ago</span>
+            <span class="trac-print">Last modified on 05/02/12 09:38:40</span>
+          </div>
+          <div id="wikipage"><p>
+</p><div class="wiki-toc">
+<ol>
+  <li>
+    <a href="gcf2ew.html#EarthwormModule:gcf2ew">Earthworm Module: gcf2ew</a>
+    <ol>
+      <li>
+        <a href="gcf2ew.html#Function">Function</a>
+      </li>
+      <li>
+        <a href="gcf2ew.html#Details">Details</a>
+      </li>
+      <li>
+        <a href="gcf2ew.html#ConfigurationFileCommands">Configuration File Commands</a>
+        <ol>
+          <li>
+            <a href="gcf2ew.html#EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</a>
+          </li>
+          <li>
+            <a href="gcf2ew.html#FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</a>
+          </li>
+          <li>
+            <a href="gcf2ew.html#ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</a>
+          </li>
+          <li>
+            <a href="gcf2ew.html#DESCRIPTORFILEEXAMPLE">DESCRIPTOR FILE EXAMPLE</a>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <a href="gcf2ew.html#HelpfulHints">Helpful Hints</a>
+      </li>
+    </ol>
+  </li>
+</ol>
+</div><p>
+</p>
+<h1 id="EarthwormModule:gcf2ew"><a class="wiki" href="Earthworm.html">Earthworm</a> Module: gcf2ew</h1>
+<p>
+<strong>Contributed by: </strong>
+</p>
+<h2 id="Function">Function</h2>
+<p>
+Guralp Digitizers Earthworm feed via direct connection to serial port or TCP terminal server. (Solaris and Linux only) (new in EW v7.0) (Linux capable in v7.3)
+</p>
+<h2 id="Details">Details</h2>
+<p>
+gcf2ew is a Guralp Digitizer GCF DM data feeding program for Earthworm. The gcf2ew module provides for three modes of data input:
+</p>
+<ul><li>Lantronix MSS100 serial to IP server
+</li><li>Direct Serial connection to a DM
+</li><li>Network connection to gcfserv
+</li></ul><p>
+This version uses a Lantronix MSS100 for the reliable transmission of data over a network. It also provides the capability for direct serial connection to a DM24 digitizer from a Solaris workstation. The direct serial connection makes full use of the BRP protocol that DM24's use to correct for serial line errors. In addtion, the gcfserv program can be used to serve data to multiple receivers using a PULL protocol that the gcf2ew module is configured for. V1.0.0 and later has SCNL capability for EW v7.0 and greater. It needs to be compiled with EW v7.0 and later, but is backward compatible to earlier versions of Earthworm.
+When running with an MSS100 or gcfserv, the module provides a reliable reconnection if the IP connection should drop. The network input also uses the Guralp BRP serial protocol to rewind the DM to request missing packets.
+</p>
+<h2 id="ConfigurationFileCommands">Configuration File Commands</h2>
+<p>
+On startup, gcf2ew reads the configuration file named on the command line. As always, the configuraton file contains comments:
+</p>
+<pre class="wiki">#  marks the line as a comment (example: # This is a comment).
+</pre><p>
+Command names must be typed in the control file exactly as shown in this document (upper/lower case matters!). gcf2ew supports one diagnostic command line option, -v is for verbose mode so that you can see packets coming in.
+</p>
+<h3 id="EXAMPLECONFIGURATIONFILE">EXAMPLE CONFIGURATION FILE</h3>
+<pre class="wiki"> #
+# gcf2ew configuration file
+#
+# This code receives GCF packets from an MSS100, converts them into
+# Earthworm trace buf messages, and stuffs them into a wave ring.
+#
+#
+ ModuleId	MOD_GCF2EW	# module id for this import,
+ RingName	WAVE_RING	# transport ring to use for input/output,
+
+ HeartbeatInt	10		# Heartbeat interval in seconds
+				# this should be half the g2ew.desc heartbeat!
+
+ LogFile	1		# If 0, don't write logfile at all,
+
+ SaveSOH2LOG 	1		#  write LOG chans to log file
+				# this is useful for debugging timing or
+				# data logger problems.	
+
+TimeoutNoSend	5		# If no data for X seconds from GCF for
+				# X seconds, then kill process (HB and
+				# main thread). 
+				# NOTE: this timeout does not take effect until
+				# a trace data packet comes from the MSS100. That
+				# is, LOG channels do not count! 
+				# 
+				# Iff TimeoutNoSend == 0, then this data
+				# check is DISABLED and gcf2ew will only die
+				# if EW dies.
+
+#
+# one of the following input modes should be used
+#
+
+HostAddress     mss             # the IP or hostname of the MSS100 unit
+PortNumber      3001            # the port number of the MSS100 unit
+
+# OR
+
+#gcfservAddress  isti		# the IP or hostname of the gcfserv program
+#PortNumber      45670          # the port number of the gcfserv program
+
+# OR
+
+#SerialPort     /dev/term/a     # the serial port to which the DM is connected
+#BaudRate       19200a		# an allowed baud rate for the solaris serial ports
+
+
+ 
+# The following mapping is used to map a system_id and stream_id to an SCN and as
+# a SELECTOR on those channels which should be passed along to Earthworm...channels not
+# matching the criteria below are dumped.
+# Example
+#               Sys     Strm    S       C       N
+InfoSCN         0D0081  1031Z2  ISTI    HHZ     CI
+InfoSCN         0D0081  1031N2  ISTI    HHN     CI
+InfoSCN         0D0081  1031E2  ISTI    HHE     CI
+</pre><h3 id="FUNCTIONALCOMMANDLISTING">FUNCTIONAL COMMAND LISTING</h3>
+<p>
+Below are the configure commands recognized by gcf2ew, grouped by the function they influence. Most of the commands are required.
+</p>
+<pre class="wiki">         Earthworm system setup:
+ 		MyModuleId	   	required
+		RingName	   	required
+		HeartbeatInt	   	required
+		TimeoutNoSend	   	required
+	
+	Input Control:
+		HostAddress	  	required
+		PortNumber	  	required
+
+			or
+
+		gcfservAddress	  	required
+		PortNumber	  	required
+
+			or
+
+		SerialPort	  	required
+		BaudRate	  	required
+
+	Output Control:
+		LogFile		   	required
+		SaveSOH2LOG		optional
+		InfoSCN			required
+		InfoSCNL			required
+</pre><h3 id="ALPHABETICCOMMANDLISTINGDESCRIPTION">ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</h3>
+<p>
+In the following section, all configuration file commands are listed in alphabetical order. Listed along with the command (bold-type) are its arguments (in red), the name of the subroutine that processes the command, and the function within the module that the command influences. A detailed description of the command and is also given. Default values and example commands are listed after each command description.
+</p>
+<p>
+The following list is organized by:
+</p>
+<p>
+command [argument here]
+</p>
+<p>
+<strong>HeartbeatInt [beat]</strong><br />
+Processed By: HeartBeat<br />
+Function: Earthworm setup
+</p>
+<p>
+Beat the gcf2ew heart every beat seconds. This is implemented as a separate thread in gcf2ew.
+</p>
+<p>
+<strong>HostAddress [IPname or number]</strong><br />
+Processed by: main<br />
+Function: Earthworm setup<br />
+</p>
+<p>
+Connect to the mss100 at the ip address IP address. This option accepts fully qualified domain names as well as IP numbers. Note that the PortNumber is also required.
+</p>
+<p>
+<strong>gcfservAddress [IPname or number]</strong><br />
+Processed by: main<br />
+Function: Earthworm setup
+</p>
+<p>
+Connect to the gcfserv module at the ip address IP address. This option accepts fully qualified domain names as well as IP numbers. Note that the PortNumber is also required. Default port numbers for gcfserv are 45670.
+</p>
+<p>
+<strong>SerialPort [SerialDevice]</strong><br />
+Processed by: main<br />
+Function: Earthworm setup
+</p>
+<p>
+Connect to the DM24 at the SerialDevice specified. To use this input mode, a BaudRate must also be provided.
+</p>
+<p>
+<strong>BaudRate [rate]</strong><br />
+Processed by: main<br />
+Function:Earthworm setup
+</p>
+<p>
+Connect to the DM24 at the BaudRate rate specified. To use this input mode, the SerialPort directive must also be used. The baud rates are the standard allowable rates on a solaris host: 1200, 2400, 4800, 9600, 19200, 38400, 57600, and 115200.
+</p>
+<p>
+<strong>SaveSOH2LOG [switch]</strong><br />
+Processed by: none<br />
+Function: Main gcf2ew Thread
+</p>
+<p>
+Sets the on-off switch for writing GSL GCF STATUS channels to the LogFile. If switch is 0, no LOG channels will be written to the log. If switch is 1, gcf2ew will write all LOG channels to the LogFile. Turning this on will automatically turn on writing of a LogFile.
+</p>
+<pre class="wiki">Default:  0 - do not use logit() for LOG channels
+</pre><p>
+<strong>LogFile [switch]</strong><br />
+Processed by: GetConfig<br />
+Function: Earthworm Setup
+</p>
+<p>
+Sets the on-off switch for writing a log file to disk. If switch is 0, no log file will be written. If switch is 1, gcf2ew will write a daily log file(s) called gcf2ewxx.log_yymmdd where xx is gcf2ew's module id (set with "MyModuleId" command) and yymmdd is the current UTC date (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG directory (environment variable).
+</p>
+<pre class="wiki">Default:  none
+</pre><p>
+<strong>MyModuleId [mod_id]</strong><br />
+Processed by: GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+Sets the module id for labeling all outgoing messages. mod_id is a character string (valid strings are listed in earthworm.d) that relates (in earthworm.d) to a unique single-byte number.
+</p>
+<pre class="wiki">Default:  none				
+Calnet:   MyModuleId MOD_Q2EW
+</pre><p>
+<strong>RingName [ring]</strong><br />
+Processed by: GetConfig<br />
+Function: Earthworm setup
+</p>
+<p>
+This is the ring into which the waveforms and messages are sent.
+</p>
+<pre class="wiki">Default:  none, required option				
+ATWC:   RingName WAVE_RING
+</pre><p>
+<strong>InfoSCN [System Stream S C N]</strong><br />
+Processed by: insertSCN<br />
+Function: Main gcf2ew Thread
+</p>
+<p>
+This command is used to define how gcf2ew maps a System and Stream ID to a Station Channel Name. It is also used as a channel selector as only those streams specified get passed on to the Earthworm Wave Ring. System is for the DM System ID name, Stream is for the DM Stream ID name ...aka channel name in GCF, S is for station name, C is for channel identifier, and N is for network code.
+</p>
+<pre class="wiki">#               Sys     Strm    S       C       N
+InfoSCN         0D0081  1031Z2  ISTI    HHZ     CI
+InfoSCN         0D0081  1031N2  ISTI    HHN     CI
+InfoSCN         0D0081  1031E2  ISTI    HHE     CI 
+</pre><p>
+<strong>InfoSCNL [System Stream S C N L]</strong><br />
+Processed by: insertSCN<br />
+Function: Main gcf2ew Thread
+</p>
+<p>
+This command is used to define how gcf2ew maps a System and Stream ID to a Station Channel Name. It is also used as a channel selector as only those streams specified get passed on to the Earthworm Wave Ring. This forces the trace buf type to be of type TRACEBUF2. InfoSCN and InfoSCNL cannot be mixed. System is for the DM System ID name, Stream is for the DM Stream ID name ...aka channel name in GCF, S is for station name (5 chars), C is for channel identifier (3 chars), N is for network code (2 chars), and L is for location code (2 chars).
+</p>
+<pre class="wiki">#                Sys     Strm    S       C       N   L
+InfoSCNL         0D0081  1031Z2  ISTI    HHZ     CI  00
+InfoSCNL         0D0081  1031N2  ISTI    HHN     CI  00
+InfoSCNL         0D0081  1031E2  ISTI    HHE     CI  00
+</pre><p>
+<strong>PortNumber [number]</strong><br />
+Processed by: main<br />
+Function: Earthworm setup
+</p>
+<p>
+Connect to the mss100 or gcfserv at the ip address specified and this port number. Note that the HostAddress or gcfservAddress is also required for this directive. PortNumber defaults to 3001 for mss and 45670 for gcfserv.
+</p>
+<p>
+<strong>TimeoutNoSend [timeout]</strong><br />
+Processed by: HeartBeat<br />
+Function: Earthworm setup
+</p>
+<p>
+If no waveform packets come from the DM after timeout seconds, the gcf2ew module will notify statmgr and die. If timeout is set to 0, then the gcf2ew module will never check for this timeout. If set to 0, gcf2ew will only die if the Earthworm system calls for its termination. This timeout begins once the first Waveform packet is received from the DM served by this MSS100.
+</p>
+<pre class="wiki">Default:  none, required option				
+ATWC:   TimeoutNoSend 0
+</pre><h3 id="DESCRIPTORFILEEXAMPLE">DESCRIPTOR FILE EXAMPLE</h3>
+<p>
+Here is a copy of the gcf2ew.desc file as implemented. Note that all causes of death for gcf2ew feed through the function gcf2ew_die() which logs all causes of death using logit() and sends a message to the statmgr utility.
+</p>
+<pre class="wiki">modName  gcf2ew
+modId    MOD_GCF2EW
+instId   INST_UNKNOWN
+ 
+restartMe       # restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every  seconds from this module, an
+#    error will be reported (client module dead).   is the maximum
+#    number of pager messages that will be reported and  is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 30  page: 0  mail: 99
+ 
+# from die.h:
+#define GCF2EW_DEATH_SIG_TRAP     1
+#define GCF2EW_DEATH_EW_PUTMSG    2
+#define GCF2EW_DEATH_EW_TERM      3
+#define GCF2EW_DEATH_EW_CONFIG    4
+#define GCF2EW_DEATH_GCF_TIMEOUT  5           
+ 
+# these are the statmgr messages that gcf2ew will send before dieing
+#
+err: 1  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused gcf2ew to die"
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, gcf2ew dead"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, gcf2ew dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, gcf2ew dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "gcf2ew received NO DATA for configured TIMEOUT and died"
+#
+</pre><h2 id="HelpfulHints">Helpful Hints</h2>
+</div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/gcf2ew?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

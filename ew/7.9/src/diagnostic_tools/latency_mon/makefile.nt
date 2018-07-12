@@ -1,0 +1,48 @@
+#
+#                    Nmake File For Latency_mon - Windows NT version
+#
+!include <ntwin32.mak>
+APP = latency_mon
+O = $(APP).obj config.obj stalist.obj 
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+# N = $(EW_HOME)\atwc\src\libsrc
+
+
+compflags= /c /W3 /MT /nologo
+
+linkflags= /release /nologo
+
+libs= libcmt.lib
+
+$B\$(APP).exe: $O $(APP).res
+   link $(linkflags) $(libs) $O \
+    $L\swap.obj \
+    $L\libew_mt.lib \
+	-out:$B\$(APP).exe $(APP).res $(guilibs) 
+
+#    $N\filters.obj $N\geotools.obj $N\complex.obj \
+#
+# for MS 2003 compiler (& earlier) syntax was:     cvtres -$(CPU) $(APP).tmp -o $(APP).res
+# for MS 2005 compiler processor arch should be x86 not i386
+
+# if 64-bit target then set cvtres MACHINE to x64
+!IF "$(PLATFORM)" == "x64"
+PROCESSOR_ARCHITECTURE=x64
+!ENDIF
+
+$(APP).res: $(APP).rc
+    rc -r -fo $(APP).tmp $(APP).rc
+    cvtres /MACHINE:$(PROCESSOR_ARCHITECTURE) -o $(APP).res $(APP).tmp
+    del $(APP).tmp
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(compflags) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~ *.res
+
+clean_bin:
+	-del $B\latency_mon*

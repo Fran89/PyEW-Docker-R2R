@@ -1,0 +1,77 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#   For use on LINUX 
+#   Tested with EW Linux port
+#   http://beaufix.ipgp.jussieu.fr/~nerces/download/ew/ 
+#
+LINUX_FLAGS = -lm -lpthread
+SOLARIS_FLAGS = -lm -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+SOLARIS_FFLAGS = -f77=tab
+SPECIFIC_FFLAGS = $($(PLATFORM)_FFLAGS)
+
+
+#F77=g77 $(FORTRANFLAGS)
+
+LINUX_CFLAGS=-Wall
+CFLAGS = ${GLOBALFLAGS} -g -I ${I} -DUSE_LOGIT $($(PLATFORM)_CFLAGS)
+FFLAGS += -g $(SPECIFIC_FFLAGS)
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+I = $(EW_HOME)/$(EW_VERSION)/include/
+
+TARGET1=rayloc_test1
+TARGET2=rayloc_test2
+TARGET3=rayloc_test3
+
+F_MAIN_SRC = raylocator.f
+F_STUB_SRC = librayloc1.f
+C_MAIN1_SRC    = rayloc_test1.c
+C_MAIN2_SRC    = rayloc_test2.c
+
+C_SRCS= rayloc_stations.c  rayloc1.c \
+   rayloc_unused_phases.c 
+
+F_SRCS = distaz.f  input.f  libsun.f   \
+   ellip.f   io_util.f     libtau.f  robust_util.f \
+   hypo.f    output.f
+
+RAYLOC_EW_OBJ = rayloc_ew_main.o rayloc_ew_config.o\
+    $L/rayloc_message_rw.o $L/libew.a \
+    $L/swap.o $L/earthworm_defs.o $L/global_msg.o $L/global_loc_rw.o
+
+C_OBJS    = $(C_SRCS:%.c=%.o)
+F_OBJS    = $(F_SRCS:%.f=%.o)
+F_STUB    = $(F_STUB_SRC:%.f=%.o)
+C_MAIN1   = $(C_MAIN1_SRC:%.c=%.o)
+C_MAIN2   = $(C_MAIN2_SRC:%.c=%.o)
+F_MAIN    = $(F_MAIN_SRC:%.c=%.o)
+
+PROGS = rayloc_ew #$(TARGET2) $(TARGET3) $(TARGET1) 
+
+########################################################################
+all: $(PROGS)
+	cp rayloc_ew $B
+
+
+rayloc_ew: $(RAYLOC_EW_OBJ) $(F_OBJS) $(C_OBJS)  $(F_STUB)
+	$(FC) $(FFLAGS)  -o rayloc_ew $(RAYLOC_EW_OBJ) $(F_OBJS) $(C_OBJS)  $(F_STUB) $(SPECIFIC_FLAGS)
+
+$(TARGET1):         $(F_OBJS) $(F_MAIN)
+	$(FC) $(FFLAGS) -o $(TARGET1) $(F_OBJS) $(F_MAIN)
+
+$(TARGET2):         $(F_OBJS) $(C_OBJS) $(C_MAIN1) $(F_STUB)
+	$(FC) $(FFLAGS) -o $(TARGET2) $(F_OBJS) $(C_OBJS) $(C_MAIN1) $(F_STUB) $L/libew.a
+
+$(TARGET3):         $(F_OBJS) $(C_OBJS) $(C_MAIN2) $(F_STUB)
+	$(FC) $(FFLAGS) -o $(TARGET3) $(F_OBJS) $(C_OBJS) $(C_MAIN2) $(F_STUB) $L/libew.a
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/rayloc_ew*

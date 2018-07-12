@@ -1,0 +1,604 @@
+<PRE>
+
+Release Notes:  Earthworm Version "V6.2"
+
+NEW MODULES:
+***********
+
+FOR AUTOMATIC EARTHWORM:
+
+File-based exchange system:
+A file-based data exchange system is now available, consisting of the modules
+ew2file, sendfileII, getfileII and file2ew. The module ew2file reads selected
+messages from an Earthworm ring and writes these messages to disk files in one
+or more directories. The files are picked up from a directory by sendfileII,
+which transmits the files over the network to a host running getfileII. The
+getfileII program accepts connections from one or more hosts running
+sendfileII, and places the incoming files in the directory assigned to the
+sending address. Finally, file2ew picks up files from a directory and inserts
+them into a transport ring as Earthworm messages.
+
+The main advantage of this system over import/export is that files are
+buffered in the directories used by sendfileII and file2ew. So if these
+programs are not able to transmit thier input files, such as when the
+recipient host is down, that data is held instead of being lost.
+
+This file-based exchange system is NOT suitable for high data-rate exchanges
+such as waveforms.
+
+The programs sendfileII and getfileII are derived from the sendfile and
+getfile programs contributed by Will Kohler at the Menlo Park campus of
+USGS. The new programs use an enhanced protocol; the original programs could
+lose files in certain circumstances. The new programs are NOT COMPATIBLE with
+the original sendfile and getfile programs, nor with the getfile_ew program.
+These programs are sometimes known as the "file flinger".
+
+The ewfile progam can be configured to generate heartbeat files to send
+through the system. If desired, the program makehbfile can be used instead to
+generate heartbeat files. Makehbfile is also part of the sendfile/getfile
+package from Will Kohler. The file2ew program can be configured to expect
+heartbeat files and to send alarm messages on loss of heartbeats.
+
+The three programs sendfileII, getfileII and makehbfile can be used
+independently from earthworm. Their source files stand alone, needing none of
+the Earthworm libraries. These three programs do not connect to Earthworm
+transport, and thus can not be monitored directly by statusmgr.
+
+The file2ew progam is a generic version of the family of strong motion file
+converters (sm_file2ew); it has been part of Earthworm for some time. 
+
+Note that ew2file can write  copies of its files to multiple directories, and
+that getfileII can accept connections from multiple sendfileII's. So this
+system offers considerable flexibility for complex data exchanges.
+Pete Lombard, 12/20/2002
+
+wave_probe:
+Wave_probe is a new piece of diagnostic software for wave servers.  It is
+mainly intended for use by developers.  Wave_probe constructs and sends
+a trace request for a single station, logging to a debugging file everything
+that occurs during this process.  This program is intended as a work in 
+progress, as new errors are diagnosed and debugged, functionality can be
+added as needed.  Wave_probe uses private versions of the ws_clientII    
+librarys, so changes to ws_clientII would have to be replicated here also
+John Patton, 02/06/2003
+
+naqsserTG: New client to NaqsServer that takes transparent serial packets
+containing tide gauge data and converts it into Earthworm messages and
+write the data to a file. Written by Paul Whitmore, ATWC. 
+LDD 2/14/2003
+
+Latency Monitor:
+This program looks at waveform messages dropped in an Earthworm Ring and 
+logs latency and outages of the data. The graphical output shows a line
+for each station for a set length of time.  Colors on the line represent 
+the latency of the station over that time interval. The program was orginally 
+written by Paul Whitmore at WC/ATWC and enhanced by John Patton at USGS, Golden.
+
+FOR INTERACTIVE, ORACLE-BASED EARTHWORM
+
+CONCIERGE:  
+A system of programs that retrieves snippets from
+wave_servers and stores them in an EW Database.  There are currently
+three executables:  ora_trace_req, ora_trace_fetch, and unlocker.
+Please see their web documentation for more info.
+
+ora_trace_req:  A moduel that reads EW Trigger messages and converts
+them to snippet requests which it inserts into the database.
+Front half of concierge.  Replaces the front half of ora_trace_save.
+
+ora_trace_fetch:  A module that reads snippet requests from an EWDB
+and retrieves snippets to fill the requests.  The snippets are then
+stored in the EWDB.   Back half of concierge.  Replaces the back half
+of ora_trace_save.
+
+unlocker:  Stand alone executable that releases old stale locks,
+such as those that are generated when ora_trace_fetch is processing
+requests and crashes or gets bonked on the head.
+DK 2002/05/15
+
+Jiggle: 
+Jiggle was developed by Doug Given at USGS Pasadena for routine analysis 
+of data collected  by TriNet in Southern California.
+The Golden development team has incorporated Jiggle with the 
+Earthworm DBMS.
+
+gencatalog:
+gencatalog allows the user to search the Earthworm database and generate 
+a summary file of all events which meet user selectable criteria.
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+
+/libsrc/util/k2evt2ew: Added checksum and sanity checks so that reading
+a bad .evt file will report an error, and a crash.
+
+libsrc/util/k2evt2ew:  Modified the MAXTRACELTH constant in k2evt2ew.h,
+so that a maxium of 800k datapoints per channel per EVT file are supported.
+WARNING!!!!!:  This brings the K2InfoStruct memory footprint to a whopping
+150MB!!!!  Any program that utilizes this library must be capable of 
+allocating the structure.
+Fixed a bug that allowed the library routines to write passed the end of
+the K2InfoStruct data fields.  Main routine now truncates processing 
+when the end of the output buffer has been reached and returns a truncation
+warning.
+DK 20030108
+
+reaper: Had a hard-coded max of 1000 events to delete. Added a loop
+to delete events in multiples of 1000. Alex 7/26/02
+
+adsend: Modifications to run at digitizing rate up to 500 sps. Some few tweaks to irige.c.
+Also tweaks to permit the user to set the actual number of channels to
+be digitized (rather than all). Outstanding problem: irige.c likes it
+best when a buffer contains one second's worth of data. Alex 7/17/02
+
+shakemapfeed: Added new configuration file command "UseEventID" so the 
+user can specify which eventid is written to the output files 
+(1=binder's eventid, 2=DBMS eventid).  Changed logging so that both ids 
+are written where applicable.  Changed so the log file is initialized 
+before the configuration file is read so that configuration errors will 
+now be written to the log file.  LDD 4/12/2002
+
+sm_ew2ora:  Changed to issue a TYPE_ERROR msg if it cannot put SM data 
+into the DBMS because the channel is not in the DBMS (previously, it 
+only logged this info).  Changed to use tport_copyfrom instead of 
+tport_getmsg. Moved logit_init such that configfile errors can be
+logged and changed fprintf(stderr...) to logit("e"...) in the configuration
+section.  LDD 5/1/2002
+   Added 2 new Earthworm error codes to distinguish among the reasons
+that SM data was not inserted in the DBMS.  Three codes now exist:
+ERR_DBMSPUT (the call to ewdb_api_PutSMMessage failed)
+ERR_UNKNOWNCHAN (channel info not in DBMS or has empty lat/lon)
+ERR_CREATEEVENT (the call to ewdb_api_CreateEvent failed) LDD 3/13/2003
+
+k2ew (tcp version only):  Changed program so that heartbeats are sent to
+statmgr while k2ew is attempting to make a socket connection to the K2.
+Changed k2ew version number to 2.30.  WMK 5/6/2002
+
+scream2ew:  Added new config command "IPNumber" so that the user can 
+specify the IP number on which SCREAM transmits data.  JMP 05/08/2002
+        Rewrite by Guralp to accept data via TCP as well as UDP. AB 03/05/03
+        New version from Guralp to fix memory leak. AB 03/27/03
+
+findwave:  Modified findwave so that it can produce output compatible with
+waveserverV .tnk file (scns to save) in addition to it's existing output. 
+Usage: findwave <ring name> <index size> <days> <file name> <output type>
+Where <ring name> is the ring to attach to,
+      <index size> is the desired waveserverV index size,
+      <days> is the number of days to save data in a waveserverV tank,
+      <file name> is the output file name, and
+      <output type> = w for waveserverV output using the above parameters, or
+      <output type> = d for debug output, providing: Station name, Component,
+      Network, Maximum Message Length, Minimum Message Length, Message Arrival
+      Rate, Total number of Messages, and estimated Megabytes per day.
+JMP 05/14/2002 
+
+wave_serverV:  (serve_trace.c)
+Fixed a bug in the fill logic, that caused one to few samples to be
+filled.  Bug was noticed by Carol Bryan.
+DK 10/11/2002
+
+binder_ew: Changed the stack weighting scheme to include not only the pick
+quality, but also the installation id that produced the pick. For example,
+this allows a user to weight a quality 2 pick from one installation differently
+than a quality 2 pick from a different installation.  Added a new config file
+command, grid_wt_instid, to set the weighting.  The original grid_wt
+command will result in all picks being weighted by their quality alone.
+LDD 5/23/2002 
+
+export_scn_remap: Removed this module. Its functionality has been merged
+with export_scn.  LDD 10/29/2002
+
+export_scn: Added a new optional command, Send_scn_remap, that allows the
+user to change the SCN of outgoing trace data on the fly.  Also added
+TYPE_TRACE_COMP_UA as a message type that scnfilter can work on. Moved the
+MaxLatency check to a section of code after the SCN check for efficiency.
+Made other cosmetic changes to the code.  Merged the priority features
+of scnprifilter.c into scnfilter.c to eliminate lots of duplicate code.
+LDD 6/11/2002
+  Modified to use binary search when matching SCN of message to the 
+requested channel list. Binary search is only used if the requested
+channel list does not contain any wildcards.  If wildcards are present,
+export_scn uses the same linear search for SCN matching as it used to.
+The binary search makes exports with long requested channel lists much
+more efficient.  LDD 10/29/2002
+
+compress_UA,
+decompress_UA: Added optional config command, UseOriginalLogo, to allow 
+user to apply the installation id & module id of the original compressed
+msg to the outgoing decompressed message. This will make it possible for
+one instance of compress_UA or decompress_UA to work on data from 
+multiple sources without losing the source information. The default 
+behavior is that the (de)compress_UA installation id & module id will
+be applied to all outgoing data. LDD 6/19/2002
+
+decompress_UA: Fixed a bug in brtt_genuncompress() which caused an
+infinite loop. It entered a while loop controlled by the size variable,
+but the value of size never changed inside the loop:
+BUG:  *size *= (int) 1.2;  (size never changes! same as *size *= 1)
+FIX:  *size  = (int)(1.2 * *size);
+This loop is to realloc the buffer used to decompress the data.
+LDD 8/13/2002
+
+swap.c:  Added fix by P. Friberg, to a bug in the code that checksums
+the header in WaveMsgMakeLocal before byte-aligning it, resulting in
+a bus-error core dump under gcc/solaris when double arithmetic is
+attempted on a non-aligned variable.  Fix was run-tested on Solaris
+by Friberg, compile tested on NT by DK.
+DK 2002/06/11
+
+Fixed the sanity check in WaveMsgMakeLocal() that ensures a trace_buf
+header is reasonably sane before attempting to byteswap the data.
+DK 2002/06/18
+
+QUICK REVIEW:   Fixed creation of SAC files for review so that 
+horizontal components which have gaps in data are not written out.
+This is necessary so that localmag under review does not attempt to 
+use gappy data.
+
+statmgr: Changed to allow an optional command, pagegroup, in each
+descriptor file.  If the descriptor file contains a pagegroup 
+command, it overrides the pagegroup in statmgr's config file.
+Otherwise, the pages will be sent to the pagegroup in statmgr's
+config file.  LDD 2002/07/09
+
+heli_ewII.h: Changed lengths of Site, Comp, and Net fields of Butler
+struct to allow for NULL byte in standard-length EW SCN names.
+5-letter Sites were being mis-interpreted due to lack of space
+for the NULL.  Still lacks string-length checks all over the
+place.  LDD 2002/07/16
+
+hyp2000: Newest version of hyp2000 code was copied into Earthworm from
+Fred Klein's directories on swave.wr.usgs.gov.  LDD 2002/09/20
+
+decimate: Modified to be able to accept up to 10 GetWavesFrom commands.
+Fixed bug that was causing core dump on exit if input and output
+rings were the same ring. LDD 2002/10/25
+ 
+naqs2ew: Added code to handle extended seismic data headers in the
+compressed data packet.  These headers are used by the new Trident
+digitizer.  Previous versions of naqs2ew did not handle compressed
+data packets from Tridents properly (decompressed packets were OK).  
+Now compressed data packets from ALL Nanometrics digitizers are
+handled properly. LDD 2002/10/25
+
+naqssoh: Added support for decoding and logging Libra time quality
+SOH information.  LDD 2002/11/08
+
+file2ew,sm_*2ew: Fixed faulty logic for handling files which cannot
+be opened.  Previously, even though the file was not open, we tried
+to read it.  Now, if a file cannot be opened an error message is
+generated and an attempt is made to move the file to the trouble
+directory.  If the file cannot be moved, the program exits. If the
+file can be moved, the program continues operating. LDD 2002/12/05
+
+file2ew:
+  An optional installation id argument was added to the SuffixType
+command to allow file2ew to assign "foreign" installation ids to
+messages it places in the local ring.  If the installation id is
+ommitted, file2ew uses its own installation id as before. LDD 2002/12/05
+
+eqfilter:
+Added a new test, nphtotalTest, which checks the total number of
+phases with weight>0.0.  The original nphTest still exists, and
+checks the number of phases with weight>0.1. Changed wording of 
+some log messages for clarity. Changed to reject event after the 
+first test it fails instead of continuing with other tests.
+LDD 2002/12/10
+
+coaxtoring:
+I found a case where the coaxtoring module if killed at startup, would
+not get restarted by statmgr since it did not beat its heart till after
+HeartbeatInt seconds. To remedy this, I simply had the heartbeat thread
+beat the instant it was forked and this seems to have solved the issue.
+Paul Friberg 2002/12/27
+
+Nanometrics API (nmx_api):
+Added functions to interpret Nanometrics "transparent serial packets".
+New functions were first used by Paul Whitmore's naqsserTG module for
+handling tide gauge data.  LDD 2003/2/14
+
+carlsubtrig,evansassoc:
+Both of these modules had a bug in writing one of the comment lines in
+the TYPE_TRIGLIST2K message and their log files.  The comment line was
+changed from "Sta/Net/Cmp...." to "Sta/Cmp/Net...." to match the order
+in which those fields are actually written to the message.  The parsing
+routine (libsrc/util/parse_trig.c) totally ignores that comment line, so the
+change should have no effect on consumers of the message.  LDD 2003/02/28
+
+pickew:
+In GetStaList() (in stalist.c), the station list
+file is read in. There are two counts made of this file. The first count looks
+for non-comment lines, and then allocates are array for that many STATION
+structures. Then GetStaList reads the file again, loading the station data
+into the array. But this time, only lines with the pickflag set are loaded
+into the array. After the file reading is completed, then the return parameter
+Nsta is set to the number of stations read in:
+    *Nsta = nsta;
+This is not right: it should be:
+    *Nsta = i;
+nsta is the number of non-blank lines, NOT the number of stations to be
+picked. The result is that the Sta array contains a number of empty STATION
+structures which now get searched each time a trace packet comes into
+pick_ew. The result can also be seen in the pick_ew log: there are a number of
+lines containing only zeros before the real station lines. An additional
+effect is that if the last station line in the station list file has its pick
+flag set to zero, it will be picked anyway.
+Problem fixed by PNL, 3/24/2003
+
+gmew:
+Added parameter 'snrThresh T'.
+Minimum accepted signal-to-noise threshold....traces are rejected unless
+this threshold is passed.
+Default: 3.0
+Added by DH, 9/25/2002
+
+
+Wave_serverV:
+Fixed bug where Wave_serverV would not work probably on multi-home 
+systems under Windows 2000.
+Added by DH, 4/15/2003
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+****************************************************
+
+shakemapfeed.d:
+Added new required command, UseEventID, to allow the user to choose which
+eventid will be written to the output files. Valid arguments are 
+1=binder's eventid, or 2=DBMS eventid.  LDD 4/12/2002 
+
+scream2ew.d:
+Added new required command, IPNumber, so that the user can 
+specify the IP number on which SCREAM transmits data.  For a SCREAM
+directly connected, use 127.0.0.1 (local host).  For a remote
+SCREAM, use the IP number associated with it.  JMP 05/08/2002
+
+binder_ew.d:
+Added a new optional command, grid_wt_instid, so that the user can set
+stackin weights based on pick weight and installation id.  The original
+command, grid_wt, still exists and allows stacking weights based on
+pick quality alone.  LDD 5/23/2002 
+
+export_scn.d
+Added a new optional command, Send_scn_remap, that allows a user to
+change the SCN (any or all of the three fields) on outgoing trace
+data (either TYPE_TRACEBUF or TYPE_TRACE_COMP_UA). LDD 6/11/2002
+
+eqfilter.d
+Added a new optional command, nphtotalTest, which allows a user to
+set a lower limit on the total number of phases with weight > 0.0.
+The original command, nphTest, still exists and sets the lower 
+
+compress_UA.d,
+decompress_UA.d
+Added optional config command, UseOriginalLogo, to allow user to
+apply the installation id & module id of the original compressed
+msg to the outgoing decompressed message (if argument is non-zero). 
+If UseOriginalLogo is zero, then all outgoing messages will be
+labeled with decompress_UA's installationid & moduleid.  LDD 6/19/2002
+
+file2ew.d
+Added optional argument to SuffixType command to allow the user
+to assign a "foreign" Installationid to messages based on the
+suffix of the filename.  If this argument is ommitted, file2ew
+uses its own installation id (same as previous behavior). LDD 12/5/2002
+
+Any .desc file
+Any .desc file can now optionally contain a pagegroup command.
+If it exists, it will override the pagegroup listed in statmgr's
+configuration file.  LDD 7/9/2002
+
+k2ew_tcp.d
+The k2ew_tcp process takes a while to cleanly exit when the program
+is told to terminate by startstop. If the KillDelay parameter is not
+set to something larger than 10-15 seconds, the k2ew_tcp process will
+not die cleanly in the time expected and will never get restarted by
+startstop resulting in a zombie process. I added a note to this effect
+to the k2ew_tcp.d file reminding others of this situation.
+Paul Friberg 12/27/2002
+
+sm_ew2ora.desc
+Added three new error codes to distinguish among the reasons the
+insertion of SM data into the DBMS failed.  LDD 3/13/2003
+
+
+KNOWN BUGS:
+***********
+k2ew: 
+k2ew uses the k2hdr.rwParms.misc.channel_bitmap parameter to decide
+which channels it will see as streams from the K2.  This is actually the
+parameter which the K2 uses to decide which channels to record in an event
+file (see K2's <bitmap> command).  The K2's <sdstreams bitmap> is the parameter
+that shows which channels the K2 is streaming out.  This is the parameter
+that k2ew should be using to decide what data it will see.  The big problem
+is that none of the header files from Kinemetrics (nkwhdrs.h) seem to 
+show this parameter anywhere. This issue is only a problem for those folks
+who want to record more channels on the K2 than they want to stream continuously.
+Terry Dye (Univ of Utah) discovered this problem when trying to stream only
+3 channels of a 12 channel K2.  LDD 4/11/2002 
+
+wave_serverV:
+it occasionally sends the following error to statmgr:
+   UTC_Thu Sep 06 03:30:14 2001  WSV1/wave_serverV_nano ReadBlockData
+   failed for tank [z:\nano57.tnk], with offset[999908] and record
+   size[64]! errno[0] Mail sent.
+The nominal tank size is 1 megabyte, and the actual tank size is 999908.
+It looks like waveserver is trying to read off the end of the tank.
+WMK 9/6/01
+
+wave_serverV:
+appears not to reply to requests for a single sample of data. I noticed 
+when testing wave_viewer, that if the start time and end time of a request were 
+equal (in which case there should be one sample of data) then wave_serverV did 
+not reply to the request (ASCII request) at all. No Data, No Flags, No Reply, 
+No Nothing.  It needs to issue a reply to every request.
+DavidK 09/25/01
+
+Automatic restarts of adsend (using the "restartMe" line in the descriptor
+file) can cause an NT system to hang. Therefore, you should never
+use the autorestart feature with adsend, but you should bring down
+the entire Earthworm system if adsend needs to be restarted.
+LDD 5/31/2000 Comments added to adsend.desc, but leave this warning here!
+
+libsrc/utils/site.c: The strings used for station, channel and network are
+required to be fixed length with trailing spaces added to short names. If
+the strings given to site_index do not have these trailing blanks, SCN names
+will not match. This is not documented anywhere.  PNL 10/15/00
+
+socket_ew: (libsrc/util/socket_ew_common.c libsrc/solaris/socket_ew.c
+            libsrc/winnt/socket_ew.c include/socket_ew.h)
+Fixed a bug in the connect_ew function().
+When run in non-blocking mode (clients connecting to
+a server - using a timeout value), there was a bug in
+the connection code(discovered on Solaris) that caused
+the function to return a timeout-error when there was
+any kind of error during connection.
+The bug was discovered when connecting to a non-existent socket.
+When trying to connect to a non-existent wave_server on a machine,
+the underlying socket library was returning a Connection-Refused error,
+but the socket_ew library was passing back a timeout error.
+-
+The change only applies when a socket-error occurs while the function is
+waiting for the connect to happen.  The instance where you will most-likely
+see a difference, is when you try connecting to a non-existent socket.
+Previously the function would return TIMEOUT, now it will return
+connection REFUSED.
+-
+Added a new function: socketSetError_ew(),
+and defined a new socket_ew return code: CONNREFUSED_EW.
+DK 2003/02/04
+
+sm_ew2ora:
+There is a bug in sm_ew2ora that involves having multipe time intervals for
+components and channels.  If a strong motion message containing information
+for a channel that the DB has never seen before is loaded into the DB, and
+then later another message for the same channel with an earlier timestamp
+is loaded, the load of the second message will fail, due to problems with
+overlapping time intervals, and the call that sm_ew2ora uses to create
+those time intervals.  This problem only affects stations that were
+not previously loaded via one of the station loader programs stalist*2ora,
+and only when receiving SM data that is timestamped with a time that is
+prior to the original time for that channel.  The bug lies in the logic
+of ewdb_api_PutSMMessage(), and not in the underlying code.
+Davidk 05/25/01
+
+A change was made to ewdb_api_PutSMMessage() that dramatically affects
+sm_ew2ora.  Please see the note about that function.  Davidk 2001/07/26 
+
+ewdb_api_CreateWaveform()  (ewdb_internal_CreateSnippet.c 
+                            ewdb_internal_CreateWaveformDesc.c)
+Added a call to release the cursors used by the internal functions, when they
+fail.  Fixes a bug which resulted in a DB cursor leak when a call to stuff
+a snippet into the DB failed.
+DK 2003/02/04
+
+
+KNOWS DEFICIENCIES:
+*******************
+
+ringtocoax:
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+
+statmgr: A space is needed between "tsec:" and the value. 
+If it isn't there, things fail. Artifcat of the kom routines. (Alex)
+
+threads functions: The KillThread function on WindowsNT and Solaris
+terminate the thread without ensuring that no mutexes are held. If a thread
+holds a mutex when it dies, no other thread can get that mutex. PNL 1/12/2000
+
+carlsubtrig:
+The system time must be set to GMT and ew_nt.cmd must have 
+TZ=GMT for carlsubtrig to work.  Comments in ew_nt.cmd done 5/25/00. Barbara
+        
+localmag:
+needs GMT set on the system
+
+ew2seisvole:
+on NT, exits with horrible crash when system is stopped.
+
+NUMBER OF RINGS LIMITED ON SOLARIS:
+Under Solaris 2.6 (and probably other versions as well), the maximum number 
+of shared memory segments is six. This means that on an out-of-the-box machine
+you can only configure six rings. If you try to configure more than that, you
+will see a cryptic message from tport_create about too many open files.  The
+fix to this problem is to add the following lines to the /etc/system
+file, and then reboot the system.
+
+ set shmsys:shminfo_shmmax = 4294967295
+ set shmsys:shminfo_shmmin = 1
+ set shmsys:shminfo_shmmni = 100
+ set shmsys:shminfo_shmseg = 20
+ set semsys:seminfo_semmns = 200
+ set semsys:seminfo_semmni = 70
+
+This allows for 20 rings.
+
+     Lucky Vidmar (7/6/2000)
+
+
+startstop_solaris: 
+There MAY be a problem with the signal that 
+startstop sends to modules during the shutdown sequence. The shutdown 
+sequence is started (after typing "quit" to startstop or running "pau")
+by startstop placing a terminate message on all transport rings. Modules
+should see this message and start their own shutdown. After a configurable
+delay, startstop checks to see that all modules have exitted. Any that are 
+still running are sent a signal to terminate them. Currently that signal
+is SIG_TERM. But since wave_serverV has a handler for SIG_TERM, wave_serverV
+sees that as essentially the same as a terminate message. So if wave_serverV
+is having problems completing its shutdown, SIG_TERM won't do anything. The
+result is that startstop may give up and exit, leaving wave_serverV running.
+If that happens, the operator will have to terminate wave_serverV by doing
+"kill -9 <wave_serverV-pid>". That may leave shared memory and semaphores
+stranded in the kernel: run the command "ipcs -a" to see. If necessary,
+the stranded shared memory and semaphores may be cleaned up with the
+ipcrc command; must be run as root; see the man page.
+This problem only exists on Solaris/Unix, not on WindowsNT.
+PNL, 10/4/2000
+
+libsrc/utils/kom.c:  fix comment in k_open()
+
+The comment above k_open() says that only one file can
+be open at a time. Yet the Kbuf array has slots for MAXBUF (currently 4) open
+files. Does this work, or is the comment to be taken at it's word?
+PNL 10/15/00
+
+libsrc/utils/logit.c: logit_init() requires a module_id number, which it uses
+to construct the log file name. This is not helpful, since the module_id
+number is not meaningful to people. Worse, it requires that the config file be
+read and earthworm.d lookups be completed before logit calls can be made. Thus
+errors in the config file can only be reported to stderr or stdout instead of
+being saved in a file.  PNL 11/29/00
+
+libsrc/util/k2evt2ew.c: This library supports a maximum EVT data size
+of 800000 samples per channel per EVT file.  This value is hardcoded
+as MAXTRACELTH in include/k2evt2ew.h.  k2evt2ew() will return a warning
+if the EVT file exceeds this size, and process as much as the EVT file
+as the hardcoded limit allows.
+DK 2003/01/18
+
+
+TRACEBUF messages.
+The definition of `endtime' of the TRACEBUF message is not documented.
+Some programmers are taking it as the "expected start time of the next
+TRACEBUF packet (if the sample interval is uniform.)" The more accepted
+practice is that `endtime' is the time of the last sample of the current
+TRACEBUF packet; that is, one sample interval less than the expected
+start time of the next TRACEBUF messsage. Using this last definition, if a
+TRACEBUF packet has exactly one sample, then its starttime and endtime are
+the identical. Clearly this distinction needs to be documented. The file
+waveform_format (in the /home/earthworm/DOC directory) gives no specifics 
+about start or end times.  PNL 1/24/01
+ 
+</PRE>
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://gldbrick.cr.usgs.gov/ew-doc/RELEASE/release_notes_v6.2.html]</B><BR>
+Contact: <B>bogaert@usgs.gov</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Earthworm Modules: ringtocoaxII overview</title>
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+<center>
+<h1>Earthworm Modules:<br>
+RingtocoaxII Overview</h1>
+<i>(last revised 26 May 2006)</i></center>
+<p>John Patton rewrote ringtocoax as ringtocoaxII for HYDRA EW and it
+was contributed back for the EW v7.0 release. This has only been run
+and tested under Windows. Here are some notes from John on the
+improvements:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; There are basically 3
+differences between ring2coax and ring2coaxII:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+1. ring2coaxII is multithreaded.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2. ring2coaxII has an input queue<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3. ring2coaxII has my attempt at an adaptive algorithm that increases <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the outgoing udp data rate as the queue fills up (within configurable <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+limits).&nbsp; It also tries to "smooth" the udp message load so that
+we're <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+at a constant level rather then spikes and troughs (not very good at <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+this, but better than nothing).<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The design idea behind it
+was that we had problems with ring2coaxII getting cpu <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; starved for a few seconds
+and loosing data, thus the input queue.&nbsp; The other half <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; was how our udp load on our
+network would change drastically from second to second <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; from very high to very low,
+we wanted some sort of way to "smooth" it out.&nbsp; I've <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; had limited success on that
+one.<br>
+<br>
+</p>
+<p>The old description:</p>
+<p>Program to broadcast Earthworm messages from a shared memory
+transport ring onto Ethernet. Messages may be of any installation id,
+message type, and module id. To prevent bursty data on the Ethernet,
+the program sleeps between outgoing packets. A parameter in the
+configuration file controls whether heartbeat and error messages are
+passed or blocked. If heartbeats and error messages are not sent, they
+should be handled by a local copy of the statmgr program.
+</p>
+<p>This module does connection-less broadcasts.
+In normal usage, it broadcasts onto an isolated, dedicated class b
+subnet. There must be no routing to or from that subnet.
+The broadcast is restricted to the subnet specified in the
+configuration file.
+Note that the companion module, coaxtoring, has strange
+system-specific addressing requirements.
+</p>
+<center> <a href="../modules.html">Module Index</a> | <a
+ href="../cmd/ringtocoaxII_cmd.html">RingtocoaxII Commands</a>
+</center>
+<!-- USGS-required stuff at the end -->
+<hr>
+Contact: <b><address> Questions? Issues? <a href="http://groups.google.com/group/earthworm_forum?hl=en" target="_blank">Subscribe to the Earthworm Google Groups List. </a></address> for help</b><br>
+</address>
+</body>
+</html>

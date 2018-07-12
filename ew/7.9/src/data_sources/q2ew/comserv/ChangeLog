@@ -1,0 +1,183 @@
+Unified comserv distribution: 25 June 2004 - Paul Friberg, Doug Neuhauser, Bob Busby
+
+This version of comserv includes a unified version of the comserv
+server that will work under both Solaris and Linux as well as
+the most popular clients from UCB and Caltech and the last
+stable QMASERV distribution
+
+
+----------------------------------
+Comments on the qmaserv addition:
+
+8 April 2002 - pjmaechling@yahoo.com
+This is a Quanterra Mountainair distribution. It is based on the
+comserv distribution comserv2linux.010319.
+I've added a qmaserv directory in the src directory. This contains
+the current Mountainair software.
+I've updated the Makefile.solaris to work with g++ and gcc 3.0.3.
+They were set up to use Sun tools.
+
+* Copy the handling of netmon from the linux comserv.ucb makefile into the solaris make file
+
+* Fixed makefile in util where timeutil had $(UTIL_DIR) on it, and it wasn't necessary.
+
+
+* Updated the Makefile solaris:
+	Removed the references to /opt/SUNWspro
+	removed the -g 
+	removed the +x
+	removed the -x03 optimazation
+	changed the cc to gcc
+
+-- Current plan
+   - add mtaserv to comserv4linux.03 by adding makefile.sg (solaris gcc)
+
+
+
+--------------------------------------------------------------------
+This is a log of COMSERV for Linux bundle modificaions
+which are done by  ISTI as a part of a contract with KMI/Quanterra
+----------------------------------------------------------------------
+Note that we start here with a working version of COMSERV for Linux and the
+purpose of these modifications are mostly to allow COMSERV for Linux to keep
+the data in shared memory in the byte-order selected by the comilation flag.
+The original version fo COMSERV for Linux swaps headers inth the Linux byte-order.
+
+This list is started on 03 March 2001.
+Ilya Dricker (i.dricker@isti.com)
+ISTI
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+===============================================================================
+03/09 |
+-------
+comserv/server.c
+	Bug fix:
+#if defined (LINUX)     
+	if (semop(semid, &notbusy, 1) == ERROR) 
+#else  /* IGD 03/09/01 bug fixed : was elif */
+	if (semop(semid, &notbusy, 0) == ERROR)
+#endif
+--------------------------------------------------------------------------
+util/stuff.c	
+	float flip_float(float fToFlip) is rewritten using a union.
+	Ugly memcpy() call is removed	
+-----------------------------------------------------------------------------
+util/seedutil.c 
+	sedheader()
+	byteswapping for -D_BIG_ENDIAN_HEADER is moved to comserv/comlink.c
+----------------------------------------------------------------------------
+comserv/comlink.c
+	byteswapping from util/seedutil.c : seedheader() is moved to process
+	case case RECORD_HEADER_1 :...
+----------------
+#if defined(LINUX)
+ 	/* bla-bla1 */
+#else /*IGD 09/03/01 Bug fixed : was elif */                           
+	/* bla-bla */ 
+#endif
+-----------------
+char set_byte_order_SEED_IO_BYTE(char in, short byteOrder) is implemented
+-----------------
+char process_set_byte_order_SEED_IO_BYTE(char myByte)
+-----------------
+flags are added:
+#define SEED_IO_BIT6 0x40    /* IGD 03/09/01 */
+#define SEED_IO_BIT7 0x80    /* Flags for placing the */				
+#define SET_BIG_ENDIAN 1     /* swapping flag into I/O and clock flags byte */
+#define SET_LITTLE_ENDIAN 0  /* of fixed SEED header */
+------------
+process():
+each case which writes into the shared memory buffered is instrumented with
+process_set_byte_order_SEED_IO_BYTE() in order to set the proper byte-order
+bits in the I/O and clock flags byte of a fixed header. This is done for
+non-LINUX COMSERV, too....
+-----------------------------------------------------------------------------
+Makefile: 	Flags -D_BIG_ENDIAN_HEADER and -D_LITTLE_ENDIAN_HEADER are
+removed 	since we moved all the coe to comserv/comlink.csince we moved
+all the coe to comserv/comlink.c
+==============================================================================
+03/08 | ------|
+	Code is restored anfter being wiped out during Redhat6.2 reinstallation
+=================================================================================
+03/05-07/01 |
+------------|
+comserv/comlink.c
+	seed_jul() is instrumented for Linux version: if the OS is lettle-endian,
+	we byteswap, year, jday and tens-of-ms shorts to get the correct output
+	julian time....
+
+------------------
+	process(): case BLOCKETTE : is instrumented for LITTLE_ENDIAN computers
+		Both -D_BIG_ENDIAN_HEADER and -D_LITTLE_ENDIAN_HEADER are assumed
+------------------
+	process(): case CLOCK_CORRECTION 
+1) Add missed byteswapping in
+	   vcovalue = flip2(dbuf.data_buf.ce.header_elog.clk_exc.vco) ; 
+2) Instrumented reversed byteswapping for -D_BIG_ENDIAN_HEADER -DLINUX case
+	for clock correction
+------------------
+	process(): case DETECTION_RESULT:
+	Instrumented reversed byteswapping for -D_BIG_ENDIAN_HEADER -DLINUX case
+------------------
+	process(): case END_OF_DETECTION:
+	Instrumented reversed byteswapping for -D_BIG_ENDIAN_HEADER -DLINUX case
+------------------
+	In header I added:
+	#ifndef FIRSTDATA
+	#define FIRSTDATA 56
+	#endif
+------------------------------------------------------------------------------
+util/seedutil.c
+	dobule seedheader()
+		 case CLOCK_CORRECTION :
+		  tim->exception_count = flip4 (pce->count_of) ;  
+			flip4 was not previously here: bug fixed....
+------------
+	seedblocks(): case CALIBRATION:
+	Three lines are changed to o optional byte-swapping:
+	 ltemp.f = (float) flip4( ltemp.l );  /* IGD 03/07/01 flip4 */
+	 calend->calibration_amplitude = (float) flip2 (pcr->cr_amplitude) ; /* IGD 03/07/01 flip2 */
+         i = flip2(pcr->cr_amplitude) ; /* IGD 03/07/01 flip2 */
+--------------------------------------------------------------------------------
+util/stuff.c
+	Add float flip_float(float) byte-swapping routine
+--------------------------------------------------------------------------------
+comserv/Makefile
+       New flags are introduced in this version
+       -D_BIG_ENDIAN_HEADER flag means that the headers of MSEED records are
+               going to be stored in BIG ENDIAN byte order (non-native) on
+               LITTLE-ENDIAN OS (Intel Linux)
+      -D_LITTLE_ENDIAN_HEADER flag means that the headers of MSEED records are
+               going to be stored in LITTLE ENDIAN byte order (native) on
+               LITTLE-ENDIAN OS (Intel Linux)
+       If neither  -D_BIG_ENDIAN_HEADER or -D_LITTLE_ENDIAN_HEADER , the default
+       is -D_LITTLE_ENDIAN_HEADER and MSEEED record headars are stored in LITTLE
+       ENDIAN BYTE ORDER IN SHARED MEMORY of COMSERV   
+================================================================================= 
+03/03/01 |
+---------|
+comserv/comlink.c
+	process(): case RECORD_HEADER_1 :, case RECORD_HEADER_2 :, case RECORD_HEADER_3 :
+	four byteswapping lines are removed from the code and implemented in 
+	util/seedutil.c double seedheader()
+---------------------------------------------------------------------------------
+util/seedutil.c
+	dobule seedheader()
+	several byte-swapping operations priginally from comserv/comlink.c/process()
+	are moved to here
+	Reversed byte-swapping of the MSEED fixed header and blockette 1000 and 1001
+	is implemented ifdefed by a compilation flag -D_BIG_ENDIAN_HEADER
+----------------------------------------------------------------------------------
+util/Makefile
+       New flags are introduced in this version
+       -D_BIG_ENDIAN_HEADER flag means that the headers of MSEED records are
+               going to be stored in BIG ENDIAN byte order (non-native) on
+               LITTLE-ENDIAN OS (Intel Linux)
+      -D_LITTLE_ENDIAN_HEADER flag means that the headers of MSEED records are
+               going to be stored in LITTLE ENDIAN byte order (native) on
+               LITTLE-ENDIAN OS (Intel Linux)
+       If neither  -D_BIG_ENDIAN_HEADER or -D_LITTLE_ENDIAN_HEADER , the default
+       is -D_LITTLE_ENDIAN_HEADER and MSEEED record headars are stored in LITTLE
+       ENDIAN BYTE ORDER IN SHARED MEMORY of COMSERV   
+================================================================================= 
+

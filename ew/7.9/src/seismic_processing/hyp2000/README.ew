@@ -1,0 +1,68 @@
+23 Mar 2007, LDD: Grabbed latest hyp2000 patch from ehzftp.wr.usgs.gov 
+ 2 Mar 2007, LDD: Grabbed hyp2000 v1.1 tarball from ehzftp.wr.usgs.gov
+ 4 Jan 2007, LDD: Grabbed latest hyp2000 patch from andreas.wr.usgs.gov
+ 4 Dec 2006, LDD: Grabbed latest hyp2000 code from andreas.wr.usgs.gov
+30 Oct 2006, LDD: Grabbed latest hyp2000 code from andreas.wr.usgs.gov 
+ 5 Oct 2005, LDD: Grabbed latest hyp2000 code from andreas.wr.usgs.gov 
+ 8 Dec 2004, LDD: Grabbed latest hyp2000 code from andreas.wr.usgs.gov
+ 1 Jul 2004, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+20 May 2004, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+20 Sep 2002, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+25 Oct 2001, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+11 Sep 2000, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+11 Jan 2000, LDD: Grabbed latest hyp2000 code from swave.wr.usgs.gov
+                  Editted makefiles to add new command in hyfile.for
+12 Nov 1999, LDD: Grabbed latest hyp2000 code from andreas.wr.usgs.gov
+15 Jan 1999, LDD: Grabbed the latest hyp2000 from andreas.wr.usgs.gov 
+
+Hyp2000, a Y2K-compliant version of Hypoinverse.
+------------------------------------------------
+
+The vast majority of this code is written and maintained by Fred Klein.
+At a minimum, the hyp2000 source directory should include:
+
+.../vX.X/src/seismic_processing/hyp2000               Majority of hyp2000 (hypoinverse) code
+                                       /subs          Fred Klein's subroutine library
+                                       /earthworm     Files required by Earthworm version
+
+Other subdirectories may exist and contain documentation or test I/O, 
+but are not required for compilation. Only the files in the subdirectory 
+/earthworm are maintained by the Earthworm team.  Periodically, it is 
+necessary to incorporate the newest version of Fred's code into Earthworm.  
+Here's what to do:
+
+1) Ask Fred which machine you should grab his code from.  He keeps copies
+   on multiple machines; hopefully they're all the same, but you never 
+   know. You'll need the code from Fred's hyp2000 (hypoinverse) directory 
+   and from his subroutine directory:
+
+     cd ~klein/hyp2000
+     tar cvf ~/hyp2000.tar *.f* *.inc *.com
+     tar cvf ~/subs.tar subs/*.f* 
+
+2) On your target machine, go to the Earthworm source directory and
+   make a copy of the old hyp2000 directory as a precautionary measure:
+
+     cd .../earthworm/vX.X/src/seismic_processing
+     cp -r hyp2000 hyp2000-old
+
+3) Put the new tar files in .../earthworm/vX.X/src/seismic_processing/hyp2000 
+   and unpack them:
+ 
+     tar xvf hyp2000.tar
+     tar xvf subs.tar
+
+4) Copy all files from the earthworm subdirectory into the hyp2000 directory.
+
+     cp earthworm/* .
+
+5) Now you're ready to compile the newest version of hyp2000 (hypoinverse)!
+
+     make -f makefile.sol  (Solaris)
+     nmake -f makefile.nt  (NT)
+
+6) When it all compiles successfully, you can delete the saved hyp2000-old 
+   directory and its contents.  
+
+7) tar or zip the entire new hyp2000 source directory and put it on the
+   Earthworm orthodoxy machine!

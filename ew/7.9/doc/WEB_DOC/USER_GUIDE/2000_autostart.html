@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Appendix: Earthworm Windows 2000 Autostart</title>
+</head>
+<body bgcolor="#ffffff">
+<center>
+<h1>Earthworm Windows 2000 Autostart</h1>
+<i>(last revised 5 May, 2003)</i></center>
+<p>
+Following are steps needed to have earthworm (EW) start up
+automatically when a PC running Windows 2000 Workstation boots up.
+</p>
+<p></p>
+<p>Note: Selecting menu choices is denoted as follows:
+</p>
+<p> Start-&gt;Programs-&gt;...
+</p>
+<p>This would mean that the Start menu is to be selected first, then
+Programs, etc.
+</p>
+<pre>
+-Create the autostart file: c:\earthworm\run\params\autostart_ew_2000.cmd
+You can use word pad or a similar application to make this file.
+
+This file should contain the following lines:
+
+	call ew_nt.cmd
+	call startstop.exe
+<p> <br>(NOTE: You can also use your existing windows NT autostart file if you have one)<br><br>-After you save this file right click on the icon and chose create shortcut<br>-Move the shortcut you created to:<br> C:-&gt;Doccuments and Settings-&gt;All Users-&gt;Start Menu-&gt;Programs-&gt;Startup<br>-Reboot your computer to test<br><br>CHANGING EARTHWORM VERSION AND CONFIGURATION DIRECTORY<br><br>Whenever a new version of Earthworm is installed, or a new<br>configuration directory is desired, the autostart script<br>must be updated. Basically, the file autostart_ew_nt.cmd mentioned<br>above consists of the main command file ew_nt.cmd (which is<br>located in the params directory of the current configuration), <br>with the addition of the startstop command which starts earthworm<br>automatically. Therefore, whenever ANY changes are made to <br>the local of the active ew_nt.cmd, the <br>autostart_ew_nt.cmd file should be update.<br><br></p></pre>
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address>
+</BODY>
+</HTML>
+
+
+

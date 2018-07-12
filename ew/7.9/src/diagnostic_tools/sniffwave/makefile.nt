@@ -1,0 +1,49 @@
+#
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5604 2013-06-25 18:02:31Z paulf $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:03:58  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:41:39  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2000/02/14 19:36:09  lucky
+#     Initial revision
+#
+#
+#
+
+
+#                    Nmake File For sniffwave - Windows NT version
+#
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = sniffwave
+O = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+$B\$(APP).exe: $O
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O \
+    $L\libew.lib $L\swap.obj $L\libmseed.lib -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\sniffwave*

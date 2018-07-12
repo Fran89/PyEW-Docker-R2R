@@ -1,0 +1,19 @@
+This is my latest version of k2ew. It comes on serveral flavors. On Solaris
+there is k2ew_tcp (for TCP comms) and k2ew_tty (for serial comms). On
+WindowsNT, there is k2ew_com (for COM port) and k2ew_tcp (for TCP comms.)
+The config files for both TCP flavors are the same; the other two flavors
+each have their own config files.
+
+Important changes in this version (7/28/2000):
+Moved heartbeats to a separate thread: this should help get heartbeats out
+when k2ew is being delayed reading from COM or socket ports.
+
+Added DontQuit flag: if set, k2ew will not quit on timeouts but will keep
+trying. 
+
+Also, the HTML files in the Doc directory have been updated.
+
+See the ChangeLog for a list of code changes in k2ew.
+
+Pete Lombard
+7/28/2000

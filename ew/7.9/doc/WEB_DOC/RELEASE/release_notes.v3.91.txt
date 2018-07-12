@@ -1,0 +1,215 @@
+Release Notes:  Earthworm Version "v3.91"
+
+
+NEW MODULES:
+***********
+q2ew:  module to convert data acquired by the Quanterra dataloggers into 
+	earthworm packets.  The Quanterra data is imported into a
+	Solaris machine via the comserv program in miniSEED format. The
+	module q2ew interfaces to comserv and converts the miniSEED
+	packets to earthworm trace_buf packets. Written by Paul Friberg
+	& Sid Hellman of ISTI.
+
+ew2seisvole: Derived from cubic_msg. Listens for hypo_sum messages, and 
+   produces files containing cubic messages in a specified directory.
+   Seisvole is hopefully configured to pick things out of that directory.
+   A readme file is being inserted into the ew2seisvole source directory.
+   AB for LV 2/14/99
+
+MODIFICATIONS/BUG FIXES TO EXISTING MODULES:
+*******************************************
+adsend: Simplified the triangle-wave follower, and changed its configuration
+   file parameters.  There are now two threshold values.  If the mean value
+   of first-differences of the guide channels falls below a threshold value,
+   adsend will do a restart.  This will occur if a guide channel goes dead.
+   If the standard deviation of first-differences of the guide channels
+   exceeds a threshold value, adsend will do a restart.  This will occur if
+   a guide channel is noisy.
+
+   Added a parameter ErrNoLockTime.  On startup or after a restart, if
+   the guide channels do not lock in after ErrNoLockTime seconds, adsend
+   will send a message to statmgr.
+
+   Adsend can now be set to ring the computer bell if time code is not in
+   synch or the guide channels are not locked in.  If someone wanders by the
+   digitizer PCs and hears a bell ringing, they will know something is wrong.
+   This feature can be enabled or disabled using the EnableBell configuration
+   file parameter.   WMK 1/12/99
+
+
+startstop (solaris & NT): Increased the allowable length of "Process" command
+   lines by use of the MAXLINE definition.   LDD 1/13/99
+
+libsrc/util/kom.c: Changed MAXCRD from 256 to 512.  This is to accomodate
+   long subnet lines in carlsubtrie configuration files.  WMK 1/15/99
+
+decimate:  Decimated trace messages are written out with new SCN labels, 
+   specified according to rewrite rules in the configuration file. Also,
+   decimate is now multi-threaded.
+
+hyp2000: Grabbed an entire new verion of Fred Klein's code which incorporates
+   numerous bug fixes.  LDD 1/15/99
+
+wave_serverV: Added a few lines of code to fix a memory alignment bug which
+   surfaced when compiled with gcc (instead of the Sun compiler).
+   Paul Friberg 1/07/1999 
+
+reftek2ew: Installed a patched source file (provided by RefTek) which 
+   fixed a bug that caused incorrect importing of 32-bit data.
+
+statmgr: Fixed a bug where statmgr could send a RESTART message before it
+   learned the pid of the module it wanted to restart. Now if needs to restart
+   a module but doesn't know its pid, statmgr complains and asks for human
+   intervention. PNL, 1/25/99
+
+trig2disk: Added suds output format. Cleaned up the code, added much 
+    more extensive error detection and reporting. LV 3/17/1999
+
+	SAC output files are written to the output directory of the
+	following format (closely resembling that of ora2sac)
+
+ 		OutDir/yyyymm/yyyymmdd_hhmmss_evid/
+
+	Within that directory are STA.CHA.NET files for each channel of
+	interest, along with a set of support SAC macros. 
+
+
+carlstatrig: Changed addtrace.c and flushbuff.c to try to get rid of crashes
+   on data rollback. PNL, 1/27/99
+
+    Fixed a problem in readstas.c where stations with TTL 0 were not
+    being ignored. PNL, 2/9/99
+
+	More changes to stop crashes. Major rewrite of addtrace.c to remove
+    the recursion, handle errors more robustly and do debugging more
+    logically. No changes to the config file except that debug levels have
+    different meanings than before.  PNL, 2/17/99
+
+    More big changes: made carlstatrig much less fussy about packet times,
+    removed InterpolateGap(). Now carlstatrig will not complain when the
+    measured sample rate is slightly different from the advertised rate. It
+    also uses less CPU time than before. PNL, 3/3/99
+
+    Fixed bug in addtrace.c where gapSize was calculated incorrectly.
+    This was causing the STA/LTA values to become NaNs (Not A Number) which
+    prevented triggers from that station. PNL 4/12/99
+
+
+rcv:	Replaced rcv code with new version which starts 'station' on startup.  
+   'station' then sends a heartbeat with pid to Earthworm ring.  BB, 1/29/99
+
+carlsubtrig: Added optional config parameters "Channel", "AllSubnets",
+   "ListSubnets" and "CompAsWild". See cmd.html and carlsubtrig.d in the
+   src/carlsubtrig directory for explanation of what these do. PNL 1/15/99
+
+carlsubtrig: Changed "ListSubnets" command to have three values: 0, 1, 2. At
+    0 or if ListSubnets is absent, only triggered SCNs from triggered subnets
+    are listed in trigger message (plus "Channels" that are always listed.)
+    With ListSubnets at 1, then all SCNs from triggered subnets are
+    listed. When ListSubnets is 2, then all SCNs from subnets that had ANY
+    triggered SCNs are listed. Usuaally this last setting results in almost
+    all SCNs being listed, especially when there is a lot of weather or
+    telemetry noise on the network. PNL, 2/8/99
+
+carlsubtrig: Changed "ListSubnets" command to have four values: 0,1,2,3.
+    At 0 or if ListSubnets is absent, all triggered SCNs are listed in the
+    trigger message (plus "Channels" that are always listed). With ListSubnets
+    at 1, all SCNs from only the triggered subnets are listed.  
+    At ListSubnets 2, all SCNs from the triggered subnets, plus all 
+    other triggered SCNs are listed (combination of 0 and 1).  
+    With ListSubnets 3, then all SCNs from subnets that had ANY triggered
+    SCNs are listed.  Usually this last setting results in almost all
+    SCNs being listed, especially when there is a lot of noise on the 
+    network.  LDD, 2/10/98
+       Changed to "Subnet" command.  Changed the first argument from an 
+    integer to a character string to be saved and reported in log messages
+    as the subnet code.  Only the first 3 characters are stored, so 
+    make sure they're unique.  LDD, 2/10/99
+
+carlsubtrig: Changed one line of code in sbntthrd.c which determines how long
+    the network trigger lasts. (NCSN's triggers for large events were cutting
+    off early; I think I fixed a bug, but I left the old line in and well-
+    commented). LDD, 3/9/99
+      Added a volatile time_t SubnetThreadHeart variable to carlsubtrig.c and
+    sbntthrd.c to use as an internal heartbeat for the SubnetThread. 
+    SubnetThreadHeart is updated each time thru SubnetThread's processing loop. 
+    The main thread monitors SubnetThreadHeart; if SubnetThreadHeart stops
+    being updated (SubnetThread is hung), the main thread will stop issuing
+    TypeHeartBeat messages to statmgr and will issue a TypeError message
+    telling why.  This will allow auto-restarts in the case that the
+    main thread is happy, but the subnet thread is hung.  LDD, 3/12/99
+
+
+evansassoc: Added a new optional configuration file command "AddChannel".
+    See the configuration file section below for details.  LDD, 2/19/99
+
+
+tankplayer: Added optional config command "SendLate"; speeded up main loop.
+   See the README file in the src/tankplayer directory for details. PNL 3/31/99
+
+heli_standalone: Corrected bugs in RequestWave() to properly handle error
+    returns from wsGetTraceAscii() before calling wsAttachServer. PNL 4/2/99
+
+****************************************************/
+
+
+CHANGES TO CONFIGURATION FILES and DESCRIPTOR FILES:
+**************************************************** 
+adsend.d: Eliminated the parameters GuideMaxBad and GuideNoise.
+   Added two new parameters, MinGuideSignal and MaxGuideNoise.
+   If the mean value of first-differences of the guide channels falls below
+   MinGuideSignal, adsend will do a restart.  This will occur if a guide
+   channel goes dead.  If the standard deviation of first-differences of
+   the guide channels ever exceeds MaxGuideNoise, adsend will do a restart.
+   This will occur if a guide channel is noisy.
+
+   Added a parameter ErrNoLockTime.  On startup or after a restart, if
+   the guide channels are not locked in after ErrNoLockTime seconds, adsend
+   will send a message to statmgr.
+
+   There is a new configuration parameter, EnableBell.  If non-zero, the
+   computer bell will ring if time code is not in synch or the guide
+   channels are not locked in.   WMK 1/12/99
+
+adsend.desc: Added a new error (number 6).  If the guide channels don't
+   lock in on startup or after a restart, adsend will send a message to
+   statmgr.   WMK 1/12/99
+
+carlsubtrig: Added optional config parameters "Channel", "AllSubnets",
+   "ListSubnets" and "CompAsWild". See cmd.html and carlsubtrig.d in the
+   src/carlsubtrig directory for explanation of what these do. PNL 1/15/99
+
+decimate:  Major change to the format of the config file. User now has
+  to specify GetWavesFrom parameter for the logos of desisred messages,
+  GetSCN to list specific data streams, and Rewrite rules to determine
+  the outgoing SCN label after decimation.
+
+hyp2000 (hypoinverse):  New arguments added to the DUB command (see sample
+   file ncal2000.hyp).  LDD 1/15/99
+
+carlsubtrig: Made "ListSubnets" a three-valued flag: 0, 1, 2. See
+   carlsubtrig.d and cmd.html for details. PNL 2/8/99
+
+carlsubtrig.desc: Added an error code describing a hung SubnetThread:
+   err: 22  nerr: 1  tsec: 0  page: 1  mail: 20
+   text: "Subnet thread stopped looping."
+   LDD 3/12/99
+
+evansassor.d: New optional command:  AddChannel <sta> <chan> <network>
+   Use an AddChannel command to list any channel (seismic, time code, 
+   non-seismic, etc) that should be included in every triglist message.
+   A wildcard (*) may be used in any field.  List one SCN per AddChannel
+   command, and use as many AddChannel commands as you need.
+   The trigger time for these channels will be all zeroes, but the 
+   save on-time and duration will be valid.  LDD 2/19/99
+
+trig2disk: Added a new output format - suds. Added a new configuration
+   parameter - OutputFormat. Valid values are sparc and intel and they
+   determine the byte order for output files. 
+
+KNOWN BUGS or DEFICIENCIES:
+**************************
+In Windows NT, the time resolution of sleep_ew() is about 16 msec (one clock
+tick).  On Solaris, the resolution is about 10 msec.  This is a problem for 
+ringtocoax, since packet delays need to be set to a few milliseconds.
+

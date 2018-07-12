@@ -1,0 +1,59 @@
+#
+#   THIS FILE IS UNDER RCS - DO NOT MODIFY UNLESS YOU HAVE
+#   CHECKED IT OUT USING THE COMMAND CHECKOUT.
+#
+#    $Id: makefile.nt 5281 2013-01-07 21:16:28Z tim $
+#
+#    Revision history:
+#     $Log$
+#     Revision 1.3  2006/11/21 23:04:07  stefan
+#     GLOBALFLAGS for c compiler from ew_nt.cmd
+#
+#     Revision 1.2  2003/05/06 20:40:55  lucky
+#     *** empty log message ***
+#
+#     Revision 1.1  2003/01/30 23:12:14  lucky
+#     Initial revision
+#
+#     Revision 1.1  2000/02/14 16:04:49  lucky
+#     Initial revision
+#
+#
+#
+
+#                    Nmake File For arc2trig- Windows NT version
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = comment2html
+O = $(APP).obj
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+
+support_files = api_doc_util.obj parse_files_for_keywords.obj \
+                write_html_comments.obj write_html_file.obj write_comment_file.obj
+
+ew_files =      $L\dirops_ew.obj $L\logit.obj $L\time_ew.obj
+
+comment2html_files = comment2html.obj $(support_files) $(ew_files)
+comment2html: $(comment2html_files) 
+	$(CC) -o $(B)\comment2html $(comment2html_files) -lm -lposix4
+
+$B\$(APP).exe: $(comment2html_files)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(comment2html_files) \
+    -out:$B\$(APP).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  /nologo $(cflags) $(cdebug) $(cvarsmt) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\arc2trig*

@@ -1,0 +1,58 @@
+#
+#                    Nmake File For ewspectra  - Windows NT version
+#
+
+B = $(EW_HOME)\$(EW_VERSION)\bin
+L = $(EW_HOME)\$(EW_VERSION)\lib
+
+NODEBUG=1
+
+!include <ntwin32.mak>
+
+APP = ewspectra
+APPc = activate_module
+APPs = sniffspectra
+
+OBJS = ewspectra.obj \
+       iir.obj
+OBJSc = activate_module.obj
+OBJSs = sniffspectra.obj
+
+EW_LIBS = \
+		$L\libew_mt.lib \
+		$L\ws_clientII.obj \
+		$L\socket_ew_common.obj \
+		$L\mem_circ_queue.obj \
+		$L\socket_ew.obj \
+		$L\swap.obj \
+		$L\ws2ts.obj \
+		$L\ew_spectra_io.obj
+
+compflags = /c /W3 /MT /nologo
+
+linkflags = /nologo
+
+libs = libcmt.lib
+
+ALL: $B\$(APP).exe $B\$(APPc).exe $B\$(APPs).exe
+
+$B\$(APP).exe: $(OBJS)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJS) $(EW_LIBS) \
+      $(LIBS) -out:$B\$(APP).exe
+$B\$(APPc).exe: $(OBJSc)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJSc) $(EW_LIBS) \
+      $(LIBS) -out:$B\$(APPc).exe
+$B\$(APPs).exe: $(OBJSs)
+   $(link) $(conlflags) $(ldebug) $(conlibsmt) $O $(OBJSs) $(EW_LIBS) \
+      $(LIBS) -out:$B\$(APPs).exe
+
+.c.obj:
+   $(CC) $(GLOBALFLAGS)  $(compflags) $(CLAGS) $(cflags) $(tflags) $<
+
+
+# Clean-up directives
+clean:
+	-del a.out core *.o *.obj *% *~
+
+clean_bin:
+	-del $B\$(APP)* $B\$(APPc)* $B\$(APPs)*

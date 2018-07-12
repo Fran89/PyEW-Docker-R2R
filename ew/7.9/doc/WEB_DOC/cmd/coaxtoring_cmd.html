@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0048)/ewdoc/WEB_DOC/cmd/coaxtoring_cmd.html -->
+<HTML><HEAD><TITLE>Earthworm Modules: Coaxtoring commands</TITLE>
+<META content="text/html; charset=windows-1252" http-equiv=Content-Type>
+<META content="MSHTML 5.00.2919.6307" name=GENERATOR></HEAD>
+<BODY aLink=#ff0000 bgColor=#fadfaf link=#0000ee text=#000000 vLink=#551a8b>
+<CENTER>
+<H1>Coaxtoring Configuration File Commands</H1><I>(last revised 29 July
+1998)</I></CENTER>Page Index:<BR>1. <A
+href="coaxtoring_cmd.html#example">Example
+configuration file</A><BR>2. <A
+href="coaxtoring_cmd.html#function">Functional
+command listing</A><BR>3. <A
+href="coaxtoring_cmd.html#alphabet">Alphabetic
+command listing &amp; description</A>
+<P><!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->On startup,
+coaxtoring reads the configuration file named on the command line. Commands in
+this file set up all parameters used in receiving UDP broadcast Earthworm
+messages from the network and placing them into shared memory. In the control
+file, lines may begin with a valid coaxtoring command (listed below) or with one
+of 2 special characters:
+<BLOCKQUOTE><PRE>#  marks the line as a comment (example: # This is a comment).<BR>
+@  allows control files to be nested; one control file can be
+   accessed from another with the command "@" followed by
+   a string representing the path name of the next control file
+   (example: @model.d).
+</PRE></BLOCKQUOTE><PRE></PRE>Command names must be typed in the control file exactly as shown in
+this document (upper/lower case matters!).
+<P><A name=example></a>
+<H2>1. EXAMPLE CONFIGURATION FILE</H2><PRE>#
+#
+# coaxtoring configuration file
+#
+#   The setup is different for Solaris and NT. The specified address
+#   will be used to receive class c subnet broadcasts.
+#
+# Solaris:    InAddress must be of the form xxx.xxx.xxx.255
+# Windows NT: InAddress must be the complete local address, eg
+#             192.168.4.107
+#
+MyModuleId   MOD_COAXTORING_A   # Module id for this process
+RingName     WAVE_RING          # Write to this shared memory region
+LogFile      1                  # 1=write log file on disk; 0=don't
+                                # 2=write to module log but not stderr/stdout
+nMsgBuf      16                 # There should be at least one buffer per logo
+MsgMaxBytes  51740              # Size of biggest message to be received
+InAddress    192.168.4.255      # IP address of ethernet line to read
+
+PortNumber   990                # Usually 990 (waveforms) or 5555 (picks)
+                                # Under Solaris, if the port number is at
+                                #  or below 1024, the program must run as root.
+
+ScrnMsg      1                  # 1=print messages on screen; 0=don't
+HeartbeatInt 30                 # Heartbeat interval in seconds
+BufferReportInt 300             # Print high buffer count every n seconds
+
+RcvBufSize   260000             # Size of socket receive buffer, in bytes.
+                                # Set RcvBufSize to a large number to avoid
+                                #   dropping packets.
+                                # Max value is system dependent
+                                #  (typically 260000)
+                                # If you set =0, it will default to the
+				        # system default. (typically 8192)
+</PRE>
+<P><A name=function></a>
+<H2>2. FUNCTIONAL COMMAND LISTING</H2>
+<P><!-- ADD HERE: Paragraph "Below are the commands recognized..." -->Below are
+the commands recognized by coaxtoring, grouped by the function they influence.
+All of the commands are required; they must be specified in the control file in
+order for coaxtoring to operate. <!-- ADD HERE: The pre-formatted functional command listing      --><!-- To make an anchor for each command, surround it with these: --><PRE>         Earthworm system setup:
+		<A href="coaxtoring_cmd.html#HeartBeatInt">HeartBeatInt</A> 	 	required
+ 		<A href="coaxtoring_cmd.html#MyModuleId">MyModuleId</A>	   	required
+		<A href="coaxtoring_cmd.html#RingName">RingName</A>	   	required
+
+	Network Information:
+		<A href="coaxtoring_cmd.html#InAddress">InAddress</A>	   	required
+		<A href="coaxtoring_cmd.html#PortNumber">PortNumber</A>	   	required
+
+	Message Handling:
+		<A href="coaxtoring_cmd.html#nMsgBuf">nMsgBuf</A>	   		required
+		<A href="coaxtoring_cmd.html#MsgMaxBytes">MsgMaxBytes</A>	   	required
+		<A href="coaxtoring_cmd.html#RcvBufSize">RcvBufSize</A>	   	required
+
+	Output Control:
+		<A href="coaxtoring_cmd.html#ScrnMsg">ScrnMsg</A>	   		required
+		<A href="coaxtoring_cmd.html#LogFile">LogFile</A>		   	required
+		<A href="coaxtoring_cmd.html#BufferReportInt">BufferReportInt</A>   	required
+</PRE><A name=alphabet></a>
+<H2>3. ALPHABETIC COMMAND LISTING &amp; DESCRIPTION</H2>
+<P>In the following section, all configuration file commands are listed in
+alphabetical order. Listed along with the command (bold-type) are its arguments
+(in red), the name of the subroutine that processes the command, and the
+function within the module that the command influences. A detailed description
+of the command and is also given. Default values and example commands are listed
+after each command description. <PRE><B>
+command <FONT color=red>arg1</FONT>				processed by		function
+</b></PRE>
+<HR>
+<!-- ADD HERE: all commands; below is a sample command blank: --><A
+name=BufferReportInt></a><!-- command name as anchor inside quotes --><PRE><B>BufferReportInt <FONT color=red>nbytes</FONT>			coaxtoring_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Print high buffer count
+  every n seconds <PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   BufferReportInt 300
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=HeartBeatInt></a><!-- command name as anchor inside quotes --><PRE><B>HeartBeatInt <FONT color=red>nsec</FONT> 			coaxtoring_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Defines the number of
+  seconds <FONT color=red>nsec</FONT> between TYPE_HEARTBEAT messages issued by
+  coaxtoring. <PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   HeartBeatInt 5
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=InAddress></a><!-- command name as anchor inside quotes --><PRE><B>InAddress <FONT color=red>a.b.c.d</FONT>			coaxtoring_config	network info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Tells coaxtoring the TCP/IP
+  address of the ethernet line that it should listen to. <FONT
+  color=red>a.b.c.d</FONT> is a character string in tcp/ip's standard
+  dotted-decimal notation that coaxtoring uses along with the port number from
+  the "PortNumber" command to set up a socket from which it will receive UDP
+  Datagram packets. Under Solaris, the "d" part of the address should be set to
+  255 (for example a.b.c.255). Under NT, the "d" part of the address should be
+  set to the complete local address, eg 192.168.4.107. <PRE><!-- Default and example go here   -->
+Default:  none
+Example:  InAddress 130.118.49.255 (Solaris)
+Example:  InAddress 192.168.4.107 (NT)
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=LogFile></a><!-- command name as anchor inside quotes --><PRE><B>LogFile <FONT color=red>switch</FONT>				coaxtoring_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Sets the on-off switch for
+  writing a log file to disk. If <FONT color=red>switch</FONT> is 0, no log file
+  will be written. If <FONT color=red>switch</FONT> is 1, coaxtoring will write
+  a daily log file(s) called coaxtoringxx.log_yymmdd where xx is coaxtoring's
+  module id (set with "MyModuleId" command) and yymmdd is the current UTC date
+  (ex: 960123) on the system clock. The file(s) will be written in the EW_LOG
+  directory (environment variable). <PRE><!-- Default and example go here   -->
+Default:  none
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=MsgMaxBytes></a><!-- command name as anchor inside quotes --><PRE><B>MsgMaxBytes <FONT color=red>nbytes</FONT>			coaxtoring_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Sets the size, in bytes, of
+  the working buffers that coaxtoring uses for rebuilding complete Earthworm
+  messages out of the UDP packets. <FONT color=red>nbytes</FONT> should be the
+  size of the largest message you expect coaxtoring to receive. If coaxtoring
+  receives a message larger than <FONT color=red>nbytes</FONT>, it will drop the
+  entire message and issue a TYPE_ERROR message containing the string "Message
+  buffer overflow" and the logo of the dropped message. <PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   MsgMaxBytes 51740
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=MyModuleId></a><!-- command name as anchor inside quotes --><PRE><B>MyModuleId <FONT color=red>mod_id</FONT>			coaxtoring_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Sets the module id for
+  labeling all outgoing heartbeat and error messages. <FONT
+  color=red>mod_id</FONT> is a character string (valid strings are listed in
+  earthworm.d) that relates (in earthworm.d) to a unique single-byte number. All
+  messages that coaxtoring receives from ethernet are tagged with their original
+  logos when they are placed into shared memory. <PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   MyModuleId MOD_COAXTORING
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=nMsgBuf></a><!-- command name as anchor inside quotes --><PRE><B>nMsgBuf <FONT color=red>nbuf</FONT>				coaxtoring_config	msg handling</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Defines the number of
+  working buffers <FONT color=red>nbuf</FONT> that coaxtoring should allocate.
+  Coaxtoring uses the buffers for rebuilding complete Earthworm messages out of
+  the UDP packets it receives from ethernet. There should be at least one buffer
+  for each different message logo that coaxtoring might see. The maximum allowed
+  number of buffers is controlled by MAX_BUF, currently defined to be 16 in
+  coaxtoring.c. The size of each buffer is set with the "MsgMaxBytes" command. <PRE><!-- Default and example go here   -->
+Default:  none
+Calnet:   nMsgBuf 16
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=PortNumber></a><!-- command name as anchor inside quotes --><PRE><B>PortNumber <FONT color=red>port</FONT>				coaxtoring_config	network info</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Defines the well-known port
+  number <FONT color=red>port</FONT> which coaxtoring will listen to. <FONT
+  color=red>port</FONT> is an integer that coaxtoring uses along with the
+  address from the "InAddress" command to set up a socket from which it will
+  receive UDP Datagram packets. <BR><FONT color=red>NOTE:</FONT> The port number
+  must be greater than 1024. Smaller port numbers require root permission. <PRE><!-- Default and example go here   -->
+Default:  none
+Example:  PortNumber 2025
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=RcvBufSize></a><!-- command name as anchor inside quotes --><PRE><B>RcvBufSize <FONT color=red>ring</FONT>				coaxtoring_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Tells coaxtoring the size of
+  the socket receive buffer, in bytes. Set RcvBufSize to a large number to avoid
+  dropping packets. Maximum value is system dependent, typically 260000. If no
+  buffering desired, use the system default size, typically 8192. To determine the default size, set RcvBufSize to zero.  When coaxtoring is restarted, it will log a message giving you the default buffer size. The maximum size can be found by trial and error.  If the value exceeds the maximum value, coaxtoring will log the message: "Error resetting receive buffer size" and exit.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RcvBufSize 260000
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=RingName></a><!-- command name as anchor inside quotes --><PRE><B>RingName <FONT color=red>ring</FONT>				coaxtoring_config	Earthworm setup</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Tells coaxtoring which
+  shared memory region to use for output. <FONT color=red>ring</FONT> is a
+  character string (valid strings are listed in earthworm.d) that relates (in
+  earthworm.d) to a unique number for the key to the shared memory region. All
+  messages that coaxtoring receives from ethernet are tagged with their original
+  logos when they are placed into shared memory. <PRE><!-- Default and example go here   -->
+Default:  none
+Example:  RingName WAVE_RING
+</PRE></BLOCKQUOTE>
+<HR>
+<A name=ScrnMsg></a><!-- command name as anchor inside quotes --><PRE><B>ScrnMsg <FONT color=red>switch</FONT>				coaxtoring_config	output</B><!-- command args ... -->
+</PRE>
+<BLOCKQUOTE><!-- command description goes here -->Sets a switch for writing
+  messages to the screen. If <FONT color=red>switch</FONT> is 1, a line is
+  printed to the screen detailing the logo and the sequence number of each
+  Earthworm message received from the ethernet. If <FONT color=red>switch</FONT>
+  is 0, no messages are written to the screen. <PRE><!-- Default and example go here   -->
+Default:  none
+Example:  ScrnMsg 0
+</PRE></BLOCKQUOTE>
+<HR>
+
+<CENTER><A href="../modules.html">Module Index</A> | <A
+href="../ovr/coaxtoring_ovr.html">Coaxtoring Overview</A>
+</CENTER><!-- USGS-required stuff at the end -->
+<HR>
+<address>Questions? Issues? <a
+ href="http://groups.google.com/group/earthworm_forum?hl=en"
+ target="_blank">Subscribe to the Earthworm Google Groups List. </a></address></BODY></HTML>

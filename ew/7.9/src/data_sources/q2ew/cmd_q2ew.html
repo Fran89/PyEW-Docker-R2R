@@ -1,0 +1,315 @@
+<HTML>
+<HEAD>
+<TITLE>Earthworm Modules: q2ew commands</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FADFAF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF
+0000">
+
+<CENTER><H1>q2ew Configuration File Commands</H1>
+<I>(last revised 28 January 1999)</I></CENTER>
+						  	 
+Page Index:<BR>
+1.  <A HREF="#example">Example configuration file</A><BR>
+2.  <A HREF="#function">Functional command listing</A><BR>
+3.  <A HREF="#alphabet">Alphabetic command listing & description</A><BR>
+4.  <A HREF="#descriptor">Descriptor file example</A>
+<P>
+<!-- ADD HERE: Paragraph "On startup, xxxx reads the..." -->
+On startup, q2ew reads the configuration file named on the command
+line.   As always, the configuraton file contains comments:
+
+<BLOCKQUOTE><PRE>
+#  marks the line as a comment (example: # This is a comment).<BR>   
+</BLOCKQUOTE></PRE>
+Command names must be typed in the control file exactly as shown in this
+document (upper/lower case matters!). q2ew supports one diagnostic command
+line option, -v is for verbose mode so that you can see packets coming in.
+<P>
+<A NAME="example">
+<H2>1.   EXAMPLE CONFIGURATION FILE</H2>
+<PRE>
+#
+# q2ew configuration file
+#
+# This code receives MiniSEED records from COMSERV, converts them into
+# Earthworm trace buf messages, and stuffs them into a wave ring.
+#
+#
+ ModuleId	MOD_Q2EW	# module id for this import,
+ RingName	WAVE_RING	# transport ring to use for input/output,
+
+ HeartbeatInt	10		# Heartbeat interval in seconds
+				# this should be half the q2ew.desc heartbeat!
+
+ LogFile	1		# If 0, don't write logfile at all,
+
+ LOG2LogFile 	1		# <Optional> write LOG chans to log file
+				# this is useful for debugging timing or
+				# data logger problems.	
+
+TimeoutNoSend	5		# If no data for X seconds from COMSERV for
+				# ALL stations,  then kill process (HB and
+				# main thread). 
+				# NOTE: this timeout does not take effect until
+				# a trace data packet comes from comserv. That
+				# is, LOG channels do not count! 
+				# 
+				# Iff TimeoutNoSend == 0, then this data
+				# check is DISABLED and q2ew will only die
+				# if EW or COMSERV dies.
+
+# For ATWC, set this next config param to CSQ_LAST
+ ComservSeqBuf	CSQ_LAST	# This is a comserv sequence control value
+				# that can have the following settings:
+				# CSQ_NEXT  = Get newer than already received
+				# CSQ_LAST  = Get first available data (latest)
+				# CSQ_FIRST = Get all data in DAQ
+				# This effects what data are returned.
+
+# These are optional for those EW users who want to have a pin number
+# instead of a SCN. The keyword here is SCN2pinmap. No duplicate checking
+# occurs
+
+# Example
+#		S	C    	N	pin
+SCN2pinmap 	Q003	HHZ  	AT	1
+SCN2pinmap 	Q003	HHN  	AT	2
+SCN2pinmap 	Q003	HHE  	AT	3
+</PRE>
+<P>
+<A NAME="function">
+<H2>2.  FUNCTIONAL COMMAND LISTING</H2>
+<P>  
+<!-- ADD HERE: Paragraph "Below are the commands recognized..." -->
+Below are the configure commands recognized by q2ew, grouped by the function 
+they influence.  Most of the commands are required. Only SCN2pinmap and 
+LOG2LogFile are optional.
+
+<!-- ADD HERE: The pre-formatted functional command listing      -->
+<!-- To make an anchor for each command, surround it with these: -->
+<PRE>
+         Earthworm system setup:
+ 		<A HREF="#MyModuleId">MyModuleId</A>	   	required
+		<A HREF="#RingName">RingName</A>	   	required
+		<A HREF="#ComservSeqBuf">ComservSeqBuf</A>	   	required
+		<A HREF="#HeartbeatInt">HeartbeatInt</A>	   	required
+		<A HREF="#TimeoutNoSend">TimeoutNoSend</A>	   	required
+	
+	Output Control:
+		<A HREF="#LogFile">LogFile</A>		   	required
+		<A HREF="#LOG2LogFile">LOG2LogFile</A>		optional
+		<A HREF="#SCN2pinmap">SCN2pinmap</A>		optional
+
+</PRE>
+
+<A NAME="alphabet">
+<H2>3.  ALPHABETIC COMMAND LISTING & DESCRIPTION</H2>
+<P>
+In the following section, all configuration file commands are listed 
+in alphabetical order.  Listed along with the command (bold-type) are 
+its arguments (in red), the name of the subroutine that processes the 
+command, and the function within the module that the command influences. 
+A detailed description of the command and is also given.  Default values 
+and example commands are listed after each command description.
+<PRE><B>
+command <font color=red>arg1</font>				processed by		function
+</PRE></B>
+<HR>
+
+<!-- ADD HERE: all commands; below is a sample command blank: -->
+
+<A NAME="ComservSeqBuf">  <!-- command name as anchor inside quotes -->	
+<PRE><B>ComservSeqBuf <font color=red>csqtype</font>			main			Main q2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command is used to define how q2ew gets data from COMSERV.  <font color=red>csqtype</font> is the name of a 
+#define as found in COMSERV's comserv/include/service.h file. <font color=red>csqtype</font> can have the following
+values:
+<PRE>
+	CSQ_NEXT
+	CSQ_LAST
+	CSQ_FIRST
+
+</PRE>
+CSQ_LAST is what is being used for ATWC since they are only interested in the latest available data from the
+digitizer or DA  (digitizer=DA in Quanterras documents). CSQ_NEXT gets only the data that are newer than that 
+already receieved by COMSERV and CSQ_FIRST gets all the data in the DA's buffer.
+<PRE><!-- Default and example go here   -->
+Default:  none
+Example: 
+	ComservSeqBuf CSQ_LAST
+</PRE>
+</BLOCKQUOTE>
+<HR>
+<A NAME="HeartbeatInt">  <!-- command name as anchor inside quotes -->	
+<PRE><B>HeartbeatInt <font color=red>beat</font>			HeartBeat		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Beat the q2ew heart every <font color=red>beat</font> seconds. This is
+implemented as a separate thread in q2ew.
+</BLOCKQUOTE>
+<HR>
+<A NAME="LOG2LogFile">  <!-- command name as anchor inside quotes -->	
+<PRE><B>LOG2LogFile <font color=red>switch</font>			logLOGchans 		Main q2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing Quanterra LOG channels to the <A HREF="#LogFile">LogFile</A>.  
+If <font color=red>switch</font> is 0, no LOG channels will be written to the log.  
+If <font color=red>switch</font> is 1, q2ew will write all LOG channels to the LogFile. Turning
+this on will automatically turn on writing of a LogFile.
+<PRE><!-- Default and example go here   -->
+Default:  0 - do not use logit() for LOG channels
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="LogFile">  <!-- command name as anchor inside quotes -->	
+<PRE><B>LogFile <font color=red>switch</font>				GetConfig		Earthworm Setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the on-off switch for writing a log file to disk.  If <font color=red>switch</font>
+is 0, no log file will be written.  If <font color=red>switch</font> is 1, q2ew 
+will write a daily log file(s) called q2ewxx.log_yymmdd 
+where xx is q2ew's module id (set with "MyModuleId" command) 
+and yymmdd is the current UTC date (ex: 960123) on the system clock.  
+The file(s) will be written in the EW_LOG directory (environment 
+variable).  
+<PRE><!-- Default and example go here   -->
+Default:  none
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="MyModuleId">  <!-- command name as anchor inside quotes -->	
+<PRE><B>MyModuleId <font color=red>mod_id</font>			GetConfig		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+Sets the module id for labeling all outgoing messages. <font color=red>mod_id</font> is
+a character string (valid strings are listed in earthworm.d) that
+relates (in earthworm.d) to a unique single-byte number.
+<PRE><!-- Default and example go here   -->
+Default:  none				
+Calnet:   MyModuleId MOD_Q2EW
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="RingName">  <!-- command name as anchor inside quotes -->	
+<PRE><B>RingName <font color=red>ring</font>				GetConfig		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This is the ring into which the waveforms and messages are sent.
+<PRE>
+Default:  none, required option				
+ATWC:   RingName WAVE_RING
+</PRE>
+</BLOCKQUOTE>
+<HR>
+<A NAME="SCN2pinmap">  <!-- command name as anchor inside quotes -->	
+<PRE><B>SCN2pinmap <font color=red>S C N pin</font>			insertSCN		Main q2ew Thread</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+This command is used to define how q2ew maps a Station Channel Name to a pin
+number for those installations who wish to define pins....This is a throwback
+to old digitizers and is not recommended since Quanterra digitizers can
+properly be configured to know SCN information. Data from 
+<font color=red>S C N</font> is compared to the SEED header of the waveform
+packets coming off the DA and the <font color=red>pin</font> number is 
+substituted into the tracebuf struct passed to Earthworm. 
+<font color=red>S</font> is for station name,
+<font color=red>C</font> is for channel identifier, and
+<font color=red>N</font> is for network code.
+Note that station,
+channel, and network names in Quanterra  follow the SEED convention and
+can be 5, 3, and 2 chars in length respectively.
+<PRE>
+Default:  none, optional command
+SCN2pinmap	Q003 HHZ AT  1
+SCN2pinmap	Q003 HLN AT  2
+SCN2pinmap	Q003 HLE AT  3
+</PRE>
+</BLOCKQUOTE>
+
+<HR>
+<A NAME="TimeoutNoSend">  <!-- command name as anchor inside quotes -->	
+<PRE><B>TimeoutNoSend <font color=red>timeout</font>			HeartBeat		Earthworm setup</B><!-- command args ... -->		
+</PRE>
+<BLOCKQUOTE> <!-- command description goes here -->
+If no waveform packets come from the DA after 
+<font color=red>timeout</font> seconds, the q2ew module will notify statmgr
+and die. If <font color=red>timeout</font> is set to 0, then the q2ew module
+will never check for this timeout. If set to 0, q2ew will only die if COMSERV 
+dies, or if the Earthworm system calls for its termination. This timeout 
+begins once the first Waveform packet is received from ANY DA served by 
+COMSERV. It is not specific to any one DA.
+<PRE>
+Default:  none, required option				
+ATWC:   TimeoutNoSend 0
+</PRE>
+</BLOCKQUOTE>
+<HR>
+
+<A NAME="descriptor">
+<H2>4.  DESCRIPTOR FILE EXAMPLE</H2>
+<P>
+Here is a copy of the q2ew.desc file as implemented. Note that all causes of
+death for q2ew feed through the function q2ew_die() which logs all causes of
+death using logit() and sends a message to the statmgr utility.
+
+<PRE>
+
+modName  q2ew
+modId    MOD_Q2EW
+instId   INST_ATWC
+
+restartMe	# restart this sucker as it is critical to data collection
+#
+#
+#    Heartbeat Specification.  If the status manager does not receive
+#    a heartbeat message every <tsec> seconds from this module, an
+#    error will be reported (client module dead).  <page> is the maximum
+#    number of pager messages that will be reported and <mail> is the
+#    maximum number of email messages that will be reported.  If the
+#    page or mail limit is exceeded, no further errors will be reported
+#    until the status manager is restarted.
+#
+tsec: 20  page: 0  mail: 99
+
+# these are the statmgr messages that q2ew will send before dieing
+#
+err: 0  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "COMSERV has a problem and died"
+#
+err: 1  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "COMSERV Recv NO DATA TIMEOUT and died"
+#
+err: 2  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "SIGNAL caused q2ew to die"
+#
+err: 3  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW tport_putmsg() failed, q2ew dead"
+#
+err: 4  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW TERMINATE recv'd, q2ew dead"
+#
+err: 5  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "EW config problems on startup, q2ew dead"
+#
+# BELOW: WARNINGS, NOT FATAL YET 
+err: 6  nerr: 1  tsec: 0  page: 5  mail: 20
+text: "qlib2 decompression errors"
+#
+</PRE>
+<CENTER> 
+<A HREF="../modules.html">Module Index</A> | 
+<A HREF="../ovr/q2ew.html">q2ew Overview</A>
+</CENTER>
+
+<!-- USGS-required stuff at the end -->
+<HR>
+<ADDRESS>
+The URL of this page is  <B>[http://www.cnss.org/EWAB/cmd/q2ew.html]</B><BR>
+Contact: <B>support@isti.com</B><BR>
+</ADDRESS>
+</BODY>
+</HTML>

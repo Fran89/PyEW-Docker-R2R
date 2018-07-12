@@ -1,0 +1,36 @@
+
+Files rayloc_message_rw.h and rayloc_message_rw.c contain
+API for reading and writing TYPEi_RAYLOC messages.
+
+File rayloc_message_rw.h is installed in $EW_HOME/include
+File rayloc_message_rw.o is installed in $EW_HOME/lib
+
+Protocol and formats are described in the comments of 
+rayloc_message_rw.h
+
+Separate program read_rayloc_msg has been written as an
+example of the code which reads and parses 
+TYPE_RAYLOC msg.
+
+Ilya Dricker (i.dricker@isti.com)
+and ISTI team
+
+20071205 update from Mitch Withers.  Synced rayloc_ew with ray_loc
+from Hydra.  Involved changes to ellip.f and robust_util.f.  Also
+needs a new prm file that I had previously allowed to reside in
+the glass model dir.  Added that dir and its contents along with
+the new res_ac.prm file to rayloc_ew's directory.  There are also
+problems with the hydra ew that should be fixed.
+
+A known feature is rayloc will complain with a less than illuminating
+error when a station is missing from the station file.  Something like:
+
+20071205_UTC_15:12:50 lib_rayloc: Failed to write Input Structure to the file /g
+aia/home/mwithers/Projects/EWSupport/Working/run_smeagol/model/RayLocInputa.txt
+20071205_UTC_15:12:50 rayloc_ew: lib_rayloc FAILED: retVal = -1
+20071205_UTC_15:12:50 rayloc_ew: Output Message size = NULL
+20071205_UTC_15:12:50 ERROR: rayloc_MessageToRaylocHeader: RAYLOC HEADER MESSAGE
+ is NULL
+20071205_UTC_15:12:50 Failed to convert RAYLOC message into structure
+
+You have been warned.

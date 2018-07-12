@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      pkfilter.designspecs.txt – Earthworm
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="http://earthwormcentral.com/trac/ew/search" />
+        <link rel="help" href="TracGuide.html" />
+        <link rel="alternate" href="http://earthwormcentral.com/trac/ew/wiki/pkfilter.designspecs.txt?format=txt" type="text/x-trac-wiki" title="Plain Text" />
+        <link rel="start" href="http://earthwormcentral.com/trac/ew/wiki" />
+        <link rel="stylesheet" href="../chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="../chrome/common/css/wiki.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/jsgantt.css" type="text/css" /><link rel="stylesheet" href="../chrome/tracjsgantt/tracjsgantt.css" type="text/css" />
+        <link rel="shortcut icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="../chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="http://earthwormcentral.com/trac/ew/search/opensearch" title="Search Earthworm" />
+    <script type="text/javascript" src="../chrome/common/js/jquery.js"></script><script type="text/javascript" src="../chrome/common/js/babel.js"></script><script type="text/javascript" src="../chrome/common/js/messages/en_US.js"></script><script type="text/javascript" src="../chrome/common/js/trac.js"></script><script type="text/javascript" src="../chrome/common/js/search.js"></script><script type="text/javascript" src="../chrome/common/js/folding.js"></script><script type="text/javascript" src="../chrome/tracjsgantt/jsgantt.js"></script>
+    <!--[if lt IE 7]>
+    <script type="text/javascript" src="/trac/ew/chrome/common/js/ie_pre7_hacks.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#content").find("h1,h2,h3,h4,h5,h6").addAnchor(_("Link to this section"));
+        $("#content").find(".wikianchor").each(function() {
+          $(this).addAnchor(babel.format(_("Link to #%(id)s"), {id: $(this).attr('id')}));
+        });
+        $(".foldable").enableFolding(true, true);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="http://earthwormcentral.com/trac/ew"><img src="../chrome/site/images/ew.logo_tiny.png" alt="" /></a>
+      </div>
+      <form id="search" action="http://earthwormcentral.com/trac/ew/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="http://earthwormcentral.com/trac/ew/login">Login</a></li><li><a href="TracGuide.html">Help/Guide</a></li><li><a href="http://earthwormcentral.com/trac/ew/about">About Trac</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/prefs">Preferences</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first active"><a href="http://earthwormcentral.com/trac/ew/wiki">Wiki</a></li><li><a href="http://earthwormcentral.com/trac/ew/timeline">Timeline</a></li><li><a href="http://earthwormcentral.com/trac/ew/roadmap">Roadmap</a></li><li><a href="http://earthwormcentral.com/trac/ew/browser">Browse Source</a></li><li><a href="http://earthwormcentral.com/trac/ew/query">View Tickets</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="pagepath" class="noprint">
+  <a class="pathentry first" title="View WikiStart" href="http://earthwormcentral.com/trac/ew/wiki">wiki:</a><a class="pathentry" href="pkfilter.designspecs.txt.html" title="View pkfilter.designspecs.txt">pkfilter.designspecs.txt</a>
+</div>
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+          <ul>
+              <li class="first"><a href="WikiStart.html">Start Page</a></li><li><a href="TitleIndex.html">Index</a></li><li class="last"><a href="http://earthwormcentral.com/trac/ew/wiki/pkfilter.designspecs.txt?action=history">History</a></li>
+          </ul>
+        <hr />
+      </div>
+    <div id="content" class="wiki">
+      <div class="wikipage searchable">
+        
+          
+          <div class="trac-modifiedby">
+            <span><a href="http://earthwormcentral.com/trac/ew/wiki/pkfilter.designspecs.txt?action=diff&amp;version=1" title="Version 1 by branden">Last modified</a> <a class="timeline" href="http://earthwormcentral.com/trac/ew/timeline?from=2012-03-25T13%3A57%3A18-07%3A00&amp;precision=second" title="2012-03-25T13:57:18-07:00 in Timeline">18 months</a> ago</span>
+            <span class="trac-print">Last modified on 03/25/12 13:57:18</span>
+          </div>
+          <div id="wikipage"><pre class="wiki">Design Requirements for a Pick Filter
+
+1. The purpose of the pick filter is to reduce the number of "duplicate" picks
+   from a given "station". For the pick filter, all components which have
+   matching station code and network code are considered to be the from the
+   same "station". The rules for what are considered "duplicate" picks are
+   given below.
+
+2. For each "station", the pick filter will maintain a history list of picks
+   that have been allowed through the filter. The size of these lists will be
+   limited by a configurable number (count) of picks.
+ 
+   LDD: Added the "PickHistory" command to specify the number (count) of
+   picks that will be maintained in the list for each "station".  
+   Only picks which pass the filter rules are added to the list. Once 
+   the list is full, old picks are removed in a simple first-in, first 
+   overwritten manner.
+
+3. The pick filter can optionally be configured to pass picks from only
+   certain component codes.
+  
+   LDD: Added "AllowComponent" command. If no "AllowComponent" command is 
+   used, ALL components will be allowed to pass. If one or more "AllowComponent"
+   commands are used, the pick filter will only pass picks from the listed
+   components.
+
+4. The following rules may be used to determine if a pick is allowed through
+   the filter. Any pick that fails these rules is considered a "duplicate" and
+   is rejected by the filter.
+
+   A new pick is considered to "match" a pick in the history list if the two
+   pick times are within "pick tolerance" of each other. That is, a new pick
+   within "pick tolerance" before or after a listed pick is considered to
+   match the listed pick.
+   
+   LDD: Set with original "PickTolerance" command.
+
+   a. A pick that is more than "pick tolerance" newer than the most recent
+      listed pick is always passed by the filter.
+
+   b. "Allow higher quality matches": A pick that "matches" a listed pick and
+      has a higher quality than that matching pick is optionally passed by the
+      filter.
+
+      LDD: Set with original "DuplicateOnQuality" and "QualDiffAllowed" commands.
+
+   c. "Allow older": A pick that is more than "pick tolerance" older than the
+      older listed pick is optionally passed by the filter.
+
+      LDD: Added two new commands to control this feature.
+      "OlderPickAllowed" has 3 possible values:
+        0=pass no non-duplicate picks older than the youngest passed
+          pick for this station.
+        1=pass older picks, but set a limit on how old they can be.
+        2=pass all non-duplicate picks older than the youngest pick
+          for this station. 
+      "OlderPickLimit" is used only if OlderPickAllowed=1. If a 
+       non-duplicate pick is older than they youngest-passed pick by 
+       more than OlderPickLimit seconds, the pick will be rejected.  
+
+       I included the "OlderPickLimit" option because I noticed in CI data, 
+       that some channels at a station can arrive many minutes later than 
+       another channel at the same station.  I assume that this is due to
+       recovery on a bad telemetry link.  If we want to keep the pick history
+       relatively short and still let older picks thru, we need to set a time 
+       limit on the oldest picks we'll accept. Otherwise we could still end up 
+       with lots of duplicates in the system.  And if new picks exist, the older
+       ones won't really help binder at all.
+
+5. Coda messages can also be filtered by the pick filter. The options should
+   include "allow all", "allow none", and "allow matching". Codas are
+   considered to match picks for a given "station" if the pick and coda have
+   the same serial number, installation and module IDs. The Earthworm picker
+   assigns serial numbers to picks and codas; the installation and module IDs
+   are part of the "logo" assigned to all Earthworm messages.
+
+   LDD: Added "CodaFilter" command for this feature. 
+        It has 3 possible values:
+        0=allow no codas
+        1=allow matching codas
+        2=allow all codas
+</pre></div>
+        
+        
+      </div>
+      
+
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="last first">
+          <a rel="nofollow" href="http://earthwormcentral.com/trac/ew/wiki/pkfilter.designspecs.txt?format=txt">Plain Text</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="../chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="http://earthwormcentral.com/trac/ew/about"><strong>Trac 0.12.4</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.org/">http://trac.edgewall.org/</a></p>
+    </div>
+  </body>
+</html>

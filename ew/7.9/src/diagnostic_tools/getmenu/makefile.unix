@@ -1,0 +1,28 @@
+LINUX_FLAGS=-lm -lpthread
+SOLARIS_FLAGS=-lm -lsocket -lnsl -lposix4
+SPECIFIC_FLAGS = $($(PLATFORM)_FLAGS)
+
+CFLAGS = ${GLOBALFLAGS}
+
+B = $(EW_HOME)/$(EW_VERSION)/bin
+L = $(EW_HOME)/$(EW_VERSION)/lib
+
+
+O = getmenu.o $L/socket_ew.o $L/libew.a $L/ws_clientII.o $L/socket_ew_common.o
+
+getmenu: $O
+	$(CC) $(CFLAGS) -o $B/getmenu $O $(SPECIFIC_FLAGS)
+
+.c.o:
+	$(CC) -c ${CFLAGS} $<
+
+lint:
+	lint getmenu.c $(GLOBALFLAGS)
+
+
+# Clean-up rules
+clean:
+	rm -f a.out core *.o *.obj *% *~
+
+clean_bin:
+	rm -f $B/getmenu*
