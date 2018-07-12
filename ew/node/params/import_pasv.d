@@ -15,7 +15,7 @@
  RingName       INPUT_RING           # transport ring to use for input/output,
  HeartBeatInt   30                   # internal heartbeat interval in seconds
 #
- LogFile        1                    # If 0, don't write logfile at all,
+ LogFile        0                    # If 0, don't write logfile at all,
 
  MaxMsgSize     65000      	         # max size (bytes) for input/output msgs
 
